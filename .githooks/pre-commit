@@ -1,0 +1,17 @@
+#!/bin/sh
+# Refuse a commit made with the wrong git identity.
+# The expected author email lives in .claude/git-identity (one line).
+# Enable once per clone:  git config core.hooksPath .githooks
+
+root=$(git rev-parse --show-toplevel)
+file="$root/.claude/git-identity"
+[ -f "$file" ] || exit 0
+
+expected=$(head -n 1 "$file" | tr -d '[:space:]')
+actual=$(git config user.email)
+
+if [ -n "$expected" ] && [ "$actual" != "$expected" ]; then
+  echo "pre-commit: git user.email is '$actual', this project expects '$expected'." >&2
+  echo "Fix with: git config user.email $expected" >&2
+  exit 1
+fi

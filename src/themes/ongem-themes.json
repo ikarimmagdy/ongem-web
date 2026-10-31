@@ -1,0 +1,468 @@
+{
+  "default": "ongem",
+  "themes": [
+    {
+      "$schema": "ongem-theme/v1",
+      "id": "ongem",
+      "name": "OnGem",
+      "version": 2,
+      "source": "OnGem Brand Guidelines V2 (inputs/OnGem Brand Guidelines V2.docx)",
+      "color": {
+        "brand": {
+          "primary": "#314BE8",
+          "primaryHover": "#2539C4",
+          "secondary": "#0B306E",
+          "signature": "#4C2DD1",
+          "signatureSoft": "#8D78F0",
+          "accent": "#38D6B0",
+          "info": "#58A8F3",
+          "gold": "#D8A63C",
+          "deep": "#081549"
+        },
+        "surface": {
+          "canvas": "#F8FAFD",
+          "card": "#FFFFFF",
+          "raised": "#FFFFFF",
+          "sunken": "#F1F4F9",
+          "inverse": "#081549",
+          "tintBlue": "#EAF4FF",
+          "tintViolet": "#F0ECFF",
+          "tintMint": "#EAF9F5"
+        },
+        "text": {
+          "primary": "#081549",
+          "secondary": "#5F6E86",
+          "muted": "#7D8AA0",
+          "inverse": "#FFFFFF",
+          "link": "#314BE8",
+          "money": "#081549"
+        },
+        "border": {
+          "default": "#DCE3EE",
+          "subtle": "#E9EEF5",
+          "strong": "#7F8CA1",
+          "focus": "#314BE8"
+        },
+        "action": {
+          "primaryBg": "#314BE8",
+          "primaryText": "#FFFFFF",
+          "primaryHoverBg": "#2539C4",
+          "secondaryBg": "#FFFFFF",
+          "secondaryText": "#081549",
+          "secondaryBorder": "#DCE3EE",
+          "dangerBg": "#D92D20",
+          "dangerText": "#FFFFFF"
+        },
+        "status": {
+          "success": "#079455",
+          "successBg": "#ECFDF3",
+          "pending": "#DC6803",
+          "pendingBg": "#FFFAEB",
+          "failure": "#D92D20",
+          "failureBg": "#FEF3F2",
+          "info": "#314BE8",
+          "infoBg": "#EAF4FF",
+          "neutral": "#65748B",
+          "neutralBg": "#F1F4F9"
+        },
+        "category": {
+          "banking": "#314BE8",
+          "bankingBg": "#EAF4FF",
+          "global": "#38D6B0",
+          "globalBg": "#EAF9F5",
+          "cards": "#4C2DD1",
+          "cardsBg": "#F0ECFF",
+          "compliance": "#58A8F3",
+          "complianceBg": "#EAF4FF",
+          "treasury": "#D8A63C",
+          "treasuryBg": "#FBF4E4"
+        }
+      },
+      "gradient": {
+        "brand": [
+          "#081549",
+          "#1E227D",
+          "#4C2DD1",
+          "#7B70C1"
+        ]
+      },
+      "typography": {
+        "display": {
+          "family": "'Roboto Condensed', 'Arial Narrow', sans-serif",
+          "weight": 700
+        },
+        "label": {
+          "family": "'Roboto Condensed', 'Arial Narrow', sans-serif",
+          "weight": 500,
+          "transform": "uppercase",
+          "tracking": "0.06em"
+        },
+        "body": {
+          "family": "'Inter', system-ui, sans-serif",
+          "weight": 400
+        },
+        "bodyStrong": {
+          "family": "'Inter', system-ui, sans-serif",
+          "weight": 500
+        },
+        "money": {
+          "family": "'Inter', system-ui, sans-serif",
+          "weight": 600,
+          "numeric": "tabular-nums"
+        },
+        "scale": {
+          "xs": 12,
+          "sm": 14,
+          "md": 16,
+          "lg": 18,
+          "xl": 22,
+          "2xl": 28,
+          "3xl": 36
+        }
+      },
+      "space": {
+        "xs": 4,
+        "sm": 8,
+        "md": 16,
+        "lg": 24,
+        "xl": 32,
+        "2xl": 48,
+        "3xl": 64
+      },
+      "radius": {
+        "sm": 6,
+        "md": 10,
+        "lg": 14,
+        "xl": 16,
+        "pill": 999
+      },
+      "shadow": {
+        "card": "0 1px 2px rgba(8,21,73,0.06)",
+        "raised": "0 6px 20px rgba(8,21,73,0.10)"
+      },
+      "logo": {
+        "wordmark": "ongem-wordmark.png",
+        "favicon": "ongem-favicon.png",
+        "alt": "OnGem"
+      },
+      "rules": [
+        "Primary CTA royal blue; secondary CTA white with cool border",
+        "Navy for financial values and primary text; never violet body text",
+        "Status colors stay conventional and separate from category colors",
+        "Light cool borders over heavy shadows; radii 10-14 for cards",
+        "Headlines sentence case, bold condensed, deep navy; numbers tabular",
+        "Logo: full-colour wordmark on white, Ice or an Ice plate on navy; clear space at least half the logo height; never below 24 px tall",
+        "Treasury gold only for treasury or stable value; workflows and compliance use blue-violet",
+        "Form controls use the strong border (3:1); cards keep the light cool border"
+      ]
+    },
+    {
+      "$schema": "ongem-theme/v1",
+      "id": "ongem-dark",
+      "name": "OnGem dark",
+      "version": 2,
+      "source": "OnGem Brand Guidelines V2 (inputs/OnGem Brand Guidelines V2.docx)",
+      "color": {
+        "brand": {
+          "primary": "#314BE8",
+          "primaryHover": "#2539C4",
+          "secondary": "#0B306E",
+          "signature": "#4C2DD1",
+          "signatureSoft": "#8D78F0",
+          "accent": "#38D6B0",
+          "info": "#58A8F3",
+          "gold": "#D8A63C",
+          "deep": "#081549"
+        },
+        "surface": {
+          "canvas": "#060E33",
+          "card": "#0B1748",
+          "raised": "#102060",
+          "sunken": "#050B29",
+          "inverse": "#F8FAFD",
+          "tintBlue": "#EAF4FF",
+          "tintViolet": "#F0ECFF",
+          "tintMint": "#EAF9F5"
+        },
+        "text": {
+          "primary": "#F8FAFD",
+          "secondary": "#A9B4C8",
+          "muted": "#8692AA",
+          "inverse": "#081549",
+          "link": "#8EA2FF",
+          "money": "#F8FAFD"
+        },
+        "border": {
+          "default": "#22306A",
+          "subtle": "#18245A",
+          "strong": "#5D6DAA",
+          "focus": "#8EA2FF"
+        },
+        "action": {
+          "primaryBg": "#314BE8",
+          "primaryText": "#FFFFFF",
+          "primaryHoverBg": "#2539C4",
+          "secondaryBg": "#0B1748",
+          "secondaryText": "#F8FAFD",
+          "secondaryBorder": "#22306A",
+          "dangerBg": "#D92D20",
+          "dangerText": "#FFFFFF"
+        },
+        "status": {
+          "success": "#32D583",
+          "successBg": "#053321",
+          "pending": "#FDB022",
+          "pendingBg": "#3D2606",
+          "failure": "#F97066",
+          "failureBg": "#3E1214",
+          "info": "#8EA2FF",
+          "infoBg": "#142467",
+          "neutral": "#A9B4C8",
+          "neutralBg": "#18245A"
+        },
+        "category": {
+          "banking": "#314BE8",
+          "bankingBg": "#EAF4FF",
+          "global": "#38D6B0",
+          "globalBg": "#EAF9F5",
+          "cards": "#4C2DD1",
+          "cardsBg": "#F0ECFF",
+          "compliance": "#58A8F3",
+          "complianceBg": "#EAF4FF",
+          "treasury": "#D8A63C",
+          "treasuryBg": "#FBF4E4"
+        }
+      },
+      "gradient": {
+        "brand": [
+          "#081549",
+          "#1E227D",
+          "#4C2DD1",
+          "#7B70C1"
+        ]
+      },
+      "typography": {
+        "display": {
+          "family": "'Roboto Condensed', 'Arial Narrow', sans-serif",
+          "weight": 700
+        },
+        "label": {
+          "family": "'Roboto Condensed', 'Arial Narrow', sans-serif",
+          "weight": 500,
+          "transform": "uppercase",
+          "tracking": "0.06em"
+        },
+        "body": {
+          "family": "'Inter', system-ui, sans-serif",
+          "weight": 400
+        },
+        "bodyStrong": {
+          "family": "'Inter', system-ui, sans-serif",
+          "weight": 500
+        },
+        "money": {
+          "family": "'Inter', system-ui, sans-serif",
+          "weight": 600,
+          "numeric": "tabular-nums"
+        },
+        "scale": {
+          "xs": 12,
+          "sm": 14,
+          "md": 16,
+          "lg": 18,
+          "xl": 22,
+          "2xl": 28,
+          "3xl": 36
+        }
+      },
+      "space": {
+        "xs": 4,
+        "sm": 8,
+        "md": 16,
+        "lg": 24,
+        "xl": 32,
+        "2xl": 48,
+        "3xl": 64
+      },
+      "radius": {
+        "sm": 6,
+        "md": 10,
+        "lg": 14,
+        "xl": 16,
+        "pill": 999
+      },
+      "shadow": {
+        "card": "0 1px 2px rgba(8,21,73,0.06)",
+        "raised": "0 6px 20px rgba(8,21,73,0.10)"
+      },
+      "logo": {
+        "wordmark": "ongem-wordmark.png",
+        "favicon": "ongem-favicon.png",
+        "alt": "OnGem"
+      },
+      "rules": [
+        "Primary CTA royal blue; secondary CTA white with cool border",
+        "Navy for financial values and primary text; never violet body text",
+        "Status colors stay conventional and separate from category colors",
+        "Light cool borders over heavy shadows; radii 10-14 for cards",
+        "Headlines sentence case, bold condensed, deep navy; numbers tabular",
+        "Logo: full-colour wordmark on white, Ice or an Ice plate on navy; clear space at least half the logo height; never below 24 px tall",
+        "Treasury gold only for treasury or stable value; workflows and compliance use blue-violet",
+        "Form controls use the strong border (3:1); cards keep the light cool border"
+      ],
+      "mode": "dark"
+    },
+    {
+      "$schema": "ongem-theme/v1",
+      "id": "demo-harbor",
+      "name": "Harbor (white-label demo)",
+      "version": 2,
+      "source": "Neutral demo brand to prove white-labelling; not a real client",
+      "color": {
+        "brand": {
+          "primary": "#0F766E",
+          "primaryHover": "#0B5E58",
+          "secondary": "#134E4A",
+          "signature": "#B45309",
+          "signatureSoft": "#F59E0B",
+          "accent": "#38D6B0",
+          "info": "#58A8F3",
+          "gold": "#D8A63C",
+          "deep": "#0B2A28"
+        },
+        "surface": {
+          "canvas": "#F7FAF9",
+          "card": "#FFFFFF",
+          "raised": "#FFFFFF",
+          "sunken": "#F1F4F9",
+          "inverse": "#0B2A28",
+          "tintBlue": "#E6F4F1",
+          "tintViolet": "#F0ECFF",
+          "tintMint": "#EAF9F5"
+        },
+        "text": {
+          "primary": "#0B2A28",
+          "secondary": "#5F6E86",
+          "muted": "#7D8AA0",
+          "inverse": "#FFFFFF",
+          "link": "#0F766E",
+          "money": "#0B2A28"
+        },
+        "border": {
+          "default": "#DCE3EE",
+          "subtle": "#E9EEF5",
+          "strong": "#7F8CA1",
+          "focus": "#0F766E"
+        },
+        "action": {
+          "primaryBg": "#0F766E",
+          "primaryText": "#FFFFFF",
+          "primaryHoverBg": "#0B5E58",
+          "secondaryBg": "#FFFFFF",
+          "secondaryText": "#0B2A28",
+          "secondaryBorder": "#DCE3EE",
+          "dangerBg": "#D92D20",
+          "dangerText": "#FFFFFF"
+        },
+        "status": {
+          "success": "#079455",
+          "successBg": "#ECFDF3",
+          "pending": "#DC6803",
+          "pendingBg": "#FFFAEB",
+          "failure": "#D92D20",
+          "failureBg": "#FEF3F2",
+          "info": "#314BE8",
+          "infoBg": "#EAF4FF",
+          "neutral": "#65748B",
+          "neutralBg": "#F1F4F9"
+        },
+        "category": {
+          "banking": "#314BE8",
+          "bankingBg": "#EAF4FF",
+          "global": "#38D6B0",
+          "globalBg": "#EAF9F5",
+          "cards": "#4C2DD1",
+          "cardsBg": "#F0ECFF",
+          "compliance": "#58A8F3",
+          "complianceBg": "#EAF4FF",
+          "treasury": "#D8A63C",
+          "treasuryBg": "#FBF4E4"
+        }
+      },
+      "gradient": {
+        "brand": [
+          "#081549",
+          "#1E227D",
+          "#4C2DD1",
+          "#7B70C1"
+        ]
+      },
+      "typography": {
+        "display": {
+          "family": "'Merriweather', Georgia, serif",
+          "weight": 700
+        },
+        "label": {
+          "family": "'Roboto Condensed', 'Arial Narrow', sans-serif",
+          "weight": 500,
+          "transform": "uppercase",
+          "tracking": "0.06em"
+        },
+        "body": {
+          "family": "'Inter', system-ui, sans-serif",
+          "weight": 400
+        },
+        "bodyStrong": {
+          "family": "'Inter', system-ui, sans-serif",
+          "weight": 500
+        },
+        "money": {
+          "family": "'Inter', system-ui, sans-serif",
+          "weight": 600,
+          "numeric": "tabular-nums"
+        },
+        "scale": {
+          "xs": 12,
+          "sm": 14,
+          "md": 16,
+          "lg": 18,
+          "xl": 22,
+          "2xl": 28,
+          "3xl": 36
+        }
+      },
+      "space": {
+        "xs": 4,
+        "sm": 8,
+        "md": 16,
+        "lg": 24,
+        "xl": 32,
+        "2xl": 48,
+        "3xl": 64
+      },
+      "radius": {
+        "sm": 6,
+        "md": 4,
+        "lg": 6,
+        "xl": 8,
+        "pill": 999
+      },
+      "shadow": {
+        "card": "0 1px 2px rgba(8,21,73,0.06)",
+        "raised": "0 6px 20px rgba(8,21,73,0.10)"
+      },
+      "logo": {
+        "wordmark": null,
+        "alt": "Harbor",
+        "favicon": null
+      },
+      "rules": [
+        "Primary CTA royal blue; secondary CTA white with cool border",
+        "Navy for financial values and primary text; never violet body text",
+        "Status colors stay conventional and separate from category colors",
+        "Light cool borders over heavy shadows; radii 10-14 for cards",
+        "Headlines sentence case, bold condensed, deep navy; numbers tabular"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+import AxeBuilder from '@axe-core/playwright';
+import { expect, test, type Page } from '@playwright/test';
+
+/** OG-030 journeys in demo mode at desktop 1440x900 and mobile 390x844 (projects in playwright.config.ts). */
+async function demo(page: Page) {
+  await page.goto('/');
+  await page.getByTestId('explore-demo').click();
+  await expect(page.getByTestId('home-total')).toBeVisible();
+}
+
+async function nav(page: Page, label: string) {
+  await page.locator(`[data-testid="nav-${label}"]:visible`).first().click();
+}
+
+async function noSideScroll(page: Page) {
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+}
+
+async function axe(page: Page) {
+  const r = await new AxeBuilder({ page }).disableRules(['color-contrast']).analyze();
+  expect(r.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical').map((v) => v.id)).toEqual([]);
+}
+
+async function stepUp(page: Page) {
+  await page.getByTestId('reverify-code').fill('123456');
+  await page.getByTestId('reverify-confirm').click();
+}
+
+test('journeys_desktop_and_mobile_AC_R1_2', async ({ page }, info) => {
+  const started = Date.now();
+  await demo(page);
+  expect(Date.now() - started).toBeLessThan(10_000);
+  const mobile = info.project.name === 'mobile';
+  await expect(page.getByTestId(mobile ? 'bottom-nav' : 'shell').locator('a', { hasText: 'Accounts' }).first()).toBeVisible();
+  await expect(page.locator('.fw-side')).toBeVisible({ visible: !mobile });
+  await noSideScroll(page);
+  await axe(page);
+  await page.screenshot({ path: `e2e-output/screens/${info.project.name}-home.png`, fullPage: true });
+
+  await nav(page, 'accounts');
+  await page.getByTestId('account-acc_demo_ops').click();
+  await expect(page.getByTestId('account-detail')).toBeVisible();
+  await page.getByTestId('statement-2026-09').click();
+  await expect(page.getByTestId('statement-view')).toContainText('US$98,700.00');
+  await page.keyboard.press('Escape');
+  await noSideScroll(page);
+  await page.screenshot({ path: `e2e-output/screens/${info.project.name}-account.png`, fullPage: true });
+
+  await nav(page, 'payments');
+  await page.getByTestId('new-payment').click();
+  await page.getByTestId('payment-recipient').selectOption('rcp_demo_acme');
+  await page.getByTestId('payment-amount').fill('250.00');
+  await page.getByTestId('payment-review-button').click();
+  await page.getByTestId('payment-send').click();
+  await stepUp(page);
+  await expect(page.getByTestId('payment-detail')).toContainText('Submitted');
+  await axe(page);
+  await page.screenshot({ path: `e2e-output/screens/${info.project.name}-payment-sent.png`, fullPage: true });
+
+  await nav(page, 'cards');
+  await page.getByTestId('card-crd_demo_dana').click();
+  await page.getByTestId('card-freeze').click();
+  await stepUp(page);
+  await expect(page.getByTestId('card-state')).toHaveText('Frozen');
+
+  await nav(page, 'support');
+  await page.getByTestId('ticket-new').click();
+  await page.getByTestId('ticket-subject').fill('Card for a contractor');
+  await page.getByTestId('ticket-body').fill('Can we get a virtual card?');
+  await page.getByTestId('ticket-send').click();
+  await expect(page.getByTestId('ticket-thread')).toContainText('Can we get a virtual card?');
+  await noSideScroll(page);
+  await page.screenshot({ path: `e2e-output/screens/${info.project.name}-support.png`, fullPage: true });
+});
+
+test('storage_holds_no_secrets_AC_R10_2', async ({ page }) => {
+  await demo(page);
+  await nav(page, 'accounts');
+  await page.getByTestId('account-acc_demo_ops').click();
+  await nav(page, 'payments');
+  await page.getByTestId('new-payment').click();
+  await page.getByTestId('payment-recipient').selectOption('rcp_demo_acme');
+  await page.getByTestId('payment-amount').fill('99.00');
+  await page.getByTestId('payment-review-button').click();
+  await page.getByTestId('payment-send').click();
+  await stepUp(page);
+  await expect(page.getByTestId('payment-detail')).toBeVisible();
+  const stored = await page.evaluate(() => JSON.stringify({ ...localStorage }) + JSON.stringify({ ...sessionStorage }));
+  expect(stored).not.toMatch(/US\$|\d{4,}|token|Bearer|eyJ/i);
+});
+
+test('dev_url_and_api_health_AC_R11_1', async ({ page, request }) => {
+  test.skip(!process.env.E2E_DEV, 'runs against the deployed dev URL only (E2E_BASE_URL with E2E_DEV=1)');
+  const health = await request.get('/api-dev/actuator/health');
+  expect((await health.json()).status).toBe('UP');
+  await demo(page);
+});
