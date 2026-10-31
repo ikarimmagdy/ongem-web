@@ -34,15 +34,26 @@ function AccountDetail({ id }: { id: string }) {
     <Load state={account} label="account">
       {(a) => (
         <div className="fw-thread" data-testid="account-detail">
-          <Card title={<>{a.name} <Last4 value={a.last4} /></>}>
+          <Card
+            title={
+              <>
+                {a.name} <Last4 value={a.last4} />
+              </>
+            }
+          >
             <KeyValue
               items={[
                 { label: 'Available', value: a.balance ? <Amt value={a.balance.available} /> : 'Not known' },
                 { label: 'Posted', value: a.balance ? <Amt value={a.balance.posted} /> : 'Not known' },
-                { label: 'Status', value: <StatusChip status={stateStatus(a.status)}>{human(a.status)}</StatusChip> },
+                {
+                  label: 'Status',
+                  value: <StatusChip status={stateStatus(a.status)}>{human(a.status)}</StatusChip>,
+                },
               ]}
             />
-            {a.balance?.stale && <p className="fw-stale">The bank did not answer just now; this is the last known balance.</p>}
+            {a.balance?.stale && (
+              <p className="fw-stale">The bank did not answer just now; this is the last known balance.</p>
+            )}
           </Card>
           <Card title="Transactions">
             <Load state={txns} label="transactions">
@@ -54,7 +65,11 @@ function AccountDetail({ id }: { id: string }) {
                     rowKey={(t) => t.id}
                     empty="No transactions yet."
                     columns={[
-                      { key: 'date', header: 'Date', render: (t) => (t.effectiveDate ? formatDate(t.effectiveDate) : '') },
+                      {
+                        key: 'date',
+                        header: 'Date',
+                        render: (t) => (t.effectiveDate ? formatDate(t.effectiveDate) : ''),
+                      },
                       { key: 'what', header: 'Description', render: (t) => t.origin || t.rail || '' },
                       { key: 'stage', header: 'Status', render: (t) => human(t.stage) },
                       {
@@ -71,7 +86,11 @@ function AccountDetail({ id }: { id: string }) {
                     ]}
                   />
                   {rows.length >= limit && limit < 100 && (
-                    <Button variant="secondary" data-testid="show-more" onClick={() => setLimit(Math.min(100, limit + PAGE))}>
+                    <Button
+                      variant="secondary"
+                      data-testid="show-more"
+                      onClick={() => setLimit(Math.min(100, limit + PAGE))}
+                    >
                       Show more
                     </Button>
                   )}
@@ -86,7 +105,11 @@ function AccountDetail({ id }: { id: string }) {
                   <ul className="fw-list">
                     {list.map((s) => (
                       <li key={s.period}>
-                        <button className="fw-row" data-testid={`statement-${s.period}`} onClick={() => void api.statement(id, s.period).then(setStatement)}>
+                        <button
+                          className="fw-row"
+                          data-testid={`statement-${s.period}`}
+                          onClick={() => void api.statement(id, s.period).then(setStatement)}
+                        >
                           Statement {s.period}
                         </button>
                       </li>
@@ -98,7 +121,11 @@ function AccountDetail({ id }: { id: string }) {
               }
             </Load>
           </Card>
-          <Modal open={Boolean(statement)} title={`Statement ${statement?.period ?? ''}`} onClose={() => setStatement(null)}>
+          <Modal
+            open={Boolean(statement)}
+            title={`Statement ${statement?.period ?? ''}`}
+            onClose={() => setStatement(null)}
+          >
             {statement && (
               <div data-testid="statement-view">
                 <KeyValue
@@ -113,8 +140,17 @@ function AccountDetail({ id }: { id: string }) {
                   rowKey={(l) => String(l.i)}
                   columns={[
                     { key: 'date', header: 'Date', render: (l) => (l.date ? formatDate(l.date) : '') },
-                    { key: 'dir', header: 'In or out', render: (l) => (l.direction === 'CREDIT' ? 'In' : 'Out') },
-                    { key: 'amount', header: 'Amount', align: 'end', render: (l) => <Amt value={l.amount} /> },
+                    {
+                      key: 'dir',
+                      header: 'In or out',
+                      render: (l) => (l.direction === 'CREDIT' ? 'In' : 'Out'),
+                    },
+                    {
+                      key: 'amount',
+                      header: 'Amount',
+                      align: 'end',
+                      render: (l) => <Amt value={l.amount} />,
+                    },
                   ]}
                 />
               </div>
@@ -133,7 +169,11 @@ export function AccountsScreen() {
   const list = useAsync(() => api.accounts(), [api]);
   return (
     <>
-      <PageHeader title="Accounts" subtitle="Balances come from the bank." actions={<Link to="/recipients">Recipients</Link>} />
+      <PageHeader
+        title="Accounts"
+        subtitle="Balances come from the bank."
+        actions={<Link to="/recipients">Recipients</Link>}
+      />
       <div className={`fw-split${id ? ' has-detail' : ''}`}>
         <div className="fw-split__list">
           <Load state={list} label="accounts">
@@ -142,7 +182,11 @@ export function AccountsScreen() {
                 <ul className="fw-list" data-testid="accounts-list">
                   {accounts.map((a) => (
                     <li key={a.id}>
-                      <button className={`fw-row${a.id === id ? ' is-active' : ''}`} data-testid={`account-${a.id}`} onClick={() => navigate(`/accounts/${a.id}`)}>
+                      <button
+                        className={`fw-row${a.id === id ? ' is-active' : ''}`}
+                        data-testid={`account-${a.id}`}
+                        onClick={() => navigate(`/accounts/${a.id}`)}
+                      >
                         <span className="fw-row__main">
                           <strong>{a.name}</strong>
                           <span className="fw-row__sub">
@@ -155,7 +199,9 @@ export function AccountsScreen() {
                   ))}
                 </ul>
               ) : (
-                <EmptyState title="No accounts yet">Your account appears here once the bank opens it.</EmptyState>
+                <EmptyState title="No accounts yet">
+                  Your account appears here once the bank opens it.
+                </EmptyState>
               )
             }
           </Load>

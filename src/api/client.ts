@@ -1,5 +1,10 @@
 import type {
   Account,
+  AssistantDraft,
+  AssistantTurn,
+  Conversation,
+  RecordedEvent,
+  RecordingSession,
   Application,
   Card,
   CardPage,
@@ -57,6 +62,15 @@ export interface OnGemApi {
   openTicket(request: OpenTicket): Promise<TicketDetail>;
   replyToTicket(id: string, body: string): Promise<TicketDetail>;
   attachToTicket(id: string, file: File): Promise<TicketDetail>;
+  // OG-031: the assistant (reads and drafts only) and screen and action recording.
+  startConversation(channel: string, recordingSessionId?: string | null): Promise<Conversation>;
+  sendAssistantMessage(conversationId: string, text: string): Promise<AssistantTurn>;
+  rateAssistantTurn(turnId: string, rating: 'UP' | 'DOWN'): Promise<AssistantTurn>;
+  /** The founder did the drafted action in the normal screen; step-up for money, card and recipient kinds. */
+  confirmAssistantDraft(draftId: string, resultRef: string): Promise<AssistantDraft>;
+  abandonAssistantDraft(draftId: string): Promise<AssistantDraft>;
+  startRecording(platform: string, appVersion?: string): Promise<RecordingSession>;
+  recordEvents(sessionId: string, events: RecordedEvent[]): Promise<{ stored: number }>;
 }
 
 /** What a company role may do, mirroring ongem-core's Role (identity/access/Access.kt) and ongem-app's Permissions. */

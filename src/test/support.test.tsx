@@ -13,8 +13,13 @@ describe('support (OG-030 R7)', () => {
     expect(within(thread).getByText('Acme says the payment has not arrived.')).toBeInTheDocument();
     await userEvent.type(screen.getByTestId('ticket-reply'), 'It was invoice 1042.');
     await userEvent.click(screen.getByTestId('ticket-reply-send'));
-    expect(await within(await screen.findByTestId('ticket-thread')).findByText('It was invoice 1042.')).toBeInTheDocument();
-    await userEvent.upload(screen.getByTestId('ticket-file'), new File(['%PDF'], 'invoice.pdf', { type: 'application/pdf' }));
+    expect(
+      await within(await screen.findByTestId('ticket-thread')).findByText('It was invoice 1042.'),
+    ).toBeInTheDocument();
+    await userEvent.upload(
+      screen.getByTestId('ticket-file'),
+      new File(['%PDF'], 'invoice.pdf', { type: 'application/pdf' }),
+    );
     expect(await screen.findByTestId('ticket-attachment')).toHaveTextContent('invoice.pdf');
   });
 });

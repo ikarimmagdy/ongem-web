@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
 import { useAuthSession } from './auth';
 import { Button, Logo, Notice, Skeleton, ThemeProvider, ToastProvider } from './design-system';
@@ -12,6 +12,9 @@ import { RecipientsScreen } from './screens/Recipients';
 import { SettingsScreen } from './screens/Settings';
 import { SupportScreen } from './screens/Support';
 import { SessionProvider, useSession, type Mode } from './session';
+import { AssistantWidget } from './assistant/AssistantWidget';
+import { DraftProvider } from './assistant/drafts';
+import { PRIVACY_LINE, Recorder } from './recording/Recorder';
 import './web.css';
 
 export const NAV = [
@@ -34,17 +37,24 @@ export function SignInScreen() {
         <h1>Business banking for founders</h1>
         {!auth.available ? (
           <Notice status="info">
-            <strong>Sign-in is not configured for this build</strong>. This build has no sign-in key. You can explore
-            the app with sample data.
+            <strong>Sign-in is not configured for this build</strong>. This build has no sign-in key. You can
+            explore the app with sample data.
           </Notice>
         ) : !auth.loaded || !auth.SignIn ? (
           <Skeleton label="Loading sign-in" />
         ) : (
           <auth.SignIn />
         )}
-        <Button data-testid="explore-demo" variant={auth.available ? 'secondary' : 'primary'} onClick={enterDemo}>
+        <Button
+          data-testid="explore-demo"
+          variant={auth.available ? 'secondary' : 'primary'}
+          onClick={enterDemo}
+        >
           Explore demo
         </Button>
+        <p className="fw-privacy" data-testid="privacy-line">
+          {PRIVACY_LINE}
+        </p>
       </div>
     </main>
   );
@@ -59,7 +69,12 @@ function Shell({ children }: { children: ReactNode }) {
   }, [me.status, membership?.role, setRole]);
   const links = NAV.map((n) => (
     <li key={n.to}>
-      <NavLink to={n.to} end={n.end} data-testid={`nav-${n.label.toLowerCase()}`} className={({ isActive }) => (isActive ? 'og-nav__link is-active' : 'og-nav__link')}>
+      <NavLink
+        to={n.to}
+        end={n.end}
+        data-testid={`nav-${n.label.toLowerCase()}`}
+        className={({ isActive }) => (isActive ? 'og-nav__link is-active' : 'og-nav__link')}
+      >
         {n.label}
       </NavLink>
     </li>
@@ -88,9 +103,7 @@ function Shell({ children }: { children: ReactNode }) {
         </main>
       </div>
       <nav aria-label="Main" className="fw-bottom" data-testid="bottom-nav">
-        <ul className="og-nav fw-bottom__list">
-          {links}
-        </ul>
+        <ul className="og-nav fw-bottom__list">{links}</ul>
       </nav>
     </div>
   );
@@ -99,26 +112,35 @@ function Shell({ children }: { children: ReactNode }) {
 export function Routed() {
   const { mode } = useSession();
   if (mode === 'none') return <SignInScreen />;
+  return <SignedIn />;
+}
+
+function SignedIn() {
+  const [recording, setRecording] = useState<string | null>(null);
   return (
-    <Shell>
-      <Routes>
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/accounts" element={<AccountsScreen />} />
-        <Route path="/accounts/:id" element={<AccountsScreen />} />
-        <Route path="/payments" element={<PaymentsScreen />} />
-        <Route path="/payments/new" element={<PaymentsScreen />} />
-        <Route path="/payments/:id" element={<PaymentsScreen />} />
-        <Route path="/recipients" element={<RecipientsScreen />} />
-        <Route path="/cards" element={<CardsScreen />} />
-        <Route path="/cards/:id" element={<CardsScreen />} />
-        <Route path="/onboarding" element={<OnboardingScreen />} />
-        <Route path="/support" element={<SupportScreen />} />
-        <Route path="/support/new" element={<SupportScreen />} />
-        <Route path="/support/:id" element={<SupportScreen />} />
-        <Route path="/settings" element={<SettingsScreen />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Shell>
+    <DraftProvider>
+      <Shell>
+        <Recorder onSession={setRecording} />
+        <Routes>
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/accounts" element={<AccountsScreen />} />
+          <Route path="/accounts/:id" element={<AccountsScreen />} />
+          <Route path="/payments" element={<PaymentsScreen />} />
+          <Route path="/payments/new" element={<PaymentsScreen />} />
+          <Route path="/payments/:id" element={<PaymentsScreen />} />
+          <Route path="/recipients" element={<RecipientsScreen />} />
+          <Route path="/cards" element={<CardsScreen />} />
+          <Route path="/cards/:id" element={<CardsScreen />} />
+          <Route path="/onboarding" element={<OnboardingScreen />} />
+          <Route path="/support" element={<SupportScreen />} />
+          <Route path="/support/new" element={<SupportScreen />} />
+          <Route path="/support/:id" element={<SupportScreen />} />
+          <Route path="/settings" element={<SettingsScreen />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        <AssistantWidget recordingSessionId={recording} />
+      </Shell>
+    </DraftProvider>
   );
 }
 

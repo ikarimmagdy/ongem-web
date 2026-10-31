@@ -240,3 +240,50 @@ export interface OpenTicket {
   category: string;
   body: string;
 }
+
+/** OG-031: the assistant's answer for one message. It never ran a write; a draft waits for the founder. */
+export interface AssistantDraft {
+  id: string;
+  kind: string;
+  operations: string[];
+  params: Record<string, unknown>;
+  summary: string;
+  state: 'OPEN' | 'CONFIRMED' | 'ABANDONED';
+  resultRef?: string | null;
+}
+
+export interface AssistantTurn {
+  id: string;
+  seq: number;
+  text: string;
+  reply: string;
+  outcome: string;
+  reads: Array<{ tool: string; operationId: string; ok: boolean; errorCode?: string | null }>;
+  draft?: AssistantDraft | null;
+  provider: string;
+  model: string;
+  latencyMs: number;
+  rating?: string | null;
+}
+
+export interface Conversation {
+  id: string;
+  channel: string;
+  startedAt: string;
+  turns: AssistantTurn[];
+}
+
+/** OG-031 R5: one recorded event, masked when it is created. */
+export interface RecordedEvent {
+  seq: number;
+  at: string;
+  type: 'SCREEN' | 'ACTION' | 'RRWEB';
+  name?: string;
+  props?: Record<string, unknown>;
+  payload?: unknown;
+}
+
+export interface RecordingSession {
+  id: string;
+  platform: string;
+}

@@ -1,9 +1,22 @@
 import { useState, type FormEvent } from 'react';
 import { Permission } from '../api/client';
 import { errorText } from '../api/errors';
-import { Button, Card, EmptyState, Field, Input, Notice, PageHeader, Select, StatusChip, useToast } from '../design-system';
+import {
+  Button,
+  Card,
+  EmptyState,
+  Field,
+  Input,
+  Notice,
+  PageHeader,
+  Select,
+  StatusChip,
+  useToast,
+} from '../design-system';
 import { abaValid } from '../lib/aba';
 import { useAsync } from '../lib/useAsync';
+import { useSearchParams } from 'react-router-dom';
+import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
 import { Last4, Load, human, stateStatus } from './common';
 
@@ -16,14 +29,25 @@ export function recipientErrors(name: string, routing: string, account: string) 
   };
 }
 
-export function AddRecipient({ initialName = '', onAdded }: { initialName?: string; onAdded?(id: string): void }) {
+export function AddRecipient({
+  initialName = '',
+  onAdded,
+}: {
+  initialName?: string;
+  onAdded?(id: string): void;
+}) {
   const { api } = useSession();
+  const drafts = useDrafts();
   const toast = useToast();
   const [name, setName] = useState(initialName);
   const [routing, setRouting] = useState('');
   const [account, setAccount] = useState('');
   const [type, setType] = useState('CHECKING');
-  const [errors, setErrors] = useState<ReturnType<typeof recipientErrors>>({ name: undefined, routing: undefined, account: undefined });
+  const [errors, setErrors] = useState<ReturnType<typeof recipientErrors>>({
+    name: undefined,
+    routing: undefined,
+    account: undefined,
+  });
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState<string | null>(null);
   const submit = async (e: FormEvent) => {
@@ -34,11 +58,18 @@ export function AddRecipient({ initialName = '', onAdded }: { initialName?: stri
     setBusy(true);
     setFailure(null);
     try {
-      const r = await api.createRecipient({ kind: 'BUSINESS', name: name.trim(), accountNumber: account, routingNumber: routing, accountType: type });
+      const r = await api.createRecipient({
+        kind: 'BUSINESS',
+        name: name.trim(),
+        accountNumber: account,
+        routingNumber: routing,
+        accountType: type,
+      });
       setAccount('');
       setRouting('');
       setName('');
       toast.show(`${r.name} added. Screening: ${human(r.screening)}.`, 'success');
+      await drafts.done(['RECIPIENT_ADD'], r.id);
       onAdded?.(r.id);
     } catch (err) {
       setFailure(errorText(err));
@@ -52,13 +83,33 @@ export function AddRecipient({ initialName = '', onAdded }: { initialName?: stri
         <Input data-testid="recipient-name" value={name} onChange={(e) => setName(e.target.value)} />
       </Field>
       <Field label="Routing number" error={errors.routing}>
-        <Input data-testid="recipient-routing" inputMode="numeric" maxLength={9} value={routing} onChange={(e) => setRouting(e.target.value.replace(/\D/g, ''))} />
+        <Input
+          data-testid="recipient-routing"
+          inputMode="numeric"
+          maxLength={9}
+          value={routing}
+          onChange={(e) => setRouting(e.target.value.replace(/\D/g, ''))}
+        />
       </Field>
       <Field label="Account number" error={errors.account}>
-        <Input data-testid="recipient-account" data-mask="" inputMode="numeric" autoComplete="off" value={account} onChange={(e) => setAccount(e.target.value.replace(/\D/g, ''))} />
+        <Input
+          data-testid="recipient-account"
+          data-mask=""
+          inputMode="numeric"
+          autoComplete="off"
+          value={account}
+          onChange={(e) => setAccount(e.target.value.replace(/\D/g, ''))}
+        />
       </Field>
       <Field label="Account type">
-        <Select value={type} onChange={(e) => setType(e.target.value)} options={[{ value: 'CHECKING', label: 'Checking' }, { value: 'SAVINGS', label: 'Savings' }]} />
+        <Select
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          options={[
+            { value: 'CHECKING', label: 'Checking' },
+            { value: 'SAVINGS', label: 'Savings' },
+          ]}
+        />
       </Field>
       {failure && <Notice status="failure">{failure}</Notice>}
       <div className="fw-actions">
@@ -72,9 +123,11 @@ export function AddRecipient({ initialName = '', onAdded }: { initialName?: stri
 
 export function RecipientsScreen() {
   const { api, can } = useSession();
+  const drafts = useDrafts();
+  const [q] = useSearchParams();
   const [n, setN] = useState(0);
   const list = useAsync(() => api.recipients(), [api, n]);
-  const [adding, setAdding] = useState(false);
+  const [adding, setAdding] = useState(q.get('add') === '1');
   const [failure, setFailure] = useState<string | null>(null);
   const manage = can(Permission.RECIPIENT_MANAGE);
   return (
@@ -82,11 +135,23 @@ export function RecipientsScreen() {
       <PageHeader
         title="Recipients"
         subtitle="Saved ACH payees, screened by the bank. Account numbers show as their last four."
-        actions={manage && <Button data-testid="recipient-add" onClick={() => setAdding((x) => !x)}>Add recipient</Button>}
+        actions={
+          manage && (
+            <Button data-testid="recipient-add" onClick={() => setAdding((x) => !x)}>
+              Add recipient
+            </Button>
+          )
+        }
       />
       {adding && manage && (
         <Card title="New recipient">
-          <AddRecipient onAdded={() => { setAdding(false); setN((x) => x + 1); }} />
+          <AddRecipient
+            initialName={q.get('name') ?? ''}
+            onAdded={() => {
+              setAdding(false);
+              setN((x) => x + 1);
+            }}
+          />
         </Card>
       )}
       {failure && <Notice status="failure">{failure}</Notice>}
@@ -105,7 +170,20 @@ export function RecipientsScreen() {
                   <span className="fw-actions">
                     <StatusChip status={stateStatus(r.screening)}>{human(r.screening)}</StatusChip>
                     {manage && (
-                      <Button variant="ghost" size="sm" aria-label={`Archive ${r.name}`} onClick={() => api.archiveRecipient(r.id).then(() => setN((x) => x + 1), (e) => setFailure(errorText(e)))}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        aria-label={`Archive ${r.name}`}
+                        onClick={() =>
+                          api
+                            .archiveRecipient(r.id)
+                            .then(() => drafts.done(['RECIPIENT_ARCHIVE'], r.id))
+                            .then(
+                              () => setN((x) => x + 1),
+                              (e) => setFailure(errorText(e)),
+                            )
+                        }
+                      >
                         Archive
                       </Button>
                     )}

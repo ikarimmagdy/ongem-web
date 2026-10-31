@@ -66,7 +66,15 @@ function DemoReverify({ ask, onDone }: { ask: Ask | null; onDone(ok: boolean): v
   );
 }
 
-export function SessionProvider({ children, initialMode = 'none', api: injected }: { children: ReactNode; initialMode?: Mode; api?: OnGemApi }) {
+export function SessionProvider({
+  children,
+  initialMode = 'none',
+  api: injected,
+}: {
+  children: ReactNode;
+  initialMode?: Mode;
+  api?: OnGemApi;
+}) {
   const auth = useAuthSession();
   const [demoMode, setDemoMode] = useState(initialMode === 'demo');
   const [role, setRole] = useState<string | null>(null);
@@ -74,7 +82,12 @@ export function SessionProvider({ children, initialMode = 'none', api: injected 
   const askRef = useRef<(purpose: string) => Promise<boolean>>(() => Promise.resolve(false));
   askRef.current = (purpose) => new Promise<boolean>((resolve) => setAsk({ purpose, resolve }));
 
-  const demo = useMemo(() => injected ?? new DemoOnGemApi({ stepUp: (p) => askRef.current(p) }), [injected, demoMode]); // eslint-disable-line react-hooks/exhaustive-deps
+  // A new demo API each time demo mode is entered, so a fresh demo starts from the sample data.
+  const demo = useMemo(
+    () => injected ?? new DemoOnGemApi({ stepUp: (p) => askRef.current(p) }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [injected, demoMode],
+  );
   const live = useMemo(
     () =>
       new LiveOnGemApi({

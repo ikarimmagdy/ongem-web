@@ -1,4 +1,5 @@
 import { Button, Card, KeyValue, PageHeader, Select, useTheme } from '../design-system';
+import { PRIVACY_LINE } from '../recording/Recorder';
 import { useSession } from '../session';
 import { human } from './common';
 
@@ -11,8 +12,18 @@ export function SettingsScreen() {
       <Card title="Appearance">
         <label>
           <span className="og-visually-hidden">Theme</span>
-          <Select aria-label="Theme" value={theme.id} onChange={(e) => setTheme(e.target.value)} options={themes.map((t) => ({ value: t.id, label: t.name }))} />
+          <Select
+            aria-label="Theme"
+            value={theme.id}
+            onChange={(e) => setTheme(e.target.value)}
+            options={themes.map((t) => ({ value: t.id, label: t.name }))}
+          />
         </label>
+      </Card>
+      <Card title="Privacy">
+        <p className="fw-privacy" data-testid="privacy-line">
+          {PRIVACY_LINE}
+        </p>
       </Card>
       <Card title="Session">
         <KeyValue

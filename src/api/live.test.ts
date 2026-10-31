@@ -15,7 +15,13 @@ function fake(...answers: Array<[number, unknown]>) {
 
 describe('live client (OG-030 R8)', () => {
   it('reverification_retries_with_same_key_AC_R8_2', async () => {
-    const { sent, fetchImpl } = fake([403, { code: 'reverification_required', reverification: { level: 'second_factor', afterMinutes: 10 } }], [202, { id: 'pay_1', state: 'SUBMITTED' }]);
+    const { sent, fetchImpl } = fake(
+      [
+        403,
+        { code: 'reverification_required', reverification: { level: 'second_factor', afterMinutes: 10 } },
+      ],
+      [202, { id: 'pay_1', state: 'SUBMITTED' }],
+    );
     const tokens: Array<boolean | undefined> = [];
     let asked = 0;
     const api = new LiveOnGemApi({
@@ -41,19 +47,36 @@ describe('live client (OG-030 R8)', () => {
 
   it('a cancelled reverification sends nothing more AC_R8_2', async () => {
     const { sent, fetchImpl } = fake([403, { code: 'reverification_required' }]);
-    const api = new LiveOnGemApi({ baseUrl: '', fetchImpl, getToken: () => Promise.resolve('t'), reverify: () => Promise.resolve(false) });
-    await expect(api.setCardFrozen('crd_1', true)).rejects.toMatchObject({ code: 'reverification_cancelled' });
+    const api = new LiveOnGemApi({
+      baseUrl: '',
+      fetchImpl,
+      getToken: () => Promise.resolve('t'),
+      reverify: () => Promise.resolve(false),
+    });
+    await expect(api.setCardFrozen('crd_1', true)).rejects.toMatchObject({
+      code: 'reverification_cancelled',
+    });
     expect(sent).toHaveLength(1);
   });
 
   it('refreshes_once_on_401_AC_R8_2', async () => {
     const { sent, fetchImpl } = fake([401, { code: 'unauthenticated' }], [200, []]);
-    const api = new LiveOnGemApi({ baseUrl: '', fetchImpl, getToken: (o) => Promise.resolve(o?.fresh ? 'b' : 'a'), reverify: () => Promise.resolve(true) });
+    const api = new LiveOnGemApi({
+      baseUrl: '',
+      fetchImpl,
+      getToken: (o) => Promise.resolve(o?.fresh ? 'b' : 'a'),
+      reverify: () => Promise.resolve(true),
+    });
     expect(await api.accounts()).toEqual([]);
     expect(sent.map((s) => s.headers.Authorization)).toEqual(['Bearer a', 'Bearer b']);
     expect(sent[0]!.headers['Idempotency-Key']).toBeUndefined();
     const mfa = fake([401, { code: 'mfa_required' }]);
-    const api2 = new LiveOnGemApi({ baseUrl: '', fetchImpl: mfa.fetchImpl, getToken: () => Promise.resolve('a'), reverify: () => Promise.resolve(true) });
+    const api2 = new LiveOnGemApi({
+      baseUrl: '',
+      fetchImpl: mfa.fetchImpl,
+      getToken: () => Promise.resolve('a'),
+      reverify: () => Promise.resolve(true),
+    });
     await expect(api2.me()).rejects.toBeInstanceOf(ApiError);
     expect(mfa.sent).toHaveLength(1);
   });

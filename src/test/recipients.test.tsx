@@ -24,7 +24,7 @@ describe('recipients (OG-030 R3)', () => {
     const api = new DemoOnGemApi({ stepUp: () => Promise.resolve(true) });
     renderApp('/recipients', { api });
     await fill('021000021');
-    const row = await screen.findByTestId('recipient-rcp_demo_new_1');
+    const row = (await screen.findByText('Globex LLC', { selector: 'strong' })).closest('li')!;
     expect(within(row).getByText('Globex LLC')).toBeInTheDocument();
     expect(within(row).getByText('•••• 6789')).toBeInTheDocument();
     expect(within(row).getByText('Pending')).toBeInTheDocument();

@@ -13,13 +13,17 @@ async function nav(page: Page, label: string) {
 }
 
 async function noSideScroll(page: Page) {
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
   expect(overflow).toBeLessThanOrEqual(1);
 }
 
 async function axe(page: Page) {
   const r = await new AxeBuilder({ page }).disableRules(['color-contrast']).analyze();
-  expect(r.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical').map((v) => v.id)).toEqual([]);
+  expect(
+    r.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical').map((v) => v.id),
+  ).toEqual([]);
 }
 
 async function stepUp(page: Page) {
@@ -32,7 +36,12 @@ test('journeys_desktop_and_mobile_AC_R1_2', async ({ page }, info) => {
   await demo(page);
   expect(Date.now() - started).toBeLessThan(10_000);
   const mobile = info.project.name === 'mobile';
-  await expect(page.getByTestId(mobile ? 'bottom-nav' : 'shell').locator('a', { hasText: 'Accounts' }).first()).toBeVisible();
+  await expect(
+    page
+      .getByTestId(mobile ? 'bottom-nav' : 'shell')
+      .locator('a', { hasText: 'Accounts' })
+      .first(),
+  ).toBeVisible();
   await expect(page.locator('.fw-side')).toBeVisible({ visible: !mobile });
   await noSideScroll(page);
   await axe(page);
@@ -86,7 +95,9 @@ test('storage_holds_no_secrets_AC_R10_2', async ({ page }) => {
   await page.getByTestId('payment-send').click();
   await stepUp(page);
   await expect(page.getByTestId('payment-detail')).toBeVisible();
-  const stored = await page.evaluate(() => JSON.stringify({ ...localStorage }) + JSON.stringify({ ...sessionStorage }));
+  const stored = await page.evaluate(
+    () => JSON.stringify({ ...localStorage }) + JSON.stringify({ ...sessionStorage }),
+  );
   expect(stored).not.toMatch(/US\$|\d{4,}|token|Bearer|eyJ/i);
 });
 
@@ -95,4 +106,29 @@ test('dev_url_and_api_health_AC_R11_1', async ({ page, request }) => {
   const health = await request.get('/api-dev/actuator/health');
   expect((await health.json()).status).toBe('UP');
   await demo(page);
+});
+
+test('assistant_widget_AC_R4_4', async ({ page }, info) => {
+  await demo(page);
+  await expect(page.getByTestId('privacy-line')).toHaveCount(0);
+  await page.getByTestId('assistant-open').click();
+  await page.getByTestId('assistant-input').fill('What is my balance?');
+  await page.getByTestId('assistant-send').click();
+  await expect(page.getByTestId('assistant-reply').last()).toContainText('Operating •••• 4821');
+  await page.getByTestId('assistant-input').fill('Transfer $100 to Tax reserve');
+  await page.getByTestId('assistant-send').click();
+  await expect(page.getByTestId('assistant-draft').last()).toContainText('Move US$100.00 from Operating to Tax reserve');
+  await axe(page);
+  await page.screenshot({ path: `e2e-output/screens/${info.project.name}-assistant-draft.png` });
+  await page.getByTestId('assistant-review').last().click();
+  await expect(page.getByTestId('payment-amount')).toHaveValue('100.00');
+  await page.getByTestId('assistant-open').click();
+  await page.getByTestId('payment-review-button').click();
+  await page.getByTestId('payment-send').click();
+  await stepUp(page);
+  await expect(page.getByTestId('payment-detail')).toContainText('Settled');
+  await page.getByTestId('assistant-open').click();
+  await expect(page.getByTestId('assistant-draft-state').last()).toHaveText('Confirmed by you');
+  await noSideScroll(page);
+  await page.screenshot({ path: `e2e-output/screens/${info.project.name}-assistant-confirmed.png` });
 });

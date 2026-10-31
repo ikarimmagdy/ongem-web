@@ -10,7 +10,10 @@ import { SessionProvider, type Mode } from '../session';
 export function renderApp(route = '/', opts: { api?: OnGemApi; mode?: Mode } = {}) {
   return render(
     <AuthProvider value={NO_AUTH}>
-      <MemoryRouter initialEntries={[route]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <MemoryRouter
+        initialEntries={[route]}
+        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+      >
         <ThemeProvider>
           <ToastProvider timeoutMs={0}>
             <SessionProvider initialMode={opts.mode ?? 'demo'} api={opts.api}>

@@ -43,13 +43,19 @@ export class LiveOnGemApi implements OnGemApi {
       payload = body.form;
     }
     try {
-      return await this.fetchImpl(this.opts.baseUrl.replace(/\/$/, '') + path, { method, headers, body: payload });
+      return await this.fetchImpl(this.opts.baseUrl.replace(/\/$/, '') + path, {
+        method,
+        headers,
+        body: payload,
+      });
     } catch {
       throw new ApiError(0, 'network', 'Could not reach OnGem.');
     }
   }
 
-  private static async problem(res: Response): Promise<{ code?: string; detail?: string; reverification?: ReverificationHint }> {
+  private static async problem(
+    res: Response,
+  ): Promise<{ code?: string; detail?: string; reverification?: ReverificationHint }> {
     try {
       return (await res.clone().json()) as { code?: string; detail?: string };
     } catch {
@@ -78,7 +84,12 @@ export class LiveOnGemApi implements OnGemApi {
         } catch {
           ok = false;
         }
-        if (!ok) throw new ApiError(403, REVERIFICATION_CANCELLED, 'You did not confirm it is you, so nothing was changed.');
+        if (!ok)
+          throw new ApiError(
+            403,
+            REVERIFICATION_CANCELLED,
+            'You did not confirm it is you, so nothing was changed.',
+          );
         token = await this.opts.getToken({ fresh: true });
         if (!token) throw new ApiError(401, 'not_signed_in');
         res = await this.send(method, path, token, key, body);
@@ -95,19 +106,25 @@ export class LiveOnGemApi implements OnGemApi {
   me: OnGemApi['me'] = () => this.call('GET', paths.me);
   accounts: OnGemApi['accounts'] = () => this.call('GET', paths.accounts);
   account: OnGemApi['account'] = (id: string) => this.call('GET', paths.account(id));
-  transactions: OnGemApi['transactions'] = (id: string, limit: number) => this.call('GET', paths.transactions(id, Math.min(100, Math.max(1, limit))));
+  transactions: OnGemApi['transactions'] = (id: string, limit: number) =>
+    this.call('GET', paths.transactions(id, Math.min(100, Math.max(1, limit))));
   statements: OnGemApi['statements'] = (id: string) => this.call('GET', paths.statements(id));
-  statement: OnGemApi['statement'] = (id: string, period: string) => this.call('GET', paths.statement(id, period));
+  statement: OnGemApi['statement'] = (id: string, period: string) =>
+    this.call('GET', paths.statement(id, period));
   recipients: OnGemApi['recipients'] = () => this.call('GET', paths.recipients);
-  createRecipient: OnGemApi['createRecipient'] = (r: CreateRecipient) => this.call('POST', paths.recipients, { json: r });
+  createRecipient: OnGemApi['createRecipient'] = (r: CreateRecipient) =>
+    this.call('POST', paths.recipients, { json: r });
   archiveRecipient: OnGemApi['archiveRecipient'] = (id: string) => this.call('DELETE', paths.recipient(id));
-  payments: OnGemApi['payments'] = (cursor?: string | null, limit = 20) => this.call('GET', paths.payments(cursor, limit));
+  payments: OnGemApi['payments'] = (cursor?: string | null, limit = 20) =>
+    this.call('GET', paths.payments(cursor, limit));
   payment: OnGemApi['payment'] = (id: string) => this.call('GET', paths.payment(id));
-  createPayment: OnGemApi['createPayment'] = (p: CreatePayment) => this.call('POST', paths.createPayment, { json: p });
+  createPayment: OnGemApi['createPayment'] = (p: CreatePayment) =>
+    this.call('POST', paths.createPayment, { json: p });
   sendPayment: OnGemApi['sendPayment'] = (id: string) => this.call('POST', paths.sendPayment(id));
   cards: OnGemApi['cards'] = (cursor?: string | null) => this.call('GET', paths.cards(cursor));
   card: OnGemApi['card'] = (id: string) => this.call('GET', paths.card(id));
-  setCardFrozen: OnGemApi['setCardFrozen'] = (id: string, frozen: boolean) => this.call('POST', paths.cardFreeze(id, frozen));
+  setCardFrozen: OnGemApi['setCardFrozen'] = (id: string, frozen: boolean) =>
+    this.call('POST', paths.cardFreeze(id, frozen));
   applications: OnGemApi['applications'] = () => this.call('GET', paths.applications);
   application: OnGemApi['application'] = (id: string) => this.call('GET', paths.application(id));
   putOwnerIdentity: OnGemApi['putOwnerIdentity'] = (app: string, owner: string, identity: OwnerIdentity) =>
@@ -121,10 +138,25 @@ export class LiveOnGemApi implements OnGemApi {
   tickets: OnGemApi['tickets'] = () => this.call('GET', paths.tickets);
   ticket: OnGemApi['ticket'] = (id: string) => this.call('GET', paths.ticket(id));
   openTicket: OnGemApi['openTicket'] = (t: OpenTicket) => this.call('POST', paths.tickets, { json: t });
-  replyToTicket: OnGemApi['replyToTicket'] = (id: string, body: string) => this.call('POST', paths.ticketMessages(id), { json: { body } });
+  replyToTicket: OnGemApi['replyToTicket'] = (id: string, body: string) =>
+    this.call('POST', paths.ticketMessages(id), { json: { body } });
   attachToTicket: OnGemApi['attachToTicket'] = (id: string, file: File) => {
     const form = new FormData();
     form.append('file', file, file.name);
     return this.call('POST', paths.ticketAttachments(id), { form });
   };
+  startConversation: OnGemApi['startConversation'] = (channel, recordingSessionId) =>
+    this.call('POST', paths.conversations, { json: { channel, recordingSessionId } });
+  sendAssistantMessage: OnGemApi['sendAssistantMessage'] = (id, text) =>
+    this.call('POST', paths.messages(id), { json: { text } });
+  rateAssistantTurn: OnGemApi['rateAssistantTurn'] = (id, rating) =>
+    this.call('POST', paths.turnFeedback(id), { json: { rating } });
+  confirmAssistantDraft: OnGemApi['confirmAssistantDraft'] = (id, resultRef) =>
+    this.call('POST', paths.confirmDraft(id), { json: { resultRef } });
+  abandonAssistantDraft: OnGemApi['abandonAssistantDraft'] = (id) =>
+    this.call('POST', paths.abandonDraft(id));
+  startRecording: OnGemApi['startRecording'] = (platform, appVersion) =>
+    this.call('POST', paths.recordingSessions, { json: { platform, appVersion } });
+  recordEvents: OnGemApi['recordEvents'] = (id, events) =>
+    this.call('POST', paths.recordingEvents(id), { json: { events } });
 }

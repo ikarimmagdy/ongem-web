@@ -33,6 +33,8 @@ describe('payments (OG-030 R4)', () => {
 
   it('returned_shows_code_AC_R4_2', async () => {
     renderApp('/payments/pay_demo_3');
-    expect(await screen.findByTestId('return-code')).toHaveTextContent('R03 No account, or unable to locate account');
+    expect(await screen.findByTestId('return-code')).toHaveTextContent(
+      'R03 No account, or unable to locate account',
+    );
   });
 });

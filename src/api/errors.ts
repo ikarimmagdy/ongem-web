@@ -16,7 +16,8 @@ export class ApiError extends Error {
 /** The line a screen shows for a failure. */
 export function errorText(e: unknown): string {
   if (e instanceof ApiError) {
-    if (e.code === 'reverification_cancelled') return 'You did not confirm it is you, so nothing was changed.';
+    if (e.code === 'reverification_cancelled')
+      return 'You did not confirm it is you, so nothing was changed.';
     if (e.status === 403) return 'Your role does not allow this. An owner of the company can do it.';
     if (e.status === 0) return 'Could not reach OnGem. Check your connection and try again.';
     return e.message;

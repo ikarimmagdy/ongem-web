@@ -3,7 +3,8 @@ import { DemoOnGemApi } from '../api/demo';
 import { demoMe } from '../api/demoData';
 import { renderApp } from './render';
 
-const viewer = () => new DemoOnGemApi({ me: { ...demoMe, memberships: [{ ...demoMe.memberships[0]!, role: 'VIEWER' }] } });
+const viewer = () =>
+  new DemoOnGemApi({ me: { ...demoMe, memberships: [{ ...demoMe.memberships[0]!, role: 'VIEWER' }] } });
 
 describe('permissions (OG-030 R9)', () => {
   it('viewer_sees_no_write_actions_AC_R9_1', async () => {
@@ -14,7 +15,9 @@ describe('permissions (OG-030 R9)', () => {
 
   it('a forced 403 says why AC_R9_1', async () => {
     renderApp('/cards', { api: viewer() });
-    expect(await screen.findByText('Your role does not allow this. An owner of the company can do it.')).toBeInTheDocument();
+    expect(
+      await screen.findByText('Your role does not allow this. An owner of the company can do it.'),
+    ).toBeInTheDocument();
   });
 
   it('recipients hide add and archive AC_R9_1', async () => {

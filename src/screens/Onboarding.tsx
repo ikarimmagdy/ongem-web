@@ -29,7 +29,15 @@ function OwnerId({ app, ownerId, onDone }: { app: Application; ownerId: string; 
   return (
     <div className="fw-form">
       <Field label="Social Security number" hint="9 digits. Only the last four are shown back.">
-        <Input data-testid={`owner-ssn-${ownerId}`} data-mask="" inputMode="numeric" autoComplete="off" maxLength={9} value={number} onChange={(e) => setNumber(e.target.value.replace(/\D/g, ''))} />
+        <Input
+          data-testid={`owner-ssn-${ownerId}`}
+          data-mask=""
+          inputMode="numeric"
+          autoComplete="off"
+          maxLength={9}
+          value={number}
+          onChange={(e) => setNumber(e.target.value.replace(/\D/g, ''))}
+        />
       </Field>
       {error && <Notice status="failure">{error}</Notice>}
       <Button data-testid={`owner-ssn-save-${ownerId}`} disabled={!valid || busy} onClick={() => void save()}>
@@ -108,14 +116,44 @@ export function OnboardingScreen() {
           const allAccepted = discs.every((d) => d.acknowledged);
           return (
             <>
-              <Card title={<>Status <StatusChip status={stateStatus(app.state)}><span data-testid="application-state">{human(app.state)}</span></StatusChip></>}>
+              <Card
+                title={
+                  <>
+                    Status{' '}
+                    <StatusChip status={stateStatus(app.state)}>
+                      <span data-testid="application-state">{human(app.state)}</span>
+                    </StatusChip>
+                  </>
+                }
+              >
                 <Stepper
                   label="Application steps"
                   items={[
-                    { id: 'owners', label: 'Owner identity', statusText: missing.length ? 'To do' : 'Done', status: missing.length ? 'pending' : 'success', current: missing.length > 0 },
-                    { id: 'confirm', label: 'Confirm details', statusText: app.state === 'COLLECTING' ? 'To do' : 'Done', status: app.state === 'COLLECTING' ? 'pending' : 'success' },
-                    { id: 'disclosures', label: 'Disclosures', statusText: allAccepted ? 'Done' : 'To do', status: allAccepted ? 'success' : 'pending' },
-                    { id: 'submit', label: 'Submit to the bank', statusText: human(app.state), status: stateStatus(app.state) },
+                    {
+                      id: 'owners',
+                      label: 'Owner identity',
+                      statusText: missing.length ? 'To do' : 'Done',
+                      status: missing.length ? 'pending' : 'success',
+                      current: missing.length > 0,
+                    },
+                    {
+                      id: 'confirm',
+                      label: 'Confirm details',
+                      statusText: app.state === 'COLLECTING' ? 'To do' : 'Done',
+                      status: app.state === 'COLLECTING' ? 'pending' : 'success',
+                    },
+                    {
+                      id: 'disclosures',
+                      label: 'Disclosures',
+                      statusText: allAccepted ? 'Done' : 'To do',
+                      status: allAccepted ? 'success' : 'pending',
+                    },
+                    {
+                      id: 'submit',
+                      label: 'Submit to the bank',
+                      statusText: human(app.state),
+                      status: stateStatus(app.state),
+                    },
                   ]}
                 />
               </Card>
@@ -127,7 +165,8 @@ export function OnboardingScreen() {
                       <span className="fw-row__main">
                         <strong>{o.name}</strong>
                         <span className="fw-row__sub">
-                          {o.ownershipPercent}% {o.idLast4 ? <span data-mask="">ID ending {o.idLast4}</span> : 'ID needed'}
+                          {o.ownershipPercent}%{' '}
+                          {o.idLast4 ? <span data-mask="">ID ending {o.idLast4}</span> : 'ID needed'}
                         </span>
                       </span>
                       {missing.includes(o) && <OwnerId app={app} ownerId={o.id} onDone={refresh} />}
@@ -136,14 +175,22 @@ export function OnboardingScreen() {
                 </ul>
               </Card>
               {app.state === 'COLLECTING' && (
-                <Button data-testid="application-confirm" disabled={missing.length > 0} onClick={() => act(() => api.confirmApplication(app.id))}>
+                <Button
+                  data-testid="application-confirm"
+                  disabled={missing.length > 0}
+                  onClick={() => act(() => api.confirmApplication(app.id))}
+                >
                   Confirm details
                 </Button>
               )}
               {app.state === 'READY_FOR_DISCLOSURES' && (
                 <Card title="Disclosures">
                   <Disclosures list={discs} onDone={refresh} />
-                  <Button data-testid="application-submit" disabled={!allAccepted} onClick={() => act(() => api.submitApplication(app.id))}>
+                  <Button
+                    data-testid="application-submit"
+                    disabled={!allAccepted}
+                    onClick={() => act(() => api.submitApplication(app.id))}
+                  >
                     Submit to the bank
                   </Button>
                 </Card>

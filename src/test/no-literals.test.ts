@@ -2,7 +2,14 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
 const root = join(__dirname, '..');
-const scanned = ['design-system/components', 'design-system/styles.css', 'web.css', 'screens', 'App.tsx', 'session.tsx'];
+const scanned = [
+  'design-system/components',
+  'design-system/styles.css',
+  'web.css',
+  'screens',
+  'App.tsx',
+  'session.tsx',
+];
 
 function files(path: string): string[] {
   const full = join(root, path);

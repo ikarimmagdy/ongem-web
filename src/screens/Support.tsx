@@ -2,9 +2,21 @@ import { useState } from 'react';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { errorText } from '../api/errors';
 import type { TicketDetail } from '../api/types';
-import { Button, Card, EmptyState, Field, Input, Notice, PageHeader, Select, StatusChip, TextArea } from '../design-system';
+import {
+  Button,
+  Card,
+  EmptyState,
+  Field,
+  Input,
+  Notice,
+  PageHeader,
+  Select,
+  StatusChip,
+  TextArea,
+} from '../design-system';
 import { formatDate } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
+import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
 import { Load, human, stateStatus } from './common';
 
@@ -15,6 +27,7 @@ const CATEGORIES = ['PAYMENT', 'CARD', 'ACCOUNT', 'ONBOARDING', 'OTHER'];
 
 function NewTicket({ onTicket }: { onTicket?: OnTicket }) {
   const { api } = useSession();
+  const drafts = useDrafts();
   const navigate = useNavigate();
   const [q] = useSearchParams();
   const [subject, setSubject] = useState(q.get('subject') ?? '');
@@ -28,6 +41,7 @@ function NewTicket({ onTicket }: { onTicket?: OnTicket }) {
     try {
       const t = await api.openTicket({ subject: subject.trim(), category, body: body.trim() });
       await onTicket?.(t, 'opened');
+      await drafts.done(['SUPPORT_TICKET'], t.ticket.id);
       navigate(`/support/${t.ticket.id}`);
     } catch (e) {
       setError(errorText(e));
@@ -39,16 +53,34 @@ function NewTicket({ onTicket }: { onTicket?: OnTicket }) {
     <Card title="New request" data-testid="ticket-form">
       <div className="fw-form">
         <Field label="Subject">
-          <Input data-testid="ticket-subject" maxLength={200} value={subject} onChange={(e) => setSubject(e.target.value)} />
+          <Input
+            data-testid="ticket-subject"
+            maxLength={200}
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+          />
         </Field>
         <Field label="About">
-          <Select value={category} onChange={(e) => setCategory(e.target.value)} options={CATEGORIES.map((c) => ({ value: c, label: human(c) }))} />
+          <Select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            options={CATEGORIES.map((c) => ({ value: c, label: human(c) }))}
+          />
         </Field>
         <Field label="Message" hint="Never type a full card or account number.">
-          <TextArea data-testid="ticket-body" rows={5} value={body} onChange={(e) => setBody(e.target.value)} />
+          <TextArea
+            data-testid="ticket-body"
+            rows={5}
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+          />
         </Field>
         {error && <Notice status="failure">{error}</Notice>}
-        <Button data-testid="ticket-send" disabled={busy || !subject.trim() || !body.trim()} onClick={() => void open()}>
+        <Button
+          data-testid="ticket-send"
+          disabled={busy || !subject.trim() || !body.trim()}
+          onClick={() => void open()}
+        >
           Send request
         </Button>
       </div>
@@ -58,9 +90,11 @@ function NewTicket({ onTicket }: { onTicket?: OnTicket }) {
 
 function Ticket({ id, onTicket }: { id: string; onTicket?: OnTicket }) {
   const { api } = useSession();
+  const drafts = useDrafts();
+  const [q] = useSearchParams();
   const [n, setN] = useState(0);
   const ticket = useAsync(() => api.ticket(id), [api, id, n]);
-  const [reply, setReply] = useState('');
+  const [reply, setReply] = useState(q.get('reply') ?? '');
   const [error, setError] = useState<string | null>(null);
   const send = async () => {
     setError(null);
@@ -68,6 +102,7 @@ function Ticket({ id, onTicket }: { id: string; onTicket?: OnTicket }) {
       const t = await api.replyToTicket(id, reply);
       setReply('');
       await onTicket?.(t, 'replied');
+      await drafts.done(['TICKET_REPLY'], id);
       setN((x) => x + 1);
     } catch (e) {
       setError(errorText(e));
@@ -85,7 +120,11 @@ function Ticket({ id, onTicket }: { id: string; onTicket?: OnTicket }) {
   return (
     <Load state={ticket} label="ticket">
       {(t) => (
-        <Card title={t.ticket.subject} data-testid="ticket-detail" actions={<StatusChip status={stateStatus(t.ticket.status)}>{human(t.ticket.status)}</StatusChip>}>
+        <Card
+          title={t.ticket.subject}
+          data-testid="ticket-detail"
+          actions={<StatusChip status={stateStatus(t.ticket.status)}>{human(t.ticket.status)}</StatusChip>}
+        >
           <div className="fw-thread" data-testid="ticket-thread">
             {t.messages.map((m) => (
               <div key={m.id} className={`fw-msg${m.authorKind === 'MEMBER' ? ' fw-msg--mine' : ''}`}>
@@ -104,7 +143,12 @@ function Ticket({ id, onTicket }: { id: string; onTicket?: OnTicket }) {
           {t.resolution && <Notice status="success">{t.resolution}</Notice>}
           <div className="fw-form">
             <Field label="Reply">
-              <TextArea data-testid="ticket-reply" rows={3} value={reply} onChange={(e) => setReply(e.target.value)} />
+              <TextArea
+                data-testid="ticket-reply"
+                rows={3}
+                value={reply}
+                onChange={(e) => setReply(e.target.value)}
+              />
             </Field>
             <div className="fw-actions">
               <Button data-testid="ticket-reply-send" disabled={!reply.trim()} onClick={() => void send()}>
@@ -112,7 +156,13 @@ function Ticket({ id, onTicket }: { id: string; onTicket?: OnTicket }) {
               </Button>
               <label className="og-btn og-btn--secondary og-btn--md">
                 Attach a file
-                <input data-testid="ticket-file" type="file" className="og-visually-hidden" accept="image/*,application/pdf" onChange={(e) => void attach(e.target.files?.[0])} />
+                <input
+                  data-testid="ticket-file"
+                  type="file"
+                  className="og-visually-hidden"
+                  accept="image/*,application/pdf"
+                  onChange={(e) => void attach(e.target.files?.[0])}
+                />
               </label>
             </div>
             {error && <Notice status="failure">{error}</Notice>}
@@ -133,7 +183,15 @@ export function SupportScreen({ onTicket }: { onTicket?: OnTicket }) {
   const detail = isNew || Boolean(id);
   return (
     <>
-      <PageHeader title="Support" subtitle="Ask OnGem's team; we answer here." actions={<Button data-testid="ticket-new" onClick={() => navigate('/support/new')}>New request</Button>} />
+      <PageHeader
+        title="Support"
+        subtitle="Ask OnGem's team; we answer here."
+        actions={
+          <Button data-testid="ticket-new" onClick={() => navigate('/support/new')}>
+            New request
+          </Button>
+        }
+      />
       <div className={`fw-split${detail ? ' has-detail' : ''}`}>
         <div className="fw-split__list">
           <Load state={list} label="tickets">
@@ -142,7 +200,11 @@ export function SupportScreen({ onTicket }: { onTicket?: OnTicket }) {
                 <ul className="fw-list" data-testid="tickets-list">
                   {rows.map((t) => (
                     <li key={t.id}>
-                      <button className={`fw-row${t.id === id ? ' is-active' : ''}`} data-testid={`ticket-${t.id}`} onClick={() => navigate(`/support/${t.id}`)}>
+                      <button
+                        className={`fw-row${t.id === id ? ' is-active' : ''}`}
+                        data-testid={`ticket-${t.id}`}
+                        onClick={() => navigate(`/support/${t.id}`)}
+                      >
                         <span className="fw-row__main">
                           <strong>{t.subject}</strong>
                           <span className="fw-row__sub">{formatDate(t.updatedAt)}</span>
@@ -153,7 +215,9 @@ export function SupportScreen({ onTicket }: { onTicket?: OnTicket }) {
                   ))}
                 </ul>
               ) : (
-                <EmptyState title="No requests yet">Ask us anything about your account, payments or cards.</EmptyState>
+                <EmptyState title="No requests yet">
+                  Ask us anything about your account, payments or cards.
+                </EmptyState>
               )
             }
           </Load>

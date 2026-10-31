@@ -20,7 +20,8 @@ export const paths = {
   cardFreeze: (id: string, frozen: boolean) => `/v1/cards/${q(id)}/${frozen ? 'freeze' : 'unfreeze'}`,
   applications: '/v1/onboarding/applications',
   application: (id: string) => `/v1/onboarding/applications/${q(id)}`,
-  ownerIdentity: (id: string, owner: string) => `/v1/onboarding/applications/${q(id)}/owners/${q(owner)}/identity`,
+  ownerIdentity: (id: string, owner: string) =>
+    `/v1/onboarding/applications/${q(id)}/owners/${q(owner)}/identity`,
   confirm: (id: string) => `/v1/onboarding/applications/${q(id)}/confirm`,
   submit: (id: string) => `/v1/onboarding/applications/${q(id)}/submit`,
   disclosuresRequired: '/v1/disclosures/required',
@@ -30,4 +31,11 @@ export const paths = {
   ticket: (id: string) => `/v1/support/tickets/${q(id)}`,
   ticketMessages: (id: string) => `/v1/support/tickets/${q(id)}/messages`,
   ticketAttachments: (id: string) => `/v1/support/tickets/${q(id)}/attachments`,
+  conversations: '/v1/assistant/conversations',
+  messages: (id: string) => `/v1/assistant/conversations/${q(id)}/messages`,
+  turnFeedback: (id: string) => `/v1/assistant/turns/${q(id)}/feedback`,
+  confirmDraft: (id: string) => `/v1/assistant/drafts/${q(id)}/confirm`,
+  abandonDraft: (id: string) => `/v1/assistant/drafts/${q(id)}/abandon`,
+  recordingSessions: '/v1/recording/sessions',
+  recordingEvents: (id: string) => `/v1/recording/sessions/${q(id)}/events`,
 } as const;
