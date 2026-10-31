@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { errorText } from '../api/errors';
 import { Button, Card, EmptyState, KeyValue, Notice, PageHeader, StatusChip } from '../design-system';
@@ -10,24 +10,37 @@ import { Last4, Load, human, stateStatus } from './common';
 /** Called after the founder froze or unfroze a card here (OG-031 confirms a drafted change with it). */
 export type OnCardChanged = (cardId: string, frozen: boolean) => void | Promise<void>;
 
-function CardDetail({ id, onChanged }: { id: string; onChanged?: OnCardChanged }) {
+function CardDetail({
+  id,
+  onChanged,
+  onListChanged,
+}: {
+  id: string;
+  onChanged?: OnCardChanged;
+  onListChanged?(): void;
+}) {
   const { api } = useSession();
   const drafts = useDrafts();
   const [n, setN] = useState(0);
   const card = useAsync(() => api.card(id), [api, id, n]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const inFlight = useRef(false);
   const toggle = async (frozen: boolean) => {
+    if (inFlight.current) return;
+    inFlight.current = true;
     setBusy(true);
     setError(null);
     try {
       await api.setCardFrozen(id, frozen);
       await onChanged?.(id, frozen);
-      await drafts.done([frozen ? 'CARD_FREEZE' : 'CARD_UNFREEZE'], id);
+      await drafts.done([frozen ? 'CARD_FREEZE' : 'CARD_UNFREEZE'], id, { cardId: id });
       setN((x) => x + 1);
+      onListChanged?.();
     } catch (e) {
       setError(errorText(e));
     } finally {
+      inFlight.current = false;
       setBusy(false);
     }
   };
@@ -80,7 +93,8 @@ export function CardsScreen({ onChanged }: { onChanged?: OnCardChanged }) {
   const { api } = useSession();
   const { id } = useParams();
   const navigate = useNavigate();
-  const list = useAsync(() => api.cards(), [api, id]);
+  const [version, setVersion] = useState(0);
+  const list = useAsync(() => api.cards(), [api, id, version]);
   return (
     <>
       <PageHeader title="Cards" subtitle="Last four digits only." />
@@ -120,7 +134,7 @@ export function CardsScreen({ onChanged }: { onChanged?: OnCardChanged }) {
               <Button variant="ghost" onClick={() => navigate('/cards')}>
                 Back to cards
               </Button>
-              <CardDetail id={id} onChanged={onChanged} />
+              <CardDetail id={id} onChanged={onChanged} onListChanged={() => setVersion((x) => x + 1)} />
             </>
           )}
         </div>

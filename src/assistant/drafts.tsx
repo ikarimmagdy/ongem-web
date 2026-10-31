@@ -4,9 +4,30 @@ import type { AssistantDraft } from '../api/types';
 import { useToast } from '../design-system';
 import { useSession } from '../session';
 
-/** Where each draft kind is completed by the founder: the normal screen, prefilled (OG-031 R3, R4). */
+/** An id the API issued (acc_..., rcp_..., crd_..., tkt_...); anything else from a draft is dropped, never routed to. */
+const ID = /^[A-Za-z0-9_-]{1,64}$/;
+const id = (v: unknown) => (typeof v === 'string' && ID.test(v) ? v : undefined);
+const minor = (v: unknown) => (typeof v === 'number' && Number.isSafeInteger(v) && v > 0 ? v : undefined);
+const text = (v: unknown, max: number) => (typeof v === 'string' ? v.slice(0, max) : undefined);
+
+/**
+ * Where each draft kind is completed by the founder: the normal screen, prefilled (OG-031 R3, R4). Draft params come from
+ * the model, so every value is checked and encoded: a draft can never open a screen other than its own kind's.
+ */
 export function routeFor(d: AssistantDraft): string {
-  const p = d.params as Record<string, string | number | undefined>;
+  const r = (d.params ?? {}) as Record<string, unknown>;
+  const p = {
+    fromAccountId: id(r.fromAccountId),
+    toAccountId: id(r.toAccountId),
+    recipientId: id(r.recipientId),
+    cardId: id(r.cardId),
+    ticketId: id(r.ticketId),
+    amountMinor: minor(r.amountMinor),
+    name: text(r.name, 200),
+    subject: text(r.subject, 200),
+    category: id(r.category),
+    body: text(r.body, 2000),
+  };
   const q = (o: Record<string, string | number | undefined | null>) =>
     new URLSearchParams(
       Object.entries(o)
@@ -24,12 +45,20 @@ export function routeFor(d: AssistantDraft): string {
       return '/recipients';
     case 'CARD_FREEZE':
     case 'CARD_UNFREEZE':
-      return p.cardId ? `/cards/${p.cardId}` : '/cards';
+      return p.cardId ? `/cards/${encodeURIComponent(p.cardId)}` : '/cards';
     case 'TICKET_REPLY':
-      return p.ticketId ? `/support/${p.ticketId}?${q({ reply: p.body })}` : '/support';
+      return p.ticketId ? `/support/${encodeURIComponent(p.ticketId)}?${q({ reply: p.body })}` : '/support';
     default:
       return `/support/new?${q({ subject: p.subject, category: p.category, body: p.body })}`;
   }
+}
+
+/** True when every value the draft set, for the keys the screen reports, is what the founder did. */
+export function matches(d: AssistantDraft, facts: Record<string, unknown>): boolean {
+  const params = (d.params ?? {}) as Record<string, unknown>;
+  return Object.entries(facts).every(
+    ([k, v]) => params[k] === undefined || params[k] === null || params[k] === v,
+  );
 }
 
 interface Drafts {
@@ -37,8 +66,11 @@ interface Drafts {
   decided: Record<string, AssistantDraft['state']>;
   review(d: AssistantDraft): void;
   dismiss(d: AssistantDraft): Promise<void>;
-  /** A screen finished an action of one of [kinds] with result [ref]: confirm the pending draft, if it is that kind. */
-  done(kinds: string[], ref: string): Promise<void>;
+  /**
+   * A screen finished an action of one of [kinds] with result [ref]: confirm the pending draft only when it is that kind
+   * and [facts] (what the founder actually did) agree with every value the draft set.
+   */
+  done(kinds: string[], ref: string, facts?: Record<string, unknown>): Promise<void>;
 }
 
 const DraftContext = createContext<Drafts>({
@@ -71,8 +103,13 @@ export function DraftProvider({ children }: { children: ReactNode }) {
     [api],
   );
   const done = useCallback(
-    async (kinds: string[], ref: string) => {
+    async (kinds: string[], ref: string, facts: Record<string, unknown> = {}) => {
       if (!pending || !kinds.includes(pending.kind)) return;
+      if (!matches(pending, facts)) {
+        setPending(null);
+        toast.show('Done. This was not the action the assistant drafted, so the draft stays open.', 'info');
+        return;
+      }
       try {
         await api.confirmAssistantDraft(pending.id, ref);
         setDecided((x) => ({ ...x, [pending.id]: 'CONFIRMED' }));

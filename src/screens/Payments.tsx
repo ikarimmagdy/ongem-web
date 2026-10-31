@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Permission } from '../api/client';
 import { errorText } from '../api/errors';
@@ -98,13 +98,17 @@ export function NewPayment({ onSent }: { onSent?: OnSent }) {
   const [from, setFrom] = useState(q.get('from') ?? '');
   const [toAccount, setToAccount] = useState(q.get('to') ?? '');
   const [recipient, setRecipient] = useState(q.get('recipient') ?? '');
-  const [amount, setAmount] = useState(
-    q.get('amount') ? minorToDecimal({ amountMinor: Number(q.get('amount')), currency: 'USD' }) : '',
-  );
+  const [amount, setAmount] = useState(() => {
+    const m = Number(q.get('amount'));
+    return Number.isSafeInteger(m) && m > 0 ? minorToDecimal({ amountMinor: m, currency: 'USD' }) : '';
+  });
   const [reference, setReference] = useState(q.get('ref') ?? '');
   const [review, setReview] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // The payment created for this review: a retry after a failed send sends it again, never a second payment.
+  const created = useRef<Payment | null>(null);
+  const inFlight = useRef(false);
   if (accounts.status !== 'success' || recipients.status !== 'success') {
     return (
       <Load state={accounts.status !== 'success' ? accounts : (recipients as never)} label="accounts">
@@ -113,35 +117,52 @@ export function NewPayment({ onSent }: { onSent?: OnSent }) {
     );
   }
   const accs = accounts.data;
-  const fromId = from || accs[0]?.id || '';
+  // A prefilled value (from a draft or a link) counts only when it is one of the options on screen.
+  const fromId = accs.some((a) => a.id === from) ? from : accs[0]?.id || '';
   const minor = decimalToMinor(amount, 'USD');
   const clear = recipients.data.filter((r) => r.screening === 'CLEAR');
-  const target = kind === 'internal' ? toAccount : recipient;
-  const valid = Boolean(fromId && target && minor && (kind !== 'internal' || toAccount !== fromId));
+  const toId = accs.some((a) => a.id === toAccount && a.id !== fromId) ? toAccount : '';
+  const recipientId = clear.some((r) => r.id === recipient) ? recipient : '';
+  const target = kind === 'internal' ? toId : recipientId;
+  const valid = Boolean(fromId && target && minor);
   const send = async () => {
-    if (!minor) return;
+    if (!minor || inFlight.current) return;
+    inFlight.current = true;
     setBusy(true);
     setError(null);
     try {
-      const draft = await api.createPayment({
-        fromAccountId: fromId,
-        rail: kind === 'internal' ? 'BOOK' : 'ACH',
-        achTiming: kind === 'internal' ? null : 'STANDARD',
-        recipientId: kind === 'internal' ? null : recipient,
-        toAccountId: kind === 'internal' ? toAccount : null,
-        amountMinor: minor,
-        currency: 'USD',
-        reference: reference.trim() || null,
-      });
+      const draft =
+        created.current ??
+        (await api.createPayment({
+          fromAccountId: fromId,
+          rail: kind === 'internal' ? 'BOOK' : 'ACH',
+          achTiming: kind === 'internal' ? null : 'STANDARD',
+          recipientId: kind === 'internal' ? null : recipientId,
+          toAccountId: kind === 'internal' ? toId : null,
+          amountMinor: minor,
+          currency: 'USD',
+          reference: reference.trim() || null,
+        }));
+      created.current = draft;
       const sent = await api.sendPayment(draft.id);
+      created.current = null;
       await onSent?.(sent);
-      await drafts.done(['PAYMENT', 'INTERNAL_TRANSFER'], sent.id);
+      await drafts.done(['PAYMENT', 'INTERNAL_TRANSFER'], sent.id, {
+        fromAccountId: fromId,
+        amountMinor: minor,
+        ...(kind === 'internal' ? { toAccountId: toId } : { recipientId }),
+      });
       navigate(`/payments/${sent.id}`);
     } catch (e) {
       setError(errorText(e));
     } finally {
+      inFlight.current = false;
       setBusy(false);
     }
+  };
+  const change = () => {
+    created.current = null;
+    setReview(false);
   };
   if (review && minor) {
     const fromA = accs.find((a) => a.id === fromId);
@@ -165,8 +186,8 @@ export function NewPayment({ onSent }: { onSent?: OnSent }) {
               label: 'To',
               value:
                 kind === 'internal'
-                  ? accs.find((a) => a.id === toAccount)?.name
-                  : clear.find((r) => r.id === recipient)?.name,
+                  ? accs.find((a) => a.id === toId)?.name
+                  : clear.find((r) => r.id === recipientId)?.name,
             },
             {
               label: 'How',
@@ -180,7 +201,7 @@ export function NewPayment({ onSent }: { onSent?: OnSent }) {
         </p>
         {error && <Notice status="failure">{error}</Notice>}
         <div className="fw-actions">
-          <Button variant="secondary" onClick={() => setReview(false)}>
+          <Button variant="secondary" disabled={busy} onClick={change}>
             Change
           </Button>
           <Button data-testid="payment-send" disabled={busy} onClick={() => void send()}>
@@ -223,7 +244,7 @@ export function NewPayment({ onSent }: { onSent?: OnSent }) {
           <Field label="To account">
             <Select
               data-testid="payment-to-account"
-              value={toAccount}
+              value={toId}
               onChange={(e) => setToAccount(e.target.value)}
               options={[
                 { value: '', label: 'Choose an account' },
@@ -242,7 +263,7 @@ export function NewPayment({ onSent }: { onSent?: OnSent }) {
           >
             <Select
               data-testid="payment-recipient"
-              value={recipient}
+              value={recipientId}
               onChange={(e) => setRecipient(e.target.value)}
               options={[
                 { value: '', label: 'Choose a recipient' },
@@ -295,7 +316,7 @@ export function PaymentsScreen({ onSent }: { onSent?: OnSent }) {
       next = page.next;
     }
     return { items, next };
-  }, [api, pages]);
+  }, [api, pages, isNew]);
   const accounts = useAsync(() => api.accounts(), [api]);
   const recipients = useAsync(() => api.recipients(), [api]);
   const accs = accounts.status === 'success' ? accounts.data : [];

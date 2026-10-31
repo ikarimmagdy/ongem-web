@@ -88,14 +88,24 @@ export function SessionProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [injected, demoMode],
   );
+  // One live client for the signed-in person: the auth value changes on many Clerk renders, and a new client would
+  // reload every screen and start a new recording session each time. It reads the current auth through a ref.
+  const authRef = useRef(auth);
+  authRef.current = auth;
+  const userId = auth.user?.id ?? null;
   const live = useMemo(
     () =>
       new LiveOnGemApi({
         baseUrl: API_BASE_URL,
-        getToken: (o) => auth.getToken(o),
-        reverify: (hint) => (auth.reverify ? auth.reverify(hint) : Promise.resolve(false)),
+        getToken: (o) => authRef.current.getToken(o),
+        reverify: (hint) => {
+          const r = authRef.current.reverify;
+          return r ? r(hint) : Promise.resolve(false);
+        },
       }),
-    [auth],
+    // A new client only when the person or the signed-in state changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [userId, auth.signedIn],
   );
   const mode: Mode = demoMode ? 'demo' : auth.signedIn ? 'live' : 'none';
   const api = mode === 'live' ? live : demo;

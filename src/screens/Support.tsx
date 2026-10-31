@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { errorText } from '../api/errors';
 import type { TicketDetail } from '../api/types';
@@ -35,7 +35,10 @@ function NewTicket({ onTicket }: { onTicket?: OnTicket }) {
   const [body, setBody] = useState(q.get('body') ?? '');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const inFlight = useRef(false);
   const open = async () => {
+    if (inFlight.current) return;
+    inFlight.current = true;
     setBusy(true);
     setError(null);
     try {
@@ -46,6 +49,7 @@ function NewTicket({ onTicket }: { onTicket?: OnTicket }) {
     } catch (e) {
       setError(errorText(e));
     } finally {
+      inFlight.current = false;
       setBusy(false);
     }
   };
@@ -96,26 +100,39 @@ function Ticket({ id, onTicket }: { id: string; onTicket?: OnTicket }) {
   const ticket = useAsync(() => api.ticket(id), [api, id, n]);
   const [reply, setReply] = useState(q.get('reply') ?? '');
   const [error, setError] = useState<string | null>(null);
-  const send = async () => {
+  const [busy, setBusy] = useState(false);
+  const inFlight = useRef(false);
+  const once = async (f: () => Promise<void>) => {
+    if (inFlight.current) return;
+    inFlight.current = true;
+    setBusy(true);
     setError(null);
     try {
+      await f();
+    } catch (e) {
+      setError(errorText(e));
+    } finally {
+      inFlight.current = false;
+      setBusy(false);
+    }
+  };
+  const send = () =>
+    once(async () => {
       const t = await api.replyToTicket(id, reply);
       setReply('');
       await onTicket?.(t, 'replied');
-      await drafts.done(['TICKET_REPLY'], id);
+      await drafts.done(['TICKET_REPLY'], id, { ticketId: id });
       setN((x) => x + 1);
-    } catch (e) {
-      setError(errorText(e));
-    }
-  };
-  const attach = async (file: File | undefined) => {
+    });
+  const attach = (input: HTMLInputElement) => {
+    const file = input.files?.[0];
+    // Cleared so the same file can be chosen again after a failure.
+    input.value = '';
     if (!file) return;
-    try {
+    void once(async () => {
       await api.attachToTicket(id, file);
       setN((x) => x + 1);
-    } catch (e) {
-      setError(errorText(e));
-    }
+    });
   };
   return (
     <Load state={ticket} label="ticket">
@@ -151,7 +168,11 @@ function Ticket({ id, onTicket }: { id: string; onTicket?: OnTicket }) {
               />
             </Field>
             <div className="fw-actions">
-              <Button data-testid="ticket-reply-send" disabled={!reply.trim()} onClick={() => void send()}>
+              <Button
+                data-testid="ticket-reply-send"
+                disabled={busy || !reply.trim()}
+                onClick={() => void send()}
+              >
                 Send reply
               </Button>
               <label className="og-btn og-btn--secondary og-btn--md">
@@ -161,7 +182,8 @@ function Ticket({ id, onTicket }: { id: string; onTicket?: OnTicket }) {
                   type="file"
                   className="og-visually-hidden"
                   accept="image/*,application/pdf"
-                  onChange={(e) => void attach(e.target.files?.[0])}
+                  disabled={busy}
+                  onChange={(e) => attach(e.currentTarget)}
                 />
               </label>
             </div>

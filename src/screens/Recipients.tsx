@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { Permission } from '../api/client';
 import { errorText } from '../api/errors';
 import {
@@ -50,11 +50,14 @@ export function AddRecipient({
   });
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState<string | null>(null);
+  const inFlight = useRef(false);
   const submit = async (e: FormEvent) => {
     e.preventDefault();
+    if (inFlight.current) return;
     const errs = recipientErrors(name, routing, account);
     setErrors(errs);
     if (errs.name || errs.routing || errs.account) return;
+    inFlight.current = true;
     setBusy(true);
     setFailure(null);
     try {
@@ -74,6 +77,7 @@ export function AddRecipient({
     } catch (err) {
       setFailure(errorText(err));
     } finally {
+      inFlight.current = false;
       setBusy(false);
     }
   };
@@ -129,7 +133,26 @@ export function RecipientsScreen() {
   const list = useAsync(() => api.recipients(), [api, n]);
   const [adding, setAdding] = useState(q.get('add') === '1');
   const [failure, setFailure] = useState<string | null>(null);
+  const [archiving, setArchiving] = useState<string | null>(null);
+  const archiveInFlight = useRef(false);
   const manage = can(Permission.RECIPIENT_MANAGE);
+  const archive = (id: string) => {
+    if (archiveInFlight.current) return;
+    archiveInFlight.current = true;
+    setArchiving(id);
+    setFailure(null);
+    api
+      .archiveRecipient(id)
+      .then(() => drafts.done(['RECIPIENT_ARCHIVE'], id, { recipientId: id }))
+      .then(
+        () => setN((x) => x + 1),
+        (e) => setFailure(errorText(e)),
+      )
+      .finally(() => {
+        archiveInFlight.current = false;
+        setArchiving(null);
+      });
+  };
   return (
     <>
       <PageHeader
@@ -174,15 +197,8 @@ export function RecipientsScreen() {
                         variant="ghost"
                         size="sm"
                         aria-label={`Archive ${r.name}`}
-                        onClick={() =>
-                          api
-                            .archiveRecipient(r.id)
-                            .then(() => drafts.done(['RECIPIENT_ARCHIVE'], r.id))
-                            .then(
-                              () => setN((x) => x + 1),
-                              (e) => setFailure(errorText(e)),
-                            )
-                        }
+                        disabled={archiving !== null}
+                        onClick={() => archive(r.id)}
                       >
                         Archive
                       </Button>

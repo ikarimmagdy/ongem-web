@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { errorText } from '../api/errors';
 import type { Application, RequiredDisclosure } from '../api/types';
 import { Button, Card, Field, Input, Modal, Notice, PageHeader, StatusChip, Stepper } from '../design-system';
@@ -50,17 +50,36 @@ function OwnerId({ app, ownerId, onDone }: { app: Application; ownerId: string; 
 function Disclosures({ list, onDone }: { list: RequiredDisclosure[]; onDone(): void }) {
   const { api } = useSession();
   const [open, setOpen] = useState<{ d: RequiredDisclosure; text: string } | null>(null);
-  const read = async (d: RequiredDisclosure) => {
-    const t = await api.disclosureText(d.versionId);
-    await api.recordDisclosure(d.versionId, 'DISPLAYED');
-    setOpen({ d, text: t.text });
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const inFlight = useRef(false);
+  const once = async (f: () => Promise<void>) => {
+    if (inFlight.current) return;
+    inFlight.current = true;
+    setBusy(true);
+    setError(null);
+    try {
+      await f();
+    } catch (e) {
+      setError(errorText(e));
+    } finally {
+      inFlight.current = false;
+      setBusy(false);
+    }
   };
-  const accept = async () => {
-    if (!open) return;
-    await api.recordDisclosure(open.d.versionId, 'ACKNOWLEDGED');
-    setOpen(null);
-    onDone();
-  };
+  const read = (d: RequiredDisclosure) =>
+    once(async () => {
+      const t = await api.disclosureText(d.versionId);
+      await api.recordDisclosure(d.versionId, 'DISPLAYED');
+      setOpen({ d, text: t.text });
+    });
+  const accept = () =>
+    once(async () => {
+      if (!open) return;
+      await api.recordDisclosure(open.d.versionId, 'ACKNOWLEDGED');
+      setOpen(null);
+      onDone();
+    });
   return (
     <>
       <ul className="fw-list">
@@ -70,24 +89,31 @@ function Disclosures({ list, onDone }: { list: RequiredDisclosure[]; onDone(): v
             {d.acknowledged ? (
               <StatusChip status="success">Accepted</StatusChip>
             ) : (
-              <Button size="sm" data-testid={`disclosure-${d.versionId}`} onClick={() => void read(d)}>
+              <Button
+                size="sm"
+                data-testid={`disclosure-${d.versionId}`}
+                disabled={busy}
+                onClick={() => void read(d)}
+              >
                 Read and accept
               </Button>
             )}
           </li>
         ))}
       </ul>
+      {error && !open && <Notice status="failure">{error}</Notice>}
       <Modal
         open={Boolean(open)}
         title={open?.d.title ?? ''}
         onClose={() => setOpen(null)}
         footer={
-          <Button data-testid="disclosure-accept" onClick={() => void accept()}>
+          <Button data-testid="disclosure-accept" disabled={busy} onClick={() => void accept()}>
             I accept
           </Button>
         }
       >
         <p>{open?.text}</p>
+        {error && <Notice status="failure">{error}</Notice>}
       </Modal>
     </>
   );
@@ -100,9 +126,19 @@ export function OnboardingScreen() {
   const apps = useAsync(() => api.applications(), [api, n]);
   const disclosures = useAsync(() => api.requiredDisclosures(), [api, n]);
   const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const inFlight = useRef(false);
   const act = (f: () => Promise<unknown>) => {
+    if (inFlight.current) return;
+    inFlight.current = true;
+    setBusy(true);
     setError(null);
-    f().then(refresh, (e) => setError(errorText(e)));
+    f()
+      .then(refresh, (e) => setError(errorText(e)))
+      .finally(() => {
+        inFlight.current = false;
+        setBusy(false);
+      });
   };
   return (
     <>
@@ -177,7 +213,7 @@ export function OnboardingScreen() {
               {app.state === 'COLLECTING' && (
                 <Button
                   data-testid="application-confirm"
-                  disabled={missing.length > 0}
+                  disabled={busy || missing.length > 0}
                   onClick={() => act(() => api.confirmApplication(app.id))}
                 >
                   Confirm details
@@ -188,7 +224,7 @@ export function OnboardingScreen() {
                   <Disclosures list={discs} onDone={refresh} />
                   <Button
                     data-testid="application-submit"
-                    disabled={!allAccepted}
+                    disabled={busy || !allAccepted}
                     onClick={() => act(() => api.submitApplication(app.id))}
                   >
                     Submit to the bank
