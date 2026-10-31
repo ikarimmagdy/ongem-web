@@ -44,3 +44,6 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   the screen's own action, with step-up, confirms the draft), recording (`src/recording/`: SCREEN and ACTION events and
   rrweb, masked at capture with `[data-mask]` and `maskAllInputs`; demo mode keeps events in memory) and the privacy line.
   Mark any element showing money, an account number or an identity value with `data-mask`.
+- 2026-10-31: review fixes (report `ongem-engineering/outputs/review/2026-10-31-ongem-web.md`): `security-headers.json` is
+  the CloudFront response headers policy (CSP and security headers) that ongem-infra applies; `npm run preview` serves the
+  same headers so e2e runs under the CSP. rrweb masks every text node (`maskNodeText`), API calls send no cookies.

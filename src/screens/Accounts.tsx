@@ -1,7 +1,18 @@
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import type { Account, Statement } from '../api/types';
-import { Button, Card, EmptyState, KeyValue, Modal, PageHeader, StatusChip, Table } from '../design-system';
+import { errorText } from '../api/errors';
+import {
+  Button,
+  Card,
+  EmptyState,
+  KeyValue,
+  Modal,
+  Notice,
+  PageHeader,
+  StatusChip,
+  Table,
+} from '../design-system';
 import { formatDate } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
 import { useSession } from '../session';
@@ -30,6 +41,11 @@ function AccountDetail({ id }: { id: string }) {
   const txns = useAsync(() => api.transactions(id, limit), [api, id, limit]);
   const statements = useAsync(() => api.statements(id).catch(() => []), [api, id]);
   const [statement, setStatement] = useState<Statement | null>(null);
+  const [statementError, setStatementError] = useState<string | null>(null);
+  const openStatement = (period: string) => {
+    setStatementError(null);
+    api.statement(id, period).then(setStatement, (e: unknown) => setStatementError(errorText(e)));
+  };
   return (
     <Load state={account} label="account">
       {(a) => (
@@ -108,7 +124,7 @@ function AccountDetail({ id }: { id: string }) {
                         <button
                           className="fw-row"
                           data-testid={`statement-${s.period}`}
-                          onClick={() => void api.statement(id, s.period).then(setStatement)}
+                          onClick={() => openStatement(s.period)}
                         >
                           Statement {s.period}
                         </button>
@@ -120,6 +136,7 @@ function AccountDetail({ id }: { id: string }) {
                 )
               }
             </Load>
+            {statementError && <Notice status="failure">{statementError}</Notice>}
           </Card>
           <Modal
             open={Boolean(statement)}

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { errorText } from '../api/errors';
-import type { AssistantTurn } from '../api/types';
+import type { AssistantDraft, AssistantTurn } from '../api/types';
 import { Button, Input } from '../design-system';
 import { useSession } from '../session';
 import { useDrafts } from './drafts';
@@ -16,9 +16,17 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const end = useRef<HTMLDivElement>(null);
+  const input = useRef<HTMLInputElement>(null);
+  const root = useRef<HTMLDivElement>(null);
+  const opened = useRef(false);
   useEffect(() => {
     end.current?.scrollIntoView?.({ block: 'end' });
   }, [turns]);
+  useEffect(() => {
+    if (open) input.current?.focus();
+    else if (opened.current) root.current?.querySelector<HTMLButtonElement>('.fw-assistant__fab')?.focus();
+    opened.current = open;
+  }, [open]);
 
   const send = async (e: FormEvent) => {
     e.preventDefault();
@@ -39,14 +47,36 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
     }
   };
   const rate = async (turn: AssistantTurn, rating: 'UP' | 'DOWN') => {
-    await api.rateAssistantTurn(turn.id, rating).catch(() => undefined);
-    setTurns((t) => t.map((x) => (x.id === turn.id ? { ...x, rating } : x)));
+    try {
+      await api.rateAssistantTurn(turn.id, rating);
+      setTurns((t) => t.map((x) => (x.id === turn.id ? { ...x, rating } : x)));
+    } catch (err) {
+      setError(errorText(err));
+    }
+  };
+  const dismiss = async (d: AssistantDraft) => {
+    try {
+      await drafts.dismiss(d);
+    } catch (err) {
+      setError(errorText(err));
+    }
   };
 
   return (
-    <div className="fw-assistant">
+    <div className="fw-assistant" ref={root}>
       {open && (
-        <section className="fw-assistant__panel" aria-label="Assistant" data-testid="assistant-panel">
+        <section
+          id="assistant-panel"
+          className="fw-assistant__panel"
+          aria-label="Assistant"
+          data-testid="assistant-panel"
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              e.stopPropagation();
+              setOpen(false);
+            }
+          }}
+        >
           <header className="fw-assistant__head">
             <strong>Assistant</strong>
             <Button variant="ghost" size="sm" aria-label="Close the assistant" onClick={() => setOpen(false)}>
@@ -89,7 +119,7 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
                           >
                             Review
                           </Button>
-                          <Button size="sm" variant="ghost" onClick={() => void drafts.dismiss(t.draft!)}>
+                          <Button size="sm" variant="ghost" onClick={() => void dismiss(t.draft!)}>
                             Dismiss
                           </Button>
                         </div>
@@ -131,6 +161,7 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
               Message the assistant
             </label>
             <Input
+              ref={input}
               id="assistant-input"
               data-testid="assistant-input"
               value={text}
@@ -148,6 +179,7 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
         className="fw-assistant__fab"
         data-testid="assistant-open"
         aria-expanded={open}
+        aria-controls="assistant-panel"
         onClick={() => setOpen((x) => !x)}
       >
         {open ? 'Hide assistant' : 'Assistant'}

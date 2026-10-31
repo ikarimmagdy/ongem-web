@@ -35,11 +35,20 @@ const TASK_URLS = { 'choose-organization': '/', 'reset-password': '/', 'setup-mf
 function ThemedTask({ task }: { task: string }) {
   const { theme } = useTheme();
   const appearance = useMemo(() => clerkAppearance(theme), [theme]);
-  const done = typeof window === 'undefined' ? '/' : window.location.pathname + window.location.search;
+  const done = typeof window === 'undefined' ? '/' : taskReturnUrl(window.location);
   if (task === 'reset-password')
     return <TaskResetPassword redirectUrlComplete={done} appearance={appearance} />;
   if (task === 'setup-mfa') return <TaskSetupMFA redirectUrlComplete={done} appearance={appearance} />;
   return <TaskChooseOrganization redirectUrlComplete={done} appearance={appearance} />;
+}
+
+/**
+ * Where Clerk returns after a task: this page, as an absolute URL on this origin. A path like `//evil.example` (the SPA
+ * serves any path) would otherwise be a protocol-relative redirect off the site.
+ */
+export function taskReturnUrl(loc: Pick<Location, 'origin' | 'pathname' | 'search'>): string {
+  const path = '/' + loc.pathname.replace(/^[/\\]+/, '');
+  return new URL(path + loc.search, loc.origin).href;
 }
 
 const DEFAULT_HINT: ReverificationHint = { level: 'second_factor', afterMinutes: 10 };

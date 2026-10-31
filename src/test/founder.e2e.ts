@@ -117,7 +117,9 @@ test('assistant_widget_AC_R4_4', async ({ page }, info) => {
   await expect(page.getByTestId('assistant-reply').last()).toContainText('Operating •••• 4821');
   await page.getByTestId('assistant-input').fill('Transfer $100 to Tax reserve');
   await page.getByTestId('assistant-send').click();
-  await expect(page.getByTestId('assistant-draft').last()).toContainText('Move US$100.00 from Operating to Tax reserve');
+  await expect(page.getByTestId('assistant-draft').last()).toContainText(
+    'Move US$100.00 from Operating to Tax reserve',
+  );
   await axe(page);
   await page.screenshot({ path: `e2e-output/screens/${info.project.name}-assistant-draft.png` });
   await page.getByTestId('assistant-review').last().click();
@@ -131,4 +133,35 @@ test('assistant_widget_AC_R4_4', async ({ page }, info) => {
   await expect(page.getByTestId('assistant-draft-state').last()).toHaveText('Confirmed by you');
   await noSideScroll(page);
   await page.screenshot({ path: `e2e-output/screens/${info.project.name}-assistant-confirmed.png` });
+});
+
+test('WEB-SEC-05 security headers are served and the journey runs under the CSP', async ({ page }) => {
+  const violations: string[] = [];
+  page.on('console', (m) => {
+    if (/Content Security Policy|Refused to/i.test(m.text())) violations.push(m.text());
+  });
+  page.on('pageerror', (e) => violations.push(e.message));
+  const res = await page.goto('/');
+  const h = res!.headers();
+  expect(h['content-security-policy']).toContain("default-src 'self'");
+  expect(h['content-security-policy']).toContain("frame-ancestors 'none'");
+  expect(h['content-security-policy']).toContain("object-src 'none'");
+  expect(h['x-content-type-options']).toBe('nosniff');
+  expect(h['x-frame-options']).toBe('DENY');
+  expect(h['referrer-policy']).toBe('strict-origin');
+  expect(h['permissions-policy']).toContain('camera=()');
+  await page.getByTestId('explore-demo').click();
+  await expect(page.getByTestId('home-total')).toBeVisible();
+  await expect(page.getByTestId('recording-session')).toBeAttached();
+  await nav(page, 'accounts');
+  await page.getByTestId('account-acc_demo_ops').click();
+  await expect(page.getByTestId('account-detail')).toBeVisible();
+  await page.getByTestId('assistant-open').click();
+  await page.getByTestId('assistant-input').fill('What is my balance?');
+  await page.getByTestId('assistant-send').click();
+  await expect(page.getByTestId('assistant-reply').last()).toContainText('Operating');
+  await nav(page, 'settings');
+  await page.getByRole('combobox', { name: 'Theme' }).selectOption({ index: 1 });
+  await page.waitForTimeout(500);
+  expect(violations).toEqual([]);
 });

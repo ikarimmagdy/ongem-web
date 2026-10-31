@@ -43,10 +43,12 @@ export class LiveOnGemApi implements OnGemApi {
       payload = body.form;
     }
     try {
+      // The bearer is the only credential: Clerk's __session cookie is never sent, so a cross-site form cannot act.
       return await this.fetchImpl(this.opts.baseUrl.replace(/\/$/, '') + path, {
         method,
         headers,
         body: payload,
+        credentials: 'omit',
       });
     } catch {
       throw new ApiError(0, 'network', 'Could not reach OnGem.');

@@ -3,6 +3,7 @@ import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
 import { useAuthSession } from './auth';
 import { Button, Logo, Notice, Skeleton, ThemeProvider, ToastProvider } from './design-system';
 import { useAsync } from './lib/useAsync';
+import { errorText } from './api/errors';
 import { AccountsScreen } from './screens/Accounts';
 import { CardsScreen } from './screens/Cards';
 import { HomeScreen } from './screens/Home';
@@ -35,7 +36,9 @@ export function SignInScreen() {
       <div className="fw-signin__panel">
         <Logo />
         <h1>Business banking for founders</h1>
-        {!auth.available ? (
+        {auth.pendingTask && auth.Task ? (
+          <auth.Task task={auth.pendingTask} />
+        ) : !auth.available ? (
           <Notice status="info">
             <strong>Sign-in is not configured for this build</strong>. This build has no sign-in key. You can
             explore the app with sample data.
@@ -61,7 +64,7 @@ export function SignInScreen() {
 }
 
 function Shell({ children }: { children: ReactNode }) {
-  const { api, mode, setRole } = useSession();
+  const { api, mode, setRole, leave } = useSession();
   const me = useAsync(() => api.me(), [api]);
   const membership = me.status === 'success' ? me.data.memberships[0] : undefined;
   useEffect(() => {
@@ -99,7 +102,27 @@ function Shell({ children }: { children: ReactNode }) {
           <span className="fw-company">{membership?.companyName}</span>
         </header>
         <main className="fw-content" id="main">
-          {me.status === 'loading' ? <Skeleton label="Loading your company" /> : children}
+          {me.status === 'loading' ? (
+            <Skeleton label="Loading your company" />
+          ) : me.status === 'error' ? (
+            <Notice
+              status="failure"
+              action={
+                <span className="fw-actions">
+                  <Button variant="secondary" onClick={me.reload}>
+                    Try again
+                  </Button>
+                  <Button variant="ghost" onClick={leave}>
+                    Sign out
+                  </Button>
+                </span>
+              }
+            >
+              <span data-testid="me-error">We could not load your company. {errorText(me.error)}</span>
+            </Notice>
+          ) : (
+            children
+          )}
         </main>
       </div>
       <nav aria-label="Main" className="fw-bottom" data-testid="bottom-nav">

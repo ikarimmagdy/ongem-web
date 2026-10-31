@@ -81,3 +81,25 @@ describe('live client (OG-030 R8)', () => {
     expect(mfa.sent).toHaveLength(1);
   });
 });
+
+describe('live client sends no cookies', () => {
+  it('WEB-SEC-06 every call omits credentials and carries only the bearer', async () => {
+    const inits: RequestInit[] = [];
+    const fetchImpl = (async (_url: string, init: RequestInit) => {
+      inits.push(init);
+      return new Response('{}', { status: 200, headers: { 'Content-Type': 'application/json' } });
+    }) as unknown as typeof fetch;
+    const api = new LiveOnGemApi({
+      baseUrl: '/api-dev',
+      fetchImpl,
+      getToken: () => Promise.resolve('tok'),
+      reverify: () => Promise.resolve(true),
+    });
+    await api.accounts();
+    await api.sendPayment('pay_1');
+    expect(inits.map((i) => i.credentials)).toEqual(['omit', 'omit']);
+    expect(inits.every((i) => (i.headers as Record<string, string>).Authorization === 'Bearer tok')).toBe(
+      true,
+    );
+  });
+});
