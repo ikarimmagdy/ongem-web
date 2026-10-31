@@ -1,4 +1,13 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
 import { applyBranding, brandName } from './branding';
 import { validateTheme, type ValidationResult } from './schema';
 import {
@@ -83,7 +92,9 @@ export function ThemeProvider({ children, storage, remoteSources, initialThemeId
   const baseTheme = baseThemes.find((t) => t.id === resolvedId) ?? overrides[resolvedId] ?? defaultTheme();
   const theme = overrides[resolvedId] ?? baseTheme;
 
-  useEffect(() => {
+  // Before the first paint: the layout reads the theme's spacing variables, so applying them after paint moved the
+  // whole shell once on every load (layout shift).
+  useLayoutEffect(() => {
     applyTheme(theme);
     applyBranding(theme);
   }, [theme]);
