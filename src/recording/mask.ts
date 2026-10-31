@@ -22,3 +22,24 @@ export function maskProps(props: Record<string, unknown>): Record<string, unknow
 
 /** rrweb's text mask: every character of a masked element becomes `*`, so the layout stays and the value goes. */
 export const maskAll = (text: string) => text.replace(/\S/g, '*');
+
+/**
+ * rrweb's mask for every text node: inside `[data-mask]` every character goes, anywhere else digit runs and amounts go, so
+ * text that nobody marked (an assistant reply, a server message) still never carries a number or a balance.
+ */
+export function maskNodeText(text: string, el: Element | null): string {
+  return el?.closest('[data-mask]') ? maskAll(text) : maskText(text).replace(BARE_AMOUNT, '[amount]');
+}
+
+/** A decimal with cents and no currency (1,250.00): screen text only, stricter than the server's Masker. */
+const BARE_AMOUNT = /(?<![\w.])\d[\d,]*\.\d{2}(?![\w.])/g;
+
+/** A URL as it may be recorded: path only, because prefilled forms carry amounts and messages in the query. */
+export function maskHref(href: string): string {
+  try {
+    const u = new URL(href);
+    return maskText(u.origin + u.pathname);
+  } catch {
+    return maskText(href.split(/[?#]/)[0] ?? '');
+  }
+}

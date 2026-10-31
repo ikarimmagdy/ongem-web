@@ -213,6 +213,7 @@ export function NewPayment({ onSent }: { onSent?: OnSent }) {
         <Field label="From">
           <Select
             data-testid="payment-from"
+            data-mask=""
             value={fromId}
             onChange={(e) => setFrom(e.target.value)}
             options={accs.map((a) => ({ value: a.id, label: `${a.name} ending ${a.last4 ?? ''}` }))}

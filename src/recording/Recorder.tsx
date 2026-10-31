@@ -3,19 +3,31 @@ import { useLocation } from 'react-router-dom';
 import type { OnGemApi } from '../api/client';
 import type { RecordedEvent } from '../api/types';
 import { useSession } from '../session';
-import { maskAll, maskProps, maskText } from './mask';
+import { maskAll, maskHref, maskNodeText, maskProps, maskText } from './mask';
 
-/** rrweb's options: every input and every [data-mask] element is masked at capture (OG-031 R6). */
+/**
+ * rrweb's options (OG-031 R6): every input is masked, every text node goes through [maskNodeText] (all of it inside
+ * `[data-mask]`, digit runs and amounts anywhere else), and Clerk's own dialogs are not recorded at all.
+ */
 export const RRWEB_OPTIONS = {
   maskAllInputs: true,
-  maskTextSelector: '[data-mask], [data-mask] *',
-  maskTextFn: maskAll,
+  maskTextSelector: '*',
+  maskTextFn: maskNodeText,
   maskInputFn: maskAll,
-  blockSelector: '[data-block]',
+  blockSelector: '[data-block], .cl-rootBox, .cl-modalBackdrop, .cl-userProfile-root',
   recordCanvas: false,
   collectFonts: false,
   sampling: { mousemove: false, scroll: 500, input: 'last' as const },
 };
+
+const RRWEB_META = 4;
+
+/** rrweb's Meta event carries the page URL; the query of a prefilled form holds amounts and messages, so it goes. */
+function maskMeta(event: unknown): unknown {
+  const e = event as { type?: number; data?: { href?: unknown } } | null;
+  if (e?.type !== RRWEB_META || typeof e.data?.href !== 'string') return event;
+  return { ...e, data: { ...e.data, href: maskHref(e.data.href) } };
+}
 
 /** Buffers masked events and sends them in batches of up to 200 (OG-031 R5). */
 export class EventQueue {
@@ -37,7 +49,7 @@ export class EventQueue {
   }
 
   rrweb(event: unknown) {
-    this.push({ type: 'RRWEB', name: 'rrweb', payload: event });
+    this.push({ type: 'RRWEB', name: 'rrweb', payload: maskMeta(event) });
   }
 
   private push(e: Omit<RecordedEvent, 'seq' | 'at'>) {

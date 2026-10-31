@@ -64,9 +64,13 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
               const state = t.draft ? (drafts.decided[t.draft.id] ?? t.draft.state) : null;
               return (
                 <div key={t.id} className="fw-thread" data-testid="assistant-turn">
-                  <div className="fw-msg fw-msg--mine">{t.text}</div>
+                  <div className="fw-msg fw-msg--mine" data-mask="">
+                    {t.text}
+                  </div>
                   <div className="fw-msg" data-testid="assistant-reply">
-                    <p className="og-message__body">{t.reply}</p>
+                    <p className="og-message__body" data-mask="">
+                      {t.reply}
+                    </p>
                     {t.reads.length > 0 && (
                       <div className="fw-msg__who">
                         Read {t.reads.map((r) => r.tool.replace(/_/g, ' ')).join(', ')}
@@ -75,7 +79,7 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
                   </div>
                   {t.draft && (
                     <div className="fw-assistant__draft" data-testid="assistant-draft">
-                      <span>{t.draft.summary}</span>
+                      <span data-mask="">{t.draft.summary}</span>
                       {state === 'OPEN' ? (
                         <div className="fw-actions">
                           <Button
