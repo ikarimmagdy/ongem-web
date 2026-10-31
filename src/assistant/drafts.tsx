@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ApiError, errorText } from '../api/errors';
 import type { AssistantDraft } from '../api/types';
 import { useToast } from '../design-system';
 import { useSession } from '../session';
@@ -114,8 +115,13 @@ export function DraftProvider({ children }: { children: ReactNode }) {
         await api.confirmAssistantDraft(pending.id, ref);
         setDecided((x) => ({ ...x, [pending.id]: 'CONFIRMED' }));
         toast.show('Done. The assistant recorded that you confirmed it.', 'success');
-      } catch {
-        toast.show('Done. The assistant could not record your confirmation.', 'info');
+      } catch (e) {
+        // CORE-ASST-01, 05: the API checks the result against the draft and refuses an old or different one.
+        const refused = e instanceof ApiError && e.code?.startsWith('draft_');
+        toast.show(
+          `Done. ${refused ? errorText(e) : 'The assistant could not record your confirmation.'}`,
+          'info',
+        );
       }
       setPending(null);
     },

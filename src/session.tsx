@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from 'react';
 import { permissionsOf, type OnGemApi } from './api/client';
 import { DemoOnGemApi } from './api/demo';
+import { defaultDeviceKeys } from './api/device';
 import { LiveOnGemApi } from './api/live';
 import { useAuthSession } from './auth';
 import { Button, Field, Input, Modal } from './design-system';
@@ -93,10 +94,13 @@ export function SessionProvider({
   const authRef = useRef(auth);
   authRef.current = auth;
   const userId = auth.user?.id ?? null;
+  const [deviceKeys] = useState(defaultDeviceKeys);
   const live = useMemo(
     () =>
       new LiveOnGemApi({
         baseUrl: API_BASE_URL,
+        personId: userId,
+        deviceKeys,
         getToken: (o) => authRef.current.getToken(o),
         reverify: (hint) => {
           const r = authRef.current.reverify;

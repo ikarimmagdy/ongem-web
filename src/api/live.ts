@@ -1,4 +1,5 @@
 import type { OnGemApi } from './client';
+import { registration, type DeviceKeys } from './device';
 import { ApiError } from './errors';
 import { paths } from './paths';
 import { REVERIFICATION_CANCELLED, REVERIFICATION_REQUIRED, type ReverificationHint } from './reverify';
@@ -10,7 +11,18 @@ export interface LiveOptions {
   reverify(hint?: ReverificationHint): Promise<boolean>;
   fetchImpl?: typeof fetch;
   newKey?: () => string;
+  /** The signed-in person and this browser's device keys: with both, every call carries X-Device-Id (CORE-SEC-03). */
+  personId?: string | null;
+  deviceKeys?: DeviceKeys;
+  /** Waits between retries of a request the API is still working on (409 idempotency_in_progress). */
+  sleep?: (ms: number) => Promise<void>;
 }
+
+/** Waits before each retry of 409 idempotency_in_progress, with the same Idempotency-Key (CORE-COR-02). */
+export const IN_PROGRESS_BACKOFF_MS = [500, 1000, 2000, 4000];
+export const IDEMPOTENCY_IN_PROGRESS = 'idempotency_in_progress';
+
+const DEVICES = '/v1/devices';
 
 type Body = { json: unknown } | { form: FormData } | undefined;
 
@@ -23,18 +35,60 @@ export class LiveOnGemApi implements OnGemApi {
   readonly kind = 'live' as const;
   private readonly fetchImpl: typeof fetch;
   private readonly newKey: () => string;
+  private readonly sleep: (ms: number) => Promise<void>;
+  private device: Promise<string | null> | null = null;
 
   constructor(private readonly opts: LiveOptions) {
     this.fetchImpl = opts.fetchImpl ?? ((i, init) => fetch(i, init));
     this.newKey = opts.newKey ?? (() => crypto.randomUUID());
+    this.sleep = opts.sleep ?? ((ms) => new Promise((r) => setTimeout(r, ms)));
   }
 
-  private async send(method: string, path: string, token: string, key: string | null, body: Body) {
+  /**
+   * This browser's device id for the signed-in person: a challenge signed with the person's device key, then
+   * POST /v1/devices, which answers the device already bound to that key. Asked once per client; when binding fails
+   * the calls go on without the header and the API decides (it refuses them where binding is enforced).
+   */
+  private deviceId(): Promise<string | null> {
+    const { personId, deviceKeys } = this.opts;
+    if (!personId || !deviceKeys) return Promise.resolve(null);
+    this.device ??= (async () => {
+      try {
+        const pair = await deviceKeys.get(personId);
+        const challenge = await this.call<{ challengeId: string; nonce: string }>(
+          'POST',
+          `${DEVICES}/challenge`,
+        );
+        const bound = await this.call<{ id: string }>('POST', DEVICES, {
+          json: await registration(pair, challenge),
+        });
+        return bound.id;
+      } catch {
+        return null;
+      }
+    })();
+    return this.device;
+  }
+
+  private async forgetDevice() {
+    this.device = null;
+    if (this.opts.personId && this.opts.deviceKeys) await this.opts.deviceKeys.forget(this.opts.personId);
+  }
+
+  private async send(
+    method: string,
+    path: string,
+    token: string,
+    key: string | null,
+    body: Body,
+    device: string | null,
+  ) {
     const headers: Record<string, string> = {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json, application/problem+json',
     };
     if (key) headers['Idempotency-Key'] = key;
+    if (device) headers['X-Device-Id'] = device;
     let payload: BodyInit | undefined;
     if (body && 'json' in body) {
       headers['Content-Type'] = 'application/json';
@@ -67,15 +121,29 @@ export class LiveOnGemApi implements OnGemApi {
 
   async call<T>(method: string, path: string, body?: Body): Promise<T> {
     const key = method === 'GET' ? null : this.newKey();
+    // Binding the device itself never needs one; every other customer call carries it.
+    const device = path === DEVICES || path.startsWith(`${DEVICES}/`) ? null : await this.deviceId();
     let token = await this.opts.getToken();
     if (!token) throw new ApiError(401, 'not_signed_in');
-    let res = await this.send(method, path, token, key, body);
+    const send = async (t: string) => {
+      let r = await this.send(method, path, t, key, body, device);
+      // The same request is still running on the server: wait and ask again with the same key, so it runs once.
+      for (const ms of IN_PROGRESS_BACKOFF_MS) {
+        if (r.status !== 409 || (await LiveOnGemApi.problem(r)).code !== IDEMPOTENCY_IN_PROGRESS) break;
+        await this.sleep(ms);
+        r = await this.send(method, path, t, key, body, device);
+      }
+      return r;
+    };
+    let res = await send(token);
     if (res.status === 401) {
       const p = await LiveOnGemApi.problem(res);
-      if (p.code === 'mfa_required' || p.code === 'device_revoked') throw new ApiError(401, p.code, p.detail);
+      if (p.code === 'device_revoked') await this.forgetDevice();
+      if (p.code === 'mfa_required' || p.code === 'device_revoked' || p.code === 'device_required')
+        throw new ApiError(401, p.code, p.detail);
       token = await this.opts.getToken({ fresh: true });
       if (!token) throw new ApiError(401, 'not_signed_in');
-      res = await this.send(method, path, token, key, body);
+      res = await send(token);
     }
     if (res.status === 403) {
       const p = await LiveOnGemApi.problem(res);
@@ -94,7 +162,7 @@ export class LiveOnGemApi implements OnGemApi {
           );
         token = await this.opts.getToken({ fresh: true });
         if (!token) throw new ApiError(401, 'not_signed_in');
-        res = await this.send(method, path, token, key, body);
+        res = await send(token);
       }
     }
     if (!res.ok) {

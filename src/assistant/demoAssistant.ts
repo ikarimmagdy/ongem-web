@@ -41,7 +41,19 @@ export class DemoAssistant {
     let draft: AssistantDraft | null = null;
     const amount = /\$?\s?(\d[\d,]*(?:\.\d{1,2})?)/.exec(t);
     const minor = amount ? Math.round(Number(amount[1]!.replace(/,/g, '')) * 100) : 0;
-    if (/\b(human|person|someone|talk to|complain)\b/.test(t)) {
+    if (/\breply\b/.test(t) && t.includes('ticket')) {
+      // TICKET_REPLY as ongem-core's stub drafts it: the first open ticket and the text after a colon (APP-QUAL-03).
+      const ts = await read('list_tickets', 'listTickets', () => this.api.tickets());
+      const open = ts.find((x) => x.status !== 'RESOLVED' && x.status !== 'CLOSED');
+      const body = maskText((text.includes(':') ? text.slice(text.indexOf(':') + 1) : text).trim());
+      draft = this.draft(
+        'TICKET_REPLY',
+        { ticketId: open?.id, body },
+        `Reply to "${open?.subject ?? 'your ticket'}".`,
+      );
+      reply = `I drafted this for our support team: ${draft.summary} Review it in Support and send it there.`;
+      outcome = 'DRAFTED';
+    } else if (/\b(human|person|someone|talk to|complain)\b/.test(t)) {
       draft = this.draft(
         'SUPPORT_TICKET',
         { subject: 'Help from the assistant', category: 'OTHER', body: maskText(text) },
