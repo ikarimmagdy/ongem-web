@@ -1,36 +1,24 @@
-import { useEffect, useState, type ReactNode } from 'react';
-import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
 import { useAuthSession } from './auth';
 import { Button, Logo, Notice, Skeleton, ThemeProvider, ToastProvider } from './design-system';
-import { useAsync } from './lib/useAsync';
-import { errorText } from './api/errors';
-import { AccountsScreen } from './screens/Accounts';
-import { CardsScreen } from './screens/Cards';
-import { HomeScreen } from './screens/Home';
-import { OnboardingScreen } from './screens/Onboarding';
-import { PaymentsScreen } from './screens/Payments';
-import { RecipientsScreen } from './screens/Recipients';
-import { SettingsScreen } from './screens/Settings';
-import { SupportScreen } from './screens/Support';
 import { SessionProvider, useSession, type Mode } from './session';
-import { AssistantWidget } from './assistant/AssistantWidget';
-import { DraftProvider } from './assistant/drafts';
-import { PRIVACY_LINE, Recorder } from './recording/Recorder';
+import { PRIVACY_LINE } from './recording/privacy';
 import './web.css';
 
-export const NAV = [
-  { to: '/', label: 'Home', end: true },
-  { to: '/accounts', label: 'Accounts' },
-  { to: '/payments', label: 'Payments' },
-  { to: '/cards', label: 'Cards' },
-  { to: '/support', label: 'Support' },
-  { to: '/settings', label: 'Settings' },
-];
+export { NAV } from './nav';
+
+// The signed-in shell and its screens are a separate chunk, so the first screen loads only what sign-in needs (OG-030-N3).
+const loadSignedIn = () => import('./SignedIn');
+const SignedIn = lazy(loadSignedIn);
 
 /** Sign-in with the Clerk customer instance; with no key the build says so and offers demo mode (OG-030 R1). */
 export function SignInScreen() {
   const auth = useAuthSession();
   const { enterDemo } = useSession();
+  // Fetch the shell while the founder reads the sign-in screen, so entering stays instant.
+  useEffect(() => {
+    void loadSignedIn();
+  }, []);
   return (
     <main className="fw-signin" id="main">
       <div className="fw-signin__panel">
@@ -63,107 +51,13 @@ export function SignInScreen() {
   );
 }
 
-function Shell({ children }: { children: ReactNode }) {
-  const { api, mode, setRole, leave } = useSession();
-  const me = useAsync(() => api.me(), [api]);
-  const membership = me.status === 'success' ? me.data.memberships[0] : undefined;
-  useEffect(() => {
-    if (me.status === 'success') setRole(membership?.role ?? null);
-  }, [me.status, membership?.role, setRole]);
-  const links = NAV.map((n) => (
-    <li key={n.to}>
-      <NavLink
-        to={n.to}
-        end={n.end}
-        data-testid={`nav-${n.label.toLowerCase()}`}
-        className={({ isActive }) => (isActive ? 'og-nav__link is-active' : 'og-nav__link')}
-      >
-        {n.label}
-      </NavLink>
-    </li>
-  ));
-  return (
-    <div className="fw-shell" data-testid="shell">
-      <a href="#main" className="og-skip">
-        Skip to content
-      </a>
-      <aside className="fw-side">
-        <Logo />
-        {membership?.companyName && <span className="fw-company">{membership.companyName}</span>}
-        <nav aria-label="Main">
-          <ul className="og-nav">{links}</ul>
-        </nav>
-      </aside>
-      <div className="fw-main">
-        <header className="og-topbar">
-          <span className={`og-env og-env--${mode === 'demo' ? 'mock' : 'live'}`} data-testid="env-badge">
-            {mode === 'demo' ? 'Demo' : 'Live'}
-          </span>
-          <span className="fw-company">{membership?.companyName}</span>
-        </header>
-        <main className="fw-content" id="main">
-          {me.status === 'loading' ? (
-            <Skeleton label="Loading your company" />
-          ) : me.status === 'error' ? (
-            <Notice
-              status="failure"
-              action={
-                <span className="fw-actions">
-                  <Button variant="secondary" onClick={me.reload}>
-                    Try again
-                  </Button>
-                  <Button variant="ghost" onClick={leave}>
-                    Sign out
-                  </Button>
-                </span>
-              }
-            >
-              <span data-testid="me-error">We could not load your company. {errorText(me.error)}</span>
-            </Notice>
-          ) : (
-            children
-          )}
-        </main>
-      </div>
-      <nav aria-label="Main" className="fw-bottom" data-testid="bottom-nav">
-        <ul className="og-nav fw-bottom__list">{links}</ul>
-      </nav>
-    </div>
-  );
-}
-
 export function Routed() {
   const { mode } = useSession();
   if (mode === 'none') return <SignInScreen />;
-  return <SignedIn />;
-}
-
-function SignedIn() {
-  const [recording, setRecording] = useState<string | null>(null);
   return (
-    <DraftProvider>
-      <Shell>
-        <Recorder onSession={setRecording} />
-        <Routes>
-          <Route path="/" element={<HomeScreen />} />
-          <Route path="/accounts" element={<AccountsScreen />} />
-          <Route path="/accounts/:id" element={<AccountsScreen />} />
-          <Route path="/payments" element={<PaymentsScreen />} />
-          <Route path="/payments/new" element={<PaymentsScreen />} />
-          <Route path="/payments/:id" element={<PaymentsScreen />} />
-          <Route path="/recipients" element={<RecipientsScreen />} />
-          <Route path="/cards" element={<CardsScreen />} />
-          <Route path="/cards/:id" element={<CardsScreen />} />
-          <Route path="/onboarding" element={<OnboardingScreen />} />
-          <Route path="/support" element={<SupportScreen />} />
-          <Route path="/support/new" element={<SupportScreen />} />
-          <Route path="/support/:id" element={<SupportScreen />} />
-          <Route path="/settings" element={<SettingsScreen />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-        <AssistantWidget recordingSessionId={recording} />
-      </Shell>
-    </DraftProvider>
+    <Suspense fallback={<Skeleton label="Loading your company" />}>
+      <SignedIn />
+    </Suspense>
   );
 }
 

@@ -134,6 +134,4 @@ export function Recorder({ onSession }: { onSession?(id: string): void }) {
   return session ? <span hidden data-testid="recording-session" data-session={session} /> : null;
 }
 
-export const PRIVACY_LINE =
-  'We record the screens you use and what you tap, with account numbers, balances and identity details hidden, to improve ' +
-  'OnGem and help when you ask for support. Recordings stay with OnGem.';
+export { PRIVACY_LINE } from './privacy';

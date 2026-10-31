@@ -194,7 +194,11 @@
 .fw-assistant__fab {
   box-shadow: var(--shadow-raised);
 }
+/* The panel opens above the button without moving it: the floating box keeps the button's size (no layout shift). */
 .fw-assistant__panel {
+  position: absolute;
+  inset-inline-end: 0;
+  bottom: calc(100% + var(--space-sm));
   width: min(calc(var(--space-3xl) * 9), calc(100vw - var(--space-lg) * 2));
   max-height: min(70vh, calc(var(--space-3xl) * 14));
   display: flex;
