@@ -11,7 +11,7 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
 
 ## Tech stack
 
-- ongem-admin's stack and versions: Vite 5, React 18, TypeScript strict, React Router 6, own design system copied from
+- ongem-admin's stack and versions: Vite 8, React 18, TypeScript strict, React Router 7, Vitest 5, own design system copied from
   ongem-admin `src/design-system/` with the same tokens file, Clerk `@clerk/react`, Vitest and Testing Library, ESLint 9,
   Prettier, Playwright with axe. Pinned versions (`.npmrc` save-exact).
 
