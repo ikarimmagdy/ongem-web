@@ -14,13 +14,10 @@ import { useCallback, useEffect, useMemo, useRef, type ReactNode } from 'react';
 import type { ReverificationHint } from '../api/reverify';
 import { activeTheme, useTheme } from '../design-system';
 import { clerkAppearance } from './appearance';
+import { CLERK_PUBLISHABLE_KEY } from './key';
 import { AuthProvider, NO_AUTH, type AuthSession } from './session';
 
-/**
- * The Clerk customer instance's publishable key (ADR-0045), never the ops instance's and never a secret key. Blank until
- * Karim creates the customer instance: then the web app runs in demo mode only (OG-030 R1).
- */
-export const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY?.trim() ?? '';
+export { CLERK_PUBLISHABLE_KEY };
 
 function ThemedSignIn() {
   const { theme } = useTheme();

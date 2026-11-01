@@ -165,3 +165,36 @@ test('WEB-SEC-05 security headers are served and the journey runs under the CSP'
   await page.waitForTimeout(500);
   expect(violations).toEqual([]);
 });
+
+test('PERF-WEB-04 the sign-in screen is in the HTML and paints before the script, without a shift', async ({
+  page,
+}) => {
+  const res = await page.request.get('/');
+  const html = await res.text();
+  expect(html).toContain('data-testid="privacy-line"');
+  expect(html).toContain('data-testid="explore-demo"');
+  // The static screen carries no data, only the sign-in copy.
+  expect(html).not.toMatch(/US\$\d/);
+  await page.route(/\/assets\/index-.*\.js$/, async (r) => {
+    await new Promise((s) => setTimeout(s, 800));
+    await r.continue();
+  });
+  await page.addInitScript(() => {
+    const w = window as unknown as { __cls: number };
+    w.__cls = 0;
+    new PerformanceObserver((l) => {
+      for (const e of l.getEntries() as unknown as Array<{ value: number; hadRecentInput: boolean }>)
+        if (!e.hadRecentInput) w.__cls += e.value;
+    }).observe({ type: 'layout-shift', buffered: true });
+  });
+  await page.goto('/', { waitUntil: 'commit' });
+  await expect(page.getByTestId('privacy-line')).toBeVisible({ timeout: 700 });
+  // The static button does nothing until the app has rendered over it.
+  await page.waitForFunction(() =>
+    Object.keys(document.getElementById('root') ?? {}).some((k) => k.startsWith('__reactContainer')),
+  );
+  await page.getByTestId('explore-demo').click();
+  await expect(page.getByTestId('home-total')).toBeVisible();
+  expect(await page.evaluate(() => (window as unknown as { __cls: number }).__cls)).toBeLessThan(0.1);
+  await axe(page);
+});

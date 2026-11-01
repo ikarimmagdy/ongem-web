@@ -11,14 +11,27 @@ export { NAV } from './nav';
 const loadSignedIn = () => import('./SignedIn');
 const SignedIn = lazy(loadSignedIn);
 
+/** Loads [load] once the page has loaded and a short pause has passed, so it never competes with the first screen. */
+function prefetchAfterLoad(load: () => Promise<unknown>, delayMs = 1500): () => void {
+  let timer: number | undefined;
+  const start = () => {
+    timer = window.setTimeout(() => void load(), delayMs);
+  };
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start, { once: true });
+  return () => {
+    window.removeEventListener('load', start);
+    window.clearTimeout(timer);
+  };
+}
+
 /** Sign-in with the Clerk customer instance; with no key the build says so and offers demo mode (OG-030 R1). */
 export function SignInScreen() {
   const auth = useAuthSession();
   const { enterDemo } = useSession();
-  // Fetch the shell while the founder reads the sign-in screen, so entering stays instant.
-  useEffect(() => {
-    void loadSignedIn();
-  }, []);
+  // Fetch the shell while the founder reads the sign-in screen, so entering stays instant; after the page has loaded, so
+  // it does not compete with the first screen for bandwidth (OG-030-N3).
+  useEffect(() => prefetchAfterLoad(loadSignedIn), []);
   return (
     <main className="fw-signin" id="main">
       <div className="fw-signin__panel">
