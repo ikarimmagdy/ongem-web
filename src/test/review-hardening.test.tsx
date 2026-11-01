@@ -109,4 +109,23 @@ describe('review fixes: sign-in, shell, widget and headers', () => {
     );
     expect(p.SecurityHeadersConfig.FrameOptions.FrameOption).toBe('DENY');
   });
+
+  it('WEB-SEC-05 the CSP lets the Clerk customer instance load its script and call its Frontend API', () => {
+    const p = JSON.parse(readFileSync('security-headers.json', 'utf8'));
+    const csp: string = p.SecurityHeadersConfig.ContentSecurityPolicy.ContentSecurityPolicy;
+    const directives = Object.fromEntries(
+      csp
+        .split(';')
+        .map((d) => d.trim().split(/\s+/))
+        .map(([k, ...v]) => [k, v]),
+    );
+    const hosts = ['https://clerk.ongem.com', 'https://obliging-hermit-8825.clerk.accounts.dev'];
+    // A publishable key is pk_<env>_ then base64 of the Frontend API host and a trailing $.
+    const key = (import.meta.env.VITE_CLERK_PUBLISHABLE_KEY ?? '').trim();
+    if (key) hosts.push(`https://${atob(key.split('_')[2] ?? '').replace(/\$$/, '')}`);
+    for (const h of hosts) {
+      expect(directives['script-src']).toContain(h);
+      expect(directives['connect-src']).toContain(h);
+    }
+  });
 });

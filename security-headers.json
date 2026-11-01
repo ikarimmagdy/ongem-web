@@ -1,10 +1,10 @@
 {
   "Name": "ongem-web-security-headers",
-  "Comment": "ongem-web behind CloudFront (WEB-SEC-05). Replace clerk.ongem.com with the Clerk customer instance Frontend API host if it differs.",
+  "Comment": "ongem-web behind CloudFront (WEB-SEC-05). script-src and connect-src carry the Frontend API host of every Clerk customer instance the build may use: clerk.ongem.com and the OnGem Founder development instance.",
   "SecurityHeadersConfig": {
     "ContentSecurityPolicy": {
       "Override": true,
-      "ContentSecurityPolicy": "default-src 'self'; script-src 'self' https://clerk.ongem.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://img.clerk.com; font-src 'self' data:; connect-src 'self' https://clerk.ongem.com; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+      "ContentSecurityPolicy": "default-src 'self'; script-src 'self' https://clerk.ongem.com https://obliging-hermit-8825.clerk.accounts.dev https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://img.clerk.com; font-src 'self' data:; connect-src 'self' https://clerk.ongem.com https://obliging-hermit-8825.clerk.accounts.dev; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
     },
     "StrictTransportSecurity": {
       "Override": true,
