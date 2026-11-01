@@ -197,7 +197,7 @@ describe('components', () => {
   it('app shell shows the logo from the theme, the environment badge and switches theme', async () => {
     render(
       <ThemeProvider>
-        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <MemoryRouter>
           <AppShell nav={[{ to: '/', label: 'Overview' }]} environment={{ label: 'Mock data', tone: 'mock' }}>
             <p>content</p>
           </AppShell>

@@ -18,7 +18,7 @@ function mount(Auth: ComponentType<{ children: ReactNode }>) {
   createRoot(root!).render(
     <StrictMode>
       <Auth>
-        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <BrowserRouter>
           <App />
         </BrowserRouter>
       </Auth>
