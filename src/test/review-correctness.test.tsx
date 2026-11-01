@@ -138,9 +138,9 @@ describe('review fixes: payments and drafts', () => {
       expect(routeFor(draft(kind, { cardId: 'javascript:alert(1)', ticketId: 'a/b' }))).toMatch(/^\/[a-z]/);
 
     const api = new DemoOnGemApi({ stepUp: () => Promise.resolve(true) });
-    const rs = await api.recipients();
-    const notClear = rs.find((r) => r.screening !== 'CLEAR')!;
-    renderApp(`/payments/new?kind=ach&from=acc_other_company&recipient=${notClear.id}&amount=abc`, { api });
+    renderApp(`/payments/new?kind=ach&from=acc_other_company&recipient=rcp_other_company&amount=abc`, {
+      api,
+    });
     expect(await screen.findByTestId('payment-recipient')).toHaveValue('');
     expect(screen.getByTestId('payment-from')).toHaveValue('acc_demo_ops');
     expect(screen.getByTestId('payment-amount')).toHaveValue('');

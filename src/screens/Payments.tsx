@@ -113,13 +113,16 @@ export function NewPayment() {
       </Load>
     );
   }
-  const accs = accounts.data;
+  // Money moves only from and to an ACTIVE account (the API also sends OPENING, FROZEN, RESTRICTED, CLOSING, CLOSED).
+  const accs = accounts.data.filter((a) => a.status === 'ACTIVE');
   // A prefilled value (from a draft or a link) counts only when it is one of the options on screen.
   const fromId = accs.some((a) => a.id === from) ? from : accs[0]?.id || '';
   const minor = decimalToMinor(amount, 'USD');
-  const clear = recipients.data.filter((r) => r.screening === 'CLEAR');
+  // ongem-core refuses only a BLOCKED payee: a new recipient stays PENDING until the bank checks it on the first payment,
+  // so holding payments to CLEAR ones only would leave every new recipient unpayable.
+  const payable = recipients.data.filter((r) => r.screening !== 'BLOCKED');
   const toId = accs.some((a) => a.id === toAccount && a.id !== fromId) ? toAccount : '';
-  const recipientId = clear.some((r) => r.id === recipient) ? recipient : '';
+  const recipientId = payable.some((r) => r.id === recipient) ? recipient : '';
   const target = kind === 'internal' ? toId : recipientId;
   const valid = Boolean(fromId && target && minor);
   const send = async () => {
@@ -183,7 +186,7 @@ export function NewPayment() {
               value:
                 kind === 'internal'
                   ? accs.find((a) => a.id === toId)?.name
-                  : clear.find((r) => r.id === recipientId)?.name,
+                  : payable.find((r) => r.id === recipientId)?.name,
             },
             {
               label: 'How',
@@ -252,9 +255,11 @@ export function NewPayment() {
           <Field
             label="Recipient"
             hint={
-              clear.length
-                ? undefined
-                : 'Add a recipient first; only recipients the bank cleared can be paid.'
+              !payable.length
+                ? 'Add a recipient first.'
+                : payable.some((r) => r.id === recipientId && r.screening === 'PENDING')
+                  ? 'Checked by the bank with the first payment.'
+                  : undefined
             }
           >
             <Select
@@ -263,7 +268,7 @@ export function NewPayment() {
               onChange={(e) => setRecipient(e.target.value)}
               options={[
                 { value: '', label: 'Choose a recipient' },
-                ...clear.map((r) => ({ value: r.id, label: r.name })),
+                ...payable.map((r) => ({ value: r.id, label: r.name })),
               ]}
             />
           </Field>

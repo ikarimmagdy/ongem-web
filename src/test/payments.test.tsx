@@ -38,3 +38,34 @@ describe('payments (OG-030 R4)', () => {
     );
   });
 });
+
+describe('payments to a new recipient (live check 2026-11-02)', () => {
+  it('a PENDING recipient can be paid, the bank checks it with the first payment; a BLOCKED one is not offered', async () => {
+    const api = new DemoOnGemApi({ stepUp: () => Promise.resolve(true) });
+    const all = api.recipients;
+    api.recipients = async () => [
+      ...(await all()),
+      {
+        id: 'rcp_blocked',
+        kind: 'BUSINESS',
+        name: 'Blocked Payee',
+        accountLast4: '0001',
+        routingNumber: '021000021',
+        accountType: 'CHECKING',
+        screening: 'BLOCKED',
+        status: 'ACTIVE',
+      },
+    ];
+    const pending = (await api.recipients()).find((r) => r.screening === 'PENDING')!;
+    renderApp('/payments/new', { api });
+    const select = await screen.findByTestId('payment-recipient');
+    expect(within(select).queryByText('Blocked Payee')).toBeNull();
+    await userEvent.selectOptions(select, pending.id);
+    expect(screen.getByText('Checked by the bank with the first payment.')).toBeInTheDocument();
+    await userEvent.type(screen.getByTestId('payment-amount'), '25.00');
+    await userEvent.click(screen.getByTestId('payment-review-button'));
+    await userEvent.click(await screen.findByTestId('payment-send'));
+    expect(await screen.findByTestId('payment-detail')).toBeInTheDocument();
+    expect(api.calls).toContain('createPayment');
+  });
+});

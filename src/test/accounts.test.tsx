@@ -1,6 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DemoOnGemApi } from '../api/demo';
+import { describeTransaction } from '../screens/Accounts';
 import { renderApp } from './render';
 
 describe('accounts and statements (OG-030 R2)', () => {
@@ -24,5 +25,28 @@ describe('accounts and statements (OG-030 R2)', () => {
     expect(within(view).getByText('US$98,700.00')).toBeInTheDocument();
     expect(within(view).getByText('US$119,854.00')).toBeInTheDocument();
     expect(within(view).getAllByRole('row')).toHaveLength(5);
+  });
+});
+
+describe('transactions and accounts as the API sends them (live check 2026-11-02)', () => {
+  it('a transaction reads as its rail and direction, never its origin', async () => {
+    expect(describeTransaction({ rail: 'ACH', direction: 'DEBIT' })).toBe('ACH out');
+    expect(describeTransaction({ rail: 'BOOK', direction: 'CREDIT' })).toBe('Transfer in');
+    expect(describeTransaction({ rail: null, direction: 'CREDIT' })).toBe('Transaction in');
+    renderApp('/accounts/acc_demo_ops');
+    const detail = await screen.findByTestId('account-detail');
+    expect(within(detail).queryByText(/PROVIDER|ONGEM/)).toBeNull();
+    expect(within(detail).getAllByText(/^(ACH|Card) (in|out)$/).length).toBeGreaterThan(0);
+  });
+
+  it('the payment form offers only ACTIVE accounts', async () => {
+    const api = new DemoOnGemApi();
+    const all = api.accounts;
+    api.accounts = async () =>
+      (await all()).map((a) => (a.id === 'acc_demo_tax' ? { ...a, status: 'FROZEN' } : a));
+    renderApp('/payments/new', { api });
+    const from = await screen.findByTestId('payment-from');
+    expect(within(from).queryByText(/Tax reserve/)).toBeNull();
+    expect(within(from).getByText(/Operating/)).toBeInTheDocument();
   });
 });

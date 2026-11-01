@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import type { Account, Statement } from '../api/types';
+import type { Account, Statement, Transaction } from '../api/types';
 import { errorText } from '../api/errors';
 import {
   Button,
@@ -19,6 +19,17 @@ import { useSession } from '../session';
 import { Amt, Last4, Load, human, stateStatus } from './common';
 
 const PAGE = 20;
+
+const RAILS: Record<string, string> = { ACH: 'ACH', BOOK: 'Transfer', CARD: 'Card', WIRE: 'Wire' };
+
+/**
+ * A transaction's line: the API sends no counterparty, and `origin` (ONGEM or PROVIDER) says who recorded it, which is
+ * not a description; the rail and the direction are what the founder can read.
+ */
+export function describeTransaction(t: Pick<Transaction, 'rail' | 'direction'>): string {
+  const rail = t.rail ? (RAILS[t.rail] ?? human(t.rail)) : 'Transaction';
+  return `${rail} ${t.direction === 'CREDIT' ? 'in' : 'out'}`;
+}
 
 function Balance({ a }: { a: Account }) {
   if (!a.balance) return <span className="fw-row__sub">No balance from the bank yet</span>;
@@ -86,7 +97,7 @@ function AccountDetail({ id }: { id: string }) {
                         header: 'Date',
                         render: (t) => (t.effectiveDate ? formatDate(t.effectiveDate) : ''),
                       },
-                      { key: 'what', header: 'Description', render: (t) => t.origin || t.rail || '' },
+                      { key: 'what', header: 'Description', render: (t) => describeTransaction(t) },
                       { key: 'stage', header: 'Status', render: (t) => human(t.stage) },
                       {
                         key: 'amount',

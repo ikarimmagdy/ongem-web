@@ -121,7 +121,7 @@ export class DemoOnGemApi implements OnGemApi {
                 direction: 'DEBIT',
                 amount: p.amount,
                 rail: p.rail,
-                origin: 'Payment',
+                origin: 'ONGEM',
                 effectiveDate: '2026-10-29',
               },
             ]
@@ -134,7 +134,7 @@ export class DemoOnGemApi implements OnGemApi {
                 direction: 'CREDIT',
                 amount: p.amount,
                 rail: p.rail,
-                origin: 'Transfer',
+                origin: 'ONGEM',
                 effectiveDate: '2026-10-29',
               },
             ]
