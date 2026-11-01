@@ -3,7 +3,14 @@ import { registration, type DeviceKeys } from './device';
 import { ApiError } from './errors';
 import { paths } from './paths';
 import { REVERIFICATION_CANCELLED, REVERIFICATION_REQUIRED, type ReverificationHint } from './reverify';
-import type { CreatePayment, CreateRecipient, OpenTicket, OwnerIdentity } from './types';
+import type {
+  CreatePayment,
+  CreateRecipient,
+  OpenTicket,
+  OwnerIdentity,
+  Recipient,
+  RecipientPage,
+} from './types';
 
 export interface LiveOptions {
   baseUrl: string;
@@ -181,7 +188,17 @@ export class LiveOnGemApi implements OnGemApi {
   statements: OnGemApi['statements'] = (id: string) => this.call('GET', paths.statements(id));
   statement: OnGemApi['statement'] = (id: string, period: string) =>
     this.call('GET', paths.statement(id, period));
-  recipients: OnGemApi['recipients'] = () => this.call('GET', paths.recipients);
+  /** ongem-core pages recipients (100 at most per page); the screens and the assistant want the whole list. */
+  recipients: OnGemApi['recipients'] = async () => {
+    const all: Recipient[] = [];
+    let cursor: string | null | undefined;
+    do {
+      const page = await this.call<RecipientPage>('GET', paths.recipientPage(cursor));
+      all.push(...page.items);
+      cursor = page.next;
+    } while (cursor);
+    return all;
+  };
   createRecipient: OnGemApi['createRecipient'] = (r: CreateRecipient) =>
     this.call('POST', paths.recipients, { json: r });
   archiveRecipient: OnGemApi['archiveRecipient'] = (id: string) => this.call('DELETE', paths.recipient(id));

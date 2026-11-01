@@ -43,7 +43,11 @@ const customerCalls = (sent: Sent[]) => sent.filter((s) => !s.url.includes('/v1/
 
 describe('cross-repo follow-ups 2026-10-31', () => {
   it('CORE-SEC-03 every customer call carries X-Device-Id from a device bound once with a signed challenge', async () => {
-    const { sent, fetchImpl } = server([200, []], [200, []], [202, { id: 'pay_1', state: 'SUBMITTED' }]);
+    const { sent, fetchImpl } = server(
+      [200, []],
+      [200, { items: [] }],
+      [202, { id: 'pay_1', state: 'SUBMITTED' }],
+    );
     const api = client(fetchImpl);
     await api.accounts();
     await api.recipients();

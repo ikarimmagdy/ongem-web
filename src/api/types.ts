@@ -116,6 +116,11 @@ export interface Payment {
   returnReason?: string | null;
 }
 
+export interface RecipientPage {
+  items: Recipient[];
+  next?: string | null;
+}
+
 export interface PaymentPage {
   items: Payment[];
   next?: string | null;

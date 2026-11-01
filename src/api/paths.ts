@@ -9,6 +9,8 @@ export const paths = {
   statements: (id: string) => `/v1/accounts/${q(id)}/statements`,
   statement: (id: string, period: string) => `/v1/accounts/${q(id)}/statements/${q(period)}`,
   recipients: '/v1/recipients',
+  recipientPage: (cursor?: string | null) =>
+    `/v1/recipients?limit=100${cursor ? `&cursor=${q(cursor)}` : ''}`,
   recipient: (id: string) => `/v1/recipients/${q(id)}`,
   payments: (cursor: string | null | undefined, limit: number) =>
     `/v1/payments?limit=${limit}${cursor ? `&cursor=${q(cursor)}` : ''}`,

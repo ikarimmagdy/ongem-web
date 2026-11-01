@@ -6,7 +6,8 @@ async function record() {
   const calls: Array<{ method: string; path: string }> = [];
   const fetchImpl = (async (url: string, init: RequestInit) => {
     calls.push({ method: init.method ?? 'GET', path: url.split('?')[0]! });
-    return new Response('{}', { status: 200 });
+    const page = url.startsWith('/v1/recipients?') && (init.method ?? 'GET') === 'GET';
+    return new Response(page ? '{"items":[]}' : '{}', { status: 200 });
   }) as unknown as typeof fetch;
   const api = new LiveOnGemApi({
     baseUrl: '',

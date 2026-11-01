@@ -103,3 +103,24 @@ describe('live client sends no cookies', () => {
     );
   });
 });
+
+describe('live client pages recipients', () => {
+  it('reads every page of GET /v1/recipients and returns one list', async () => {
+    const r = (id: string) => ({ id, name: id });
+    const { sent, fetchImpl } = fake(
+      [200, { items: [r('a'), r('b')], next: 'c1' }],
+      [200, { items: [r('c')] }],
+    );
+    const api = new LiveOnGemApi({
+      baseUrl: '',
+      fetchImpl,
+      getToken: () => Promise.resolve('t'),
+      reverify: () => Promise.resolve(true),
+    });
+    expect((await api.recipients()).map((x) => x.id)).toEqual(['a', 'b', 'c']);
+    expect(sent.map((s) => s.url)).toEqual([
+      '/v1/recipients?limit=100',
+      '/v1/recipients?limit=100&cursor=c1',
+    ]);
+  });
+});
