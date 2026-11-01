@@ -90,6 +90,7 @@ export function AddRecipient({
         <Input
           data-testid="recipient-routing"
           inputMode="numeric"
+          autoComplete="off"
           maxLength={9}
           value={routing}
           onChange={(e) => setRouting(e.target.value.replace(/\D/g, ''))}
