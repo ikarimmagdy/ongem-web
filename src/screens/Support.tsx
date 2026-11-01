@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { errorText } from '../api/errors';
-import type { TicketDetail } from '../api/types';
 import {
   Button,
   Card,
@@ -20,12 +19,9 @@ import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
 import { Load, human, stateStatus } from './common';
 
-/** Called after the founder opened a ticket or replied here (OG-031 confirms a drafted hand-off with it). */
-export type OnTicket = (ticket: TicketDetail, kind: 'opened' | 'replied') => void | Promise<void>;
-
 const CATEGORIES = ['PAYMENT', 'CARD', 'ACCOUNT', 'ONBOARDING', 'OTHER'];
 
-function NewTicket({ onTicket }: { onTicket?: OnTicket }) {
+function NewTicket() {
   const { api } = useSession();
   const drafts = useDrafts();
   const navigate = useNavigate();
@@ -43,7 +39,6 @@ function NewTicket({ onTicket }: { onTicket?: OnTicket }) {
     setError(null);
     try {
       const t = await api.openTicket({ subject: subject.trim(), category, body: body.trim() });
-      await onTicket?.(t, 'opened');
       await drafts.done(['SUPPORT_TICKET'], t.ticket.id);
       navigate(`/support/${t.ticket.id}`);
     } catch (e) {
@@ -92,7 +87,7 @@ function NewTicket({ onTicket }: { onTicket?: OnTicket }) {
   );
 }
 
-function Ticket({ id, onTicket }: { id: string; onTicket?: OnTicket }) {
+function Ticket({ id }: { id: string }) {
   const { api } = useSession();
   const drafts = useDrafts();
   const [q] = useSearchParams();
@@ -118,9 +113,8 @@ function Ticket({ id, onTicket }: { id: string; onTicket?: OnTicket }) {
   };
   const send = () =>
     once(async () => {
-      const t = await api.replyToTicket(id, reply);
+      await api.replyToTicket(id, reply);
       setReply('');
-      await onTicket?.(t, 'replied');
       await drafts.done(['TICKET_REPLY'], id, { ticketId: id });
       setN((x) => x + 1);
     });
@@ -195,7 +189,7 @@ function Ticket({ id, onTicket }: { id: string; onTicket?: OnTicket }) {
   );
 }
 
-export function SupportScreen({ onTicket }: { onTicket?: OnTicket }) {
+export function SupportScreen() {
   const { api } = useSession();
   const { id } = useParams();
   const location = useLocation();
@@ -250,7 +244,7 @@ export function SupportScreen({ onTicket }: { onTicket?: OnTicket }) {
               Back to support
             </Button>
           )}
-          {isNew ? <NewTicket onTicket={onTicket} /> : id ? <Ticket id={id} onTicket={onTicket} /> : null}
+          {isNew ? <NewTicket /> : id ? <Ticket id={id} /> : null}
         </div>
       </div>
     </>

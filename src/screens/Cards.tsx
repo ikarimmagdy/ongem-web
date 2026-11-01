@@ -7,18 +7,7 @@ import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
 import { Last4, Load, human, stateStatus } from './common';
 
-/** Called after the founder froze or unfroze a card here (OG-031 confirms a drafted change with it). */
-export type OnCardChanged = (cardId: string, frozen: boolean) => void | Promise<void>;
-
-function CardDetail({
-  id,
-  onChanged,
-  onListChanged,
-}: {
-  id: string;
-  onChanged?: OnCardChanged;
-  onListChanged?(): void;
-}) {
+function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void }) {
   const { api } = useSession();
   const drafts = useDrafts();
   const [n, setN] = useState(0);
@@ -33,7 +22,6 @@ function CardDetail({
     setError(null);
     try {
       await api.setCardFrozen(id, frozen);
-      await onChanged?.(id, frozen);
       await drafts.done([frozen ? 'CARD_FREEZE' : 'CARD_UNFREEZE'], id, { cardId: id });
       setN((x) => x + 1);
       onListChanged?.();
@@ -89,7 +77,7 @@ function CardDetail({
   );
 }
 
-export function CardsScreen({ onChanged }: { onChanged?: OnCardChanged }) {
+export function CardsScreen() {
   const { api } = useSession();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -134,7 +122,7 @@ export function CardsScreen({ onChanged }: { onChanged?: OnCardChanged }) {
               <Button variant="ghost" onClick={() => navigate('/cards')}>
                 Back to cards
               </Button>
-              <CardDetail id={id} onChanged={onChanged} onListChanged={() => setVersion((x) => x + 1)} />
+              <CardDetail id={id} onListChanged={() => setVersion((x) => x + 1)} />
             </>
           )}
         </div>

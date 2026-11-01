@@ -22,9 +22,6 @@ import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
 import { Amt, Last4, Load, human, stateStatus } from './common';
 
-/** Called after a payment the founder sent from this form, so a drafted action can be confirmed (OG-031). */
-export type OnSent = (payment: Payment) => void | Promise<void>;
-
 function to(p: Payment, accounts: Account[], recipients: Recipient[]) {
   if (p.toAccountId) {
     const a = accounts.find((x) => x.id === p.toAccountId);
@@ -87,7 +84,7 @@ export function PaymentDetail({ id }: { id: string }) {
 }
 
 /** New payment: an ACH to a recipient or a transfer between own accounts; review, then send with step-up (OG-030 R4). */
-export function NewPayment({ onSent }: { onSent?: OnSent }) {
+export function NewPayment() {
   const { api } = useSession();
   const drafts = useDrafts();
   const navigate = useNavigate();
@@ -146,7 +143,6 @@ export function NewPayment({ onSent }: { onSent?: OnSent }) {
       created.current = draft;
       const sent = await api.sendPayment(draft.id);
       created.current = null;
-      await onSent?.(sent);
       await drafts.done(['PAYMENT', 'INTERNAL_TRANSFER'], sent.id, {
         fromAccountId: fromId,
         amountMinor: minor,
@@ -299,7 +295,7 @@ export function NewPayment({ onSent }: { onSent?: OnSent }) {
   );
 }
 
-export function PaymentsScreen({ onSent }: { onSent?: OnSent }) {
+export function PaymentsScreen() {
   const { api, can } = useSession();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -392,7 +388,7 @@ export function PaymentsScreen({ onSent }: { onSent?: OnSent }) {
           )}
           {isNew ? (
             can(Permission.PAYMENT_CREATE) ? (
-              <NewPayment onSent={onSent} />
+              <NewPayment />
             ) : (
               <Notice status="info">Your role does not allow this. An owner of the company can do it.</Notice>
             )
