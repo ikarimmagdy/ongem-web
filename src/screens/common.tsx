@@ -49,7 +49,11 @@ export function Last4({ value }: { value?: string | null }) {
 
 export function stateStatus(state: string): Status {
   const s = state.toUpperCase();
-  if (['SETTLED', 'SENT', 'ACTIVE', 'OPEN', 'CLEAR', 'RESOLVED', 'APPROVED', 'CONFIRMED'].includes(s))
+  if (
+    ['SETTLED', 'SENT', 'ACTIVE', 'OPEN', 'CLEAR', 'RESOLVED', 'APPROVED', 'CONFIRMED', 'ACCEPTED'].includes(
+      s,
+    )
+  )
     return 'success';
   if (['RETURNED', 'FAILED', 'REFUSED', 'BLOCKED', 'CLOSED', 'REJECTED', 'CANCELLED'].includes(s))
     return 'failure';

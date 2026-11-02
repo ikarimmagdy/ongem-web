@@ -1,6 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DemoOnGemApi } from '../api/demo';
+import { readLabel } from '../assistant/readLabel';
 import { renderApp } from './render';
 
 async function ask(text: string) {
@@ -38,6 +39,21 @@ describe('assistant widget on the web (OG-031 R4)', () => {
     expect(draft.state).toBe('CONFIRMED');
     expect(draft.resultRef).toBe((await api.payments()).items[0]!.id);
     expect(api.stepUps).toEqual(['payment']);
+  });
+
+  it('the tool line reads as words, never a raw tool name G_157_TOOLS', async () => {
+    renderApp('/');
+    const turn = await ask('What is my balance?');
+    const line = within(turn).getByTestId('assistant-read');
+    expect(line).toHaveTextContent(/^Checked /);
+    expect(line.textContent).not.toMatch(/_|\blist\b|\bget\b/);
+    expect(readLabel(['list_accounts', 'get_account', 'list_transactions'])).toBe(
+      'Checked your accounts and transactions',
+    );
+    expect(readLabel(['list_payments', 'list_recipients', 'get_me'])).toBe(
+      'Checked payments, recipients and your profile',
+    );
+    expect(readLabel(['some_new_tool'])).toBeNull();
   });
 
   it('a dismissed draft runs nothing AC_R4_3', async () => {

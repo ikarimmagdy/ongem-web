@@ -21,3 +21,14 @@ describe('shell and sign-in (OG-030 R1)', () => {
     expect(await screen.findByTestId('explore-demo')).toBeInTheDocument();
   });
 });
+
+describe('home (G-157)', () => {
+  it('greets the founder by name and shows the company name and the bank identity state G_157', async () => {
+    renderApp('/');
+    expect(await screen.findByRole('heading', { name: 'Hello, Dana' })).toBeInTheDocument();
+    const company = await screen.findByTestId('home-company');
+    expect(company).toHaveTextContent('Northwind Labs LLC');
+    expect(company).not.toHaveTextContent(/cmp_/);
+    expect(screen.getByTestId('home-verification')).toHaveTextContent('Accepted');
+  });
+});

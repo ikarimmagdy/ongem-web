@@ -4,6 +4,7 @@ import type { AssistantDraft, AssistantTurn } from '../api/types';
 import { Button, Input } from '../design-system';
 import { useSession } from '../session';
 import { useDrafts } from './drafts';
+import { readLabel } from './readLabel';
 
 /** The floating assistant (OG-031 R4): reads and drafts only; a draft opens the normal screen for the founder to confirm. */
 export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: string | null }) {
@@ -101,9 +102,9 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
                     <p className="og-message__body" data-mask="">
                       {t.reply}
                     </p>
-                    {t.reads.length > 0 && (
-                      <div className="fw-msg__who">
-                        Read {t.reads.map((r) => r.tool.replace(/_/g, ' ')).join(', ')}
+                    {readLabel(t.reads.map((r) => r.tool)) && (
+                      <div className="fw-msg__who" data-testid="assistant-read">
+                        {readLabel(t.reads.map((r) => r.tool))}
                       </div>
                     )}
                   </div>
