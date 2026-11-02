@@ -1,3 +1,5 @@
+import type { CardWidgetKind } from './types';
+
 /** The customer endpoints, one place, the same as ongem-app's ApiPaths. */
 const q = encodeURIComponent;
 
@@ -19,6 +21,7 @@ export const paths = {
   sendPayment: (id: string) => `/v1/payments/${q(id)}/send`,
   cards: (cursor?: string | null) => `/v1/cards${cursor ? `?cursor=${q(cursor)}` : ''}`,
   card: (id: string) => `/v1/cards/${q(id)}`,
+  cardWidget: (id: string, kind: CardWidgetKind) => `/v1/cards/${q(id)}/widget-token?kind=${kind}`,
   cardFreeze: (id: string, frozen: boolean) => `/v1/cards/${q(id)}/${frozen ? 'freeze' : 'unfreeze'}`,
   applications: '/v1/onboarding/applications',
   application: (id: string) => `/v1/onboarding/applications/${q(id)}`,

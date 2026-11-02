@@ -8,6 +8,8 @@ import type {
   Application,
   Card,
   CardPage,
+  CardWidgetKind,
+  CardWidgetSession,
   CreatePayment,
   CreateRecipient,
   DisclosureEventView,
@@ -49,6 +51,8 @@ export interface OnGemApi {
   cards(cursor?: string | null): Promise<CardPage>;
   card(id: string): Promise<Card>;
   setCardFrozen(id: string, frozen: boolean): Promise<Card>;
+  /** Step-up: a five minute token for the bank's card widget; never stored. */
+  cardWidget(id: string, kind: CardWidgetKind): Promise<CardWidgetSession>;
   applications(): Promise<Application[]>;
   application(id: string): Promise<Application>;
   putOwnerIdentity(applicationId: string, ownerId: string, identity: OwnerIdentity): Promise<Owner>;

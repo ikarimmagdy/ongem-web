@@ -10,6 +10,7 @@ import type {
   OwnerIdentity,
   Recipient,
   RecipientPage,
+  CardWidgetKind,
 } from './types';
 
 export interface LiveOptions {
@@ -212,6 +213,8 @@ export class LiveOnGemApi implements OnGemApi {
   card: OnGemApi['card'] = (id: string) => this.call('GET', paths.card(id));
   setCardFrozen: OnGemApi['setCardFrozen'] = (id: string, frozen: boolean) =>
     this.call('POST', paths.cardFreeze(id, frozen));
+  cardWidget: OnGemApi['cardWidget'] = (id: string, kind: CardWidgetKind) =>
+    this.call('GET', paths.cardWidget(id, kind));
   applications: OnGemApi['applications'] = () => this.call('GET', paths.applications);
   application: OnGemApi['application'] = (id: string) => this.call('GET', paths.application(id));
   putOwnerIdentity: OnGemApi['putOwnerIdentity'] = (app: string, owner: string, identity: OwnerIdentity) =>

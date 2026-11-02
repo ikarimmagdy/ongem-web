@@ -62,3 +62,8 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   renders over it. A build without `VITE_CLERK_PUBLISHABLE_KEY` never bundles Clerk (`src/auth/key.ts`). The signed-in
   chunk is prefetched 1.5 s after load. `node scripts/lcp-probe.mjs [url] [runs]` measures cold FCP, LCP and CLS at
   phone width on a throttled connection.
+- 2026-11-02: card widgets (Synctera widgets, WS `docs/synctera/cards.md` s6): `src/screens/CardWidget.tsx` loads the
+  bank's widget script (assets or assets-sandbox only) and renders its element in a `data-block` host, so rrweb records
+  neither the frame nor the token; `security-headers.json` allows both asset hosts in script-src and frame-src and the
+  asset and API hosts in connect-src. Home greets the founder and shows the company and the bank identity state; the
+  assistant's tool line is `src/assistant/readLabel.ts` words, never a raw tool name.

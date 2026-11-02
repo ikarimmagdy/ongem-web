@@ -148,6 +148,24 @@ export interface Card {
   updatedAt?: string | null;
 }
 
+/** The bank's card widgets: number, CVV and expiry; the PIN; setting the PIN; activating a physical card. */
+export type CardWidgetKind = 'REVEAL' | 'GET_PIN' | 'SET_PIN' | 'ACTIVATE';
+
+/**
+ * A five minute session for the bank's widget (ongem-core `openCardWidget`). The number and PIN stay in the bank's
+ * frame; `scriptUrl` and `element` are null for the simulator, which the app draws itself from sample data.
+ */
+export interface CardWidgetSession {
+  cardId: string;
+  kind: CardWidgetKind;
+  token: string;
+  expiresAt: string;
+  environment: 'production' | 'sandbox' | 'simulator' | string;
+  scriptUrl?: string | null;
+  element?: string | null;
+  last4: string;
+}
+
 export interface CardPage {
   items: Card[];
   next?: string | null;

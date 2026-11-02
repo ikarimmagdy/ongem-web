@@ -1,6 +1,8 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DemoOnGemApi } from '../api/demo';
+import { ApiError, errorText } from '../api/errors';
+import { paymentStatusLine } from '../screens/Payments';
 import { renderApp } from './render';
 
 describe('payments (OG-030 R4)', () => {
@@ -16,6 +18,19 @@ describe('payments (OG-030 R4)', () => {
     await userEvent.click(screen.getByTestId('reverify-confirm'));
     const detail = await screen.findByTestId('payment-detail');
     expect(within(detail).getAllByText('Submitted').length).toBeGreaterThan(0);
+    // SL1-15: where the payment is, in words, announced as a status.
+    expect(within(detail).getByRole('status')).toHaveTextContent(/^Sent\./);
+  });
+
+  it('SL1_15 status lines and the low balance message', () => {
+    expect(paymentStatusLine('PRECHECKED')).toBe(
+      'Sending. Our banking partner did not answer yet. We will not send it twice.',
+    );
+    expect(paymentStatusLine('SUBMITTED', 'ach_5c2e')).toBe('Sent. Bank reference ach_5c2e.');
+    expect(paymentStatusLine('SETTLED')).toBe('Settled.');
+    expect(errorText(new ApiError(409, 'insufficient_funds', 'x'))).toBe(
+      'Your available balance is lower than this payment.',
+    );
   });
 
   it('internal_transfer_moves_both_balances_AC_R4_1', async () => {

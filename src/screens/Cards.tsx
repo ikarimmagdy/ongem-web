@@ -5,7 +5,16 @@ import { Button, Card, EmptyState, KeyValue, Notice, PageHeader, StatusChip } fr
 import { useAsync } from '../lib/useAsync';
 import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
+import type { CardWidgetKind, CardWidgetSession } from '../api/types';
+import { CardWidget } from './CardWidget';
 import { Last4, Load, human, stateStatus } from './common';
+
+const WIDGET_LABELS: Record<CardWidgetKind, string> = {
+  REVEAL: 'Show card details',
+  GET_PIN: 'Show PIN',
+  SET_PIN: 'Set PIN',
+  ACTIVATE: 'Activate card',
+};
 
 function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void }) {
   const { api } = useSession();
@@ -15,6 +24,21 @@ function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inFlight = useRef(false);
+  const [widget, setWidget] = useState<CardWidgetSession | null>(null);
+  const [opening, setOpening] = useState<CardWidgetKind | null>(null);
+  const openWidget = async (kind: CardWidgetKind) => {
+    if (opening) return;
+    setOpening(kind);
+    setError(null);
+    setWidget(null);
+    try {
+      setWidget(await api.cardWidget(id, kind));
+    } catch (e) {
+      setError(errorText(e));
+    } finally {
+      setOpening(null);
+    }
+  };
   const toggle = async (frozen: boolean) => {
     if (inFlight.current) return;
     inFlight.current = true;
@@ -57,8 +81,33 @@ function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void 
               },
             ]}
           />
-          <p>The full card number stays with the bank and is never shown here.</p>
+          <p>The bank shows the card number and PIN in its own secure view. OnGem never sees them.</p>
           {error && <Notice status="failure">{error}</Notice>}
+          {widget && (
+            <CardWidget
+              key={`${widget.kind}-${widget.expiresAt}`}
+              session={widget}
+              onClose={() => setWidget(null)}
+            />
+          )}
+          <div className="fw-actions" data-testid="card-widget-actions">
+            {(c.state === 'ACTIVE' || c.state === 'FROZEN'
+              ? (['REVEAL', 'GET_PIN', 'SET_PIN'] as const)
+              : c.state === 'PENDING'
+                ? (['ACTIVATE'] as const)
+                : []
+            ).map((k) => (
+              <Button
+                key={k}
+                variant="secondary"
+                data-testid={`card-widget-${k.toLowerCase()}`}
+                disabled={opening !== null}
+                onClick={() => void openWidget(k)}
+              >
+                {WIDGET_LABELS[k]}
+              </Button>
+            ))}
+          </div>
           <div className="fw-actions">
             {c.state === 'ACTIVE' && (
               <Button data-testid="card-freeze" disabled={busy} onClick={() => void toggle(true)}>

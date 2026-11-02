@@ -119,6 +119,8 @@ function Disclosures({ list, onDone }: { list: RequiredDisclosure[]; onDone(): v
   );
 }
 
+/** States in which the bank is deciding (the app's "The bank's review" step). */
+const WAITING = ['SUBMITTED', 'VERIFYING', 'PENDING_BANK', 'IN_REVIEW', 'MORE_INFO', 'EDD'];
 export function OnboardingScreen() {
   const { api } = useSession();
   const [n, setN] = useState(0);
@@ -193,6 +195,14 @@ export function OnboardingScreen() {
                   ]}
                 />
               </Card>
+              {WAITING.includes(app.state) && (
+                <Notice status="info">
+                  <span role="status" aria-live="polite" data-testid="bank-waiting">
+                    The bank is reviewing your application. This can take a few days. Check back here for
+                    updates.
+                  </span>
+                </Notice>
+              )}
               {error && <Notice status="failure">{error}</Notice>}
               <Card title="Owners">
                 <ul className="fw-list">

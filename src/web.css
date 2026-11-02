@@ -248,3 +248,23 @@
     bottom: calc(var(--space-3xl) * 1.75);
   }
 }
+
+.fw-widget {
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  margin-block: var(--space-md);
+}
+.fw-widget__title {
+  margin: 0;
+  font-size: var(--font-size-md);
+}
+.fw-widget__frame {
+  min-height: 12rem;
+}
+.fw-widget__note {
+  margin: 0;
+  color: var(--color-text-secondary);
+}

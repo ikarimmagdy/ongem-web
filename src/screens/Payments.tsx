@@ -30,6 +30,23 @@ function to(p: Payment, accounts: Account[], recipients: Recipient[]) {
   return recipients.find((r) => r.id === p.recipientId)?.name ?? 'Recipient';
 }
 
+/** Where the payment is, in words (SL1-15): sending, sent with the bank's reference, or settled. */
+export function paymentStatusLine(state: string, bankReference?: string | null): string {
+  switch (state.toUpperCase()) {
+    case 'DRAFT':
+    case 'PENDING_APPROVAL':
+    case 'PRECHECKED':
+      return 'Sending. Our banking partner did not answer yet. We will not send it twice.';
+    case 'SUBMITTED':
+    case 'BANK_REVIEW':
+      return bankReference ? `Sent. Bank reference ${bankReference}.` : 'Sent. The bank reference follows.';
+    case 'SETTLED':
+      return 'Settled.';
+    default:
+      return human(state);
+  }
+}
+
 export function PaymentDetail({ id }: { id: string }) {
   const { api } = useSession();
   const payment = useAsync(() => api.payment(id), [api, id]);
@@ -44,6 +61,9 @@ export function PaymentDetail({ id }: { id: string }) {
           }
           data-testid="payment-detail"
         >
+          <p role="status" data-testid="payment-status-line">
+            {paymentStatusLine(p.state, p.providerReference)}
+          </p>
           <KeyValue
             items={[
               {

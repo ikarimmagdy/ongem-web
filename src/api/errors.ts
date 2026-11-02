@@ -26,6 +26,7 @@ const MESSAGES: Record<string, string> = {
   draft_not_found: 'The assistant draft is no longer there.',
   idempotency_in_progress:
     'OnGem is still working on this request. Wait a moment and check before trying again; it will not run twice.',
+  insufficient_funds: 'Your available balance is lower than this payment.',
   device_revoked: 'This browser was signed out of OnGem. Sign in again.',
   device_required: 'This browser is not registered with OnGem yet. Sign out, then sign in again.',
 };

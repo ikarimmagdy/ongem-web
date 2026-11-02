@@ -23,6 +23,8 @@ import type {
   RecordedEvent,
   Application,
   Card,
+  CardWidgetKind,
+  CardWidgetSession,
   CreatePayment,
   CreateRecipient,
   Me,
@@ -282,6 +284,25 @@ export class DemoOnGemApi implements OnGemApi {
     const changed = { ...c, state: frozen ? 'FROZEN' : 'ACTIVE', updatedAt: this.now() };
     this.cardsState = this.cardsState.map((x) => (x.id === id ? changed : x));
     return this.log('setCardFrozen', changed);
+  };
+
+  /** The simulator's widget: no bank script, so the screen draws sample data (never a real card number). */
+  cardWidget = async (id: string, kind: CardWidgetKind): Promise<CardWidgetSession> => {
+    this.require(Permission.CARD_MANAGE);
+    const c = this.cardsState.find((x) => x.id === id) ?? this.notFound('card');
+    const ok = kind === 'ACTIVATE' ? c.state === 'PENDING' : c.state === 'ACTIVE' || c.state === 'FROZEN';
+    if (!ok) throw new ApiError(409, 'card_not_active', "This card's details are not available.");
+    await this.stepUp('card_details');
+    return this.log('cardWidget', {
+      cardId: id,
+      kind,
+      token: `demo-widget-${id}`,
+      expiresAt: new Date(Date.now() + 5 * 60_000).toISOString(),
+      environment: 'simulator',
+      scriptUrl: null,
+      element: null,
+      last4: c.last4,
+    });
   };
 
   private static progress = ['SUBMITTED', 'VERIFYING', 'MORE_INFO', 'IN_REVIEW', 'APPROVED', 'ACTIVE'];
