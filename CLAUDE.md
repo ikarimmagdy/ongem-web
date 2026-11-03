@@ -67,3 +67,7 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   neither the frame nor the token; `security-headers.json` allows both asset hosts in script-src and frame-src and the
   asset and API hosts in connect-src. Home greets the founder and shows the company and the bank identity state; the
   assistant's tool line is `src/assistant/readLabel.ts` words, never a raw tool name.
+- 2026-11-03: screen recording off (G-156, Karim: not needed): `RECORDING_ENABLED` in `src/recording/Recorder.tsx` is
+  the one switch, false; the shell does not mount the Recorder, so nothing reaches /v1/recording. CI
+  (`.github/workflows/ci.yml`, as ongem-admin's) runs lint, typecheck, tests, build and OSV-Scanner failing on high and
+  critical (G-125); it runs once the GitHub remote exists.
