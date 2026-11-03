@@ -27,6 +27,8 @@ import type {
   CardWidgetSession,
   CreatePayment,
   CreateRecipient,
+  IdCapture,
+  IdDocument,
   Me,
   OpenTicket,
   OwnerIdentity,
@@ -41,7 +43,12 @@ export interface DemoOptions {
   now?: () => string;
   /** The company picked in the switcher (G-69); null is the person's default. */
   companyId?: string | null;
+  /** The application to start from (tests); the sample one otherwise. */
+  application?: Application;
 }
+
+/** Submitted and not yet decided: the bank may still ask for an ID document (ongem-core FounderDocv.OPEN). */
+const CAPTURE_OPEN = ['SUBMITTED', 'VERIFYING', 'MORE_INFO', 'IN_REVIEW', 'EDD', 'PENDING_BANK'];
 
 /**
  * Demo mode (OG-030): ongem-app's DemoOnGemApi in TypeScript. Sample data that follows ongem-core's shapes, roles and
@@ -53,7 +60,8 @@ export class DemoOnGemApi implements OnGemApi {
   private recipientsState = demoRecipients();
   private paymentsState: Payment[] = demoPayments();
   private cardsState: Card[] = demoCards();
-  private applicationState: Application = demoApplication();
+  private applicationState: Application;
+  private captures: IdCapture[] = [];
   private disclosuresState = demoDisclosures();
   private ticketsState: TicketDetail[] = demoTickets();
   private seq = 0;
@@ -70,6 +78,7 @@ export class DemoOnGemApi implements OnGemApi {
     const me = opts.me ?? demoMe;
     this.me_ = opts.companyId ? { ...me, companyId: opts.companyId } : me;
     this.now = opts.now ?? (() => '2026-10-29T15:00:00Z');
+    this.applicationState = opts.application ?? demoApplication();
   }
 
   private next(prefix: string) {
@@ -379,6 +388,51 @@ export class DemoOnGemApi implements OnGemApi {
     if (app.state !== 'READY_FOR_DISCLOSURES') throw new ApiError(409, 'invalid_state');
     this.applicationState = { ...app, state: 'SUBMITTED' };
     return this.log('submitApplication', this.applicationState);
+  };
+
+  /** The founder's own owner record; demo mode has no capture page, so `captureUrl` stays empty. */
+  startIdCapture = async (id: string, document: IdDocument, sendSms: boolean) => {
+    this.require(Permission.ONBOARDING_MANAGE);
+    const app = this.applicationState;
+    if (id !== app.id) this.notFound('application');
+    if (!CAPTURE_OPEN.includes(app.state))
+      throw new ApiError(409, 'invalid_state', 'ID capture is open only while the bank is checking the application.');
+    const owner = app.owners.find((o) => o.founder) ?? this.notFound('owner');
+    const at = this.now();
+    const capture: IdCapture = {
+      id: this.next('cap'),
+      ownerId: owner.id,
+      document,
+      stage: 'WAITING',
+      kycStatus: null,
+      smsRequested: sendSms,
+      createdAt: at,
+      updatedAt: at,
+      captureUrl: null,
+    };
+    this.captures = [capture, ...this.captures];
+    return this.log('startIdCapture', capture);
+  };
+
+  idCaptures = async (id: string) => {
+    this.require(Permission.ONBOARDING_MANAGE);
+    if (id !== this.applicationState.id) this.notFound('application');
+    return this.log('idCaptures', this.captures);
+  };
+
+  /** Each read moves the demo session one step: photos received, then the bank's answer. */
+  idCapture = async (id: string, captureId: string) => {
+    this.require(Permission.ONBOARDING_MANAGE);
+    if (id !== this.applicationState.id) this.notFound('application');
+    const c = this.captures.find((x) => x.id === captureId) ?? this.notFound('capture');
+    const next: IdCapture =
+      c.stage === 'WAITING'
+        ? { ...c, stage: 'CAPTURED' }
+        : c.stage === 'CAPTURED'
+          ? { ...c, stage: 'VERIFIED', kycStatus: 'ACCEPTED' }
+          : c;
+    this.captures = this.captures.map((x) => (x.id === c.id ? next : x));
+    return this.log('idCapture', next);
   };
 
   requiredDisclosures = async () => this.log('requiredDisclosures', this.disclosuresState);

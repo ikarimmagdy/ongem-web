@@ -1,7 +1,19 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { errorText } from '../api/errors';
-import type { Application, RequiredDisclosure } from '../api/types';
-import { Button, Card, Field, Input, Modal, Notice, PageHeader, StatusChip, Stepper } from '../design-system';
+import type { Application, IdCapture, IdDocument, RequiredDisclosure } from '../api/types';
+import {
+  Button,
+  Card,
+  Field,
+  Input,
+  Modal,
+  Notice,
+  PageHeader,
+  Select,
+  StatusChip,
+  Stepper,
+  type Status,
+} from '../design-system';
 import { useAsync } from '../lib/useAsync';
 import { useSession } from '../session';
 import { Load, human, stateStatus } from './common';
@@ -119,6 +131,170 @@ function Disclosures({ list, onDone }: { list: RequiredDisclosure[]; onDone(): v
   );
 }
 
+const DOCUMENTS: Array<{ value: IdDocument; label: string }> = [
+  { value: 'DRIVERS_LICENSE', label: "Driver's license" },
+  { value: 'PASSPORT', label: 'Passport' },
+  { value: 'ID_CARD', label: 'State ID card' },
+];
+
+/** How often an unfinished capture is read again while this screen is open. */
+export const ID_CAPTURE_POLL_MS = 5000;
+
+/** The capture page the bank gave, only if it is an https address; anything else is never opened. */
+export function safeCaptureUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  try {
+    return new URL(url).protocol === 'https:' ? url : null;
+  } catch {
+    return null;
+  }
+}
+
+/** A capture's stage in words, the same as the app's (G-111). */
+export function captureStatus(c: IdCapture): { status: Status; text: string } {
+  if (c.stage === 'WAITING') return { status: 'pending', text: 'Waiting for your photos' };
+  if (c.stage === 'CAPTURED') return { status: 'pending', text: 'Photos received. The bank is checking them.' };
+  const k = (c.kycStatus ?? '').toUpperCase();
+  if (k === 'ACCEPTED') return { status: 'success', text: 'Your ID is verified' };
+  if (k === 'REJECTED') return { status: 'failure', text: 'The bank could not verify this ID' };
+  return { status: 'pending', text: 'The bank is reviewing your ID' };
+}
+
+/**
+ * G-111: the founder's own ID document capture while the bank is checking the application. "Capture in this browser"
+ * gets the bank's capture page (a link that opens in a new tab, https only); "Text me the link" asks the bank to text it
+ * to the phone it holds. The newest session is read again until the bank has answered.
+ */
+function IdCaptureCard({ app }: { app: Application }) {
+  const { api } = useSession();
+  const [document, setDocument] = useState<IdDocument>('DRIVERS_LICENSE');
+  const [capture, setCapture] = useState<IdCapture | null>(null);
+  const [link, setLink] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const inFlight = useRef(false);
+
+  useEffect(() => {
+    let alive = true;
+    api.idCaptures(app.id).then(
+      (list) => alive && setCapture((c) => c ?? list[0] ?? null),
+      () => undefined,
+    );
+    return () => {
+      alive = false;
+    };
+  }, [api, app.id]);
+
+  const check = async () => {
+    if (!capture || inFlight.current) return;
+    inFlight.current = true;
+    try {
+      setCapture(await api.idCapture(app.id, capture.id));
+      setError(null);
+    } catch (e) {
+      setError(errorText(e));
+    } finally {
+      inFlight.current = false;
+    }
+  };
+
+  const done = capture?.stage === 'VERIFIED';
+  const captureId = capture?.id;
+  useEffect(() => {
+    if (!captureId || done) return;
+    const t = setInterval(() => void check(), ID_CAPTURE_POLL_MS);
+    return () => clearInterval(t);
+  }, [captureId, done]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const start = async (sendSms: boolean) => {
+    if (inFlight.current) return;
+    inFlight.current = true;
+    setBusy(true);
+    setError(null);
+    setLink(null);
+    try {
+      const c = await api.startIdCapture(app.id, document, sendSms);
+      setCapture({ ...c, captureUrl: null });
+      if (!sendSms) {
+        const url = safeCaptureUrl(c.captureUrl);
+        if (url) setLink(url);
+        else if (c.captureUrl) setError('The bank sent a capture address we cannot open. Try Text me the link.');
+      }
+    } catch (e) {
+      setError(errorText(e));
+    } finally {
+      inFlight.current = false;
+      setBusy(false);
+    }
+  };
+
+  const s = capture ? captureStatus(capture) : null;
+  return (
+    <Card title="Verify your ID document">
+      <p>
+        The bank may ask for photos of your ID. Take them in this browser or on your phone. It takes about two
+        minutes.
+      </p>
+      {capture && s && (
+        <p data-testid="id-capture-status">
+          <StatusChip status={s.status}>
+            <span role="status" aria-live="polite">
+              {s.text}
+            </span>
+          </StatusChip>
+        </p>
+      )}
+      {capture?.smsRequested && !done && (
+        <Notice status="info">
+          <span data-testid="id-capture-sms-sent">
+            The bank is texting the link to the phone number it holds for you. Open it on your phone.
+          </span>
+        </Notice>
+      )}
+      {link && (
+        <Notice status="info">
+          <a data-testid="id-capture-open" href={link} target="_blank" rel="noopener noreferrer">
+            Open the capture page
+          </a>{' '}
+          It opens in a new tab. Come back here when you are done.
+        </Notice>
+      )}
+      {api.kind === 'demo' && capture && !capture.smsRequested && !link && !done && (
+        <Notice status="info">Demo mode has no capture page. Check the status to see the next step.</Notice>
+      )}
+      {error && <Notice status="failure">{error}</Notice>}
+      {!done && (
+        <div className="fw-form">
+          <Field label="Document">
+            <Select
+              data-testid="id-capture-document"
+              value={document}
+              options={DOCUMENTS}
+              onChange={(e) => setDocument(e.target.value as IdDocument)}
+            />
+          </Field>
+          <Button data-testid="id-capture-browser" disabled={busy} onClick={() => void start(false)}>
+            Capture in this browser
+          </Button>
+          <Button
+            variant="secondary"
+            data-testid="id-capture-sms"
+            disabled={busy}
+            onClick={() => void start(true)}
+          >
+            Text me the link
+          </Button>
+          {capture && (
+            <Button variant="secondary" data-testid="id-capture-check" onClick={() => void check()}>
+              Check status
+            </Button>
+          )}
+        </div>
+      )}
+    </Card>
+  );
+}
+
 /** States in which the bank is deciding (the app's "The bank's review" step). */
 const WAITING = ['SUBMITTED', 'VERIFYING', 'PENDING_BANK', 'IN_REVIEW', 'MORE_INFO', 'EDD'];
 export function OnboardingScreen() {
@@ -204,6 +380,7 @@ export function OnboardingScreen() {
                 </Notice>
               )}
               {error && <Notice status="failure">{error}</Notice>}
+              {WAITING.includes(app.state) && <IdCaptureCard app={app} />}
               <Card title="Owners">
                 <ul className="fw-list">
                   {app.owners.map((o) => (

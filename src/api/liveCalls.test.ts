@@ -45,6 +45,9 @@ async function record() {
     api.putOwnerIdentity('x', 'o', { idType: 'SSN', number: '1', country: 'US' }),
     api.confirmApplication('x'),
     api.submitApplication('x'),
+    api.startIdCapture('x', 'PASSPORT', false),
+    api.idCaptures('x'),
+    api.idCapture('x', 'c'),
     api.requiredDisclosures(),
     api.disclosureText('d'),
     api.recordDisclosure('d', 'DISPLAYED'),
@@ -75,7 +78,7 @@ function served(call: { method: string; path: string }) {
 describe('every live call is an ongem-core endpoint (OG-030 R8)', () => {
   it('every_live_call_is_in_the_openapi_AC_R8_1', async () => {
     const calls = await record();
-    expect(calls).toHaveLength(37);
+    expect(calls).toHaveLength(40);
     expect(calls.filter((c) => !served(c))).toEqual([]);
   });
 });

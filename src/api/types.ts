@@ -192,6 +192,26 @@ export interface Application {
   requirements: string[];
 }
 
+/** The ID documents the bank's capture accepts (G-111). */
+export type IdDocument = 'DRIVERS_LICENSE' | 'PASSPORT' | 'ID_CARD';
+
+/**
+ * The founder's own ID capture session (G-111, POST and GET /v1/onboarding/applications/{id}/docv). `stage` is WAITING
+ * (no photos yet), CAPTURED (the bank is checking) or VERIFIED (`kycStatus` is the bank's answer). `captureUrl` comes back
+ * once, in the answer to the start, and is never kept.
+ */
+export interface IdCapture {
+  id: string;
+  ownerId: string;
+  document: IdDocument | string;
+  stage: 'WAITING' | 'CAPTURED' | 'VERIFIED' | string;
+  kycStatus: string | null;
+  smsRequested: boolean;
+  createdAt: string;
+  updatedAt: string;
+  captureUrl: string | null;
+}
+
 /** PUT .../owners/{ownerId}/identity. The number exists only inside this request. */
 export interface OwnerIdentity {
   idType: string;

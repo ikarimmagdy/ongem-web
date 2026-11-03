@@ -252,6 +252,10 @@ export class LiveOnGemApi implements OnGemApi {
     this.call('PUT', paths.ownerIdentity(app, owner), { json: identity });
   confirmApplication: OnGemApi['confirmApplication'] = (id: string) => this.call('POST', paths.confirm(id));
   submitApplication: OnGemApi['submitApplication'] = (id: string) => this.call('POST', paths.submit(id));
+  startIdCapture: OnGemApi['startIdCapture'] = (id, document, sendSms) =>
+    this.call('POST', paths.idCaptures(id), { json: { document, sendSms } });
+  idCaptures: OnGemApi['idCaptures'] = (id) => this.call('GET', paths.idCaptures(id));
+  idCapture: OnGemApi['idCapture'] = (id, capture) => this.call('GET', paths.idCapture(id, capture));
   requiredDisclosures: OnGemApi['requiredDisclosures'] = () => this.call('GET', paths.disclosuresRequired);
   disclosureText: OnGemApi['disclosureText'] = (id: string) => this.call('GET', paths.disclosureVersion(id));
   recordDisclosure: OnGemApi['recordDisclosure'] = (versionId: string, kind: string) =>

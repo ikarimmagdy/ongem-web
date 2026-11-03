@@ -96,6 +96,13 @@
   "/v1/onboarding/applications/{id}/confirm": [
     "post"
   ],
+  "/v1/onboarding/applications/{id}/docv": [
+    "get",
+    "post"
+  ],
+  "/v1/onboarding/applications/{id}/docv/{captureId}": [
+    "get"
+  ],
   "/v1/onboarding/applications/{id}/owners/{ownerId}/identity": [
     "put"
   ],

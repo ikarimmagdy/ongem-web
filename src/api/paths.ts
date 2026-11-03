@@ -29,6 +29,8 @@ export const paths = {
     `/v1/onboarding/applications/${q(id)}/owners/${q(owner)}/identity`,
   confirm: (id: string) => `/v1/onboarding/applications/${q(id)}/confirm`,
   submit: (id: string) => `/v1/onboarding/applications/${q(id)}/submit`,
+  idCaptures: (id: string) => `/v1/onboarding/applications/${q(id)}/docv`,
+  idCapture: (id: string, capture: string) => `/v1/onboarding/applications/${q(id)}/docv/${q(capture)}`,
   disclosuresRequired: '/v1/disclosures/required',
   disclosureVersion: (id: string) => `/v1/disclosures/versions/${q(id)}`,
   disclosureEvents: '/v1/disclosures/events',

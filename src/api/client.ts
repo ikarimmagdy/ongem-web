@@ -3,6 +3,8 @@ import type {
   AssistantDraft,
   AssistantTurn,
   Conversation,
+  IdCapture,
+  IdDocument,
   RecordedEvent,
   RecordingSession,
   Application,
@@ -62,6 +64,15 @@ export interface OnGemApi {
   putOwnerIdentity(applicationId: string, ownerId: string, identity: OwnerIdentity): Promise<Owner>;
   confirmApplication(id: string): Promise<Application>;
   submitApplication(id: string): Promise<Application>;
+  /**
+   * G-111: starts the caller's own ID capture; `captureUrl` is in this answer only. With [sendSms] the bank also texts
+   * the link to the phone it holds.
+   */
+  startIdCapture(applicationId: string, document: IdDocument, sendSms: boolean): Promise<IdCapture>;
+  /** The caller's own capture sessions, newest first. */
+  idCaptures(applicationId: string): Promise<IdCapture[]>;
+  /** One session, its status read again from the bank. */
+  idCapture(applicationId: string, captureId: string): Promise<IdCapture>;
   requiredDisclosures(): Promise<RequiredDisclosure[]>;
   disclosureText(versionId: string): Promise<DisclosureText>;
   recordDisclosure(versionId: string, kind: string): Promise<DisclosureEventView>;
