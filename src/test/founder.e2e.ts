@@ -152,7 +152,7 @@ test('WEB-SEC-05 security headers are served and the journey runs under the CSP'
   expect(h['permissions-policy']).toContain('camera=()');
   await page.getByTestId('explore-demo').click();
   await expect(page.getByTestId('home-total')).toBeVisible();
-  await expect(page.getByTestId('recording-session')).toBeAttached();
+  await expect(page.getByTestId('recording-session')).not.toBeAttached();
   await nav(page, 'accounts');
   await page.getByTestId('account-acc_demo_ops').click();
   await expect(page.getByTestId('account-detail')).toBeVisible();

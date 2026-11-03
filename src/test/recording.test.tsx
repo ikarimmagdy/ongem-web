@@ -6,6 +6,12 @@ import { maskAll } from '../recording/mask';
 import { EventQueue, PRIVACY_LINE, RRWEB_OPTIONS } from '../recording/Recorder';
 import { renderApp } from './render';
 
+// The shell's recording switch is off (RECORDING_ENABLED); these tests cover the recorder itself, so they turn it on.
+vi.mock('../recording/Recorder', async (actual) => ({
+  ...(await actual<typeof import('../recording/Recorder')>()),
+  RECORDING_ENABLED: true,
+}));
+
 describe('recording (OG-031 R5, R6, R8)', () => {
   it('screen_and_action_events_AC_R5_2', async () => {
     const api = new DemoOnGemApi();

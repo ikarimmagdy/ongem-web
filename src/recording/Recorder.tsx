@@ -20,6 +20,12 @@ export const RRWEB_OPTIONS = {
   sampling: { mousemove: false, scroll: 500, input: 'last' as const },
 };
 
+/**
+ * The one switch for screen and action recording in the founder web app: off (Karim, 2026-11-03, recording is not
+ * needed). Off, the signed-in shell never mounts [Recorder], so no session starts and nothing is sent to /v1/recording.
+ */
+export const RECORDING_ENABLED = false;
+
 const RRWEB_META = 4;
 
 /** rrweb's Meta event carries the page URL; the query of a prefilled form holds amounts and messages, so it goes. */

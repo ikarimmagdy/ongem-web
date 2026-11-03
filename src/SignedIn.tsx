@@ -16,7 +16,7 @@ import { SupportScreen } from './screens/Support';
 import { useSession } from './session';
 import { AssistantWidget } from './assistant/AssistantWidget';
 import { DraftProvider } from './assistant/drafts';
-import { Recorder } from './recording/Recorder';
+import { RECORDING_ENABLED, Recorder } from './recording/Recorder';
 import { NAV } from './nav';
 
 function Shell({ children }: { children: ReactNode }) {
@@ -111,7 +111,7 @@ function CompanyScope() {
   return (
     <DraftProvider>
       <Shell>
-        <Recorder onSession={setRecording} />
+        {RECORDING_ENABLED && <Recorder onSession={setRecording} />}
         <Routes>
           <Route path="/" element={<HomeScreen />} />
           <Route path="/accounts" element={<AccountsScreen />} />

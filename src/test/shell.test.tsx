@@ -1,5 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { DemoOnGemApi } from '../api/demo';
+import { RECORDING_ENABLED } from '../recording/Recorder';
 import { renderApp } from './render';
 
 describe('shell and sign-in (OG-030 R1)', () => {
@@ -13,6 +15,21 @@ describe('shell and sign-in (OG-030 R1)', () => {
     for (const label of ['Home', 'Accounts', 'Payments', 'Cards', 'Support', 'Settings']) {
       expect(within(nav).getByRole('link', { name: label })).toBeInTheDocument();
     }
+  });
+
+  it('screen recording is off: no session starts and no event is sent', async () => {
+    expect(RECORDING_ENABLED).toBe(false);
+    const api = new DemoOnGemApi();
+    renderApp('/', { api });
+    await screen.findByTestId('home-total');
+    await userEvent.click(screen.getAllByTestId('nav-accounts')[0]!);
+    await screen.findByTestId('accounts-list');
+    await userEvent.click(screen.getAllByTestId('nav-settings')[0]!);
+    await screen.findByTestId('sign-out');
+    expect(screen.queryByTestId('recording-session')).not.toBeInTheDocument();
+    expect(api.calls).not.toContain('startRecording');
+    expect(api.calls).not.toContain('recordEvents');
+    expect(api.recorded).toEqual([]);
   });
 
   it('leaving demo returns to sign-in', async () => {
