@@ -118,6 +118,7 @@ function CompanyScope() {
           <Route path="/accounts/:id" element={<AccountsScreen />} />
           <Route path="/payments" element={<PaymentsScreen />} />
           <Route path="/payments/new" element={<PaymentsScreen />} />
+          <Route path="/payments/top-up" element={<PaymentsScreen />} />
           <Route path="/payments/:id" element={<PaymentsScreen />} />
           <Route path="/recipients" element={<RecipientsScreen />} />
           <Route path="/cards" element={<CardsScreen />} />

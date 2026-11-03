@@ -36,6 +36,20 @@ async function record() {
     api.payment('p'),
     api.createPayment({ fromAccountId: 'a', rail: 'ACH', amountMinor: 1, currency: 'USD' }),
     api.sendPayment('p'),
+    api.approvePayment('p'),
+    api.rejectPayment('p'),
+    api.fundingSources(),
+    api.fundingSource('f'),
+    api.linkFundingSource({
+      accountId: 'a',
+      method: 'MANUAL',
+      accountNumber: '1234',
+      routingNumber: '021000021',
+      accountType: 'CHECKING',
+      ownerName: 'n',
+    }),
+    api.removeFundingSource('f'),
+    api.createTopUp({ fundingSourceId: 'f', toAccountId: 'a', amountMinor: 1, currency: 'USD' }),
     api.cards(),
     api.card('c'),
     api.setCardFrozen('c', true),
@@ -78,7 +92,7 @@ function served(call: { method: string; path: string }) {
 describe('every live call is an ongem-core endpoint (OG-030 R8)', () => {
   it('every_live_call_is_in_the_openapi_AC_R8_1', async () => {
     const calls = await record();
-    expect(calls).toHaveLength(40);
+    expect(calls).toHaveLength(47);
     expect(calls.filter((c) => !served(c))).toEqual([]);
   });
 });

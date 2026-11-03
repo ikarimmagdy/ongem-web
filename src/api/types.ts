@@ -114,6 +114,46 @@ export interface Payment {
   createdAt?: string | null;
   returnCode?: string | null;
   returnReason?: string | null;
+  /** G-40: set on a top-up, an ACH debit from the company's own account at another bank into `fromAccountId`. */
+  fundingSourceId?: string | null;
+}
+
+/**
+ * G-40: the company's own account at another bank, for top-ups. UNVERIFIED (typed in; the bank has not verified it, so
+ * nothing can be pulled from it yet), VERIFIED (top-ups allowed) or REMOVED. Only the last four digits come back.
+ */
+export interface FundingSource {
+  id: string;
+  accountId: string;
+  method: string;
+  aggregator?: string | null;
+  nickname?: string | null;
+  last4: string;
+  routingNumber?: string | null;
+  accountType?: string | null;
+  state: 'UNVERIFIED' | 'VERIFIED' | 'REMOVED' | string;
+  createdAt: string;
+  verifiedAt?: string | null;
+}
+
+/** POST /v1/funding-sources, typed in (MANUAL). The account number exists only inside this request. */
+export interface LinkFundingSource {
+  accountId: string;
+  method: 'MANUAL';
+  accountNumber: string;
+  routingNumber: string;
+  accountType: 'CHECKING' | 'SAVINGS';
+  ownerName: string;
+  nickname?: string | null;
+}
+
+/** POST /v1/top-ups. */
+export interface CreateTopUp {
+  fundingSourceId: string;
+  toAccountId: string;
+  amountMinor: number;
+  currency: string;
+  reference?: string | null;
 }
 
 export interface RecipientPage {

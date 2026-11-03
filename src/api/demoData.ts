@@ -10,6 +10,7 @@ import type {
   Statement,
   TicketDetail,
   Transaction,
+  FundingSource,
 } from './types';
 
 /** Demo mode's sample data, ported from ongem-app's DemoData.kt (same ids, names and amounts). Fictional only. */
@@ -114,6 +115,23 @@ export function demoStatement(accountId: string, period: string): Statement {
     transactions: accountId === OPS ? lines : lines.slice(0, 1),
   };
 }
+
+/** G-40: the company's own account at another bank, already verified through the aggregator (sample). */
+export const demoFundingSources = (): FundingSource[] => [
+  {
+    id: 'fsrc_demo_main',
+    accountId: OPS,
+    method: 'AGGREGATOR',
+    aggregator: 'PLAID',
+    nickname: 'Main bank',
+    last4: '3321',
+    routingNumber: '021000021',
+    accountType: 'CHECKING',
+    state: 'VERIFIED',
+    createdAt: '2026-10-20T09:00:00Z',
+    verifiedAt: '2026-10-20T09:00:00Z',
+  },
+];
 
 export const demoRecipients = (): Recipient[] => [
   {

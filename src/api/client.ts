@@ -13,6 +13,9 @@ import type {
   CardWidgetKind,
   CardWidgetSession,
   CreatePayment,
+  CreateTopUp,
+  FundingSource,
+  LinkFundingSource,
   CreateRecipient,
   DisclosureEventView,
   DisclosureText,
@@ -54,6 +57,20 @@ export interface OnGemApi {
   createPayment(request: CreatePayment): Promise<Payment>;
   /** Step-up, the same Idempotency-Key on the retry. */
   sendPayment(id: string): Promise<Payment>;
+  /** A second person approves a payment waiting in PENDING_APPROVAL (not its maker); step-up. */
+  approvePayment(id: string): Promise<Payment>;
+  /** A second person declines it; it ends REJECTED and nothing moves. */
+  rejectPayment(id: string): Promise<Payment>;
+  /** G-40: the company's own accounts at other banks, not removed, newest first. */
+  fundingSources(): Promise<FundingSource[]>;
+  /** One, read again at the bank: an UNVERIFIED one becomes VERIFIED once the bank holds it so. */
+  fundingSource(id: string): Promise<FundingSource>;
+  /** Step-up. Typed in, so it starts UNVERIFIED. */
+  linkFundingSource(request: LinkFundingSource): Promise<FundingSource>;
+  /** Step-up. A top-up already sent is not affected. */
+  removeFundingSource(id: string): Promise<FundingSource>;
+  /** Step-up. An ACH debit from a VERIFIED funding source; the answer is the payment, often PENDING_APPROVAL. */
+  createTopUp(request: CreateTopUp): Promise<Payment>;
   cards(cursor?: string | null): Promise<CardPage>;
   card(id: string): Promise<Card>;
   setCardFrozen(id: string, frozen: boolean): Promise<Card>;
@@ -97,6 +114,7 @@ export const Permission = {
   ACCOUNT_VIEW: 'account:view',
   PAYMENT_VIEW: 'payment:view',
   PAYMENT_CREATE: 'payment:create',
+  PAYMENT_APPROVE: 'payment:approve',
   RECIPIENT_MANAGE: 'recipient:manage',
   CARD_MANAGE: 'card:manage',
   ONBOARDING_MANAGE: 'onboarding:manage',
@@ -110,7 +128,7 @@ export function permissionsOf(role: string | null | undefined): Set<string> {
     case 'ADMIN':
       return new Set([p.RECIPIENT_MANAGE, p.PAYMENT_CREATE, p.PAYMENT_VIEW, p.CARD_MANAGE, p.ACCOUNT_VIEW]);
     case 'APPROVER':
-      return new Set([p.PAYMENT_VIEW, p.ACCOUNT_VIEW]);
+      return new Set([p.PAYMENT_APPROVE, p.PAYMENT_VIEW, p.ACCOUNT_VIEW]);
     case 'MEMBER':
       return new Set([p.PAYMENT_CREATE, p.PAYMENT_VIEW, p.RECIPIENT_MANAGE, p.ACCOUNT_VIEW]);
     case 'VIEWER':

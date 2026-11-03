@@ -27,6 +27,15 @@ const MESSAGES: Record<string, string> = {
   idempotency_in_progress:
     'OnGem is still working on this request. Wait a moment and check before trying again; it will not run twice.',
   insufficient_funds: 'Your available balance is lower than this payment.',
+  funding_source_not_verified:
+    'The bank has not verified this account yet, so nothing can be pulled from it. Check it again later.',
+  funding_source_refused: 'The bank could not link this account. Check the numbers and try again.',
+  funding_source_not_found: 'That account is no longer linked.',
+  limit_exceeded: 'This top-up is over the limit of US$25,000.00 for one top-up.',
+  daily_limit_exceeded: 'This would go over the top-up limit of US$50,000.00 a day.',
+  rail_unavailable: 'Link this account for an OnGem account at the same bank.',
+  self_approval_forbidden: 'A second person approves this, not the person who made it.',
+  payment_not_pending_approval: 'This payment is no longer waiting for approval.',
   company_not_member: 'You are no longer a member of that company. OnGem opened your default company.',
   device_revoked: 'This browser was signed out of OnGem. Sign in again.',
   device_required: 'This browser is not registered with OnGem yet. Sign out, then sign in again.',

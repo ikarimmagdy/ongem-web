@@ -153,7 +153,8 @@ export function safeCaptureUrl(url: string | null | undefined): string | null {
 /** A capture's stage in words, the same as the app's (G-111). */
 export function captureStatus(c: IdCapture): { status: Status; text: string } {
   if (c.stage === 'WAITING') return { status: 'pending', text: 'Waiting for your photos' };
-  if (c.stage === 'CAPTURED') return { status: 'pending', text: 'Photos received. The bank is checking them.' };
+  if (c.stage === 'CAPTURED')
+    return { status: 'pending', text: 'Photos received. The bank is checking them.' };
   const k = (c.kycStatus ?? '').toUpperCase();
   if (k === 'ACCEPTED') return { status: 'success', text: 'Your ID is verified' };
   if (k === 'REJECTED') return { status: 'failure', text: 'The bank could not verify this ID' };
@@ -218,7 +219,8 @@ function IdCaptureCard({ app }: { app: Application }) {
       if (!sendSms) {
         const url = safeCaptureUrl(c.captureUrl);
         if (url) setLink(url);
-        else if (c.captureUrl) setError('The bank sent a capture address we cannot open. Try Text me the link.');
+        else if (c.captureUrl)
+          setError('The bank sent a capture address we cannot open. Try Text me the link.');
       }
     } catch (e) {
       setError(errorText(e));

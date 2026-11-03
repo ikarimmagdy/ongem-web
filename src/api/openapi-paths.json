@@ -84,6 +84,14 @@
   "/v1/disclosures/versions/{id}": [
     "get"
   ],
+  "/v1/funding-sources": [
+    "get",
+    "post"
+  ],
+  "/v1/funding-sources/{id}": [
+    "delete",
+    "get"
+  ],
   "/v1/me": [
     "get"
   ],
@@ -533,6 +541,9 @@
     "get"
   ],
   "/v1/support/tickets/{id}/messages": [
+    "post"
+  ],
+  "/v1/top-ups": [
     "post"
   ]
 }

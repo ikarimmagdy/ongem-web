@@ -82,6 +82,11 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
 }
+.fw-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
 .fw-actions {
   display: flex;
   flex-wrap: wrap;

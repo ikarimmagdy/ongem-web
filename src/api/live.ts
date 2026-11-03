@@ -240,6 +240,14 @@ export class LiveOnGemApi implements OnGemApi {
   createPayment: OnGemApi['createPayment'] = (p: CreatePayment) =>
     this.call('POST', paths.createPayment, { json: p });
   sendPayment: OnGemApi['sendPayment'] = (id: string) => this.call('POST', paths.sendPayment(id));
+  approvePayment: OnGemApi['approvePayment'] = (id) => this.call('POST', paths.approvePayment(id));
+  rejectPayment: OnGemApi['rejectPayment'] = (id) => this.call('POST', paths.rejectPayment(id));
+  fundingSources: OnGemApi['fundingSources'] = () => this.call('GET', paths.fundingSources);
+  fundingSource: OnGemApi['fundingSource'] = (id) => this.call('GET', paths.fundingSource(id));
+  linkFundingSource: OnGemApi['linkFundingSource'] = (r) =>
+    this.call('POST', paths.fundingSources, { json: r });
+  removeFundingSource: OnGemApi['removeFundingSource'] = (id) => this.call('DELETE', paths.fundingSource(id));
+  createTopUp: OnGemApi['createTopUp'] = (r) => this.call('POST', paths.topUps, { json: r });
   cards: OnGemApi['cards'] = (cursor?: string | null) => this.call('GET', paths.cards(cursor));
   card: OnGemApi['card'] = (id: string) => this.call('GET', paths.card(id));
   setCardFrozen: OnGemApi['setCardFrozen'] = (id: string, frozen: boolean) =>

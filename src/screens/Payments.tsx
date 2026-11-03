@@ -21,8 +21,13 @@ import { useAsync } from '../lib/useAsync';
 import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
 import { Amt, Last4, Load, human, stateStatus } from './common';
+import { TopUp } from './TopUp';
 
 function to(p: Payment, accounts: Account[], recipients: Recipient[]) {
+  if (p.fundingSourceId) {
+    const a = accounts.find((x) => x.id === p.fromAccountId);
+    return a ? `Top-up to ${a.name}` : 'Top-up';
+  }
   if (p.toAccountId) {
     const a = accounts.find((x) => x.id === p.toAccountId);
     return a ? `${a.name}` : 'Your account';
@@ -33,8 +38,11 @@ function to(p: Payment, accounts: Account[], recipients: Recipient[]) {
 /** Where the payment is, in words (SL1-15): sending, sent with the bank's reference, or settled. */
 export function paymentStatusLine(state: string, bankReference?: string | null): string {
   switch (state.toUpperCase()) {
-    case 'DRAFT':
     case 'PENDING_APPROVAL':
+      return 'Waiting for a second person in your company to approve it. Nothing has moved yet.';
+    case 'REJECTED':
+      return 'Declined by the approver. Nothing was moved.';
+    case 'DRAFT':
     case 'PRECHECKED':
       return 'Sending. Our banking partner did not answer yet. We will not send it twice.';
     case 'SUBMITTED':
@@ -47,9 +55,55 @@ export function paymentStatusLine(state: string, bankReference?: string | null):
   }
 }
 
-export function PaymentDetail({ id }: { id: string }) {
+/** Approve or decline a payment waiting for a second person (G-40 top-ups, wires); the maker is refused by the API. */
+function Approval({ id, onDone }: { id: string; onDone(): void }) {
   const { api } = useSession();
-  const payment = useAsync(() => api.payment(id), [api, id]);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const inFlight = useRef(false);
+  const act = async (f: () => Promise<unknown>) => {
+    if (inFlight.current) return;
+    inFlight.current = true;
+    setBusy(true);
+    setError(null);
+    try {
+      await f();
+      onDone();
+    } catch (e) {
+      setError(errorText(e));
+    } finally {
+      inFlight.current = false;
+      setBusy(false);
+    }
+  };
+  return (
+    <>
+      {error && <Notice status="failure">{error}</Notice>}
+      <div className="fw-actions">
+        <Button
+          variant="secondary"
+          data-testid="payment-reject"
+          disabled={busy}
+          onClick={() => void act(() => api.rejectPayment(id))}
+        >
+          Decline
+        </Button>
+        <Button
+          data-testid="payment-approve"
+          disabled={busy}
+          onClick={() => void act(() => api.approvePayment(id))}
+        >
+          Approve
+        </Button>
+      </div>
+    </>
+  );
+}
+
+export function PaymentDetail({ id }: { id: string }) {
+  const { api, can } = useSession();
+  const [n, setN] = useState(0);
+  const payment = useAsync(() => api.payment(id), [api, id, n]);
   return (
     <Load state={payment} label="payment">
       {(p) => (
@@ -70,7 +124,14 @@ export function PaymentDetail({ id }: { id: string }) {
                 label: 'Status',
                 value: <StatusChip status={stateStatus(p.state)}>{human(p.state)}</StatusChip>,
               },
-              { label: 'Rail', value: p.toAccountId ? 'Internal transfer' : 'ACH' },
+              {
+                label: 'Rail',
+                value: p.fundingSourceId
+                  ? 'ACH debit from your account at another bank'
+                  : p.toAccountId
+                    ? 'Internal transfer'
+                    : 'ACH',
+              },
               { label: 'Reference', value: p.reference ?? 'None' },
               { label: 'Bank reference', value: p.providerReference ?? 'Not yet' },
               ...(p.state === 'RETURNED'
@@ -87,6 +148,9 @@ export function PaymentDetail({ id }: { id: string }) {
                 : []),
             ]}
           />
+          {p.state === 'PENDING_APPROVAL' && can(Permission.PAYMENT_APPROVE) && (
+            <Approval id={p.id} onDone={() => setN((x) => x + 1)} />
+          )}
           <Stepper
             label="Payment timeline"
             items={p.timeline.map((t, i) => ({
@@ -326,6 +390,7 @@ export function PaymentsScreen() {
   const navigate = useNavigate();
   const location = useLocation();
   const isNew = location.pathname.endsWith('/payments/new');
+  const isTopUp = location.pathname.endsWith('/payments/top-up');
   const [pages, setPages] = useState<string[]>([]);
   const list = useAsync(async () => {
     const first = await api.payments(null, 20);
@@ -342,7 +407,7 @@ export function PaymentsScreen() {
   const recipients = useAsync(() => api.recipients(), [api]);
   const accs = accounts.status === 'success' ? accounts.data : [];
   const recs = recipients.status === 'success' ? recipients.data : [];
-  const detail = isNew || Boolean(id);
+  const detail = isNew || isTopUp || Boolean(id);
   return (
     <>
       <PageHeader
@@ -350,6 +415,15 @@ export function PaymentsScreen() {
         actions={
           <div className="fw-actions">
             <Link to="/recipients">Recipients</Link>
+            {can(Permission.PAYMENT_VIEW) && (
+              <Button
+                variant="secondary"
+                data-testid="add-money"
+                onClick={() => navigate('/payments/top-up')}
+              >
+                Add money
+              </Button>
+            )}
             {can(Permission.PAYMENT_CREATE) && (
               <Button data-testid="new-payment" onClick={() => navigate('/payments/new')}>
                 New payment
@@ -375,7 +449,7 @@ export function PaymentsScreen() {
                           <span className="fw-row__main">
                             <strong>{to(p, accs, recs)}</strong>
                             <span className="fw-row__sub">
-                              {p.toAccountId ? 'Internal transfer' : 'ACH'}{' '}
+                              {p.fundingSourceId ? 'Top-up' : p.toAccountId ? 'Internal transfer' : 'ACH'}{' '}
                               {p.createdAt ? `· ${formatDate(p.createdAt)}` : ''}
                             </span>
                           </span>
@@ -411,7 +485,9 @@ export function PaymentsScreen() {
               Back to payments
             </Button>
           )}
-          {isNew ? (
+          {isTopUp ? (
+            <TopUp />
+          ) : isNew ? (
             can(Permission.PAYMENT_CREATE) ? (
               <NewPayment />
             ) : (

@@ -65,7 +65,10 @@ describe('ID document capture (G-111)', () => {
   it('never opens a capture address that is not https G_111_3', async () => {
     const api = new DemoOnGemApi({ application: submitted() });
     const start = api.startIdCapture;
-    api.startIdCapture = async (...args) => ({ ...(await start(...args)), captureUrl: 'javascript:alert(1)' });
+    api.startIdCapture = async (...args) => ({
+      ...(await start(...args)),
+      captureUrl: 'javascript:alert(1)',
+    });
     renderApp('/onboarding', { api });
     await userEvent.click(await screen.findByTestId('id-capture-browser'));
     expect(await screen.findByText(/capture address we cannot open/)).toBeInTheDocument();

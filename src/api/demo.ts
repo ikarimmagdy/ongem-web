@@ -5,6 +5,7 @@ import {
   demoApplication,
   demoCards,
   demoDisclosures,
+  demoFundingSources,
   demoMe,
   demoPayments,
   demoRecipients,
@@ -27,7 +28,10 @@ import type {
   CardWidgetSession,
   CreatePayment,
   CreateRecipient,
+  CreateTopUp,
+  FundingSource,
   IdCapture,
+  LinkFundingSource,
   IdDocument,
   Me,
   OpenTicket,
@@ -62,6 +66,7 @@ export class DemoOnGemApi implements OnGemApi {
   private cardsState: Card[] = demoCards();
   private applicationState: Application;
   private captures: IdCapture[] = [];
+  private fundingState: FundingSource[] = demoFundingSources();
   private disclosuresState = demoDisclosures();
   private ticketsState: TicketDetail[] = demoTickets();
   private seq = 0;
@@ -285,6 +290,122 @@ export class DemoOnGemApi implements OnGemApi {
     return this.log('sendPayment', sent);
   };
 
+  /** A second person approves; demo mode is one person, so the maker check is the API's own (self_approval_forbidden). */
+  approvePayment = async (id: string) => {
+    this.require(Permission.PAYMENT_APPROVE);
+    const p = this.paymentsState.find((x) => x.id === id) ?? this.notFound('payment');
+    if (p.state !== 'PENDING_APPROVAL')
+      throw new ApiError(409, 'payment_not_pending_approval', 'This payment is not waiting for approval.');
+    await this.stepUp('payment');
+    const sent: Payment = {
+      ...p,
+      state: 'SUBMITTED',
+      providerReference: `ach_${p.id.slice(-6)}`,
+      timeline: [
+        ...p.timeline,
+        { from: 'PENDING_APPROVAL', to: 'PRECHECKED', at: this.now() },
+        { from: 'PRECHECKED', to: 'SUBMITTED', at: this.now() },
+      ],
+    };
+    this.paymentsState = this.paymentsState.map((x) => (x.id === id ? sent : x));
+    return this.log('approvePayment', sent);
+  };
+
+  rejectPayment = async (id: string) => {
+    this.require(Permission.PAYMENT_APPROVE);
+    const p = this.paymentsState.find((x) => x.id === id) ?? this.notFound('payment');
+    if (p.state !== 'PENDING_APPROVAL')
+      throw new ApiError(409, 'payment_not_pending_approval', 'This payment is not waiting for approval.');
+    const rejected: Payment = {
+      ...p,
+      state: 'REJECTED',
+      timeline: [...p.timeline, { from: 'PENDING_APPROVAL', to: 'REJECTED', at: this.now() }],
+    };
+    this.paymentsState = this.paymentsState.map((x) => (x.id === id ? rejected : x));
+    return this.log('rejectPayment', rejected);
+  };
+
+  fundingSources = async () => {
+    this.require(Permission.PAYMENT_VIEW);
+    return this.log(
+      'fundingSources',
+      this.fundingState.filter((f) => f.state !== 'REMOVED'),
+    );
+  };
+
+  /** Demo: the bank verifies a typed-in account the next time it is read. */
+  fundingSource = async (id: string) => {
+    this.require(Permission.PAYMENT_VIEW);
+    const f = this.fundingState.find((x) => x.id === id) ?? this.notFound('funding_source');
+    const read = f.state === 'UNVERIFIED' ? { ...f, state: 'VERIFIED', verifiedAt: this.now() } : f;
+    this.fundingState = this.fundingState.map((x) => (x.id === id ? read : x));
+    return this.log('fundingSource', read);
+  };
+
+  linkFundingSource = async (r: LinkFundingSource) => {
+    this.require(Permission.RECIPIENT_MANAGE);
+    await this.account(r.accountId);
+    const number = r.accountNumber.replace(/\D/g, '');
+    if (!/^\d{9}$/.test(r.routingNumber) || number.length < 4 || number.length > 17 || !r.ownerName.trim())
+      throw new ApiError(422, 'validation_failed', 'Check the routing number, account number and name.');
+    await this.stepUp('funding_source');
+    const f: FundingSource = {
+      id: this.next('fsrc'),
+      accountId: r.accountId,
+      method: 'MANUAL',
+      aggregator: null,
+      nickname: r.nickname?.trim() || null,
+      last4: number.slice(-4),
+      routingNumber: r.routingNumber,
+      accountType: r.accountType,
+      state: 'UNVERIFIED',
+      createdAt: this.now(),
+      verifiedAt: null,
+    };
+    this.fundingState = [f, ...this.fundingState];
+    return this.log('linkFundingSource', f);
+  };
+
+  removeFundingSource = async (id: string) => {
+    this.require(Permission.RECIPIENT_MANAGE);
+    const f = this.fundingState.find((x) => x.id === id) ?? this.notFound('funding_source');
+    await this.stepUp('funding_source');
+    const removed = { ...f, state: 'REMOVED' };
+    this.fundingState = this.fundingState.map((x) => (x.id === id ? removed : x));
+    return this.log('removeFundingSource', removed);
+  };
+
+  /** Like ongem-core: approval is required by default, so a top-up waits in PENDING_APPROVAL. */
+  createTopUp = async (r: CreateTopUp) => {
+    this.require(Permission.PAYMENT_CREATE);
+    const f = this.fundingState.find((x) => x.id === r.fundingSourceId && x.state !== 'REMOVED');
+    if (!f) this.notFound('funding_source');
+    await this.account(r.toAccountId);
+    if (r.amountMinor <= 0) throw new ApiError(422, 'validation_failed', 'The amount must be positive.');
+    if (f.state !== 'VERIFIED') throw new ApiError(409, 'funding_source_not_verified');
+    if (r.amountMinor > 2_500_000) throw new ApiError(409, 'limit_exceeded');
+    await this.stepUp('payment');
+    const p: Payment = {
+      id: this.next('pay'),
+      state: 'PENDING_APPROVAL',
+      rail: 'ACH',
+      achTiming: 'STANDARD',
+      amount: usd(r.amountMinor),
+      fromAccountId: r.toAccountId,
+      recipientId: null,
+      toAccountId: null,
+      fundingSourceId: f.id,
+      reference: r.reference ?? null,
+      createdAt: this.now(),
+      timeline: [
+        { from: null, to: 'DRAFT', at: this.now() },
+        { from: 'DRAFT', to: 'PENDING_APPROVAL', at: this.now() },
+      ],
+    };
+    this.paymentsState = [p, ...this.paymentsState];
+    return this.log('createTopUp', p);
+  };
+
   cards = async () => {
     this.require(Permission.CARD_MANAGE);
     return this.log('cards', { items: this.cardsState, next: null });
@@ -396,7 +517,11 @@ export class DemoOnGemApi implements OnGemApi {
     const app = this.applicationState;
     if (id !== app.id) this.notFound('application');
     if (!CAPTURE_OPEN.includes(app.state))
-      throw new ApiError(409, 'invalid_state', 'ID capture is open only while the bank is checking the application.');
+      throw new ApiError(
+        409,
+        'invalid_state',
+        'ID capture is open only while the bank is checking the application.',
+      );
     const owner = app.owners.find((o) => o.founder) ?? this.notFound('owner');
     const at = this.now();
     const capture: IdCapture = {
