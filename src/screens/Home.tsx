@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Card, KeyValue, Notice, PageHeader, StatusChip } from '../design-system';
 import { formatMinor } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
+import { currentMembership } from '../lib/company';
 import { useSession } from '../session';
 import { Load, human, stateStatus } from './common';
 
@@ -11,8 +12,7 @@ export function HomeScreen() {
   const apps = useAsync(() => api.applications(), [api]);
   const me = useAsync(() => api.me(), [api]);
   const person = me.status === 'success' ? me.data : null;
-  const membership =
-    person?.memberships.find((m) => m.state === 'ACTIVE') ?? person?.memberships[0] ?? undefined;
+  const membership = currentMembership(person);
   const bankState = person?.providerState ?? 'NOT_SUBMITTED';
   return (
     <>

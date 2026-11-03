@@ -110,3 +110,41 @@ export async function registration(pair: CryptoKeyPair, challenge: { challengeId
   );
   return { challengeId: challenge.challengeId, publicKey, signature, platform: 'web', name: 'Web browser' };
 }
+
+/** The lines a device signs for one call (ongem-core DeviceProofs, CORE-SEC-04): the path has no query. */
+export function proofMessage(
+  method: string,
+  path: string,
+  seconds: number,
+  deviceId: string,
+  idempotencyKey: string | null,
+): string {
+  return [
+    'v1',
+    method.toUpperCase(),
+    path.split('?')[0],
+    String(seconds),
+    deviceId,
+    idempotencyKey ?? '',
+  ].join('\n');
+}
+
+/** X-Device-Proof: `v1.<seconds>.<raw ECDSA SHA-256 signature, base64>` by this browser's device key. */
+export async function deviceProof(
+  pair: CryptoKeyPair,
+  method: string,
+  path: string,
+  deviceId: string,
+  idempotencyKey: string | null,
+  now: () => number = Date.now,
+): Promise<string> {
+  const seconds = Math.floor(now() / 1000);
+  const signature = base64(
+    await crypto.subtle.sign(
+      { name: 'ECDSA', hash: 'SHA-256' },
+      pair.privateKey,
+      new TextEncoder().encode(proofMessage(method, path, seconds, deviceId, idempotencyKey)),
+    ),
+  );
+  return `v1.${seconds}.${signature}`;
+}

@@ -17,6 +17,10 @@ export interface Session {
   enterDemo(): void;
   leave(): void;
   setRole(role: string | null): void;
+  /** The company the person picked in the switcher (G-69), or null for their default company. */
+  companyId: string | null;
+  /** Moves every screen to [companyId] with a new client, so nothing loaded for the previous company is kept. */
+  switchCompany(companyId: string | null): void;
 }
 
 const SessionContext = createContext<Session | null>(null);
@@ -112,11 +116,23 @@ export function SessionProvider({
     [userId, auth.signedIn],
   );
   const mode: Mode = demoMode ? 'demo' : auth.signedIn ? 'live' : 'none';
-  const api = mode === 'live' ? live : demo;
+  const base: OnGemApi = mode === 'live' ? live : demo;
+  // The pick belongs to the client it was made on: a new person, demo or sign-in starts on the default company again.
+  const [pick, setPick] = useState<{ base: OnGemApi; companyId: string } | null>(null);
+  const picked = pick && pick.base === base ? pick : null;
+  const api = useMemo(() => (picked ? base.forCompany(picked.companyId) : base), [base, picked]);
+  const switchCompany = useCallback(
+    (companyId: string | null) => {
+      setRole(null);
+      setPick(companyId ? { base, companyId } : null);
+    },
+    [base],
+  );
   const permissions = useMemo(() => permissionsOf(role), [role]);
   const leave = useCallback(() => {
     setDemoMode(false);
     setRole(null);
+    setPick(null);
     if (auth.signedIn) void auth.signOut();
   }, [auth]);
 
@@ -130,8 +146,10 @@ export function SessionProvider({
       enterDemo: () => setDemoMode(true),
       leave,
       setRole,
+      companyId: picked?.companyId ?? null,
+      switchCompany,
     }),
-    [mode, api, role, permissions, leave],
+    [mode, api, role, permissions, leave, picked, switchCompany],
   );
   return (
     <SessionContext.Provider value={value}>

@@ -39,6 +39,8 @@ export interface DemoOptions {
   /** Step-up in demo mode: the same dialog as live, any six digits; false when cancelled. */
   stepUp?: (purpose: string) => Promise<boolean>;
   now?: () => string;
+  /** The company picked in the switcher (G-69); null is the person's default. */
+  companyId?: string | null;
 }
 
 /**
@@ -65,7 +67,8 @@ export class DemoOnGemApi implements OnGemApi {
   private readonly now: () => string;
 
   constructor(private readonly opts: DemoOptions = {}) {
-    this.me_ = opts.me ?? demoMe;
+    const me = opts.me ?? demoMe;
+    this.me_ = opts.companyId ? { ...me, companyId: opts.companyId } : me;
     this.now = opts.now ?? (() => '2026-10-29T15:00:00Z');
   }
 
@@ -75,7 +78,8 @@ export class DemoOnGemApi implements OnGemApi {
   }
 
   private get role() {
-    return this.me_.memberships[0]?.role ?? 'VIEWER';
+    const m = this.me_.memberships;
+    return (m.find((x) => x.companyId === this.me_.companyId) ?? m[0])?.role ?? 'VIEWER';
   }
 
   private require(permission: string) {
@@ -102,6 +106,15 @@ export class DemoOnGemApi implements OnGemApi {
   private log<T>(name: string, v: T): Promise<T> {
     this.calls.push(name);
     return Promise.resolve(structuredClone(v));
+  }
+
+  get companyId(): string | null {
+    return this.opts.companyId ?? null;
+  }
+
+  /** A fresh demo client for another company of the person: the sample data starts again, nothing is carried over. */
+  forCompany(companyId: string | null): DemoOnGemApi {
+    return new DemoOnGemApi({ ...this.opts, companyId });
   }
 
   me = async () => this.log('me', this.me_);

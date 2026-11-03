@@ -1,8 +1,10 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
+import { NavLink, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { Button, Logo, Notice, Skeleton } from './design-system';
 import { useAsync } from './lib/useAsync';
-import { errorText } from './api/errors';
+import { ApiError, errorText } from './api/errors';
+import { CompanySwitcher } from './CompanySwitcher';
+import { currentMembership, switchable } from './lib/company';
 import { AccountsScreen } from './screens/Accounts';
 import { CardsScreen } from './screens/Cards';
 import { HomeScreen } from './screens/Home';
@@ -18,12 +20,24 @@ import { Recorder } from './recording/Recorder';
 import { NAV } from './nav';
 
 function Shell({ children }: { children: ReactNode }) {
-  const { api, mode, setRole, leave } = useSession();
+  const { api, mode, setRole, leave, companyId, switchCompany } = useSession();
+  const navigate = useNavigate();
   const me = useAsync(() => api.me(), [api]);
-  const membership = me.status === 'success' ? me.data.memberships[0] : undefined;
+  const person = me.status === 'success' ? me.data : null;
+  const membership = currentMembership(person);
   useEffect(() => {
     if (me.status === 'success') setRole(membership?.role ?? null);
   }, [me.status, membership?.role, setRole]);
+  // A company the person was removed from since they picked it: back to the default company.
+  const notMember =
+    me.status === 'error' && me.error instanceof ApiError && me.error.code === 'company_not_member';
+  useEffect(() => {
+    if (notMember && companyId) switchCompany(null);
+  }, [notMember, companyId, switchCompany]);
+  const pick = (id: string) => {
+    switchCompany(id);
+    navigate('/');
+  };
   const links = NAV.map((n) => (
     <li key={n.to}>
       <NavLink
@@ -53,7 +67,7 @@ function Shell({ children }: { children: ReactNode }) {
           <span className={`og-env og-env--${mode === 'demo' ? 'mock' : 'live'}`} data-testid="env-badge">
             {mode === 'demo' ? 'Demo' : 'Live'}
           </span>
-          <span className="fw-company">{membership?.companyName}</span>
+          <CompanySwitcher companies={switchable(person)} current={membership} onPick={pick} />
         </header>
         <main className="fw-content" id="main">
           {me.status === 'loading' ? (
@@ -87,6 +101,12 @@ function Shell({ children }: { children: ReactNode }) {
 }
 
 export default function SignedIn() {
+  const { companyId } = useSession();
+  return <CompanyScope key={companyId ?? 'default'} />;
+}
+
+/** Everything under one company (G-69): a switch remounts it, so no screen, draft or recording outlives the company. */
+function CompanyScope() {
   const [recording, setRecording] = useState<string | null>(null);
   return (
     <DraftProvider>

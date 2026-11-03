@@ -1,5 +1,5 @@
 import type { OnGemApi } from './client';
-import { registration, type DeviceKeys } from './device';
+import { deviceProof, registration, type DeviceKeys } from './device';
 import { ApiError } from './errors';
 import { paths } from './paths';
 import { REVERIFICATION_CANCELLED, REVERIFICATION_REQUIRED, type ReverificationHint } from './reverify';
@@ -24,6 +24,8 @@ export interface LiveOptions {
   deviceKeys?: DeviceKeys;
   /** Waits between retries of a request the API is still working on (409 idempotency_in_progress). */
   sleep?: (ms: number) => Promise<void>;
+  /** The company picked in the switcher (G-69): every call carries it as X-Company-Id; none means the default. */
+  companyId?: string | null;
 }
 
 /** Waits before each retry of 409 idempotency_in_progress, with the same Idempotency-Key (CORE-COR-02). */
@@ -44,9 +46,22 @@ export class LiveOnGemApi implements OnGemApi {
   private readonly fetchImpl: typeof fetch;
   private readonly newKey: () => string;
   private readonly sleep: (ms: number) => Promise<void>;
-  private device: Promise<string | null> | null = null;
+  private device: Promise<string | null> | null;
 
-  constructor(private readonly opts: LiveOptions) {
+  get companyId(): string | null {
+    return this.opts.companyId ?? null;
+  }
+
+  /** The same person and browser device in another of the person's companies; the device is not bound again. */
+  forCompany(companyId: string | null): LiveOnGemApi {
+    return new LiveOnGemApi({ ...this.opts, companyId }, { device: this.device });
+  }
+
+  constructor(
+    private readonly opts: LiveOptions,
+    shared?: { device: Promise<string | null> | null },
+  ) {
+    this.device = shared?.device ?? null;
     this.fetchImpl = opts.fetchImpl ?? ((i, init) => fetch(i, init));
     this.newKey = opts.newKey ?? (() => crypto.randomUUID());
     this.sleep = opts.sleep ?? ((ms) => new Promise((r) => setTimeout(r, ms)));
@@ -78,6 +93,16 @@ export class LiveOnGemApi implements OnGemApi {
     return this.device;
   }
 
+  private async proof(method: string, path: string, device: string, key: string | null) {
+    const { personId, deviceKeys } = this.opts;
+    if (!personId || !deviceKeys) return null;
+    try {
+      return await deviceProof(await deviceKeys.get(personId), method, path, device, key);
+    } catch {
+      return null;
+    }
+  }
+
   private async forgetDevice() {
     this.device = null;
     if (this.opts.personId && this.opts.deviceKeys) await this.opts.deviceKeys.forget(this.opts.personId);
@@ -96,7 +121,13 @@ export class LiveOnGemApi implements OnGemApi {
       Accept: 'application/json, application/problem+json',
     };
     if (key) headers['Idempotency-Key'] = key;
-    if (device) headers['X-Device-Id'] = device;
+    if (device) {
+      headers['X-Device-Id'] = device;
+      // CORE-SEC-04: a fresh proof for every attempt, signed by this browser's device key.
+      const proof = await this.proof(method, path, device, key);
+      if (proof) headers['X-Device-Proof'] = proof;
+    }
+    if (this.opts.companyId) headers['X-Company-Id'] = this.opts.companyId;
     let payload: BodyInit | undefined;
     if (body && 'json' in body) {
       headers['Content-Type'] = 'application/json';

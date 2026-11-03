@@ -32,6 +32,10 @@ import type {
 /** The customer API as the founder web uses it: call for call the same as ongem-app's OnGemApi.kt. */
 export interface OnGemApi {
   readonly kind: 'demo' | 'live';
+  /** The company every call of this client runs in (X-Company-Id, G-69); null is the person's default company. */
+  readonly companyId: string | null;
+  /** A new client for [companyId], so nothing the screens loaded for the previous company is reused (G-69). */
+  forCompany(companyId: string | null): OnGemApi;
   me(): Promise<Me>;
   accounts(): Promise<Account[]>;
   account(id: string): Promise<Account>;
