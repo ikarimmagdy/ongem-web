@@ -14,6 +14,8 @@ import type {
   CardWidgetSession,
   CreatePayment,
   CreateTopUp,
+  CreateSchedule,
+  PaymentSchedule,
   FundingSource,
   LinkFundingSource,
   CreateRecipient,
@@ -71,6 +73,16 @@ export interface OnGemApi {
   removeFundingSource(id: string): Promise<FundingSource>;
   /** Step-up. An ACH debit from a VERIFIED funding source; the answer is the payment, often PENDING_APPROVAL. */
   createTopUp(request: CreateTopUp): Promise<Payment>;
+  /** G-120: the company's scheduled payments, newest first, without their runs. */
+  schedules(): Promise<PaymentSchedule[]>;
+  /** One schedule with its latest runs. */
+  schedule(id: string): Promise<PaymentSchedule>;
+  /** Step-up. ACH only until the bank confirms scheduled internal transfers (Q-128). */
+  createSchedule(request: CreateSchedule): Promise<PaymentSchedule>;
+  pauseSchedule(id: string): Promise<PaymentSchedule>;
+  /** Step-up. Active again from today; dates passed while paused are not made. */
+  resumeSchedule(id: string): Promise<PaymentSchedule>;
+  cancelSchedule(id: string): Promise<PaymentSchedule>;
   cards(cursor?: string | null): Promise<CardPage>;
   card(id: string): Promise<Card>;
   setCardFrozen(id: string, frozen: boolean): Promise<Card>;

@@ -147,6 +147,56 @@ export interface LinkFundingSource {
   nickname?: string | null;
 }
 
+/** G-120: one run of a schedule. DUE (waiting for its attempt or a retry), SENT (its payment was made), SKIPPED, FAILED or CANCELLED. */
+export interface ScheduleRun {
+  id: string;
+  occurrence: number;
+  runOn: string;
+  state: string;
+  attempts: number;
+  paymentId?: string | null;
+  failureCode?: string | null;
+  nextAttemptAt?: string | null;
+}
+
+/**
+ * G-120: a scheduled ACH that OnGem runs itself; each run is a payment through the normal path. ACTIVE, PAUSED,
+ * CANCELLED or COMPLETED; `nextRunOn` is the next date a run is made (bank time), none when it will not run again.
+ */
+export interface PaymentSchedule {
+  id: string;
+  fromAccountId: string;
+  recipientId: string;
+  rail: string;
+  amount: Amount;
+  reference?: string | null;
+  frequency: 'DAILY' | 'WEEKLY' | 'MONTHLY' | string;
+  interval: number;
+  startDate: string;
+  endDate?: string | null;
+  count?: number | null;
+  state: string;
+  nextRunOn?: string | null;
+  runsMade: number;
+  createdAt: string;
+  runs: ScheduleRun[];
+}
+
+/** POST /v1/payment-schedules: ends on `endDate`, after `count` runs, or never (both empty). */
+export interface CreateSchedule {
+  fromAccountId: string;
+  recipientId: string;
+  rail: 'ACH';
+  amountMinor: number;
+  currency: string;
+  frequency: 'DAILY' | 'WEEKLY' | 'MONTHLY';
+  interval: number;
+  startDate: string;
+  endDate?: string | null;
+  count?: number | null;
+  reference?: string | null;
+}
+
 /** POST /v1/top-ups. */
 export interface CreateTopUp {
   fundingSourceId: string;

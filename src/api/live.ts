@@ -248,6 +248,12 @@ export class LiveOnGemApi implements OnGemApi {
     this.call('POST', paths.fundingSources, { json: r });
   removeFundingSource: OnGemApi['removeFundingSource'] = (id) => this.call('DELETE', paths.fundingSource(id));
   createTopUp: OnGemApi['createTopUp'] = (r) => this.call('POST', paths.topUps, { json: r });
+  schedules: OnGemApi['schedules'] = () => this.call('GET', paths.schedules);
+  schedule: OnGemApi['schedule'] = (id) => this.call('GET', paths.schedule(id));
+  createSchedule: OnGemApi['createSchedule'] = (r) => this.call('POST', paths.schedules, { json: r });
+  pauseSchedule: OnGemApi['pauseSchedule'] = (id) => this.call('POST', paths.scheduleAction(id, 'pause'));
+  resumeSchedule: OnGemApi['resumeSchedule'] = (id) => this.call('POST', paths.scheduleAction(id, 'resume'));
+  cancelSchedule: OnGemApi['cancelSchedule'] = (id) => this.call('POST', paths.scheduleAction(id, 'cancel'));
   cards: OnGemApi['cards'] = (cursor?: string | null) => this.call('GET', paths.cards(cursor));
   card: OnGemApi['card'] = (id: string) => this.call('GET', paths.card(id));
   setCardFrozen: OnGemApi['setCardFrozen'] = (id: string, frozen: boolean) =>

@@ -4,6 +4,7 @@ import { DemoOnGemApi } from '../api/demo';
 import { demoMe } from '../api/demoData';
 import { ApiError, errorText } from '../api/errors';
 import { paymentStatusLine } from '../screens/Payments';
+import { formatDay, frequencyText, nthRun } from '../lib/schedule';
 import { renderApp } from './render';
 
 describe('payments (OG-030 R4)', () => {
@@ -189,5 +190,131 @@ describe('add money from another bank (G-40)', () => {
     Object.assign(approver, { paymentsState: [pending] });
     renderApp(`/payments/${pending.id}`, { api: approver });
     expect(await screen.findByTestId('payment-approve')).toBeInTheDocument();
+  });
+});
+
+describe('scheduled payments (G-120)', () => {
+  it('creates a monthly ACH schedule and shows the next payment date G_120_1', async () => {
+    const api = new DemoOnGemApi();
+    renderApp('/payments', { api });
+    await userEvent.click(await screen.findByTestId('scheduled'));
+    await userEvent.selectOptions(await screen.findByTestId('schedule-recipient'), 'rcp_demo_acme');
+    await userEvent.type(screen.getByTestId('schedule-amount'), '2,000.00');
+    const start = screen.getByTestId('schedule-start');
+    await userEvent.clear(start);
+    await userEvent.type(start, '2026-12-01');
+    await userEvent.selectOptions(screen.getByTestId('schedule-ends'), 'count');
+    await userEvent.clear(screen.getByTestId('schedule-count'));
+    await userEvent.type(screen.getByTestId('schedule-count'), '3');
+    expect(screen.getByTestId('schedule-summary')).toHaveTextContent(
+      'US$2,000.00 every month, first on 1 Dec 2026',
+    );
+    await userEvent.click(screen.getByTestId('schedule-save'));
+    const [s] = await api.schedules();
+    expect(s).toMatchObject({
+      frequency: 'MONTHLY',
+      interval: 1,
+      count: 3,
+      startDate: '2026-12-01',
+      rail: 'ACH',
+    });
+    expect(await screen.findByTestId(`schedule-next-${s!.id}`)).toHaveTextContent(
+      'Next payment on 1 Dec 2026',
+    );
+    expect(screen.getByTestId(`schedule-${s!.id}`)).toHaveTextContent('Every month');
+    expect(screen.getByTestId(`schedule-state-${s!.id}`)).toHaveTextContent('Active');
+    expect(api.stepUps).toContain('payment');
+    await userEvent.click(screen.getByTestId(`schedule-runs-toggle-${s!.id}`));
+    expect(await screen.findByTestId(`schedule-runs-${s!.id}`)).toHaveTextContent('No payment has been made');
+  });
+
+  it('pauses, resumes and cancels G_120_2', async () => {
+    const api = new DemoOnGemApi();
+    const s = await api.createSchedule({
+      fromAccountId: 'acc_demo_ops',
+      recipientId: 'rcp_demo_acme',
+      rail: 'ACH',
+      amountMinor: 50_000,
+      currency: 'USD',
+      frequency: 'WEEKLY',
+      interval: 2,
+      startDate: '2026-11-02',
+    });
+    renderApp('/payments/schedules', { api });
+    await userEvent.click(await screen.findByTestId(`schedule-pause-${s.id}`));
+    expect(await screen.findByText('Paused. No payment is made until you resume it.')).toBeInTheDocument();
+    expect(screen.getByTestId(`schedule-${s.id}`)).toHaveTextContent('Every 2 weeks');
+    await userEvent.click(screen.getByTestId(`schedule-resume-${s.id}`));
+    expect(await screen.findByText('Next payment on 2 Nov 2026')).toBeInTheDocument();
+    await userEvent.click(screen.getByTestId(`schedule-cancel-${s.id}`));
+    expect(await screen.findByText('No more payments.')).toBeInTheDocument();
+    expect(screen.getByTestId(`schedule-state-${s.id}`)).toHaveTextContent('Cancelled');
+    expect(screen.queryByTestId(`schedule-resume-${s.id}`)).not.toBeInTheDocument();
+    const again = await api.resumeSchedule(s.id).catch((e: unknown) => e);
+    expect(errorText(again)).toMatch(/cannot do that now/);
+  });
+
+  it('a resume skips the dates that passed while paused, and month ends hold G_120_3', async () => {
+    let now = '2026-10-29T15:00:00Z';
+    const api = new DemoOnGemApi({ now: () => now });
+    const s = await api.createSchedule({
+      fromAccountId: 'acc_demo_ops',
+      recipientId: 'rcp_demo_acme',
+      rail: 'ACH',
+      amountMinor: 1_000,
+      currency: 'USD',
+      frequency: 'DAILY',
+      interval: 1,
+      startDate: '2026-10-30',
+      endDate: '2026-11-05',
+    });
+    await api.pauseSchedule(s.id);
+    now = '2026-11-03T09:00:00Z';
+    expect((await api.resumeSchedule(s.id)).nextRunOn).toBe('2026-11-03');
+    await api.pauseSchedule(s.id);
+    now = '2026-11-06T09:00:00Z';
+    expect(await api.resumeSchedule(s.id)).toMatchObject({ state: 'COMPLETED', nextRunOn: null });
+    expect(nthRun('2026-01-31', 'MONTHLY', 1, 1)).toBe('2026-02-28');
+    expect(nthRun('2026-01-31', 'MONTHLY', 1, 2)).toBe('2026-03-31');
+    expect(nthRun('2026-12-28', 'WEEKLY', 1, 1)).toBe('2027-01-04');
+    expect(formatDay('2026-12-01')).toBe('1 Dec 2026');
+    expect(frequencyText('DAILY', 3)).toBe('Every 3 days');
+    const internal = await api
+      .createSchedule({
+        ...{
+          fromAccountId: 'acc_demo_ops',
+          recipientId: 'rcp_demo_acme',
+          amountMinor: 1,
+          currency: 'USD',
+          frequency: 'DAILY',
+          interval: 1,
+          startDate: '2026-12-01',
+        },
+        rail: 'BOOK' as 'ACH',
+      })
+      .catch((e: unknown) => e);
+    expect(errorText(internal)).toMatch(/not available yet/);
+  });
+
+  it('a viewer sees the schedules only G_120_4', async () => {
+    const owner = new DemoOnGemApi();
+    const s = await owner.createSchedule({
+      fromAccountId: 'acc_demo_ops',
+      recipientId: 'rcp_demo_acme',
+      rail: 'ACH',
+      amountMinor: 1_000,
+      currency: 'USD',
+      frequency: 'MONTHLY',
+      interval: 1,
+      startDate: '2026-12-01',
+    });
+    const viewer = new DemoOnGemApi({
+      me: { ...demoMe, memberships: [{ ...demoMe.memberships[0]!, role: 'VIEWER' }] },
+    });
+    Object.assign(viewer, { schedulesState: [s] });
+    renderApp('/payments/schedules', { api: viewer });
+    expect(await screen.findByTestId(`schedule-${s.id}`)).toBeInTheDocument();
+    expect(screen.queryByTestId(`schedule-pause-${s.id}`)).not.toBeInTheDocument();
+    expect(screen.queryByTestId('schedule-form')).not.toBeInTheDocument();
   });
 });

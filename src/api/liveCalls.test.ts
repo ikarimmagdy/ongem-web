@@ -49,6 +49,21 @@ async function record() {
       ownerName: 'n',
     }),
     api.removeFundingSource('f'),
+    api.schedules(),
+    api.schedule('s'),
+    api.createSchedule({
+      fromAccountId: 'a',
+      recipientId: 'r',
+      rail: 'ACH',
+      amountMinor: 1,
+      currency: 'USD',
+      frequency: 'MONTHLY',
+      interval: 1,
+      startDate: '2026-12-01',
+    }),
+    api.pauseSchedule('s'),
+    api.resumeSchedule('s'),
+    api.cancelSchedule('s'),
     api.createTopUp({ fundingSourceId: 'f', toAccountId: 'a', amountMinor: 1, currency: 'USD' }),
     api.cards(),
     api.card('c'),
@@ -92,7 +107,7 @@ function served(call: { method: string; path: string }) {
 describe('every live call is an ongem-core endpoint (OG-030 R8)', () => {
   it('every_live_call_is_in_the_openapi_AC_R8_1', async () => {
     const calls = await record();
-    expect(calls).toHaveLength(47);
+    expect(calls).toHaveLength(53);
     expect(calls.filter((c) => !served(c))).toEqual([]);
   });
 });

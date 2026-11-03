@@ -21,6 +21,7 @@ import { useAsync } from '../lib/useAsync';
 import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
 import { Amt, Last4, Load, human, stateStatus } from './common';
+import { Schedules } from './Schedules';
 import { TopUp } from './TopUp';
 
 function to(p: Payment, accounts: Account[], recipients: Recipient[]) {
@@ -391,6 +392,7 @@ export function PaymentsScreen() {
   const location = useLocation();
   const isNew = location.pathname.endsWith('/payments/new');
   const isTopUp = location.pathname.endsWith('/payments/top-up');
+  const isSchedules = location.pathname.endsWith('/payments/schedules');
   const [pages, setPages] = useState<string[]>([]);
   const list = useAsync(async () => {
     const first = await api.payments(null, 20);
@@ -407,7 +409,7 @@ export function PaymentsScreen() {
   const recipients = useAsync(() => api.recipients(), [api]);
   const accs = accounts.status === 'success' ? accounts.data : [];
   const recs = recipients.status === 'success' ? recipients.data : [];
-  const detail = isNew || isTopUp || Boolean(id);
+  const detail = isNew || isTopUp || isSchedules || Boolean(id);
   return (
     <>
       <PageHeader
@@ -415,6 +417,15 @@ export function PaymentsScreen() {
         actions={
           <div className="fw-actions">
             <Link to="/recipients">Recipients</Link>
+            {can(Permission.PAYMENT_VIEW) && (
+              <Button
+                variant="secondary"
+                data-testid="scheduled"
+                onClick={() => navigate('/payments/schedules')}
+              >
+                Scheduled
+              </Button>
+            )}
             {can(Permission.PAYMENT_VIEW) && (
               <Button
                 variant="secondary"
@@ -485,7 +496,9 @@ export function PaymentsScreen() {
               Back to payments
             </Button>
           )}
-          {isTopUp ? (
+          {isSchedules ? (
+            <Schedules />
+          ) : isTopUp ? (
             <TopUp />
           ) : isNew ? (
             can(Permission.PAYMENT_CREATE) ? (

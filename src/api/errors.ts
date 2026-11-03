@@ -36,6 +36,11 @@ const MESSAGES: Record<string, string> = {
   rail_unavailable: 'Link this account for an OnGem account at the same bank.',
   self_approval_forbidden: 'A second person approves this, not the person who made it.',
   payment_not_pending_approval: 'This payment is no longer waiting for approval.',
+  invalid_transition: 'This schedule cannot do that now. It may have ended or been cancelled.',
+  schedule_not_found: 'That schedule is no longer there.',
+  recipient_blocked: 'Payments to this recipient are blocked.',
+  capability_unavailable:
+    'Scheduled transfers between your own accounts are not available yet. Schedule an ACH instead.',
   company_not_member: 'You are no longer a member of that company. OnGem opened your default company.',
   device_revoked: 'This browser was signed out of OnGem. Sign in again.',
   device_required: 'This browser is not registered with OnGem yet. Sign out, then sign in again.',

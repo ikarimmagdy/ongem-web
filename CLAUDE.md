@@ -71,3 +71,10 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   the one switch, false; the shell does not mount the Recorder, so nothing reaches /v1/recording. CI
   (`.github/workflows/ci.yml`, as ongem-admin's) runs lint, typecheck, tests, build and OSV-Scanner failing on high and
   critical (G-125); it runs once the GitHub remote exists.
+- 2026-11-03: founder features from ongem-core 2da3ccf, f606441 and 31d24a4. ID capture (G-111) on Onboarding while the
+  bank is checking: in this browser (the bank's capture link, https only, opens in a new tab, never kept) or a text
+  message, then the session's stage polled. Add money (G-40, `src/screens/TopUp.tsx`, /payments/top-up): accounts at
+  other banks (typed in, verified by the bank), top-ups by ACH debit, and Approve or Decline on a payment waiting for a
+  second person (`payment:approve`). Scheduled payments (G-120, `src/screens/Schedules.tsx`, /payments/schedules): ACH
+  only (Q-128), create, pause, resume, cancel, next payment date and the runs; bank dates go through `src/lib/schedule.ts`
+  (`formatDay` never shifts a day by time zone).

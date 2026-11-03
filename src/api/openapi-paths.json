@@ -493,6 +493,25 @@
   "/v1/ops/workflows/{id}/retry": [
     "post"
   ],
+  "/v1/payment-schedules": [
+    "get",
+    "post"
+  ],
+  "/v1/payment-schedules/{id}": [
+    "get"
+  ],
+  "/v1/payment-schedules/{id}/cancel": [
+    "post"
+  ],
+  "/v1/payment-schedules/{id}/pause": [
+    "post"
+  ],
+  "/v1/payment-schedules/{id}/resume": [
+    "post"
+  ],
+  "/v1/payment-schedules/{id}/skip": [
+    "post"
+  ],
   "/v1/payments": [
     "get",
     "post"

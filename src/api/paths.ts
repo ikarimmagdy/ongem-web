@@ -24,6 +24,10 @@ export const paths = {
   fundingSources: '/v1/funding-sources',
   fundingSource: (id: string) => `/v1/funding-sources/${q(id)}`,
   topUps: '/v1/top-ups',
+  schedules: '/v1/payment-schedules',
+  schedule: (id: string) => `/v1/payment-schedules/${q(id)}`,
+  scheduleAction: (id: string, action: 'pause' | 'resume' | 'cancel') =>
+    `/v1/payment-schedules/${q(id)}/${action}`,
   cards: (cursor?: string | null) => `/v1/cards${cursor ? `?cursor=${q(cursor)}` : ''}`,
   card: (id: string) => `/v1/cards/${q(id)}`,
   cardWidget: (id: string, kind: CardWidgetKind) => `/v1/cards/${q(id)}/widget-token?kind=${kind}`,

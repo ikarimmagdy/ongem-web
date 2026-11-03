@@ -18,6 +18,7 @@ import {
 } from './demoData';
 import { DemoAssistant } from '../assistant/demoAssistant';
 import { ApiError } from './errors';
+import { nthRun } from '../lib/schedule';
 import { REVERIFICATION_CANCELLED } from './reverify';
 import type {
   Account,
@@ -29,7 +30,9 @@ import type {
   CreatePayment,
   CreateRecipient,
   CreateTopUp,
+  CreateSchedule,
   FundingSource,
+  PaymentSchedule,
   IdCapture,
   LinkFundingSource,
   IdDocument,
@@ -67,6 +70,9 @@ export class DemoOnGemApi implements OnGemApi {
   private applicationState: Application;
   private captures: IdCapture[] = [];
   private fundingState: FundingSource[] = demoFundingSources();
+  private schedulesState: PaymentSchedule[] = [];
+  /** A schedule's next occurrence (from 0), as ongem-core keeps it. */
+  private occurrence = new Map<string, number>();
   private disclosuresState = demoDisclosures();
   private ticketsState: TicketDetail[] = demoTickets();
   private seq = 0;
@@ -404,6 +410,107 @@ export class DemoOnGemApi implements OnGemApi {
     };
     this.paymentsState = [p, ...this.paymentsState];
     return this.log('createTopUp', p);
+  };
+
+  /** The date of occurrence [k], or null once the schedule has ended (count reached, or on or after endDate). */
+  private runDate(s: PaymentSchedule, k: number): string | null {
+    if (s.count != null && k >= s.count) return null;
+    const d = nthRun(s.startDate, s.frequency, s.interval, k);
+    return s.endDate && d >= s.endDate ? null : d;
+  }
+
+  private moveSchedule(id: string, to: string, change: (s: PaymentSchedule) => PaymentSchedule = (s) => s) {
+    const s = this.schedulesState.find((x) => x.id === id) ?? this.notFound('schedule');
+    const moves: Record<string, string[]> = {
+      ACTIVE: ['PAUSED', 'CANCELLED'],
+      PAUSED: ['ACTIVE', 'CANCELLED'],
+    };
+    if (!(moves[s.state] ?? []).includes(to))
+      throw new ApiError(409, 'invalid_transition', `A ${s.state.toLowerCase()} schedule cannot do that.`);
+    const moved = change({ ...s, state: to });
+    this.schedulesState = this.schedulesState.map((x) => (x.id === id ? moved : x));
+    return moved;
+  }
+
+  schedules = async () => {
+    this.require(Permission.PAYMENT_VIEW);
+    return this.log(
+      'schedules',
+      this.schedulesState.map((s) => ({ ...s, runs: [] })),
+    );
+  };
+
+  schedule = async (id: string) => {
+    this.require(Permission.PAYMENT_VIEW);
+    return this.log('schedule', this.schedulesState.find((s) => s.id === id) ?? this.notFound('schedule'));
+  };
+
+  createSchedule = async (r: CreateSchedule) => {
+    this.require(Permission.PAYMENT_CREATE);
+    await this.account(r.fromAccountId);
+    if (r.rail !== 'ACH') throw new ApiError(422, 'capability_unavailable');
+    const recipient = this.recipientsState.find((x) => x.id === r.recipientId) ?? this.notFound('recipient');
+    if (recipient.screening === 'BLOCKED') throw new ApiError(409, 'recipient_blocked');
+    const today = this.now().slice(0, 10);
+    if (
+      r.amountMinor <= 0 ||
+      r.interval < 1 ||
+      r.startDate < today ||
+      (r.endDate && r.endDate <= r.startDate)
+    )
+      throw new ApiError(422, 'validation_failed', 'Check the amount, how often and the dates.');
+    await this.stepUp('payment');
+    const s: PaymentSchedule = {
+      id: this.next('psch'),
+      fromAccountId: r.fromAccountId,
+      recipientId: r.recipientId,
+      rail: 'ACH',
+      amount: usd(r.amountMinor),
+      reference: r.reference ?? null,
+      frequency: r.frequency,
+      interval: r.interval,
+      startDate: r.startDate,
+      endDate: r.endDate ?? null,
+      count: r.count ?? null,
+      state: 'ACTIVE',
+      nextRunOn: r.startDate,
+      runsMade: 0,
+      createdAt: this.now(),
+      runs: [],
+    };
+    this.occurrence.set(s.id, 0);
+    this.schedulesState = [s, ...this.schedulesState];
+    return this.log('createSchedule', s);
+  };
+
+  pauseSchedule = async (id: string) => {
+    this.require(Permission.PAYMENT_CREATE);
+    return this.log('pauseSchedule', this.moveSchedule(id, 'PAUSED'));
+  };
+
+  /** Active again from today: dates that passed while paused are not made. */
+  resumeSchedule = async (id: string) => {
+    this.require(Permission.PAYMENT_CREATE);
+    await this.stepUp('payment');
+    const today = this.now().slice(0, 10);
+    return this.log(
+      'resumeSchedule',
+      this.moveSchedule(id, 'ACTIVE', (s) => {
+        let k = this.occurrence.get(id) ?? 0;
+        let d = this.runDate(s, k);
+        while (d && d < today) d = this.runDate(s, ++k);
+        this.occurrence.set(id, k);
+        return d ? { ...s, nextRunOn: d } : { ...s, state: 'COMPLETED', nextRunOn: null };
+      }),
+    );
+  };
+
+  cancelSchedule = async (id: string) => {
+    this.require(Permission.PAYMENT_CREATE);
+    return this.log(
+      'cancelSchedule',
+      this.moveSchedule(id, 'CANCELLED', (s) => ({ ...s, nextRunOn: null })),
+    );
   };
 
   cards = async () => {
