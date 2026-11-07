@@ -334,3 +334,25 @@ export const LABELS_V2 = {
   faqTitle: 'Questions founders ask',
   productScreens: 'See it in the app',
 };
+
+/** Sign-in and sign-up: the same site frame as the public pages, the form beside a short reminder of what is inside. */
+export const AUTH = {
+  eyebrow: 'Business banking for founders',
+  signInTitle: 'Sign in to OnGem',
+  signUpTitle: 'Create your OnGem account',
+  signInLede:
+    'Your accounts at Piermont Bank, your payments and your cards, with the same approvals on the web and on your phone.',
+  signUpLede:
+    'Create your sign-in, then tell us about your company. Piermont Bank decides on your account and OnGem shows you each step.',
+  points: [
+    'A second sign-in step before money moves',
+    'A second person approves larger payments',
+    'Card numbers stay in the bank’s secure window',
+  ],
+  demo: 'Explore the demo',
+  demoHint: 'Sample data only. Nothing you do in the demo reaches a bank.',
+};
+
+/** The product page's lede: what the page covers, without repeating its title (UX-07). */
+export const PRODUCT_LEDE =
+  'Business accounts and statements, ACH and scheduled payments, top-ups, virtual cards, approvals, recipients, support and notices, as they work today. Planned features are marked Coming soon.';

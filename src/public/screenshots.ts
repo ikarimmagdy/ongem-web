@@ -1,10 +1,14 @@
+import cardsPhone from '../assets/public/screen-cards-phone.jpg';
 import cards from '../assets/public/screen-cards.jpg';
 import homePhone from '../assets/public/screen-home-phone.jpg';
 import home from '../assets/public/screen-home.jpg';
+import notificationsPhone from '../assets/public/screen-notifications-phone.jpg';
 import notifications from '../assets/public/screen-notifications.jpg';
 import paymentsPhone from '../assets/public/screen-payments-phone.jpg';
+import schedulesPhone from '../assets/public/screen-payments-schedules-phone.jpg';
 import schedules from '../assets/public/screen-payments-schedules.jpg';
 import payments from '../assets/public/screen-payments.jpg';
+import supportPhone from '../assets/public/screen-support-phone.jpg';
 import support from '../assets/public/screen-support.jpg';
 
 /**
@@ -63,3 +67,16 @@ export const SCREENSHOTS = {
 } as const;
 
 export type ScreenName = keyof typeof SCREENSHOTS;
+
+/**
+ * The same screen as a phone shows it, for narrow pages: a desktop screen shrunk to a phone's width cannot be read
+ * (UX-08). Captured by the same script at 390 x 844.
+ */
+export const PHONE_SCREENS: Partial<Record<ScreenName, string>> = {
+  home: homePhone,
+  payments: paymentsPhone,
+  schedules: schedulesPhone,
+  cards: cardsPhone,
+  notifications: notificationsPhone,
+  support: supportPhone,
+};

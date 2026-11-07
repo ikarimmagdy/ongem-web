@@ -1,6 +1,7 @@
 import {
   ClerkProvider,
   SignIn,
+  SignUp,
   TaskChooseOrganization,
   TaskResetPassword,
   TaskSetupMFA,
@@ -19,10 +20,20 @@ import { AuthProvider, NO_AUTH, type AuthSession } from './session';
 
 export { CLERK_PUBLISHABLE_KEY };
 
+/** Where each form's switch link goes: the other mode of the same OnGem page, never Clerk's hosted pages. */
+const SIGN_IN_URL = '/sign-in';
+const SIGN_UP_URL = '/sign-in?mode=sign-up';
+
 function ThemedSignIn() {
   const { theme } = useTheme();
   const appearance = useMemo(() => clerkAppearance(theme), [theme]);
-  return <SignIn routing="hash" appearance={appearance} />;
+  return <SignIn routing="hash" signUpUrl={SIGN_UP_URL} appearance={appearance} />;
+}
+
+function ThemedSignUp() {
+  const { theme } = useTheme();
+  const appearance = useMemo(() => clerkAppearance(theme), [theme]);
+  return <SignUp routing="hash" signInUrl={SIGN_IN_URL} appearance={appearance} />;
 }
 
 /** Where Clerk sends a pending session: the console itself, which shows the task in place (no hosted page, no loop). */
@@ -124,6 +135,7 @@ function Bridge({ children }: { children: ReactNode }) {
       manageAccount: account,
       setUpTwoStep: twoStep,
       SignIn: ThemedSignIn,
+      SignUp: ThemedSignUp,
     }),
     [isLoaded, isSignedIn, pendingTask, user, token, out, account, twoStep, reverify],
   );

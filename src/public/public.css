@@ -7,6 +7,10 @@
   min-height: 100vh;
 }
 
+.pub [id] {
+  scroll-margin-top: 84px;
+}
+
 .pub-wrap {
   max-width: 1180px;
   margin-inline: auto;
@@ -535,7 +539,8 @@
   margin-bottom: calc(var(--space-3xl) * -1);
 }
 .pub-hero__desk {
-  margin-inline-end: 12%;
+  /* The phone sits beside the browser, never over it: the balance is on the right of the web screen (UX-03). */
+  margin-inline-end: 23%;
 }
 .pub-hero__phone {
   position: absolute;
@@ -581,7 +586,8 @@
 .pub-phone {
   position: relative;
   border-radius: calc(var(--radius-xl) * 2);
-  padding: 10px;
+  /* The notch sits in the bezel above the screen, never over the app's top bar (UX-13). */
+  padding: 30px 10px 10px;
   background: var(--color-brand-deep);
   border: 1px solid var(--color-border-strong);
   box-shadow: var(--shadow-raised);
@@ -591,13 +597,13 @@
 }
 .pub-phone__notch {
   position: absolute;
-  top: 16px;
+  top: 11px;
   inset-inline-start: 50%;
   width: 28%;
   height: 10px;
   margin-inline-start: -14%;
   border-radius: var(--radius-pill);
-  background: var(--color-brand-deep);
+  background: var(--color-border-strong);
 }
 .pub-phones {
   display: grid;
@@ -660,6 +666,8 @@
   position: relative;
 }
 .pub-band .pub-h2,
+.pub-band .pub-h3,
+.pub-band h2,
 .pub-band h3,
 .pub-band strong {
   color: var(--color-action-primary-text);
@@ -840,14 +848,84 @@
 }
 
 @media (max-width: 640px) {
+  /* On a phone the hero shows the app as a phone shows it, large enough to read (UX-03). */
   .pub-hero__desk {
-    margin-inline-end: 22%;
+    display: none;
   }
   .pub-hero__phone {
-    width: 34%;
+    position: static;
+    width: 64%;
     min-width: 0;
+    margin-inline: auto;
   }
   .pub-browser__address {
     display: none;
+  }
+}
+
+/* Sign-in and sign-up in the site frame (UX-04): the form is the one card on the page. */
+.fw-auth__main {
+  padding-block: var(--space-3xl);
+}
+.fw-auth__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+  gap: var(--space-3xl);
+  align-items: start;
+}
+.fw-auth__title {
+  font-size: var(--font-size-3xl);
+  max-width: 16ch;
+}
+.fw-auth__points {
+  color: var(--color-text-secondary);
+}
+.fw-auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.fw-auth__form .og-signin__clerk,
+.fw-auth__form .cl-rootBox,
+.fw-auth__form .cl-cardBox {
+  width: 100%;
+  max-width: none;
+}
+.fw-auth__demo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm) var(--space-md);
+}
+.fw-auth__hint {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+@media (max-width: 900px) {
+  .fw-auth__main {
+    padding-block: var(--space-xl);
+  }
+  .fw-auth__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xl);
+  }
+  .fw-auth__points {
+    display: none;
+  }
+}
+
+/* Product screens: the desktop screen on wide pages, the phone screen on narrow ones (UX-08). */
+.pub-shot--narrow {
+  display: none;
+}
+@media (max-width: 640px) {
+  .pub-shot--wide {
+    display: none;
+  }
+  .pub-shot--narrow {
+    display: block;
+    max-width: 280px;
+    margin-inline: auto;
   }
 }

@@ -31,6 +31,8 @@ export interface AuthSession {
   setUpTwoStep?(): void;
   /** The provider's sign-in form. */
   SignIn?: ComponentType;
+  /** The provider's sign-up form (OG-032 R5: Get started opens it, not the sign-in form). */
+  SignUp?: ComponentType;
 }
 
 export const NO_AUTH: AuthSession = {

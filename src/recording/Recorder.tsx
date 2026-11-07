@@ -21,10 +21,10 @@ export const RRWEB_OPTIONS = {
 };
 
 /**
- * The one switch for screen and action recording in the founder web app: off (Karim, 2026-11-03, recording is not
- * needed). Off, the signed-in shell never mounts [Recorder], so no session starts and nothing is sent to /v1/recording.
+ * The one switch for screen and action recording in the founder web app (`privacy.ts`): off, the signed-in shell never
+ * mounts [Recorder], so no session starts and nothing is sent to /v1/recording, and the privacy line says so.
  */
-export const RECORDING_ENABLED = false;
+export { RECORDING_ENABLED } from './privacy';
 
 const RRWEB_META = 4;
 

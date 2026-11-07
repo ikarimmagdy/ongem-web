@@ -34,7 +34,8 @@ async function capture(viewport, paths, suffix) {
 }
 
 await capture({ width: 1440, height: 900 }, DESKTOP, '');
-await capture({ width: 390, height: 844 }, ['/', '/payments'], '-phone');
+// Every product screen also as a phone screen: narrow pages show these instead of a shrunken desktop screen (UX-08).
+await capture({ width: 390, height: 844 }, DESKTOP, '-phone');
 await browser.close();
 if (errors.length) {
   console.error(errors);

@@ -1,11 +1,11 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useAuthSession } from './auth';
-import { Button, Logo, Notice, Skeleton, ThemeProvider, ToastProvider } from './design-system';
+import { Button, Notice, Skeleton, ThemeProvider, ToastProvider } from './design-system';
 import { SessionProvider, useSession, type Mode } from './session';
 import { PRIVACY_LINE } from './recording/privacy';
-import { isPublicPath } from './public/content';
-import { PublicSite } from './public/PublicSite';
+import { AUTH, isPublicPath } from './public/content';
+import { Footer, Header, PublicSite } from './public/PublicSite';
 import './web.css';
 
 export { NAV } from './nav';
@@ -28,7 +28,11 @@ function prefetchAfterLoad(load: () => Promise<unknown>, delayMs = 1500): () => 
   };
 }
 
-/** Sign-in with the Clerk customer instance; with no key the build says so and offers demo mode (OG-030 R1). */
+/**
+ * Sign-in and sign-up with the Clerk customer instance, in the same frame as the public site: its header and footer, the
+ * form as the one card on the page beside a short reminder of what is inside (UX-04). With no key the build says so and
+ * offers demo mode (OG-030 R1); `?mode=sign-up` shows the sign-up form (OG-032 R5).
+ */
 export function SignInScreen() {
   const auth = useAuthSession();
   const { enterDemo } = useSession();
@@ -36,37 +40,57 @@ export function SignInScreen() {
   // Fetch the shell while the founder reads the sign-in screen, so entering stays instant; after the page has loaded, so
   // it does not compete with the first screen for bandwidth (OG-030-N3).
   useEffect(() => prefetchAfterLoad(loadSignedIn), []);
+  const Form = signUp ? (auth.SignUp ?? auth.SignIn) : auth.SignIn;
   return (
-    <main className="fw-signin" id="main">
-      <div className="fw-signin__panel">
-        <Link to="/" aria-label="OnGem home">
-          <Logo />
-        </Link>
-        <h1>{signUp ? 'Create your OnGem account' : 'Business banking for founders'}</h1>
-        {auth.pendingTask && auth.Task ? (
-          <auth.Task task={auth.pendingTask} />
-        ) : !auth.available ? (
-          <Notice status="info">
-            <strong>Sign-in is not configured for this build</strong>. This build has no sign-in key. You can
-            explore the app with sample data.
-          </Notice>
-        ) : !auth.loaded || !auth.SignIn ? (
-          <Skeleton label="Loading sign-in" />
-        ) : (
-          <auth.SignIn />
-        )}
-        <Button
-          data-testid="explore-demo"
-          variant={auth.available ? 'secondary' : 'primary'}
-          onClick={enterDemo}
-        >
-          Explore demo
-        </Button>
-        <p className="fw-privacy" data-testid="privacy-line">
-          {PRIVACY_LINE}
-        </p>
-      </div>
-    </main>
+    <div className="pub fw-auth">
+      <Header />
+      <main className="fw-auth__main" id="main">
+        <div className="pub-wrap fw-auth__grid">
+          <section className="fw-auth__intro" aria-labelledby="auth-title">
+            <p className="pub-eyebrow">{AUTH.eyebrow}</p>
+            <h1 id="auth-title" className="pub-display fw-auth__title">
+              {signUp ? AUTH.signUpTitle : AUTH.signInTitle}
+            </h1>
+            <p className="pub-lede">{signUp ? AUTH.signUpLede : AUTH.signInLede}</p>
+            <ul className="pub-list fw-auth__points">
+              {AUTH.points.map((p) => (
+                <li key={p}>{p}</li>
+              ))}
+            </ul>
+          </section>
+          <section className="fw-auth__form" aria-label={signUp ? AUTH.signUpTitle : AUTH.signInTitle}>
+            {auth.pendingTask && auth.Task ? (
+              <auth.Task task={auth.pendingTask} />
+            ) : !auth.available ? (
+              <Notice status="info">
+                <strong>Sign-in is not configured for this build</strong>. This build has no sign-in key. You
+                can explore the app with sample data.
+              </Notice>
+            ) : !auth.loaded || !Form ? (
+              <Skeleton label="Loading sign-in" />
+            ) : (
+              <div data-testid={signUp ? 'auth-sign-up' : 'auth-sign-in'}>
+                <Form />
+              </div>
+            )}
+            <div className="fw-auth__demo">
+              <Button
+                data-testid="explore-demo"
+                variant={auth.available ? 'secondary' : 'primary'}
+                onClick={enterDemo}
+              >
+                {AUTH.demo}
+              </Button>
+              <p className="fw-auth__hint">{AUTH.demoHint}</p>
+            </div>
+            <p className="fw-privacy" data-testid="privacy-line">
+              {PRIVACY_LINE}
+            </p>
+          </section>
+        </div>
+      </main>
+      <Footer />
+    </div>
   );
 }
 

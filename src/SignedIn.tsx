@@ -64,7 +64,10 @@ function Shell({ children }: { children: ReactNode }) {
         </nav>
       </aside>
       <div className="fw-main">
-        <header className="og-topbar">
+        <header className="og-topbar fw-topbar">
+          <span className="fw-topbar__logo" aria-hidden="true">
+            <Logo />
+          </span>
           <span className={`og-env og-env--${mode === 'demo' ? 'mock' : 'live'}`} data-testid="env-badge">
             {mode === 'demo' ? 'Demo' : 'Live'}
           </span>

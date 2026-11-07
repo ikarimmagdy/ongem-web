@@ -116,7 +116,8 @@ describe('public site (OG-032)', () => {
     for (const f of FEATURE_ROWS) {
       const row = screen.getByTestId(`feature-row-${f.id}`);
       expect(within(row).getByRole('heading', { level: 2, name: f.title })).toBeInTheDocument();
-      expect(within(row).getByRole('img', { name: /sample data/ })).toBeInTheDocument();
+      // The desktop screen and its phone version (UX-08); CSS shows one per width.
+      expect(within(row).getAllByRole('img', { name: /sample data/ }).length).toBeGreaterThan(0);
     }
   });
 

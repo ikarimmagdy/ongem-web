@@ -386,7 +386,7 @@ export function OnboardingScreen() {
               <Card title="Owners">
                 <ul className="fw-list">
                   {app.owners.map((o) => (
-                    <li key={o.id} className="fw-row">
+                    <li key={o.id} className="fw-row fw-row--stack" data-testid={`owner-row-${o.id}`}>
                       <span className="fw-row__main">
                         <strong>{o.name}</strong>
                         <span className="fw-row__sub">

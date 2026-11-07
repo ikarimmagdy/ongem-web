@@ -18,13 +18,14 @@ import {
   NAV_LINKS,
   PAGE_META,
   PARTNER,
+  PRODUCT_LEDE,
   SECURITY,
   STEPS,
   TRUST,
   type ArtName,
   type PublicPath,
 } from './content';
-import { SCREENSHOTS, type ScreenName } from './screenshots';
+import { PHONE_SCREENS, SCREENSHOTS, type ScreenName } from './screenshots';
 import './public.css';
 
 export const SIGN_IN = '/sign-in';
@@ -43,11 +44,13 @@ function usePageMeta(path: PublicPath) {
     }
     tag.content = meta.description;
   }, [path]);
-  // A new page starts at its top; a link to /product#cards lands on that section.
+  // A new page starts at its very top, header included (scrolling to #main hid the page's first lines under the sticky
+  // header, UX-02); a link to /product#cards lands on that section, below the header (scroll-margin-top in CSS).
   const { hash } = useLocation();
   useEffect(() => {
-    const target = (hash && document.getElementById(hash.slice(1))) || document.getElementById('main');
-    target?.scrollIntoView?.({ block: 'start' });
+    const target = hash ? document.getElementById(hash.slice(1)) : null;
+    if (target) target.scrollIntoView?.({ block: 'start' });
+    else window.scrollTo?.(0, 0);
   }, [path, hash]);
 }
 
@@ -99,7 +102,8 @@ function ThemeToggle() {
   );
 }
 
-function Header({ path }: { path: PublicPath }) {
+/** The site header; sign-in uses it too, with no page marked current. */
+export function Header({ path }: { path?: PublicPath }) {
   const [open, setOpen] = useState(false);
   return (
     <header className="pub-header">
@@ -148,7 +152,8 @@ function Header({ path }: { path: PublicPath }) {
   );
 }
 
-function Footer() {
+/** The site footer with the draft disclosures; sign-in uses it too. */
+export function Footer() {
   return (
     <footer className="pub-footer">
       <div className="pub-wrap">
@@ -213,7 +218,22 @@ function Shot({ name, frame = 'browser' }: { name: ScreenName; frame?: 'browser'
   );
   if (frame === 'phone') return <PhoneFrame>{img}</PhoneFrame>;
   if (frame === 'none') return <figure className="pub-shot">{img}</figure>;
-  return <BrowserFrame address="app.ongem.com">{img}</BrowserFrame>;
+  const phone = PHONE_SCREENS[name];
+  if (!phone) return <BrowserFrame address="app.ongem.com">{img}</BrowserFrame>;
+  // Wide pages show the desktop screen in a browser; narrow pages show the phone screen in a phone (UX-08). The hidden
+  // one is display: none, so its lazy image is never fetched.
+  return (
+    <>
+      <div className="pub-shot--wide" data-testid={`shot-wide-${name}`}>
+        <BrowserFrame address="app.ongem.com">{img}</BrowserFrame>
+      </div>
+      <div className="pub-shot--narrow" data-testid={`shot-narrow-${name}`}>
+        <PhoneFrame>
+          <img src={phone} alt={s.alt} width={390} height={844} loading="lazy" decoding="async" />
+        </PhoneFrame>
+      </div>
+    </>
+  );
 }
 
 function Home() {
@@ -470,7 +490,7 @@ const PRODUCT_SCREENS: Partial<Record<ArtName, ScreenName>> = {
 function Product() {
   return (
     <div data-testid="public-product">
-      <PageHead title={LABELS.productTitle} lede={PAGE_META['/product'].description} />
+      <PageHead title={LABELS.productTitle} lede={PRODUCT_LEDE} />
       {CAPABILITIES.map((c, i) => (
         <section
           key={c.id}

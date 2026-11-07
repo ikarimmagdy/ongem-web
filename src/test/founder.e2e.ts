@@ -219,8 +219,11 @@ test('public_pages_axe_and_no_sideways_scroll_OG_032_N1_N3', async ({ page }, in
       }
       window.scrollTo(0, 0);
     });
+    // Only the images on show: each product screen has a desktop and a phone version, one hidden per width (UX-08).
     await page.waitForFunction(() =>
-      Array.from(document.images).every((i) => i.complete && i.naturalWidth > 0),
+      Array.from(document.images)
+        .filter((i) => i.getClientRects().length > 0)
+        .every((i) => i.complete && i.naturalWidth > 0),
     );
     await page.waitForTimeout(700);
     await page.screenshot({
@@ -248,5 +251,110 @@ test('public_pages_colour_contrast_light_and_dark_OG_032_N1_R13', async ({ page 
         r.violations.flatMap((v) => v.nodes.map((n) => `${theme} ${path} ${n.target.join(' ')}`)),
       ).toEqual([]);
     }
+  }
+});
+
+/** Contrast ratio of two CSS colours (WCAG relative luminance); rgb() or rgba() strings from getComputedStyle. */
+function contrast(a: string, b: string): number {
+  const lum = (c: string) => {
+    const [r, g, bl] = (c.match(/[\d.]+/g) ?? ['0', '0', '0']).slice(0, 3).map(Number);
+    const ch = (v: number) => {
+      const s = v / 255;
+      return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+    };
+    return 0.2126 * ch(r!) + 0.7152 * ch(g!) + 0.0722 * ch(bl!);
+  };
+  const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p);
+  return (x! + 0.05) / (y! + 0.05);
+}
+
+test('UX_01 headings on dark brand bands read against the band, light and dark', async ({ page }) => {
+  // axe cannot measure text over the band's glow image, so the band's own colour is the background here.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const theme of ['light', 'dark']) {
+    for (const path of ['/', '/product', '/security', '/partners']) {
+      await page.goto(path);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      const dark = await page.evaluate(
+        () => getComputedStyle(document.documentElement).colorScheme === 'dark',
+      );
+      if ((theme === 'dark') !== dark) await page.getByTestId('theme-toggle').click();
+      const pairs = await page.evaluate(() =>
+        Array.from(document.querySelectorAll<HTMLElement>('.pub-band h2, .pub-band h3, .pub-band p')).map(
+          (el) => ({
+            text: (el.textContent ?? '').slice(0, 30),
+            fg: getComputedStyle(el).color,
+            bg: getComputedStyle(el.closest('.pub-band')!).backgroundColor,
+          }),
+        ),
+      );
+      for (const p of pairs)
+        expect(contrast(p.fg, p.bg), `${theme} ${path} "${p.text}"`).toBeGreaterThanOrEqual(4.5);
+    }
+  }
+});
+
+test('UX_02 a public page opens at its top with the header and the first heading in view', async ({
+  page,
+}) => {
+  for (const path of ['/', '/product', '/security', '/partners', '/sign-in']) {
+    await page.goto(path);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await page.waitForTimeout(300);
+    expect(await page.evaluate(() => window.scrollY), path).toBe(0);
+    const header = await page.locator('.pub-header').boundingBox();
+    const h1 = await page.getByRole('heading', { level: 1 }).boundingBox();
+    expect(header!.y, path).toBe(0);
+    expect(h1!.y, `${path} heading under the header`).toBeGreaterThanOrEqual(header!.height);
+  }
+});
+
+test('UX_03 the hero phone never covers the web screen; a phone sees the phone screen', async ({
+  page,
+}, info) => {
+  await page.goto('/');
+  const phone = await page.locator('.pub-hero__phone').boundingBox();
+  if (info.project.name === 'mobile') {
+    await expect(page.locator('.pub-hero__desk')).toBeHidden();
+    expect(phone!.width).toBeGreaterThan(200);
+  } else {
+    const desk = await page.locator('.pub-hero__desk').boundingBox();
+    expect(phone!.x).toBeGreaterThanOrEqual(desk!.x + desk!.width - 1);
+  }
+});
+
+test('UX_09 the assistant button never covers the last field or button of a form', async ({ page }) => {
+  await demo(page);
+  await nav(page, 'support');
+  await page.getByTestId('ticket-new').click();
+  const send = page.getByRole('button', { name: 'Send request' });
+  await send.scrollIntoViewIfNeeded();
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  const b = (await send.boundingBox())!;
+  const fab = (await page.locator('.fw-assistant').boundingBox())!;
+  const overlaps =
+    b.x < fab.x + fab.width && fab.x < b.x + b.width && b.y < fab.y + fab.height && fab.y < b.y + b.height;
+  expect(overlaps).toBe(false);
+});
+
+test('UX_12 the top bar is one row on a phone', async ({ page }, info) => {
+  test.skip(info.project.name !== 'mobile', 'phone layout');
+  await demo(page);
+  const bar = (await page.locator('.fw-topbar').boundingBox())!;
+  expect(bar.height).toBeLessThanOrEqual(72);
+  await expect(page.locator('.fw-topbar__logo')).toBeVisible();
+});
+
+test('UX_13 the notch of a phone frame sits in the bezel, above the screen', async ({ page }) => {
+  await page.goto('/product');
+  const frames = page.locator('.pub-phone:visible');
+  const n = await frames.count();
+  expect(n).toBeGreaterThan(0);
+  for (let i = 0; i < n; i++) {
+    const f = frames.nth(i);
+    await f.scrollIntoViewIfNeeded();
+    const notch = (await f.locator('.pub-phone__notch').boundingBox())!;
+    const img = (await f.locator('img').boundingBox())!;
+    expect(notch.y + notch.height).toBeLessThanOrEqual(img.y + 0.5);
   }
 });

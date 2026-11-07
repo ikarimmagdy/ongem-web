@@ -425,7 +425,13 @@ export function PaymentsScreen() {
         title="Payments"
         actions={
           <div className="fw-actions">
-            <Link to="/recipients">Recipients</Link>
+            <Link
+              to="/recipients"
+              className="og-btn og-btn--secondary og-btn--md"
+              data-testid="payments-recipients"
+            >
+              Recipients
+            </Link>
             {can(Permission.PAYMENT_VIEW) && (
               <Button
                 variant="secondary"

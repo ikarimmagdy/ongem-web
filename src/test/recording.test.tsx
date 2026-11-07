@@ -77,6 +77,6 @@ describe('recording (OG-031 R5, R6, R8)', () => {
     expect(screen.getByTestId('privacy-line')).toHaveTextContent(PRIVACY_LINE);
     unmount();
     renderApp('/settings');
-    expect(await screen.findByTestId('privacy-line')).toHaveTextContent('Recordings stay with OnGem.');
+    expect(await screen.findByTestId('privacy-line')).toHaveTextContent(PRIVACY_LINE);
   });
 });
