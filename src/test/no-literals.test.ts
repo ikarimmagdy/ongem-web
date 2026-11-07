@@ -8,6 +8,7 @@ const scanned = [
   'design-system/styles.css',
   'web.css',
   'screens',
+  'public',
   'App.tsx',
   'session.tsx',
 ];

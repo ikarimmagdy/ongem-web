@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 
 /** OG-030 journeys in demo mode at desktop 1440x900 and mobile 390x844 (projects in playwright.config.ts). */
 async function demo(page: Page) {
-  await page.goto('/');
+  await page.goto('/sign-in');
   await page.getByTestId('explore-demo').click();
   await expect(page.getByTestId('home-total')).toBeVisible();
 }
@@ -141,7 +141,7 @@ test('WEB-SEC-05 security headers are served and the journey runs under the CSP'
     if (/Content Security Policy|Refused to/i.test(m.text())) violations.push(m.text());
   });
   page.on('pageerror', (e) => violations.push(e.message));
-  const res = await page.goto('/');
+  const res = await page.goto('/sign-in');
   const h = res!.headers();
   expect(h['content-security-policy']).toContain("default-src 'self'");
   expect(h['content-security-policy']).toContain("frame-ancestors 'none'");
@@ -166,15 +166,15 @@ test('WEB-SEC-05 security headers are served and the journey runs under the CSP'
   expect(violations).toEqual([]);
 });
 
-test('PERF-WEB-04 the sign-in screen is in the HTML and paints before the script, without a shift', async ({
+test('PERF-WEB-04 the public home is in the HTML and paints before the script, without a shift (OG-032)', async ({
   page,
 }) => {
   const res = await page.request.get('/');
   const html = await res.text();
-  expect(html).toContain('data-testid="privacy-line"');
-  expect(html).toContain('data-testid="explore-demo"');
-  // The static screen carries no data, only the sign-in copy.
-  expect(html).not.toMatch(/US\$\d/);
+  expect(html).toContain('data-testid="public-home"');
+  expect(html).toContain('data-testid="hero-get-started"');
+  // The static screen carries no founder data: nothing from the signed-in app is rendered.
+  expect(html).not.toContain('data-testid="home-total"');
   await page.route(/\/assets\/index-.*\.js$/, async (r) => {
     await new Promise((s) => setTimeout(s, 800));
     await r.continue();
@@ -188,13 +188,32 @@ test('PERF-WEB-04 the sign-in screen is in the HTML and paints before the script
     }).observe({ type: 'layout-shift', buffered: true });
   });
   await page.goto('/', { waitUntil: 'commit' });
-  await expect(page.getByTestId('privacy-line')).toBeVisible({ timeout: 700 });
-  // The static button does nothing until the app has rendered over it.
+  await expect(page.getByTestId('public-home')).toBeVisible({ timeout: 700 });
+  // The static links do nothing until the app has rendered over them.
   await page.waitForFunction(() =>
     Object.keys(document.getElementById('root') ?? {}).some((k) => k.startsWith('__reactContainer')),
   );
+  await axe(page);
+  await page.getByTestId('hero-get-started').click();
+  await expect(page.getByTestId('privacy-line')).toBeVisible();
   await page.getByTestId('explore-demo').click();
   await expect(page.getByTestId('home-total')).toBeVisible();
   expect(await page.evaluate(() => (window as unknown as { __cls: number }).__cls)).toBeLessThan(0.1);
-  await axe(page);
+});
+
+test('public_pages_axe_and_no_sideways_scroll_OG_032_N1_N3', async ({ page }, info) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  for (const path of ['/', '/product', '/security', '/partners']) {
+    await page.goto(path);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await axe(page);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    expect(overflow, `${path} scrolls sideways`).toBeLessThanOrEqual(0);
+    await page.screenshot({
+      path: `e2e-output/public-${info.project.name}${path === '/' ? '-home' : path.replace('/', '-')}.png`,
+      fullPage: true,
+    });
+  }
+  expect(errors).toEqual([]);
 });

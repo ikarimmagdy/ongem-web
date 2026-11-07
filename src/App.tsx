@@ -1,8 +1,11 @@
 import { lazy, Suspense, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuthSession } from './auth';
 import { Button, Logo, Notice, Skeleton, ThemeProvider, ToastProvider } from './design-system';
 import { SessionProvider, useSession, type Mode } from './session';
 import { PRIVACY_LINE } from './recording/privacy';
+import { isPublicPath } from './public/content';
+import { PublicSite } from './public/PublicSite';
 import './web.css';
 
 export { NAV } from './nav';
@@ -29,14 +32,17 @@ function prefetchAfterLoad(load: () => Promise<unknown>, delayMs = 1500): () => 
 export function SignInScreen() {
   const auth = useAuthSession();
   const { enterDemo } = useSession();
+  const signUp = new URLSearchParams(useLocation().search).get('mode') === 'sign-up';
   // Fetch the shell while the founder reads the sign-in screen, so entering stays instant; after the page has loaded, so
   // it does not compete with the first screen for bandwidth (OG-030-N3).
   useEffect(() => prefetchAfterLoad(loadSignedIn), []);
   return (
     <main className="fw-signin" id="main">
       <div className="fw-signin__panel">
-        <Logo />
-        <h1>Business banking for founders</h1>
+        <Link to="/" aria-label="OnGem home">
+          <Logo />
+        </Link>
+        <h1>{signUp ? 'Create your OnGem account' : 'Business banking for founders'}</h1>
         {auth.pendingTask && auth.Task ? (
           <auth.Task task={auth.pendingTask} />
         ) : !auth.available ? (
@@ -66,7 +72,12 @@ export function SignInScreen() {
 
 export function Routed() {
   const { mode } = useSession();
-  if (mode === 'none') return <SignInScreen />;
+  const { pendingTask } = useAuthSession();
+  const { pathname } = useLocation();
+  // Signed out, the public site answers its own paths (OG-032 R1, R5); every other path is sign-in, as before. A
+  // sign-in that still has a task to finish (WEB-COR-07) always shows sign-in, so the task form is never hidden.
+  if (mode === 'none')
+    return isPublicPath(pathname) && !pendingTask ? <PublicSite path={pathname} /> : <SignInScreen />;
   return (
     <Suspense fallback={<Skeleton label="Loading your company" />}>
       <SignedIn />

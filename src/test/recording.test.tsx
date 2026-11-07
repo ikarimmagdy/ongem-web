@@ -73,7 +73,7 @@ describe('recording (OG-031 R5, R6, R8)', () => {
   });
 
   it('privacy_line_on_sign_in_and_settings_AC_R8_1', async () => {
-    const { unmount } = renderApp('/', { mode: 'none' });
+    const { unmount } = renderApp('/sign-in', { mode: 'none' });
     expect(screen.getByTestId('privacy-line')).toHaveTextContent(PRIVACY_LINE);
     unmount();
     renderApp('/settings');

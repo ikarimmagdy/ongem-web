@@ -238,7 +238,7 @@ async function signInOrUp(page: Page): Promise<string> {
   const password = env.E2E_LIVE_PASSWORD ?? '';
   if (!email || !password) throw new Blocked('E2E_LIVE_EMAIL and E2E_LIVE_PASSWORD are not set in .env.e2e');
   const path: string[] = [];
-  await page.goto('/');
+  await page.goto('/sign-in');
   const shell = page.getByTestId('shell');
   const code = page.locator('input[autocomplete="one-time-code"]').first();
   const emailField = page.getByLabel('Email address');
@@ -322,7 +322,7 @@ async function signInOrUp(page: Page): Promise<string> {
     // On the Account Portal with nothing left to answer: back to the app.
     if (!page.url().startsWith(test.info().project.use.baseURL ?? 'http://localhost:5190')) {
       path.push('back-to-app');
-      await page.goto('/');
+      await page.goto('/sign-in');
     }
   }
   throw new Error(`sign-in did not reach the app (path: ${path.join(' > ')})`);

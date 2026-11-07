@@ -1,4 +1,4 @@
-// After `vite build`: puts the sign-in screen into dist/index.html as static HTML with the default theme's variables, so
+// After `vite build`: puts the first screen (the public home, OG-032) into dist/index.html as static HTML with the default theme's variables, so
 // the first screen paints before the script runs (OG-030-N3). Font preloads were tried and made LCP later on a throttled
 // phone (the fonts took bandwidth from the stylesheet), so the text paints in the fallback font and swaps.
 import { readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -31,7 +31,7 @@ html = html
   )
   .replace(/<title>.*<\/title>/, `<title>${text(shell.title)}</title>`)
   .replace('<div id="root"></div>', `<div id="root">${shell.html}</div>`);
-if (html === before || !html.includes('data-testid="privacy-line"'))
+if (html === before || !html.includes('data-testid="public-home"'))
   throw new Error('prerender: index.html not updated');
 writeFileSync('dist/index.html', html);
-console.log('prerender: sign-in screen in dist/index.html');
+console.log('prerender: public home in dist/index.html');
