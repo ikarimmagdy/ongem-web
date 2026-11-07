@@ -34,6 +34,9 @@ import type {
   TicketDetail,
   TicketSummary,
   Transaction,
+  Inbox,
+  NotificationPreferences,
+  PreferenceChange,
 } from './types';
 
 /** The customer API as the founder web uses it: call for call the same as ongem-app's OnGemApi.kt. */
@@ -110,6 +113,18 @@ export interface OnGemApi {
   openTicket(request: OpenTicket): Promise<TicketDetail>;
   replyToTicket(id: string, body: string): Promise<TicketDetail>;
   attachToTicket(id: string, file: File): Promise<TicketDetail>;
+  // OG-014: the person's notices and notification choices; nothing here moves money, so no step-up.
+  /** Newest first, in the company the person acts in; `unread` only unread ones. */
+  notifications(opts?: { unread?: boolean; limit?: number }): Promise<Inbox>;
+  readNotification(id: string): Promise<Inbox>;
+  readAllNotifications(): Promise<Inbox>;
+  notificationPreferences(): Promise<NotificationPreferences>;
+  /** 422 mandatory_kind when email is turned off for a mandatory kind. */
+  setNotificationPreferences(kinds: PreferenceChange[]): Promise<NotificationPreferences>;
+  /** International form (E.164); a 6-digit code is sent to it. */
+  setSmsNumber(number: string): Promise<NotificationPreferences>;
+  /** 422 sms_code_invalid or sms_code_expired, 429 sms_code_locked. */
+  verifySmsNumber(code: string): Promise<NotificationPreferences>;
   // OG-031: the assistant (reads and drafts only) and screen and action recording.
   startConversation(channel: string, recordingSessionId?: string | null): Promise<Conversation>;
   sendAssistantMessage(conversationId: string, text: string): Promise<AssistantTurn>;

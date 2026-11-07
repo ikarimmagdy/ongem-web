@@ -18,6 +18,7 @@ const WIDGET_LABELS: Record<CardWidgetKind, string> = {
 
 function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void }) {
   const { api } = useSession();
+  const navigate = useNavigate();
   const drafts = useDrafts();
   const [n, setN] = useState(0);
   const card = useAsync(() => api.card(id), [api, id, n]);
@@ -119,6 +120,17 @@ function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void 
                 Unfreeze card
               </Button>
             )}
+            <Button
+              variant="secondary"
+              data-testid="card-dispute"
+              onClick={() =>
+                navigate(
+                  `/support/new?category=DISPUTE&subject=${encodeURIComponent(`Dispute a charge on card ending ${c.last4}`)}`,
+                )
+              }
+            >
+              Dispute a charge
+            </Button>
           </div>
         </Card>
       )}

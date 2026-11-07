@@ -47,6 +47,13 @@ export const paths = {
   ticket: (id: string) => `/v1/support/tickets/${q(id)}`,
   ticketMessages: (id: string) => `/v1/support/tickets/${q(id)}/messages`,
   ticketAttachments: (id: string) => `/v1/support/tickets/${q(id)}/attachments`,
+  notifications: (unread: boolean, limit: number) =>
+    `/v1/notifications?limit=${limit}${unread ? '&unread=true' : ''}`,
+  readNotification: (id: string) => `/v1/notifications/${q(id)}/read`,
+  readAllNotifications: '/v1/notifications/read-all',
+  notificationPreferences: '/v1/notifications/preferences',
+  smsNumber: '/v1/notifications/sms-number',
+  verifySmsNumber: '/v1/notifications/sms-number/verify',
   conversations: '/v1/assistant/conversations',
   messages: (id: string) => `/v1/assistant/conversations/${q(id)}/messages`,
   turnFeedback: (id: string) => `/v1/assistant/turns/${q(id)}/feedback`,

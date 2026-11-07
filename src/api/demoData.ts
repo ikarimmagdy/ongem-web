@@ -11,6 +11,8 @@ import type {
   TicketDetail,
   Transaction,
   FundingSource,
+  KindPreference,
+  NoticeView,
 } from './types';
 
 /** Demo mode's sample data, ported from ongem-app's DemoData.kt (same ids, names and amounts). Fictional only. */
@@ -369,5 +371,65 @@ export const demoTickets = (): TicketDetail[] => [
       },
     ],
     attachments: [],
+  },
+];
+
+/** OG-014 kinds as ongem-core's NoticeKind: label, mandatory (email always on) and the email default. */
+export const NOTICE_KINDS: Array<[kind: string, label: string, mandatory: boolean, email: boolean]> = [
+  ['APPROVAL_WAITING', 'A payment waits for your approval', false, true],
+  ['PAYMENT_SENT', 'Payment sent', false, false],
+  ['PAYMENT_WITH_BANK', 'Payment with the bank', false, false],
+  ['PAYMENT_SETTLED', 'Payment completed', false, true],
+  ['PAYMENT_FAILED', 'Payment not sent', true, true],
+  ['PAYMENT_RETURNED', 'Payment returned', true, true],
+  ['SCHEDULE_FAILED', 'Scheduled payment did not go', true, true],
+  ['CARD_FROZEN', 'Card frozen or cancelled', true, true],
+  ['APPLICATION_DECIDED', 'Application decision', false, true],
+  ['ACCOUNT_READY', 'Account open', false, true],
+  ['LIMITS_CHANGED', 'Payment limits changed', true, true],
+  ['DETAILS_NEEDED', 'Business details to confirm', true, true],
+  ['SUPPORT_UPDATE', 'Support request update', false, true],
+  ['NEW_DEVICE', 'New device', true, true],
+  ['CLOSURE_STARTED', 'Account closing', true, true],
+  ['ACCOUNT_FROZEN', 'Account on hold', true, true],
+];
+
+export const demoPreferences = (): KindPreference[] =>
+  NOTICE_KINDS.map(([kind, label, mandatory, email]) => ({ kind, label, mandatory, email, sms: false }));
+
+/** Sample notices in ongem-core's wording, newest first; two unread. */
+export const demoNotices = (): NoticeView[] => [
+  {
+    id: 'ntc_demo_3',
+    kind: 'APPROVAL_WAITING',
+    title: 'A payment needs your approval',
+    body: 'A payment of $2,450.00 is waiting for a second person to approve it.',
+    link: 'payments/pay_demo_2/approve',
+    mandatory: false,
+    occurredAt: '2026-10-29T14:20:00Z',
+    createdAt: '2026-10-29T14:20:01Z',
+    readAt: null,
+  },
+  {
+    id: 'ntc_demo_2',
+    kind: 'SUPPORT_UPDATE',
+    title: 'Your support request has an answer',
+    body: 'OnGem replied to your request.',
+    link: 'support/tkt_demo_1',
+    mandatory: false,
+    occurredAt: '2026-10-29T10:05:00Z',
+    createdAt: '2026-10-29T10:05:01Z',
+    readAt: null,
+  },
+  {
+    id: 'ntc_demo_1',
+    kind: 'PAYMENT_SETTLED',
+    title: 'Payment completed',
+    body: 'Your payment of $1,200.00 has completed.',
+    link: 'payments/pay_demo_1',
+    mandatory: false,
+    occurredAt: '2026-10-28T16:00:00Z',
+    createdAt: '2026-10-28T16:00:01Z',
+    readAt: '2026-10-28T16:30:00Z',
   },
 ];

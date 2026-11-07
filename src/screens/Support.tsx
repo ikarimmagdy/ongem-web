@@ -19,7 +19,7 @@ import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
 import { Load, human, stateStatus } from './common';
 
-const CATEGORIES = ['PAYMENT', 'CARD', 'ACCOUNT', 'ONBOARDING', 'OTHER'];
+const CATEGORIES = ['PAYMENT', 'CARD', 'ACCOUNT', 'ONBOARDING', 'DISPUTE', 'OTHER'];
 
 function NewTicket() {
   const { api } = useSession();

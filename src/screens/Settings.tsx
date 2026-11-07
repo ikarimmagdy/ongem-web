@@ -2,6 +2,7 @@ import { Button, Card, KeyValue, PageHeader, Select, useTheme } from '../design-
 import { PRIVACY_LINE } from '../recording/Recorder';
 import { useSession } from '../session';
 import { human } from './common';
+import { NotificationChoices } from './NotificationChoices';
 
 export function SettingsScreen() {
   const { mode, role, leave } = useSession();
@@ -20,6 +21,7 @@ export function SettingsScreen() {
           />
         </label>
       </Card>
+      <NotificationChoices />
       <Card title="Privacy">
         <p className="fw-privacy" data-testid="privacy-line">
           {PRIVACY_LINE}

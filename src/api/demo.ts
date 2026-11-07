@@ -15,6 +15,8 @@ import {
   demoTransactions,
   disclosureBody,
   usd,
+  demoNotices,
+  demoPreferences,
 } from './demoData';
 import { DemoAssistant } from '../assistant/demoAssistant';
 import { ApiError } from './errors';
@@ -41,6 +43,9 @@ import type {
   OwnerIdentity,
   Payment,
   TicketDetail,
+  NoticeView,
+  NotificationPreferences,
+  PreferenceChange,
 } from './types';
 
 export interface DemoOptions {
@@ -77,6 +82,14 @@ export class DemoOnGemApi implements OnGemApi {
   /** Who approves a new top-up (Q-091): COMPANY in the demo, ONGEM to show a one-person company. */
   approvalBy: 'COMPANY' | 'ONGEM' = 'COMPANY';
   private ticketsState: TicketDetail[] = demoTickets();
+  private noticesState: NoticeView[] = demoNotices();
+  private preferencesState: NotificationPreferences = {
+    kinds: demoPreferences(),
+    smsNumberLast4: null,
+    smsVerified: false,
+  };
+  /** The demo SMS code: any 6 digits but 000000, which the demo answers as wrong. */
+  private smsPending = false;
   private seq = 0;
   readonly stepUps: string[] = [];
   /** Demo recording stays in memory: events are masked but never leave the browser. */
@@ -694,6 +707,74 @@ export class DemoOnGemApi implements OnGemApi {
       );
     }
     return this.log('recordDisclosure', { id: this.next('dse'), versionId, kind, syncState: 'SYNCED' });
+  };
+
+  private inbox(unread = false, limit = 50) {
+    const items = this.noticesState.filter((n) => !unread || !n.readAt).slice(0, limit);
+    return { items, unread: this.noticesState.filter((n) => !n.readAt).length };
+  }
+
+  notifications = async (opts?: { unread?: boolean; limit?: number }) =>
+    this.log('notifications', this.inbox(opts?.unread ?? false, opts?.limit ?? 50));
+
+  readNotification = async (id: string) => {
+    if (!this.noticesState.some((n) => n.id === id)) this.notFound('notice');
+    this.noticesState = this.noticesState.map((n) =>
+      n.id === id && !n.readAt ? { ...n, readAt: this.now() } : n,
+    );
+    return this.log('readNotification', this.inbox());
+  };
+
+  readAllNotifications = async () => {
+    this.noticesState = this.noticesState.map((n) => (n.readAt ? n : { ...n, readAt: this.now() }));
+    return this.log('readAllNotifications', this.inbox());
+  };
+
+  notificationPreferences = async () => this.log('notificationPreferences', this.preferencesState);
+
+  setNotificationPreferences = async (kinds: PreferenceChange[]) => {
+    const known = new Map(this.preferencesState.kinds.map((k) => [k.kind, k]));
+    for (const c of kinds) {
+      const k = known.get(c.kind);
+      if (!k) throw new ApiError(422, 'validation_failed', `Unknown notice kind ${c.kind}.`);
+      if (k.mandatory && c.email === false)
+        throw new ApiError(422, 'mandatory_kind', 'This notice always goes by email.');
+      if (c.sms && !this.preferencesState.smsVerified)
+        throw new ApiError(422, 'validation_failed', 'Verify your SMS number first.');
+    }
+    this.preferencesState = {
+      ...this.preferencesState,
+      kinds: this.preferencesState.kinds.map((k) => {
+        const c = kinds.find((x) => x.kind === k.kind);
+        return c ? { ...k, email: c.email ?? k.email, sms: c.sms ?? k.sms } : k;
+      }),
+    };
+    return this.log('setNotificationPreferences', this.preferencesState);
+  };
+
+  setSmsNumber = async (number: string) => {
+    if (!/^\+[1-9]\d{7,14}$/.test(number.trim()))
+      throw new ApiError(
+        422,
+        'sms_number_invalid',
+        'Enter the number in international form, like +15551234567.',
+      );
+    this.smsPending = true;
+    this.preferencesState = {
+      ...this.preferencesState,
+      smsNumberLast4: number.trim().slice(-4),
+      smsVerified: false,
+      kinds: this.preferencesState.kinds.map((k) => ({ ...k, sms: false })),
+    };
+    return this.log('setSmsNumber', this.preferencesState);
+  };
+
+  verifySmsNumber = async (code: string) => {
+    if (!this.smsPending || !/^\d{6}$/.test(code) || code === '000000')
+      throw new ApiError(422, 'sms_code_invalid', 'That code is not right. Check the text and try again.');
+    this.smsPending = false;
+    this.preferencesState = { ...this.preferencesState, smsVerified: true };
+    return this.log('verifySmsNumber', this.preferencesState);
   };
 
   tickets = async () =>

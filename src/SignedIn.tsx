@@ -13,6 +13,7 @@ import { PaymentsScreen } from './screens/Payments';
 import { RecipientsScreen } from './screens/Recipients';
 import { SettingsScreen } from './screens/Settings';
 import { SupportScreen } from './screens/Support';
+import { NoticeBell, NotificationsScreen } from './screens/Notifications';
 import { useSession } from './session';
 import { AssistantWidget } from './assistant/AssistantWidget';
 import { DraftProvider } from './assistant/drafts';
@@ -67,7 +68,10 @@ function Shell({ children }: { children: ReactNode }) {
           <span className={`og-env og-env--${mode === 'demo' ? 'mock' : 'live'}`} data-testid="env-badge">
             {mode === 'demo' ? 'Demo' : 'Live'}
           </span>
-          <CompanySwitcher companies={switchable(person)} current={membership} onPick={pick} />
+          <span className="og-topbar__right">
+            <CompanySwitcher companies={switchable(person)} current={membership} onPick={pick} />
+            {me.status === 'success' && <NoticeBell />}
+          </span>
         </header>
         <main className="fw-content" id="main">
           {me.status === 'loading' ? (
@@ -129,6 +133,7 @@ function CompanyScope() {
           <Route path="/support/new" element={<SupportScreen />} />
           <Route path="/support/:id" element={<SupportScreen />} />
           <Route path="/settings" element={<SettingsScreen />} />
+          <Route path="/notifications" element={<NotificationsScreen />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <AssistantWidget recordingSessionId={recording} />

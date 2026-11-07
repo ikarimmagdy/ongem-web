@@ -92,6 +92,13 @@ async function record() {
     api.abandonAssistantDraft('d'),
     api.startRecording('WEB'),
     api.recordEvents('s', []),
+    api.notifications({ unread: true, limit: 1 }),
+    api.readNotification('n'),
+    api.readAllNotifications(),
+    api.notificationPreferences(),
+    api.setNotificationPreferences([{ kind: 'PAYMENT_SENT', email: true }]),
+    api.setSmsNumber('+15551234567'),
+    api.verifySmsNumber('123456'),
   ]);
   return calls;
 }
@@ -107,7 +114,7 @@ function served(call: { method: string; path: string }) {
 describe('every live call is an ongem-core endpoint (OG-030 R8)', () => {
   it('every_live_call_is_in_the_openapi_AC_R8_1', async () => {
     const calls = await record();
-    expect(calls).toHaveLength(53);
+    expect(calls).toHaveLength(60);
     expect(calls.filter((c) => !served(c))).toEqual([]);
   });
 });

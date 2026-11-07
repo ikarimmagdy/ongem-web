@@ -1,568 +1,190 @@
 {
-  "/partner/v1/applications": [
-    "post"
-  ],
-  "/partner/v1/applications/{id}": [
-    "get"
-  ],
-  "/partner/v1/oauth/token": [
-    "post"
-  ],
-  "/v1/accounts": [
-    "get"
-  ],
-  "/v1/accounts/{id}": [
-    "get"
-  ],
-  "/v1/accounts/{id}/statement-files": [
-    "get"
-  ],
-  "/v1/accounts/{id}/statement-files/{fileId}": [
-    "get"
-  ],
-  "/v1/accounts/{id}/statements": [
-    "get"
-  ],
-  "/v1/accounts/{id}/statements/{statementId}": [
-    "get"
-  ],
-  "/v1/accounts/{id}/statements/{statementId}/pdf": [
-    "get"
-  ],
-  "/v1/accounts/{id}/transactions": [
-    "get"
-  ],
-  "/v1/assistant/conversations": [
-    "post"
-  ],
-  "/v1/assistant/conversations/{id}": [
-    "get"
-  ],
-  "/v1/assistant/conversations/{id}/messages": [
-    "post"
-  ],
-  "/v1/assistant/drafts/{id}/abandon": [
-    "post"
-  ],
-  "/v1/assistant/drafts/{id}/confirm": [
-    "post"
-  ],
-  "/v1/assistant/turns/{id}/feedback": [
-    "post"
-  ],
-  "/v1/cards": [
-    "get"
-  ],
-  "/v1/cards/{id}": [
-    "get"
-  ],
-  "/v1/cards/{id}/freeze": [
-    "post"
-  ],
-  "/v1/cards/{id}/unfreeze": [
-    "post"
-  ],
-  "/v1/cards/{id}/widget-token": [
-    "get"
-  ],
-  "/v1/devices": [
-    "get",
-    "post"
-  ],
-  "/v1/devices/challenge": [
-    "post"
-  ],
-  "/v1/devices/{id}": [
-    "delete"
-  ],
-  "/v1/disclosures/events": [
-    "post"
-  ],
-  "/v1/disclosures/required": [
-    "get"
-  ],
-  "/v1/disclosures/versions/{id}": [
-    "get"
-  ],
-  "/v1/funding-sources": [
-    "get",
-    "post"
-  ],
-  "/v1/funding-sources/{id}": [
-    "delete",
-    "get"
-  ],
-  "/v1/me": [
-    "get"
-  ],
-  "/v1/onboarding/applications": [
-    "get"
-  ],
-  "/v1/onboarding/applications/{id}": [
-    "get"
-  ],
-  "/v1/onboarding/applications/{id}/confirm": [
-    "post"
-  ],
-  "/v1/onboarding/applications/{id}/docv": [
-    "get",
-    "post"
-  ],
-  "/v1/onboarding/applications/{id}/docv/{captureId}": [
-    "get"
-  ],
-  "/v1/onboarding/applications/{id}/owners/{ownerId}/identity": [
-    "put"
-  ],
-  "/v1/onboarding/applications/{id}/submit": [
-    "post"
-  ],
-  "/v1/ops/accounts": [
-    "get"
-  ],
-  "/v1/ops/accounts/{id}": [
-    "get"
-  ],
-  "/v1/ops/accounts/{id}/closure-check": [
-    "get"
-  ],
-  "/v1/ops/accounts/{id}/closure-requests": [
-    "post"
-  ],
-  "/v1/ops/accounts/{id}/freeze": [
-    "post"
-  ],
-  "/v1/ops/accounts/{id}/holds": [
-    "get"
-  ],
-  "/v1/ops/accounts/{id}/members": [
-    "get"
-  ],
-  "/v1/ops/accounts/{id}/statements": [
-    "get"
-  ],
-  "/v1/ops/accounts/{id}/statements/{period}": [
-    "get"
-  ],
-  "/v1/ops/accounts/{id}/statements/{period}/document": [
-    "get"
-  ],
-  "/v1/ops/accounts/{id}/statements/{period}/download": [
-    "get"
-  ],
-  "/v1/ops/accounts/{id}/test-funding": [
-    "post"
-  ],
-  "/v1/ops/accounts/{id}/transactions": [
-    "get"
-  ],
-  "/v1/ops/accounts/{id}/transactions/{transactionId}": [
-    "get"
-  ],
-  "/v1/ops/accounts/{id}/unfreeze-requests": [
-    "post"
-  ],
-  "/v1/ops/activity": [
-    "get"
-  ],
-  "/v1/ops/assistant/metrics": [
-    "get"
-  ],
-  "/v1/ops/assistant/turns": [
-    "get"
-  ],
-  "/v1/ops/assistant/turns/{id}": [
-    "get"
-  ],
-  "/v1/ops/audit/verify": [
-    "get"
-  ],
-  "/v1/ops/calls": [
-    "get"
-  ],
-  "/v1/ops/cards": [
-    "get"
-  ],
-  "/v1/ops/cards/{id}": [
-    "get"
-  ],
-  "/v1/ops/cards/{id}/controls": [
-    "post"
-  ],
-  "/v1/ops/cards/{id}/freeze": [
-    "post"
-  ],
-  "/v1/ops/cards/{id}/reissue": [
-    "post"
-  ],
-  "/v1/ops/cards/{id}/unfreeze": [
-    "post"
-  ],
-  "/v1/ops/cases": [
-    "get"
-  ],
-  "/v1/ops/companies": [
-    "get"
-  ],
-  "/v1/ops/companies/{companyId}/accounts": [
-    "post"
-  ],
-  "/v1/ops/companies/{companyId}/card-candidates": [
-    "get"
-  ],
-  "/v1/ops/companies/{companyId}/cardholders": [
-    "get"
-  ],
-  "/v1/ops/companies/{companyId}/cards": [
-    "post"
-  ],
-  "/v1/ops/companies/{companyId}/freeze": [
-    "post"
-  ],
-  "/v1/ops/companies/{companyId}/recipients": [
-    "get",
-    "post"
-  ],
-  "/v1/ops/companies/{companyId}/recipients/{id}": [
-    "put"
-  ],
-  "/v1/ops/companies/{companyId}/recipients/{id}/versions": [
-    "get"
-  ],
-  "/v1/ops/companies/{companyId}/unfreeze-requests": [
-    "post"
-  ],
-  "/v1/ops/companies/{id}": [
-    "get"
-  ],
-  "/v1/ops/config/{key}": [
-    "get",
-    "put"
-  ],
-  "/v1/ops/conformance/runs": [
-    "get",
-    "post"
-  ],
-  "/v1/ops/conformance/runs/{id}": [
-    "get"
-  ],
-  "/v1/ops/disputes": [
-    "get",
-    "post"
-  ],
-  "/v1/ops/disputes/{id}": [
-    "get"
-  ],
-  "/v1/ops/disputes/{id}/evidence": [
-    "post"
-  ],
-  "/v1/ops/disputes/{id}/evidence-complete": [
-    "post"
-  ],
-  "/v1/ops/drift/items": [
-    "get"
-  ],
-  "/v1/ops/drift/items/{itemId}/resolve-requests": [
-    "post"
-  ],
-  "/v1/ops/drift/runs": [
-    "get",
-    "post"
-  ],
-  "/v1/ops/identity/config": [
-    "get"
-  ],
-  "/v1/ops/inbound": [
-    "get"
-  ],
-  "/v1/ops/inbound/replay": [
-    "post"
-  ],
-  "/v1/ops/onboarding/applications": [
-    "get"
-  ],
-  "/v1/ops/onboarding/applications/{id}": [
-    "get"
-  ],
-  "/v1/ops/onboarding/applications/{id}/audit": [
-    "get"
-  ],
-  "/v1/ops/onboarding/applications/{id}/cancel": [
-    "post"
-  ],
-  "/v1/ops/onboarding/applications/{id}/decision-requests": [
-    "get",
-    "post"
-  ],
-  "/v1/ops/onboarding/applications/{id}/disclosures": [
-    "get"
-  ],
-  "/v1/ops/onboarding/applications/{id}/disclosures/resend": [
-    "post"
-  ],
-  "/v1/ops/onboarding/applications/{id}/document-requests": [
-    "post"
-  ],
-  "/v1/ops/onboarding/applications/{id}/documents": [
-    "get",
-    "post"
-  ],
-  "/v1/ops/onboarding/applications/{id}/documents/{documentId}/content": [
-    "get"
-  ],
-  "/v1/ops/onboarding/applications/{id}/docv": [
-    "get"
-  ],
-  "/v1/ops/onboarding/applications/{id}/docv/{captureId}": [
-    "get"
-  ],
-  "/v1/ops/onboarding/applications/{id}/edd": [
-    "get",
-    "post"
-  ],
-  "/v1/ops/onboarding/applications/{id}/kyb": [
-    "post"
-  ],
-  "/v1/ops/onboarding/applications/{id}/notes": [
-    "get",
-    "post"
-  ],
-  "/v1/ops/onboarding/applications/{id}/owners/{ownerId}/docv": [
-    "post"
-  ],
-  "/v1/ops/onboarding/applications/{id}/owners/{ownerId}/kyc": [
-    "post"
-  ],
-  "/v1/ops/onboarding/applications/{id}/risk": [
-    "get"
-  ],
-  "/v1/ops/onboarding/applications/{id}/test-drive/next": [
-    "post"
-  ],
-  "/v1/ops/onboarding/applications/{id}/verification": [
-    "get"
-  ],
-  "/v1/ops/onboarding/applications/{id}/verification/refresh": [
-    "post"
-  ],
-  "/v1/ops/onboarding/decision-requests/{overrideId}/approve": [
-    "post"
-  ],
-  "/v1/ops/onboarding/decision-requests/{overrideId}/reject": [
-    "post"
-  ],
-  "/v1/ops/onboarding/monitoring-alerts": [
-    "get"
-  ],
-  "/v1/ops/onboarding/rekyb": [
-    "get"
-  ],
-  "/v1/ops/onboarding/rekyb/{id}/verify": [
-    "post"
-  ],
-  "/v1/ops/onboarding/test-applications": [
-    "post"
-  ],
-  "/v1/ops/overrides": [
-    "get"
-  ],
-  "/v1/ops/overrides/{id}": [
-    "get"
-  ],
-  "/v1/ops/overrides/{id}/approve": [
-    "post"
-  ],
-  "/v1/ops/overrides/{id}/reject": [
-    "post"
-  ],
-  "/v1/ops/overrides/{id}/retry": [
-    "post"
-  ],
-  "/v1/ops/overview": [
-    "get"
-  ],
-  "/v1/ops/payment-requests": [
-    "post"
-  ],
-  "/v1/ops/payments": [
-    "get"
-  ],
-  "/v1/ops/payments/rails": [
-    "get"
-  ],
-  "/v1/ops/payments/{id}": [
-    "get"
-  ],
-  "/v1/ops/payments/{id}/cancel-requests": [
-    "post"
-  ],
-  "/v1/ops/payments/{id}/resolve": [
-    "post"
-  ],
-  "/v1/ops/payments/{id}/test-return": [
-    "post"
-  ],
-  "/v1/ops/people": [
-    "get"
-  ],
-  "/v1/ops/people/{personId}/ops-roles/{role}": [
-    "delete",
-    "put"
-  ],
-  "/v1/ops/providers": [
-    "get"
-  ],
-  "/v1/ops/providers/config": [
-    "get"
-  ],
-  "/v1/ops/providers/routing": [
-    "get",
-    "put"
-  ],
-  "/v1/ops/providers/{instanceId}/config": [
-    "get"
-  ],
-  "/v1/ops/providers/{instanceId}/webhook-secret/rotate": [
-    "post"
-  ],
-  "/v1/ops/providers/{instanceId}/webhook-secret/rotations": [
-    "get"
-  ],
-  "/v1/ops/recipients/compare": [
-    "post"
-  ],
-  "/v1/ops/recipients/compare/runs": [
-    "get"
-  ],
-  "/v1/ops/recipients/{id}": [
-    "get"
-  ],
-  "/v1/ops/recipients/{id}/archive": [
-    "post"
-  ],
-  "/v1/ops/recipients/{id}/review-decision": [
-    "post"
-  ],
-  "/v1/ops/recording/sessions": [
-    "get"
-  ],
-  "/v1/ops/recording/sessions/{id}": [
-    "get"
-  ],
-  "/v1/ops/support/tickets": [
-    "get",
-    "post"
-  ],
-  "/v1/ops/support/tickets/{id}": [
-    "get",
-    "patch"
-  ],
-  "/v1/ops/support/tickets/{id}/assign": [
-    "post"
-  ],
-  "/v1/ops/support/tickets/{id}/attachments": [
-    "post"
-  ],
-  "/v1/ops/support/tickets/{id}/attachments/{attachmentId}": [
-    "get"
-  ],
-  "/v1/ops/support/tickets/{id}/awaiting-case": [
-    "post"
-  ],
-  "/v1/ops/support/tickets/{id}/links": [
-    "post"
-  ],
-  "/v1/ops/support/tickets/{id}/messages": [
-    "post"
-  ],
-  "/v1/ops/support/tickets/{id}/status": [
-    "post"
-  ],
-  "/v1/ops/workflows": [
-    "get"
-  ],
-  "/v1/ops/workflows/summary": [
-    "get"
-  ],
-  "/v1/ops/workflows/{id}": [
-    "get"
-  ],
-  "/v1/ops/workflows/{id}/cancel": [
-    "post"
-  ],
-  "/v1/ops/workflows/{id}/retry": [
-    "post"
-  ],
-  "/v1/payment-schedules": [
-    "get",
-    "post"
-  ],
-  "/v1/payment-schedules/{id}": [
-    "get"
-  ],
-  "/v1/payment-schedules/{id}/cancel": [
-    "post"
-  ],
-  "/v1/payment-schedules/{id}/pause": [
-    "post"
-  ],
-  "/v1/payment-schedules/{id}/resume": [
-    "post"
-  ],
-  "/v1/payment-schedules/{id}/skip": [
-    "post"
-  ],
-  "/v1/payments": [
-    "get",
-    "post"
-  ],
-  "/v1/payments/{id}": [
-    "get"
-  ],
-  "/v1/payments/{id}/approve": [
-    "post"
-  ],
-  "/v1/payments/{id}/cancel": [
-    "post"
-  ],
-  "/v1/payments/{id}/reject": [
-    "post"
-  ],
-  "/v1/payments/{id}/send": [
-    "post"
-  ],
-  "/v1/recipients": [
-    "get",
-    "post"
-  ],
-  "/v1/recipients/{id}": [
-    "delete",
-    "get",
-    "put"
-  ],
-  "/v1/recording/sessions": [
-    "post"
-  ],
-  "/v1/recording/sessions/{id}/events": [
-    "post"
-  ],
-  "/v1/support/tickets": [
-    "get",
-    "post"
-  ],
-  "/v1/support/tickets/{id}": [
-    "get"
-  ],
-  "/v1/support/tickets/{id}/attachments": [
-    "post"
-  ],
-  "/v1/support/tickets/{id}/attachments/{attachmentId}": [
-    "get"
-  ],
-  "/v1/support/tickets/{id}/messages": [
-    "post"
-  ],
-  "/v1/top-ups": [
-    "post"
-  ]
+  "/partner/v1/applications": ["post"],
+  "/partner/v1/applications/{id}": ["get"],
+  "/partner/v1/oauth/token": ["post"],
+  "/v1/accounts": ["get"],
+  "/v1/accounts/{id}": ["get"],
+  "/v1/accounts/{id}/statement-files": ["get"],
+  "/v1/accounts/{id}/statement-files/{fileId}": ["get"],
+  "/v1/accounts/{id}/statements": ["get"],
+  "/v1/accounts/{id}/statements/{statementId}": ["get"],
+  "/v1/accounts/{id}/statements/{statementId}/pdf": ["get"],
+  "/v1/accounts/{id}/transactions": ["get"],
+  "/v1/assistant/conversations": ["post"],
+  "/v1/assistant/conversations/{id}": ["get"],
+  "/v1/assistant/conversations/{id}/messages": ["post"],
+  "/v1/assistant/drafts/{id}/abandon": ["post"],
+  "/v1/assistant/drafts/{id}/confirm": ["post"],
+  "/v1/assistant/turns/{id}/feedback": ["post"],
+  "/v1/cards": ["get"],
+  "/v1/cards/{id}": ["get"],
+  "/v1/cards/{id}/freeze": ["post"],
+  "/v1/cards/{id}/unfreeze": ["post"],
+  "/v1/cards/{id}/widget-token": ["get"],
+  "/v1/devices": ["get", "post"],
+  "/v1/devices/challenge": ["post"],
+  "/v1/devices/{id}": ["delete"],
+  "/v1/disclosures/events": ["post"],
+  "/v1/disclosures/required": ["get"],
+  "/v1/disclosures/versions/{id}": ["get"],
+  "/v1/funding-sources": ["get", "post"],
+  "/v1/funding-sources/{id}": ["delete", "get"],
+  "/v1/me": ["get"],
+  "/v1/notifications": ["get"],
+  "/v1/notifications/preferences": ["get", "put"],
+  "/v1/notifications/read-all": ["post"],
+  "/v1/notifications/sms-number": ["put"],
+  "/v1/notifications/sms-number/verify": ["post"],
+  "/v1/notifications/{id}/read": ["post"],
+  "/v1/onboarding/applications": ["get"],
+  "/v1/onboarding/applications/{id}": ["get"],
+  "/v1/onboarding/applications/{id}/confirm": ["post"],
+  "/v1/onboarding/applications/{id}/docv": ["get", "post"],
+  "/v1/onboarding/applications/{id}/docv/{captureId}": ["get"],
+  "/v1/onboarding/applications/{id}/owners/{ownerId}/identity": ["put"],
+  "/v1/onboarding/applications/{id}/submit": ["post"],
+  "/v1/ops/accounts": ["get"],
+  "/v1/ops/accounts/{id}": ["get"],
+  "/v1/ops/accounts/{id}/closure-check": ["get"],
+  "/v1/ops/accounts/{id}/closure-requests": ["post"],
+  "/v1/ops/accounts/{id}/freeze": ["post"],
+  "/v1/ops/accounts/{id}/holds": ["get"],
+  "/v1/ops/accounts/{id}/members": ["get"],
+  "/v1/ops/accounts/{id}/statements": ["get"],
+  "/v1/ops/accounts/{id}/statements/{period}": ["get"],
+  "/v1/ops/accounts/{id}/statements/{period}/document": ["get"],
+  "/v1/ops/accounts/{id}/statements/{period}/download": ["get"],
+  "/v1/ops/accounts/{id}/test-funding": ["post"],
+  "/v1/ops/accounts/{id}/transactions": ["get"],
+  "/v1/ops/accounts/{id}/transactions/{transactionId}": ["get"],
+  "/v1/ops/accounts/{id}/unfreeze-requests": ["post"],
+  "/v1/ops/activity": ["get"],
+  "/v1/ops/assistant/metrics": ["get"],
+  "/v1/ops/assistant/turns": ["get"],
+  "/v1/ops/assistant/turns/{id}": ["get"],
+  "/v1/ops/audit/verify": ["get"],
+  "/v1/ops/calls": ["get"],
+  "/v1/ops/cards": ["get"],
+  "/v1/ops/cards/{id}": ["get"],
+  "/v1/ops/cards/{id}/controls": ["post"],
+  "/v1/ops/cards/{id}/freeze": ["post"],
+  "/v1/ops/cards/{id}/reissue": ["post"],
+  "/v1/ops/cards/{id}/unfreeze": ["post"],
+  "/v1/ops/cases": ["get"],
+  "/v1/ops/companies": ["get"],
+  "/v1/ops/companies/{companyId}/accounts": ["post"],
+  "/v1/ops/companies/{companyId}/card-candidates": ["get"],
+  "/v1/ops/companies/{companyId}/cardholders": ["get"],
+  "/v1/ops/companies/{companyId}/cards": ["post"],
+  "/v1/ops/companies/{companyId}/freeze": ["post"],
+  "/v1/ops/companies/{companyId}/recipients": ["get", "post"],
+  "/v1/ops/companies/{companyId}/recipients/{id}": ["put"],
+  "/v1/ops/companies/{companyId}/recipients/{id}/versions": ["get"],
+  "/v1/ops/companies/{companyId}/unfreeze-requests": ["post"],
+  "/v1/ops/companies/{id}": ["get"],
+  "/v1/ops/config/{key}": ["get", "put"],
+  "/v1/ops/conformance/runs": ["get", "post"],
+  "/v1/ops/conformance/runs/{id}": ["get"],
+  "/v1/ops/disputes": ["get", "post"],
+  "/v1/ops/disputes/{id}": ["get"],
+  "/v1/ops/disputes/{id}/evidence": ["post"],
+  "/v1/ops/disputes/{id}/evidence-complete": ["post"],
+  "/v1/ops/drift/items": ["get"],
+  "/v1/ops/drift/items/{itemId}/resolve-requests": ["post"],
+  "/v1/ops/drift/runs": ["get", "post"],
+  "/v1/ops/identity/config": ["get"],
+  "/v1/ops/inbound": ["get"],
+  "/v1/ops/inbound/replay": ["post"],
+  "/v1/ops/onboarding/applications": ["get"],
+  "/v1/ops/onboarding/applications/{id}": ["get"],
+  "/v1/ops/onboarding/applications/{id}/audit": ["get"],
+  "/v1/ops/onboarding/applications/{id}/cancel": ["post"],
+  "/v1/ops/onboarding/applications/{id}/decision-requests": ["get", "post"],
+  "/v1/ops/onboarding/applications/{id}/disclosures": ["get"],
+  "/v1/ops/onboarding/applications/{id}/disclosures/resend": ["post"],
+  "/v1/ops/onboarding/applications/{id}/document-requests": ["post"],
+  "/v1/ops/onboarding/applications/{id}/documents": ["get", "post"],
+  "/v1/ops/onboarding/applications/{id}/documents/{documentId}/content": ["get"],
+  "/v1/ops/onboarding/applications/{id}/docv": ["get"],
+  "/v1/ops/onboarding/applications/{id}/docv/{captureId}": ["get"],
+  "/v1/ops/onboarding/applications/{id}/edd": ["get", "post"],
+  "/v1/ops/onboarding/applications/{id}/kyb": ["post"],
+  "/v1/ops/onboarding/applications/{id}/notes": ["get", "post"],
+  "/v1/ops/onboarding/applications/{id}/owners/{ownerId}/docv": ["post"],
+  "/v1/ops/onboarding/applications/{id}/owners/{ownerId}/kyc": ["post"],
+  "/v1/ops/onboarding/applications/{id}/risk": ["get"],
+  "/v1/ops/onboarding/applications/{id}/test-drive/next": ["post"],
+  "/v1/ops/onboarding/applications/{id}/verification": ["get"],
+  "/v1/ops/onboarding/applications/{id}/verification/refresh": ["post"],
+  "/v1/ops/onboarding/decision-requests/{overrideId}/approve": ["post"],
+  "/v1/ops/onboarding/decision-requests/{overrideId}/reject": ["post"],
+  "/v1/ops/onboarding/monitoring-alerts": ["get"],
+  "/v1/ops/onboarding/rekyb": ["get"],
+  "/v1/ops/onboarding/rekyb/{id}/verify": ["post"],
+  "/v1/ops/onboarding/test-applications": ["post"],
+  "/v1/ops/overrides": ["get"],
+  "/v1/ops/overrides/{id}": ["get"],
+  "/v1/ops/overrides/{id}/approve": ["post"],
+  "/v1/ops/overrides/{id}/reject": ["post"],
+  "/v1/ops/overrides/{id}/retry": ["post"],
+  "/v1/ops/overview": ["get"],
+  "/v1/ops/payment-requests": ["post"],
+  "/v1/ops/payments": ["get"],
+  "/v1/ops/payments/rails": ["get"],
+  "/v1/ops/payments/{id}": ["get"],
+  "/v1/ops/payments/{id}/approve": ["post"],
+  "/v1/ops/payments/{id}/cancel-requests": ["post"],
+  "/v1/ops/payments/{id}/resolve": ["post"],
+  "/v1/ops/payments/{id}/test-return": ["post"],
+  "/v1/ops/people": ["get"],
+  "/v1/ops/people/{personId}/ops-roles/{role}": ["delete", "put"],
+  "/v1/ops/providers": ["get"],
+  "/v1/ops/providers/config": ["get"],
+  "/v1/ops/providers/routing": ["get", "put"],
+  "/v1/ops/providers/{instanceId}/config": ["get"],
+  "/v1/ops/providers/{instanceId}/webhook-secret/rotate": ["post"],
+  "/v1/ops/providers/{instanceId}/webhook-secret/rotations": ["get"],
+  "/v1/ops/recipients/compare": ["post"],
+  "/v1/ops/recipients/compare/runs": ["get"],
+  "/v1/ops/recipients/{id}": ["get"],
+  "/v1/ops/recipients/{id}/archive": ["post"],
+  "/v1/ops/recipients/{id}/review-decision": ["post"],
+  "/v1/ops/recording/sessions": ["get"],
+  "/v1/ops/recording/sessions/{id}": ["get"],
+  "/v1/ops/support/tickets": ["get", "post"],
+  "/v1/ops/support/tickets/{id}": ["get", "patch"],
+  "/v1/ops/support/tickets/{id}/assign": ["post"],
+  "/v1/ops/support/tickets/{id}/attachments": ["post"],
+  "/v1/ops/support/tickets/{id}/attachments/{attachmentId}": ["get"],
+  "/v1/ops/support/tickets/{id}/awaiting-case": ["post"],
+  "/v1/ops/support/tickets/{id}/links": ["post"],
+  "/v1/ops/support/tickets/{id}/messages": ["post"],
+  "/v1/ops/support/tickets/{id}/status": ["post"],
+  "/v1/ops/workflows": ["get"],
+  "/v1/ops/workflows/summary": ["get"],
+  "/v1/ops/workflows/{id}": ["get"],
+  "/v1/ops/workflows/{id}/cancel": ["post"],
+  "/v1/ops/workflows/{id}/retry": ["post"],
+  "/v1/payment-schedules": ["get", "post"],
+  "/v1/payment-schedules/{id}": ["get"],
+  "/v1/payment-schedules/{id}/cancel": ["post"],
+  "/v1/payment-schedules/{id}/pause": ["post"],
+  "/v1/payment-schedules/{id}/resume": ["post"],
+  "/v1/payment-schedules/{id}/skip": ["post"],
+  "/v1/payments": ["get", "post"],
+  "/v1/payments/{id}": ["get"],
+  "/v1/payments/{id}/approve": ["post"],
+  "/v1/payments/{id}/cancel": ["post"],
+  "/v1/payments/{id}/reject": ["post"],
+  "/v1/payments/{id}/send": ["post"],
+  "/v1/recipients": ["get", "post"],
+  "/v1/recipients/{id}": ["delete", "get", "put"],
+  "/v1/recording/sessions": ["post"],
+  "/v1/recording/sessions/{id}/events": ["post"],
+  "/v1/support/tickets": ["get", "post"],
+  "/v1/support/tickets/{id}": ["get"],
+  "/v1/support/tickets/{id}/attachments": ["post"],
+  "/v1/support/tickets/{id}/attachments/{attachmentId}": ["get"],
+  "/v1/support/tickets/{id}/messages": ["post"],
+  "/v1/top-ups": ["post"]
 }

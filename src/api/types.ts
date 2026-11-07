@@ -425,3 +425,44 @@ export interface RecordingSession {
   id: string;
   platform: string;
 }
+
+/** OG-014: one notice in the person's inbox (`GET /v1/notifications`); `link` is a screen path such as `payments/<id>`. */
+export interface NoticeView {
+  id: string;
+  kind: string;
+  title: string;
+  body: string;
+  link: string | null;
+  mandatory: boolean;
+  occurredAt: string;
+  createdAt: string;
+  readAt: string | null;
+}
+
+/** The inbox in the company the person acts in; `unread` is the count of unread notices. */
+export interface Inbox {
+  items: NoticeView[];
+  unread: number;
+}
+
+export interface KindPreference {
+  kind: string;
+  label: string;
+  mandatory: boolean;
+  email: boolean;
+  sms: boolean;
+}
+
+/** The person's notification choices; the SMS number shows its last 4 digits only. */
+export interface NotificationPreferences {
+  kinds: KindPreference[];
+  smsNumberLast4: string | null;
+  smsVerified: boolean;
+}
+
+/** A change to one kind; a field left out keeps its value. */
+export interface PreferenceChange {
+  kind: string;
+  email?: boolean;
+  sms?: boolean;
+}

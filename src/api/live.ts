@@ -284,6 +284,22 @@ export class LiveOnGemApi implements OnGemApi {
     form.append('file', file, file.name);
     return this.call('POST', paths.ticketAttachments(id), { form });
   };
+  notifications: OnGemApi['notifications'] = (opts) =>
+    this.call(
+      'GET',
+      paths.notifications(opts?.unread ?? false, Math.min(100, Math.max(1, opts?.limit ?? 50))),
+    );
+  readNotification: OnGemApi['readNotification'] = (id) => this.call('POST', paths.readNotification(id));
+  readAllNotifications: OnGemApi['readAllNotifications'] = () =>
+    this.call('POST', paths.readAllNotifications);
+  notificationPreferences: OnGemApi['notificationPreferences'] = () =>
+    this.call('GET', paths.notificationPreferences);
+  setNotificationPreferences: OnGemApi['setNotificationPreferences'] = (kinds) =>
+    this.call('PUT', paths.notificationPreferences, { json: { kinds } });
+  setSmsNumber: OnGemApi['setSmsNumber'] = (number) =>
+    this.call('PUT', paths.smsNumber, { json: { number } });
+  verifySmsNumber: OnGemApi['verifySmsNumber'] = (code) =>
+    this.call('POST', paths.verifySmsNumber, { json: { code } });
   startConversation: OnGemApi['startConversation'] = (channel, recordingSessionId) =>
     this.call('POST', paths.conversations, { json: { channel, recordingSessionId } });
   sendAssistantMessage: OnGemApi['sendAssistantMessage'] = (id, text) =>

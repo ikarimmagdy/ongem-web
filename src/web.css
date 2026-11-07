@@ -304,3 +304,52 @@
   transform: translateY(-25%) rotate(45deg);
   flex: none;
 }
+
+/* OG-014 notifications (M-3-R31, R32): the bell in the top bar and unread rows. */
+.fw-bell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: calc(var(--space-xl) + var(--space-sm));
+  min-height: calc(var(--space-xl) + var(--space-sm));
+  color: var(--color-text-primary);
+  border-radius: var(--radius-pill);
+}
+.fw-bell:hover {
+  background: var(--color-surface-tint-blue);
+}
+.fw-bell:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+.fw-bell__count {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  min-width: var(--space-lg);
+  padding: 0 var(--space-xs);
+  border-radius: var(--radius-pill);
+  background: var(--color-action-danger-bg);
+  color: var(--color-action-danger-text);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-body-strong-weight);
+  line-height: var(--space-lg);
+  text-align: center;
+}
+.fw-row.is-unread {
+  border-inline-start: 3px solid var(--color-action-primary-bg);
+}
+.fw-prefs {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--space-sm) var(--space-md);
+  align-items: center;
+}
+.fw-prefs__head {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+.fw-prefs__row {
+  display: contents;
+}
