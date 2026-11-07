@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BrowserFrame, PhoneFrame } from '../art';
 import { formatPostDate, POSTS, postBySlug, type Post } from './blog';
@@ -16,26 +17,63 @@ import {
 } from './videos';
 import './media.css';
 
-/** One walkthrough: native controls, captions on, poster first, nothing downloaded until played. */
+/**
+ * One walkthrough: a branded poster with a play button first (OG-032 R23), then the native controls with captions on.
+ * Nothing is downloaded until played.
+ */
 export function VideoPlayer({ video }: { video: Video }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [started, setStarted] = useState(false);
+  const start = () => {
+    setStarted(true);
+    void ref.current?.play().catch(() => undefined);
+  };
   return (
     <figure
       className={video.height > video.width ? 'pub-video pub-video--phone' : 'pub-video'}
       id={video.id}
       data-testid={`video-${video.id}`}
     >
-      <video
-        controls
-        preload="none"
-        playsInline
-        poster={videoPoster(video.id)}
-        width={video.width}
-        height={video.height}
-        aria-label={video.title}
-      >
-        <source src={videoSrc(video.id)} type="video/webm" />
-        <track kind="captions" src={videoTrack(video.id)} srcLang="en" label={MEDIA.captionsLabel} default />
-      </video>
+      <div className="pub-video__stage">
+        <video
+          ref={ref}
+          controls={started}
+          preload="none"
+          playsInline
+          poster={videoPoster(video.id)}
+          width={video.width}
+          height={video.height}
+          aria-label={video.title}
+          onPlay={() => setStarted(true)}
+        >
+          <source src={videoSrc(video.id)} type="video/webm" />
+          <track
+            kind="captions"
+            src={videoTrack(video.id)}
+            srcLang="en"
+            label={MEDIA.captionsLabel}
+            default
+          />
+        </video>
+        {!started && (
+          <button
+            type="button"
+            className="pub-video__play"
+            onClick={start}
+            data-testid={`play-${video.id}`}
+            aria-label={`${MEDIA.play}: ${video.title}, ${formatDuration(video.seconds)}`}
+          >
+            <span className="pub-video__play-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M8 5.5v13l11-6.5z" />
+              </svg>
+            </span>
+            <span className="pub-video__play-title" aria-hidden="true">
+              {video.title}
+            </span>
+          </button>
+        )}
+      </div>
       <figcaption>
         <span className="pub-video__title">{video.title}</span>
         <span className="pub-video__meta">{formatDuration(video.seconds)}</span>
@@ -216,7 +254,7 @@ function Videos() {
   return (
     <div data-testid="public-videos">
       <Head title={MEDIA.videosTitle} lede={MEDIA.videosLede} />
-      <section className="pub-section">
+      <section className="pub-section pub-section--after-head">
         <div className="pub-wrap">
           <div className="pub-video-grid pub-video-grid--all">
             {VIDEOS.map((v) => (

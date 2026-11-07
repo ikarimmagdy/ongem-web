@@ -8,6 +8,9 @@ import {
   DISCLOSURES,
   FACTS,
   FAQ,
+  FAQ_NEXT,
+  PRICING,
+  SECURITY_FACTS,
   FEATURE_ROWS,
   DISCLOSURES_NOTE,
   FINAL_CTA,
@@ -216,10 +219,20 @@ function Soon({ items }: { items: string[] }) {
   );
 }
 
-function Shot({ name, frame = 'browser' }: { name: ScreenName; frame?: 'browser' | 'phone' | 'none' }) {
+function Shot({
+  name,
+  frame = 'browser',
+  eager = false,
+}: {
+  name: ScreenName;
+  frame?: 'browser' | 'phone' | 'none';
+  /** The first screen below the hero loads at once, so it is never an empty frame (OG-032 R17). */
+  eager?: boolean;
+}) {
   const s = SCREENSHOTS[name];
+  const loading = eager ? 'eager' : 'lazy';
   const img = (
-    <img src={s.src} alt={s.alt} width={s.width} height={s.height} loading="lazy" decoding="async" />
+    <img src={s.src} alt={s.alt} width={s.width} height={s.height} loading={loading} decoding="async" />
   );
   if (frame === 'phone') return <PhoneFrame>{img}</PhoneFrame>;
   if (frame === 'none') return <figure className="pub-shot">{img}</figure>;
@@ -234,7 +247,7 @@ function Shot({ name, frame = 'browser' }: { name: ScreenName; frame?: 'browser'
       </div>
       <div className="pub-shot--narrow" data-testid={`shot-narrow-${name}`}>
         <PhoneFrame>
-          <img src={phone} alt={s.alt} width={390} height={844} loading="lazy" decoding="async" />
+          <img src={phone} alt={s.alt} width={390} height={844} loading={loading} decoding="async" />
         </PhoneFrame>
       </div>
     </>
@@ -247,18 +260,24 @@ function Home() {
     <>
       <section className="pub-hero" data-testid="public-home">
         <GemGlow className="pub-hero__glow" />
-        <div className="pub-wrap">
+        <div className="pub-wrap pub-hero__grid">
           <div className="pub-hero__copy">
             <p className="pub-eyebrow pub-eyebrow--on-dark">{HERO.eyebrow}</p>
             <h1 className="pub-display">{HERO.title}</h1>
-            <p className="pub-lede">{HERO.lede}</p>
+            <p className="pub-lede pub-lede--full">{HERO.lede}</p>
+            <p className="pub-lede pub-lede--short">{HERO.ledeShort}</p>
             <Cta testid="hero-get-started">
               <Link to={SIGN_IN} className="og-btn og-btn--secondary og-btn--md">
                 {HERO.secondary}
               </Link>
             </Cta>
+            <ul className="pub-proof" data-testid="hero-proof">
+              {HERO.proof.map((p) => (
+                <li key={p}>{p}</li>
+              ))}
+            </ul>
           </div>
-          <div className="pub-hero__stage">
+          <div className="pub-hero__stage" data-testid="hero-stage">
             <div className="pub-hero__desk">
               <BrowserFrame address="app.ongem.com">
                 <img
@@ -266,12 +285,13 @@ function Home() {
                   alt={SCREENSHOTS.home.alt}
                   width={SCREENSHOTS.home.width}
                   height={SCREENSHOTS.home.height}
+                  fetchPriority="high"
                   decoding="async"
                 />
               </BrowserFrame>
             </div>
             <div className="pub-hero__phone">
-              <Shot name="homePhone" frame="phone" />
+              <Shot name="homePhone" frame="phone" eager />
             </div>
           </div>
         </div>
@@ -341,7 +361,7 @@ function Home() {
               </ul>
             </div>
             <div className="pub-feature__shot" data-reveal>
-              <Shot name={f.screen} />
+              <Shot name={f.screen} eager={i === 0} />
             </div>
           </div>
         </section>
@@ -417,7 +437,7 @@ function Home() {
   );
 }
 
-function Facts() {
+function Facts({ items = FACTS }: { items?: typeof FACTS }) {
   return (
     <section className="pub-section pub-band" aria-labelledby="home-facts" data-testid="pub-facts">
       <div className="pub-wrap">
@@ -425,7 +445,7 @@ function Facts() {
           {LABELS_V2.factsTitle}
         </h2>
         <dl className="pub-facts">
-          {FACTS.map((f) => (
+          {items.map((f) => (
             <div key={f.label} className="pub-fact" data-reveal data-source={f.source}>
               <dt>{f.label}</dt>
               <dd>{f.value}</dd>
@@ -447,10 +467,28 @@ function Faq() {
         <div className="pub-faq__list">
           {FAQ.map((f) => (
             <details key={f.q} className="pub-faq__item">
-              <summary>{f.q}</summary>
+              <summary>
+                <span>{f.q}</span>
+                <span className="pub-faq__mark" aria-hidden="true" />
+              </summary>
               <p>{f.a}</p>
             </details>
           ))}
+          <div className="pub-faq__next" data-testid="faq-next">
+            <h3 className="pub-h3">{FAQ_NEXT.title}</h3>
+            <p>{FAQ_NEXT.text}</p>
+            <Cta>
+              <Link to="/security" className="og-btn og-btn--secondary og-btn--md">
+                {FAQ_NEXT.security}
+              </Link>
+            </Cta>
+          </div>
+          <div className="pub-pricing" data-testid="pub-pricing">
+            <h3 className="pub-h3">{PRICING.title}</h3>
+            <p>
+              <strong>{PRICING.label}.</strong> {PRICING.text}
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -570,7 +608,7 @@ function Security() {
           </div>
         </div>
       </section>
-      <Facts />
+      <Facts items={SECURITY_FACTS} />
       <Faq />
       <FinalCta />
     </div>

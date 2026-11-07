@@ -72,8 +72,16 @@ export const HERO = {
   eyebrow: 'Business banking for founders',
   title: 'Run your company’s money in one calm place',
   lede: 'A US business account held at Piermont Bank, ACH and scheduled payments, virtual cards and approvals that keep two sets of eyes on every payment. On the web and on your phone.',
+  /** Two lines on a phone (OG-032 R20). */
+  ledeShort: 'Business accounts at Piermont Bank, with cards and two-person approvals.',
   primary: 'Get started',
   secondary: 'Sign in',
+  /** What a founder gets, beside the first call to action (OG-032 R19). Each is how the product works today. */
+  proof: [
+    'Your money is held at Piermont Bank',
+    'A second person approves larger payments',
+    'Card numbers never reach OnGem',
+  ],
 };
 
 export const BANK_STATEMENT =
@@ -298,12 +306,37 @@ export const FEATURE_ROWS = [
  * and privacy v3, approved 6 Nov 2026 (records kept 7 years after closure); hub Testing evidence, 7 Nov 2026 (1,189
  * automated tests with a recorded result, 0 failures); OG-014 notifications, ongem-core 72e7d83 (16 kinds of notice).
  */
+/** Founder-facing facts lead (OG-032 R19); every value has a source. */
 export const FACTS = [
+  {
+    value: '2',
+    label: 'People on every payment above your threshold',
+    source: 'OG-011 maker-checker, ongem-core',
+  },
   { value: '5 min', label: 'Card details close by themselves', source: 'ongem-web CardWidget' },
   { value: '16', label: 'Kinds of notices you control', source: 'OG-014, ongem-core 72e7d83' },
   { value: '7 years', label: 'Records kept after an account closes', source: 'Data protection v3' },
+];
+
+/** The security page adds the engineering fact (OG-032 R19). */
+export const SECURITY_FACTS = [
+  ...FACTS.slice(1),
   { value: '1,189', label: 'Automated tests behind every release', source: 'Testing evidence, 7 Nov 2026' },
 ];
+
+/** No public price list exists, so no numbers are shown (OG-032 R22). */
+export const PRICING = {
+  title: 'What it costs',
+  label: 'Pricing: talk to us',
+  text: 'Pricing is agreed with each company when its account is set up. There is no public price list yet, so ask us when you sign up.',
+};
+
+/** The step after the last answer (OG-032 R21). */
+export const FAQ_NEXT = {
+  title: 'Still deciding?',
+  text: 'Open your account in a few minutes, or read how we protect your money first.',
+  security: 'How we protect your money',
+};
 
 /** Answers from how the product works today (OG-032 R12). */
 export const FAQ = [

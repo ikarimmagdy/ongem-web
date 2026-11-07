@@ -1,7 +1,19 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axe from 'axe-core';
-import { CAPABILITIES, DISCLOSURES, FACTS, FAQ, FEATURE_ROWS, PAGE_META, TRUST } from '../public/content';
+import {
+  CAPABILITIES,
+  DISCLOSURES,
+  FACTS,
+  FAQ,
+  FAQ_NEXT,
+  FEATURE_ROWS,
+  HERO,
+  PAGE_META,
+  PRICING,
+  SECURITY_FACTS,
+  TRUST,
+} from '../public/content';
 import { renderApp } from './render';
 
 /** OG-032: the signed-out public site and the way into sign-up. */
@@ -164,5 +176,56 @@ describe('public site (OG-032)', () => {
     } finally {
       window.matchMedia = original;
     }
+  });
+
+  it('no_blank_frames_first_screens_load_at_once_AC_R17_1', () => {
+    renderApp('/', { mode: 'none' });
+    const hero = screen.getByTestId('public-home');
+    for (const img of within(hero).getAllByRole('img')) {
+      expect(img.getAttribute('loading')).not.toBe('lazy');
+    }
+    const first = screen.getByTestId(`feature-row-${FEATURE_ROWS[0]!.id}`);
+    for (const img of within(first).getAllByRole('img', { name: /sample data/ })) {
+      expect(img).toHaveAttribute('loading', 'eager');
+    }
+    const later = screen.getByTestId(`feature-row-${FEATURE_ROWS[1]!.id}`);
+    expect(within(later).getAllByRole('img', { name: /sample data/ })[0]).toHaveAttribute('loading', 'lazy');
+  });
+
+  it('hero_copy_beside_the_product_with_proof_AC_R18_1_AC_R19_1', () => {
+    renderApp('/', { mode: 'none' });
+    const proof = screen.getByTestId('hero-proof');
+    for (const p of HERO.proof) expect(within(proof).getByText(p)).toBeInTheDocument();
+    // Copy and stage are the two columns of one grid.
+    const grid = screen.getByTestId('hero-stage').parentElement!;
+    expect(grid).toHaveClass('pub-hero__grid');
+    expect(screen.getByText(HERO.ledeShort)).toHaveClass('pub-lede--short');
+  });
+
+  it('facts_lead_with_founder_value_and_tests_only_on_security_AC_R19_2', () => {
+    renderApp('/', { mode: 'none' });
+    const facts = screen.getByTestId('pub-facts');
+    expect(within(facts).queryByText(/Automated tests/)).not.toBeInTheDocument();
+    expect(within(facts).getAllByRole('term')[0]).toHaveTextContent(FACTS[0]!.label);
+  });
+
+  it('security_facts_keep_the_tests_fact_AC_R19_3', () => {
+    renderApp('/security', { mode: 'none' });
+    const facts = screen.getByTestId('pub-facts');
+    expect(within(facts).getByText(SECURITY_FACTS.at(-1)!.label)).toBeInTheDocument();
+  });
+
+  it('faq_ends_with_a_next_step_and_pricing_has_no_numbers_AC_R21_1_AC_R22_1', () => {
+    renderApp('/', { mode: 'none' });
+    const next = screen.getByTestId('faq-next');
+    expect(within(next).getByRole('heading', { name: FAQ_NEXT.title })).toBeInTheDocument();
+    expect(within(next).getByRole('link', { name: HERO.primary })).toHaveAttribute(
+      'href',
+      '/sign-in?mode=sign-up',
+    );
+    expect(within(next).getByRole('link', { name: FAQ_NEXT.security })).toHaveAttribute('href', '/security');
+    const pricing = screen.getByTestId('pub-pricing');
+    expect(pricing).toHaveTextContent(PRICING.label);
+    expect(pricing.textContent).not.toMatch(/\$|US\$|[0-9]/);
   });
 });

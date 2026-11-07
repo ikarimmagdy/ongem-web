@@ -15,6 +15,68 @@
   border: 1px solid var(--color-border-subtle);
   box-shadow: var(--shadow-raised);
 }
+.pub-video__stage {
+  position: relative;
+}
+/* The branded poster overlay (OG-032 R23): the poster stays visible, a scrim and a play button in brand colours sit on top. */
+.pub-video__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-brand-deep) 45%, transparent);
+  color: var(--color-action-primary-text);
+  cursor: pointer;
+  font: inherit;
+}
+.pub-video__play:focus-visible {
+  outline: 3px solid var(--color-border-focus);
+  outline-offset: 3px;
+}
+.pub-video__play-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-pill);
+  background: var(--color-action-primary-bg);
+  box-shadow: var(--shadow-raised);
+  transition: transform 0.2s ease;
+}
+.pub-video__play:hover .pub-video__play-icon {
+  transform: scale(1.06);
+}
+.pub-video__play-icon svg {
+  width: 28px;
+  height: 28px;
+  fill: var(--color-action-primary-text);
+  margin-inline-start: 3px;
+}
+.pub-video__play-title {
+  font-family: var(--font-display);
+  font-weight: var(--font-display-weight);
+  font-size: var(--font-size-lg);
+  padding-inline: var(--space-md);
+  text-align: center;
+}
+.pub-video--phone .pub-video__stage {
+  max-width: 300px;
+  margin-inline: auto;
+  width: 100%;
+}
+.pub-section--after-head {
+  padding-top: var(--space-lg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pub-video__play-icon {
+    transition: none;
+  }
+}
 .pub-video figcaption {
   display: flex;
   flex-wrap: wrap;

@@ -1,5 +1,6 @@
 /// <reference types="node" />
 import { screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import axe from 'axe-core';
 import { existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
@@ -113,7 +114,8 @@ describe('public media (OG-032)', () => {
     for (const v of VIDEOS) {
       const fig = screen.getByTestId(`video-${v.id}`);
       const video = fig.querySelector('video')!;
-      expect(video).toHaveAttribute('controls');
+      // Native controls appear once played; before that the branded play button stands in (OG-032 R23).
+      expect(within(fig).getByRole('button', { name: new RegExp(v.title) })).toBeInTheDocument();
       expect(video).toHaveAttribute('preload', 'none');
       expect(video.getAttribute('poster')).toMatch(new RegExp(`videos/${v.id}\\.jpg$`));
       expect(video.querySelector('source')!.getAttribute('src')).toMatch(
@@ -177,5 +179,18 @@ describe('public media (OG-032)', () => {
       ).toEqual([]);
       unmount();
     }
+  });
+
+  it('videos_show_a_branded_play_button_that_starts_playback_AC_R23_1', async () => {
+    renderApp('/videos', { mode: 'none' });
+    const v = VIDEOS[0]!;
+    const fig = screen.getByTestId(`video-${v.id}`);
+    const video = fig.querySelector('video')!;
+    expect(video).not.toHaveAttribute('controls');
+    const play = within(fig).getByRole('button', { name: new RegExp(v.title) });
+    video.play = () => Promise.resolve();
+    await userEvent.click(play);
+    expect(within(fig).queryByRole('button', { name: new RegExp(v.title) })).not.toBeInTheDocument();
+    expect(video).toHaveAttribute('controls');
   });
 });

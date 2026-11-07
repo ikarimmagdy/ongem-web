@@ -22,6 +22,8 @@ export const MEDIA = {
   galleryWeb: 'On the web',
   galleryApp: 'In the app',
   captionsLabel: 'English captions',
+  /** The branded play button over each poster (OG-032 R23). */
+  play: 'Play',
   blogMetaTitle: 'Blog: running your company’s money with OnGem | OnGem',
   videosMetaTitle: 'Videos: OnGem walkthroughs for founders | OnGem',
 } as const;

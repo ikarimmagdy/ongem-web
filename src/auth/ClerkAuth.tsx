@@ -24,16 +24,21 @@ export { CLERK_PUBLISHABLE_KEY };
 const SIGN_IN_URL = '/sign-in';
 const SIGN_UP_URL = '/sign-in?mode=sign-up';
 
+/** The page already has its own heading, so Clerk's card shows none of its own: one heading per screen (OG-032 R20). */
+function withoutHeader(appearance: ReturnType<typeof clerkAppearance>) {
+  return { ...appearance, elements: { ...appearance.elements, header: { display: 'none' } } };
+}
+
 function ThemedSignIn() {
   const { theme } = useTheme();
   const appearance = useMemo(() => clerkAppearance(theme), [theme]);
-  return <SignIn routing="hash" signUpUrl={SIGN_UP_URL} appearance={appearance} />;
+  return <SignIn routing="hash" signUpUrl={SIGN_UP_URL} appearance={withoutHeader(appearance)} />;
 }
 
 function ThemedSignUp() {
   const { theme } = useTheme();
   const appearance = useMemo(() => clerkAppearance(theme), [theme]);
-  return <SignUp routing="hash" signInUrl={SIGN_IN_URL} appearance={appearance} />;
+  return <SignUp routing="hash" signInUrl={SIGN_IN_URL} appearance={withoutHeader(appearance)} />;
 }
 
 /** Where Clerk sends a pending session: the console itself, which shows the task in place (no hosted page, no loop). */

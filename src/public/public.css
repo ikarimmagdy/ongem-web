@@ -514,7 +514,9 @@
 /* Hero */
 .pub-hero .pub-display {
   color: var(--color-action-primary-text);
-  max-width: 14ch;
+  /* Two lines beside the product at 1280 wide, so the proof is above the fold (OG-032 R18). */
+  font-size: clamp(var(--font-size-3xl), 3.3vw, calc(var(--font-size-3xl) * 1.5));
+  max-width: none;
 }
 .pub-hero .pub-lede {
   color: var(--color-surface-tint-blue);
@@ -538,16 +540,62 @@
   margin-top: var(--space-2xl);
   margin-bottom: calc(var(--space-3xl) * -1);
 }
+/* Wide screens: the product sits beside the copy, not below it (OG-032 R18). */
+@media (min-width: 861px) {
+  .pub-hero {
+    padding-block: var(--space-2xl) var(--space-3xl);
+  }
+  .pub-hero__grid .pub-hero__stage {
+    margin-block: 0;
+  }
+  .pub-hero + .pub-trust {
+    padding-top: var(--space-2xl);
+  }
+}
+.pub-lede--short {
+  display: none;
+}
+@media (max-width: 640px) {
+  .pub-lede--full {
+    display: none;
+  }
+  .pub-lede--short {
+    display: block;
+  }
+}
+/* What a founder gets, next to the first call to action (OG-032 R19). */
+.pub-proof {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-lg) 0 0;
+  display: grid;
+  gap: var(--space-xs);
+  color: var(--color-surface-tint-blue);
+  font-size: var(--font-size-sm);
+}
+.pub-proof li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.pub-proof li::before {
+  content: '';
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-brand-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-brand-accent) 25%, transparent);
+}
 .pub-hero__desk {
   /* The phone sits beside the browser, never over it: the balance is on the right of the web screen (UX-03). */
-  margin-inline-end: 23%;
+  margin-inline-end: 30%;
 }
 .pub-hero__phone {
   position: absolute;
   inset-inline-end: 0;
   bottom: calc(var(--space-2xl) * -1);
-  width: 21%;
-  min-width: 150px;
+  width: 27%;
 }
 .pub-hero + .pub-trust {
   padding-top: calc(var(--space-3xl) * 1.6);
@@ -582,6 +630,8 @@
   display: block;
   width: 100%;
   height: auto;
+  /* Until an image arrives its frame shows a tint, never an empty white box (OG-032 R17). */
+  background: var(--color-surface-tint-blue);
 }
 .pub-phone {
   position: relative;
@@ -679,10 +729,17 @@
 }
 .pub-band__glow {
   position: absolute;
-  inset-inline-start: -160px;
-  bottom: -160px;
+  /* Behind the content and away from the cards (OG-032 R24). */
+  inset-inline-end: -200px;
+  top: -200px;
   width: 520px;
   pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+}
+.pub-band--glow > .pub-wrap {
+  position: relative;
+  z-index: 1;
 }
 
 /* Feature rows */
@@ -758,8 +815,12 @@
   color: var(--color-brand-deep);
 }
 .pub-tile--dark {
-  background: transparent;
+  background: color-mix(in srgb, var(--color-brand-deep) 70%, transparent);
   border-color: var(--color-brand-signature-soft);
+}
+.pub-tile--dark p {
+  font-size: var(--font-size-md);
+  line-height: 1.6;
 }
 
 /* FAQ */
@@ -790,7 +851,57 @@
   font-weight: var(--font-display-weight);
   font-size: var(--font-size-lg);
   color: var(--color-text-primary);
-  list-style-position: outside;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+.pub-faq__item summary::-webkit-details-marker {
+  display: none;
+}
+/* A plus that turns into a minus when open (OG-032 R21). */
+.pub-faq__mark {
+  position: relative;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-sunken);
+}
+.pub-faq__mark::before,
+.pub-faq__mark::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 50%;
+  top: 50%;
+  width: 12px;
+  height: 2px;
+  margin: -1px 0 0 -6px;
+  background: var(--color-text-link);
+  transition: transform 0.2s ease;
+}
+.pub-faq__mark::after {
+  transform: rotate(90deg);
+}
+.pub-faq__item[open] .pub-faq__mark::after {
+  transform: rotate(0deg);
+}
+.pub-faq__next,
+.pub-pricing {
+  margin-top: var(--space-md);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-surface-card);
+}
+.pub-faq__next p,
+.pub-pricing p {
+  color: var(--color-text-secondary);
+  margin: var(--space-xs) 0 var(--space-md);
+}
+.pub-pricing p {
+  margin-bottom: 0;
 }
 .pub-faq__item summary:focus-visible {
   outline: 2px solid var(--color-border-focus);
@@ -834,6 +945,10 @@
   box-shadow: var(--shadow-raised);
 }
 @media (prefers-reduced-motion: reduce) {
+  .pub-faq__mark::before,
+  .pub-faq__mark::after {
+    transition: none;
+  }
   .pub--motion [data-reveal],
   .pub-card,
   .pub-browser,
@@ -928,4 +1043,17 @@
     max-width: 280px;
     margin-inline: auto;
   }
+}
+
+/* Dark mode (OG-032 R25): the wordmark in light ink with no plate, and outline buttons with a visible edge. */
+[data-theme-mode='dark'] .pub .og-logo--image {
+  background: transparent;
+  padding: 0;
+}
+[data-theme-mode='dark'] .pub .og-logo--image img {
+  filter: brightness(0) invert(1);
+}
+[data-theme-mode='dark'] .pub .og-btn--secondary,
+[data-theme-mode='dark'] .pub .og-btn--ghost {
+  border: 1.5px solid var(--color-border-strong);
 }
