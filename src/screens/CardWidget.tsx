@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CardWidgetKind, CardWidgetSession } from '../api/types';
 import { Button, KeyValue, Notice } from '../design-system';
+import { IS_AE } from '../region';
 
 export const WIDGET_TITLES: Record<CardWidgetKind, string> = {
   REVEAL: 'Card details',
@@ -9,9 +10,13 @@ export const WIDGET_TITLES: Record<CardWidgetKind, string> = {
   ACTIVATE: 'Activate the card',
 };
 
-/** Only the bank's own asset hosts may serve a widget script (the CSP allows no other). */
-const ALLOWED_SCRIPT =
-  /^https:\/\/assets(-sandbox)?\.synctera\.com\/widgets\/[a-z-]+\/v\d+\.\d+\.\d+\/index\.js$/;
+/**
+ * Only the bank's own asset hosts may serve a widget script (the CSP allows no other). The AE bank has no card widget
+ * yet (OG-022 R13), so the AE build allows none.
+ */
+const ALLOWED_SCRIPT = IS_AE
+  ? /^$/
+  : /^https:\/\/assets(-sandbox)?\.synctera\.com\/widgets\/[a-z-]+\/v\d+\.\d+\.\d+\/index\.js$/;
 const ALLOWED_ELEMENT = /^[a-z]+-[a-z-]+$/;
 
 const loaded = new Map<string, Promise<void>>();

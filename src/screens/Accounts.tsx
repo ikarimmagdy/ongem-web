@@ -16,12 +16,13 @@ import {
 import { formatDate } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
 import { useSession } from '../session';
-import { Amt, Last4, Load, human, stateStatus } from './common';
+import { REGION_CONFIG } from '../region';
+import { AcctLast4, Amt, Load, human, stateStatus } from './common';
 import { SplitHint } from './SplitHint';
 
 const PAGE = 20;
 
-const RAILS: Record<string, string> = { ACH: 'ACH', BOOK: 'Transfer', CARD: 'Card', WIRE: 'Wire' };
+const RAILS: Record<string, string> = REGION_CONFIG.railNames;
 
 /**
  * A transaction's line: the API sends no counterparty, and `origin` (ONGEM or PROVIDER) says who recorded it, which is
@@ -65,7 +66,7 @@ function AccountDetail({ id }: { id: string }) {
           <Card
             title={
               <>
-                {a.name} <Last4 value={a.last4} />
+                {a.name} <AcctLast4 value={a.last4} />
               </>
             }
           >
@@ -219,7 +220,7 @@ export function AccountsScreen() {
                         <span className="fw-row__main">
                           <strong>{a.name}</strong>
                           <span className="fw-row__sub">
-                            <Last4 value={a.last4} /> {human(a.status)}
+                            <AcctLast4 value={a.last4} /> {human(a.status)}
                           </span>
                         </span>
                         <Balance a={a} />

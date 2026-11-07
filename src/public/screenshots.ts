@@ -1,3 +1,4 @@
+import type { ArtName } from './content';
 import cardsPhone from '../assets/public/screen-cards-phone.jpg';
 import cards from '../assets/public/screen-cards.jpg';
 import homePhone from '../assets/public/screen-home-phone.jpg';
@@ -67,6 +68,18 @@ export const SCREENSHOTS = {
 } as const;
 
 export type ScreenName = keyof typeof SCREENSHOTS;
+
+/** The illustration that stands in for a screen where screenshots are left out (the AE build, OG-022 R18). */
+export const SCREEN_ART: Record<ScreenName, ArtName> = {
+  home: 'accounts',
+  payments: 'payments',
+  schedules: 'payments',
+  cards: 'cards',
+  notifications: 'notifications',
+  support: 'support',
+  homePhone: 'accounts',
+  paymentsPhone: 'payments',
+};
 
 /**
  * The same screen as a phone shows it, for narrow pages: a desktop screen shrunk to a phone's width cannot be read

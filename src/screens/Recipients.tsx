@@ -14,11 +14,13 @@ import {
   useToast,
 } from '../design-system';
 import { abaValid } from '../lib/aba';
+import { normaliseIban, uaeIbanValid } from '../lib/iban';
+import { IS_AE, REGION_CONFIG } from '../region';
 import { useAsync } from '../lib/useAsync';
 import { useSearchParams } from 'react-router-dom';
 import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
-import { Last4, Load, human, stateStatus } from './common';
+import { AcctLast4, Load, human, stateStatus } from './common';
 
 /** Checked before any call (OG-030 AC-R3.1): name, ABA routing number, 4 to 17 digit account number. */
 export function recipientErrors(name: string, routing: string, account: string) {
@@ -26,6 +28,15 @@ export function recipientErrors(name: string, routing: string, account: string) 
     name: name.trim() ? undefined : 'Enter the recipient name.',
     routing: abaValid(routing) ? undefined : 'Enter a valid 9-digit routing number.',
     account: /^\d{4,17}$/.test(account) ? undefined : 'Enter 4 to 17 digits.',
+  };
+}
+
+/** The AE build (OG-022 R18): name and UAE IBAN; the IBAN error shows on the account line. */
+export function ibanRecipientErrors(name: string, iban: string) {
+  return {
+    name: name.trim() ? undefined : 'Enter the recipient name.',
+    routing: undefined,
+    account: uaeIbanValid(iban) ? undefined : 'Enter a valid UAE IBAN: AE and 21 digits.',
   };
 }
 
@@ -54,20 +65,24 @@ export function AddRecipient({
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (inFlight.current) return;
-    const errs = recipientErrors(name, routing, account);
+    const errs = IS_AE ? ibanRecipientErrors(name, account) : recipientErrors(name, routing, account);
     setErrors(errs);
     if (errs.name || errs.routing || errs.account) return;
     inFlight.current = true;
     setBusy(true);
     setFailure(null);
     try {
-      const r = await api.createRecipient({
-        kind: 'BUSINESS',
-        name: name.trim(),
-        accountNumber: account,
-        routingNumber: routing,
-        accountType: type,
-      });
+      const r = await api.createRecipient(
+        IS_AE
+          ? { kind: 'BUSINESS', name: name.trim(), iban: normaliseIban(account), accountType: 'CURRENT' }
+          : {
+              kind: 'BUSINESS',
+              name: name.trim(),
+              accountNumber: account,
+              routingNumber: routing,
+              accountType: type,
+            },
+      );
       setAccount('');
       setRouting('');
       setName('');
@@ -86,36 +101,51 @@ export function AddRecipient({
       <Field label="Recipient name" error={errors.name}>
         <Input data-testid="recipient-name" value={name} onChange={(e) => setName(e.target.value)} />
       </Field>
-      <Field label="Routing number" error={errors.routing}>
-        <Input
-          data-testid="recipient-routing"
-          inputMode="numeric"
-          autoComplete="off"
-          maxLength={9}
-          value={routing}
-          onChange={(e) => setRouting(e.target.value.replace(/\D/g, ''))}
-        />
-      </Field>
-      <Field label="Account number" error={errors.account}>
-        <Input
-          data-testid="recipient-account"
-          data-mask=""
-          inputMode="numeric"
-          autoComplete="off"
-          value={account}
-          onChange={(e) => setAccount(e.target.value.replace(/\D/g, ''))}
-        />
-      </Field>
-      <Field label="Account type">
-        <Select
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          options={[
-            { value: 'CHECKING', label: 'Checking' },
-            { value: 'SAVINGS', label: 'Savings' },
-          ]}
-        />
-      </Field>
+      {IS_AE ? (
+        <Field label="IBAN" hint="AE and 21 digits. Only the last four are kept." error={errors.account}>
+          <Input
+            data-testid="recipient-iban"
+            data-mask=""
+            autoComplete="off"
+            maxLength={29}
+            value={account}
+            onChange={(e) => setAccount(e.target.value.toUpperCase())}
+          />
+        </Field>
+      ) : (
+        <>
+          <Field label="Routing number" error={errors.routing}>
+            <Input
+              data-testid="recipient-routing"
+              inputMode="numeric"
+              autoComplete="off"
+              maxLength={9}
+              value={routing}
+              onChange={(e) => setRouting(e.target.value.replace(/\D/g, ''))}
+            />
+          </Field>
+          <Field label="Account number" error={errors.account}>
+            <Input
+              data-testid="recipient-account"
+              data-mask=""
+              inputMode="numeric"
+              autoComplete="off"
+              value={account}
+              onChange={(e) => setAccount(e.target.value.replace(/\D/g, ''))}
+            />
+          </Field>
+          <Field label="Account type">
+            <Select
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              options={[
+                { value: 'CHECKING', label: 'Checking' },
+                { value: 'SAVINGS', label: 'Savings' },
+              ]}
+            />
+          </Field>
+        </>
+      )}
       {failure && <Notice status="failure">{failure}</Notice>}
       <div className="fw-actions">
         <Button type="submit" data-testid="recipient-save" disabled={busy}>
@@ -158,7 +188,7 @@ export function RecipientsScreen() {
     <>
       <PageHeader
         title="Recipients"
-        subtitle="Saved ACH payees, screened by the bank. Account numbers show as their last four."
+        subtitle={REGION_CONFIG.recipientsSubtitle}
         actions={
           manage && (
             <Button data-testid="recipient-add" onClick={() => setAdding((x) => !x)}>
@@ -188,7 +218,8 @@ export function RecipientsScreen() {
                   <span className="fw-row__main">
                     <strong>{r.name}</strong>
                     <span className="fw-row__sub">
-                      Account <Last4 value={r.accountLast4} /> · {human(r.accountType)}
+                      {IS_AE ? 'IBAN' : 'Account'} <AcctLast4 value={r.accountLast4} /> ·{' '}
+                      {human(r.accountType)}
                     </span>
                   </span>
                   <span className="fw-actions">

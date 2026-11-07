@@ -1,11 +1,14 @@
+import { IS_AE } from '../region';
+
 /**
  * Masking at capture (OG-031 R6), the same rules as ongem-core's Masker: digit runs of five or more (account, routing,
  * card and identity numbers; not ids like acc_9f12345, not ISO dates) and money amounts. Applied when an event is created.
  */
-const AMOUNT = /(US\$|\$|USD\s?|€|£)\s?\d[\d,]*(\.\d{1,2})?|\b\d[\d,]*\.\d{2}\s?(USD|EUR|GBP)\b/gi;
+const AMOUNT = /(US\$|\$|USD\s?|AED\s?|€|£)\s?\d[\d,]*(\.\d{1,2})?|\b\d[\d,]*\.\d{2}\s?(USD|EUR|GBP|AED)\b/gi;
 const DIGITS = /(?<![A-Za-z0-9_])(?!\d{4}-\d{2}-\d{2}\b)\d(?:[\s-]?\d){4,}(?![A-Za-z0-9_])/g;
-const SENSITIVE =
-  /(account.?number|routing|tax.?id|id.?number|passport|licen[cs]e|document.?number|birth|balance|amount|card.?number|ssn|cvv)/i;
+const SENSITIVE = IS_AE
+  ? /(account.?number|iban|tax.?id|id.?number|emirates.?id|passport|licen[cs]e|document.?number|birth|balance|amount|card.?number|cvv)/i
+  : /(account.?number|routing|tax.?id|id.?number|passport|licen[cs]e|document.?number|birth|balance|amount|card.?number|ssn|cvv)/i;
 
 export function maskText(value: string): string {
   return value.replace(AMOUNT, '[amount]').replace(DIGITS, '[digits]');

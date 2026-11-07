@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ApiError, errorText } from '../api/errors';
 import type { AssistantDraft } from '../api/types';
 import { useToast } from '../design-system';
+import { REGION_CONFIG } from '../region';
 import { useSession } from '../session';
 
 /** An id the API issued (acc_..., rcp_..., crd_..., tkt_...); anything else from a draft is dropped, never routed to. */
@@ -37,7 +38,7 @@ export function routeFor(d: AssistantDraft): string {
     ).toString();
   switch (d.kind) {
     case 'PAYMENT':
-      return `/payments/new?${q({ kind: 'ach', from: p.fromAccountId, recipient: p.recipientId, amount: p.amountMinor })}`;
+      return `/payments/new?${q({ kind: REGION_CONFIG.rails[0]!.rail.toLowerCase(), from: p.fromAccountId, recipient: p.recipientId, amount: p.amountMinor })}`;
     case 'INTERNAL_TRANSFER':
       return `/payments/new?${q({ kind: 'internal', from: p.fromAccountId, to: p.toAccountId, amount: p.amountMinor })}`;
     case 'RECIPIENT_ADD':

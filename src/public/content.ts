@@ -1,9 +1,12 @@
+import { IS_AE } from '../region';
+import * as AE from './content.ae';
 import { isMediaPath } from './media/paths';
 
 /**
  * Every word of the public site (OG-032), in one place so pages and tests read the same source. Capabilities are the
  * ones built in ongem-core and the founder apps; anything with code that is not switched on is marked Coming soon.
- * No customer logos, stats, prices or reviews: OnGem has no public source for them yet.
+ * No customer logos, stats, prices or reviews: OnGem has no public source for them yet. The AE build (OG-022 R18) takes
+ * its region variants from content.ae.ts through `IS_AE ? AE.X : ...`, so a build carries only its own region's words.
  */
 
 export type ArtName =
@@ -37,154 +40,168 @@ export function isPublicPath(path: string): path is PublicPath {
 export const isPagePath = (path: string): path is PagePath =>
   (PUBLIC_PATHS as readonly string[]).includes(path);
 
-export const PAGE_META: Record<PagePath, { title: string; description: string }> = {
-  '/': {
-    title: 'OnGem: business banking for founders',
-    description:
-      'Open a US business account held at Piermont Bank, pay by ACH, issue virtual cards and approve every payment, from the web or your phone.',
-  },
-  '/product': {
-    title: 'Product: accounts, payments, cards and approvals | OnGem',
-    description:
-      'What OnGem does today: business accounts and statements, ACH and scheduled payments, top-ups, virtual cards, approvals, recipients and support.',
-  },
-  '/security': {
-    title: 'Security: how OnGem protects your money and data | OnGem',
-    description:
-      'Money held at the bank, a second sign-in step before money moves, second-person approvals, a tamper-evident audit trail and card numbers OnGem never sees.',
-  },
-  '/partners': {
-    title: 'Partners: open an account from the company you just formed | OnGem',
-    description:
-      'Founders who form their company with GenZone apply to OnGem with their company details already filled in.',
-  },
-};
+export const PAGE_META: Record<PagePath, { title: string; description: string }> = IS_AE
+  ? AE.PAGE_META
+  : {
+      '/': {
+        title: 'OnGem: business banking for founders',
+        description:
+          'Open a US business account held at Piermont Bank, pay by ACH, issue virtual cards and approve every payment, from the web or your phone.',
+      },
+      '/product': {
+        title: 'Product: accounts, payments, cards and approvals | OnGem',
+        description:
+          'What OnGem does today: business accounts and statements, ACH and scheduled payments, top-ups, virtual cards, approvals, recipients and support.',
+      },
+      '/security': {
+        title: 'Security: how OnGem protects your money and data | OnGem',
+        description:
+          'Money held at the bank, a second sign-in step before money moves, second-person approvals, a tamper-evident audit trail and card numbers OnGem never sees.',
+      },
+      '/partners': {
+        title: 'Partners: open an account from the company you just formed | OnGem',
+        description:
+          'Founders who form their company with GenZone apply to OnGem with their company details already filled in.',
+      },
+    };
 
-export const NAV_LINKS: Array<{ to: PublicPath; label: string }> = [
-  { to: '/product', label: 'Product' },
-  { to: '/security', label: 'Security' },
-  { to: '/partners', label: 'Partners' },
-  { to: '/videos', label: 'Videos' },
-  { to: '/blog', label: 'Blog' },
-];
+export const NAV_LINKS: Array<{ to: PublicPath; label: string }> = IS_AE
+  ? AE.NAV_LINKS
+  : [
+      { to: '/product', label: 'Product' },
+      { to: '/security', label: 'Security' },
+      { to: '/partners', label: 'Partners' },
+      { to: '/videos', label: 'Videos' },
+      { to: '/blog', label: 'Blog' },
+    ];
 
-export const HERO = {
-  eyebrow: 'Business banking for founders',
-  title: 'Run your company’s money in one calm place',
-  lede: 'A US business account held at Piermont Bank, ACH and scheduled payments, virtual cards and approvals that keep two sets of eyes on every payment. On the web and on your phone.',
-  /** Two lines on a phone (OG-032 R20). */
-  ledeShort: 'Business accounts at Piermont Bank, with cards and two-person approvals.',
-  primary: 'Get started',
-  secondary: 'Sign in',
-  /** What a founder gets, beside the first call to action (OG-032 R19). Each is how the product works today. */
-  proof: [
-    'Your money is held at Piermont Bank',
-    'A second person approves larger payments',
-    'Card numbers never reach OnGem',
-  ],
-};
+export const HERO = IS_AE
+  ? AE.HERO
+  : {
+      eyebrow: 'Business banking for founders',
+      title: 'Run your company’s money in one calm place',
+      lede: 'A US business account held at Piermont Bank, ACH and scheduled payments, virtual cards and approvals that keep two sets of eyes on every payment. On the web and on your phone.',
+      /** Two lines on a phone (OG-032 R20). */
+      ledeShort: 'Business accounts at Piermont Bank, with cards and two-person approvals.',
+      primary: 'Get started',
+      secondary: 'Sign in',
+      /** What a founder gets, beside the first call to action (OG-032 R19). Each is how the product works today. */
+      proof: [
+        'Your money is held at Piermont Bank',
+        'A second person approves larger payments',
+        'Card numbers never reach OnGem',
+      ],
+    };
 
-export const BANK_STATEMENT =
-  'OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank through Synctera.¹';
+export const BANK_STATEMENT = IS_AE
+  ? AE.BANK_STATEMENT
+  : 'OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank through Synctera.¹';
 
-export const CAPABILITIES: Capability[] = [
-  {
-    id: 'accounts',
-    title: 'Business accounts and statements',
-    summary: 'See the balance the bank holds, every transaction and a monthly statement for each account.',
-    points: [
-      'Balances read from the bank, checked against OnGem every night',
-      'Monthly statements to download',
-      'Move money between your own accounts',
-    ],
-  },
-  {
-    id: 'payments',
-    title: 'ACH and scheduled payments',
-    summary: 'Pay suppliers by ACH and follow each payment from sent to settled or returned.',
-    points: [
-      'One-off and repeating payments you can pause, resume or cancel',
-      'The next payment date always in view',
-      'Returns explained in plain words',
-    ],
-    soon: ['Domestic wires', 'International payments'],
-  },
-  {
-    id: 'topup',
-    title: 'Top up from your other bank',
-    summary: 'Link your account at another bank and pull money in by ACH debit.',
-    points: [
-      'A second person approves each top-up before the bank pulls it',
-      'Limits per top-up, per day and per month',
-    ],
-    soon: ['Instant verification of your other bank account'],
-  },
-  {
-    id: 'cards',
-    title: 'Virtual cards',
-    summary: 'Issue virtual cards for your team and freeze one in a tap.',
-    points: [
-      'Card number and PIN shown in the bank’s own secure window, never stored by OnGem',
-      'Freeze and unfreeze any time',
-      'Ask about a card payment from the card itself',
-    ],
-  },
-  {
-    id: 'approvals',
-    title: 'Approvals and limits',
-    summary: 'Every payment above your threshold waits for a second person before it moves.',
-    points: [
-      'The person who creates a payment can never approve it',
-      'Limits that follow your company’s risk level at the bank',
-      'One-person company? OnGem approves instead, so you are never stuck',
-    ],
-  },
-  {
-    id: 'recipients',
-    title: 'Recipients you can trust',
-    summary: 'Save the people and companies you pay, checked before the first payment goes out.',
-    points: ['Screened before use', 'Changes to bank details reviewed before money moves'],
-  },
-  {
-    id: 'support',
-    title: 'Support that knows your account',
-    summary: 'Raise a ticket with files and follow the reply in the app, including card disputes.',
-    points: ['Linked to the bank’s case when the bank needs to act', 'Every update in one thread'],
-  },
-  {
-    id: 'notifications',
-    title: 'Notices that matter',
-    summary: 'An inbox for payments, approvals, cards and your application, with your own choices.',
-    points: ['Payment sent, settled or returned', 'Approvals waiting for you'],
-    soon: ['Email and text message alerts'],
-  },
-  {
-    id: 'assistant',
-    title: 'An assistant that drafts, you decide',
-    summary:
-      'Ask about your money in plain words. It can draft a payment or a ticket, and only you can send it.',
-    points: ['Reads your data, never moves money on its own'],
-    soon: ['Available to every founder'],
-  },
-];
+export const CAPABILITIES: Capability[] = IS_AE
+  ? AE.CAPABILITIES
+  : [
+      {
+        id: 'accounts',
+        title: 'Business accounts and statements',
+        summary:
+          'See the balance the bank holds, every transaction and a monthly statement for each account.',
+        points: [
+          'Balances read from the bank, checked against OnGem every night',
+          'Monthly statements to download',
+          'Move money between your own accounts',
+        ],
+      },
+      {
+        id: 'payments',
+        title: 'ACH and scheduled payments',
+        summary: 'Pay suppliers by ACH and follow each payment from sent to settled or returned.',
+        points: [
+          'One-off and repeating payments you can pause, resume or cancel',
+          'The next payment date always in view',
+          'Returns explained in plain words',
+        ],
+        soon: ['Domestic wires', 'International payments'],
+      },
+      {
+        id: 'topup',
+        title: 'Top up from your other bank',
+        summary: 'Link your account at another bank and pull money in by ACH debit.',
+        points: [
+          'A second person approves each top-up before the bank pulls it',
+          'Limits per top-up, per day and per month',
+        ],
+        soon: ['Instant verification of your other bank account'],
+      },
+      {
+        id: 'cards',
+        title: 'Virtual cards',
+        summary: 'Issue virtual cards for your team and freeze one in a tap.',
+        points: [
+          'Card number and PIN shown in the bank’s own secure window, never stored by OnGem',
+          'Freeze and unfreeze any time',
+          'Ask about a card payment from the card itself',
+        ],
+      },
+      {
+        id: 'approvals',
+        title: 'Approvals and limits',
+        summary: 'Every payment above your threshold waits for a second person before it moves.',
+        points: [
+          'The person who creates a payment can never approve it',
+          'Limits that follow your company’s risk level at the bank',
+          'One-person company? OnGem approves instead, so you are never stuck',
+        ],
+      },
+      {
+        id: 'recipients',
+        title: 'Recipients you can trust',
+        summary: 'Save the people and companies you pay, checked before the first payment goes out.',
+        points: ['Screened before use', 'Changes to bank details reviewed before money moves'],
+      },
+      {
+        id: 'support',
+        title: 'Support that knows your account',
+        summary: 'Raise a ticket with files and follow the reply in the app, including card disputes.',
+        points: ['Linked to the bank’s case when the bank needs to act', 'Every update in one thread'],
+      },
+      {
+        id: 'notifications',
+        title: 'Notices that matter',
+        summary: 'An inbox for payments, approvals, cards and your application, with your own choices.',
+        points: ['Payment sent, settled or returned', 'Approvals waiting for you'],
+        soon: ['Email and text message alerts'],
+      },
+      {
+        id: 'assistant',
+        title: 'An assistant that drafts, you decide',
+        summary:
+          'Ask about your money in plain words. It can draft a payment or a ticket, and only you can send it.',
+        points: ['Reads your data, never moves money on its own'],
+        soon: ['Available to every founder'],
+      },
+    ];
 
 export const HOME_CARDS: ArtName[] = ['accounts', 'payments', 'cards', 'approvals'];
 
-export const STEPS = [
-  { title: 'Create your sign-in', text: 'Use your email and a second sign-in step.' },
-  {
-    title: 'Tell us about your company',
-    text: 'Owners, documents and the bank’s disclosures, step by step.',
-  },
-  { title: 'The bank decides', text: 'Piermont Bank verifies your business and its owners.' },
-  { title: 'Your account opens', text: 'Fund it, add recipients and issue cards.' },
-];
+export const STEPS = IS_AE
+  ? AE.STEPS
+  : [
+      { title: 'Create your sign-in', text: 'Use your email and a second sign-in step.' },
+      {
+        title: 'Tell us about your company',
+        text: 'Owners, documents and the bank’s disclosures, step by step.',
+      },
+      { title: 'The bank decides', text: 'Piermont Bank verifies your business and its owners.' },
+      { title: 'Your account opens', text: 'Fund it, add recipients and issue cards.' },
+    ];
 
 export const SECURITY = [
-  {
-    title: 'Your money stays at the bank',
-    text: 'Deposits are held at Piermont Bank. OnGem shows the bank’s balance and never holds your funds.¹',
-  },
+  IS_AE
+    ? AE.SECURITY_BANK
+    : {
+        title: 'Your money stays at the bank',
+        text: 'Deposits are held at Piermont Bank. OnGem shows the bank’s balance and never holds your funds.¹',
+      },
   {
     title: 'A second step before money moves',
     text: 'Payments, card details and changes to your team ask you to confirm it is you, again.',
@@ -207,18 +224,20 @@ export const SECURITY = [
   },
 ];
 
-export const PARTNER = {
-  title: 'Formed your company with GenZone?',
-  text: 'GenZone sends your company’s details to OnGem when you ask it to. You review them, add what is missing and submit. No retyping what you already gave.',
-  points: [
-    'Company and owner details arrive prefilled',
-    'You accept the bank’s disclosures yourself',
-    'The bank makes the decision, as for every founder',
-  ],
-  apiTitle: 'For partners',
-  apiText:
-    'Company formation and licensing firms connect through OnGem’s Partner API: they submit applications, see their progress and never see a founder’s banking data.',
-};
+export const PARTNER = IS_AE
+  ? AE.PARTNER
+  : {
+      title: 'Formed your company with GenZone?',
+      text: 'GenZone sends your company’s details to OnGem when you ask it to. You review them, add what is missing and submit. No retyping what you already gave.',
+      points: [
+        'Company and owner details arrive prefilled',
+        'You accept the bank’s disclosures yourself',
+        'The bank makes the decision, as for every founder',
+      ],
+      apiTitle: 'For partners',
+      apiText:
+        'Company formation and licensing firms connect through OnGem’s Partner API: they submit applications, see their progress and never see a founder’s banking data.',
+    };
 
 export const FINAL_CTA = {
   title: 'Open your business account',
@@ -227,12 +246,14 @@ export const FINAL_CTA = {
 
 export const DISCLOSURES_NOTE = 'Draft for legal review. Not approved for publication.';
 
-export const DISCLOSURES = [
-  'OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank, Member FDIC, through Synctera.',
-  'OnGem cards are issued by Piermont Bank.',
-  'Deposit insurance covers the failure of an insured bank, up to the applicable limits, once funds are on deposit at Piermont Bank. Conditions apply.',
-  'Features marked Coming soon are in development and not yet available.',
-];
+export const DISCLOSURES = IS_AE
+  ? AE.DISCLOSURES
+  : [
+      'OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank, Member FDIC, through Synctera.',
+      'OnGem cards are issued by Piermont Bank.',
+      'Deposit insurance covers the failure of an insured bank, up to the applicable limits, once funds are on deposit at Piermont Bank. Conditions apply.',
+      'Features marked Coming soon are in development and not yet available.',
+    ];
 
 /** Headings and short labels used around the content above. */
 export const LABELS = {
@@ -258,14 +279,16 @@ export const LABELS = {
 };
 
 /** The parties behind every account, named as plain text (no third-party logos), with the bank statement beside them. */
-export const TRUST = {
-  label: 'Who does what',
-  parties: [
-    { name: 'Piermont Bank', role: 'holds your deposits and issues your cards¹' },
-    { name: 'Synctera', role: 'connects OnGem to the bank' },
-    { name: 'GenZone', role: 'sends the companies it forms, prefilled' },
-  ],
-};
+export const TRUST = IS_AE
+  ? AE.TRUST
+  : {
+      label: 'Who does what',
+      parties: [
+        { name: 'Piermont Bank', role: 'holds your deposits and issues your cards¹' },
+        { name: 'Synctera', role: 'connects OnGem to the bank' },
+        { name: 'GenZone', role: 'sends the companies it forms, prefilled' },
+      ],
+    };
 
 /** Large product rows on the home page, each with a real screen from demo mode (OG-032 R10). */
 export const FEATURE_ROWS = [
@@ -273,8 +296,12 @@ export const FEATURE_ROWS = [
     id: 'payments',
     screen: 'payments',
     eyebrow: 'Payments',
-    title: 'Every payment, followed to the end',
-    text: 'Pay by ACH or move money between your accounts, and watch each payment go from sent to settled. A return is explained in plain words, never a code.',
+    ...(IS_AE
+      ? AE.FEATURE_PAYMENTS
+      : {
+          title: 'Every payment, followed to the end',
+          text: 'Pay by ACH or move money between your accounts, and watch each payment go from sent to settled. A return is explained in plain words, never a code.',
+        }),
     points: [
       'Repeating payments you can pause, resume or cancel',
       'Larger payments wait for a second person',
@@ -340,18 +367,22 @@ export const FAQ_NEXT = {
 
 /** Answers from how the product works today (OG-032 R12). */
 export const FAQ = [
-  {
-    q: 'Is OnGem a bank? Who holds my money?',
-    a: 'No. OnGem is a financial technology company. Your deposits are held at Piermont Bank, which provides the accounts through Synctera. OnGem shows you the bank’s balance and never holds your funds.¹',
-  },
+  IS_AE
+    ? AE.FAQ_BANK
+    : {
+        q: 'Is OnGem a bank? Who holds my money?',
+        a: 'No. OnGem is a financial technology company. Your deposits are held at Piermont Bank, which provides the accounts through Synctera. OnGem shows you the bank’s balance and never holds your funds.¹',
+      },
   {
     q: 'How do approvals work?',
     a: 'You set who can create and who can approve payments. Above your threshold a payment waits for a second person, and the person who created it can never approve it. If no one else in your company can approve, OnGem approves it, so a one-person company is never stuck.',
   },
-  {
-    q: 'How do I add money to my account?',
-    a: 'Send money in to your account and routing numbers, or link your account at another bank and pull a top-up by ACH. The bank verifies the linked account first, and a second person approves each top-up before the bank pulls it.',
-  },
+  IS_AE
+    ? AE.FAQ_TOPUP
+    : {
+        q: 'How do I add money to my account?',
+        a: 'Send money in to your account and routing numbers, or link your account at another bank and pull a top-up by ACH. The bank verifies the linked account first, and a second person approves each top-up before the bank pulls it.',
+      },
   {
     q: 'Are there limits on payments and top-ups?',
     a: 'Yes. Limits apply per payment, per day and per month, and they follow your company’s risk level at the bank. If a payment would go over a limit, it does not move and the app tells you why.',
@@ -364,10 +395,12 @@ export const FAQ = [
     q: 'How do you protect my account?',
     a: 'Money moves only after a second sign-in step, larger payments need two people, every change is written to an audit trail that cannot be rewritten, and card numbers open in the bank’s window so they never pass through OnGem.',
   },
-  {
-    q: 'I formed my company with GenZone. What changes?',
-    a: 'When you ask it to, GenZone sends your company’s details to OnGem. You review them, add what is missing, accept the bank’s disclosures and submit. The bank makes its decision as it does for every founder.',
-  },
+  IS_AE
+    ? AE.FAQ_PARTNER
+    : {
+        q: 'I formed my company with GenZone. What changes?',
+        a: 'When you ask it to, GenZone sends your company’s details to OnGem. You review them, add what is missing, accept the bank’s disclosures and submit. The bank makes its decision as it does for every founder.',
+      },
 ];
 
 export const LABELS_V2 = {
@@ -382,10 +415,14 @@ export const AUTH = {
   eyebrow: 'Business banking for founders',
   signInTitle: 'Sign in to OnGem',
   signUpTitle: 'Create your OnGem account',
-  signInLede:
-    'Your accounts at Piermont Bank, your payments and your cards, with the same approvals on the web and on your phone.',
-  signUpLede:
-    'Create your sign-in, then tell us about your company. Piermont Bank decides on your account and OnGem shows you each step.',
+  ...(IS_AE
+    ? AE.AUTH_LEDES
+    : {
+        signInLede:
+          'Your accounts at Piermont Bank, your payments and your cards, with the same approvals on the web and on your phone.',
+        signUpLede:
+          'Create your sign-in, then tell us about your company. Piermont Bank decides on your account and OnGem shows you each step.',
+      }),
   points: [
     'A second sign-in step before money moves',
     'A second person approves larger payments',
@@ -396,5 +433,6 @@ export const AUTH = {
 };
 
 /** The product page's lede: what the page covers, without repeating its title (UX-07). */
-export const PRODUCT_LEDE =
-  'Business accounts and statements, ACH and scheduled payments, top-ups, virtual cards, approvals, recipients, support and notices, as they work today. Planned features are marked Coming soon.';
+export const PRODUCT_LEDE = IS_AE
+  ? AE.PRODUCT_LEDE
+  : 'Business accounts and statements, ACH and scheduled payments, top-ups, virtual cards, approvals, recipients, support and notices, as they work today. Planned features are marked Coming soon.';

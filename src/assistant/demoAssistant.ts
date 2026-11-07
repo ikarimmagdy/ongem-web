@@ -2,6 +2,7 @@ import type { OnGemApi } from '../api/client';
 import type { AssistantDraft, AssistantTurn } from '../api/types';
 import { formatMinor } from '../lib/format';
 import { maskText } from '../recording/mask';
+import { IS_AE, REGION_CONFIG } from '../region';
 
 type Reads = Pick<
   OnGemApi,
@@ -77,7 +78,7 @@ export class DemoAssistant {
       draft = this.draft(
         'RECIPIENT_ADD',
         { name },
-        `Add ${name ?? 'a new recipient'}. You enter the routing and account numbers in the form.`,
+        `Add ${name ?? 'a new recipient'}. ${REGION_CONFIG.recipientDraftHint}`,
       );
       reply = `I drafted this for you: ${draft.summary} Review it and confirm it on the screen I open; nothing happens until you do.`;
       outcome = 'DRAFTED';
@@ -96,11 +97,16 @@ export class DemoAssistant {
           target &&
           (target.includes(a.name.toLowerCase()) || a.name.toLowerCase().includes(target)),
       );
-      const shown = formatMinor({ amountMinor: minor, currency: 'USD' });
+      const shown = formatMinor({ amountMinor: minor, currency: REGION_CONFIG.currency });
       if (toAcc) {
         draft = this.draft(
           'INTERNAL_TRANSFER',
-          { fromAccountId: from.id, toAccountId: toAcc.id, amountMinor: minor, currency: 'USD' },
+          {
+            fromAccountId: from.id,
+            toAccountId: toAcc.id,
+            amountMinor: minor,
+            currency: REGION_CONFIG.currency,
+          },
           `Move ${shown} from ${from.name} to ${toAcc.name}.`,
         );
       } else {
@@ -109,8 +115,13 @@ export class DemoAssistant {
         );
         draft = this.draft(
           'PAYMENT',
-          { fromAccountId: from.id, recipientId: r?.id, amountMinor: minor, currency: 'USD' },
-          `Send ${shown} by ACH from ${from.name} to ${r?.name ?? 'a recipient you choose'}.`,
+          {
+            fromAccountId: from.id,
+            recipientId: r?.id,
+            amountMinor: minor,
+            currency: REGION_CONFIG.currency,
+          },
+          `Send ${shown} by ${REGION_CONFIG.paymentRail(REGION_CONFIG.rails[0]!.rail)} from ${from.name} to ${r?.name ?? 'a recipient you choose'}.`,
         );
       }
       reply = `I drafted this for you: ${draft.summary} Review it and confirm it on the screen I open; nothing happens until you do.`;
@@ -132,7 +143,12 @@ export class DemoAssistant {
       const rs = await read('list_recipients', 'listRecipients', () => this.api.recipients());
       reply =
         'Here are your recipients:\n' +
-        rs.map((r) => `- ${r.name} (account ending ${r.accountLast4}): screening ${r.screening}`).join('\n');
+        rs
+          .map(
+            (r) =>
+              `- ${r.name} (${IS_AE ? 'IBAN' : 'account'} ending ${r.accountLast4}): screening ${r.screening}`,
+          )
+          .join('\n');
     } else if (t.includes('ticket')) {
       const ts = await read('list_tickets', 'listTickets', () => this.api.tickets());
       reply = 'Here are your support tickets:\n' + ts.map((x) => `- ${x.subject}: ${x.status}`).join('\n');
@@ -146,7 +162,7 @@ export class DemoAssistant {
         accounts
           .map(
             (a) =>
-              `- ${a.name} •••• ${a.last4}: ${a.balance ? `${formatMinor(a.balance.available)} available` : 'no balance yet'}`,
+              `- ${a.name} ${REGION_CONFIG.accountMask(a.last4 ?? '')}: ${a.balance ? `${formatMinor(a.balance.available)} available` : 'no balance yet'}`,
           )
           .join('\n');
     } else {

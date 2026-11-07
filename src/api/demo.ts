@@ -14,13 +14,15 @@ import {
   demoTickets,
   demoTransactions,
   disclosureBody,
-  usd,
+  money,
   demoNotices,
   demoPreferences,
 } from './demoData';
 import { DemoAssistant } from '../assistant/demoAssistant';
 import { ApiError } from './errors';
+import { normaliseIban, uaeIbanValid } from '../lib/iban';
 import { nthRun } from '../lib/schedule';
+import { IS_AE, REGION_CONFIG } from '../region';
 import { REVERIFICATION_CANCELLED } from './reverify';
 import type {
   Account,
@@ -218,13 +220,15 @@ export class DemoOnGemApi implements OnGemApi {
 
   createRecipient = async (r: CreateRecipient) => {
     this.require(Permission.RECIPIENT_MANAGE);
+    if (IS_AE && !uaeIbanValid(r.iban ?? ''))
+      throw new ApiError(422, 'iban_invalid', 'Check the IBAN: AE and 21 digits.');
     await this.stepUp('recipient');
     const created = {
       id: this.next('rcp'),
       kind: r.kind,
       name: r.name.trim(),
-      accountLast4: r.accountNumber.slice(-4),
-      routingNumber: r.routingNumber,
+      accountLast4: (IS_AE ? normaliseIban(r.iban ?? '') : (r.accountNumber ?? '')).slice(-4),
+      routingNumber: r.routingNumber ?? null,
       accountType: r.accountType,
       screening: 'PENDING',
       status: 'ACTIVE',
@@ -264,7 +268,7 @@ export class DemoOnGemApi implements OnGemApi {
       state: 'DRAFT',
       rail: r.rail,
       achTiming: r.achTiming,
-      amount: usd(r.amountMinor),
+      amount: money(r.amountMinor),
       fromAccountId: r.fromAccountId,
       recipientId: r.recipientId,
       toAccountId: r.toAccountId,
@@ -306,8 +310,8 @@ export class DemoOnGemApi implements OnGemApi {
         ...a,
         balance: {
           ...a.balance,
-          posted: usd(posted),
-          available: usd(a.balance.available.amountMinor + delta),
+          posted: money(posted),
+          available: money(a.balance.available.amountMinor + delta),
         },
       };
     });
@@ -371,8 +375,16 @@ export class DemoOnGemApi implements OnGemApi {
   linkFundingSource = async (r: LinkFundingSource) => {
     this.require(Permission.RECIPIENT_MANAGE);
     await this.account(r.accountId);
-    const number = r.accountNumber.replace(/\D/g, '');
-    if (!/^\d{9}$/.test(r.routingNumber) || number.length < 4 || number.length > 17 || !r.ownerName.trim())
+    const number = IS_AE ? normaliseIban(r.iban ?? '') : (r.accountNumber ?? '').replace(/\D/g, '');
+    if (IS_AE && (!uaeIbanValid(number) || !r.ownerName.trim()))
+      throw new ApiError(422, 'iban_invalid', 'Check the IBAN and the name.');
+    if (
+      !IS_AE &&
+      (!/^\d{9}$/.test(r.routingNumber ?? '') ||
+        number.length < 4 ||
+        number.length > 17 ||
+        !r.ownerName.trim())
+    )
       throw new ApiError(422, 'validation_failed', 'Check the routing number, account number and name.');
     await this.stepUp('funding_source');
     const f: FundingSource = {
@@ -382,7 +394,7 @@ export class DemoOnGemApi implements OnGemApi {
       aggregator: null,
       nickname: r.nickname?.trim() || null,
       last4: number.slice(-4),
-      routingNumber: r.routingNumber,
+      routingNumber: r.routingNumber ?? null,
       accountType: r.accountType,
       state: 'UNVERIFIED',
       createdAt: this.now(),
@@ -409,14 +421,14 @@ export class DemoOnGemApi implements OnGemApi {
     await this.account(r.toAccountId);
     if (r.amountMinor <= 0) throw new ApiError(422, 'validation_failed', 'The amount must be positive.');
     if (f.state !== 'VERIFIED') throw new ApiError(409, 'funding_source_not_verified');
-    if (r.amountMinor > 2_500_000) throw new ApiError(409, 'limit_exceeded');
+    if (r.amountMinor > REGION_CONFIG.topUpLimit) throw new ApiError(409, 'limit_exceeded');
     await this.stepUp('payment');
     const p: Payment = {
       id: this.next('pay'),
       state: 'PENDING_APPROVAL',
-      rail: 'ACH',
-      achTiming: 'STANDARD',
-      amount: usd(r.amountMinor),
+      rail: REGION_CONFIG.scheduleRail,
+      achTiming: IS_AE ? null : 'STANDARD',
+      amount: money(r.amountMinor),
       fromAccountId: r.toAccountId,
       recipientId: null,
       toAccountId: null,
@@ -469,7 +481,7 @@ export class DemoOnGemApi implements OnGemApi {
   createSchedule = async (r: CreateSchedule) => {
     this.require(Permission.PAYMENT_CREATE);
     await this.account(r.fromAccountId);
-    if (r.rail !== 'ACH') throw new ApiError(422, 'capability_unavailable');
+    if (r.rail !== REGION_CONFIG.scheduleRail) throw new ApiError(422, 'capability_unavailable');
     const recipient = this.recipientsState.find((x) => x.id === r.recipientId) ?? this.notFound('recipient');
     if (recipient.screening === 'BLOCKED') throw new ApiError(409, 'recipient_blocked');
     const today = this.now().slice(0, 10);
@@ -485,8 +497,8 @@ export class DemoOnGemApi implements OnGemApi {
       id: this.next('psch'),
       fromAccountId: r.fromAccountId,
       recipientId: r.recipientId,
-      rail: 'ACH',
-      amount: usd(r.amountMinor),
+      rail: REGION_CONFIG.scheduleRail,
+      amount: money(r.amountMinor),
       reference: r.reference ?? null,
       frequency: r.frequency,
       interval: r.interval,
@@ -598,8 +610,11 @@ export class DemoOnGemApi implements OnGemApi {
     this.require(Permission.ONBOARDING_MANAGE);
     const app = this.applicationState;
     if (app.id !== appId) this.notFound('application');
-    const digits = identity.number.replace(/\D/g, '');
-    if (digits.length !== 9) throw new ApiError(422, 'validation_failed', 'An SSN has 9 digits.');
+    const kind = REGION_CONFIG.ownerIds.find((k) => k.idType === identity.idType);
+    const digits =
+      kind?.numeric === false ? identity.number.trim().toUpperCase() : identity.number.replace(/\D/g, '');
+    if (!kind?.pattern.test(digits))
+      throw new ApiError(422, 'validation_failed', kind?.error ?? 'Check the ID number.');
     const owner = app.owners.find((o) => o.id === ownerId) ?? this.notFound('owner');
     const updated = {
       ...owner,

@@ -17,8 +17,10 @@ import {
 } from '../design-system';
 import { decimalToMinor, formatMinor } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
+import { normaliseIban, uaeIbanValid } from '../lib/iban';
+import { IS_AE, REGION_CONFIG } from '../region';
 import { useSession } from '../session';
-import { Last4, Load } from './common';
+import { AcctLast4, Load } from './common';
 
 /** A funding source's state in words, the same as the app's (G-40). */
 export function fundingState(state: string): { status: Status; text: string } {
@@ -67,18 +69,24 @@ function LinkAccount({ accounts, onLinked }: { accounts: Account[]; onLinked(): 
   const [type, setType] = useState<'CHECKING' | 'SAVINGS'>('CHECKING');
   const [nickname, setNickname] = useState('');
   const to = accounts.some((a) => a.id === accountId) ? accountId : (accounts[0]?.id ?? '');
-  const valid = Boolean(to && ownerName.trim() && /^\d{9}$/.test(routing) && /^\d{4,17}$/.test(number));
+  const valid = Boolean(
+    to &&
+    ownerName.trim() &&
+    (IS_AE ? uaeIbanValid(number) : /^\d{9}$/.test(routing) && /^\d{4,17}$/.test(number)),
+  );
   const link = () =>
     run(async () => {
-      await api.linkFundingSource({
+      const common = {
         accountId: to,
-        method: 'MANUAL',
-        accountNumber: number,
-        routingNumber: routing,
-        accountType: type,
+        method: 'MANUAL' as const,
         ownerName: ownerName.trim(),
         nickname: nickname.trim() || null,
-      });
+      };
+      await api.linkFundingSource(
+        IS_AE
+          ? { ...common, iban: normaliseIban(number), accountType: 'CURRENT' }
+          : { ...common, accountNumber: number, routingNumber: routing, accountType: type },
+      );
       setNumber('');
       setRouting('');
       onLinked();
@@ -111,38 +119,53 @@ function LinkAccount({ accounts, onLinked }: { accounts: Account[]; onLinked(): 
             onChange={(e) => setOwnerName(e.target.value)}
           />
         </Field>
-        <Field label="Routing number" hint="9 digits">
-          <Input
-            data-testid="funding-link-routing"
-            inputMode="numeric"
-            autoComplete="off"
-            maxLength={9}
-            value={routing}
-            onChange={(e) => setRouting(e.target.value.replace(/\D/g, ''))}
-          />
-        </Field>
-        <Field label="Account number" hint="Only the last four are kept.">
-          <Input
-            data-testid="funding-link-number"
-            data-mask=""
-            inputMode="numeric"
-            autoComplete="off"
-            maxLength={17}
-            value={number}
-            onChange={(e) => setNumber(e.target.value.replace(/\D/g, ''))}
-          />
-        </Field>
-        <Field label="Account type">
-          <Select
-            data-testid="funding-link-type"
-            value={type}
-            onChange={(e) => setType(e.target.value as 'CHECKING' | 'SAVINGS')}
-            options={[
-              { value: 'CHECKING', label: 'Checking' },
-              { value: 'SAVINGS', label: 'Savings' },
-            ]}
-          />
-        </Field>
+        {IS_AE ? (
+          <Field label="IBAN" hint="AE and 21 digits. Only the last four are kept.">
+            <Input
+              data-testid="funding-link-iban"
+              data-mask=""
+              autoComplete="off"
+              maxLength={29}
+              value={number}
+              onChange={(e) => setNumber(e.target.value.toUpperCase())}
+            />
+          </Field>
+        ) : (
+          <>
+            <Field label="Routing number" hint="9 digits">
+              <Input
+                data-testid="funding-link-routing"
+                inputMode="numeric"
+                autoComplete="off"
+                maxLength={9}
+                value={routing}
+                onChange={(e) => setRouting(e.target.value.replace(/\D/g, ''))}
+              />
+            </Field>
+            <Field label="Account number" hint="Only the last four are kept.">
+              <Input
+                data-testid="funding-link-number"
+                data-mask=""
+                inputMode="numeric"
+                autoComplete="off"
+                maxLength={17}
+                value={number}
+                onChange={(e) => setNumber(e.target.value.replace(/\D/g, ''))}
+              />
+            </Field>
+            <Field label="Account type">
+              <Select
+                data-testid="funding-link-type"
+                value={type}
+                onChange={(e) => setType(e.target.value as 'CHECKING' | 'SAVINGS')}
+                options={[
+                  { value: 'CHECKING', label: 'Checking' },
+                  { value: 'SAVINGS', label: 'Savings' },
+                ]}
+              />
+            </Field>
+          </>
+        )}
         <Field label="Nickname (optional)">
           <Input
             data-testid="funding-link-nickname"
@@ -176,7 +199,7 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
   const fromId = verified.some((f) => f.id === source) ? source : (verified[0]?.id ?? '');
   const from = verified.find((f) => f.id === fromId);
   const toId = accounts.some((a) => a.id === to) ? to : (from?.accountId ?? accounts[0]?.id ?? '');
-  const minor = decimalToMinor(amount, 'USD');
+  const minor = decimalToMinor(amount, REGION_CONFIG.currency);
   const valid = Boolean(fromId && toId && minor);
   if (!verified.length) {
     return (
@@ -194,7 +217,7 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
         fundingSourceId: fromId,
         toAccountId: toId,
         amountMinor: minor,
-        currency: 'USD',
+        currency: REGION_CONFIG.currency,
         reference: reference.trim() || null,
       });
       navigate(`/payments/${p.id}`);
@@ -207,13 +230,17 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
           items={[
             {
               label: 'Amount',
-              value: <span data-mask="">{formatMinor({ amountMinor: minor, currency: 'USD' })}</span>,
+              value: (
+                <span data-mask="">
+                  {formatMinor({ amountMinor: minor, currency: REGION_CONFIG.currency })}
+                </span>
+              ),
             },
             {
               label: 'From',
               value: (
                 <>
-                  {fundingName(from)} <Last4 value={from.last4} />
+                  {fundingName(from)} <AcctLast4 value={from.last4} />
                 </>
               ),
             },
@@ -221,11 +248,11 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
               label: 'To',
               value: (
                 <>
-                  {toA?.name} <Last4 value={toA?.last4} />
+                  {toA?.name} <AcctLast4 value={toA?.last4} />
                 </>
               ),
             },
-            { label: 'How', value: 'ACH debit, 1 to 3 business days' },
+            { label: 'How', value: REGION_CONFIG.topUpHow },
           ]}
         />
         <p>
@@ -270,8 +297,8 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
           />
         </Field>
         <Field
-          label="Amount in US$"
-          hint="Up to US$25,000.00 a top-up and US$50,000.00 a day."
+          label={REGION_CONFIG.amountLabel}
+          hint={`Up to ${formatMinor({ amountMinor: REGION_CONFIG.topUpLimit, currency: REGION_CONFIG.currency })} a top-up and ${formatMinor({ amountMinor: REGION_CONFIG.topUpDailyLimit, currency: REGION_CONFIG.currency })} a day.`}
           error={amount && !minor ? 'Enter an amount like 1,250.00' : undefined}
         >
           <Input
@@ -328,7 +355,7 @@ export function TopUp() {
                       <span className="fw-row__main">
                         <strong>{fundingName(f)}</strong>
                         <span className="fw-row__sub">
-                          <Last4 value={f.last4} /> {f.accountType ? f.accountType.toLowerCase() : ''}
+                          <AcctLast4 value={f.last4} /> {f.accountType ? f.accountType.toLowerCase() : ''}
                         </span>
                       </span>
                       <span className="fw-row__main">

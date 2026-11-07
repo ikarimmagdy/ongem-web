@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { US_MEDIA } from '../../region';
 import { BrowserFrame, PhoneFrame } from '../art';
 import { formatPostDate, POSTS, postBySlug, type Post } from './blog';
 import { MEDIA } from './content';
@@ -85,6 +86,7 @@ export function VideoPlayer({ video }: { video: Video }) {
 
 /** Three featured walkthroughs, for the home and product pages. */
 export function VideoStrip() {
+  if (!US_MEDIA) return null;
   const featured = FEATURED.map(videoById).filter((v): v is Video => Boolean(v));
   return (
     <section
@@ -139,6 +141,7 @@ function Shot({ shot }: { shot: GalleryShot }) {
 
 /** Web and app screens for the product page. */
 export function Gallery() {
+  if (!US_MEDIA) return null;
   return (
     <section className="pub-section" aria-labelledby="gallery" data-testid="gallery">
       <div className="pub-wrap">

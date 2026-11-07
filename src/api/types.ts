@@ -76,7 +76,8 @@ export interface Recipient {
   kind: string;
   name: string;
   accountLast4: string;
-  routingNumber: string;
+  /** US only; an AE recipient is paid by IBAN, of which only the last four come back. */
+  routingNumber?: string | null;
   accountType: string;
   screening: string;
   status: string;
@@ -87,8 +88,10 @@ export interface Recipient {
 export interface CreateRecipient {
   kind: string;
   name: string;
-  accountNumber: string;
-  routingNumber: string;
+  /** US: account and routing number. AE (OG-022 R18): the UAE IBAN instead. */
+  accountNumber?: string;
+  routingNumber?: string;
+  iban?: string;
   accountType: string;
 }
 
@@ -145,9 +148,11 @@ export interface FundingSource {
 export interface LinkFundingSource {
   accountId: string;
   method: 'MANUAL';
-  accountNumber: string;
-  routingNumber: string;
-  accountType: 'CHECKING' | 'SAVINGS';
+  /** US: account and routing number. AE (OG-022 R18): the UAE IBAN instead. */
+  accountNumber?: string;
+  routingNumber?: string;
+  iban?: string;
+  accountType: 'CHECKING' | 'SAVINGS' | 'CURRENT';
   ownerName: string;
   nickname?: string | null;
 }
@@ -191,7 +196,7 @@ export interface PaymentSchedule {
 export interface CreateSchedule {
   fromAccountId: string;
   recipientId: string;
-  rail: 'ACH';
+  rail: 'ACH' | 'UAEFTS';
   amountMinor: number;
   currency: string;
   frequency: 'DAILY' | 'WEEKLY' | 'MONTHLY';
@@ -225,7 +230,7 @@ export interface CreatePayment {
   fromAccountId: string;
   recipientId?: string | null;
   toAccountId?: string | null;
-  rail: 'ACH' | 'BOOK';
+  rail: 'ACH' | 'BOOK' | 'AANI' | 'UAEFTS';
   achTiming?: string | null;
   amountMinor: number;
   currency: string;

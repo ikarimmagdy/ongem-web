@@ -30,10 +30,15 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
 - `npm run dev` (port 5190), `npm run build`, `npm run preview` (port 5190; `/api-dev` proxies to api-dev.ongem.com)
 - `npm run lint`, `npm run typecheck`, `npm test`, `npm run e2e` (against `E2E_BASE_URL`, default the local preview)
 - Config: `VITE_CLERK_PUBLISHABLE_KEY` (customer instance publishable key; blank means demo only), `VITE_API_BASE_URL`.
+- Region (OG-022 R18): `VITE_REGION` is `US` (default) or `AE`. AE build: `VITE_REGION=AE npm run build -- --outDir dist-uae`
+  (`scripts/build.mjs` passes `--outDir` to the client build and the prerender). AE shows UAE content only: no US bank,
+  BaaS or partner names, AED, UAE IBANs, Aani and UAEFTS, Emirates ID or passport, a licensed UAE bank (never named).
 
 ## Rules for this repo
 
-- Copy: plain English, money as US$1,250.00 from minor units (`formatMinor`), dates as 20 Oct 2026, no em or en dashes.
+- Copy: plain English, money as US$1,250.00 (AED 1,250.00 in AE) from minor units (`formatMinor`), dates as 20 Oct 2026, no em or en dashes.
+- Region differences are data: `src/region.ts` (`REGION_CONFIG`) and `*.ae.ts` variants picked with `IS_AE ? AE.x : ...`
+  (a ternary, not a helper, so the bundler drops the other region's words). Never name a US partner or bank in AE copy.
 - No hex, rgb, font family or radius literals outside the theme (`src/test/no-literals.test.ts`).
 - Every screen has loading, empty, error and success states. Test names carry the spec's AC ids.
 
@@ -78,3 +83,9 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   second person (`payment:approve`). Scheduled payments (G-120, `src/screens/Schedules.tsx`, /payments/schedules): ACH
   only (Q-128), create, pause, resume, cancel, next payment date and the runs; bank dates go through `src/lib/schedule.ts`
   (`formatDay` never shifts a day by time zone).
+- 2026-11-08: OG-022 T9, region build switch (R18): `VITE_REGION=AE` gives the UAE founder web. `src/region.ts` holds
+  currency, bank time (Asia/Dubai, GST), rails (Aani, UAEFTS, book), owner ID types, IBAN masking and limits;
+  `public/content.ae.ts` and `api/demoData.ae.ts` hold the AE copy and demo (Dune Trading LLC, AED); `public/blog/ae/` is
+  the AE blog (US-only posts left out). AE leaves out the US-recorded screenshots, gallery and videos (the vite plugin
+  drops `videos/` and unreferenced images) and allows no card widget host. Tests `region-ae.test.tsx` (AC-R18.1, grep of
+  rendered pages for US names) and `region-us.test.tsx` (AC-R18.2); the US prerendered home is byte-identical to before.

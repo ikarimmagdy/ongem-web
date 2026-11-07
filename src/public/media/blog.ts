@@ -1,3 +1,5 @@
+import { IS_AE } from '../../region';
+
 /**
  * The founder blog (OG-032 R15): one markdown file per post in src/public/blog/, with front matter for the title,
  * date, summary, author, tags, the walkthrough video it links and the product page. Newest first.
@@ -14,10 +16,15 @@ export interface Post {
   body: string;
 }
 
-const files = import.meta.glob('../blog/*.md', { query: '?raw', import: 'default', eager: true }) as Record<
-  string,
-  string
->;
+/**
+ * The AE build (OG-022 R18) reads only blog/ae/: the posts that hold for the UAE, without US bank, rail or partner names.
+ * US-only posts (the partner, where your money lives, adding money, limits) are not in it.
+ */
+const files = (
+  IS_AE
+    ? import.meta.glob('../blog/ae/*.md', { query: '?raw', import: 'default', eager: true })
+    : import.meta.glob('../blog/*.md', { query: '?raw', import: 'default', eager: true })
+) as Record<string, string>;
 
 export function parsePost(slug: string, raw: string): Post {
   const m = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/.exec(raw);

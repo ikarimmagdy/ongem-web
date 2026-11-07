@@ -1,18 +1,25 @@
+import { IS_AE, REGION_CONFIG } from '../region';
+
 export interface MoneyValue {
   amount: string | number;
   currency: string;
 }
+
+/** US$ in the US build; every currency by its code in the AE build (AED 1,250.00). */
+const currencyPrefix = (currency: string) => (!IS_AE && currency === 'USD' ? 'US$' : `${currency} `);
 
 const number2 = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 export function formatMoney({ amount, currency }: MoneyValue): string {
   const n = typeof amount === 'number' ? amount : Number(amount);
   if (!Number.isFinite(n)) return '';
-  const prefix = currency === 'USD' ? 'US$' : `${currency} `;
+  const prefix = currencyPrefix(currency);
   return `${n < 0 ? '-' : ''}${prefix}${number2.format(Math.abs(n))}`;
 }
 
-const ET = 'America/New_York';
+/** Bank time for this build's region: New York (ET) or Dubai (GST). */
+const ET = REGION_CONFIG.timeZone;
+const ET_LABEL = REGION_CONFIG.zoneLabel;
 
 function parts(iso: string | Date, withTime: boolean, timeZone: string) {
   const d = typeof iso === 'string' ? new Date(iso) : iso;
@@ -28,21 +35,21 @@ function parts(iso: string | Date, withTime: boolean, timeZone: string) {
   return p as Record<string, string>;
 }
 
-/** 20 Oct 2026, or 20 Oct 2026 10:42 ET with time. */
+/** 20 Oct 2026, or 20 Oct 2026 10:42 ET with time (GST in the AE build). */
 export function formatDate(iso: string | Date, opts: { time?: boolean; timeZone?: string } = {}): string {
   const tz = opts.timeZone ?? ET;
   const p = parts(iso, Boolean(opts.time), tz);
   if (!p) return '';
   const date = `${p.day} ${p.month} ${p.year}`;
   if (!opts.time) return date;
-  const label = tz === ET ? 'ET' : tz === 'UTC' ? 'UTC' : tz;
+  const label = tz === ET ? ET_LABEL : tz === 'UTC' ? 'UTC' : tz;
   return `${date} ${p.hour}:${p.minute} ${label}`;
 }
 
 export function formatTime(iso: string | Date, timeZone = ET): string {
   const p = parts(iso, true, timeZone);
   if (!p) return '';
-  return `${p.hour}:${p.minute} ${timeZone === ET ? 'ET' : timeZone}`;
+  return `${p.hour}:${p.minute} ${timeZone === ET ? ET_LABEL : timeZone}`;
 }
 
 export function formatNumber(n: number): string {
@@ -97,14 +104,14 @@ export function decimalToMinor(text: string, currency: string): number | null {
   return Number.isSafeInteger(n) ? n : null;
 }
 
-/** US$1,250.00 from minor units, with the currency's own exponent. */
+/** US$1,250.00 (AED 1,250.00 in the AE build) from minor units, with the currency's own exponent. */
 export function formatMinor(m: MinorValue): string {
   const exp = currencyExponent(m.currency);
   const dec = minorToDecimal(m);
   const neg = dec.startsWith('-');
   const [whole, frac] = dec.replace('-', '').split('.');
   const grouped = Number(whole).toLocaleString('en-US');
-  const prefix = m.currency === 'USD' ? 'US$' : `${m.currency} `;
+  const prefix = currencyPrefix(m.currency);
   return `${neg ? '-' : ''}${prefix}${grouped}${exp ? `.${frac}` : ''}`;
 }
 

@@ -1,7 +1,8 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Logo, useTheme } from '../design-system';
-import { BrowserFrame, CapabilityArt, GemGlow, PartnerArt, PhoneFrame, ShieldArt } from './art';
+import { US_MEDIA } from '../region';
+import { BrowserFrame, CapabilityArt, GemGlow, HeroArt, PartnerArt, PhoneFrame, ShieldArt } from './art';
 import {
   BANK_STATEMENT,
   CAPABILITIES,
@@ -31,7 +32,7 @@ import {
   type PublicPath,
 } from './content';
 import { Gallery, MediaPage, mediaMeta, VideoStrip } from './media/MediaPages';
-import { PHONE_SCREENS, SCREENSHOTS, type ScreenName } from './screenshots';
+import { PHONE_SCREENS, SCREEN_ART, SCREENSHOTS, type ScreenName } from './screenshots';
 import './public.css';
 
 export const SIGN_IN = '/sign-in';
@@ -229,6 +230,7 @@ function Shot({
   /** The first screen below the hero loads at once, so it is never an empty frame (OG-032 R17). */
   eager?: boolean;
 }) {
+  if (!US_MEDIA) return <CapabilityArt name={SCREEN_ART[name]} />;
   const s = SCREENSHOTS[name];
   const loading = eager ? 'eager' : 'lazy';
   const img = (
@@ -277,23 +279,29 @@ function Home() {
               ))}
             </ul>
           </div>
-          <div className="pub-hero__stage" data-testid="hero-stage">
-            <div className="pub-hero__desk">
-              <BrowserFrame address="app.ongem.com">
-                <img
-                  src={SCREENSHOTS.home.src}
-                  alt={SCREENSHOTS.home.alt}
-                  width={SCREENSHOTS.home.width}
-                  height={SCREENSHOTS.home.height}
-                  fetchPriority="high"
-                  decoding="async"
-                />
-              </BrowserFrame>
+          {US_MEDIA ? (
+            <div className="pub-hero__stage" data-testid="hero-stage">
+              <div className="pub-hero__desk">
+                <BrowserFrame address="app.ongem.com">
+                  <img
+                    src={SCREENSHOTS.home.src}
+                    alt={SCREENSHOTS.home.alt}
+                    width={SCREENSHOTS.home.width}
+                    height={SCREENSHOTS.home.height}
+                    fetchPriority="high"
+                    decoding="async"
+                  />
+                </BrowserFrame>
+              </div>
+              <div className="pub-hero__phone">
+                <Shot name="homePhone" frame="phone" eager />
+              </div>
             </div>
-            <div className="pub-hero__phone">
-              <Shot name="homePhone" frame="phone" eager />
+          ) : (
+            <div className="pub-hero__stage" data-testid="hero-stage">
+              <HeroArt />
             </div>
-          </div>
+          )}
         </div>
       </section>
 

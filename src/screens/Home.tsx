@@ -5,7 +5,8 @@ import { useAsync } from '../lib/useAsync';
 import { currentMembership } from '../lib/company';
 import { applicationSentence, paymentLabel } from '../lib/states';
 import { useSession } from '../session';
-import { Amt, Last4, Load, human, stateStatus } from './common';
+import { REGION_CONFIG } from '../region';
+import { AcctLast4, Amt, Load, human, stateStatus } from './common';
 
 /** Home leads with the money (UI review 2026-11-07, OG-030 R-UX-6): the total, where it sits, and what to do next. */
 export function HomeScreen() {
@@ -44,7 +45,7 @@ export function HomeScreen() {
           return (
             <Card title="Available across your accounts" data-testid="home-balance">
               <p className="og-money og-money--xl" data-mask="" data-testid="home-total">
-                {formatMinor({ amountMinor: total, currency: list[0]?.currency ?? 'USD' })}
+                {formatMinor({ amountMinor: total, currency: list[0]?.currency ?? REGION_CONFIG.currency })}
               </p>
               {list.length > 0 && (
                 <ul className="fw-breakdown" data-testid="home-breakdown">
@@ -54,7 +55,7 @@ export function HomeScreen() {
                         <span className="fw-row__main">
                           <span>{a.name}</span>
                           <span className="fw-row__sub">
-                            <Last4 value={a.last4} />
+                            <AcctLast4 value={a.last4} />
                           </span>
                         </span>
                         {a.balance && <Amt value={a.balance.available} />}

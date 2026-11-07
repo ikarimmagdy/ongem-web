@@ -5,6 +5,9 @@ import { readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { build } from 'vite';
 
+// `npm run build -- --outDir dist-uae` builds into another folder (scripts/build.mjs passes the same argument here).
+const at = process.argv.indexOf('--outDir');
+const dist = at > 0 && process.argv[at + 1] ? process.argv[at + 1] : 'dist';
 const out = 'node_modules/.tmp/prerender';
 await build({
   logLevel: 'warn',
@@ -22,7 +25,7 @@ rmSync(out, { recursive: true, force: true });
 
 const attr = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 const text = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-let html = readFileSync('dist/index.html', 'utf8');
+let html = readFileSync(`${dist}/index.html`, 'utf8');
 const before = html;
 html = html
   .replace(
@@ -33,5 +36,5 @@ html = html
   .replace('<div id="root"></div>', `<div id="root">${shell.html}</div>`);
 if (html === before || !html.includes('data-testid="public-home"'))
   throw new Error('prerender: index.html not updated');
-writeFileSync('dist/index.html', html);
-console.log('prerender: public home in dist/index.html');
+writeFileSync(`${dist}/index.html`, html);
+console.log(`prerender: public home in ${dist}/index.html`);

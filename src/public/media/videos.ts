@@ -1,3 +1,4 @@
+import { US_MEDIA } from '../../region';
 import recorded from './videos.json';
 
 /**
@@ -14,7 +15,8 @@ export interface Video {
   height: number;
 }
 
-export const VIDEOS: Video[] = recorded;
+/** None in the AE build: they were recorded on the US demo (OG-022 R18). */
+export const VIDEOS: Video[] = US_MEDIA ? recorded : [];
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 export const videoSrc = (id: string) => `${base}videos/${id}.webm`;

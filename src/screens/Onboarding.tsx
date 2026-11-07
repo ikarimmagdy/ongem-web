@@ -16,21 +16,30 @@ import {
 } from '../design-system';
 import { useAsync } from '../lib/useAsync';
 import { applicationLabel } from '../lib/states';
+import { IS_AE, REGION_CONFIG } from '../region';
+
+const ID_TEST = IS_AE ? 'id' : 'ssn';
 import { useSession } from '../session';
 import { Load, stateStatus } from './common';
 
+/** An owner's ID number, by the region's ID types (US: SSN; AE: Emirates ID or passport, OG-022 R18). */
 function OwnerId({ app, ownerId, onDone }: { app: Application; ownerId: string; onDone(): void }) {
   const { api } = useSession();
+  const types = REGION_CONFIG.ownerIds;
+  const [idType, setIdType] = useState(types[0]!.idType);
+  const kind = types.find((t) => t.idType === idType) ?? types[0]!;
   const [number, setNumber] = useState('');
+  const [issuer, setIssuer] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const valid = /^\d{9}$/.test(number);
+  const country = kind.country ?? issuer;
+  const valid = kind.pattern.test(number) && /^[A-Z]{2}$/.test(country);
   const save = async () => {
     setBusy(true);
     setError(null);
     try {
       // The number exists only in this request and is cleared from the field right after (OG-029 R3).
-      await api.putOwnerIdentity(app.id, ownerId, { idType: 'SSN', number, country: 'US' });
+      await api.putOwnerIdentity(app.id, ownerId, { idType: kind.idType, number, country });
       setNumber('');
       onDone();
     } catch (e) {
@@ -41,19 +50,53 @@ function OwnerId({ app, ownerId, onDone }: { app: Application; ownerId: string; 
   };
   return (
     <div className="fw-form">
-      <Field label="Social Security number" hint="9 digits. Only the last four are shown back.">
+      {types.length > 1 && (
+        <Field label="ID type">
+          <Select
+            data-testid={`owner-id-type-${ownerId}`}
+            value={idType}
+            onChange={(e) => {
+              setIdType(e.target.value);
+              setNumber('');
+            }}
+            options={types.map((t) => ({ value: t.idType, label: t.label }))}
+          />
+        </Field>
+      )}
+      <Field label={kind.label} hint={kind.hint}>
         <Input
-          data-testid={`owner-ssn-${ownerId}`}
+          data-testid={`owner-${ID_TEST}-${ownerId}`}
           data-mask=""
-          inputMode="numeric"
+          inputMode={kind.numeric ? 'numeric' : 'text'}
           autoComplete="off"
-          maxLength={9}
+          maxLength={kind.maxLength}
           value={number}
-          onChange={(e) => setNumber(e.target.value.replace(/\D/g, ''))}
+          onChange={(e) =>
+            setNumber(
+              kind.numeric
+                ? e.target.value.replace(/\D/g, '')
+                : e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''),
+            )
+          }
         />
       </Field>
+      {!kind.country && (
+        <Field label="Issuing country" hint="Two letters, such as IN or GB.">
+          <Input
+            data-testid={`owner-id-country-${ownerId}`}
+            autoComplete="off"
+            maxLength={2}
+            value={issuer}
+            onChange={(e) => setIssuer(e.target.value.toUpperCase().replace(/[^A-Z]/g, ''))}
+          />
+        </Field>
+      )}
       {error && <Notice status="failure">{error}</Notice>}
-      <Button data-testid={`owner-ssn-save-${ownerId}`} disabled={!valid || busy} onClick={() => void save()}>
+      <Button
+        data-testid={`owner-${ID_TEST}-save-${ownerId}`}
+        disabled={!valid || busy}
+        onClick={() => void save()}
+      >
         Save
       </Button>
     </div>

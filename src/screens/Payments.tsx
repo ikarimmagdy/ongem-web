@@ -19,8 +19,9 @@ import { decimalToMinor, formatDate, formatMinor, minorToDecimal } from '../lib/
 import { useAsync } from '../lib/useAsync';
 import { paymentLabel } from '../lib/states';
 import { useDrafts } from '../assistant/drafts';
+import { REGION_CONFIG } from '../region';
 import { useSession } from '../session';
-import { Amt, Last4, Load, stateStatus } from './common';
+import { AcctLast4, Amt, Load, stateStatus } from './common';
 import { Schedules } from './Schedules';
 import { TopUp } from './TopUp';
 import { SplitHint } from './SplitHint';
@@ -146,10 +147,10 @@ export function PaymentDetail({ id }: { id: string }) {
               {
                 label: 'Rail',
                 value: p.fundingSourceId
-                  ? 'ACH debit from your account at another bank'
+                  ? REGION_CONFIG.topUpRail
                   : p.toAccountId
                     ? 'Internal transfer'
-                    : 'ACH',
+                    : REGION_CONFIG.paymentRail(p.rail),
               },
               { label: 'Reference', value: p.reference ?? 'None' },
               { label: 'Bank reference', value: p.providerReference ?? 'Not yet' },
@@ -195,13 +196,17 @@ export function NewPayment() {
   const [q] = useSearchParams();
   const accounts = useAsync(() => api.accounts(), [api]);
   const recipients = useAsync(() => api.recipients(), [api]);
-  const [kind, setKind] = useState(q.get('kind') === 'internal' ? 'internal' : 'ach');
+  const rails = REGION_CONFIG.rails;
+  const railValue = (r: (typeof rails)[number]) => r.rail.toLowerCase();
+  const [kind, setKind] = useState(q.get('kind') === 'internal' ? 'internal' : railValue(rails[0]!));
   const [from, setFrom] = useState(q.get('from') ?? '');
   const [toAccount, setToAccount] = useState(q.get('to') ?? '');
   const [recipient, setRecipient] = useState(q.get('recipient') ?? '');
   const [amount, setAmount] = useState(() => {
     const m = Number(q.get('amount'));
-    return Number.isSafeInteger(m) && m > 0 ? minorToDecimal({ amountMinor: m, currency: 'USD' }) : '';
+    return Number.isSafeInteger(m) && m > 0
+      ? minorToDecimal({ amountMinor: m, currency: REGION_CONFIG.currency })
+      : '';
   });
   const [reference, setReference] = useState(q.get('ref') ?? '');
   const [review, setReview] = useState(false);
@@ -221,7 +226,7 @@ export function NewPayment() {
   const accs = accounts.data.filter((a) => a.status === 'ACTIVE');
   // A prefilled value (from a draft or a link) counts only when it is one of the options on screen.
   const fromId = accs.some((a) => a.id === from) ? from : accs[0]?.id || '';
-  const minor = decimalToMinor(amount, 'USD');
+  const minor = decimalToMinor(amount, REGION_CONFIG.currency);
   // ongem-core refuses only a BLOCKED payee: a new recipient stays PENDING until the bank checks it on the first payment,
   // so holding payments to CLEAR ones only would leave every new recipient unpayable.
   const payable = recipients.data.filter((r) => r.screening !== 'BLOCKED');
@@ -229,6 +234,7 @@ export function NewPayment() {
   const recipientId = payable.some((r) => r.id === recipient) ? recipient : '';
   const target = kind === 'internal' ? toId : recipientId;
   const valid = Boolean(fromId && target && minor);
+  const rail = rails.find((r) => railValue(r) === kind) ?? rails[0]!;
   const send = async () => {
     if (!minor || inFlight.current) return;
     inFlight.current = true;
@@ -239,12 +245,12 @@ export function NewPayment() {
         created.current ??
         (await api.createPayment({
           fromAccountId: fromId,
-          rail: kind === 'internal' ? 'BOOK' : 'ACH',
-          achTiming: kind === 'internal' ? null : 'STANDARD',
+          rail: kind === 'internal' ? 'BOOK' : rail.rail,
+          achTiming: kind === 'internal' ? null : (rail.achTiming ?? null),
           recipientId: kind === 'internal' ? null : recipientId,
           toAccountId: kind === 'internal' ? toId : null,
           amountMinor: minor,
-          currency: 'USD',
+          currency: REGION_CONFIG.currency,
           reference: reference.trim() || null,
         }));
       created.current = draft;
@@ -275,13 +281,17 @@ export function NewPayment() {
           items={[
             {
               label: 'Amount',
-              value: <span data-mask="">{formatMinor({ amountMinor: minor, currency: 'USD' })}</span>,
+              value: (
+                <span data-mask="">
+                  {formatMinor({ amountMinor: minor, currency: REGION_CONFIG.currency })}
+                </span>
+              ),
             },
             {
               label: 'From',
               value: (
                 <>
-                  {fromA?.name} <Last4 value={fromA?.last4} />
+                  {fromA?.name} <AcctLast4 value={fromA?.last4} />
                 </>
               ),
             },
@@ -294,8 +304,7 @@ export function NewPayment() {
             },
             {
               label: 'How',
-              value:
-                kind === 'internal' ? 'Internal transfer, right away' : 'Standard ACH, 1 to 2 business days',
+              value: kind === 'internal' ? 'Internal transfer, right away' : rail.how,
             },
           ]}
         />
@@ -329,7 +338,7 @@ export function NewPayment() {
             value={kind}
             onChange={(e) => setKind(e.target.value)}
             options={[
-              { value: 'ach', label: 'ACH to a recipient' },
+              ...rails.map((r) => ({ value: railValue(r), label: r.option })),
               { value: 'internal', label: 'Transfer between my accounts' },
             ]}
           />
@@ -377,7 +386,10 @@ export function NewPayment() {
             />
           </Field>
         )}
-        <Field label="Amount in US$" error={amount && !minor ? 'Enter an amount like 1,250.00' : undefined}>
+        <Field
+          label={REGION_CONFIG.amountLabel}
+          error={amount && !minor ? 'Enter an amount like 1,250.00' : undefined}
+        >
           <Input
             data-testid="payment-amount"
             data-mask=""
@@ -481,7 +493,11 @@ export function PaymentsScreen() {
                           <span className="fw-row__main">
                             <strong>{to(p, accs, recs)}</strong>
                             <span className="fw-row__sub">
-                              {p.fundingSourceId ? 'Top-up' : p.toAccountId ? 'Internal transfer' : 'ACH'}{' '}
+                              {p.fundingSourceId
+                                ? 'Top-up'
+                                : p.toAccountId
+                                  ? 'Internal transfer'
+                                  : REGION_CONFIG.paymentRail(p.rail)}{' '}
                               {p.createdAt ? `· ${formatDate(p.createdAt)}` : ''}
                             </span>
                           </span>

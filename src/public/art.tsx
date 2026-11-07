@@ -1,5 +1,10 @@
 import { useId, type ReactNode } from 'react';
+import { formatMinor } from '../lib/format';
+import { REGION_CONFIG } from '../region';
 import type { ArtName } from './content';
+
+/** Sample amounts in the build's currency (US$48,250.00, or AED in the AE build). */
+const sample = (amountMinor: number) => formatMinor({ amountMinor, currency: REGION_CONFIG.currency });
 
 /**
  * Original OnGem illustrations (OG-032 R7): the faceted gem from the brand and simple product shapes, drawn only with
@@ -68,7 +73,7 @@ export function HeroArt() {
         Operating account
       </text>
       <text className="t-primary pub-art__money" x="64" y="180" fontSize="30">
-        US$48,250.00
+        {sample(4_825_000)}
       </text>
       <rect className="f-tint-mint" x="64" y="200" width="150" height="26" rx="13" />
       <circle className="f-success" cx="80" cy="213" r="5" />
@@ -154,7 +159,7 @@ const ART: Record<ArtName, () => ReactNode> = {
       <Panel x={30} y={30} w={260} h={160} />
       <Gem x={48} y={46} s={0.6} />
       <text className="t-primary pub-art__money" x="48" y="112" fontSize="26">
-        US$12,400.00
+        {sample(1_240_000)}
       </text>
       <Bar x={48} y={130} w={140} />
       <Bar x={48} y={148} w={100} />

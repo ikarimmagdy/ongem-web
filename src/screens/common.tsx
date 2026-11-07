@@ -3,6 +3,7 @@ import { errorText } from '../api/errors';
 import type { Amount } from '../api/types';
 import { Button, Notice, Skeleton, type Status } from '../design-system';
 import { formatMinor } from '../lib/format';
+import { REGION_CONFIG } from '../region';
 import type { AsyncState } from '../lib/useAsync';
 
 /** Loading, error and success states for one read (every screen has them, the console's rule). */
@@ -45,6 +46,11 @@ export function Amt({ value }: { value: Amount }) {
 /** An account or card number's last four, masked in recordings. */
 export function Last4({ value }: { value?: string | null }) {
   return value ? <span data-mask="">•••• {value}</span> : null;
+}
+
+/** A bank account's last four (an IBAN's in the AE build, OG-022 R18), masked in recordings. */
+export function AcctLast4({ value }: { value?: string | null }) {
+  return value ? <span data-mask="">{REGION_CONFIG.accountMask(value)}</span> : null;
 }
 
 export function stateStatus(state: string): Status {

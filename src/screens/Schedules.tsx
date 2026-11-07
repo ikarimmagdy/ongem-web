@@ -16,6 +16,7 @@ import {
 import { decimalToMinor, formatMinor } from '../lib/format';
 import { formatDay, frequencyText, today } from '../lib/schedule';
 import { useAsync } from '../lib/useAsync';
+import { REGION_CONFIG } from '../region';
 import { useSession } from '../session';
 import { Amt, Load } from './common';
 
@@ -212,7 +213,7 @@ function NewSchedule({
   const [reference, setReference] = useState('');
   const fromId = accounts.some((a) => a.id === from) ? from : (accounts[0]?.id ?? '');
   const recipientId = payable.some((r) => r.id === recipient) ? recipient : '';
-  const minor = decimalToMinor(amount, 'USD');
+  const minor = decimalToMinor(amount, REGION_CONFIG.currency);
   const every = Number(interval);
   const times = Number(count);
   const dateOk = /^\d{4}-\d{2}-\d{2}$/.test(start) && start >= today();
@@ -229,9 +230,9 @@ function NewSchedule({
       await api.createSchedule({
         fromAccountId: fromId,
         recipientId,
-        rail: 'ACH',
+        rail: REGION_CONFIG.scheduleRail,
         amountMinor: minor,
-        currency: 'USD',
+        currency: REGION_CONFIG.currency,
         frequency,
         interval: every,
         startDate: start,
@@ -246,8 +247,8 @@ function NewSchedule({
   return (
     <Card title="New scheduled payment" data-testid="schedule-form">
       <p>
-        OnGem makes each payment on its date as a standard ACH, with the same checks as one you send yourself.
-        A date on a weekend or holiday goes on the next banking day.
+        OnGem makes each payment on its date as {REGION_CONFIG.scheduleAs}, with the same checks as one you
+        send yourself. A date on a weekend or holiday goes on the next banking day.
       </p>
       <form
         className="fw-form"
@@ -275,7 +276,10 @@ function NewSchedule({
             ]}
           />
         </Field>
-        <Field label="Amount in US$" error={amount && !minor ? 'Enter an amount like 1,250.00' : undefined}>
+        <Field
+          label={REGION_CONFIG.amountLabel}
+          error={amount && !minor ? 'Enter an amount like 1,250.00' : undefined}
+        >
           <Input
             data-testid="schedule-amount"
             data-mask=""
@@ -367,7 +371,7 @@ function NewSchedule({
         </Field>
         {minor && valid && (
           <p data-testid="schedule-summary">
-            <span data-mask="">{formatMinor({ amountMinor: minor, currency: 'USD' })}</span>{' '}
+            <span data-mask="">{formatMinor({ amountMinor: minor, currency: REGION_CONFIG.currency })}</span>{' '}
             {frequencyText(frequency, every).toLowerCase()}, first on {formatDay(start)}. You confirm it is
             you before it is set up.
           </p>

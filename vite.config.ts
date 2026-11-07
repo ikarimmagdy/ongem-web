@@ -1,8 +1,9 @@
 /// <reference types="vitest" />
 import { configDefaults } from 'vitest/config';
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
-import { readFileSync } from 'node:fs';
+import { readFileSync, rmSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 /**
  * The CloudFront response headers policy (security-headers.json, WEB-SEC-05) as plain headers, so the local preview and
@@ -25,6 +26,32 @@ function securityHeaders(): Record<string, string> {
   return headers;
 }
 
+/**
+ * The walkthrough videos in public/videos/ and the screenshots were recorded on the US demo, so an AE build
+ * (VITE_REGION=AE, OG-022 R18) leaves them out of its output: the videos folder, and every image no chunk refers to.
+ */
+function regionPublic(): Plugin {
+  let drop: string | null = null;
+  return {
+    name: 'ongem-region-public',
+    apply: 'build',
+    configResolved(config) {
+      drop = config.env.VITE_REGION === 'AE' ? resolve(config.root, config.build.outDir, 'videos') : null;
+    },
+    generateBundle(_, bundle) {
+      if (!drop) return;
+      const files = Object.values(bundle);
+      const code = files.map((f) => (f.type === 'chunk' ? f.code : String(f.source))).join('\n');
+      for (const f of files)
+        if (f.type === 'asset' && /\.(jpe?g|png|webp)$/.test(f.fileName) && !code.includes(f.fileName))
+          delete bundle[f.fileName];
+    },
+    closeBundle() {
+      if (drop) rmSync(drop, { recursive: true, force: true });
+    },
+  };
+}
+
 const devApi = {
   '/api-dev': {
     target: 'https://api-dev.ongem.com',
@@ -35,7 +62,7 @@ const devApi = {
 };
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), regionPublic()],
   server: { port: 5190, strictPort: true, proxy: devApi },
   preview: { port: 5190, strictPort: true, proxy: devApi, headers: securityHeaders() },
   test: {
