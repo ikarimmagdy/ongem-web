@@ -177,13 +177,14 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
         </section>
       )}
       <Button
+        variant="secondary"
         className="fw-assistant__fab"
         data-testid="assistant-open"
         aria-expanded={open}
         aria-controls="assistant-panel"
         onClick={() => setOpen((x) => !x)}
       >
-        {open ? 'Hide assistant' : 'Assistant'}
+        Assistant
       </Button>
     </div>
   );

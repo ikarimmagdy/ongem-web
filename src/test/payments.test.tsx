@@ -19,7 +19,7 @@ describe('payments (OG-030 R4)', () => {
     await userEvent.type(await screen.findByTestId('reverify-code'), '123456');
     await userEvent.click(screen.getByTestId('reverify-confirm'));
     const detail = await screen.findByTestId('payment-detail');
-    expect(within(detail).getAllByText('Submitted').length).toBeGreaterThan(0);
+    expect(within(detail).getAllByText('Sent').length).toBeGreaterThan(0);
     // SL1-15: where the payment is, in words, announced as a status.
     expect(within(detail).getByRole('status')).toHaveTextContent(/^Sent\./);
   });

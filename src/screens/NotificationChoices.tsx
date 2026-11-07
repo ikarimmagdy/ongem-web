@@ -58,22 +58,30 @@ export function NotificationChoices() {
                       {k.label}
                       {k.mandatory && <span className="fw-row__sub"> (always by email)</span>}
                     </span>
-                    <input
-                      type="checkbox"
-                      aria-label={`${k.label} by email`}
-                      data-testid={`pref-email-${k.kind}`}
-                      checked={k.email || k.mandatory}
-                      disabled={busy || k.mandatory}
-                      onChange={(e) => change({ kind: k.kind, email: e.target.checked })}
-                    />
-                    <input
-                      type="checkbox"
-                      aria-label={`${k.label} by SMS`}
-                      data-testid={`pref-sms-${k.kind}`}
-                      checked={k.sms}
-                      disabled={busy || !p.smsVerified}
-                      onChange={(e) => change({ kind: k.kind, sms: e.target.checked })}
-                    />
+                    <label className="fw-toggle">
+                      <input
+                        type="checkbox"
+                        role="switch"
+                        className="fw-toggle__input"
+                        aria-label={`${k.label} by email`}
+                        data-testid={`pref-email-${k.kind}`}
+                        checked={k.email || k.mandatory}
+                        disabled={busy || k.mandatory}
+                        onChange={(e) => change({ kind: k.kind, email: e.target.checked })}
+                      />
+                    </label>
+                    <label className="fw-toggle">
+                      <input
+                        type="checkbox"
+                        role="switch"
+                        className="fw-toggle__input"
+                        aria-label={`${k.label} by SMS`}
+                        data-testid={`pref-sms-${k.kind}`}
+                        checked={k.sms}
+                        disabled={busy || !p.smsVerified}
+                        onChange={(e) => change({ kind: k.kind, sms: e.target.checked })}
+                      />
+                    </label>
                   </div>
                 ))}
               </div>

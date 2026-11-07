@@ -1,13 +1,17 @@
-import { BRAND_ASSETS, BRAND_ASSET_SIZES } from '../../assets';
+import { BRAND_ASSETS, BRAND_ASSET_ON_DARK, BRAND_ASSET_SIZES } from '../../assets';
 import { useTheme } from '../theme/ThemeProvider';
 
 export function Logo() {
   const { theme } = useTheme();
-  const src = theme.logo.wordmark ? BRAND_ASSETS[theme.logo.wordmark] : undefined;
-  if (src) {
-    const size = theme.logo.wordmark ? BRAND_ASSET_SIZES[theme.logo.wordmark] : undefined;
+  const named = theme.logo.wordmark;
+  // A dark theme uses the light-ink wordmark when one exists; otherwise the full-colour one sits on its plate.
+  const onDark = theme.mode === 'dark' && named ? BRAND_ASSET_ON_DARK[named] : undefined;
+  const file = onDark ?? named;
+  const src = file ? BRAND_ASSETS[file] : undefined;
+  if (src && file) {
+    const size = BRAND_ASSET_SIZES[file];
     return (
-      <span className="og-logo og-logo--image">
+      <span className={onDark ? 'og-logo og-logo--image og-logo--ink' : 'og-logo og-logo--image'}>
         <img src={src} alt={theme.logo.alt} width={size?.width} height={size?.height} />
       </span>
     );

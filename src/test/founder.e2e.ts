@@ -9,7 +9,14 @@ async function demo(page: Page) {
 }
 
 async function nav(page: Page, label: string) {
-  await page.locator(`[data-testid="nav-${label}"]:visible`).first().click();
+  const link = page.locator(`[data-testid="nav-${label}"]:visible`).first();
+  // On a phone Settings sits in the profile menu, not the five bottom tabs (OG-030 R-UX-10).
+  if (label === 'settings' && !(await link.count())) {
+    await page.getByTestId('profile-menu').click();
+    await page.getByTestId('profile-settings').click();
+    return;
+  }
+  await link.click();
 }
 
 async function noSideScroll(page: Page) {
@@ -63,7 +70,7 @@ test('journeys_desktop_and_mobile_AC_R1_2', async ({ page }, info) => {
   await page.getByTestId('payment-review-button').click();
   await page.getByTestId('payment-send').click();
   await stepUp(page);
-  await expect(page.getByTestId('payment-detail')).toContainText('Submitted');
+  await expect(page.getByTestId('payment-detail')).toContainText('Sent');
   await axe(page);
   await page.screenshot({ path: `e2e-output/screens/${info.project.name}-payment-sent.png`, fullPage: true });
 
@@ -375,4 +382,41 @@ test('UX_17 wide screens: content keeps a readable width and list screens fill t
     await expect(hint).toBeHidden();
   }
   await expect(page.getByTestId('payments-pager')).toBeVisible();
+});
+
+/** UI Skills review 2026-11-07 (OG-030 R12 to R21): layout checks only a real browser can make. */
+test('AC_R18_2 the assistant never covers content, titles name the page, contrast holds', async ({
+  page,
+}) => {
+  await demo(page);
+  await expect(page).toHaveTitle('Home | OnGem');
+  const fab = page.getByTestId('assistant-open');
+  const header = page.locator('header.fw-topbar');
+  const f = await fab.boundingBox();
+  const h = await header.boundingBox();
+  expect(f && h && f.y >= h.y && f.y + f.height <= h.y + h.height + 1).toBeTruthy();
+  const goSettings = async () => {
+    const menu = page.getByTestId('profile-menu');
+    if (await menu.isVisible()) {
+      await menu.click();
+      await page.getByTestId('profile-settings').click();
+    } else await nav(page, 'settings');
+  };
+  const check = async (label: string) => {
+    await page.waitForLoadState('networkidle');
+    const r = await new AxeBuilder({ page }).withRules(['color-contrast', 'target-size']).analyze();
+    expect(r.violations, `${label}: ${r.violations.map((v) => v.id).join(', ')}`).toEqual([]);
+  };
+  await check('home');
+  await nav(page, 'payments');
+  await expect(page).toHaveTitle('Payments | OnGem');
+  await check('payments');
+  await nav(page, 'cards');
+  await check('cards');
+  await goSettings();
+  await expect(page).toHaveTitle('Settings | OnGem');
+  await check('settings');
+  const toggle = page.getByTestId('pref-email-PAYMENT_SENT').locator('xpath=..');
+  const t = await toggle.boundingBox();
+  expect(t && t.width >= 40 && t.height >= 40).toBeTruthy();
 });

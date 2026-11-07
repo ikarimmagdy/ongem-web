@@ -1,5 +1,5 @@
-import { useEffect, useState, type ReactNode } from 'react';
-import { NavLink, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Logo, Notice, Skeleton } from './design-system';
 import { useAsync } from './lib/useAsync';
 import { ApiError, errorText } from './api/errors';
@@ -18,11 +18,67 @@ import { useSession } from './session';
 import { AssistantWidget } from './assistant/AssistantWidget';
 import { DraftProvider } from './assistant/drafts';
 import { RECORDING_ENABLED, Recorder } from './recording/Recorder';
-import { NAV } from './nav';
+import { NAV, pageTitle } from './nav';
 
-function Shell({ children }: { children: ReactNode }) {
+/** Every route names its page in the browser tab (WCAG 2.4.2, UI review 2026-11-07). */
+function usePageTitle() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    document.title = `${pageTitle(pathname)} | OnGem`;
+  }, [pathname]);
+}
+
+/** Settings, the company switch and sign out, behind one button on a phone where the bottom bar has five tabs. */
+function ProfileMenu({ children, onLeave }: { children?: ReactNode; onLeave(): void }) {
+  const [open, setOpen] = useState(false);
+  const root = useRef<HTMLDivElement>(null);
+  const { pathname } = useLocation();
+  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    if (!open) return;
+    const close = (e: MouseEvent | KeyboardEvent) => {
+      if (e instanceof KeyboardEvent ? e.key === 'Escape' : !root.current?.contains(e.target as Node))
+        setOpen(false);
+    };
+    document.addEventListener('mousedown', close);
+    document.addEventListener('keydown', close);
+    return () => {
+      document.removeEventListener('mousedown', close);
+      document.removeEventListener('keydown', close);
+    };
+  }, [open]);
+  return (
+    <div className="fw-profile" ref={root}>
+      <button
+        type="button"
+        className="fw-icon-button"
+        data-testid="profile-menu"
+        aria-label="Your profile and settings"
+        aria-expanded={open}
+        aria-controls="profile-menu-list"
+        onClick={() => setOpen((x) => !x)}
+      >
+        <span aria-hidden="true" className="fw-profile__glyph" />
+      </button>
+      {open && (
+        <div className="fw-profile__menu" id="profile-menu-list" data-testid="profile-menu-list">
+          {children}
+          <NavLink to="/settings" className="fw-profile__item" data-testid="profile-settings">
+            Settings
+          </NavLink>
+          <button type="button" className="fw-profile__item" onClick={onLeave}>
+            Sign out
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Shell({ children, assistant }: { children: ReactNode; assistant?: ReactNode }) {
   const { api, mode, setRole, leave, companyId, switchCompany } = useSession();
   const navigate = useNavigate();
+  usePageTitle();
   const me = useAsync(() => api.me(), [api]);
   const person = me.status === 'success' ? me.data : null;
   const membership = currentMembership(person);
@@ -39,7 +95,7 @@ function Shell({ children }: { children: ReactNode }) {
     switchCompany(id);
     navigate('/');
   };
-  const links = NAV.map((n) => (
+  const link = (n: (typeof NAV)[number]) => (
     <li key={n.to}>
       <NavLink
         to={n.to}
@@ -50,7 +106,10 @@ function Shell({ children }: { children: ReactNode }) {
         {n.label}
       </NavLink>
     </li>
-  ));
+  );
+  const links = NAV.map(link);
+  // A phone keeps five tabs; Settings moves to the profile menu (UI review 2026-11-07).
+  const bottomLinks = NAV.filter((n) => n.to !== '/settings').map(link);
   return (
     <div className="fw-shell" data-testid="shell">
       <a href="#main" className="og-skip">
@@ -72,8 +131,16 @@ function Shell({ children }: { children: ReactNode }) {
             {mode === 'demo' ? 'Demo' : 'Live'}
           </span>
           <span className="og-topbar__right">
-            <CompanySwitcher companies={switchable(person)} current={membership} onPick={pick} />
+            <span className="fw-topbar__company">
+              <CompanySwitcher companies={switchable(person)} current={membership} onPick={pick} />
+            </span>
             {me.status === 'success' && <NoticeBell />}
+            {me.status === 'success' && assistant}
+            <ProfileMenu onLeave={leave}>
+              {switchable(person).length > 1 && (
+                <CompanySwitcher companies={switchable(person)} current={membership} onPick={pick} />
+              )}
+            </ProfileMenu>
           </span>
         </header>
         <main className="fw-content" id="main">
@@ -101,7 +168,7 @@ function Shell({ children }: { children: ReactNode }) {
         </main>
       </div>
       <nav aria-label="Main" className="fw-bottom" data-testid="bottom-nav">
-        <ul className="og-nav fw-bottom__list">{links}</ul>
+        <ul className="og-nav fw-bottom__list">{bottomLinks}</ul>
       </nav>
     </div>
   );
@@ -117,7 +184,7 @@ function CompanyScope() {
   const [recording, setRecording] = useState<string | null>(null);
   return (
     <DraftProvider>
-      <Shell>
+      <Shell assistant={<AssistantWidget recordingSessionId={recording} />}>
         {RECORDING_ENABLED && <Recorder onSession={setRecording} />}
         <Routes>
           <Route path="/" element={<HomeScreen />} />
@@ -139,7 +206,6 @@ function CompanyScope() {
           <Route path="/notifications" element={<NotificationsScreen />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-        <AssistantWidget recordingSessionId={recording} />
       </Shell>
     </DraftProvider>
   );

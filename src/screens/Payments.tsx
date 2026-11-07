@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Permission } from '../api/client';
 import { errorText } from '../api/errors';
@@ -14,13 +14,13 @@ import {
   PageHeader,
   Select,
   StatusChip,
-  Stepper,
 } from '../design-system';
 import { decimalToMinor, formatDate, formatMinor, minorToDecimal } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
+import { paymentLabel } from '../lib/states';
 import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
-import { Amt, Last4, Load, human, stateStatus } from './common';
+import { Amt, Last4, Load, stateStatus } from './common';
 import { Schedules } from './Schedules';
 import { TopUp } from './TopUp';
 import { SplitHint } from './SplitHint';
@@ -65,7 +65,7 @@ export function paymentStatusLine(
     case 'SETTLED':
       return 'Settled.';
     default:
-      return human(state);
+      return paymentLabel(state);
   }
 }
 
@@ -114,6 +114,11 @@ function Approval({ id, onDone }: { id: string; onDone(): void }) {
   );
 }
 
+/** What a payment is, for its title: a top-up, a transfer between own accounts or a payment (R-UX-4). */
+export function paymentKind(p: { fundingSourceId?: string | null; toAccountId?: string | null }): string {
+  return p.fundingSourceId ? 'Top-up' : p.toAccountId ? 'Transfer' : 'Payment';
+}
+
 export function PaymentDetail({ id }: { id: string }) {
   const { api, can } = useSession();
   const [n, setN] = useState(0);
@@ -124,7 +129,7 @@ export function PaymentDetail({ id }: { id: string }) {
         <Card
           title={
             <>
-              Payment <Amt value={p.amount} />
+              <span data-testid="payment-kind">{paymentKind(p)}</span> <Amt value={p.amount} />
             </>
           }
           data-testid="payment-detail"
@@ -136,7 +141,7 @@ export function PaymentDetail({ id }: { id: string }) {
             items={[
               {
                 label: 'Status',
-                value: <StatusChip status={stateStatus(p.state)}>{human(p.state)}</StatusChip>,
+                value: <StatusChip status={stateStatus(p.state)}>{paymentLabel(p.state)}</StatusChip>,
               },
               {
                 label: 'Rail',
@@ -165,16 +170,17 @@ export function PaymentDetail({ id }: { id: string }) {
           {p.state === 'PENDING_APPROVAL' && p.approvalBy !== 'ONGEM' && can(Permission.PAYMENT_APPROVE) && (
             <Approval id={p.id} onDone={() => setN((x) => x + 1)} />
           )}
-          <Stepper
-            label="Payment timeline"
-            items={p.timeline.map((t, i) => ({
-              id: `${i}`,
-              label: human(t.to),
-              statusText: formatDate(t.at, { time: true }),
-              status: stateStatus(t.to),
-              current: i === p.timeline.length - 1,
-            }))}
-          />
+          <ol className="fw-timeline" aria-label="Payment timeline" data-testid="payment-timeline">
+            {p.timeline.map((t, i) => (
+              <li
+                key={i}
+                className={i === p.timeline.length - 1 ? 'fw-timeline__step is-current' : 'fw-timeline__step'}
+              >
+                <span className="fw-timeline__label">{paymentLabel(t.to)}</span>
+                <span className="fw-timeline__date">{formatDate(t.at, { time: true })}</span>
+              </li>
+            ))}
+          </ol>
         </Card>
       )}
     </Load>
@@ -409,7 +415,11 @@ export function PaymentsScreen() {
   // Cursors of the pages before the current one; the last entry is the current page's cursor (null = first page).
   const [cursors, setCursors] = useState<(string | null)[]>([null]);
   const cursor = cursors[cursors.length - 1];
-  const list = useAsync(() => api.payments(cursor, PAYMENTS_PAGE), [api, cursor, isNew]);
+  // Reloaded after a payment or a top-up is created, from the first page, so the new item shows at once (R-UX-4).
+  useEffect(() => {
+    if (isNew || isTopUp) setCursors([null]);
+  }, [isNew, isTopUp]);
+  const list = useAsync(() => api.payments(cursor, PAYMENTS_PAGE), [api, cursor, isNew, isTopUp]);
   const accounts = useAsync(() => api.accounts(), [api]);
   const recipients = useAsync(() => api.recipients(), [api]);
   const accs = accounts.status === 'success' ? accounts.data : [];
@@ -477,7 +487,7 @@ export function PaymentsScreen() {
                           </span>
                           <span className="fw-row__main">
                             <Amt value={p.amount} />
-                            <StatusChip status={stateStatus(p.state)}>{human(p.state)}</StatusChip>
+                            <StatusChip status={stateStatus(p.state)}>{paymentLabel(p.state)}</StatusChip>
                           </span>
                         </button>
                       </li>

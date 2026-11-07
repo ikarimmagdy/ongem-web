@@ -430,3 +430,299 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* UI review 2026-11-07 (OG-030 R-UX). */
+/* The assistant is docked in the top bar on every size, so it never floats over a balance, a row or a form
+   (R-UX-1). Its panel drops down from the bar. */
+.fw-assistant {
+  position: relative;
+  inset: auto;
+  z-index: 30;
+  flex-direction: row;
+  align-items: center;
+}
+.fw-assistant__fab {
+  box-shadow: none;
+}
+.fw-assistant__panel {
+  top: calc(100% + var(--space-sm));
+  bottom: auto;
+}
+.fw-content {
+  padding-bottom: var(--space-xl);
+}
+/* The unread count sits on the bell's shoulder with a ring in the bar's colour, not over the glyph (R-UX-11). */
+.fw-bell__count {
+  inset-block-start: calc(var(--space-xs) * -1);
+  inset-inline-end: calc(var(--space-xs) * -1);
+  box-shadow: 0 0 0 2px var(--color-surface-card);
+}
+/* Profile menu: phones only (five tabs below; Settings, company and sign out here) (R-UX-10). */
+.fw-profile {
+  position: relative;
+  display: none;
+}
+.fw-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: calc(var(--space-xl) + var(--space-sm));
+  min-height: calc(var(--space-xl) + var(--space-sm));
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-card);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+.fw-icon-button:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+.fw-profile__glyph {
+  position: relative;
+  width: var(--space-md);
+  height: var(--space-md);
+}
+.fw-profile__glyph::before,
+.fw-profile__glyph::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  background: currentColor;
+}
+.fw-profile__glyph::before {
+  top: 0;
+  width: 45%;
+  height: 45%;
+  border-radius: var(--radius-pill);
+}
+.fw-profile__glyph::after {
+  bottom: 0;
+  width: 90%;
+  height: 40%;
+  border-radius: var(--radius-pill) var(--radius-pill) var(--radius-sm) var(--radius-sm);
+}
+.fw-profile__menu {
+  position: absolute;
+  inset-inline-end: 0;
+  top: calc(100% + var(--space-sm));
+  z-index: 40;
+  min-width: calc(var(--space-3xl) * 5);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-xs);
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-raised);
+}
+.fw-profile__item {
+  display: flex;
+  align-items: center;
+  min-height: calc(var(--space-xl) + var(--space-sm));
+  padding: 0 var(--space-md);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-primary);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.fw-profile__item:hover {
+  background: var(--color-surface-tint-blue);
+}
+@media (max-width: 900px) {
+  .fw-profile {
+    display: block;
+  }
+  /* The company name moves under the greeting on a phone instead of being cut in the bar (R-UX-10). */
+  .fw-topbar__company {
+    display: none;
+  }
+  .fw-assistant__panel {
+    position: fixed;
+    inset-inline: var(--space-sm);
+    top: calc(var(--space-3xl) * 1.5);
+    width: auto;
+    max-height: calc(100vh - var(--space-3xl) * 3.5);
+  }
+  .fw-content {
+    padding-bottom: var(--space-md);
+  }
+}
+/* Settings choices are switches inside a 44px target (WCAG 2.5.8, R-UX-8). */
+.fw-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: calc(var(--space-xl) + var(--space-sm));
+  min-height: calc(var(--space-xl) + var(--space-sm));
+  cursor: pointer;
+}
+.fw-toggle__input {
+  appearance: none;
+  position: relative;
+  margin: 0;
+  width: calc(var(--space-xl) + var(--space-xs));
+  height: calc(var(--space-lg) - var(--space-xs) / 2);
+  border-radius: var(--radius-pill);
+  background: var(--color-border-strong);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+.fw-toggle__input::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  inset-inline-start: 2px;
+  width: calc(var(--space-lg) - var(--space-xs) / 2 - 4px);
+  height: calc(var(--space-lg) - var(--space-xs) / 2 - 4px);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-card);
+  transition: transform 150ms ease;
+}
+.fw-toggle__input:checked {
+  background: var(--color-action-primary-bg);
+}
+.fw-toggle__input:checked::after {
+  transform: translateX(calc(var(--space-xl) + var(--space-xs) - var(--space-lg) + var(--space-xs) / 2));
+}
+[dir='rtl'] .fw-toggle__input:checked::after {
+  transform: translateX(
+    calc((var(--space-xl) + var(--space-xs) - var(--space-lg) + var(--space-xs) / 2) * -1)
+  );
+}
+.fw-toggle__input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.fw-toggle__input:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fw-toggle__input,
+  .fw-toggle__input::after {
+    transition: none;
+  }
+}
+/* Home balance breakdown (R-UX-6). */
+.fw-breakdown {
+  list-style: none;
+  margin: 0 0 var(--space-md);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--color-border-subtle);
+}
+.fw-breakdown__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  min-height: calc(var(--space-xl) + var(--space-sm));
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+.fw-breakdown__row:hover {
+  background: var(--color-surface-tint-blue);
+}
+/* Payment timeline: steps as words, dates as plain secondary text, never as status pills (R-UX-5). */
+.fw-timeline {
+  list-style: none;
+  margin: var(--space-md) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  border-inline-start: 2px solid var(--color-border-default);
+}
+.fw-timeline__step {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-xs) var(--space-md);
+  padding-inline-start: var(--space-md);
+}
+.fw-timeline__step.is-current .fw-timeline__label {
+  font-weight: var(--font-body-strong-weight);
+}
+.fw-timeline__date {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+/* Card tiles (R-UX-9): a card looks like a card. */
+.fw-card-tiles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-3xl) * 4.5), 1fr));
+  gap: var(--space-md);
+}
+.fw-card-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-md);
+  width: 100%;
+  aspect-ratio: 1.586;
+  padding: var(--space-md);
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--color-brand-primary), var(--color-action-primary-bg));
+  color: var(--color-text-inverse);
+  text-align: start;
+  cursor: pointer;
+  box-shadow: var(--shadow-raised);
+}
+.fw-card-tile.is-active {
+  border-color: var(--color-border-focus);
+}
+.fw-card-tile.is-frozen {
+  filter: grayscale(0.6);
+}
+.fw-card-tile:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+.fw-card-tile__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+.fw-card-tile__form {
+  font-size: var(--font-size-sm);
+}
+.fw-card-tile__number {
+  font-size: var(--font-size-lg);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+.fw-card-tile__holder {
+  font-size: var(--font-size-sm);
+}
+/* The assistant button keeps one label; aria-expanded tells its state, so opening it never widens the bar (R-UX-1). */
+.fw-assistant__fab[aria-expanded='true'] {
+  background: var(--color-surface-tint-blue);
+}
+@media (max-width: 900px) {
+  .fw-assistant__fab {
+    padding-inline: var(--space-sm);
+  }
+}
+/* A link that looks like a button reads as a button: no underline (R-UX-7). */
+a.og-btn,
+a.og-btn:hover {
+  text-decoration: none;
+}
+/* A card tile stays card-sized on a wide screen (R-UX-9). */
+.fw-card-tiles > li {
+  max-width: calc(var(--space-3xl) * 7);
+}

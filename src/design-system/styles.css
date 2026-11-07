@@ -116,6 +116,12 @@ a {
 [data-theme-mode='dark'] .og-logo--image {
   padding: var(--space-sm) var(--space-md);
 }
+/* The light-ink wordmark needs no plate: it sits on the dark surface directly. */
+.og-logo--image.og-logo--ink,
+[data-theme-mode='dark'] .og-logo--image.og-logo--ink {
+  background: transparent;
+  padding: 0;
+}
 .og-logo--image img {
   /* 28px tall in the shell; the brand minimum is 24px. */
   height: calc(var(--space-lg) + var(--space-xs));

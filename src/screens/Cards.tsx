@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { errorText } from '../api/errors';
 import { Button, Card, EmptyState, KeyValue, Notice, PageHeader, StatusChip } from '../design-system';
@@ -145,6 +145,12 @@ export function CardsScreen() {
   const navigate = useNavigate();
   const [version, setVersion] = useState(0);
   const list = useAsync(() => api.cards(), [api, id, version]);
+  // On a wide screen the first card opens at once instead of an empty detail column (R-UX-9).
+  const first = list.status === 'success' ? list.data.items[0]?.id : undefined;
+  useEffect(() => {
+    if (id || !first || typeof window.matchMedia !== 'function') return;
+    if (window.matchMedia('(min-width: 901px)').matches) navigate(`/cards/${first}`, { replace: true });
+  }, [id, first, navigate]);
   return (
     <>
       <PageHeader title="Cards" subtitle="Last four digits only." />
@@ -153,21 +159,23 @@ export function CardsScreen() {
           <Load state={list} label="cards">
             {(page) =>
               page.items.length ? (
-                <ul className="fw-list" data-testid="cards-list">
+                <ul className="fw-card-tiles" data-testid="cards-list">
                   {page.items.map((c) => (
                     <li key={c.id}>
                       <button
-                        className={`fw-row${c.id === id ? ' is-active' : ''}`}
+                        className={`fw-card-tile${c.id === id ? ' is-active' : ''}${c.state === 'FROZEN' ? ' is-frozen' : ''}`}
                         data-testid={`card-${c.id}`}
+                        aria-current={c.id === id ? 'true' : undefined}
                         onClick={() => navigate(`/cards/${c.id}`)}
                       >
-                        <span className="fw-row__main">
-                          <strong>{c.holderName}</strong>
-                          <span className="fw-row__sub">
-                            {human(c.form)} <Last4 value={c.last4} />
-                          </span>
+                        <span className="fw-card-tile__top">
+                          <span className="fw-card-tile__form">{human(c.form)}</span>
+                          <StatusChip status={stateStatus(c.state)}>{human(c.state)}</StatusChip>
                         </span>
-                        <StatusChip status={stateStatus(c.state)}>{human(c.state)}</StatusChip>
+                        <span className="fw-card-tile__number">
+                          <Last4 value={c.last4} />
+                        </span>
+                        <span className="fw-card-tile__holder">{c.holderName}</span>
                       </button>
                     </li>
                   ))}

@@ -15,8 +15,9 @@ import {
   type Status,
 } from '../design-system';
 import { useAsync } from '../lib/useAsync';
+import { applicationLabel } from '../lib/states';
 import { useSession } from '../session';
-import { Load, human, stateStatus } from './common';
+import { Load, stateStatus } from './common';
 
 function OwnerId({ app, ownerId, onDone }: { app: Application; ownerId: string; onDone(): void }) {
   const { api } = useSession();
@@ -337,7 +338,7 @@ export function OnboardingScreen() {
                   <>
                     Status{' '}
                     <StatusChip status={stateStatus(app.state)}>
-                      <span data-testid="application-state">{human(app.state)}</span>
+                      <span data-testid="application-state">{applicationLabel(app.state)}</span>
                     </StatusChip>
                   </>
                 }
@@ -367,7 +368,7 @@ export function OnboardingScreen() {
                     {
                       id: 'submit',
                       label: 'Submit to the bank',
-                      statusText: human(app.state),
+                      statusText: applicationLabel(app.state),
                       status: stateStatus(app.state),
                     },
                   ]}
