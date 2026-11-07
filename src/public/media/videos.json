@@ -4,7 +4,7 @@
     "title": "From sign-up to an application at the bank",
     "summary": "Start on the OnGem site, open the demo, confirm your company and owners, accept the disclosures and submit.",
     "seconds": 25,
-    "bytes": 2872988,
+    "bytes": 3000857,
     "width": 1280,
     "height": 800
   },
@@ -13,7 +13,7 @@
     "title": "Send an ACH payment",
     "summary": "Pick a recipient, enter the amount, review and confirm it is you; then follow it from sent to settled.",
     "seconds": 19,
-    "bytes": 2688548,
+    "bytes": 2687170,
     "width": 1280,
     "height": 800
   },
@@ -22,7 +22,7 @@
     "title": "Add money from another bank, with a second approval",
     "summary": "Pull money from your verified account at another bank by ACH; a second person in your company approves it.",
     "seconds": 20,
-    "bytes": 3583755,
+    "bytes": 3475747,
     "width": 1280,
     "height": 800
   },
@@ -31,7 +31,7 @@
     "title": "One-person company: OnGem approves",
     "summary": "When no one else in your company can approve, OnGem approves your payment or top-up.",
     "seconds": 15,
-    "bytes": 2670164,
+    "bytes": 2624844,
     "width": 1280,
     "height": 800
   },
@@ -40,7 +40,7 @@
     "title": "Virtual cards: freeze, unfreeze and see the details",
     "summary": "Freeze a card the moment something looks wrong, unfreeze it, and open its details in the bank’s secure window.",
     "seconds": 19,
-    "bytes": 2061092,
+    "bytes": 2186638,
     "width": 1280,
     "height": 800
   },
@@ -49,7 +49,7 @@
     "title": "Notifications and your choices",
     "summary": "See what needs you in one inbox, and choose email or text for each kind of notice.",
     "seconds": 17,
-    "bytes": 1831619,
+    "bytes": 1738687,
     "width": 1280,
     "height": 800
   },
@@ -58,7 +58,7 @@
     "title": "Get help and dispute a card payment",
     "summary": "Raise a support ticket or dispute a charge from the card, and follow the replies in one thread.",
     "seconds": 17,
-    "bytes": 1538597,
+    "bytes": 1503577,
     "width": 1280,
     "height": 800
   },
@@ -67,7 +67,7 @@
     "title": "On your phone: send a payment",
     "summary": "The same payment, with the same second step, on a phone.",
     "seconds": 16,
-    "bytes": 1265877,
+    "bytes": 1235856,
     "width": 390,
     "height": 844
   }
