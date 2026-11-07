@@ -57,6 +57,8 @@ export interface DemoOptions {
   companyId?: string | null;
   /** The application to start from (tests); the sample one otherwise. */
   application?: Application;
+  /** Who approves a new top-up (Q-091): ONGEM shows a one-person company (`/sign-in?demo=solo`). */
+  approvalBy?: 'COMPANY' | 'ONGEM';
 }
 
 /** Submitted and not yet decided: the bank may still ask for an ID document (ongem-core FounderDocv.OPEN). */
@@ -105,6 +107,7 @@ export class DemoOnGemApi implements OnGemApi {
     this.me_ = opts.companyId ? { ...me, companyId: opts.companyId } : me;
     this.now = opts.now ?? (() => '2026-10-29T15:00:00Z');
     this.applicationState = opts.application ?? demoApplication();
+    if (opts.approvalBy) this.approvalBy = opts.approvalBy;
   }
 
   private next(prefix: string) {

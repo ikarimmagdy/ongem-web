@@ -22,9 +22,12 @@ import {
   SECURITY,
   STEPS,
   TRUST,
+  isPagePath,
   type ArtName,
+  type PagePath,
   type PublicPath,
 } from './content';
+import { Gallery, MediaPage, mediaMeta, VideoStrip } from './media/MediaPages';
 import { PHONE_SCREENS, SCREENSHOTS, type ScreenName } from './screenshots';
 import './public.css';
 
@@ -34,7 +37,7 @@ export const SIGN_UP = '/sign-in?mode=sign-up';
 /** Title and meta description per page (OG-032 R8). */
 function usePageMeta(path: PublicPath) {
   useEffect(() => {
-    const meta = PAGE_META[path];
+    const meta = isPagePath(path) ? PAGE_META[path] : mediaMeta(path);
     document.title = meta.title;
     let tag = document.querySelector<HTMLMetaElement>('meta[name="description"]');
     if (!tag) {
@@ -117,7 +120,9 @@ export function Header({ path }: { path?: PublicPath }) {
               key={l.to}
               to={l.to}
               className="pub-nav__link"
-              aria-current={l.to === path ? 'page' : undefined}
+              aria-current={
+                l.to === path || (l.to === '/blog' && !!path?.startsWith('/blog/')) ? 'page' : undefined
+              }
               onClick={() => setOpen(false)}
             >
               {l.label}
@@ -405,6 +410,7 @@ function Home() {
         </div>
       </section>
 
+      <VideoStrip />
       <Faq />
       <FinalCta />
     </>
@@ -518,6 +524,8 @@ function Product() {
           </div>
         </section>
       ))}
+      <VideoStrip />
+      <Gallery />
       <section className="pub-section">
         <div className="pub-wrap pub-split">
           <div data-reveal>
@@ -614,7 +622,7 @@ function Partners() {
   );
 }
 
-const PAGES: Record<PublicPath, () => ReactNode> = {
+const PAGES: Record<PagePath, () => ReactNode> = {
   '/': Home,
   '/product': Product,
   '/security': Security,
@@ -625,7 +633,7 @@ const PAGES: Record<PublicPath, () => ReactNode> = {
 export function PublicSite({ path }: { path: PublicPath }) {
   usePageMeta(path);
   useReveal(path);
-  const Page = PAGES[path];
+  const Page = isPagePath(path) ? PAGES[path] : () => <MediaPage path={path} />;
   return (
     <div className="pub">
       <a href="#main" className="pub-skip">

@@ -1,3 +1,5 @@
+import { isMediaPath } from './media/paths';
+
 /**
  * Every word of the public site (OG-032), in one place so pages and tests read the same source. Capabilities are the
  * ones built in ongem-core and the founder apps; anything with code that is not switched on is marked Coming soon.
@@ -24,13 +26,18 @@ export interface Capability {
 }
 
 export const PUBLIC_PATHS = ['/', '/product', '/security', '/partners'] as const;
-export type PublicPath = (typeof PUBLIC_PATHS)[number];
+/** The site's pages, plus the blog, its posts and the videos (OG-032 R15, R16), answered by media/MediaPages. */
+export type PublicPath = (typeof PUBLIC_PATHS)[number] | '/blog' | '/videos' | `/blog/${string}`;
+export type PagePath = (typeof PUBLIC_PATHS)[number];
 
 export function isPublicPath(path: string): path is PublicPath {
-  return (PUBLIC_PATHS as readonly string[]).includes(path);
+  return (PUBLIC_PATHS as readonly string[]).includes(path) || isMediaPath(path);
 }
 
-export const PAGE_META: Record<PublicPath, { title: string; description: string }> = {
+export const isPagePath = (path: string): path is PagePath =>
+  (PUBLIC_PATHS as readonly string[]).includes(path);
+
+export const PAGE_META: Record<PagePath, { title: string; description: string }> = {
   '/': {
     title: 'OnGem: business banking for founders',
     description:
@@ -57,6 +64,8 @@ export const NAV_LINKS: Array<{ to: PublicPath; label: string }> = [
   { to: '/product', label: 'Product' },
   { to: '/security', label: 'Security' },
   { to: '/partners', label: 'Partners' },
+  { to: '/videos', label: 'Videos' },
+  { to: '/blog', label: 'Blog' },
 ];
 
 export const HERO = {

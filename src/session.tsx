@@ -89,7 +89,16 @@ export function SessionProvider({
 
   // A new demo API each time demo mode is entered, so a fresh demo starts from the sample data.
   const demo = useMemo(
-    () => injected ?? new DemoOnGemApi({ stepUp: (p) => askRef.current(p) }),
+    () =>
+      injected ??
+      new DemoOnGemApi({
+        stepUp: (p) => askRef.current(p),
+        // `?demo=solo` shows the demo as a one-person company, where OnGem approves (Q-091; videos, OG-032 R16).
+        approvalBy:
+          typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('demo') === 'solo'
+            ? 'ONGEM'
+            : 'COMPANY',
+      }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [injected, demoMode],
   );
