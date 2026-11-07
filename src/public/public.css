@@ -1045,14 +1045,7 @@
   }
 }
 
-/* Dark mode (OG-032 R25): the wordmark in light ink with no plate, and outline buttons with a visible edge. */
-[data-theme-mode='dark'] .pub .og-logo--image {
-  background: transparent;
-  padding: 0;
-}
-[data-theme-mode='dark'] .pub .og-logo--image img {
-  filter: brightness(0) invert(1);
-}
+/* Dark mode (OG-032 R25): the light-ink wordmark comes from Logo (og-logo--ink, OG-030); outline buttons get a visible edge. */
 [data-theme-mode='dark'] .pub .og-btn--secondary,
 [data-theme-mode='dark'] .pub .og-btn--ghost {
   border: 1.5px solid var(--color-border-strong);
