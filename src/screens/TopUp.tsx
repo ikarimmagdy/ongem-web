@@ -229,8 +229,8 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
           ]}
         />
         <p>
-          A second person in your company approves it before the bank pulls the money. You confirm it is you
-          first.
+          A second person in your company approves it before the bank pulls the money. If no one else in your
+          company can approve, OnGem approves it. You confirm it is you first.
         </p>
         {error && <Notice status="failure">{error}</Notice>}
         <div className="fw-actions">

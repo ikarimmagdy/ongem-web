@@ -36,11 +36,20 @@ function to(p: Payment, accounts: Account[], recipients: Recipient[]) {
   return recipients.find((r) => r.id === p.recipientId)?.name ?? 'Recipient';
 }
 
-/** Where the payment is, in words (SL1-15): sending, sent with the bank's reference, or settled. */
-export function paymentStatusLine(state: string, bankReference?: string | null): string {
+/**
+ * Where the payment is, in words (SL1-15): sending, sent with the bank's reference, or settled. A payment waiting for
+ * approval names who approves it (Q-091): OnGem when nobody else in the company can.
+ */
+export function paymentStatusLine(
+  state: string,
+  bankReference?: string | null,
+  approvalBy?: Payment['approvalBy'],
+): string {
   switch (state.toUpperCase()) {
     case 'PENDING_APPROVAL':
-      return 'Waiting for a second person in your company to approve it. Nothing has moved yet.';
+      return approvalBy === 'ONGEM'
+        ? 'Waiting for OnGem to approve it, because no one else in your company can approve payments. Nothing has moved yet.'
+        : 'Waiting for a second person in your company to approve it. Nothing has moved yet.';
     case 'REJECTED':
       return 'Declined by the approver. Nothing was moved.';
     case 'DRAFT':
@@ -117,7 +126,7 @@ export function PaymentDetail({ id }: { id: string }) {
           data-testid="payment-detail"
         >
           <p role="status" data-testid="payment-status-line">
-            {paymentStatusLine(p.state, p.providerReference)}
+            {paymentStatusLine(p.state, p.providerReference, p.approvalBy)}
           </p>
           <KeyValue
             items={[
@@ -149,7 +158,7 @@ export function PaymentDetail({ id }: { id: string }) {
                 : []),
             ]}
           />
-          {p.state === 'PENDING_APPROVAL' && can(Permission.PAYMENT_APPROVE) && (
+          {p.state === 'PENDING_APPROVAL' && p.approvalBy !== 'ONGEM' && can(Permission.PAYMENT_APPROVE) && (
             <Approval id={p.id} onDone={() => setN((x) => x + 1)} />
           )}
           <Stepper

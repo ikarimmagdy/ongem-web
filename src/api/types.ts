@@ -116,6 +116,11 @@ export interface Payment {
   returnReason?: string | null;
   /** G-40: set on a top-up, an ACH debit from the company's own account at another bank into `fromAccountId`. */
   fundingSourceId?: string | null;
+  /**
+   * Q-091: who approves a payment in PENDING_APPROVAL. COMPANY: another person of the company; ONGEM: OnGem ops,
+   * because nobody but its maker can approve. Absent in any other state.
+   */
+  approvalBy?: 'COMPANY' | 'ONGEM' | null;
 }
 
 /**

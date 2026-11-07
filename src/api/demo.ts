@@ -74,6 +74,8 @@ export class DemoOnGemApi implements OnGemApi {
   /** A schedule's next occurrence (from 0), as ongem-core keeps it. */
   private occurrence = new Map<string, number>();
   private disclosuresState = demoDisclosures();
+  /** Who approves a new top-up (Q-091): COMPANY in the demo, ONGEM to show a one-person company. */
+  approvalBy: 'COMPANY' | 'ONGEM' = 'COMPANY';
   private ticketsState: TicketDetail[] = demoTickets();
   private seq = 0;
   readonly stepUps: string[] = [];
@@ -306,6 +308,7 @@ export class DemoOnGemApi implements OnGemApi {
     const sent: Payment = {
       ...p,
       state: 'SUBMITTED',
+      approvalBy: null,
       providerReference: `ach_${p.id.slice(-6)}`,
       timeline: [
         ...p.timeline,
@@ -325,6 +328,7 @@ export class DemoOnGemApi implements OnGemApi {
     const rejected: Payment = {
       ...p,
       state: 'REJECTED',
+      approvalBy: null,
       timeline: [...p.timeline, { from: 'PENDING_APPROVAL', to: 'REJECTED', at: this.now() }],
     };
     this.paymentsState = this.paymentsState.map((x) => (x.id === id ? rejected : x));
@@ -401,6 +405,7 @@ export class DemoOnGemApi implements OnGemApi {
       recipientId: null,
       toAccountId: null,
       fundingSourceId: f.id,
+      approvalBy: this.approvalBy,
       reference: r.reference ?? null,
       createdAt: this.now(),
       timeline: [

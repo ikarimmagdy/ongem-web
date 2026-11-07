@@ -30,6 +30,12 @@ describe('payments (OG-030 R4)', () => {
     );
     expect(paymentStatusLine('SUBMITTED', 'ach_5c2e')).toBe('Sent. Bank reference ach_5c2e.');
     expect(paymentStatusLine('SETTLED')).toBe('Settled.');
+    expect(paymentStatusLine('PENDING_APPROVAL', null, 'COMPANY')).toBe(
+      'Waiting for a second person in your company to approve it. Nothing has moved yet.',
+    );
+    expect(paymentStatusLine('PENDING_APPROVAL', null, 'ONGEM')).toBe(
+      'Waiting for OnGem to approve it, because no one else in your company can approve payments. Nothing has moved yet.',
+    );
     expect(errorText(new ApiError(409, 'insufficient_funds', 'x'))).toBe(
       'Your available balance is lower than this payment.',
     );
@@ -108,6 +114,22 @@ describe('add money from another bank (G-40)', () => {
     await userEvent.click(screen.getByTestId(`funding-remove-${id}`));
     await screen.findByTestId('funding-fsrc_demo_main');
     await expect(api.fundingSources()).resolves.toHaveLength(1);
+  });
+
+  it('a one-person company is told OnGem approves its top-up, with no approve button Q_091_COPY_1', async () => {
+    const api = new DemoOnGemApi();
+    api.approvalBy = 'ONGEM';
+    renderApp('/payments', { api });
+    await userEvent.click(await screen.findByTestId('add-money'));
+    await userEvent.type(await screen.findByTestId('topup-amount'), '5,000.00');
+    await userEvent.click(screen.getByTestId('topup-review-button'));
+    expect(await screen.findByTestId('topup-review')).toHaveTextContent(
+      'If no one else in your company can approve, OnGem approves it.',
+    );
+    await userEvent.click(screen.getByTestId('topup-send'));
+    const detail = await screen.findByTestId('payment-detail');
+    expect(within(detail).getByRole('status')).toHaveTextContent('Waiting for OnGem to approve it');
+    expect(within(detail).queryByRole('button', { name: /approve/i })).toBeNull();
   });
 
   it('tops up from a verified account and waits for approval, then the approver approves G_40_2', async () => {
