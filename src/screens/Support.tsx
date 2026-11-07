@@ -18,6 +18,7 @@ import { useAsync } from '../lib/useAsync';
 import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
 import { Load, human, stateStatus } from './common';
+import { SplitHint } from './SplitHint';
 
 const CATEGORIES = ['PAYMENT', 'CARD', 'ACCOUNT', 'ONBOARDING', 'DISPUTE', 'OTHER'];
 
@@ -244,7 +245,15 @@ export function SupportScreen() {
               Back to support
             </Button>
           )}
-          {isNew ? <NewTicket /> : id ? <Ticket id={id} /> : null}
+          {isNew ? (
+            <NewTicket />
+          ) : id ? (
+            <Ticket id={id} />
+          ) : (
+            <SplitHint title="Pick a request">
+              The conversation with OnGem support and each status change show here.
+            </SplitHint>
+          )}
         </div>
       </div>
     </>

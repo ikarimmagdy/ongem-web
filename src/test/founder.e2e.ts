@@ -358,3 +358,21 @@ test('UX_13 the notch of a phone frame sits in the bezel, above the screen', asy
     expect(notch.y + notch.height).toBeLessThanOrEqual(img.y + 0.5);
   }
 });
+
+test('UX_17 wide screens: content keeps a readable width and list screens fill the detail column', async ({
+  page,
+}, info) => {
+  await demo(page);
+  await nav(page, 'payments');
+  await expect(page.getByTestId('payments-list')).toBeVisible();
+  await noSideScroll(page);
+  const width = await page.locator('.fw-content').evaluate((e) => e.getBoundingClientRect().width);
+  const hint = page.getByTestId('split-hint');
+  if (info.project.name === 'desktop') {
+    expect(width).toBeLessThanOrEqual(1280);
+    await expect(hint).toBeVisible();
+  } else {
+    await expect(hint).toBeHidden();
+  }
+  await expect(page.getByTestId('payments-pager')).toBeVisible();
+});

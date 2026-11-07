@@ -23,6 +23,10 @@ import { useSession } from '../session';
 import { Amt, Last4, Load, human, stateStatus } from './common';
 import { Schedules } from './Schedules';
 import { TopUp } from './TopUp';
+import { SplitHint } from './SplitHint';
+
+/** Payments per page on the list (UX-16): the list stays short and the form beside it stays in view. */
+export const PAYMENTS_PAGE = 10;
 
 function to(p: Payment, accounts: Account[], recipients: Recipient[]) {
   if (p.fundingSourceId) {
@@ -402,18 +406,10 @@ export function PaymentsScreen() {
   const isNew = location.pathname.endsWith('/payments/new');
   const isTopUp = location.pathname.endsWith('/payments/top-up');
   const isSchedules = location.pathname.endsWith('/payments/schedules');
-  const [pages, setPages] = useState<string[]>([]);
-  const list = useAsync(async () => {
-    const first = await api.payments(null, 20);
-    let items = first.items;
-    let next = first.next;
-    for (const c of pages) {
-      const page = await api.payments(c, 20);
-      items = [...items, ...page.items];
-      next = page.next;
-    }
-    return { items, next };
-  }, [api, pages, isNew]);
+  // Cursors of the pages before the current one; the last entry is the current page's cursor (null = first page).
+  const [cursors, setCursors] = useState<(string | null)[]>([null]);
+  const cursor = cursors[cursors.length - 1];
+  const list = useAsync(() => api.payments(cursor, PAYMENTS_PAGE), [api, cursor, isNew]);
   const accounts = useAsync(() => api.accounts(), [api]);
   const recipients = useAsync(() => api.recipients(), [api]);
   const accs = accounts.status === 'success' ? accounts.data : [];
@@ -487,14 +483,28 @@ export function PaymentsScreen() {
                       </li>
                     ))}
                   </ul>
-                  {page.next && (
-                    <Button
-                      variant="secondary"
-                      data-testid="payments-more"
-                      onClick={() => setPages((x) => [...x, page.next as string])}
-                    >
-                      Show more
-                    </Button>
+                  {(page.next || cursors.length > 1) && (
+                    <nav className="fw-pager" aria-label="Payments pages" data-testid="payments-pager">
+                      <Button
+                        variant="secondary"
+                        data-testid="payments-newer"
+                        disabled={cursors.length === 1}
+                        onClick={() => setCursors((x) => x.slice(0, -1))}
+                      >
+                        Newer
+                      </Button>
+                      <span className="fw-pager__label" aria-live="polite">
+                        Page {cursors.length}
+                      </span>
+                      <Button
+                        variant="secondary"
+                        data-testid="payments-older"
+                        disabled={!page.next}
+                        onClick={() => setCursors((x) => [...x, page.next as string])}
+                      >
+                        Older
+                      </Button>
+                    </nav>
                   )}
                 </>
               ) : (
@@ -523,7 +533,11 @@ export function PaymentsScreen() {
             )
           ) : id ? (
             <PaymentDetail id={id} />
-          ) : null}
+          ) : (
+            <SplitHint title="Pick a payment">
+              Its amount, recipient and each step from sent to settled show here.
+            </SplitHint>
+          )}
         </div>
       </div>
     </>

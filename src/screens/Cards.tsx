@@ -8,6 +8,7 @@ import { useSession } from '../session';
 import type { CardWidgetKind, CardWidgetSession } from '../api/types';
 import { CardWidget } from './CardWidget';
 import { Last4, Load, human, stateStatus } from './common';
+import { SplitHint } from './SplitHint';
 
 const WIDGET_LABELS: Record<CardWidgetKind, string> = {
   REVEAL: 'Show card details',
@@ -185,6 +186,11 @@ export function CardsScreen() {
               </Button>
               <CardDetail id={id} onListChanged={() => setVersion((x) => x + 1)} />
             </>
+          )}
+          {!id && (
+            <SplitHint title="Pick a card">
+              Freeze or unfreeze it, see its details in the bank's secure window, or dispute a charge.
+            </SplitHint>
           )}
         </div>
       </div>

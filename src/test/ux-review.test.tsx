@@ -1,4 +1,6 @@
 import { screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { PAYMENTS_PAGE } from '../screens/Payments';
 import type { AuthSession } from '../auth';
 import { NO_AUTH } from '../auth';
 import { LABELS } from '../public/content';
@@ -80,5 +82,28 @@ describe('UX review 2026-11-07', () => {
     renderApp('/');
     await screen.findByTestId('home-total');
     expect(document.querySelector('.fw-topbar .fw-topbar__logo')).not.toBeNull();
+  });
+  it('UX_16 payments come in pages of ten with Newer and Older, not one long list', async () => {
+    renderApp('/payments');
+    const list = await screen.findByTestId('payments-list');
+    expect(within(list).getAllByRole('listitem')).toHaveLength(PAYMENTS_PAGE);
+    expect(screen.getByTestId('payments-newer')).toBeDisabled();
+    await userEvent.click(screen.getByTestId('payments-older'));
+    expect(await screen.findByText('Page 2')).toBeInTheDocument();
+    expect(screen.getByTestId('payments-newer')).toBeEnabled();
+    await userEvent.click(screen.getByTestId('payments-newer'));
+    expect(await screen.findByText('Page 1')).toBeInTheDocument();
+  });
+
+  it('UX_17 a list screen explains its detail column before anything is picked, and Home uses both columns', async () => {
+    for (const path of ['/payments', '/accounts', '/cards', '/support']) {
+      const { unmount } = renderApp(path);
+      expect(await screen.findByTestId('split-hint')).toBeInTheDocument();
+      unmount();
+    }
+    renderApp('/');
+    const grid = await screen.findByTestId('home-grid');
+    expect(within(grid).getByTestId('home-recent')).toBeInTheDocument();
+    expect(await within(grid).findByTestId('home-company')).toBeInTheDocument();
   });
 });

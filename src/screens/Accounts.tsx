@@ -17,6 +17,7 @@ import { formatDate } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
 import { useSession } from '../session';
 import { Amt, Last4, Load, human, stateStatus } from './common';
+import { SplitHint } from './SplitHint';
 
 const PAGE = 20;
 
@@ -242,7 +243,9 @@ export function AccountsScreen() {
             <AccountDetail id={id} />
           </div>
         ) : (
-          <div />
+          <SplitHint title="Pick an account">
+            Its balance from the bank, recent activity and monthly statements show here.
+          </SplitHint>
         )}
       </div>
     </>

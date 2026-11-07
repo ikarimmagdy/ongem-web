@@ -385,3 +385,48 @@
     padding-bottom: calc(var(--space-3xl) * 3);
   }
 }
+
+/* Wide screens (UX-17): the signed-in content keeps a readable width, centred, and the detail column of a list
+   screen explains itself before anything is picked instead of leaving half the page empty. */
+.fw-content {
+  width: 100%;
+  max-width: calc(var(--space-3xl) * 20);
+  margin-inline: auto;
+}
+.fw-split__hint {
+  border: 1px dashed var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+}
+/* Payments pages (UX-16). */
+.fw-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-block-start: var(--space-md);
+}
+.fw-pager__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+@media (max-width: 900px) {
+  .fw-split__hint {
+    display: none;
+  }
+}
+/* Home on wide screens (UX-17): balance and company side by side, recent payments below across both. */
+.fw-home-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+.fw-home-grid > [data-testid='home-recent'] {
+  grid-column: 1 / -1;
+}
+@media (max-width: 900px) {
+  .fw-home-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
