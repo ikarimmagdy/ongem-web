@@ -1,7 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axe from 'axe-core';
-import { CAPABILITIES, DISCLOSURES, PAGE_META } from '../public/content';
+import { CAPABILITIES, DISCLOSURES, FACTS, FAQ, FEATURE_ROWS, PAGE_META, TRUST } from '../public/content';
 import { renderApp } from './render';
 
 /** OG-032: the signed-out public site and the way into sign-up. */
@@ -105,6 +105,63 @@ describe('public site (OG-032)', () => {
       const result = await axe.run(container, { rules: { 'color-contrast': { enabled: false } } });
       expect(result.violations.map((v) => `${path} ${v.id}: ${v.help}`)).toEqual([]);
       unmount();
+    }
+  });
+
+  it('hero_stage_and_feature_rows_with_real_screens_AC_R10_1', () => {
+    renderApp('/', { mode: 'none' });
+    const hero = screen.getByTestId('public-home');
+    expect(within(hero).getByAltText(/home screen on the web/)).toBeInTheDocument();
+    expect(within(hero).getByAltText(/app home screen on a phone/)).toBeInTheDocument();
+    for (const f of FEATURE_ROWS) {
+      const row = screen.getByTestId(`feature-row-${f.id}`);
+      expect(within(row).getByRole('heading', { level: 2, name: f.title })).toBeInTheDocument();
+      expect(within(row).getByRole('img', { name: /sample data/ })).toBeInTheDocument();
+    }
+  });
+
+  it('trust_strip_names_the_parties_and_the_bank_statement_AC_R9_1', () => {
+    renderApp('/', { mode: 'none' });
+    for (const p of TRUST.parties) expect(screen.getByText(p.name)).toBeInTheDocument();
+    expect(screen.getByTestId('pub-bank-statement')).toHaveTextContent('not a bank');
+  });
+
+  it('facts_carry_a_source_each_AC_R11_1', () => {
+    renderApp('/', { mode: 'none' });
+    const facts = screen.getByTestId('pub-facts');
+    for (const f of FACTS) {
+      const value = within(facts).getByText(f.value);
+      expect(value.closest('[data-source]')?.getAttribute('data-source')).toBeTruthy();
+    }
+  });
+
+  it('faq_answers_open_and_close_AC_R12_1', async () => {
+    renderApp('/', { mode: 'none' });
+    const faq = screen.getByTestId('pub-faq');
+    expect(within(faq).getAllByRole('group')).toHaveLength(FAQ.length);
+    const first = within(faq).getByText(FAQ[0]!.q);
+    await userEvent.click(first);
+    expect(first.closest('details')).toHaveAttribute('open');
+    expect(within(faq).getByText(/Piermont Bank, which provides the accounts/)).toBeVisible();
+  });
+
+  it('motion_off_with_reduced_motion_and_nothing_hidden_AC_R13_1', () => {
+    const original = window.matchMedia;
+    window.matchMedia = ((q: string) => ({
+      matches: q.includes('reduce'),
+      media: q,
+      addEventListener() {},
+      removeEventListener() {},
+      addListener() {},
+      removeListener() {},
+      onchange: null,
+      dispatchEvent: () => false,
+    })) as unknown as typeof window.matchMedia;
+    try {
+      renderApp('/', { mode: 'none' });
+      expect(document.querySelector('.pub')).not.toHaveClass('pub--motion');
+    } finally {
+      window.matchMedia = original;
     }
   });
 });

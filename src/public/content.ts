@@ -239,3 +239,98 @@ export const LABELS = {
   productTitle: 'What OnGem does today',
   securityTitle: 'How OnGem protects your money',
 };
+
+/** The parties behind every account, named as plain text (no third-party logos), with the bank statement beside them. */
+export const TRUST = {
+  label: 'Who does what',
+  parties: [
+    { name: 'Piermont Bank', role: 'holds your deposits and issues your cards¹' },
+    { name: 'Synctera', role: 'connects OnGem to the bank' },
+    { name: 'GenZone', role: 'sends the companies it forms, prefilled' },
+  ],
+};
+
+/** Large product rows on the home page, each with a real screen from demo mode (OG-032 R10). */
+export const FEATURE_ROWS = [
+  {
+    id: 'payments',
+    screen: 'payments',
+    eyebrow: 'Payments',
+    title: 'Every payment, followed to the end',
+    text: 'Pay by ACH or move money between your accounts, and watch each payment go from sent to settled. A return is explained in plain words, never a code.',
+    points: [
+      'Repeating payments you can pause, resume or cancel',
+      'Larger payments wait for a second person',
+    ],
+  },
+  {
+    id: 'cards',
+    screen: 'cards',
+    eyebrow: 'Cards',
+    title: 'Virtual cards you control in a tap',
+    text: 'Issue a virtual card, freeze it the moment something looks wrong and unfreeze it when you are sure. Card numbers open in the bank’s own secure window.',
+    points: [
+      'Card details close by themselves after a few minutes',
+      'Ask about a card payment from the card',
+    ],
+  },
+  {
+    id: 'notifications',
+    screen: 'notifications',
+    eyebrow: 'Notices',
+    title: 'Know what needs you, and nothing else',
+    text: 'Payments sent and settled, approvals waiting for you, card changes and your application, in one inbox with your own choices.',
+    points: ['The important ones can never be switched off', 'Email and text message alerts are coming soon'],
+  },
+] as const;
+
+/**
+ * Facts with a source each (OG-032 R11). Sources: CardWidget.tsx (card details close after 5 minutes); data protection
+ * and privacy v3, approved 6 Nov 2026 (records kept 7 years after closure); hub Testing evidence, 7 Nov 2026 (1,189
+ * automated tests with a recorded result, 0 failures); OG-014 notifications, ongem-core 72e7d83 (16 kinds of notice).
+ */
+export const FACTS = [
+  { value: '5 min', label: 'Card details close by themselves', source: 'ongem-web CardWidget' },
+  { value: '16', label: 'Kinds of notices you control', source: 'OG-014, ongem-core 72e7d83' },
+  { value: '7 years', label: 'Records kept after an account closes', source: 'Data protection v3' },
+  { value: '1,189', label: 'Automated tests behind every release', source: 'Testing evidence, 7 Nov 2026' },
+];
+
+/** Answers from how the product works today (OG-032 R12). */
+export const FAQ = [
+  {
+    q: 'Is OnGem a bank? Who holds my money?',
+    a: 'No. OnGem is a financial technology company. Your deposits are held at Piermont Bank, which provides the accounts through Synctera. OnGem shows you the bank’s balance and never holds your funds.¹',
+  },
+  {
+    q: 'How do approvals work?',
+    a: 'You set who can create and who can approve payments. Above your threshold a payment waits for a second person, and the person who created it can never approve it. If no one else in your company can approve, OnGem approves it, so a one-person company is never stuck.',
+  },
+  {
+    q: 'How do I add money to my account?',
+    a: 'Send money in to your account and routing numbers, or link your account at another bank and pull a top-up by ACH. The bank verifies the linked account first, and a second person approves each top-up before the bank pulls it.',
+  },
+  {
+    q: 'Are there limits on payments and top-ups?',
+    a: 'Yes. Limits apply per payment, per day and per month, and they follow your company’s risk level at the bank. If a payment would go over a limit, it does not move and the app tells you why.',
+  },
+  {
+    q: 'Can I issue cards to my team?',
+    a: 'Today you can issue virtual cards for the owners of your company, freeze and unfreeze them, and raise a dispute from a card. Cards for other team members are coming soon.',
+  },
+  {
+    q: 'How do you protect my account?',
+    a: 'Money moves only after a second sign-in step, larger payments need two people, every change is written to an audit trail that cannot be rewritten, and card numbers open in the bank’s window so they never pass through OnGem.',
+  },
+  {
+    q: 'I formed my company with GenZone. What changes?',
+    a: 'When you ask it to, GenZone sends your company’s details to OnGem. You review them, add what is missing, accept the bank’s disclosures and submit. The bank makes its decision as it does for every founder.',
+  },
+];
+
+export const LABELS_V2 = {
+  trustTitle: 'Banking you can trace',
+  factsTitle: 'The small print, in numbers',
+  faqTitle: 'Questions founders ask',
+  productScreens: 'See it in the app',
+};

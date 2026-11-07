@@ -286,3 +286,56 @@ const ART: Record<ArtName, () => ReactNode> = {
 export function CapabilityArt({ name }: { name: ArtName }) {
   return <>{ART[name]()}</>;
 }
+
+/** A large faceted gem drawn as a soft backdrop for dark bands (decorative, hidden from assistive technology). */
+export function GemGlow({ className }: { className?: string }) {
+  return (
+    <svg
+      className={`pub-art pub-glow ${className ?? ''}`}
+      viewBox="0 0 480 440"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <g opacity="0.22">
+        <polygon className="f-signature" points="0,140 140,0 340,0 480,140 240,440" />
+        <polygon className="f-primary" points="0,140 140,0 240,140" />
+        <polygon className="f-soft" points="240,140 340,0 480,140" />
+        <polygon className="f-accent" points="240,140 480,140 240,440" opacity="0.6" />
+      </g>
+    </svg>
+  );
+}
+
+/** An original browser window frame around a product screen (OG-032 R10). */
+export function BrowserFrame({ children, address }: { children: ReactNode; address: string }) {
+  return (
+    <div className="pub-browser">
+      <svg
+        className="pub-art pub-browser__bar"
+        viewBox="0 0 600 28"
+        preserveAspectRatio="xMinYMid meet"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <circle className="f-soft" cx="16" cy="14" r="5" />
+        <circle className="f-accent" cx="34" cy="14" r="5" />
+        <circle className="f-tint" cx="52" cy="14" r="5" />
+        <rect className="f-sunken" x="76" y="6" width="300" height="16" rx="8" />
+      </svg>
+      <span className="pub-browser__address" aria-hidden="true">
+        {address}
+      </span>
+      {children}
+    </div>
+  );
+}
+
+/** An original phone frame around a product screen (OG-032 R10). */
+export function PhoneFrame({ children }: { children: ReactNode }) {
+  return (
+    <div className="pub-phone">
+      <span className="pub-phone__notch" aria-hidden="true" />
+      {children}
+    </div>
+  );
+}

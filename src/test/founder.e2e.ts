@@ -202,6 +202,7 @@ test('PERF-WEB-04 the public home is in the HTML and paints before the script, w
 });
 
 test('public_pages_axe_and_no_sideways_scroll_OG_032_N1_N3', async ({ page }, info) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   for (const path of ['/', '/product', '/security', '/partners']) {
@@ -210,10 +211,42 @@ test('public_pages_axe_and_no_sideways_scroll_OG_032_N1_N3', async ({ page }, in
     await axe(page);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow, `${path} scrolls sideways`).toBeLessThanOrEqual(0);
+    // The full-page capture shows every section settled: scroll so lazy screens load, then wait for each image.
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.body.scrollHeight; y += 600) {
+        window.scrollTo(0, y);
+        await new Promise((r) => requestAnimationFrame(() => r(null)));
+      }
+      window.scrollTo(0, 0);
+    });
+    await page.waitForFunction(() =>
+      Array.from(document.images).every((i) => i.complete && i.naturalWidth > 0),
+    );
+    await page.waitForTimeout(700);
     await page.screenshot({
       path: `e2e-output/public-${info.project.name}${path === '/' ? '-home' : path.replace('/', '-')}.png`,
       fullPage: true,
     });
   }
   expect(errors).toEqual([]);
+});
+
+test('public_pages_colour_contrast_light_and_dark_OG_032_N1_R13', async ({ page }) => {
+  // Reduced motion: nothing is mid-fade when axe measures, and the reveal never hides content.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const theme of ['light', 'dark']) {
+    for (const path of ['/', '/product', '/security', '/partners']) {
+      await page.goto(path);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      const dark = await page.evaluate(
+        () => getComputedStyle(document.documentElement).colorScheme === 'dark',
+      );
+      if ((theme === 'dark') !== dark) await page.getByTestId('theme-toggle').click();
+      await expect(page.locator('.pub--motion')).toHaveCount(0);
+      const r = await new AxeBuilder({ page }).withRules(['color-contrast']).analyze();
+      expect(
+        r.violations.flatMap((v) => v.nodes.map((n) => `${theme} ${path} ${n.target.join(' ')}`)),
+      ).toEqual([]);
+    }
+  }
 });
