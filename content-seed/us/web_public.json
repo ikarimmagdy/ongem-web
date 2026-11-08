@@ -1822,6 +1822,96 @@
       "ar": "شاهده أثناء العمل"
     },
     {
+      "key": "web.media.tag.ach",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "ach",
+      "ar": "تحويلات ACH"
+    },
+    {
+      "key": "web.media.tag.approvals",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "approvals",
+      "ar": "الموافقات"
+    },
+    {
+      "key": "web.media.tag.banking",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "banking",
+      "ar": "الخدمات المصرفية"
+    },
+    {
+      "key": "web.media.tag.cards",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "cards",
+      "ar": "البطاقات"
+    },
+    {
+      "key": "web.media.tag.limits",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "limits",
+      "ar": "الحدود"
+    },
+    {
+      "key": "web.media.tag.onboarding",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "onboarding",
+      "ar": "فتح الحساب"
+    },
+    {
+      "key": "web.media.tag.partners",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "partners",
+      "ar": "الشركاء"
+    },
+    {
+      "key": "web.media.tag.payments",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "payments",
+      "ar": "الدفعات"
+    },
+    {
+      "key": "web.media.tag.security",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "security",
+      "ar": "الأمان"
+    },
+    {
+      "key": "web.media.tag.top_ups",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "top-ups",
+      "ar": "عمليات التعبئة"
+    },
+    {
       "key": "web.media.tags",
       "format": "text",
       "description": "Screen reader name of a blog post's tags",

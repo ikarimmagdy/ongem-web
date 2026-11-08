@@ -5,6 +5,7 @@ import './fonts';
 import { App } from './App';
 import { CLERK_PUBLISHABLE_KEY } from './auth/key';
 import { AuthProvider, NO_AUTH } from './auth/session';
+import { initContent } from './i18n';
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Missing #root');
@@ -26,6 +27,9 @@ function mount(Auth: ComponentType<{ children: ReactNode }>) {
   );
 }
 
-// A build without a sign-in key never downloads Clerk.
-if (CLERK_PUBLISHABLE_KEY) void import('./auth/ClerkAuth').then(({ ClerkAuth }) => mount(ClerkAuth));
-else mount(NoAuth);
+// The remembered language (Arabic loads its texts first) and newer texts kept from the API, before the first render
+// (OG-033). A build without a sign-in key never downloads Clerk.
+void initContent().then(() => {
+  if (CLERK_PUBLISHABLE_KEY) void import('./auth/ClerkAuth').then(({ ClerkAuth }) => mount(ClerkAuth));
+  else mount(NoAuth);
+});

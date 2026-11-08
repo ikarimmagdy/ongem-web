@@ -4,7 +4,7 @@ import { US_MEDIA } from '../../region';
 import { BrowserFrame, PhoneFrame } from '../art';
 import { formatPostDate, posts, postBySlug, type Post } from './blog';
 import { media } from './content';
-import { t } from '../../i18n';
+import { has, t } from '../../i18n';
 import { APP_SHOTS, WEB_SHOTS, type GalleryShot } from './gallery';
 import { Markdown } from '../../i18n/markdown';
 import {
@@ -211,7 +211,11 @@ function BlogIndex() {
                 <p>{p.summary}</p>
                 <ul className="pub-tags" aria-label={t('web.media.tags')}>
                   {p.tags.map((tag) => (
-                    <li key={tag}>{tag}</li>
+                    <li key={tag}>
+                      {has(`web.media.tag.${tag.replace(/-/g, '_')}`)
+                        ? t(`web.media.tag.${tag.replace(/-/g, '_')}`)
+                        : tag}
+                    </li>
                   ))}
                 </ul>
               </li>

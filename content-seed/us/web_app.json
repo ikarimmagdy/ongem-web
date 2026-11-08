@@ -4471,7 +4471,7 @@
     {
       "key": "app.schedules.form.intro",
       "format": "text",
-      "description": "New schedule intro; how is the region rail in words (a standard ACH, a UAEFTS payment)",
+      "description": "New schedule intro; how is the region rail in words",
       "placeholders": [
         "how"
       ],

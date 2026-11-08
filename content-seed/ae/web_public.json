@@ -1004,222 +1004,6 @@
       "ar": "© {year} OnGem"
     },
     {
-      "key": "web.gallery.app_android_payment_returned.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The OnGem app on a Pixel phone: a payment the bank returned, on sample data",
-      "ar": "تطبيق OnGem على هاتف Pixel: دفعة أعادها البنك، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.app_android_payment_returned.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "A returned payment on Android",
-      "ar": "دفعة معادة على Android"
-    },
-    {
-      "key": "web.gallery.app_ipad_accounts.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The OnGem app on iPad: accounts and the selected account side by side, on sample data",
-      "ar": "تطبيق OnGem على iPad: الحسابات والحساب المحدد جنبًا إلى جنب، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.app_ipad_accounts.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Two panes on iPad",
-      "ar": "لوحتان على iPad"
-    },
-    {
-      "key": "web.gallery.app_iphone_accounts.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The OnGem app on iPhone: accounts with their bank balances, on sample data",
-      "ar": "تطبيق OnGem على iPhone: الحسابات وأرصدتها لدى البنك، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.app_iphone_accounts.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Accounts on iPhone",
-      "ar": "الحسابات على iPhone"
-    },
-    {
-      "key": "web.gallery.app_iphone_dark_account.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The OnGem app on iPhone in the dark theme: an account and its transactions, on sample data",
-      "ar": "تطبيق OnGem على iPhone بالمظهر الداكن: حساب ومعاملاته، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.app_iphone_dark_account.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Dark theme",
-      "ar": "المظهر الداكن"
-    },
-    {
-      "key": "web.gallery.app_iphone_payment_review.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The OnGem app on iPhone: a US$1,250.00 ACH payment to Acme Supplies LLC under review, on sample data",
-      "ar": "تطبيق OnGem على iPhone: دفعة ACH بقيمة US$1,250.00 إلى Acme Supplies LLC قيد المراجعة، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.app_iphone_payment_review.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Review before you send",
-      "ar": "راجع قبل الإرسال"
-    },
-    {
-      "key": "web.gallery.app_iphone_payment_sent.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The OnGem app on iPhone: a payment sent to the bank, on sample data",
-      "ar": "تطبيق OnGem على iPhone: دفعة أُرسلت إلى البنك، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.app_iphone_payment_sent.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Sent, and followed to settled",
-      "ar": "أُرسلت، ومتابَعة حتى التسوية"
-    },
-    {
-      "key": "web.gallery.web_add_money.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "Add money: a verified account at another bank, the OnGem account to fund and the amount, on sample data",
-      "ar": "إضافة الأموال: حساب موثَّق لدى بنك آخر، وحساب OnGem المراد تمويله، والمبلغ، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.web_add_money.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Add money from another bank",
-      "ar": "أضف الأموال من بنك آخر"
-    },
-    {
-      "key": "web.gallery.web_card.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "A virtual card with show card details, show PIN, set PIN, freeze and dispute a charge, on sample data",
-      "ar": "بطاقة افتراضية مع عرض تفاصيل البطاقة، وعرض الرقم السري، وتعيين الرقم السري، والتجميد، والاعتراض على عملية، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.web_card.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "A virtual card and its controls",
-      "ar": "بطاقة افتراضية وأدوات التحكم بها"
-    },
-    {
-      "key": "web.gallery.web_dispute.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "A new support request about a charge on the card ending 5521, on sample data",
-      "ar": "طلب دعم جديد بشأن عملية على البطاقة المنتهية بـ 5521، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.web_dispute.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Dispute a charge from the card",
-      "ar": "اعترض على عملية من البطاقة"
-    },
-    {
-      "key": "web.gallery.web_notification_choices.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "Notification settings: email and text for each kind of notice, with the important ones always on, on sample data",
-      "ar": "إعدادات الإشعارات: البريد الإلكتروني والرسائل النصية لكل نوع من الإشعارات، مع بقاء المهمة منها مفعّلة دائمًا، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.web_notification_choices.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Choose how each notice reaches you",
-      "ar": "اختر كيف يصلك كل إشعار"
-    },
-    {
-      "key": "web.gallery.web_onboarding.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The account application: owner identity done, then confirm details, disclosures and submit to the bank, on sample data",
-      "ar": "طلب فتح الحساب: اكتمال هوية المالك، ثم تأكيد البيانات والإفصاحات والتقديم إلى البنك، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.web_onboarding.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Your application, step by step",
-      "ar": "طلبك، خطوة بخطوة"
-    },
-    {
-      "key": "web.gallery.web_ongem_approves.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "A top-up waiting for OnGem to approve it, because no one else in the company can approve payments, on sample data",
-      "ar": "عملية تعبئة بانتظار موافقة OnGem، لأنه لا يوجد في الشركة شخص آخر يملك صلاحية الموافقة على الدفعات، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.web_ongem_approves.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "OnGem approves for a one-person company",
-      "ar": "OnGem توافق عن شركة الشخص الواحد"
-    },
-    {
       "key": "web.hero.eyebrow",
       "format": "text",
       "description": "Small line above the home heading",
@@ -1786,6 +1570,42 @@
       "ar": "شاهده أثناء العمل"
     },
     {
+      "key": "web.media.tag.approvals",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "approvals",
+      "ar": "الموافقات"
+    },
+    {
+      "key": "web.media.tag.cards",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "cards",
+      "ar": "البطاقات"
+    },
+    {
+      "key": "web.media.tag.payments",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "payments",
+      "ar": "الدفعات"
+    },
+    {
+      "key": "web.media.tag.security",
+      "format": "text",
+      "description": "Blog tag shown on the post list",
+      "placeholders": [],
+      "meta": {},
+      "en": "security",
+      "ar": "الأمان"
+    },
+    {
       "key": "web.media.tags",
       "format": "text",
       "description": "Screen reader name of a blog post's tags",
@@ -2155,78 +1975,6 @@
       "ar": "حماية أثناء النقل وأثناء التخزين"
     },
     {
-      "key": "web.shots.cards.alt",
-      "format": "text",
-      "description": "Description of a product screenshot for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "Virtual cards with their state and the controls to freeze, unfreeze and show details, on sample data",
-      "ar": "بطاقات افتراضية مع حالتها وأدوات التجميد وإلغاء التجميد وعرض التفاصيل، ببيانات نموذجية"
-    },
-    {
-      "key": "web.shots.home.alt",
-      "format": "text",
-      "description": "Description of a product screenshot for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The OnGem home screen on the web: the company, its identity check at the bank and the balance across accounts, on sample data",
-      "ar": "الشاشة الرئيسية لـ OnGem على الويب: الشركة، والتحقق من هويتها لدى البنك، والرصيد عبر الحسابات، ببيانات نموذجية"
-    },
-    {
-      "key": "web.shots.home_phone.alt",
-      "format": "text",
-      "description": "Description of a product screenshot for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The OnGem app home screen on a phone, on sample data",
-      "ar": "الشاشة الرئيسية لتطبيق OnGem على الهاتف، ببيانات نموذجية"
-    },
-    {
-      "key": "web.shots.notifications.alt",
-      "format": "text",
-      "description": "Description of a product screenshot for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The notifications inbox with payment, approval and card notices, on sample data",
-      "ar": "صندوق وارد الإشعارات مع إشعارات الدفعات والموافقات والبطاقات، ببيانات نموذجية"
-    },
-    {
-      "key": "web.shots.payments.alt",
-      "format": "text",
-      "description": "Description of a product screenshot for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The OnGem payments list: ACH and internal payments marked sent, settled or returned, on sample data",
-      "ar": "قائمة الدفعات في OnGem: دفعات ACH ودفعات داخلية بحالة مرسلة أو مسوّاة أو معادة، ببيانات نموذجية"
-    },
-    {
-      "key": "web.shots.payments_phone.alt",
-      "format": "text",
-      "description": "Description of a product screenshot for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The OnGem app payments screen on a phone, on sample data",
-      "ar": "شاشة الدفعات في تطبيق OnGem على الهاتف، ببيانات نموذجية"
-    },
-    {
-      "key": "web.shots.schedules.alt",
-      "format": "text",
-      "description": "Description of a product screenshot for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "Scheduled payments with their next payment date and controls to pause, resume or cancel, on sample data",
-      "ar": "الدفعات المجدولة مع موعد الدفعة التالية وأدوات الإيقاف المؤقت والاستئناف والإلغاء، ببيانات نموذجية"
-    },
-    {
-      "key": "web.shots.support.alt",
-      "format": "text",
-      "description": "Description of a product screenshot for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "Support tickets with their status and replies, on sample data",
-      "ar": "طلبات الدعم مع حالتها والردود عليها، ببيانات نموذجية"
-    },
-    {
       "key": "web.steps.1.text",
       "format": "text",
       "description": "Step 1: explanation",
@@ -2360,150 +2108,6 @@
       "meta": {},
       "en": "Who does what",
       "ar": "من يفعل ماذا"
-    },
-    {
-      "key": "web.videos.add_money_and_approve.summary",
-      "format": "text",
-      "description": "Walkthrough video summary",
-      "placeholders": [],
-      "meta": {},
-      "en": "Pull money from your verified account at another bank by ACH; a second person in your company approves it.",
-      "ar": "اسحب الأموال من حسابك الموثَّق لدى بنك آخر عبر ACH، ويوافق عليها شخص ثانٍ في شركتك."
-    },
-    {
-      "key": "web.videos.add_money_and_approve.title",
-      "format": "text",
-      "description": "Walkthrough video title",
-      "placeholders": [],
-      "meta": {},
-      "en": "Add money from another bank, with a second approval",
-      "ar": "أضف الأموال من بنك آخر، مع موافقة ثانية"
-    },
-    {
-      "key": "web.videos.cards_freeze_and_details.summary",
-      "format": "text",
-      "description": "Walkthrough video summary",
-      "placeholders": [],
-      "meta": {},
-      "en": "Freeze a card the moment something looks wrong, unfreeze it, and open its details in the bank’s secure window.",
-      "ar": "جمّد البطاقة فور أن يبدو شيء غير طبيعي، وألغِ التجميد، وافتح تفاصيلها في نافذة البنك الآمنة."
-    },
-    {
-      "key": "web.videos.cards_freeze_and_details.title",
-      "format": "text",
-      "description": "Walkthrough video title",
-      "placeholders": [],
-      "meta": {},
-      "en": "Virtual cards: freeze, unfreeze and see the details",
-      "ar": "البطاقات الافتراضية: التجميد وإلغاؤه وعرض التفاصيل"
-    },
-    {
-      "key": "web.videos.notifications_and_settings.summary",
-      "format": "text",
-      "description": "Walkthrough video summary",
-      "placeholders": [],
-      "meta": {},
-      "en": "See what needs you in one inbox, and choose email or text for each kind of notice.",
-      "ar": "اطّلع على ما يحتاج إليك في صندوق وارد واحد، واختر البريد الإلكتروني أو الرسائل النصية لكل نوع من الإشعارات."
-    },
-    {
-      "key": "web.videos.notifications_and_settings.title",
-      "format": "text",
-      "description": "Walkthrough video title",
-      "placeholders": [],
-      "meta": {},
-      "en": "Notifications and your choices",
-      "ar": "الإشعارات واختياراتك"
-    },
-    {
-      "key": "web.videos.ongem_approves_one_person_company.summary",
-      "format": "text",
-      "description": "Walkthrough video summary",
-      "placeholders": [],
-      "meta": {},
-      "en": "When no one else in your company can approve, OnGem approves your payment or top-up.",
-      "ar": "عندما لا يوجد في شركتك شخص آخر يملك صلاحية الموافقة، توافق OnGem على دفعتك أو عملية التعبئة."
-    },
-    {
-      "key": "web.videos.ongem_approves_one_person_company.title",
-      "format": "text",
-      "description": "Walkthrough video title",
-      "placeholders": [],
-      "meta": {},
-      "en": "One-person company: OnGem approves",
-      "ar": "شركة الشخص الواحد: OnGem توافق"
-    },
-    {
-      "key": "web.videos.phone_send_a_payment.summary",
-      "format": "text",
-      "description": "Walkthrough video summary",
-      "placeholders": [],
-      "meta": {},
-      "en": "The same payment, with the same second step, on a phone.",
-      "ar": "الدفعة نفسها، بالخطوة الثانية نفسها، على الهاتف."
-    },
-    {
-      "key": "web.videos.phone_send_a_payment.title",
-      "format": "text",
-      "description": "Walkthrough video title",
-      "placeholders": [],
-      "meta": {},
-      "en": "On your phone: send a payment",
-      "ar": "على هاتفك: أرسل دفعة"
-    },
-    {
-      "key": "web.videos.send_a_payment.summary",
-      "format": "text",
-      "description": "Walkthrough video summary",
-      "placeholders": [],
-      "meta": {},
-      "en": "Pick a recipient, enter the amount, review and confirm it is you; then follow it from sent to settled.",
-      "ar": "اختر المستفيد، وأدخل المبلغ، وراجع وأكّد هويتك، ثم تابع الدفعة من الإرسال حتى التسوية."
-    },
-    {
-      "key": "web.videos.send_a_payment.title",
-      "format": "text",
-      "description": "Walkthrough video title",
-      "placeholders": [],
-      "meta": {},
-      "en": "Send an ACH payment",
-      "ar": "أرسل دفعة ACH"
-    },
-    {
-      "key": "web.videos.sign_up_and_onboarding.summary",
-      "format": "text",
-      "description": "Walkthrough video summary",
-      "placeholders": [],
-      "meta": {},
-      "en": "Start on the OnGem site, open the demo, confirm your company and owners, accept the disclosures and submit.",
-      "ar": "ابدأ من موقع OnGem، وافتح النسخة التجريبية، وأكّد بيانات شركتك وملاكها، واقبل الإفصاحات، ثم قدّم الطلب."
-    },
-    {
-      "key": "web.videos.sign_up_and_onboarding.title",
-      "format": "text",
-      "description": "Walkthrough video title",
-      "placeholders": [],
-      "meta": {},
-      "en": "From sign-up to an application at the bank",
-      "ar": "من التسجيل إلى طلب لدى البنك"
-    },
-    {
-      "key": "web.videos.support_and_disputes.summary",
-      "format": "text",
-      "description": "Walkthrough video summary",
-      "placeholders": [],
-      "meta": {},
-      "en": "Raise a support ticket or dispute a charge from the card, and follow the replies in one thread.",
-      "ar": "افتح طلب دعم أو اعترض على عملية من البطاقة، وتابع الردود في محادثة واحدة."
-    },
-    {
-      "key": "web.videos.support_and_disputes.title",
-      "format": "text",
-      "description": "Walkthrough video title",
-      "placeholders": [],
-      "meta": {},
-      "en": "Get help and dispute a card payment",
-      "ar": "احصل على المساعدة واعترض على عملية بالبطاقة"
     }
   ]
 }

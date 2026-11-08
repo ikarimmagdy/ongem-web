@@ -5,7 +5,11 @@ import { has, t } from '../i18n/store';
  * reach a founder. One short label for chips and lists, one sentence where a state needs explaining. The words are
  * content entries `app.state.application.<state>.label` and `.sentence`, and `app.state.payment.<state>` (OG-033 R1).
  */
-const fallback = (s: string) => s.charAt(0) + s.slice(1).toLowerCase().replace(/_/g, ' ');
+/** An API word with no state entry: its `app.state.word.<word>` entry, else the word itself in sentence case. */
+const fallback = (s: string) =>
+  has(`app.state.word.${s.toLowerCase()}`)
+    ? t(`app.state.word.${s.toLowerCase()}`)
+    : s.charAt(0) + s.slice(1).toLowerCase().replace(/_/g, ' ');
 const key = (s: string) => s.toLowerCase();
 
 export const applicationLabel = (state: string) => {

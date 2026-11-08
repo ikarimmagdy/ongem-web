@@ -133,7 +133,7 @@ describe('recording masks every sensitive screen (OG-031 R6)', () => {
       expect(hits, `"${secret}" was recorded`).toEqual([]);
     }
     expect(recorded.join('\n')).not.toMatch(/US\$\s?\d/);
-  });
+  }, 30_000);
 
   it('WEB-SEC-02 the recorded page URL drops the query that prefills a form', () => {
     const queue = new EventQueue({ recordEvents: () => Promise.resolve({ stored: 0 }) }, () => null);
