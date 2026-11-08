@@ -101,7 +101,7 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   rendered pages for US names) and `region-us.test.tsx` (AC-R18.2); the US prerendered home is byte-identical to before.
 - 2026-11-08: OG-033 T4 and OG-022 T4. Every text is a content entry (`src/i18n`): the build's snapshot of the public
   channels (`virtual:ongem-content`, Arabic in its own chunk) and, on load, the API's newer texts by ETag, cached in
-  localStorage by version. `content-seed/us|ae/` holds today's texts in English and Arabic (`content.ts`,
+  localStorage by version. `content-seed/us|ae/` holds today's texts in English and Arabic (the words of `content.ts`,
   `content.ae.ts` and the blog markdown are gone). Language switch (English, العربية) in the header and in Settings
   (PUT /v1/me/preferences); Arabic sets `<html lang="ar" dir="rtl">` and uses IBM Plex Sans Arabic after the brand
   faces. Legal pages at `/legal/<slug>` from the `legal` channel. After sign-in banking calls move to whereami's
