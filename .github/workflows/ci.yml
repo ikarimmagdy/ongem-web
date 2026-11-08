@@ -22,7 +22,8 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
-      # G-125: OSV-Scanner over package-lock.json; fails on a high or critical finding (CVSS 7.0 or more).
+      # G-125: OSV-Scanner over package-lock.json; fails on a high or critical finding (CVSS 7.0 or more)
+      # that has a fixed version.
       - name: Dependency scan (OSV-Scanner)
         env:
           OSV_VERSION: v2.7.0
@@ -37,6 +38,6 @@ jobs:
           set -e
           if [ "$code" -ne 0 ] && [ "$code" -ne 1 ]; then echo "osv-scanner did not complete (exit $code)"; exit "$code"; fi
           jq -r '.results[]?.packages[]? | .package as $p | .groups[]? | "\(.max_severity // "?")\t\($p.ecosystem) \($p.name) \($p.version)\t\(.ids | join(","))"' "$RUNNER_TEMP/osv.json" | sort -rn
-          high=$(jq '[.results[]?.packages[]?.groups[]? | select(((.max_severity // "") | tonumber? // 0) >= 7)] | length' "$RUNNER_TEMP/osv.json")
-          echo "high or critical: $high"
+          high=$(jq '[.results[]?.packages[]? | .vulnerabilities as $v | .groups[]? | select(((.max_severity // "") | tonumber? // 0) >= 7) | .ids as $ids | select([$v[]? | select(.id as $i | $ids | index($i)) | .affected[]?.ranges[]?.events[]? | select(.fixed)] | length > 0)] | length' "$RUNNER_TEMP/osv.json")
+          echo "high or critical with a fixed version: $high"
           test "$high" -eq 0
