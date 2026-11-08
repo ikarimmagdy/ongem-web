@@ -477,9 +477,8 @@ for (const v of VIDEOS) {
     `WEBVTT\n\n${cues.map((c, i) => `${i + 1}\n${vtt(c.start)} --> ${vtt(c.end)}\n${c.text}\n`).join('\n')}`,
   );
   results.push({
+    // The title and summary shown on the site are content entries (web.videos.<id>.*, OG-033).
     id: v.id,
-    title: v.title,
-    summary: v.summary,
     seconds: Math.round(ms / 1000),
     bytes: statSync(join(out, `${v.id}.webm`)).size,
     width: v.viewport.width,

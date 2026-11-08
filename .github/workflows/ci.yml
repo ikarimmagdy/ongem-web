@@ -21,7 +21,10 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
-      - run: npm run build
+      - run: npm run content:check
+      # OG-033: CI builds from the seed as a content snapshot; a deploy build pulls it from the region's API.
+      - run: npm run content:snapshot -- --region us && npm run build -- --content-snapshot content-snapshot.us.json
+      - run: npm run content:snapshot -- --region ae && VITE_REGION=AE npm run build -- --outDir dist-uae --content-snapshot content-snapshot.ae.json
       # G-125: OSV-Scanner over package-lock.json; fails on a high or critical finding (CVSS 7.0 or more)
       # that has a fixed version.
       - name: Dependency scan (OSV-Scanner)
