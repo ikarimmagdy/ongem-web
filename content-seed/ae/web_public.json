@@ -1000,8 +1000,7 @@
         "year"
       ],
       "meta": {},
-      "en": "© {year} OnGem",
-      "ar": "© {year} OnGem"
+      "en": "© {year} OnGem"
     },
     {
       "key": "web.hero.eyebrow",
@@ -1299,8 +1298,7 @@
         "title"
       ],
       "meta": {},
-      "en": "{title}.",
-      "ar": "{title}."
+      "en": "{title}."
     },
     {
       "key": "web.labels.trust_title",
@@ -1326,8 +1324,7 @@
       "description": "The English language, named in English in both languages",
       "placeholders": [],
       "meta": {},
-      "en": "English",
-      "ar": "English"
+      "en": "English"
     },
     {
       "key": "web.lang.label",
@@ -1386,8 +1383,7 @@
         "title"
       ],
       "meta": {},
-      "en": "{title} | OnGem",
-      "ar": "{title} | OnGem"
+      "en": "{title} | OnGem"
     },
     {
       "key": "web.legal.nav",
@@ -1530,8 +1526,7 @@
         "title"
       ],
       "meta": {},
-      "en": "{title} | OnGem",
-      "ar": "{title} | OnGem"
+      "en": "{title} | OnGem"
     },
     {
       "key": "web.media.read_post",
@@ -2070,8 +2065,7 @@
       "description": "Home: party 2 behind every account",
       "placeholders": [],
       "meta": {},
-      "en": "OnGem",
-      "ar": "OnGem"
+      "en": "OnGem"
     },
     {
       "key": "web.trust.2.role",

@@ -1036,8 +1036,7 @@
         "year"
       ],
       "meta": {},
-      "en": "© {year} OnGem",
-      "ar": "© {year} OnGem"
+      "en": "© {year} OnGem"
     },
     {
       "key": "web.gallery.app_android_payment_returned.alt",
@@ -1551,8 +1550,7 @@
         "title"
       ],
       "meta": {},
-      "en": "{title}.",
-      "ar": "{title}."
+      "en": "{title}."
     },
     {
       "key": "web.labels.trust_title",
@@ -1578,8 +1576,7 @@
       "description": "The English language, named in English in both languages",
       "placeholders": [],
       "meta": {},
-      "en": "English",
-      "ar": "English"
+      "en": "English"
     },
     {
       "key": "web.lang.label",
@@ -1638,8 +1635,7 @@
         "title"
       ],
       "meta": {},
-      "en": "{title} | OnGem",
-      "ar": "{title} | OnGem"
+      "en": "{title} | OnGem"
     },
     {
       "key": "web.legal.nav",
@@ -1782,8 +1778,7 @@
         "title"
       ],
       "meta": {},
-      "en": "{title} | OnGem",
-      "ar": "{title} | OnGem"
+      "en": "{title} | OnGem"
     },
     {
       "key": "web.media.read_post",
@@ -2439,8 +2434,7 @@
       "description": "Home: party 1 behind every account",
       "placeholders": [],
       "meta": {},
-      "en": "Piermont Bank",
-      "ar": "Piermont Bank"
+      "en": "Piermont Bank"
     },
     {
       "key": "web.trust.1.role",
@@ -2457,8 +2451,7 @@
       "description": "Home: party 2 behind every account",
       "placeholders": [],
       "meta": {},
-      "en": "Synctera",
-      "ar": "Synctera"
+      "en": "Synctera"
     },
     {
       "key": "web.trust.2.role",
@@ -2475,8 +2468,7 @@
       "description": "Home: party 3 behind every account",
       "placeholders": [],
       "meta": {},
-      "en": "GenZone",
-      "ar": "GenZone"
+      "en": "GenZone"
     },
     {
       "key": "web.trust.3.role",

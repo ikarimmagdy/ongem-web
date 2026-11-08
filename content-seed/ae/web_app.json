@@ -2477,8 +2477,7 @@
         "page"
       ],
       "meta": {},
-      "en": "{page} | OnGem",
-      "ar": "{page} | OnGem"
+      "en": "{page} | OnGem"
     },
     {
       "key": "app.nav.home",
@@ -4093,8 +4092,7 @@
       "description": "Rail name: Aani (UAE instant payments), kept in Latin script",
       "placeholders": [],
       "meta": {},
-      "en": "Aani",
-      "ar": "Aani"
+      "en": "Aani"
     },
     {
       "key": "app.region.rail_name.bank_transfer",
@@ -6028,8 +6026,7 @@
       "description": "Link form label (UAE)",
       "placeholders": [],
       "meta": {},
-      "en": "IBAN",
-      "ar": "IBAN"
+      "en": "IBAN"
     },
     {
       "key": "app.topup.link.iban_hint",

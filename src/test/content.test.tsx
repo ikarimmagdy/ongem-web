@@ -265,12 +265,12 @@ describe('seed files (OG-033 R12)', () => {
           );
           expect(['text', 'markdown'], e.key).toContain(e.format);
           expect(e.description, e.key).toBeTruthy();
-          // Arabic text, or the English kept as it is (a name, a figure, a format such as {title} | OnGem).
-          if (e.ar !== e.en) expect(e.ar, e.key).toMatch(/[\u0600-\u06FF]/);
+          // Arabic text, a figure or format kept as it is, or no Arabic (a name such as OnGem falls back to English).
+          if (e.ar != null && e.ar !== e.en) expect(e.ar, e.key).toMatch(/[\u0600-\u06FF]/);
           const used = (s: string) => [...new Set(s.match(/\{[a-zA-Z0-9_]+\}/g) ?? [])].sort();
           expect(used(e.en), e.key).toEqual(e.placeholders.map((p) => `{${p}}`).sort());
-          expect(used(e.ar!), e.key).toEqual(used(e.en));
-          expect(`${e.en} ${e.ar}`, e.key).not.toMatch(/[–—]/);
+          if (e.ar != null) expect(used(e.ar), e.key).toEqual(used(e.en));
+          expect(`${e.en} ${e.ar ?? ''}`, e.key).not.toMatch(/[–—]/);
         }
       }
     });
