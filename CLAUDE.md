@@ -29,6 +29,9 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
 - `source ~/.nvm/nvm.sh && nvm use 22`
 - `npm run dev` (port 5190), `npm run build`, `npm run preview` (port 5190; `/api-dev` proxies to api-dev.ongem.com)
 - `npm run lint`, `npm run typecheck`, `npm test`, `npm run e2e` (against `E2E_BASE_URL`, default the local preview)
+- Content (OG-033): `npm run build` pulls the content snapshot from the region's API (`ONGEM_CONTENT_API` overrides)
+  and stops if it cannot; `npm run content:snapshot [-- --region ae]` turns the seed into a snapshot file for
+  `npm run build -- --content-snapshot content-snapshot.<region>.json` (CI). `npm run content:check` finds authored text.
 - Config: `VITE_CLERK_PUBLISHABLE_KEY` (customer instance publishable key; blank means demo only), `VITE_API_BASE_URL`.
 - Region (OG-022 R18): `VITE_REGION` is `US` (default) or `AE`. AE build: `VITE_REGION=AE npm run build -- --outDir dist-uae`
   (`scripts/build.mjs` passes `--outDir` to the client build and the prerender). AE shows UAE content only: no US bank,
@@ -36,9 +39,16 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
 
 ## Rules for this repo
 
-- Copy: plain English, money as US$1,250.00 (AED 1,250.00 in AE) from minor units (`formatMinor`), dates as 20 Oct 2026, no em or en dashes.
-- Region differences are data: `src/region.ts` (`REGION_CONFIG`) and `*.ae.ts` variants picked with `IS_AE ? AE.x : ...`
-  (a ternary, not a helper, so the bundler drops the other region's words). Never name a US partner or bank in AE copy.
+- No words in code (OG-033, ADR-0051): every text is a content entry read with `t('key', { name })`, `tn`, `tList`,
+  `<T k>` or `<Md k>` from `src/i18n`, never at module load. A new text is a new key in `content-seed/<region>/<channel>.json`
+  (`web.` public, `app.` signed in, `blog.`, `faq.`; `legal.` is written by legal) with `en`, `ar`, a description and
+  its placeholders. `scripts/check-content.mjs` (test AC-R1.1) fails on authored text; sample data files start with
+  `// content-check: data`.
+- Copy: plain English, money as US$1,250.00 (AED 1,250.00 in AE) from minor units (`formatMinor`), Latin digits in
+  Arabic too, dates as 20 Oct 2026 (Arabic month names in Arabic), no em or en dashes.
+- Arabic is right to left: use start and end (logical) CSS properties, never left or right.
+- Region differences are data: `src/region.ts` (`REGION_CONFIG`, its words are content keys) and each region's seed.
+  Never name a US partner or bank in the AE seed (test AC-R12.2).
 - No hex, rgb, font family or radius literals outside the theme (`src/test/no-literals.test.ts`).
 - Every screen has loading, empty, error and success states. Test names carry the spec's AC ids.
 
@@ -89,3 +99,10 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   the AE blog (US-only posts left out). AE leaves out the US-recorded screenshots, gallery and videos (the vite plugin
   drops `videos/` and unreferenced images) and allows no card widget host. Tests `region-ae.test.tsx` (AC-R18.1, grep of
   rendered pages for US names) and `region-us.test.tsx` (AC-R18.2); the US prerendered home is byte-identical to before.
+- 2026-11-08: OG-033 T4 and OG-022 T4. Every text is a content entry (`src/i18n`): the build's snapshot of the public
+  channels (`virtual:ongem-content`, Arabic in its own chunk) and, on load, the API's newer texts by ETag, cached in
+  localStorage by version. `content-seed/us|ae/` holds today's texts in English and Arabic (`content.ts`,
+  `content.ae.ts` and the blog markdown are gone). Language switch (English, العربية) in the header and in Settings
+  (PUT /v1/me/preferences); Arabic sets `<html lang="ar" dir="rtl">` and uses IBM Plex Sans Arabic after the brand
+  faces. Legal pages at `/legal/<slug>` from the `legal` channel. After sign-in banking calls move to whereami's
+  `apiBaseUrl` when the company lives in another region (`regionApiBase` in `session.tsx`).
