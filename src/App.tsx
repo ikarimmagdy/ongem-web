@@ -1,11 +1,11 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuthSession } from './auth';
-import { useContent } from './i18n';
+import { Md, t, tList, useChannels, useContent } from './i18n';
 import { Button, Notice, Skeleton, ThemeProvider, ToastProvider } from './design-system';
 import { SessionProvider, useSession, type Mode } from './session';
 import { privacyLine } from './recording/privacy';
-import { AUTH, isPublicPath } from './public/content';
+import { isPublicPath } from './public/content';
 import { Footer, Header, PublicSite } from './public/PublicSite';
 import './web.css';
 
@@ -41,6 +41,7 @@ export function SignInScreen() {
   // Fetch the shell while the founder reads the sign-in screen, so entering stays instant; after the page has loaded, so
   // it does not compete with the first screen for bandwidth (OG-030-N3).
   useEffect(() => prefetchAfterLoad(loadSignedIn), []);
+  useChannels('web_public', 'legal');
   const Form = signUp ? (auth.SignUp ?? auth.SignIn) : auth.SignIn;
   return (
     <div className="pub fw-auth">
@@ -48,27 +49,29 @@ export function SignInScreen() {
       <main className="fw-auth__main" id="main">
         <div className="pub-wrap fw-auth__grid">
           <section className="fw-auth__intro" aria-labelledby="auth-title">
-            <p className="pub-eyebrow">{AUTH.eyebrow}</p>
+            <p className="pub-eyebrow">{t('web.auth.eyebrow')}</p>
             <h1 id="auth-title" className="pub-display fw-auth__title">
-              {signUp ? AUTH.signUpTitle : AUTH.signInTitle}
+              {signUp ? t('web.auth.sign_up_title') : t('web.auth.sign_in_title')}
             </h1>
-            <p className="pub-lede">{signUp ? AUTH.signUpLede : AUTH.signInLede}</p>
+            <p className="pub-lede">{signUp ? t('web.auth.sign_up_lede') : t('web.auth.sign_in_lede')}</p>
             <ul className="pub-list fw-auth__points">
-              {AUTH.points.map((p) => (
+              {tList('web.auth.points').map((p) => (
                 <li key={p}>{p}</li>
               ))}
             </ul>
           </section>
-          <section className="fw-auth__form" aria-label={signUp ? AUTH.signUpTitle : AUTH.signInTitle}>
+          <section
+            className="fw-auth__form"
+            aria-label={signUp ? t('web.auth.sign_up_title') : t('web.auth.sign_in_title')}
+          >
             {auth.pendingTask && auth.Task ? (
               <auth.Task task={auth.pendingTask} />
             ) : !auth.available ? (
               <Notice status="info">
-                <strong>Sign-in is not configured for this build</strong>. This build has no sign-in key. You
-                can explore the app with sample data.
+                <Md k="web.auth.not_configured" />
               </Notice>
             ) : !auth.loaded || !Form ? (
-              <Skeleton label="Loading sign-in" />
+              <Skeleton label={t('web.auth.loading')} />
             ) : (
               <div data-testid={signUp ? 'auth-sign-up' : 'auth-sign-in'}>
                 <Form />
@@ -80,9 +83,9 @@ export function SignInScreen() {
                 variant={auth.available ? 'secondary' : 'primary'}
                 onClick={enterDemo}
               >
-                {AUTH.demo}
+                {t('web.auth.demo')}
               </Button>
-              <p className="fw-auth__hint">{AUTH.demoHint}</p>
+              <p className="fw-auth__hint">{t('web.auth.demo_hint')}</p>
             </div>
             <p className="fw-privacy" data-testid="privacy-line">
               {privacyLine()}
@@ -106,7 +109,7 @@ export function Routed() {
   if (mode === 'none')
     return isPublicPath(pathname) && !pendingTask ? <PublicSite path={pathname} /> : <SignInScreen />;
   return (
-    <Suspense fallback={<Skeleton label="Loading your company" />}>
+    <Suspense fallback={<Skeleton label={t('app.shell.loading_company')} />}>
       <SignedIn />
     </Suspense>
   );

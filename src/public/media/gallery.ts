@@ -17,8 +17,8 @@ import webOngem from '../../assets/public/gallery/web-ongem-approves.jpg';
  */
 export interface GalleryShot {
   src: string;
-  alt: string;
-  caption: string;
+  /** Its caption and description are `web.gallery.<id>.caption` and `.alt`. */
+  id: string;
   width: number;
   height: number;
   device: 'web' | 'phone' | 'tablet';
@@ -27,48 +27,42 @@ export interface GalleryShot {
 export const WEB_SHOTS: GalleryShot[] = [
   {
     src: webOnboarding,
-    caption: 'Your application, step by step',
-    alt: 'The account application: owner identity done, then confirm details, disclosures and submit to the bank, on sample data',
+    id: 'web_onboarding',
     width: 1040,
     height: 760,
     device: 'web',
   },
   {
     src: webAddMoney,
-    caption: 'Add money from another bank',
-    alt: 'Add money: a verified account at another bank, the OnGem account to fund and the amount, on sample data',
+    id: 'web_add_money',
     width: 1040,
     height: 760,
     device: 'web',
   },
   {
     src: webOngem,
-    caption: 'OnGem approves for a one-person company',
-    alt: 'A top-up waiting for OnGem to approve it, because no one else in the company can approve payments, on sample data',
+    id: 'web_ongem_approves',
     width: 1040,
     height: 760,
     device: 'web',
   },
   {
     src: webCard,
-    caption: 'A virtual card and its controls',
-    alt: 'A virtual card with show card details, show PIN, set PIN, freeze and dispute a charge, on sample data',
+    id: 'web_card',
     width: 1040,
     height: 760,
     device: 'web',
   },
   {
     src: webDispute,
-    caption: 'Dispute a charge from the card',
-    alt: 'A new support request about a charge on the card ending 5521, on sample data',
+    id: 'web_dispute',
     width: 1040,
     height: 760,
     device: 'web',
   },
   {
     src: webChoices,
-    caption: 'Choose how each notice reaches you',
-    alt: 'Notification settings: email and text for each kind of notice, with the important ones always on, on sample data',
+    id: 'web_notification_choices',
     width: 1040,
     height: 760,
     device: 'web',
@@ -78,48 +72,42 @@ export const WEB_SHOTS: GalleryShot[] = [
 export const APP_SHOTS: GalleryShot[] = [
   {
     src: iphoneAccounts,
-    caption: 'Accounts on iPhone',
-    alt: 'The OnGem app on iPhone: accounts with their bank balances, on sample data',
+    id: 'app_iphone_accounts',
     width: 414,
     height: 900,
     device: 'phone',
   },
   {
     src: iphoneReview,
-    caption: 'Review before you send',
-    alt: 'The OnGem app on iPhone: a US$1,250.00 ACH payment to Acme Supplies LLC under review, on sample data',
+    id: 'app_iphone_payment_review',
     width: 414,
     height: 900,
     device: 'phone',
   },
   {
     src: iphoneSent,
-    caption: 'Sent, and followed to settled',
-    alt: 'The OnGem app on iPhone: a payment sent to the bank, on sample data',
+    id: 'app_iphone_payment_sent',
     width: 414,
     height: 900,
     device: 'phone',
   },
   {
     src: iphoneDark,
-    caption: 'Dark theme',
-    alt: 'The OnGem app on iPhone in the dark theme: an account and its transactions, on sample data',
+    id: 'app_iphone_dark_account',
     width: 414,
     height: 900,
     device: 'phone',
   },
   {
     src: androidReturned,
-    caption: 'A returned payment on Android',
-    alt: 'The OnGem app on a Pixel phone: a payment the bank returned, on sample data',
+    id: 'app_android_payment_returned',
     width: 403,
     height: 900,
     device: 'phone',
   },
   {
     src: ipadAccounts,
-    caption: 'Two panes on iPad',
-    alt: 'The OnGem app on iPad: accounts and the selected account side by side, on sample data',
+    id: 'app_ipad_accounts',
     width: 620,
     height: 621,
     device: 'tablet',

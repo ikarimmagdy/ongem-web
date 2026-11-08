@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { PAYMENTS_PAGE } from '../screens/Payments';
 import type { AuthSession } from '../auth';
 import { NO_AUTH } from '../auth';
-import { LABELS } from '../public/content';
+import { t } from '../i18n';
 import { privacyLine, privacyLineOff, RECORDING_ENABLED } from '../recording/privacy';
 import { renderApp } from './render';
 
@@ -46,9 +46,12 @@ describe('UX review 2026-11-07', () => {
 
   it('UX_07 the product page lede does not repeat its title', () => {
     renderApp('/product', { mode: 'none' });
-    const head = screen.getByRole('heading', { level: 1, name: LABELS.productTitle }).parentElement!;
+    const head = screen.getByRole('heading', {
+      level: 1,
+      name: t('web.labels.product_title'),
+    }).parentElement!;
     const lede = head.querySelector('.pub-lede')!;
-    expect(lede.textContent).not.toMatch(new RegExp(`^${LABELS.productTitle}`));
+    expect(lede.textContent).not.toMatch(new RegExp(`^${t('web.labels.product_title')}`));
   });
 
   it('UX_08 product screens come as a desktop screen and a phone screen, one shown per width', () => {

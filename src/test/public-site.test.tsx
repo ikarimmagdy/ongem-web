@@ -1,18 +1,16 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axe from 'axe-core';
+import { t, tList } from '../i18n';
 import {
-  CAPABILITIES,
-  DISCLOSURES,
-  FACTS,
-  FAQ,
-  FAQ_NEXT,
+  capabilities,
+  facts as factList,
+  faq as faqList,
+  feature,
   FEATURE_ROWS,
-  HERO,
-  PAGE_META,
-  PRICING,
-  SECURITY_FACTS,
-  TRUST,
+  pageMeta,
+  securityFacts,
+  trustParties,
 } from '../public/content';
 import { renderApp } from './render';
 
@@ -42,7 +40,7 @@ describe('public site (OG-032)', () => {
 
   it('product_sections_AC_R2_1', () => {
     renderApp('/product', { mode: 'none' });
-    for (const c of CAPABILITIES) {
+    for (const c of capabilities()) {
       expect(
         within(screen.getByTestId(`cap-${c.id}`)).getByRole('heading', { name: c.title }),
       ).toBeInTheDocument();
@@ -85,7 +83,7 @@ describe('public site (OG-032)', () => {
       const { unmount } = renderApp(path, { mode: 'none' });
       const footer = screen.getByTestId('pub-disclosures');
       expect(within(footer).getByTestId('pub-draft-note')).toHaveTextContent('Draft for legal review');
-      expect(within(footer).getAllByRole('listitem')).toHaveLength(DISCLOSURES.length);
+      expect(within(footer).getAllByRole('listitem')).toHaveLength(tList('web.disclosures').length);
       unmount();
     }
   });
@@ -93,10 +91,10 @@ describe('public site (OG-032)', () => {
   it('title_meta_AC_R8_1', () => {
     for (const path of ['/', '/product', '/security', '/partners'] as const) {
       const { unmount } = renderApp(path, { mode: 'none' });
-      expect(document.title).toBe(PAGE_META[path].title);
+      expect(document.title).toBe(pageMeta(path).title);
       expect(document.querySelector('meta[name="description"]')).toHaveAttribute(
         'content',
-        PAGE_META[path].description,
+        pageMeta(path).description,
       );
       unmount();
     }
@@ -127,7 +125,7 @@ describe('public site (OG-032)', () => {
     expect(within(hero).getByAltText(/app home screen on a phone/)).toBeInTheDocument();
     for (const f of FEATURE_ROWS) {
       const row = screen.getByTestId(`feature-row-${f.id}`);
-      expect(within(row).getByRole('heading', { level: 2, name: f.title })).toBeInTheDocument();
+      expect(within(row).getByRole('heading', { level: 2, name: feature(f.id).title })).toBeInTheDocument();
       // The desktop screen and its phone version (UX-08); CSS shows one per width.
       expect(within(row).getAllByRole('img', { name: /sample data/ }).length).toBeGreaterThan(0);
     }
@@ -135,14 +133,14 @@ describe('public site (OG-032)', () => {
 
   it('trust_strip_names_the_parties_and_the_bank_statement_AC_R9_1', () => {
     renderApp('/', { mode: 'none' });
-    for (const p of TRUST.parties) expect(screen.getByText(p.name)).toBeInTheDocument();
+    for (const p of trustParties()) expect(screen.getByText(p.name)).toBeInTheDocument();
     expect(screen.getByTestId('pub-bank-statement')).toHaveTextContent('not a bank');
   });
 
   it('facts_carry_a_source_each_AC_R11_1', () => {
     renderApp('/', { mode: 'none' });
     const facts = screen.getByTestId('pub-facts');
-    for (const f of FACTS) {
+    for (const f of factList()) {
       const value = within(facts).getByText(f.value);
       expect(value.closest('[data-source]')?.getAttribute('data-source')).toBeTruthy();
     }
@@ -151,8 +149,8 @@ describe('public site (OG-032)', () => {
   it('faq_answers_open_and_close_AC_R12_1', async () => {
     renderApp('/', { mode: 'none' });
     const faq = screen.getByTestId('pub-faq');
-    expect(within(faq).getAllByRole('group')).toHaveLength(FAQ.length);
-    const first = within(faq).getByText(FAQ[0]!.q);
+    expect(within(faq).getAllByRole('group')).toHaveLength(faqList().length);
+    const first = within(faq).getByText(faqList()[0]!.q);
     await userEvent.click(first);
     expect(first.closest('details')).toHaveAttribute('open');
     expect(within(faq).getByText(/Piermont Bank, which provides the accounts/)).toBeVisible();
@@ -195,37 +193,40 @@ describe('public site (OG-032)', () => {
   it('hero_copy_beside_the_product_with_proof_AC_R18_1_AC_R19_1', () => {
     renderApp('/', { mode: 'none' });
     const proof = screen.getByTestId('hero-proof');
-    for (const p of HERO.proof) expect(within(proof).getByText(p)).toBeInTheDocument();
+    for (const p of tList('web.hero.proof')) expect(within(proof).getByText(p)).toBeInTheDocument();
     // Copy and stage are the two columns of one grid.
     const grid = screen.getByTestId('hero-stage').parentElement!;
     expect(grid).toHaveClass('pub-hero__grid');
-    expect(screen.getByText(HERO.ledeShort)).toHaveClass('pub-lede--short');
+    expect(screen.getByText(t('web.hero.lede_short'))).toHaveClass('pub-lede--short');
   });
 
   it('facts_lead_with_founder_value_and_tests_only_on_security_AC_R19_2', () => {
     renderApp('/', { mode: 'none' });
     const facts = screen.getByTestId('pub-facts');
     expect(within(facts).queryByText(/Automated tests/)).not.toBeInTheDocument();
-    expect(within(facts).getAllByRole('term')[0]).toHaveTextContent(FACTS[0]!.label);
+    expect(within(facts).getAllByRole('term')[0]).toHaveTextContent(factList()[0]!.label);
   });
 
   it('security_facts_keep_the_tests_fact_AC_R19_3', () => {
     renderApp('/security', { mode: 'none' });
     const facts = screen.getByTestId('pub-facts');
-    expect(within(facts).getByText(SECURITY_FACTS.at(-1)!.label)).toBeInTheDocument();
+    expect(within(facts).getByText(securityFacts().at(-1)!.label)).toBeInTheDocument();
   });
 
   it('faq_ends_with_a_next_step_and_pricing_has_no_numbers_AC_R21_1_AC_R22_1', () => {
     renderApp('/', { mode: 'none' });
     const next = screen.getByTestId('faq-next');
-    expect(within(next).getByRole('heading', { name: FAQ_NEXT.title })).toBeInTheDocument();
-    expect(within(next).getByRole('link', { name: HERO.primary })).toHaveAttribute(
+    expect(within(next).getByRole('heading', { name: t('web.faq_next.title') })).toBeInTheDocument();
+    expect(within(next).getByRole('link', { name: t('web.hero.primary') })).toHaveAttribute(
       'href',
       '/sign-in?mode=sign-up',
     );
-    expect(within(next).getByRole('link', { name: FAQ_NEXT.security })).toHaveAttribute('href', '/security');
+    expect(within(next).getByRole('link', { name: t('web.faq_next.security') })).toHaveAttribute(
+      'href',
+      '/security',
+    );
     const pricing = screen.getByTestId('pub-pricing');
-    expect(pricing).toHaveTextContent(PRICING.label);
+    expect(pricing).toHaveTextContent(t('web.pricing.label'));
     expect(pricing.textContent).not.toMatch(/\$|US\$|[0-9]/);
   });
 });

@@ -4,8 +4,8 @@ import { DemoOnGemApi } from '../api/demo';
 import { DemoAssistant } from '../assistant/demoAssistant';
 import { uaeIbanValid } from '../lib/iban';
 import { formatDate, formatMinor } from '../lib/format';
-import { POSTS } from '../public/media/blog';
-import { BANK_STATEMENT, DISCLOSURES, DISCLOSURES_NOTE } from '../public/content';
+import { t, tList } from '../i18n';
+import { posts } from '../public/media/blog';
 import { IS_AE, REGION } from '../region';
 import { renderApp } from './render';
 
@@ -50,12 +50,12 @@ describe('AE build shows UAE content only (OG-022 R18)', () => {
   });
 
   it('blog_posts_shown_have_no_us_names_AC_R18_1', () => {
-    const slugs = POSTS.map((p) => p.slug);
+    const slugs = posts().map((p) => p.slug);
     expect(slugs).not.toContain('from-genzone-to-ongem');
     expect(slugs).not.toContain('where-your-money-lives');
     expect(slugs).not.toContain('adding-money-from-another-bank');
     expect(slugs.length).toBeGreaterThan(0);
-    for (const p of POSTS) {
+    for (const p of posts()) {
       const { unmount } = renderApp(`/blog/${p.slug}`, { mode: 'none' });
       expect(screen.getByTestId('public-post')).toBeInTheDocument();
       expect(text(), p.slug).not.toMatch(FORBIDDEN);
@@ -71,13 +71,13 @@ describe('AE build shows UAE content only (OG-022 R18)', () => {
   });
 
   it('disclosures_name_a_licensed_uae_bank_AC_R18_1', () => {
-    expect(BANK_STATEMENT).toContain('Banking services are provided by a licensed UAE bank.');
-    expect(DISCLOSURES[0]).toBe(
+    expect(t('web.bank_statement')).toContain('Banking services are provided by a licensed UAE bank.');
+    expect(tList('web.disclosures')[0]).toBe(
       'OnGem is a financial technology company, not a bank. Banking services are provided by a licensed UAE bank.',
     );
     renderApp('/', { mode: 'none' });
-    expect(screen.getByTestId('pub-draft-note')).toHaveTextContent(DISCLOSURES_NOTE);
-    expect(DISCLOSURES_NOTE).toContain('Draft for legal review');
+    expect(screen.getByTestId('pub-draft-note')).toHaveTextContent(t('web.disclosures.note'));
+    expect(t('web.disclosures.note')).toContain('Draft for legal review');
   });
 
   it('demo_screens_have_no_us_names_and_read_aed_AC_R18_1', async () => {

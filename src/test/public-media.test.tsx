@@ -5,11 +5,11 @@ import axe from 'axe-core';
 import { existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { DemoOnGemApi } from '../api/demo';
-import { parsePost, POSTS } from '../public/media/blog';
+import { posts } from '../public/media/blog';
 import { APP_SHOTS, WEB_SHOTS } from '../public/media/gallery';
 import { Markdown } from '../i18n/markdown';
 import { isMediaPath } from '../public/media/paths';
-import { VIDEOS } from '../public/media/videos';
+import { VIDEOS, videoTitle } from '../public/media/videos';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { renderApp } from './render';
@@ -35,13 +35,13 @@ describe('public media (OG-032)', () => {
   it('blog_index_lists_every_post_newest_first_AC_R15_1', () => {
     renderApp('/blog', { mode: 'none' });
     expect(screen.getByTestId('public-blog')).toBeInTheDocument();
-    expect(POSTS.length).toBeGreaterThanOrEqual(5);
-    for (const p of POSTS) {
+    expect(posts().length).toBeGreaterThanOrEqual(5);
+    for (const p of posts()) {
       const card = screen.getByTestId(`post-card-${p.slug}`);
       expect(within(card).getByRole('link', { name: p.title })).toHaveAttribute('href', `/blog/${p.slug}`);
       expect(p.author).toBe('Karim Magdy');
     }
-    const dates = POSTS.map((p) => p.date);
+    const dates = posts().map((p) => p.date);
     expect([...dates].sort().reverse()).toEqual(dates);
     expect(document.title).toMatch(/Blog/);
   });
@@ -61,7 +61,7 @@ describe('public media (OG-032)', () => {
 
   it('every_post_links_a_recorded_video_and_a_product_page_AC_R15_3', () => {
     const ids = new Set(VIDEOS.map((v) => v.id));
-    for (const p of POSTS) {
+    for (const p of posts()) {
       expect(p.video && ids.has(p.video)).toBe(true);
       expect(p.product).toMatch(/^\/(product|partners)/);
       expect(p.body).not.toMatch(/[–—]/);
@@ -72,7 +72,7 @@ describe('public media (OG-032)', () => {
   it('unknown_post_is_not_a_public_page_AC_R15_4', () => {
     expect(isMediaPath('/blog')).toBe(true);
     expect(isMediaPath('/videos')).toBe(true);
-    expect(isMediaPath(`/blog/${POSTS[0]!.slug}`)).toBe(true);
+    expect(isMediaPath(`/blog/${posts()[0]!.slug}`)).toBe(true);
     expect(isMediaPath('/blog/not-a-post')).toBe(false);
     renderApp('/blog/not-a-post', { mode: 'none' });
     expect(screen.queryByTestId('public-post')).not.toBeInTheDocument();
@@ -103,7 +103,6 @@ describe('public media (OG-032)', () => {
     expect(container.querySelector('blockquote')).toHaveTextContent('quote');
     expect(container.querySelector('img')).toBeNull();
     expect(container.textContent).toContain('<img src=x onerror=alert(1)>');
-    expect(() => parsePost('bad', 'no front matter')).toThrow();
   });
 
   it('videos_page_with_captions_and_posters_AC_R16_1', () => {
@@ -115,7 +114,7 @@ describe('public media (OG-032)', () => {
       const fig = screen.getByTestId(`video-${v.id}`);
       const video = fig.querySelector('video')!;
       // Native controls appear once played; before that the branded play button stands in (OG-032 R23).
-      expect(within(fig).getByRole('button', { name: new RegExp(v.title) })).toBeInTheDocument();
+      expect(within(fig).getByRole('button', { name: new RegExp(videoTitle(v)) })).toBeInTheDocument();
       expect(video).toHaveAttribute('preload', 'none');
       expect(video.getAttribute('poster')).toMatch(new RegExp(`videos/${v.id}\\.jpg$`));
       expect(video.querySelector('source')!.getAttribute('src')).toMatch(
@@ -171,7 +170,7 @@ describe('public media (OG-032)', () => {
   });
 
   it('media_pages_pass_axe_AC_R14_2', async () => {
-    for (const path of ['/blog', '/videos', `/blog/${POSTS[0]!.slug}`]) {
+    for (const path of ['/blog', '/videos', `/blog/${posts()[0]!.slug}`]) {
       const { container, unmount } = renderApp(path, { mode: 'none' });
       const r = await axe.run(container, { rules: { 'color-contrast': { enabled: false } } });
       expect(
@@ -187,10 +186,10 @@ describe('public media (OG-032)', () => {
     const fig = screen.getByTestId(`video-${v.id}`);
     const video = fig.querySelector('video')!;
     expect(video).not.toHaveAttribute('controls');
-    const play = within(fig).getByRole('button', { name: new RegExp(v.title) });
+    const play = within(fig).getByRole('button', { name: new RegExp(videoTitle(v)) });
     video.play = () => Promise.resolve();
     await userEvent.click(play);
-    expect(within(fig).queryByRole('button', { name: new RegExp(v.title) })).not.toBeInTheDocument();
+    expect(within(fig).queryByRole('button', { name: new RegExp(videoTitle(v)) })).not.toBeInTheDocument();
     expect(video).toHaveAttribute('controls');
   });
 });

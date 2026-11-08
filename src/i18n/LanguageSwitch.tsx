@@ -44,7 +44,9 @@ export function LanguageSwitch({
           role="radio"
           aria-checked={l === locale}
           lang={l}
-          className={l === locale ? 'og-btn og-btn--primary og-btn--md' : 'og-btn og-btn--secondary og-btn--md'}
+          className={
+            l === locale ? 'og-btn og-btn--primary og-btn--md' : 'og-btn og-btn--secondary og-btn--md'
+          }
           onClick={() => pick(l)}
           data-testid={`language-${l}`}
         >

@@ -34,6 +34,7 @@ export function readsAsCopy(s) {
   if (/[؀-ۿ]/.test(text)) return true;
   if (/^[a-z0-9_.-]+$/i.test(text) && !/\s/.test(text) && !/^[A-Z][a-z’']+$/.test(text)) return false;
   if (/^(https?:|\/|#|\.|\[|data:|mailto:)/.test(text)) return false;
+  if (/^[-\d\s.%a-z]*\d[-\d\s.%a-z]*$/.test(text) && !/[a-z]{4,}/.test(text)) return false;
   if (/^[A-Z][a-z’']+(\s|[.,:?!]|$)/.test(text)) return true;
   return words(text).length >= 3 && /\s/.test(text) && !/^[a-z0-9_-]+( [a-z0-9_-]+)*$/.test(text);
 }
@@ -44,11 +45,21 @@ function inDeveloperCall(node) {
     if (ts.isCallExpression(p) && /^console\./.test(p.expression.getText())) return true;
     if (ts.isTypeNode(p) || ts.isImportDeclaration(p) || ts.isExportDeclaration(p)) return true;
     if (ts.isPropertyAssignment(p) && p.name === node) return true;
-    if (ts.isJsxAttribute(p) && /^(className|data-testid|id|to|href|type|variant|status|name|htmlFor|role|rel|target|autoComplete|inputMode|src)$/.test(p.name.getText()))
+    if (
+      ts.isJsxAttribute(p) &&
+      /^(className|data-testid|id|to|href|d|points|viewBox|transform|type|variant|status|name|htmlFor|role|rel|target|autoComplete|inputMode|src)$/.test(
+        p.name.getText(),
+      )
+    )
       return true;
     if (ts.isBinaryExpression(p) && /===|!==|==|!=/.test(p.operatorToken.getText())) return true;
     if (ts.isCaseClause(p)) return true;
-    if (ts.isCallExpression(p) && /(^|\.)(t|tn|tList|has|keysUnder|metaOf|getItem|setItem|removeItem|get|querySelector|querySelectorAll|getElementById|matchMedia|addEventListener|removeEventListener|startsWith|endsWith|includes|split|replace|test|closest|getAttribute|setAttribute|hasAttribute)$/.test(p.expression.getText()))
+    if (
+      ts.isCallExpression(p) &&
+      /(^|\.)(t|tn|tList|has|keysUnder|metaOf|getItem|setItem|removeItem|get|querySelector|querySelectorAll|getElementById|matchMedia|addEventListener|removeEventListener|startsWith|endsWith|includes|split|replace|test|closest|getAttribute|setAttribute|hasAttribute)$/.test(
+        p.expression.getText(),
+      )
+    )
       return true;
     if (ts.isStatement(p) || ts.isJsxElement(p) || ts.isJsxSelfClosingElement(p)) return false;
   }
@@ -63,7 +74,13 @@ export function findings(root = ROOT) {
     const source = readFileSync(path, 'utf8');
     if (/^\/\/ content-check: data/m.test(source.slice(0, 400))) continue;
     const lines = source.split('\n');
-    const sf = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, path.endsWith('.tsx') ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
+    const sf = ts.createSourceFile(
+      path,
+      source,
+      ts.ScriptTarget.Latest,
+      true,
+      path.endsWith('.tsx') ? ts.ScriptKind.TSX : ts.ScriptKind.TS,
+    );
     const report = (node, text) => {
       const line = sf.getLineAndCharacterOfPosition(node.getStart()).line;
       if (/content-check: ignore/.test(lines[line] ?? '')) return;
@@ -91,7 +108,9 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const found = findings();
   for (const f of found) console.log(f);
   if (found.length) {
-    console.error(`check-content: ${found.length} authored text(s) in src; move them to content keys (OG-033 R1).`);
+    console.error(
+      `check-content: ${found.length} authored text(s) in src; move them to content keys (OG-033 R1).`,
+    );
     process.exit(1);
   }
   console.log('check-content: no authored text in src');

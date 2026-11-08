@@ -2,8 +2,9 @@ import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { US_MEDIA } from '../../region';
 import { BrowserFrame, PhoneFrame } from '../art';
-import { formatPostDate, POSTS, postBySlug, type Post } from './blog';
-import { MEDIA } from './content';
+import { formatPostDate, posts, postBySlug, type Post } from './blog';
+import { media } from './content';
+import { t } from '../../i18n';
 import { APP_SHOTS, WEB_SHOTS, type GalleryShot } from './gallery';
 import { Markdown } from '../../i18n/markdown';
 import {
@@ -13,6 +14,8 @@ import {
   videoPoster,
   VIDEOS,
   videoSrc,
+  videoSummary,
+  videoTitle,
   videoTrack,
   type Video,
 } from './videos';
@@ -44,7 +47,7 @@ export function VideoPlayer({ video }: { video: Video }) {
           poster={videoPoster(video.id)}
           width={video.width}
           height={video.height}
-          aria-label={video.title}
+          aria-label={videoTitle(video)}
           onPlay={() => setStarted(true)}
         >
           <source src={videoSrc(video.id)} type="video/webm" />
@@ -52,7 +55,7 @@ export function VideoPlayer({ video }: { video: Video }) {
             kind="captions"
             src={videoTrack(video.id)}
             srcLang="en"
-            label={MEDIA.captionsLabel}
+            label={media('captions_label')}
             default
           />
         </video>
@@ -62,23 +65,26 @@ export function VideoPlayer({ video }: { video: Video }) {
             className="pub-video__play"
             onClick={start}
             data-testid={`play-${video.id}`}
-            aria-label={`${MEDIA.play}: ${video.title}, ${formatDuration(video.seconds)}`}
+            aria-label={t('web.media.play_label', {
+              title: videoTitle(video),
+              duration: formatDuration(video.seconds),
+            })}
           >
             <span className="pub-video__play-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" focusable="false">
-                <path d="M8 5.5v13l11-6.5z" />
+                <path d="M8 5.5v13l11-6.5z" /> {/* content-check: ignore */}
               </svg>
             </span>
             <span className="pub-video__play-title" aria-hidden="true">
-              {video.title}
+              {videoTitle(video)}
             </span>
           </button>
         )}
       </div>
       <figcaption>
-        <span className="pub-video__title">{video.title}</span>
+        <span className="pub-video__title">{videoTitle(video)}</span>
         <span className="pub-video__meta">{formatDuration(video.seconds)}</span>
-        <span className="pub-video__summary">{video.summary}</span>
+        <span className="pub-video__summary">{videoSummary(video)}</span>
       </figcaption>
     </figure>
   );
@@ -96,10 +102,10 @@ export function VideoStrip() {
     >
       <div className="pub-wrap">
         <h2 id="video-strip" className="pub-h2" data-reveal>
-          {MEDIA.stripTitle}
+          {media('strip_title')}
         </h2>
         <p className="pub-lede" data-reveal>
-          {MEDIA.stripLede}
+          {media('strip_lede')}
         </p>
         <div className="pub-video-grid" data-reveal>
           {featured.map((v) => (
@@ -107,7 +113,7 @@ export function VideoStrip() {
           ))}
         </div>
         <p className="pub-more">
-          <Link to="/videos">{MEDIA.allVideos}</Link>
+          <Link to="/videos">{media('all_videos')}</Link>
         </p>
       </div>
     </section>
@@ -118,7 +124,7 @@ function Shot({ shot }: { shot: GalleryShot }) {
   const img = (
     <img
       src={shot.src}
-      alt={shot.alt}
+      alt={t(`web.gallery.${shot.id}.alt`)}
       width={shot.width}
       height={shot.height}
       loading="lazy"
@@ -134,7 +140,7 @@ function Shot({ shot }: { shot: GalleryShot }) {
       ) : (
         <div className="pub-gallery__tablet">{img}</div>
       )}
-      <figcaption>{shot.caption}</figcaption>
+      <figcaption>{t(`web.gallery.${shot.id}.caption`)}</figcaption>
     </figure>
   );
 }
@@ -146,18 +152,18 @@ export function Gallery() {
     <section className="pub-section" aria-labelledby="gallery" data-testid="gallery">
       <div className="pub-wrap">
         <h2 id="gallery" className="pub-h2" data-reveal>
-          {MEDIA.galleryTitle}
+          {media('gallery_title')}
         </h2>
         <p className="pub-lede" data-reveal>
-          {MEDIA.galleryLede}
+          {media('gallery_lede')}
         </p>
-        <h3 className="pub-h3">{MEDIA.galleryWeb}</h3>
+        <h3 className="pub-h3">{media('gallery_web')}</h3>
         <div className="pub-gallery pub-gallery--web">
           {WEB_SHOTS.map((s) => (
             <Shot key={s.src} shot={s} />
           ))}
         </div>
-        <h3 className="pub-h3">{MEDIA.galleryApp}</h3>
+        <h3 className="pub-h3">{media('gallery_app')}</h3>
         <div className="pub-gallery pub-gallery--app">
           {APP_SHOTS.map((s) => (
             <Shot key={s.src} shot={s} />
@@ -184,7 +190,7 @@ function PostMeta({ post }: { post: Post }) {
     <p className="pub-post__meta">
       <time dateTime={post.date}>{formatPostDate(post.date)}</time>
       <span aria-hidden="true"> · </span>
-      {MEDIA.by} {post.author}
+      {t('web.media.by_author', { author: post.author })}
     </p>
   );
 }
@@ -192,20 +198,20 @@ function PostMeta({ post }: { post: Post }) {
 function BlogIndex() {
   return (
     <div data-testid="public-blog">
-      <Head title={MEDIA.blogTitle} lede={MEDIA.blogLede} />
+      <Head title={media('blog_title')} lede={media('blog_lede')} />
       <section className="pub-section">
         <div className="pub-wrap">
           <ul className="pub-posts">
-            {POSTS.map((p) => (
+            {posts().map((p) => (
               <li key={p.slug} className="pub-card pub-post-card" data-testid={`post-card-${p.slug}`}>
                 <h2 className="pub-h3">
                   <Link to={`/blog/${p.slug}`}>{p.title}</Link>
                 </h2>
                 <PostMeta post={p} />
                 <p>{p.summary}</p>
-                <ul className="pub-tags" aria-label="Tags">
-                  {p.tags.map((t) => (
-                    <li key={t}>{t}</li>
+                <ul className="pub-tags" aria-label={t('web.media.tags')}>
+                  {p.tags.map((tag) => (
+                    <li key={tag}>{tag}</li>
                   ))}
                 </ul>
               </li>
@@ -224,7 +230,7 @@ function BlogPost({ post }: { post: Post }) {
       <section className="pub-pagehead">
         <div className="pub-wrap pub-post__head">
           <p className="pub-eyebrow">
-            <Link to="/blog">{MEDIA.backToBlog}</Link>
+            <Link to="/blog">{media('back_to_blog')}</Link>
           </p>
           <h1 className="pub-display">{post.title}</h1>
           <PostMeta post={post} />
@@ -237,12 +243,12 @@ function BlogPost({ post }: { post: Post }) {
             <Markdown source={post.body} />
           </div>
           {video && (
-            <aside aria-label={MEDIA.watchVideo} className="pub-post__aside">
-              <h2 className="pub-h3">{MEDIA.watchVideo}</h2>
+            <aside aria-label={media('watch_video')} className="pub-post__aside">
+              <h2 className="pub-h3">{media('watch_video')}</h2>
               <VideoPlayer video={video} />
               {post.product && (
                 <p className="pub-more">
-                  <Link to={post.product}>{MEDIA.seeProduct}</Link>
+                  <Link to={post.product}>{media('see_product')}</Link>
                 </p>
               )}
             </aside>
@@ -256,7 +262,7 @@ function BlogPost({ post }: { post: Post }) {
 function Videos() {
   return (
     <div data-testid="public-videos">
-      <Head title={MEDIA.videosTitle} lede={MEDIA.videosLede} />
+      <Head title={media('videos_title')} lede={media('videos_lede')} />
       <section className="pub-section pub-section--after-head">
         <div className="pub-wrap">
           <div className="pub-video-grid pub-video-grid--all">
@@ -264,7 +270,7 @@ function Videos() {
               <VideoPlayer key={v.id} video={v} />
             ))}
           </div>
-          <p className="pub-draft-free">{MEDIA.videosSampleNote}</p>
+          <p className="pub-draft-free">{media('videos_sample_note')}</p>
         </div>
       </section>
     </div>
@@ -273,10 +279,11 @@ function Videos() {
 
 /** Title and description for a media page, for the page meta hook. */
 export function mediaMeta(path: string): { title: string; description: string } {
-  if (path === '/videos') return { title: MEDIA.videosMetaTitle, description: MEDIA.videosLede };
+  if (path === '/videos') return { title: media('videos_meta_title'), description: media('videos_lede') };
   const post = postBySlug(path.replace(/^\/blog\/?/, ''));
-  if (post) return { title: `${post.title} | OnGem`, description: post.summary };
-  return { title: MEDIA.blogMetaTitle, description: MEDIA.blogLede };
+  if (post)
+    return { title: t('web.media.post_meta_title', { title: post.title }), description: post.summary };
+  return { title: media('blog_meta_title'), description: media('blog_lede') };
 }
 
 export function MediaPage({ path }: { path: string }) {

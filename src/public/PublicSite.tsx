@@ -4,35 +4,30 @@ import { Logo, useTheme } from '../design-system';
 import { US_MEDIA } from '../region';
 import { BrowserFrame, CapabilityArt, GemGlow, HeroArt, PartnerArt, PhoneFrame, ShieldArt } from './art';
 import {
-  BANK_STATEMENT,
-  CAPABILITIES,
-  DISCLOSURES,
-  FACTS,
-  FAQ,
-  FAQ_NEXT,
-  PRICING,
-  SECURITY_FACTS,
+  capabilities,
+  facts,
+  faq,
+  feature,
   FEATURE_ROWS,
-  DISCLOSURES_NOTE,
-  FINAL_CTA,
-  HERO,
   HOME_CARDS,
-  LABELS,
-  LABELS_V2,
-  NAV_LINKS,
-  PAGE_META,
-  PARTNER,
-  PRODUCT_LEDE,
-  SECURITY,
-  STEPS,
-  TRUST,
+  isLegalPath,
   isPagePath,
+  legalSlugs,
+  navLinks,
+  pageMeta,
+  securityControls,
+  securityFacts,
+  steps,
+  trustParties,
   type ArtName,
+  type Fact,
   type PagePath,
   type PublicPath,
 } from './content';
+import { LanguageSwitch, t, tList, useChannels, useContent } from '../i18n';
+import { LegalPage, legalMeta } from './LegalPage';
 import { Gallery, MediaPage, mediaMeta, VideoStrip } from './media/MediaPages';
-import { PHONE_SCREENS, SCREEN_ART, SCREENSHOTS, type ScreenName } from './screenshots';
+import { PHONE_SCREENS, SCREEN_ART, SCREENSHOTS, shotAlt, type ScreenName } from './screenshots';
 import './public.css';
 
 export const SIGN_IN = '/sign-in';
@@ -40,8 +35,9 @@ export const SIGN_UP = '/sign-in?mode=sign-up';
 
 /** Title and meta description per page (OG-032 R8). */
 function usePageMeta(path: PublicPath) {
+  const locale = useContent();
   useEffect(() => {
-    const meta = isPagePath(path) ? PAGE_META[path] : mediaMeta(path);
+    const meta = isPagePath(path) ? pageMeta(path) : isLegalPath(path) ? legalMeta(path) : mediaMeta(path);
     document.title = meta.title;
     let tag = document.querySelector<HTMLMetaElement>('meta[name="description"]');
     if (!tag) {
@@ -50,7 +46,7 @@ function usePageMeta(path: PublicPath) {
       document.head.appendChild(tag);
     }
     tag.content = meta.description;
-  }, [path]);
+  }, [path, locale]);
   // A new page starts at its very top, header included (scrolling to #main hid the page's first lines under the sticky
   // header, UX-02); a link to /product#cards lands on that section, below the header (scroll-margin-top in CSS).
   const { hash } = useLocation();
@@ -101,7 +97,7 @@ function ThemeToggle() {
       type="button"
       className="pub-icon-btn"
       onClick={() => setTheme(target.id)}
-      aria-label={dark ? LABELS.lightTheme : LABELS.darkTheme}
+      aria-label={dark ? t('web.labels.light_theme') : t('web.labels.dark_theme')}
       data-testid="theme-toggle"
     >
       <span aria-hidden="true">{dark ? '☀' : '☾'}</span>
@@ -115,11 +111,15 @@ export function Header({ path }: { path?: PublicPath }) {
   return (
     <header className="pub-header">
       <div className="pub-wrap pub-header__row">
-        <Link to="/" className="pub-brand" aria-label={LABELS.homeLink}>
+        <Link to="/" className="pub-brand" aria-label={t('web.labels.home_link')}>
           <Logo />
         </Link>
-        <nav aria-label="Site" className={open ? 'pub-nav pub-nav--open' : 'pub-nav'} id="pub-nav">
-          {NAV_LINKS.map((l) => (
+        <nav
+          aria-label={t('web.labels.site_nav')}
+          className={open ? 'pub-nav pub-nav--open' : 'pub-nav'}
+          id="pub-nav"
+        >
+          {navLinks().map((l) => (
             <Link
               key={l.to}
               to={l.to}
@@ -137,20 +137,21 @@ export function Header({ path }: { path?: PublicPath }) {
             className="og-btn og-btn--ghost og-btn--md pub-nav__signin"
             data-testid="pub-sign-in"
           >
-            {HERO.secondary}
+            {t('web.hero.secondary')}
           </Link>
           <Link to={SIGN_UP} className="og-btn og-btn--primary og-btn--md" data-testid="pub-get-started">
-            {HERO.primary}
+            {t('web.hero.primary')}
           </Link>
         </nav>
         <div className="pub-header__tools">
+          <LanguageSwitch className="pub-icon-btn pub-lang" />
           <ThemeToggle />
           <button
             type="button"
             className="pub-icon-btn pub-menu-btn"
             aria-expanded={open}
             aria-controls="pub-nav"
-            aria-label={open ? LABELS.closeMenu : LABELS.openMenu}
+            aria-label={open ? t('web.labels.close_menu') : t('web.labels.open_menu')}
             onClick={() => setOpen((o) => !o)}
           >
             <span aria-hidden="true">{open ? '✕' : '☰'}</span>
@@ -163,34 +164,44 @@ export function Header({ path }: { path?: PublicPath }) {
 
 /** The site footer with the draft disclosures; sign-in uses it too. */
 export function Footer() {
+  const legal = legalSlugs();
   return (
     <footer className="pub-footer">
       <div className="pub-wrap">
         <div className="pub-footer__top">
           <Logo />
-          <nav aria-label="Footer" className="pub-footer__links">
-            {NAV_LINKS.map((l) => (
+          <nav aria-label={t('web.labels.footer_nav')} className="pub-footer__links">
+            {navLinks().map((l) => (
               <Link key={l.to} to={l.to}>
                 {l.label}
               </Link>
             ))}
-            <Link to={SIGN_IN}>{HERO.secondary}</Link>
-            <Link to={SIGN_UP}>{HERO.primary}</Link>
+            <Link to={SIGN_IN}>{t('web.hero.secondary')}</Link>
+            <Link to={SIGN_UP}>{t('web.hero.primary')}</Link>
           </nav>
+          {legal.length > 0 && (
+            <nav aria-label={t('web.legal.nav')} className="pub-footer__links" data-testid="pub-legal-links">
+              {legal.map((slug) => (
+                <Link key={slug} to={`/legal/${slug}`}>
+                  {t(`legal.${slug}.title`)}
+                </Link>
+              ))}
+            </nav>
+          )}
         </div>
         <section aria-labelledby="pub-disclosures" className="pub-disclosures" data-testid="pub-disclosures">
           <h2 id="pub-disclosures" className="pub-disclosures__title">
-            {LABELS.disclosures}
+            {t('web.labels.disclosures')}
           </h2>
           <p className="pub-draft" data-testid="pub-draft-note">
-            {DISCLOSURES_NOTE}
+            {t('web.disclosures.note')}
           </p>
           <ol>
-            {DISCLOSURES.map((d) => (
+            {tList('web.disclosures').map((d) => (
               <li key={d}>{d}</li>
             ))}
           </ol>
-          <p className="pub-copyright">© {new Date().getFullYear()} OnGem</p>
+          <p className="pub-copyright">{t('web.footer.copyright', { year: new Date().getFullYear() })}</p>
         </section>
       </div>
     </footer>
@@ -201,7 +212,7 @@ function Cta({ children, testid }: { children?: ReactNode; testid?: string }) {
   return (
     <div className="pub-cta-row">
       <Link to={SIGN_UP} className="og-btn og-btn--primary og-btn--md" data-testid={testid}>
-        {HERO.primary}
+        {t('web.hero.primary')}
       </Link>
       {children}
     </div>
@@ -210,10 +221,10 @@ function Cta({ children, testid }: { children?: ReactNode; testid?: string }) {
 
 function Soon({ items }: { items: string[] }) {
   return (
-    <ul className="pub-soon" aria-label={LABELS.comingSoon}>
+    <ul className="pub-soon" aria-label={t('web.labels.coming_soon')}>
       {items.map((s) => (
         <li key={s}>
-          <span className="pub-badge">{LABELS.comingSoon}</span> {s}
+          <span className="pub-badge">{t('web.labels.coming_soon')}</span> {s}
         </li>
       ))}
     </ul>
@@ -234,7 +245,14 @@ function Shot({
   const s = SCREENSHOTS[name];
   const loading = eager ? 'eager' : 'lazy';
   const img = (
-    <img src={s.src} alt={s.alt} width={s.width} height={s.height} loading={loading} decoding="async" />
+    <img
+      src={s.src}
+      alt={shotAlt(name)}
+      width={s.width}
+      height={s.height}
+      loading={loading}
+      decoding="async"
+    />
   );
   if (frame === 'phone') return <PhoneFrame>{img}</PhoneFrame>;
   if (frame === 'none') return <figure className="pub-shot">{img}</figure>;
@@ -249,7 +267,7 @@ function Shot({
       </div>
       <div className="pub-shot--narrow" data-testid={`shot-narrow-${name}`}>
         <PhoneFrame>
-          <img src={phone} alt={s.alt} width={390} height={844} loading={loading} decoding="async" />
+          <img src={phone} alt={shotAlt(name)} width={390} height={844} loading={loading} decoding="async" />
         </PhoneFrame>
       </div>
     </>
@@ -257,24 +275,25 @@ function Shot({
 }
 
 function Home() {
-  const cards = HOME_CARDS.map((id) => CAPABILITIES.find((c) => c.id === id)!);
+  const all = capabilities();
+  const cards = HOME_CARDS.map((id) => all.find((c) => c.id === id)).filter((c) => c !== undefined);
   return (
     <>
       <section className="pub-hero" data-testid="public-home">
         <GemGlow className="pub-hero__glow" />
         <div className="pub-wrap pub-hero__grid">
           <div className="pub-hero__copy">
-            <p className="pub-eyebrow pub-eyebrow--on-dark">{HERO.eyebrow}</p>
-            <h1 className="pub-display">{HERO.title}</h1>
-            <p className="pub-lede pub-lede--full">{HERO.lede}</p>
-            <p className="pub-lede pub-lede--short">{HERO.ledeShort}</p>
+            <p className="pub-eyebrow pub-eyebrow--on-dark">{t('web.hero.eyebrow')}</p>
+            <h1 className="pub-display">{t('web.hero.title')}</h1>
+            <p className="pub-lede pub-lede--full">{t('web.hero.lede')}</p>
+            <p className="pub-lede pub-lede--short">{t('web.hero.lede_short')}</p>
             <Cta testid="hero-get-started">
               <Link to={SIGN_IN} className="og-btn og-btn--secondary og-btn--md">
-                {HERO.secondary}
+                {t('web.hero.secondary')}
               </Link>
             </Cta>
             <ul className="pub-proof" data-testid="hero-proof">
-              {HERO.proof.map((p) => (
+              {tList('web.hero.proof').map((p) => (
                 <li key={p}>{p}</li>
               ))}
             </ul>
@@ -285,7 +304,7 @@ function Home() {
                 <BrowserFrame address="app.ongem.com">
                   <img
                     src={SCREENSHOTS.home.src}
-                    alt={SCREENSHOTS.home.alt}
+                    alt={t('web.shots.home.alt')}
                     width={SCREENSHOTS.home.width}
                     height={SCREENSHOTS.home.height}
                     fetchPriority="high"
@@ -308,10 +327,10 @@ function Home() {
       <section className="pub-trust" aria-labelledby="home-trust">
         <div className="pub-wrap">
           <h2 id="home-trust" className="pub-trust__title">
-            {LABELS_V2.trustTitle}
+            {t('web.labels.trust_title')}
           </h2>
-          <ul className="pub-trust__list">
-            {TRUST.parties.map((p) => (
+          <ul className="pub-trust__list" aria-label={t('web.trust.label')}>
+            {trustParties().map((p) => (
               <li key={p.name}>
                 <span className="pub-trust__name">{p.name}</span>
                 <span className="pub-trust__role">{p.role}</span>
@@ -319,7 +338,7 @@ function Home() {
             ))}
           </ul>
           <p className="pub-bank" data-testid="pub-bank-statement">
-            {BANK_STATEMENT}
+            {t('web.bank_statement')}
           </p>
         </div>
       </section>
@@ -327,7 +346,7 @@ function Home() {
       <section className="pub-section" aria-labelledby="home-what">
         <div className="pub-wrap">
           <h2 id="home-what" className="pub-h2" data-reveal>
-            {LABELS.homeWhat}
+            {t('web.labels.home_what')}
           </h2>
           <div className="pub-cards">
             {cards.map((c) => (
@@ -341,14 +360,14 @@ function Home() {
                 <CapabilityArt name={c.id} />
                 <h3>{c.title}</h3>
                 <p>{c.summary}</p>
-                <span className="pub-more">{LABELS.seeHow}</span>
+                <span className="pub-more">{t('web.labels.see_how')}</span>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {FEATURE_ROWS.map((f, i) => (
+      {FEATURE_ROWS.map(({ id, screen }) => ({ id, screen, ...feature(id) })).map((f, i) => (
         <section
           key={f.id}
           className={i % 2 ? 'pub-section pub-band' : 'pub-section pub-section--tint'}
@@ -378,10 +397,10 @@ function Home() {
       <section className="pub-section" aria-labelledby="home-steps">
         <div className="pub-wrap">
           <h2 id="home-steps" className="pub-h2" data-reveal>
-            {LABELS.homeSteps}
+            {t('web.labels.home_steps')}
           </h2>
           <ol className="pub-steps">
-            {STEPS.map((s, i) => (
+            {steps().map((s, i) => (
               <li key={s.title} data-reveal>
                 <span className="pub-step-n" aria-hidden="true">
                   {i + 1}
@@ -400,19 +419,21 @@ function Home() {
         <GemGlow className="pub-band__glow" />
         <div className="pub-wrap pub-split">
           <div data-reveal>
-            <p className="pub-eyebrow pub-eyebrow--on-dark">{LABELS.securityLink}</p>
+            <p className="pub-eyebrow pub-eyebrow--on-dark">{t('web.labels.security_link')}</p>
             <h2 id="home-sec" className="pub-h2">
-              {LABELS.homeSecurity}
+              {t('web.labels.home_security')}
             </h2>
             <ul className="pub-ticks">
-              {SECURITY.slice(0, 4).map((s) => (
-                <li key={s.title}>
-                  <strong>{s.title}.</strong> {s.text}
-                </li>
-              ))}
+              {securityControls()
+                .slice(0, 4)
+                .map((s) => (
+                  <li key={s.title}>
+                    <strong>{t('web.labels.tick_title', { title: s.title })}</strong> {s.text}
+                  </li>
+                ))}
             </ul>
             <Link to="/security" className="pub-link-light">
-              {LABELS.securityLink}
+              {t('web.labels.security_link')}
             </Link>
           </div>
           <div data-reveal>
@@ -428,11 +449,11 @@ function Home() {
           </div>
           <div data-reveal>
             <h2 id="home-partner" className="pub-h2">
-              {PARTNER.title}
+              {t('web.partner.title')}
             </h2>
-            <p className="pub-lede">{PARTNER.text}</p>
+            <p className="pub-lede">{t('web.partner.text')}</p>
             <Link to="/partners" className="pub-more">
-              {LABELS.partnerLink}
+              {t('web.labels.partner_link')}
             </Link>
           </div>
         </div>
@@ -445,12 +466,12 @@ function Home() {
   );
 }
 
-function Facts({ items = FACTS }: { items?: typeof FACTS }) {
+function Facts({ items = facts() }: { items?: Fact[] }) {
   return (
     <section className="pub-section pub-band" aria-labelledby="home-facts" data-testid="pub-facts">
       <div className="pub-wrap">
         <h2 id="home-facts" className="pub-h2" data-reveal>
-          {LABELS_V2.factsTitle}
+          {t('web.labels.facts_title')}
         </h2>
         <dl className="pub-facts">
           {items.map((f) => (
@@ -470,10 +491,10 @@ function Faq() {
     <section className="pub-section pub-section--tint" aria-labelledby="home-faq" data-testid="pub-faq">
       <div className="pub-wrap pub-faq">
         <h2 id="home-faq" className="pub-h2">
-          {LABELS_V2.faqTitle}
+          {t('web.labels.faq_title')}
         </h2>
         <div className="pub-faq__list">
-          {FAQ.map((f) => (
+          {faq().map((f) => (
             <details key={f.q} className="pub-faq__item">
               <summary>
                 <span>{f.q}</span>
@@ -483,18 +504,19 @@ function Faq() {
             </details>
           ))}
           <div className="pub-faq__next" data-testid="faq-next">
-            <h3 className="pub-h3">{FAQ_NEXT.title}</h3>
-            <p>{FAQ_NEXT.text}</p>
+            <h3 className="pub-h3">{t('web.faq_next.title')}</h3>
+            <p>{t('web.faq_next.text')}</p>
             <Cta>
               <Link to="/security" className="og-btn og-btn--secondary og-btn--md">
-                {FAQ_NEXT.security}
+                {t('web.faq_next.security')}
               </Link>
             </Cta>
           </div>
           <div className="pub-pricing" data-testid="pub-pricing">
-            <h3 className="pub-h3">{PRICING.title}</h3>
+            <h3 className="pub-h3">{t('web.pricing.title')}</h3>
             <p>
-              <strong>{PRICING.label}.</strong> {PRICING.text}
+              <strong>{t('web.labels.tick_title', { title: t('web.pricing.label') })}</strong>{' '}
+              {t('web.pricing.text')}
             </p>
           </div>
         </div>
@@ -509,9 +531,9 @@ function FinalCta() {
       <GemGlow className="pub-final__glow" />
       <div className="pub-wrap">
         <h2 id="final-cta" className="pub-h2">
-          {FINAL_CTA.title}
+          {t('web.final_cta.title')}
         </h2>
-        <p>{FINAL_CTA.text}</p>
+        <p>{t('web.final_cta.text')}</p>
         <Cta testid="final-get-started" />
       </div>
     </section>
@@ -542,8 +564,8 @@ const PRODUCT_SCREENS: Partial<Record<ArtName, ScreenName>> = {
 function Product() {
   return (
     <div data-testid="public-product">
-      <PageHead title={LABELS.productTitle} lede={PRODUCT_LEDE} />
-      {CAPABILITIES.map((c, i) => (
+      <PageHead title={t('web.labels.product_title')} lede={t('web.product.lede')} />
+      {capabilities().map((c, i) => (
         <section
           key={c.id}
           id={c.id}
@@ -562,7 +584,7 @@ function Product() {
                   <li key={p}>{p}</li>
                 ))}
               </ul>
-              {c.soon && <Soon items={c.soon} />}
+              {c.soon.length > 0 && <Soon items={c.soon} />}
             </div>
             <div data-reveal>
               {PRODUCT_SCREENS[c.id] ? <Shot name={PRODUCT_SCREENS[c.id]!} /> : <CapabilityArt name={c.id} />}
@@ -575,9 +597,9 @@ function Product() {
       <section className="pub-section">
         <div className="pub-wrap pub-split">
           <div data-reveal>
-            <h2 className="pub-h2">{LABELS.homeShotTitle}</h2>
-            <p className="pub-lede">{LABELS.homeShotText}</p>
-            <p className="pub-bank">{BANK_STATEMENT}</p>
+            <h2 className="pub-h2">{t('web.labels.home_shot_title')}</h2>
+            <p className="pub-lede">{t('web.labels.home_shot_text')}</p>
+            <p className="pub-bank">{t('web.bank_statement')}</p>
           </div>
           <div className="pub-phones" data-reveal>
             <Shot name="homePhone" frame="phone" />
@@ -594,12 +616,12 @@ function Product() {
 function Security() {
   return (
     <div data-testid="public-security">
-      <PageHead title={LABELS.securityTitle} lede={PAGE_META['/security'].description} />
+      <PageHead title={t('web.labels.security_title')} lede={t('web.meta.security.description')} />
       <section className="pub-section pub-band pub-band--glow">
         <GemGlow className="pub-band__glow" />
         <div className="pub-wrap pub-split">
           <div className="pub-grid2">
-            {SECURITY.map((s) => (
+            {securityControls().map((s) => (
               <article
                 key={s.title}
                 className="pub-tile pub-tile--dark"
@@ -616,7 +638,7 @@ function Security() {
           </div>
         </div>
       </section>
-      <Facts items={SECURITY_FACTS} />
+      <Facts items={securityFacts()} />
       <Faq />
       <FinalCta />
     </div>
@@ -626,12 +648,12 @@ function Security() {
 function Partners() {
   return (
     <div data-testid="public-partners">
-      <PageHead title={PARTNER.title} lede={PARTNER.text} />
+      <PageHead title={t('web.partner.title')} lede={t('web.partner.text')} />
       <section className="pub-section">
         <div className="pub-wrap pub-split">
           <div>
             <ul className="pub-list">
-              {PARTNER.points.map((p) => (
+              {tList('web.partner.points').map((p) => (
                 <li key={p}>{p}</li>
               ))}
             </ul>
@@ -645,12 +667,12 @@ function Partners() {
         <div className="pub-wrap pub-split">
           <div data-reveal>
             <h2 id="partner-api" className="pub-h2">
-              {PARTNER.apiTitle}
+              {t('web.partner.api_title')}
             </h2>
-            <p className="pub-lede">{PARTNER.apiText}</p>
+            <p className="pub-lede">{t('web.partner.api_text')}</p>
           </div>
           <ol className="pub-steps pub-steps--dark" data-reveal>
-            {STEPS.map((st, i) => (
+            {steps().map((st, i) => (
               <li key={st.title}>
                 <span className="pub-step-n" aria-hidden="true">
                   {i + 1}
@@ -677,13 +699,18 @@ const PAGES: Record<PagePath, () => ReactNode> = {
 
 /** The signed-out public site (OG-032): one page per path, header and footer around it. */
 export function PublicSite({ path }: { path: PublicPath }) {
+  useChannels('web_public', 'faq', 'legal', ...(path.startsWith('/blog') ? (['blog'] as const) : []));
   usePageMeta(path);
   useReveal(path);
-  const Page = isPagePath(path) ? PAGES[path] : () => <MediaPage path={path} />;
+  const Page = isPagePath(path)
+    ? PAGES[path]
+    : isLegalPath(path)
+      ? () => <LegalPage slug={path.slice(7)} />
+      : () => <MediaPage path={path} />;
   return (
     <div className="pub">
       <a href="#main" className="pub-skip">
-        {LABELS.skip}
+        {t('web.labels.skip')}
       </a>
       <Header path={path} />
       <main id="main">

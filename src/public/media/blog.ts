@@ -1,8 +1,10 @@
-import { IS_AE } from '../../region';
+import { has, keysUnder, metaOf, t } from '../../i18n';
+import { formatDay } from '../../lib/schedule';
 
 /**
- * The founder blog (OG-032 R15): one markdown file per post in src/public/blog/, with front matter for the title,
- * date, summary, author, tags, the walkthrough video it links and the product page. Newest first.
+ * The founder blog (OG-032 R15): each post is entries of the `blog` channel (`blog.<slug>.title`, `.summary`,
+ * `.author`, `.body` in markdown); the title's meta holds the date, tags, the walkthrough video and the product page.
+ * Each region's content holds its own posts (the AE build has no US-only post, OG-022 R18).
  */
 export interface Post {
   slug: string;
@@ -16,51 +18,34 @@ export interface Post {
   body: string;
 }
 
-/**
- * The AE build (OG-022 R18) reads only blog/ae/: the posts that hold for the UAE, without US bank, rail or partner names.
- * US-only posts (the partner, where your money lives, adding money, limits) are not in it.
- */
-const files = (
-  IS_AE
-    ? import.meta.glob('../blog/ae/*.md', { query: '?raw', import: 'default', eager: true })
-    : import.meta.glob('../blog/*.md', { query: '?raw', import: 'default', eager: true })
-) as Record<string, string>;
-
-export function parsePost(slug: string, raw: string): Post {
-  const m = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/.exec(raw);
-  if (!m) throw new Error(`Blog post ${slug} has no front matter`);
-  const meta: Record<string, string> = {};
-  for (const line of m[1]!.split('\n')) {
-    const i = line.indexOf(':');
-    if (i > 0) meta[line.slice(0, i).trim()] = line.slice(i + 1).trim();
-  }
-  for (const k of ['title', 'date', 'summary', 'author'])
-    if (!meta[k]) throw new Error(`Blog post ${slug} has no ${k}`);
+/** A post's text in the current language: the `blog` channel (OG-033), one entry each for title, summary, author and body. */
+export function postBySlug(slug: string): Post | undefined {
+  if (!has(`blog.${slug}.title`) || !has(`blog.${slug}.body`)) return undefined;
+  const meta = metaOf(`blog.${slug}.title`);
   return {
     slug,
-    title: meta.title!,
-    date: meta.date!,
-    summary: meta.summary!,
-    author: meta.author!,
+    title: t(`blog.${slug}.title`),
+    date: meta.date ?? '',
+    summary: t(`blog.${slug}.summary`),
+    author: t(`blog.${slug}.author`),
     tags: (meta.tags ?? '')
       .split(',')
-      .map((t) => t.trim())
+      .map((x) => x.trim())
       .filter(Boolean),
-    video: meta.video,
-    product: meta.product,
-    body: m[2]!.trim(),
+    video: meta.video || undefined,
+    product: meta.product || undefined,
+    body: t(`blog.${slug}.body`),
   };
 }
 
-export const POSTS: Post[] = Object.entries(files)
-  .map(([path, raw]) => parsePost(path.replace(/^.*\/|\.md$/g, ''), raw))
-  .sort((a, b) => (a.date === b.date ? a.title.localeCompare(b.title) : b.date.localeCompare(a.date)));
-
-export const postBySlug = (slug: string) => POSTS.find((p) => p.slug === slug);
-
-/** 7 Nov 2026, as the rest of the app writes dates; the date is a calendar day, so it never shifts by time zone. */
-export function formatPostDate(iso: string): string {
-  const [y, mo, d] = iso.split('-').map(Number);
-  const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][mo! - 1];
-  return `${d} ${month} ${y}`;
+/** Every post the content has, newest first. */
+export function posts(): Post[] {
+  return keysUnder('blog.')
+    .filter((k) => k.endsWith('.title'))
+    .map((k) => postBySlug(k.slice(5, -6)))
+    .filter((p): p is Post => p !== undefined)
+    .sort((a, b) => (a.date === b.date ? a.title.localeCompare(b.title) : b.date.localeCompare(a.date)));
 }
+
+/** 7 Nov 2026, as the rest of the app writes dates (Arabic month names in Arabic); a calendar day never shifts. */
+export const formatPostDate = (iso: string): string => formatDay(iso) || iso;

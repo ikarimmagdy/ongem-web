@@ -1,3 +1,4 @@
+import { t } from '../i18n';
 import { useId, type ReactNode } from 'react';
 import { formatMinor } from '../lib/format';
 import { REGION_CONFIG } from '../region';
@@ -55,7 +56,7 @@ export function HeroArt() {
       className="pub-art pub-art--hero"
       viewBox="0 0 520 420"
       role="img"
-      aria-label="OnGem on a laptop and a phone"
+      aria-label={t('web.art.label.hero')}
     >
       <defs>
         <linearGradient id={g} x1="0" y1="0" x2="1" y2="1">
@@ -70,7 +71,7 @@ export function HeroArt() {
       <Gem x={58} y={78} s={0.5} />
       <Bar x={96} y={86} w={80} cls="f-deep" />
       <text className="t-muted" x="64" y="146" fontSize="13">
-        Operating account
+        {t('web.art.operating_account')}
       </text>
       <text className="t-primary pub-art__money" x="64" y="180" fontSize="30">
         {sample(4_825_000)}
@@ -78,7 +79,7 @@ export function HeroArt() {
       <rect className="f-tint-mint" x="64" y="200" width="150" height="26" rx="13" />
       <circle className="f-success" cx="80" cy="213" r="5" />
       <text className="t-on-tint" x="92" y="218" fontSize="12">
-        Payment settled
+        {t('web.art.payment_settled')}
       </text>
       <polyline
         className="s-primary"
@@ -101,7 +102,7 @@ export function HeroArt() {
         <Bar x={18} y={122} w={60} />
         <rect className="f-primary" x="18" y="196" width="94" height="26" rx="13" />
         <text className="t-on-primary" x="40" y="213" fontSize="11">
-          Approve
+          {t('web.art.approve')}
         </text>
       </g>
     </svg>
@@ -110,7 +111,7 @@ export function HeroArt() {
 
 export function ShieldArt() {
   return (
-    <Svg label="A shield with the OnGem gem">
+    <Svg label={t('web.art.label.shield')}>
       <path
         className="f-tint"
         d="M160 20 L250 52 L250 112 C250 160 210 192 160 206 C110 192 70 160 70 112 L70 52 Z"
@@ -130,10 +131,10 @@ export function ShieldArt() {
 
 export function PartnerArt() {
   return (
-    <Svg label="A company passing its details to OnGem">
+    <Svg label={t('web.art.label.partner')}>
       <Panel x={20} y={50} w={110} h={120} />
       <text className="t-muted" x="34" y="78" fontSize="12">
-        New company
+        {t('web.art.new_company')}
       </text>
       <Bar x={34} y={92} w={80} />
       <Bar x={34} y={110} w={60} />
@@ -155,7 +156,7 @@ export function PartnerArt() {
 
 const ART: Record<ArtName, () => ReactNode> = {
   accounts: () => (
-    <Svg label="Account balance and statement">
+    <Svg label={t('web.art.label.accounts')}>
       <Panel x={30} y={30} w={260} h={160} />
       <Gem x={48} y={46} s={0.6} />
       <text className="t-primary pub-art__money" x="48" y="112" fontSize="26">
@@ -165,12 +166,12 @@ const ART: Record<ArtName, () => ReactNode> = {
       <Bar x={48} y={148} w={100} />
       <rect className="f-tint-violet" x="200" y="132" width="70" height="40" rx="8" />
       <text className="t-on-tint" x="212" y="157" fontSize="11">
-        PDF
+        PDF {/* content-check: ignore */}
       </text>
     </Svg>
   ),
   payments: () => (
-    <Svg label="A payment moving from sent to settled">
+    <Svg label={t('web.art.label.payments')}>
       {[60, 160, 260].map((cx, i) => (
         <g key={cx}>
           <circle className={i === 2 ? 'f-success' : 'f-primary'} cx={cx} cy="100" r="22" />
@@ -180,18 +181,18 @@ const ART: Record<ArtName, () => ReactNode> = {
       <line className="s-primary" x1="84" y1="100" x2="136" y2="100" strokeWidth="4" />
       <line className="s-success" x1="184" y1="100" x2="236" y2="100" strokeWidth="4" />
       <text className="t-muted" x="40" y="150" fontSize="12">
-        Sent
+        {t('web.art.sent')}
       </text>
       <text className="t-muted" x="130" y="150" fontSize="12">
-        At the bank
+        {t('web.art.at_the_bank')}
       </text>
       <text className="t-muted" x="238" y="150" fontSize="12">
-        Settled
+        {t('web.art.settled')}
       </text>
     </Svg>
   ),
   topup: () => (
-    <Svg label="Money pulled in from another bank">
+    <Svg label={t('web.art.label.topup')}>
       <path className="f-tint" d="M30 90 L90 60 L150 90 Z" />
       {[44, 76, 108, 136].map((x) => (
         <rect key={x} className="f-primary" x={x} y="94" width="10" height="56" rx="3" />
@@ -214,7 +215,7 @@ const ART: Record<ArtName, () => ReactNode> = {
       </g>
     );
     return (
-      <Svg label="Two virtual cards, one frozen">
+      <Svg label={t('web.art.label.cards')}>
         <Card x={40} y={40} cls="f-primary" />
         <Card x={110} y={80} cls="f-signature" />
         <circle className="f-card s-border" cx="268" cy="70" r="24" />
@@ -223,7 +224,7 @@ const ART: Record<ArtName, () => ReactNode> = {
     );
   },
   approvals: () => (
-    <Svg label="A maker and an approver">
+    <Svg label={t('web.art.label.approvals')}>
       {[90, 230].map((cx, i) => (
         <g key={cx}>
           <circle className={i ? 'f-signature' : 'f-primary'} cx={cx} cy="80" r="26" />
@@ -235,12 +236,12 @@ const ART: Record<ArtName, () => ReactNode> = {
       <rect className="f-tint-mint" x="100" y="130" width="120" height="40" rx="20" />
       <polyline className="s-success" points="128,150 138,160 156,140" fill="none" strokeWidth="4" />
       <text className="t-on-tint" x="164" y="155" fontSize="12">
-        Approved
+        {t('web.art.approved')}
       </text>
     </Svg>
   ),
   recipients: () => (
-    <Svg label="A list of screened recipients">
+    <Svg label={t('web.art.label.recipients')}>
       <Panel x={50} y={30} w={220} h={160} />
       {[60, 100, 140].map((y, i) => (
         <g key={y}>
@@ -252,7 +253,7 @@ const ART: Record<ArtName, () => ReactNode> = {
     </Svg>
   ),
   support: () => (
-    <Svg label="A support conversation">
+    <Svg label={t('web.art.label.support')}>
       <rect className="f-tint" x="40" y="40" width="170" height="60" rx="16" />
       <Bar x={58} y={60} w={120} cls="f-card" />
       <Bar x={58} y={76} w={80} cls="f-card" />
@@ -262,7 +263,7 @@ const ART: Record<ArtName, () => ReactNode> = {
     </Svg>
   ),
   notifications: () => (
-    <Svg label="An inbox of notices">
+    <Svg label={t('web.art.label.notifications')}>
       <path
         className="f-primary"
         d="M160 40 C130 40 116 62 116 92 V120 L104 138 H216 L204 120 V92 C204 62 190 40 160 40 Z"
@@ -275,14 +276,14 @@ const ART: Record<ArtName, () => ReactNode> = {
     </Svg>
   ),
   assistant: () => (
-    <Svg label="An assistant drafting a payment">
+    <Svg label={t('web.art.label.assistant')}>
       <Panel x={40} y={40} w={240} h={140} />
       <Gem x={56} y={56} s={0.6} />
       <Bar x={96} y={62} w={150} />
       <Bar x={96} y={80} w={110} />
       <rect className="f-tint-violet" x="56" y="110" width="208" height="50" rx="12" />
       <text className="t-on-tint" x="70" y="140" fontSize="12">
-        Draft ready: you review and send
+        {t('web.art.draft_ready')}
       </text>
     </Svg>
   ),
