@@ -30,7 +30,7 @@ const before = html;
 html = html
   .replace(
     '<html lang="en">',
-    `<html lang="en" data-theme="${attr(shell.themeId)}" data-theme-mode="${attr(shell.themeMode)}" style="${attr(shell.style)}">`,
+    `<html lang="en" dir="ltr" data-theme="${attr(shell.themeId)}" data-theme-mode="${attr(shell.themeMode)}" style="${attr(shell.style)}">`,
   )
   .replace(/<title>.*<\/title>/, `<title>${text(shell.title)}</title>`)
   .replace('<div id="root"></div>', `<div id="root">${shell.html}</div>`);

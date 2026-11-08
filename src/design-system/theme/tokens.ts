@@ -1,5 +1,20 @@
 import type { Theme } from './types';
 
+/**
+ * The Arabic face (OG-033 R10), placed after the theme's own faces and before the generic family, so Latin text keeps
+ * the brand face and Arabic letters, which the brand faces do not have, use IBM Plex Sans Arabic.
+ */
+export const ARABIC_FACE = "'IBM Plex Sans Arabic'"; // content-check: ignore (a font name)
+const GENERIC = /^(system-ui|sans-serif|serif|monospace|ui-\w+|-apple-system)$/;
+
+export function withArabic(family: string): string {
+  if (family.includes(ARABIC_FACE)) return family;
+  const faces = family.split(',').map((f) => f.trim());
+  const at = faces.findIndex((f) => GENERIC.test(f));
+  faces.splice(at < 0 ? faces.length : at, 0, ARABIC_FACE);
+  return faces.join(', ');
+}
+
 const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
 export function themeToCssVars(theme: Theme): Record<string, string> {
@@ -12,7 +27,7 @@ export function themeToCssVars(theme: Theme): Record<string, string> {
   for (const role of ['display', 'label', 'body', 'bodyStrong', 'money'] as const) {
     const r = theme.typography[role];
     const name = kebab(role);
-    vars[`--font-${name}`] = r.family;
+    vars[`--font-${name}`] = withArabic(r.family);
     vars[`--font-${name}-weight`] = String(r.weight);
     if (r.transform) vars[`--font-${name}-transform`] = r.transform;
     if (r.tracking) vars[`--font-${name}-tracking`] = r.tracking;

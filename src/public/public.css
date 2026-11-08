@@ -1050,3 +1050,8 @@
 [data-theme-mode='dark'] .pub .og-btn--ghost {
   border: 1.5px solid var(--color-border-strong);
 }
+
+/* The language button in the header (OG-033 R10): a word, not an icon. */
+.pub-lang {
+  padding-inline: var(--space-sm);
+}

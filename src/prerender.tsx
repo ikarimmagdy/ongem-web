@@ -3,7 +3,8 @@ import { MemoryRouter } from 'react-router-dom';
 import { App } from './App';
 import { CLERK_PUBLISHABLE_KEY } from './auth/key';
 import { AuthProvider, NO_AUTH } from './auth/session';
-import { defaultTheme, documentTitle, themeToCssVars } from './design-system';
+import { defaultTheme, themeToCssVars } from './design-system';
+import { pageMeta } from './public/content';
 
 /**
  * The first screen (the public home, OG-032; sign-in before it) as static HTML for index.html, built by `scripts/prerender.mjs` after `vite build`, so it
@@ -24,5 +25,5 @@ export function prerender() {
     Object.entries(vars)
       .map(([k, v]) => `${k}: ${v}`)
       .join('; ') + `; color-scheme: ${vars['--color-scheme'] ?? 'light'}`;
-  return { html, style, themeId: theme.id, themeMode: theme.mode ?? 'light', title: documentTitle(theme) };
+  return { html, style, themeId: theme.id, themeMode: theme.mode ?? 'light', title: pageMeta('/').title };
 }

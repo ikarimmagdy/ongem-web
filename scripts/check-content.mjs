@@ -9,8 +9,6 @@ import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 
-const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..');
-
 /** Words that are not copy: header names and protocol words. */
 const ALLOWED = new Set(['Authorization', 'Accept', 'Bearer', 'Content-Type', 'ETag', 'OnGem']);
 
@@ -66,7 +64,7 @@ function inDeveloperCall(node) {
   return false;
 }
 
-export function findings(root = ROOT) {
+export function findings(root = process.cwd()) {
   const out = [];
   for (const path of files(join(root, 'src'))) {
     const rel = relative(root, path);
@@ -104,7 +102,14 @@ export function findings(root = ROOT) {
   return out;
 }
 
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+const cli = (() => {
+  try {
+    return Boolean(process.argv[1]) && fileURLToPath(import.meta.url) === process.argv[1];
+  } catch {
+    return false;
+  }
+})();
+if (cli) {
   const found = findings();
   for (const f of found) console.log(f);
   if (found.length) {

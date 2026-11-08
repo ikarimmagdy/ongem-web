@@ -49,7 +49,7 @@ a {
 
 .og-skip {
   position: absolute;
-  left: var(--space-sm);
+  inset-inline-start: var(--space-sm);
   top: calc(-1 * var(--space-3xl));
   background: var(--color-action-primary-bg);
   color: var(--color-action-primary-text);
@@ -888,7 +888,7 @@ input[type='color'].og-input {
 .og-steps__item:not(:last-child)::before {
   content: '';
   position: absolute;
-  left: calc(var(--space-lg) / 2 - 1px);
+  inset-inline-start: calc(var(--space-lg) / 2 - 1px);
   top: var(--space-lg);
   bottom: 0;
   width: 2px;

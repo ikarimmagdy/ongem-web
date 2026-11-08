@@ -1,0 +1,251 @@
+{
+  "channel": "blog",
+  "entries": [
+    {
+      "key": "blog.adding-money-from-another-bank.author",
+      "format": "text",
+      "description": "Blog post author line",
+      "placeholders": [],
+      "meta": {},
+      "en": "Karim Magdy",
+      "ar": "كريم مجدي"
+    },
+    {
+      "key": "blog.adding-money-from-another-bank.body",
+      "format": "markdown",
+      "description": "Blog post text (markdown: ## headings, lists, links, bold)",
+      "placeholders": [],
+      "meta": {},
+      "en": "You can fund your OnGem account by wiring money in, or by pulling it from your company's account at another bank. This post covers the second.\n\n## Step 1: link the account\n\nAdd the other bank's routing and account number and who owns the account. The bank checks that the account is real and belongs to your company. Until it is verified, it shows as unverified and cannot be pulled from.\n\n_Coming soon: linking an account instantly by signing in to your other bank. Today accounts are typed in and verified by the bank._\n\n## Step 2: add money\n\n1. Choose the verified account and the OnGem account to fund.\n2. Enter the amount and review it.\n3. Confirm it is you with your second sign-in step.\n4. A second person in your company approves it, or OnGem does if no one else can approve.\n5. The bank pulls the money by ACH.\n\n## Limits and timing\n\nToday a single top-up can be up to **US$25,000**, and a company can add up to **US$50,000** a day. ACH takes one to two business days, and the bank can hold money pulled in this way for a short time before you can spend it.\n\nWatch [adding money with a second approval](/videos#add-money-and-approve).",
+      "ar": "يمكنك تمويل حسابك في OnGem بتحويل الأموال إليه برقيًا، أو بسحبها من حساب شركتك لدى بنك آخر. يتناول هذا المقال الطريقة الثانية.\n\n## الخطوة 1: اربط الحساب\n\nأضف رقم التوجيه (routing number) ورقم الحساب لدى البنك الآخر، ومن يملك الحساب. يتحقق البنك من أن الحساب حقيقي وأنه يعود إلى شركتك. وإلى أن يُوثَّق، يظهر بحالة غير موثَّق ولا يمكن السحب منه.\n\n_قريبًا: ربط الحساب فورًا بتسجيل الدخول إلى بنكك الآخر. اليوم تُدخَل الحسابات يدويًا ويتحقق منها البنك._\n\n## الخطوة 2: أضف الأموال\n\n1. اختر الحساب الموثَّق وحساب OnGem المراد تمويله.\n2. أدخل المبلغ وراجعه.\n3. أكّد هويتك بخطوة التحقق الثانية.\n4. يوافق عليها شخص ثانٍ في شركتك، أو توافق OnGem إذا لم يكن هناك من يملك صلاحية الموافقة.\n5. يسحب البنك الأموال عبر ACH.\n\n## الحدود والمدة\n\nاليوم يمكن أن تصل عملية التعبئة الواحدة إلى **US$25,000**، ويمكن للشركة إضافة ما يصل إلى **US$50,000** في اليوم. تستغرق ACH من يوم إلى يومي عمل، وقد يحتجز البنك الأموال المسحوبة بهذه الطريقة لفترة قصيرة قبل أن تتمكن من إنفاقها.\n\nشاهد [إضافة الأموال مع موافقة ثانية](/videos#add-money-and-approve)."
+    },
+    {
+      "key": "blog.adding-money-from-another-bank.summary",
+      "format": "text",
+      "description": "Blog post summary on the list and in search results",
+      "placeholders": [],
+      "meta": {},
+      "en": "Link your company's account at another bank, then pull money into OnGem by ACH, with a second approval before anything moves.",
+      "ar": "اربط حساب شركتك لدى بنك آخر، ثم اسحب الأموال إلى OnGem عبر ACH، مع موافقة شخص ثانٍ قبل أن تتحرك أي أموال."
+    },
+    {
+      "key": "blog.adding-money-from-another-bank.title",
+      "format": "text",
+      "description": "Blog post title; meta holds the date, tags, the linked video and product page",
+      "placeholders": [],
+      "meta": {
+        "date": "2026-11-07",
+        "tags": "top-ups,ach",
+        "video": "add-money-and-approve",
+        "product": "/product#topup"
+      },
+      "en": "Adding money from your account at another bank",
+      "ar": "إضافة الأموال من حسابك لدى بنك آخر"
+    },
+    {
+      "key": "blog.approvals-and-the-one-person-company.author",
+      "format": "text",
+      "description": "Blog post author line",
+      "placeholders": [],
+      "meta": {},
+      "en": "Karim Magdy",
+      "ar": "كريم مجدي"
+    },
+    {
+      "key": "blog.approvals-and-the-one-person-company.body",
+      "format": "markdown",
+      "description": "Blog post text (markdown: ## headings, lists, links, bold)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Most payment mistakes are caught by a second look. That is why OnGem sends larger payments, and money you pull in from another bank, to a second person before anything moves.\n\n## How approvals work\n\n1. Someone in your company creates the payment and confirms it is them with a second sign-in step.\n2. The payment waits, marked **Pending approval**. Nothing has moved yet.\n3. A different person in your company who is allowed to approve payments reviews it and approves or declines it, again with their own second step.\n4. Only then does the payment go to the bank.\n\nThe person who created a payment can never approve it. The rules are kept per company.\n\n## What if you are the only person?\n\nMany companies start with one founder. In that case there is no second person to ask, so **OnGem approves it**. You will see:\n\n> Waiting for OnGem to approve it, because no one else in your company can approve payments. Nothing has moved yet.\n\nThe approve and decline buttons are not shown to you, because you made the payment. When you add someone to your company who can approve, approvals go back to your own team.\n\nWatch [OnGem approving for a one-person company](/videos#ongem-approves-one-person-company) and [adding money with a second approval](/videos#add-money-and-approve).",
+      "ar": "تُكتشف معظم أخطاء الدفع بنظرة ثانية. لهذا ترسل OnGem الدفعات الأكبر، والأموال التي تسحبها من بنك آخر، إلى شخص ثانٍ قبل أن يتحرك أي شيء.\n\n## كيف تعمل الموافقات\n\n1. ينشئ شخص في شركتك الدفعة ويؤكد هويته بخطوة تحقق ثانية.\n2. تنتظر الدفعة بحالة **بانتظار الموافقة**. لم يتحرك شيء بعد.\n3. يراجعها شخص آخر في شركتك يملك صلاحية الموافقة على الدفعات، فيوافق عليها أو يرفضها، بخطوة التحقق الثانية الخاصة به أيضًا.\n4. عندها فقط تُرسل الدفعة إلى البنك.\n\nلا يمكن لمن أنشأ الدفعة أن يوافق عليها أبدًا. والقواعد محفوظة لكل شركة على حدة.\n\n## ماذا لو كنت الشخص الوحيد؟\n\nتبدأ شركات كثيرة بمؤسس واحد. وفي هذه الحالة لا يوجد شخص ثانٍ يُطلب منه ذلك، لذا **توافق OnGem عليها**. وسترى:\n\n> بانتظار موافقة OnGem، لأنه لا يوجد في شركتك شخص آخر يملك صلاحية الموافقة على الدفعات. لم يتحرك شيء بعد.\n\nلا تظهر لك أزرار الموافقة والرفض، لأنك أنت من أنشأ الدفعة. وعندما تضيف إلى شركتك شخصًا يملك صلاحية الموافقة، تعود الموافقات إلى فريقك.\n\nشاهد [OnGem توافق عن شركة الشخص الواحد](/videos#ongem-approves-one-person-company) و[إضافة الأموال مع موافقة ثانية](/videos#add-money-and-approve)."
+    },
+    {
+      "key": "blog.approvals-and-the-one-person-company.summary",
+      "format": "text",
+      "description": "Blog post summary on the list and in search results",
+      "placeholders": [],
+      "meta": {},
+      "en": "Larger payments in OnGem wait for a second person to approve them. If no one else in your company can approve, OnGem does.",
+      "ar": "تنتظر الدفعات الأكبر في OnGem موافقة شخص ثانٍ. وإذا لم يكن في شركتك من يملك صلاحية الموافقة، تتولى OnGem الموافقة."
+    },
+    {
+      "key": "blog.approvals-and-the-one-person-company.title",
+      "format": "text",
+      "description": "Blog post title; meta holds the date, tags, the linked video and product page",
+      "placeholders": [],
+      "meta": {
+        "date": "2026-11-07",
+        "tags": "approvals,payments",
+        "video": "ongem-approves-one-person-company",
+        "product": "/product#approvals"
+      },
+      "en": "Two sets of eyes on every larger payment, even in a one-person company",
+      "ar": "مراجعة ثانية لكل دفعة كبيرة، حتى في شركة الشخص الواحد"
+    },
+    {
+      "key": "blog.from-genzone-to-ongem.author",
+      "format": "text",
+      "description": "Blog post author line",
+      "placeholders": [],
+      "meta": {},
+      "en": "Karim Magdy",
+      "ar": "كريم مجدي"
+    },
+    {
+      "key": "blog.from-genzone-to-ongem.body",
+      "format": "markdown",
+      "description": "Blog post text (markdown: ## headings, lists, links, bold)",
+      "placeholders": [],
+      "meta": {},
+      "en": "GenZone forms companies and handles business licences. When you form your company with GenZone, you can ask it to send your company's details to OnGem.\n\n## What happens\n\n1. GenZone sends your company's details through OnGem's Partner API, with your consent.\n2. You sign in to OnGem and find your application already filled in: the company, its address and its owners.\n3. Each owner adds their own identity details in OnGem.\n4. You confirm the details, accept the bank's disclosures and submit.\n5. Piermont Bank verifies the business and its owners, and OnGem shows you each step.\n\nNo retyping what you already gave GenZone, and nothing is submitted to the bank until you do it yourself.\n\nWatch the [sign-up and onboarding walkthrough](/videos#sign-up-and-onboarding), or read [how partner onboarding works](/partners).",
+      "ar": "تؤسس GenZone الشركات وتتولى الرخص التجارية. وعندما تؤسس شركتك مع GenZone، يمكنك أن تطلب منها إرسال بيانات شركتك إلى OnGem.\n\n## ما الذي يحدث\n\n1. ترسل GenZone بيانات شركتك عبر واجهة برمجة الشركاء من OnGem، بموافقتك.\n2. تسجّل الدخول إلى OnGem فتجد طلبك معبأً مسبقًا: الشركة وعنوانها وملاكها.\n3. يضيف كل مالك بيانات هويته بنفسه في OnGem.\n4. تؤكد البيانات، وتقبل إفصاحات البنك، ثم تقدّم الطلب.\n5. يتحقق Piermont Bank من النشاط التجاري وملاكه، وتعرض لك OnGem كل خطوة.\n\nدون إعادة كتابة ما قدمته إلى GenZone، ولا يُقدَّم أي شيء إلى البنك إلا عندما تقدّمه بنفسك.\n\nشاهد [جولة التسجيل وفتح الحساب](/videos#sign-up-and-onboarding)، أو اقرأ [كيف يعمل التسجيل عبر الشركاء](/partners)."
+    },
+    {
+      "key": "blog.from-genzone-to-ongem.summary",
+      "format": "text",
+      "description": "Blog post summary on the list and in search results",
+      "placeholders": [],
+      "meta": {},
+      "en": "GenZone sends your company's details to OnGem when you ask it to. You review them, add what is missing and submit.",
+      "ar": "ترسل GenZone بيانات شركتك إلى OnGem عندما تطلب منها ذلك. تراجعها، وتضيف ما ينقص، ثم تقدّم الطلب."
+    },
+    {
+      "key": "blog.from-genzone-to-ongem.title",
+      "format": "text",
+      "description": "Blog post title; meta holds the date, tags, the linked video and product page",
+      "placeholders": [],
+      "meta": {
+        "date": "2026-11-07",
+        "tags": "partners,onboarding",
+        "video": "sign-up-and-onboarding",
+        "product": "/partners"
+      },
+      "en": "Formed your company with GenZone? Your application is mostly done",
+      "ar": "هل أسّست شركتك مع GenZone؟ طلبك شبه مكتمل"
+    },
+    {
+      "key": "blog.limits-that-follow-the-bank.author",
+      "format": "text",
+      "description": "Blog post author line",
+      "placeholders": [],
+      "meta": {},
+      "en": "Karim Magdy",
+      "ar": "كريم مجدي"
+    },
+    {
+      "key": "blog.limits-that-follow-the-bank.body",
+      "format": "markdown",
+      "description": "Blog post text (markdown: ## headings, lists, links, bold)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Like every business bank account, an OnGem account has limits on how much can move: per payment, per day and per month.\n\n## Where the limits come from\n\nPiermont Bank, the bank that holds your account, reviews every business it banks and keeps that review up to date. OnGem reads the bank's view of your business every day, and again straight away when the bank tells us it has changed. The limits that apply to your payments follow it.\n\nThat means:\n\n- **A new company may start with lower limits.** As your company builds a history with the bank, limits can rise.\n- **Limits can change.** When they do, OnGem sends you a notice that your limits have changed.\n- **Some features need a history.** For example, pulling money in from another bank can need a period of payments without returns first.\n\n## What you see when a payment is over a limit\n\nOnGem tells you plainly that the payment is over the limit, for one payment or for the day or month, and that nothing was sent. It never moves part of a payment.\n\n## The limits we use today\n\nUntil the bank confirms the limits for our pilot, OnGem uses its built-in limits: **US$25,000 per payment and US$50,000 per day**. The limits per level that we proposed to the bank are waiting for its approval.\n\nWatch [sending a payment](/videos#send-a-payment).",
+      "ar": "مثل كل حساب مصرفي للأعمال، لحساب OnGem حدود لما يمكن تحريكه: لكل دفعة، ولكل يوم، ولكل شهر.\n\n## من أين تأتي الحدود\n\nيراجع Piermont Bank، البنك الذي يحتفظ بحسابك، كل نشاط تجاري يتعامل معه ويُبقي هذه المراجعة محدَّثة. تقرأ OnGem تقييم البنك لنشاطك التجاري كل يوم، ومرة أخرى فورًا عندما يبلغنا البنك بأنه تغيّر. والحدود المطبقة على دفعاتك تتبعه.\n\nوهذا يعني:\n\n- **قد تبدأ الشركة الجديدة بحدود أقل.** ومع بناء شركتك سجلًا مع البنك، يمكن أن ترتفع الحدود.\n- **قد تتغير الحدود.** وعندما يحدث ذلك، ترسل لك OnGem إشعارًا بأن حدودك تغيّرت.\n- **بعض الميزات تتطلب سجلًا.** على سبيل المثال، قد يتطلب سحب الأموال من بنك آخر فترة من الدفعات دون إعادة أولًا.\n\n## ما الذي تراه عندما تتجاوز الدفعة أحد الحدود\n\nتوضح لك OnGem بوضوح أن الدفعة تتجاوز الحد، سواء لدفعة واحدة أو لليوم أو للشهر، وأنه لم يُرسل شيء. ولا تحرك أبدًا جزءًا من دفعة.\n\n## الحدود التي نستخدمها اليوم\n\nإلى أن يؤكد البنك الحدود الخاصة بمرحلتنا التجريبية، تستخدم OnGem حدودها المضمّنة: **US$25,000 لكل دفعة وUS$50,000 لكل يوم**. أما الحدود لكل مستوى التي اقترحناها على البنك فهي بانتظار موافقته.\n\nشاهد [إرسال دفعة](/videos#send-a-payment)."
+    },
+    {
+      "key": "blog.limits-that-follow-the-bank.summary",
+      "format": "text",
+      "description": "Blog post summary on the list and in search results",
+      "placeholders": [],
+      "meta": {},
+      "en": "Every payment and every day has a limit. The limits that apply to your company follow the bank's view of your business, and can change over time.",
+      "ar": "لكل دفعة ولكل يوم حدّ. والحدود المطبقة على شركتك تتبع تقييم البنك لنشاطك التجاري، وقد تتغير مع الوقت."
+    },
+    {
+      "key": "blog.limits-that-follow-the-bank.title",
+      "format": "text",
+      "description": "Blog post title; meta holds the date, tags, the linked video and product page",
+      "placeholders": [],
+      "meta": {
+        "date": "2026-11-07",
+        "tags": "limits,payments",
+        "video": "send-a-payment",
+        "product": "/product#payments"
+      },
+      "en": "Payment limits, and why they can change",
+      "ar": "حدود الدفعات، ولماذا قد تتغير"
+    },
+    {
+      "key": "blog.virtual-cards-and-card-safety.author",
+      "format": "text",
+      "description": "Blog post author line",
+      "placeholders": [],
+      "meta": {},
+      "en": "Karim Magdy",
+      "ar": "كريم مجدي"
+    },
+    {
+      "key": "blog.virtual-cards-and-card-safety.body",
+      "format": "markdown",
+      "description": "Blog post text (markdown: ## headings, lists, links, bold)",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem cards are issued by Piermont Bank. You manage them in OnGem on the web and on your phone.\n\n## Freeze and unfreeze\n\nIf a card looks wrong, freeze it. Payments on a frozen card are declined until you unfreeze it. Both take one tap and your second sign-in step.\n\n## Card details OnGem never sees\n\nWhen you show the card number, the PIN or set a PIN, the bank's own secure window opens inside OnGem. The number goes from the bank to your screen; it never passes through OnGem's servers. The window closes by itself after **5 minutes**.\n\n## Something you do not recognise?\n\nOpen the card and choose **Dispute a charge**. It starts a support request about that card, and you follow the replies and the status in one thread.\n\nWatch [freezing a card and showing its details](/videos#cards-freeze-and-details) and [disputing a charge](/videos#support-and-disputes).",
+      "ar": "تُصدر بطاقات OnGem من Piermont Bank. وتديرها في OnGem على الويب وعلى هاتفك.\n\n## التجميد وإلغاء التجميد\n\nإذا بدا شيء غير طبيعي في بطاقة، فجمّدها. تُرفض الدفعات على البطاقة المجمّدة إلى أن تلغي تجميدها. ويتطلب كلا الإجراءين لمسة واحدة وخطوة التحقق الثانية.\n\n## تفاصيل بطاقة لا تراها OnGem أبدًا\n\nعندما تعرض رقم البطاقة أو الرقم السري أو تعيّن رقمًا سريًا، تُفتح نافذة البنك الآمنة داخل OnGem. ينتقل الرقم من البنك إلى شاشتك مباشرة، ولا يمر أبدًا عبر خوادم OnGem. وتُغلق النافذة تلقائيًا بعد **5 دقائق**.\n\n## عملية لا تعرفها؟\n\nافتح البطاقة واختر **الاعتراض على عملية**. يبدأ ذلك طلب دعم بشأن تلك البطاقة، وتتابع الردود والحالة في محادثة واحدة.\n\nشاهد [تجميد البطاقة وعرض تفاصيلها](/videos#cards-freeze-and-details) و[الاعتراض على عملية](/videos#support-and-disputes)."
+    },
+    {
+      "key": "blog.virtual-cards-and-card-safety.summary",
+      "format": "text",
+      "description": "Blog post summary on the list and in search results",
+      "placeholders": [],
+      "meta": {},
+      "en": "Issue virtual cards for your team, freeze one the moment something looks wrong, and see the card number only in the bank's secure window.",
+      "ar": "أصدر بطاقات افتراضية لفريقك، وجمّد أي بطاقة فور أن يبدو شيء غير طبيعي، ولا تطّلع على رقم البطاقة إلا في نافذة البنك الآمنة."
+    },
+    {
+      "key": "blog.virtual-cards-and-card-safety.title",
+      "format": "text",
+      "description": "Blog post title; meta holds the date, tags, the linked video and product page",
+      "placeholders": [],
+      "meta": {
+        "date": "2026-11-07",
+        "tags": "cards,security",
+        "video": "cards-freeze-and-details",
+        "product": "/product#cards"
+      },
+      "en": "Virtual cards you control in a tap",
+      "ar": "بطاقات افتراضية تتحكم فيها بلمسة واحدة"
+    },
+    {
+      "key": "blog.where-your-money-lives.author",
+      "format": "text",
+      "description": "Blog post author line",
+      "placeholders": [],
+      "meta": {},
+      "en": "Karim Magdy",
+      "ar": "كريم مجدي"
+    },
+    {
+      "key": "blog.where-your-money-lives.body",
+      "format": "markdown",
+      "description": "Blog post text (markdown: ## headings, lists, links, bold)",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem is a financial technology company, not a bank. When you open a business account with OnGem, the account is held at **Piermont Bank**, through **Synctera**, the banking platform that connects OnGem to the bank.\n\n## What that means for you\n\n- **The bank holds the deposits.** The balance you see in OnGem is the bank's balance, read from the bank. OnGem shows it; it does not keep your money in its own accounts.\n- **The bank decides who can open an account.** When you apply, Piermont Bank verifies your business and its owners. OnGem shows you each step and asks for anything the bank needs, such as an ID document.\n- **Every night we check our view against the bank's.** If the balance or a transaction we show ever differs from the bank's records, our nightly check flags it so it is corrected.\n\n## What OnGem adds on top\n\nThe bank account is the foundation. OnGem gives you the tools to run it: payments by ACH, scheduled payments, virtual cards, approvals for larger payments, notices when something needs you, and support that answers in the same place.\n\n## Records\n\nOnGem keeps customer records for seven years after an account closes, and tells you so when you open and when you close an account.\n\nWatch the [sign-up and onboarding walkthrough](/videos#sign-up-and-onboarding), or read [what OnGem does today](/product).\n\n_The exact wording of our bank and deposit disclosures is with our legal reviewers. The disclosures at the foot of each page are the ones that apply._",
+      "ar": "OnGem شركة تقنية مالية وليست بنكًا. عندما تفتح حساب أعمال مع OnGem، يُحفظ الحساب لدى **Piermont Bank**، عبر **Synctera**، المنصة المصرفية التي تربط OnGem بالبنك.\n\n## ماذا يعني ذلك بالنسبة إليك\n\n- **البنك يحتفظ بالودائع.** الرصيد الذي تراه في OnGem هو رصيد البنك، مقروءًا من البنك. تعرضه OnGem، ولا تحتفظ بأموالك في حساباتها الخاصة.\n- **البنك يقرر من يمكنه فتح حساب.** عندما تتقدم بطلب، يتحقق Piermont Bank من نشاطك التجاري وملاكه. وتعرض لك OnGem كل خطوة وتطلب منك ما يحتاجه البنك، مثل وثيقة هوية.\n- **كل ليلة نطابق بياناتنا مع بيانات البنك.** إذا اختلف الرصيد أو أي معاملة نعرضها عن سجلات البنك، ينبّه فحصنا الليلي إلى ذلك حتى يُصحَّح.\n\n## ما الذي تضيفه OnGem\n\nالحساب المصرفي هو الأساس. وتمنحك OnGem الأدوات لإدارته: الدفعات عبر ACH، والدفعات المجدولة، والبطاقات الافتراضية، والموافقات على الدفعات الأكبر، والإشعارات عندما يحتاج شيء إليك، ودعمًا يجيبك في المكان نفسه.\n\n## السجلات\n\nتحتفظ OnGem بسجلات العملاء لمدة سبع سنوات بعد إغلاق الحساب، وتبلغك بذلك عند فتح الحساب وعند إغلاقه.\n\nشاهد [جولة التسجيل وفتح الحساب](/videos#sign-up-and-onboarding)، أو اقرأ [ما تقدمه OnGem اليوم](/product).\n\n_الصيغة الدقيقة لإفصاحات البنك والودائع لدى مراجعينا القانونيين. والإفصاحات الواردة أسفل كل صفحة هي المعمول بها._"
+    },
+    {
+      "key": "blog.where-your-money-lives.summary",
+      "format": "text",
+      "description": "Blog post summary on the list and in search results",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem is the place you run your company's money. The money itself sits in an account at Piermont Bank. Here is how the two fit together.",
+      "ar": "OnGem هي المكان الذي تدير منه أموال شركتك، أما الأموال نفسها فتُحفظ في حساب لدى Piermont Bank. إليك كيف يتكامل الاثنان."
+    },
+    {
+      "key": "blog.where-your-money-lives.title",
+      "format": "text",
+      "description": "Blog post title; meta holds the date, tags, the linked video and product page",
+      "placeholders": [],
+      "meta": {
+        "date": "2026-11-07",
+        "tags": "banking,security",
+        "video": "sign-up-and-onboarding",
+        "product": "/product#accounts"
+      },
+      "en": "Where your money lives: OnGem and Piermont Bank",
+      "ar": "أين تُحفظ أموالك: OnGem وPiermont Bank"
+    }
+  ]
+}

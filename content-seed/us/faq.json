@@ -1,0 +1,131 @@
+{
+  "channel": "faq",
+  "entries": [
+    {
+      "key": "faq.1.a",
+      "format": "text",
+      "description": "FAQ answer 1",
+      "placeholders": [],
+      "meta": {},
+      "en": "No. OnGem is a financial technology company. Your deposits are held at Piermont Bank, which provides the accounts through Synctera. OnGem shows you the bank’s balance and never holds your funds.¹",
+      "ar": "لا. OnGem شركة تقنية مالية. تُحفظ ودائعك لدى Piermont Bank، الذي يقدّم الحسابات عبر Synctera. تعرض لك OnGem رصيد البنك ولا تحتفظ بأموالك أبدًا.¹"
+    },
+    {
+      "key": "faq.1.q",
+      "format": "text",
+      "description": "FAQ question 1",
+      "placeholders": [],
+      "meta": {},
+      "en": "Is OnGem a bank? Who holds my money?",
+      "ar": "هل OnGem بنك؟ ومن يحتفظ بأموالي؟"
+    },
+    {
+      "key": "faq.2.a",
+      "format": "text",
+      "description": "FAQ answer 2",
+      "placeholders": [],
+      "meta": {},
+      "en": "You set who can create and who can approve payments. Above your threshold a payment waits for a second person, and the person who created it can never approve it. If no one else in your company can approve, OnGem approves it, so a one-person company is never stuck.",
+      "ar": "أنت تحدد من يمكنه إنشاء الدفعات ومن يمكنه الموافقة عليها. فوق الحد الذي تضعه تنتظر الدفعة موافقة شخص ثانٍ، ولا يمكن لمن أنشأها أن يوافق عليها أبدًا. وإذا لم يكن في شركتك من يملك صلاحية الموافقة، توافق OnGem عليها، فلا تتعطل شركة الشخص الواحد أبدًا."
+    },
+    {
+      "key": "faq.2.q",
+      "format": "text",
+      "description": "FAQ question 2",
+      "placeholders": [],
+      "meta": {},
+      "en": "How do approvals work?",
+      "ar": "كيف تعمل الموافقات؟"
+    },
+    {
+      "key": "faq.3.a",
+      "format": "text",
+      "description": "FAQ answer 3",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send money in to your account and routing numbers, or link your account at another bank and pull a top-up by ACH. The bank verifies the linked account first, and a second person approves each top-up before the bank pulls it.",
+      "ar": "حوّل الأموال إلى رقم حسابك ورقم التوجيه (routing number)، أو اربط حسابك لدى بنك آخر واسحب مبلغ التعبئة عبر ACH. يتحقق البنك من الحساب المرتبط أولًا، ويوافق شخص ثانٍ على كل عملية تعبئة قبل أن يسحبها البنك."
+    },
+    {
+      "key": "faq.3.q",
+      "format": "text",
+      "description": "FAQ question 3",
+      "placeholders": [],
+      "meta": {},
+      "en": "How do I add money to my account?",
+      "ar": "كيف أضيف أموالًا إلى حسابي؟"
+    },
+    {
+      "key": "faq.4.a",
+      "format": "text",
+      "description": "FAQ answer 4",
+      "placeholders": [],
+      "meta": {},
+      "en": "Yes. Limits apply per payment, per day and per month, and they follow your company’s risk level at the bank. If a payment would go over a limit, it does not move and the app tells you why.",
+      "ar": "نعم. تُطبَّق الحدود على كل دفعة وعلى كل يوم وكل شهر، وتتبع مستوى المخاطر الخاص بشركتك لدى البنك. وإذا كانت الدفعة ستتجاوز أحد الحدود، فلن تُرسل، وسيوضح لك التطبيق السبب."
+    },
+    {
+      "key": "faq.4.q",
+      "format": "text",
+      "description": "FAQ question 4",
+      "placeholders": [],
+      "meta": {},
+      "en": "Are there limits on payments and top-ups?",
+      "ar": "هل توجد حدود على الدفعات وعمليات التعبئة؟"
+    },
+    {
+      "key": "faq.5.a",
+      "format": "text",
+      "description": "FAQ answer 5",
+      "placeholders": [],
+      "meta": {},
+      "en": "Today you can issue virtual cards for the owners of your company, freeze and unfreeze them, and raise a dispute from a card. Cards for other team members are coming soon.",
+      "ar": "يمكنك اليوم إصدار بطاقات افتراضية لملاك شركتك، وتجميدها وإلغاء تجميدها، وفتح اعتراض من البطاقة نفسها. البطاقات لأعضاء الفريق الآخرين قريبًا."
+    },
+    {
+      "key": "faq.5.q",
+      "format": "text",
+      "description": "FAQ question 5",
+      "placeholders": [],
+      "meta": {},
+      "en": "Can I issue cards to my team?",
+      "ar": "هل يمكنني إصدار بطاقات لفريقي؟"
+    },
+    {
+      "key": "faq.6.a",
+      "format": "text",
+      "description": "FAQ answer 6",
+      "placeholders": [],
+      "meta": {},
+      "en": "Money moves only after a second sign-in step, larger payments need two people, every change is written to an audit trail that cannot be rewritten, and card numbers open in the bank’s window so they never pass through OnGem.",
+      "ar": "لا تتحرك الأموال إلا بعد خطوة تحقق ثانية عند تسجيل الدخول، وتحتاج الدفعات الأكبر إلى شخصين، ويُسجَّل كل تغيير في سجل تدقيق لا يمكن تعديله، وتُفتح أرقام البطاقات في نافذة البنك فلا تمر عبر OnGem أبدًا."
+    },
+    {
+      "key": "faq.6.q",
+      "format": "text",
+      "description": "FAQ question 6",
+      "placeholders": [],
+      "meta": {},
+      "en": "How do you protect my account?",
+      "ar": "كيف تحمون حسابي؟"
+    },
+    {
+      "key": "faq.7.a",
+      "format": "text",
+      "description": "FAQ answer 7",
+      "placeholders": [],
+      "meta": {},
+      "en": "When you ask it to, GenZone sends your company’s details to OnGem. You review them, add what is missing, accept the bank’s disclosures and submit. The bank makes its decision as it does for every founder.",
+      "ar": "عندما تطلب منها ذلك، ترسل GenZone بيانات شركتك إلى OnGem. تراجعها، وتضيف ما ينقص، وتقبل إفصاحات البنك، ثم تقدّم الطلب. ويتخذ البنك قراره كما يفعل مع كل مؤسس."
+    },
+    {
+      "key": "faq.7.q",
+      "format": "text",
+      "description": "FAQ question 7",
+      "placeholders": [],
+      "meta": {},
+      "en": "I formed my company with GenZone. What changes?",
+      "ar": "أسّست شركتي مع GenZone. ما الذي يتغير؟"
+    }
+  ]
+}

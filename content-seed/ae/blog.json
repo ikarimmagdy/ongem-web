@@ -1,0 +1,87 @@
+{
+  "channel": "blog",
+  "entries": [
+    {
+      "key": "blog.approvals-and-the-one-person-company.author",
+      "format": "text",
+      "description": "Blog post author line",
+      "placeholders": [],
+      "meta": {},
+      "en": "Karim Magdy",
+      "ar": "كريم مجدي"
+    },
+    {
+      "key": "blog.approvals-and-the-one-person-company.body",
+      "format": "markdown",
+      "description": "Blog post text (markdown: ## headings, lists, links, bold)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Most payment mistakes are caught by a second look. That is why OnGem sends larger payments, and money you pull in from another bank, to a second person before anything moves.\n\n## How approvals work\n\n1. Someone in your company creates the payment and confirms it is them with a second sign-in step.\n2. The payment waits, marked **Pending approval**. Nothing has moved yet.\n3. A different person in your company who is allowed to approve payments reviews it and approves or declines it, again with their own second step.\n4. Only then does the payment go to the bank.\n\nThe person who created a payment can never approve it. The rules are kept per company.\n\n## What if you are the only person?\n\nMany companies start with one founder. In that case there is no second person to ask, so **OnGem approves it**. You will see:\n\n> Waiting for OnGem to approve it, because no one else in your company can approve payments. Nothing has moved yet.\n\nThe approve and decline buttons are not shown to you, because you made the payment. When you add someone to your company who can approve, approvals go back to your own team.",
+      "ar": "تُكتشف معظم أخطاء الدفع بنظرة ثانية. لهذا ترسل OnGem الدفعات الأكبر، والأموال التي تسحبها من بنك آخر، إلى شخص ثانٍ قبل أن يتحرك أي شيء.\n\n## كيف تعمل الموافقات\n\n1. ينشئ شخص في شركتك الدفعة ويؤكد هويته بخطوة تحقق ثانية.\n2. تنتظر الدفعة بحالة **بانتظار الموافقة**. لم يتحرك شيء بعد.\n3. يراجعها شخص آخر في شركتك يملك صلاحية الموافقة على الدفعات، فيوافق عليها أو يرفضها، بخطوة التحقق الثانية الخاصة به أيضًا.\n4. عندها فقط تُرسل الدفعة إلى البنك.\n\nلا يمكن لمن أنشأ الدفعة أن يوافق عليها أبدًا. والقواعد محفوظة لكل شركة على حدة.\n\n## ماذا لو كنت الشخص الوحيد؟\n\nتبدأ شركات كثيرة بمؤسس واحد. وفي هذه الحالة لا يوجد شخص ثانٍ يُطلب منه ذلك، لذا **توافق OnGem عليها**. وسترى:\n\n> بانتظار موافقة OnGem، لأنه لا يوجد في شركتك شخص آخر يملك صلاحية الموافقة على الدفعات. لم يتحرك شيء بعد.\n\nلا تظهر لك أزرار الموافقة والرفض، لأنك أنت من أنشأ الدفعة. وعندما تضيف إلى شركتك شخصًا يملك صلاحية الموافقة، تعود الموافقات إلى فريقك."
+    },
+    {
+      "key": "blog.approvals-and-the-one-person-company.summary",
+      "format": "text",
+      "description": "Blog post summary on the list and in search results",
+      "placeholders": [],
+      "meta": {},
+      "en": "Larger payments in OnGem wait for a second person to approve them. If no one else in your company can approve, OnGem does.",
+      "ar": "تنتظر الدفعات الأكبر في OnGem موافقة شخص ثانٍ. وإذا لم يكن في شركتك من يملك صلاحية الموافقة، تتولى OnGem الموافقة."
+    },
+    {
+      "key": "blog.approvals-and-the-one-person-company.title",
+      "format": "text",
+      "description": "Blog post title; meta holds the date, tags, the linked video and product page",
+      "placeholders": [],
+      "meta": {
+        "date": "2026-11-07",
+        "tags": "approvals,payments",
+        "video": "ongem-approves-one-person-company",
+        "product": "/product#approvals"
+      },
+      "en": "Two sets of eyes on every larger payment, even in a one-person company",
+      "ar": "مراجعة ثانية لكل دفعة كبيرة، حتى في شركة الشخص الواحد"
+    },
+    {
+      "key": "blog.virtual-cards-and-card-safety.author",
+      "format": "text",
+      "description": "Blog post author line",
+      "placeholders": [],
+      "meta": {},
+      "en": "Karim Magdy",
+      "ar": "كريم مجدي"
+    },
+    {
+      "key": "blog.virtual-cards-and-card-safety.body",
+      "format": "markdown",
+      "description": "Blog post text (markdown: ## headings, lists, links, bold)",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem cards are issued by a licensed UAE bank. You manage them in OnGem on the web and on your phone.\n\n## Freeze and unfreeze\n\nIf a card looks wrong, freeze it. Payments on a frozen card are declined until you unfreeze it. Both take one tap and your second sign-in step.\n\n## Card details OnGem never sees\n\nWhen you show the card number, the PIN or set a PIN, the bank's own secure window opens inside OnGem. The number goes from the bank to your screen; it never passes through OnGem's servers. The window closes by itself after **5 minutes**.\n\n## Something you do not recognise?\n\nOpen the card and choose **Dispute a charge**. It starts a support request about that card, and you follow the replies and the status in one thread.",
+      "ar": "تُصدر بطاقات OnGem من بنك مرخّص في الإمارات العربية المتحدة. وتديرها في OnGem على الويب وعلى هاتفك.\n\n## التجميد وإلغاء التجميد\n\nإذا بدا شيء غير طبيعي في بطاقة، فجمّدها. تُرفض الدفعات على البطاقة المجمّدة إلى أن تلغي تجميدها. ويتطلب كلا الإجراءين لمسة واحدة وخطوة التحقق الثانية.\n\n## تفاصيل بطاقة لا تراها OnGem أبدًا\n\nعندما تعرض رقم البطاقة أو الرقم السري أو تعيّن رقمًا سريًا، تُفتح نافذة البنك الآمنة داخل OnGem. ينتقل الرقم من البنك إلى شاشتك مباشرة، ولا يمر أبدًا عبر خوادم OnGem. وتُغلق النافذة تلقائيًا بعد **5 دقائق**.\n\n## عملية لا تعرفها؟\n\nافتح البطاقة واختر **الاعتراض على عملية**. يبدأ ذلك طلب دعم بشأن تلك البطاقة، وتتابع الردود والحالة في محادثة واحدة."
+    },
+    {
+      "key": "blog.virtual-cards-and-card-safety.summary",
+      "format": "text",
+      "description": "Blog post summary on the list and in search results",
+      "placeholders": [],
+      "meta": {},
+      "en": "Issue virtual cards for your team, freeze one the moment something looks wrong, and see the card number only in the bank's secure window.",
+      "ar": "أصدر بطاقات افتراضية لفريقك، وجمّد أي بطاقة فور أن يبدو شيء غير طبيعي، ولا تطّلع على رقم البطاقة إلا في نافذة البنك الآمنة."
+    },
+    {
+      "key": "blog.virtual-cards-and-card-safety.title",
+      "format": "text",
+      "description": "Blog post title; meta holds the date, tags, the linked video and product page",
+      "placeholders": [],
+      "meta": {
+        "date": "2026-11-07",
+        "tags": "cards,security",
+        "video": "cards-freeze-and-details",
+        "product": "/product#cards"
+      },
+      "en": "Virtual cards you control in a tap",
+      "ar": "بطاقات افتراضية تتحكم فيها بلمسة واحدة"
+    }
+  ]
+}

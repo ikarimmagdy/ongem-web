@@ -726,3 +726,27 @@ a.og-btn:hover {
 .fw-card-tiles > li {
   max-width: calc(var(--space-3xl) * 7);
 }
+
+/* OG-033 R10: Arabic, right to left. The layout uses start and end (logical) properties; these are the few places a
+   direction is drawn. Letter spacing breaks the joining of Arabic letters, so tracked text drops it in Arabic. Money
+   and numbers keep Latin digits and read left to right inside right-to-left text. */
+[lang='ar'] body * {
+  letter-spacing: normal !important;
+}
+[dir='rtl'] .og-money {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: end;
+}
+[dir='rtl'] .fw-profile__glyph::before,
+[dir='rtl'] .fw-profile__glyph::after {
+  transform: translateX(50%);
+}
+[dir='rtl'] .fw-switcher__chevron {
+  transform: translateY(-25%) rotate(-45deg);
+}
+.fw-lang {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}

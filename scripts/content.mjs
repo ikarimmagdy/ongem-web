@@ -27,21 +27,6 @@ export function readSeed(root, region) {
       const seed = JSON.parse(readFileSync(join(dir, f), 'utf8'));
       channels[seed.channel] = [...(channels[seed.channel] ?? []), ...seed.entries];
     }
-  // Working parts (OG-033 T4, merged into the region files before the task closes): one list for both regions, with
-  // an `ae` override and `only` for a region-only key.
-  const parts = join(root, 'content-seed', '_parts');
-  if (existsSync(parts))
-    for (const f of readdirSync(parts).filter((n) => n.endsWith('.json'))) {
-      const list = JSON.parse(readFileSync(join(parts, f), 'utf8'));
-      for (const e of list.entries ?? list) {
-        if (e.only && e.only !== region) continue;
-        const { ae, only, ...base } = e;
-        void only;
-        const entry = region === 'ae' && ae ? { ...base, ...ae } : base;
-        const channel = channelOf(entry.key);
-        channels[channel] = [...(channels[channel] ?? []), entry];
-      }
-    }
   return channels;
 }
 

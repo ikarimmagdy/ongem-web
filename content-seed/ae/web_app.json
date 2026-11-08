@@ -1,0 +1,6251 @@
+{
+  "channel": "web_app",
+  "entries": [
+    {
+      "key": "app.accounts.available",
+      "format": "text",
+      "description": "Label: available balance",
+      "placeholders": [],
+      "meta": {},
+      "en": "Available",
+      "ar": "المتاح"
+    },
+    {
+      "key": "app.accounts.back",
+      "format": "text",
+      "description": "Back button on a narrow screen",
+      "placeholders": [],
+      "meta": {},
+      "en": "Back to accounts",
+      "ar": "العودة إلى الحسابات"
+    },
+    {
+      "key": "app.accounts.closing_balance",
+      "format": "text",
+      "description": "Statement label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Closing balance",
+      "ar": "الرصيد الختامي"
+    },
+    {
+      "key": "app.accounts.col_amount",
+      "format": "text",
+      "description": "Column header: amount",
+      "placeholders": [],
+      "meta": {},
+      "en": "Amount",
+      "ar": "المبلغ"
+    },
+    {
+      "key": "app.accounts.col_date",
+      "format": "text",
+      "description": "Column header: date",
+      "placeholders": [],
+      "meta": {},
+      "en": "Date",
+      "ar": "التاريخ"
+    },
+    {
+      "key": "app.accounts.col_description",
+      "format": "text",
+      "description": "Column header: description",
+      "placeholders": [],
+      "meta": {},
+      "en": "Description",
+      "ar": "الوصف"
+    },
+    {
+      "key": "app.accounts.col_in_or_out",
+      "format": "text",
+      "description": "Statement column header: direction",
+      "placeholders": [],
+      "meta": {},
+      "en": "In or out",
+      "ar": "وارد أو صادر"
+    },
+    {
+      "key": "app.accounts.empty_text",
+      "format": "text",
+      "description": "Empty accounts list text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your account appears here once the bank opens it.",
+      "ar": "سيظهر حسابك هنا بمجرد أن يفتحه البنك."
+    },
+    {
+      "key": "app.accounts.empty_title",
+      "format": "text",
+      "description": "Empty accounts list title",
+      "placeholders": [],
+      "meta": {},
+      "en": "No accounts yet",
+      "ar": "لا توجد حسابات بعد"
+    },
+    {
+      "key": "app.accounts.hint_text",
+      "format": "text",
+      "description": "Detail column hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "Its balance from the bank, recent activity and monthly statements show here.",
+      "ar": "يظهر هنا رصيده من البنك وآخر الحركات والكشوف الشهرية."
+    },
+    {
+      "key": "app.accounts.hint_title",
+      "format": "text",
+      "description": "Detail column before an account is picked",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pick an account",
+      "ar": "اختر حسابا"
+    },
+    {
+      "key": "app.accounts.in",
+      "format": "text",
+      "description": "Statement line direction: money in",
+      "placeholders": [],
+      "meta": {},
+      "en": "In",
+      "ar": "وارد"
+    },
+    {
+      "key": "app.accounts.no_balance",
+      "format": "text",
+      "description": "Account list row when the bank has sent no balance",
+      "placeholders": [],
+      "meta": {},
+      "en": "No balance from the bank yet",
+      "ar": "لم يصل الرصيد من البنك بعد"
+    },
+    {
+      "key": "app.accounts.no_statements",
+      "format": "text",
+      "description": "No statements yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "No statements yet.",
+      "ar": "لا توجد كشوف بعد."
+    },
+    {
+      "key": "app.accounts.no_transactions",
+      "format": "text",
+      "description": "Empty transactions table",
+      "placeholders": [],
+      "meta": {},
+      "en": "No transactions yet.",
+      "ar": "لا توجد معاملات بعد."
+    },
+    {
+      "key": "app.accounts.not_known",
+      "format": "text",
+      "description": "Value shown when the balance is not known",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not known",
+      "ar": "غير معروف"
+    },
+    {
+      "key": "app.accounts.opening_balance",
+      "format": "text",
+      "description": "Statement label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Opening balance",
+      "ar": "الرصيد الافتتاحي"
+    },
+    {
+      "key": "app.accounts.out",
+      "format": "text",
+      "description": "Statement line direction: money out",
+      "placeholders": [],
+      "meta": {},
+      "en": "Out",
+      "ar": "صادر"
+    },
+    {
+      "key": "app.accounts.posted",
+      "format": "text",
+      "description": "Label: posted balance",
+      "placeholders": [],
+      "meta": {},
+      "en": "Posted",
+      "ar": "المقيد"
+    },
+    {
+      "key": "app.accounts.recipients_link",
+      "format": "text",
+      "description": "Link to recipients from accounts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recipients",
+      "ar": "المستفيدون"
+    },
+    {
+      "key": "app.accounts.show_more",
+      "format": "text",
+      "description": "Button that loads more transactions",
+      "placeholders": [],
+      "meta": {},
+      "en": "Show more",
+      "ar": "عرض المزيد"
+    },
+    {
+      "key": "app.accounts.stale_balance",
+      "format": "text",
+      "description": "Account detail when the balance is the last known one",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank did not answer just now; this is the last known balance.",
+      "ar": "لم يستجب البنك في الوقت الحالي، وهذا هو آخر رصيد معروف."
+    },
+    {
+      "key": "app.accounts.stale_last_known",
+      "format": "text",
+      "description": "Account row when the bank did not answer; time of last known balance",
+      "placeholders": [
+        "time"
+      ],
+      "meta": {},
+      "en": "The bank did not answer just now. Last known {time}.",
+      "ar": "لم يستجب البنك في الوقت الحالي. آخر رصيد معروف في {time}."
+    },
+    {
+      "key": "app.accounts.statement_lines",
+      "format": "text",
+      "description": "Statement table caption",
+      "placeholders": [],
+      "meta": {},
+      "en": "Statement lines",
+      "ar": "بنود الكشف"
+    },
+    {
+      "key": "app.accounts.statement_period",
+      "format": "text",
+      "description": "A statement by its period, e.g. Statement 2026-09",
+      "placeholders": [
+        "period"
+      ],
+      "meta": {},
+      "en": "Statement {period}",
+      "ar": "كشف {period}"
+    },
+    {
+      "key": "app.accounts.statements",
+      "format": "text",
+      "description": "Card title: monthly statements",
+      "placeholders": [],
+      "meta": {},
+      "en": "Statements",
+      "ar": "الكشوف"
+    },
+    {
+      "key": "app.accounts.status",
+      "format": "text",
+      "description": "Label and column header: status",
+      "placeholders": [],
+      "meta": {},
+      "en": "Status",
+      "ar": "الحالة"
+    },
+    {
+      "key": "app.accounts.subtitle",
+      "format": "text",
+      "description": "Accounts page subtitle",
+      "placeholders": [],
+      "meta": {},
+      "en": "Balances come from the bank.",
+      "ar": "الأرصدة واردة من البنك."
+    },
+    {
+      "key": "app.accounts.title",
+      "format": "text",
+      "description": "Accounts page title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accounts",
+      "ar": "الحسابات"
+    },
+    {
+      "key": "app.accounts.transactions",
+      "format": "text",
+      "description": "Card title: transactions",
+      "placeholders": [],
+      "meta": {},
+      "en": "Transactions",
+      "ar": "المعاملات"
+    },
+    {
+      "key": "app.accounts.transactions_caption",
+      "format": "text",
+      "description": "Table caption for screen readers",
+      "placeholders": [],
+      "meta": {},
+      "en": "Transactions, newest first",
+      "ar": "المعاملات، الأحدث أولا"
+    },
+    {
+      "key": "app.accounts.txn_in",
+      "format": "text",
+      "description": "Transaction line for money coming in, after the rail name",
+      "placeholders": [
+        "rail"
+      ],
+      "meta": {},
+      "en": "{rail} in",
+      "ar": "{rail} وارد"
+    },
+    {
+      "key": "app.accounts.txn_out",
+      "format": "text",
+      "description": "Transaction line for money going out, after the rail name",
+      "placeholders": [
+        "rail"
+      ],
+      "meta": {},
+      "en": "{rail} out",
+      "ar": "{rail} صادر"
+    },
+    {
+      "key": "app.accounts.txn_unknown_rail",
+      "format": "text",
+      "description": "Transaction line when the payment rail is not known",
+      "placeholders": [],
+      "meta": {},
+      "en": "Transaction",
+      "ar": "معاملة"
+    },
+    {
+      "key": "app.assistant.close",
+      "format": "text",
+      "description": "Button that closes the assistant panel",
+      "placeholders": [],
+      "meta": {},
+      "en": "Close",
+      "ar": "إغلاق"
+    },
+    {
+      "key": "app.assistant.close_label",
+      "format": "text",
+      "description": "Screen reader label of the close button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Close the assistant",
+      "ar": "إغلاق المساعد"
+    },
+    {
+      "key": "app.assistant.confirmed",
+      "format": "text",
+      "description": "State of a draft the founder confirmed",
+      "placeholders": [],
+      "meta": {},
+      "en": "Confirmed by you",
+      "ar": "أكّدته أنت"
+    },
+    {
+      "key": "app.assistant.demo.accounts_heading",
+      "format": "text",
+      "description": "Demo assistant: heading before a list of accounts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Here are your accounts:",
+      "ar": "إليك حساباتك:"
+    },
+    {
+      "key": "app.assistant.demo.add_recipient",
+      "format": "text",
+      "description": "Draft summary: add a recipient; {hint} says what the founder enters",
+      "placeholders": [
+        "hint",
+        "name"
+      ],
+      "meta": {},
+      "en": "Add {name}. {hint}",
+      "ar": "إضافة {name}. {hint}"
+    },
+    {
+      "key": "app.assistant.demo.application",
+      "format": "text",
+      "description": "Demo assistant: the application state",
+      "placeholders": [
+        "state"
+      ],
+      "meta": {},
+      "en": "Your application is {state}.",
+      "ar": "حالة طلبك: {state}."
+    },
+    {
+      "key": "app.assistant.demo.available",
+      "format": "text",
+      "description": "Demo assistant: an account's available balance",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "{amount} available",
+      "ar": "{amount} متاح"
+    },
+    {
+      "key": "app.assistant.demo.card_line",
+      "format": "text",
+      "description": "Demo assistant: one card in a list",
+      "placeholders": [
+        "holder",
+        "last4",
+        "state"
+      ],
+      "meta": {},
+      "en": "- Card ending {last4} ({holder}): {state}",
+      "ar": "- البطاقة المنتهية بـ {last4} ({holder}): {state}"
+    },
+    {
+      "key": "app.assistant.demo.card_you_choose",
+      "format": "text",
+      "description": "Used when no card matches the request",
+      "placeholders": [],
+      "meta": {},
+      "en": "you choose",
+      "ar": "التي تختارها"
+    },
+    {
+      "key": "app.assistant.demo.cards_heading",
+      "format": "text",
+      "description": "Demo assistant: heading before a list of cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Here are your cards:",
+      "ar": "إليك بطاقاتك:"
+    },
+    {
+      "key": "app.assistant.demo.drafted",
+      "format": "text",
+      "description": "Demo assistant reply after drafting an action; {summary} is the draft",
+      "placeholders": [
+        "summary"
+      ],
+      "meta": {},
+      "en": "I drafted this for you: {summary} Review it and confirm it on the screen I open; nothing happens until you do.",
+      "ar": "أعددت لك هذه المسودة: {summary} راجعها وأكّدها في الشاشة التي سأفتحها، ولن يُنفَّذ شيء قبل أن تؤكدها."
+    },
+    {
+      "key": "app.assistant.demo.drafted_support",
+      "format": "text",
+      "description": "Demo assistant reply after drafting something for support; {summary} is the draft",
+      "placeholders": [
+        "summary"
+      ],
+      "meta": {},
+      "en": "I drafted this for our support team: {summary} Review it in Support and send it there.",
+      "ar": "أعددت هذه المسودة لفريق الدعم: {summary} راجعها في قسم الدعم وأرسلها من هناك."
+    },
+    {
+      "key": "app.assistant.demo.fallback",
+      "format": "text",
+      "description": "Demo assistant: answer when it did not understand",
+      "placeholders": [],
+      "meta": {},
+      "en": "I can check your balances, payments, recipients, cards, support tickets and your application, and I can draft a payment, a transfer between your accounts, a card freeze, a recipient or a support ticket for you to review and confirm. Nothing changes until you confirm it yourself.",
+      "ar": "يمكنني الاطلاع على أرصدتك ومدفوعاتك والمستفيدين وبطاقاتك وطلبات الدعم وطلبك، ويمكنني إعداد مسودة دفعة أو تحويل بين حساباتك أو تجميد بطاقة أو إضافة مستفيد أو طلب دعم لتراجعه وتؤكده. لا يتغير شيء حتى تؤكده بنفسك."
+    },
+    {
+      "key": "app.assistant.demo.freeze",
+      "format": "text",
+      "description": "Draft summary: freeze a card",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Freeze the card ending {last4}.",
+      "ar": "تجميد البطاقة المنتهية بـ {last4}."
+    },
+    {
+      "key": "app.assistant.demo.move",
+      "format": "text",
+      "description": "Draft summary: transfer between own accounts",
+      "placeholders": [
+        "amount",
+        "from",
+        "to"
+      ],
+      "meta": {},
+      "en": "Move {amount} from {from} to {to}.",
+      "ar": "تحويل {amount} من {from} إلى {to}."
+    },
+    {
+      "key": "app.assistant.demo.new_recipient",
+      "format": "text",
+      "description": "Used when the founder named no recipient",
+      "placeholders": [],
+      "meta": {},
+      "en": "a new recipient",
+      "ar": "مستفيد جديد"
+    },
+    {
+      "key": "app.assistant.demo.no_balance",
+      "format": "text",
+      "description": "Demo assistant: an account with no balance yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "no balance yet",
+      "ar": "لا يوجد رصيد بعد"
+    },
+    {
+      "key": "app.assistant.demo.not_started",
+      "format": "text",
+      "description": "Application state when there is none",
+      "placeholders": [],
+      "meta": {},
+      "en": "not started",
+      "ar": "لم يبدأ بعد"
+    },
+    {
+      "key": "app.assistant.demo.payments_heading",
+      "format": "text",
+      "description": "Demo assistant: heading before a list of payments",
+      "placeholders": [],
+      "meta": {},
+      "en": "Here are your payments:",
+      "ar": "إليك مدفوعاتك:"
+    },
+    {
+      "key": "app.assistant.demo.recipient_line",
+      "format": "text",
+      "description": "Demo assistant: one recipient in a list",
+      "placeholders": [
+        "last4",
+        "name",
+        "screening"
+      ],
+      "meta": {},
+      "en": "- {name} (IBAN ending {last4}): screening {screening}",
+      "ar": "- {name} (IBAN المنتهي بـ {last4}): الفحص {screening}"
+    },
+    {
+      "key": "app.assistant.demo.recipient_you_choose",
+      "format": "text",
+      "description": "Used when no recipient matches the request",
+      "placeholders": [],
+      "meta": {},
+      "en": "a recipient you choose",
+      "ar": "مستفيد تختاره"
+    },
+    {
+      "key": "app.assistant.demo.recipients_heading",
+      "format": "text",
+      "description": "Demo assistant: heading before a list of recipients",
+      "placeholders": [],
+      "meta": {},
+      "en": "Here are your recipients:",
+      "ar": "إليك المستفيدون لديك:"
+    },
+    {
+      "key": "app.assistant.demo.send",
+      "format": "text",
+      "description": "Draft summary: payment to a recipient; {rail} is how it moves",
+      "placeholders": [
+        "amount",
+        "from",
+        "rail",
+        "recipient"
+      ],
+      "meta": {},
+      "en": "Send {amount} by {rail} from {from} to {recipient}.",
+      "ar": "إرسال {amount} عبر {rail} من {from} إلى {recipient}."
+    },
+    {
+      "key": "app.assistant.demo.support_subject",
+      "format": "text",
+      "description": "Subject of a support ticket the assistant drafts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Help from the assistant",
+      "ar": "مساعدة من المساعد"
+    },
+    {
+      "key": "app.assistant.demo.support_ticket",
+      "format": "text",
+      "description": "Draft summary: a new support ticket with the founder's words",
+      "placeholders": [
+        "text"
+      ],
+      "meta": {},
+      "en": "Open a support ticket for our team: \"{text}\".",
+      "ar": "فتح طلب دعم لفريقنا: \"{text}\"."
+    },
+    {
+      "key": "app.assistant.demo.ticket_reply",
+      "format": "text",
+      "description": "Draft summary: a reply to a support ticket",
+      "placeholders": [
+        "subject"
+      ],
+      "meta": {},
+      "en": "Reply to \"{subject}\".",
+      "ar": "الرد على \"{subject}\"."
+    },
+    {
+      "key": "app.assistant.demo.tickets_heading",
+      "format": "text",
+      "description": "Demo assistant: heading before a list of support tickets",
+      "placeholders": [],
+      "meta": {},
+      "en": "Here are your support tickets:",
+      "ar": "إليك طلبات الدعم الخاصة بك:"
+    },
+    {
+      "key": "app.assistant.demo.unfreeze",
+      "format": "text",
+      "description": "Draft summary: unfreeze a card",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Unfreeze the card ending {last4}.",
+      "ar": "إلغاء تجميد البطاقة المنتهية بـ {last4}."
+    },
+    {
+      "key": "app.assistant.demo.your_ticket",
+      "format": "text",
+      "description": "Used in a reply draft when no open ticket exists",
+      "placeholders": [],
+      "meta": {},
+      "en": "your ticket",
+      "ar": "طلبك"
+    },
+    {
+      "key": "app.assistant.dismiss",
+      "format": "text",
+      "description": "Button that dismisses an assistant draft",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dismiss",
+      "ar": "تجاهل"
+    },
+    {
+      "key": "app.assistant.dismissed",
+      "format": "text",
+      "description": "State of a draft the founder dismissed",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dismissed",
+      "ar": "تم التجاهل"
+    },
+    {
+      "key": "app.assistant.helpful",
+      "format": "text",
+      "description": "Rating button: the answer helped",
+      "placeholders": [],
+      "meta": {},
+      "en": "Helpful",
+      "ar": "مفيد"
+    },
+    {
+      "key": "app.assistant.input_label",
+      "format": "text",
+      "description": "Hidden label of the message field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Message the assistant",
+      "ar": "راسل المساعد"
+    },
+    {
+      "key": "app.assistant.intro",
+      "format": "text",
+      "description": "Assistant panel text before the first question",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ask about your balances, payments, cards or support. I draft actions; you confirm them on the normal screen.",
+      "ar": "اسأل عن أرصدتك أو مدفوعاتك أو بطاقاتك أو الدعم. أُعدّ لك الإجراءات كمسودات، وتؤكدها أنت من الشاشة المعتادة."
+    },
+    {
+      "key": "app.assistant.not_helpful",
+      "format": "text",
+      "description": "Rating button: the answer did not help",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not helpful",
+      "ar": "غير مفيد"
+    },
+    {
+      "key": "app.assistant.placeholder",
+      "format": "text",
+      "description": "Placeholder of the message field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ask the assistant",
+      "ar": "اسأل المساعد"
+    },
+    {
+      "key": "app.assistant.read.checked",
+      "format": "text",
+      "description": "Line under an assistant answer naming what it read; {list} is the topics",
+      "placeholders": [
+        "list"
+      ],
+      "meta": {},
+      "en": "Checked {list}",
+      "ar": "تم الاطلاع على {list}"
+    },
+    {
+      "key": "app.assistant.read.list",
+      "format": "text",
+      "description": "Joins topics: {items} are all but the last, {last} the last",
+      "placeholders": [
+        "items",
+        "last"
+      ],
+      "meta": {},
+      "en": "{items} and {last}",
+      "ar": "{items} و{last}"
+    },
+    {
+      "key": "app.assistant.read.separator",
+      "format": "text",
+      "description": "Separator between topics in a list",
+      "placeholders": [],
+      "meta": {},
+      "en": ", ",
+      "ar": "، "
+    },
+    {
+      "key": "app.assistant.review",
+      "format": "text",
+      "description": "Button that opens the screen to review an assistant draft",
+      "placeholders": [],
+      "meta": {},
+      "en": "Review",
+      "ar": "مراجعة"
+    },
+    {
+      "key": "app.assistant.send",
+      "format": "text",
+      "description": "Button that sends a message to the assistant",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send",
+      "ar": "إرسال"
+    },
+    {
+      "key": "app.assistant.title",
+      "format": "text",
+      "description": "Assistant panel heading, open button and region label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Assistant",
+      "ar": "المساعد"
+    },
+    {
+      "key": "app.assistant.toast.confirmed",
+      "format": "text",
+      "description": "Toast after an action confirmed an assistant draft",
+      "placeholders": [],
+      "meta": {},
+      "en": "Done. The assistant recorded that you confirmed it.",
+      "ar": "تم. سجّل المساعد أنك أكدت الإجراء."
+    },
+    {
+      "key": "app.assistant.toast.done",
+      "format": "text",
+      "description": "Toast after an action whose draft confirmation failed; {reason} is the reason",
+      "placeholders": [
+        "reason"
+      ],
+      "meta": {},
+      "en": "Done. {reason}",
+      "ar": "تم. {reason}"
+    },
+    {
+      "key": "app.assistant.toast.not_drafted",
+      "format": "text",
+      "description": "Toast after an action that differs from the assistant draft",
+      "placeholders": [],
+      "meta": {},
+      "en": "Done. This was not the action the assistant drafted, so the draft stays open.",
+      "ar": "تم. لم يكن هذا الإجراء هو ما أعدّه المساعد، لذا تبقى المسودة مفتوحة."
+    },
+    {
+      "key": "app.assistant.toast.not_recorded",
+      "format": "text",
+      "description": "Reason shown when the assistant could not record the confirmation",
+      "placeholders": [],
+      "meta": {},
+      "en": "The assistant could not record your confirmation.",
+      "ar": "تعذّر على المساعد تسجيل تأكيدك."
+    },
+    {
+      "key": "app.assistant.topic.accounts",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "your accounts",
+      "ar": "حساباتك"
+    },
+    {
+      "key": "app.assistant.topic.application",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "your application",
+      "ar": "طلبك"
+    },
+    {
+      "key": "app.assistant.topic.cards",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "cards",
+      "ar": "البطاقات"
+    },
+    {
+      "key": "app.assistant.topic.disclosures",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "disclosures",
+      "ar": "الإفصاحات"
+    },
+    {
+      "key": "app.assistant.topic.payments",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "payments",
+      "ar": "المدفوعات"
+    },
+    {
+      "key": "app.assistant.topic.profile",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "your profile",
+      "ar": "ملفك الشخصي"
+    },
+    {
+      "key": "app.assistant.topic.recipients",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "recipients",
+      "ar": "المستفيدين"
+    },
+    {
+      "key": "app.assistant.topic.statements",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "statements",
+      "ar": "كشوف الحساب"
+    },
+    {
+      "key": "app.assistant.topic.support",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "support requests",
+      "ar": "طلبات الدعم"
+    },
+    {
+      "key": "app.assistant.topic.transactions",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "transactions",
+      "ar": "المعاملات"
+    },
+    {
+      "key": "app.cards.back",
+      "format": "text",
+      "description": "Back button on a narrow screen",
+      "placeholders": [],
+      "meta": {},
+      "en": "Back to cards",
+      "ar": "العودة إلى البطاقات"
+    },
+    {
+      "key": "app.cards.card",
+      "format": "text",
+      "description": "Label: card (before its last four)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card",
+      "ar": "البطاقة"
+    },
+    {
+      "key": "app.cards.cardholder",
+      "format": "text",
+      "description": "Label: cardholder name",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cardholder",
+      "ar": "حامل البطاقة"
+    },
+    {
+      "key": "app.cards.dispute",
+      "format": "text",
+      "description": "Button: dispute a card charge",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dispute a charge",
+      "ar": "الاعتراض على عملية"
+    },
+    {
+      "key": "app.cards.dispute_subject",
+      "format": "text",
+      "description": "Support request subject prefilled when disputing a card charge",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Dispute a charge on card ending {last4}",
+      "ar": "الاعتراض على عملية على البطاقة المنتهية بـ {last4}"
+    },
+    {
+      "key": "app.cards.empty_text",
+      "format": "text",
+      "description": "Empty cards list text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cards ops issues for your company show here.",
+      "ar": "تظهر هنا البطاقات التي يصدرها فريق العمليات لشركتك."
+    },
+    {
+      "key": "app.cards.empty_title",
+      "format": "text",
+      "description": "Empty cards list title",
+      "placeholders": [],
+      "meta": {},
+      "en": "No cards yet",
+      "ar": "لا توجد بطاقات بعد"
+    },
+    {
+      "key": "app.cards.freeze",
+      "format": "text",
+      "description": "Button: freeze the card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Freeze card",
+      "ar": "تجميد البطاقة"
+    },
+    {
+      "key": "app.cards.hint_text",
+      "format": "text",
+      "description": "Detail column hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "Freeze or unfreeze it, see its details in the bank's secure window, or dispute a charge.",
+      "ar": "جمّد البطاقة أو ألغ تجميدها، واطلع على تفاصيلها في نافذة البنك الآمنة، أو اعترض على عملية."
+    },
+    {
+      "key": "app.cards.hint_title",
+      "format": "text",
+      "description": "Detail column before a card is picked",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pick a card",
+      "ar": "اختر بطاقة"
+    },
+    {
+      "key": "app.cards.sample_cvv",
+      "format": "text",
+      "description": "Simulator sample: security code label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Security code",
+      "ar": "رمز الأمان"
+    },
+    {
+      "key": "app.cards.sample_ending",
+      "format": "text",
+      "description": "Simulator sample: card ending in last four",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Ending {last4}",
+      "ar": "تنتهي بـ {last4}"
+    },
+    {
+      "key": "app.cards.sample_expires",
+      "format": "text",
+      "description": "Simulator sample: expiry label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Expires",
+      "ar": "تاريخ الانتهاء"
+    },
+    {
+      "key": "app.cards.sample_new_pin",
+      "format": "text",
+      "description": "Simulator sample: new PIN label",
+      "placeholders": [],
+      "meta": {},
+      "en": "New PIN",
+      "ar": "الرقم السري الجديد"
+    },
+    {
+      "key": "app.cards.sample_new_pin_value",
+      "format": "text",
+      "description": "Simulator sample: where the new PIN is typed",
+      "placeholders": [],
+      "meta": {},
+      "en": "Entered in the bank’s view",
+      "ar": "يُدخل في نافذة البنك"
+    },
+    {
+      "key": "app.cards.sample_notice",
+      "format": "text",
+      "description": "Simulator notice over sample card data",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sample data from the simulator, not a real card.",
+      "ar": "بيانات تجريبية من المحاكي، وليست بطاقة حقيقية."
+    },
+    {
+      "key": "app.cards.sample_number",
+      "format": "text",
+      "description": "Simulator sample: card number label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card number",
+      "ar": "رقم البطاقة"
+    },
+    {
+      "key": "app.cards.sample_pin",
+      "format": "text",
+      "description": "Simulator sample: PIN label",
+      "placeholders": [],
+      "meta": {},
+      "en": "PIN",
+      "ar": "الرقم السري"
+    },
+    {
+      "key": "app.cards.secure_view_note",
+      "format": "text",
+      "description": "Card detail: where card numbers show",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank shows the card number and PIN in its own secure view. OnGem never sees them.",
+      "ar": "يعرض البنك رقم البطاقة والرقم السري في نافذته الآمنة الخاصة، ولا يطلع عليهما OnGem أبدا."
+    },
+    {
+      "key": "app.cards.status",
+      "format": "text",
+      "description": "Label: card status",
+      "placeholders": [],
+      "meta": {},
+      "en": "Status",
+      "ar": "الحالة"
+    },
+    {
+      "key": "app.cards.subtitle",
+      "format": "text",
+      "description": "Cards page subtitle",
+      "placeholders": [],
+      "meta": {},
+      "en": "Last four digits only.",
+      "ar": "آخر أربعة أرقام فقط."
+    },
+    {
+      "key": "app.cards.title",
+      "format": "text",
+      "description": "Cards page title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cards",
+      "ar": "البطاقات"
+    },
+    {
+      "key": "app.cards.type",
+      "format": "text",
+      "description": "Label: card type (virtual or physical)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Type",
+      "ar": "النوع"
+    },
+    {
+      "key": "app.cards.unfreeze",
+      "format": "text",
+      "description": "Button: unfreeze the card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unfreeze card",
+      "ar": "إلغاء تجميد البطاقة"
+    },
+    {
+      "key": "app.cards.widget_activate",
+      "format": "text",
+      "description": "Button: activate a new card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Activate card",
+      "ar": "تفعيل البطاقة"
+    },
+    {
+      "key": "app.cards.widget_activated",
+      "format": "text",
+      "description": "Success: card activated",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your card is active.",
+      "ar": "تم تفعيل بطاقتك."
+    },
+    {
+      "key": "app.cards.widget_close",
+      "format": "text",
+      "description": "Button: close the expired widget notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Close",
+      "ar": "إغلاق"
+    },
+    {
+      "key": "app.cards.widget_expired",
+      "format": "text",
+      "description": "Notice when the card widget closed itself; title is the widget's title",
+      "placeholders": [
+        "title"
+      ],
+      "meta": {},
+      "en": "{title} closed after 5 minutes. Open it again to see it.",
+      "ar": "أُغلقت نافذة {title} بعد 5 دقائق. افتحها مرة أخرى لعرضها."
+    },
+    {
+      "key": "app.cards.widget_failed",
+      "format": "text",
+      "description": "The bank's widget failed to open",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank's secure view did not open. Try again in a moment.",
+      "ar": "تعذر فتح نافذة البنك الآمنة. حاول مرة أخرى بعد قليل."
+    },
+    {
+      "key": "app.cards.widget_get_pin",
+      "format": "text",
+      "description": "Button: show the card PIN",
+      "placeholders": [],
+      "meta": {},
+      "en": "Show PIN",
+      "ar": "عرض الرقم السري"
+    },
+    {
+      "key": "app.cards.widget_hide",
+      "format": "text",
+      "description": "Button: hide the card widget",
+      "placeholders": [],
+      "meta": {},
+      "en": "Hide",
+      "ar": "إخفاء"
+    },
+    {
+      "key": "app.cards.widget_note",
+      "format": "text",
+      "description": "Under the card widget",
+      "placeholders": [],
+      "meta": {},
+      "en": "Shown by the bank. OnGem never sees or stores these numbers.",
+      "ar": "يعرضها البنك. لا يطلع OnGem على هذه الأرقام ولا يحتفظ بها أبدا."
+    },
+    {
+      "key": "app.cards.widget_opening",
+      "format": "text",
+      "description": "Status while the bank's widget loads",
+      "placeholders": [],
+      "meta": {},
+      "en": "Opening the bank's secure view.",
+      "ar": "جار فتح نافذة البنك الآمنة."
+    },
+    {
+      "key": "app.cards.widget_pin_set",
+      "format": "text",
+      "description": "Success: new PIN set",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your new PIN is set.",
+      "ar": "تم تعيين الرقم السري الجديد."
+    },
+    {
+      "key": "app.cards.widget_reveal",
+      "format": "text",
+      "description": "Button and widget toggle: open the card number in the bank's view",
+      "placeholders": [],
+      "meta": {},
+      "en": "Show card details",
+      "ar": "عرض تفاصيل البطاقة"
+    },
+    {
+      "key": "app.cards.widget_set_pin",
+      "format": "text",
+      "description": "Button: set a new card PIN",
+      "placeholders": [],
+      "meta": {},
+      "en": "Set PIN",
+      "ar": "تعيين الرقم السري"
+    },
+    {
+      "key": "app.cards.widget_title_activate",
+      "format": "text",
+      "description": "Card widget title: activate",
+      "placeholders": [],
+      "meta": {},
+      "en": "Activate the card",
+      "ar": "تفعيل البطاقة"
+    },
+    {
+      "key": "app.cards.widget_title_get_pin",
+      "format": "text",
+      "description": "Card widget title: PIN",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card PIN",
+      "ar": "الرقم السري للبطاقة"
+    },
+    {
+      "key": "app.cards.widget_title_reveal",
+      "format": "text",
+      "description": "Card widget title: card number",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card details",
+      "ar": "تفاصيل البطاقة"
+    },
+    {
+      "key": "app.cards.widget_title_set_pin",
+      "format": "text",
+      "description": "Card widget title: set PIN",
+      "placeholders": [],
+      "meta": {},
+      "en": "Set a new PIN",
+      "ar": "تعيين رقم سري جديد"
+    },
+    {
+      "key": "app.common.cancel",
+      "format": "text",
+      "description": "Cancel button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cancel",
+      "ar": "إلغاء"
+    },
+    {
+      "key": "app.common.confirm",
+      "format": "text",
+      "description": "Confirm button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Confirm",
+      "ar": "تأكيد"
+    },
+    {
+      "key": "app.common.loading.account",
+      "format": "text",
+      "description": "Loading state label (screen readers) while account load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading account",
+      "ar": "جارٍ تحميل الحساب"
+    },
+    {
+      "key": "app.common.loading.accounts",
+      "format": "text",
+      "description": "Loading state label (screen readers) while accounts load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading accounts",
+      "ar": "جارٍ تحميل الحسابات"
+    },
+    {
+      "key": "app.common.loading.application",
+      "format": "text",
+      "description": "Loading state label (screen readers) while application load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading application",
+      "ar": "جارٍ تحميل الطلب"
+    },
+    {
+      "key": "app.common.loading.card",
+      "format": "text",
+      "description": "Loading state label (screen readers) while card load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading card",
+      "ar": "جارٍ تحميل البطاقة"
+    },
+    {
+      "key": "app.common.loading.cards",
+      "format": "text",
+      "description": "Loading state label (screen readers) while cards load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading cards",
+      "ar": "جارٍ تحميل البطاقات"
+    },
+    {
+      "key": "app.common.loading.linked_accounts",
+      "format": "text",
+      "description": "Loading state label (screen readers) while linked accounts load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading linked accounts",
+      "ar": "جارٍ تحميل الحسابات المرتبطة"
+    },
+    {
+      "key": "app.common.loading.notification_choices",
+      "format": "text",
+      "description": "Loading state label (screen readers) while notification choices load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading notification choices",
+      "ar": "جارٍ تحميل خيارات الإشعارات"
+    },
+    {
+      "key": "app.common.loading.notifications",
+      "format": "text",
+      "description": "Loading state label (screen readers) while notifications load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading notifications",
+      "ar": "جارٍ تحميل الإشعارات"
+    },
+    {
+      "key": "app.common.loading.other",
+      "format": "text",
+      "description": "Loading state label for anything without its own text; {what} names it",
+      "placeholders": [
+        "what"
+      ],
+      "meta": {},
+      "en": "Loading {what}",
+      "ar": "جارٍ تحميل {what}"
+    },
+    {
+      "key": "app.common.loading.payment",
+      "format": "text",
+      "description": "Loading state label (screen readers) while payment load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading payment",
+      "ar": "جارٍ تحميل الدفعة"
+    },
+    {
+      "key": "app.common.loading.payments",
+      "format": "text",
+      "description": "Loading state label (screen readers) while payments load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading payments",
+      "ar": "جارٍ تحميل المدفوعات"
+    },
+    {
+      "key": "app.common.loading.recipients",
+      "format": "text",
+      "description": "Loading state label (screen readers) while recipients load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading recipients",
+      "ar": "جارٍ تحميل المستفيدين"
+    },
+    {
+      "key": "app.common.loading.runs",
+      "format": "text",
+      "description": "Loading state label (screen readers) while runs load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading runs",
+      "ar": "جارٍ تحميل عمليات التنفيذ"
+    },
+    {
+      "key": "app.common.loading.scheduled_payments",
+      "format": "text",
+      "description": "Loading state label (screen readers) while scheduled payments load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading scheduled payments",
+      "ar": "جارٍ تحميل المدفوعات المجدولة"
+    },
+    {
+      "key": "app.common.loading.statements",
+      "format": "text",
+      "description": "Loading state label (screen readers) while statements load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading statements",
+      "ar": "جارٍ تحميل الكشوفات"
+    },
+    {
+      "key": "app.common.loading.ticket",
+      "format": "text",
+      "description": "Loading state label (screen readers) while ticket load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading ticket",
+      "ar": "جارٍ تحميل الطلب"
+    },
+    {
+      "key": "app.common.loading.tickets",
+      "format": "text",
+      "description": "Loading state label (screen readers) while tickets load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading tickets",
+      "ar": "جارٍ تحميل الطلبات"
+    },
+    {
+      "key": "app.common.loading.transactions",
+      "format": "text",
+      "description": "Loading state label (screen readers) while transactions load",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading transactions",
+      "ar": "جارٍ تحميل المعاملات"
+    },
+    {
+      "key": "app.common.sign_out",
+      "format": "text",
+      "description": "Sign out button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sign out",
+      "ar": "تسجيل الخروج"
+    },
+    {
+      "key": "app.common.since.days",
+      "format": "text",
+      "description": "How long ago, in days",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "{count} days",
+      "ar": "{count} يوم"
+    },
+    {
+      "key": "app.common.since.hours",
+      "format": "text",
+      "description": "How long ago, in hours (short)",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "{count} h",
+      "ar": "{count} س"
+    },
+    {
+      "key": "app.common.since.minutes",
+      "format": "text",
+      "description": "How long ago, in minutes (short)",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "{count} min",
+      "ar": "{count} د"
+    },
+    {
+      "key": "app.common.skip",
+      "format": "text",
+      "description": "Skip link at the top of every signed-in page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Skip to content",
+      "ar": "انتقل إلى المحتوى"
+    },
+    {
+      "key": "app.common.try_again",
+      "format": "text",
+      "description": "Retry button after a failed read",
+      "placeholders": [],
+      "meta": {},
+      "en": "Try again",
+      "ar": "حاول مجدداً"
+    },
+    {
+      "key": "app.demo.disclosure.body",
+      "format": "text",
+      "description": "Demo disclosure text; {title} is the disclosure",
+      "placeholders": [
+        "title"
+      ],
+      "meta": {},
+      "en": "Sample text for demo mode. {title}: the real text comes from the API and is shown here in full. You agree to receive records electronically, to keep your contact details current, and that this acceptance is recorded with its time and this device.",
+      "ar": "نص تجريبي لوضع العرض. {title}: يأتي النص الفعلي من واجهة البرمجة ويُعرض هنا كاملًا. أنت توافق على تلقي السجلات إلكترونيًا، وعلى تحديث بيانات التواصل الخاصة بك باستمرار، وعلى تسجيل هذه الموافقة مع وقتها وهذا الجهاز."
+    },
+    {
+      "key": "app.demo.disclosure.esign.title",
+      "format": "text",
+      "description": "Demo disclosure title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Consent to electronic records",
+      "ar": "الموافقة على السجلات الإلكترونية"
+    },
+    {
+      "key": "app.demo.disclosure.terms.title",
+      "format": "text",
+      "description": "Demo disclosure title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Business account terms",
+      "ar": "شروط الحساب التجاري"
+    },
+    {
+      "key": "app.demo.error.amount_positive",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "The amount must be positive.",
+      "ar": "يجب أن يكون المبلغ موجبًا."
+    },
+    {
+      "key": "app.demo.error.amount_zero",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "The amount must be more than zero.",
+      "ar": "يجب أن يكون المبلغ أكبر من صفر."
+    },
+    {
+      "key": "app.demo.error.capture_closed",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "ID capture is open only while the bank is checking the application.",
+      "ar": "التقاط الهوية متاح فقط أثناء تدقيق البنك للطلب."
+    },
+    {
+      "key": "app.demo.error.card_details_unavailable",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "This card's details are not available.",
+      "ar": "تفاصيل هذه البطاقة غير متاحة."
+    },
+    {
+      "key": "app.demo.error.card_not_active",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Only an active card can be frozen.",
+      "ar": "لا يمكن تجميد إلا بطاقة نشطة."
+    },
+    {
+      "key": "app.demo.error.card_not_frozen",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "The card is not frozen.",
+      "ar": "البطاقة ليست مجمّدة."
+    },
+    {
+      "key": "app.demo.error.disclosures_first",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accept every disclosure first.",
+      "ar": "وافق على جميع الإفصاحات أولًا."
+    },
+    {
+      "key": "app.demo.error.file_too_large",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Files can be up to 10 MB.",
+      "ar": "يمكن أن يصل حجم الملف إلى 10 ميغابايت كحد أقصى."
+    },
+    {
+      "key": "app.demo.error.forbidden",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your role does not allow this.",
+      "ar": "دورك لا يسمح بهذا الإجراء."
+    },
+    {
+      "key": "app.demo.error.iban_and_name",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the IBAN and the name.",
+      "ar": "تحقق من رقم IBAN والاسم."
+    },
+    {
+      "key": "app.demo.error.iban_format",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the IBAN: AE and 21 digits.",
+      "ar": "تحقق من رقم IBAN: يبدأ بـ AE ويليه 21 رقمًا."
+    },
+    {
+      "key": "app.demo.error.id_number",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the ID number.",
+      "ar": "تحقق من رقم الهوية."
+    },
+    {
+      "key": "app.demo.error.insufficient_funds",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "The available balance does not cover this payment.",
+      "ar": "الرصيد المتاح لا يغطي هذه الدفعة."
+    },
+    {
+      "key": "app.demo.error.mandatory_kind",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "This notice always goes by email.",
+      "ar": "يُرسل هذا الإشعار دائمًا بالبريد الإلكتروني."
+    },
+    {
+      "key": "app.demo.error.not_pending_approval",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "This payment is not waiting for approval.",
+      "ar": "هذه الدفعة ليست بانتظار الموافقة."
+    },
+    {
+      "key": "app.demo.error.owner_id_missing",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "An owner's ID is missing.",
+      "ar": "هوية أحد المالكين غير موجودة."
+    },
+    {
+      "key": "app.demo.error.reverification_cancelled",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "You did not confirm it is you, so nothing was changed.",
+      "ar": "لم تؤكد هويتك، لذا لم يتغير شيء."
+    },
+    {
+      "key": "app.demo.error.schedule_fields",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the amount, how often and the dates.",
+      "ar": "تحقق من المبلغ وعدد مرات التكرار والتواريخ."
+    },
+    {
+      "key": "app.demo.error.schedule_state",
+      "format": "text",
+      "description": "Demo refusal of a schedule action; {state} is the schedule state",
+      "placeholders": [
+        "state"
+      ],
+      "meta": {},
+      "en": "A {state} schedule cannot do that.",
+      "ar": "لا يمكن تنفيذ ذلك على جدول دفعات في الحالة {state}."
+    },
+    {
+      "key": "app.demo.error.sms_code_invalid",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "That code is not right. Check the text and try again.",
+      "ar": "الرمز غير صحيح. تحقق من الرسالة وحاول مرة أخرى."
+    },
+    {
+      "key": "app.demo.error.sms_number_format",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter the number in international form, like +15551234567.",
+      "ar": "أدخل الرقم بالصيغة الدولية، مثل +15551234567."
+    },
+    {
+      "key": "app.demo.error.sms_verify_first",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Verify your SMS number first.",
+      "ar": "تحقق من رقم الرسائل النصية أولًا."
+    },
+    {
+      "key": "app.demo.error.ticket_fields",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "A subject and a message are needed.",
+      "ar": "يجب إدخال الموضوع والرسالة."
+    },
+    {
+      "key": "app.demo.error.unknown_kind",
+      "format": "text",
+      "description": "Demo refusal of an unknown notice kind",
+      "placeholders": [
+        "kind"
+      ],
+      "meta": {},
+      "en": "Unknown notice kind {kind}.",
+      "ar": "نوع إشعار غير معروف: {kind}."
+    },
+    {
+      "key": "app.demo.member",
+      "format": "text",
+      "description": "Name shown for a person with no name in demo mode",
+      "placeholders": [],
+      "meta": {},
+      "en": "Company member",
+      "ar": "عضو في الشركة"
+    },
+    {
+      "key": "app.demo.notice.approval.body",
+      "format": "text",
+      "description": "Demo notice body; {amount} is the payment",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "A payment of {amount} is waiting for a second person to approve it.",
+      "ar": "دفعة بقيمة {amount} بانتظار موافقة شخص ثانٍ."
+    },
+    {
+      "key": "app.demo.notice.approval.title",
+      "format": "text",
+      "description": "Demo notice title",
+      "placeholders": [],
+      "meta": {},
+      "en": "A payment needs your approval",
+      "ar": "دفعة بانتظار موافقتك"
+    },
+    {
+      "key": "app.demo.notice.settled.body",
+      "format": "text",
+      "description": "Demo notice body; {amount} is the payment",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "Your payment of {amount} has completed.",
+      "ar": "اكتملت دفعتك بقيمة {amount}."
+    },
+    {
+      "key": "app.demo.notice.settled.title",
+      "format": "text",
+      "description": "Demo notice title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment completed",
+      "ar": "اكتملت الدفعة"
+    },
+    {
+      "key": "app.demo.notice.support.body",
+      "format": "text",
+      "description": "Demo notice body",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem replied to your request.",
+      "ar": "ردّ فريق OnGem على طلبك."
+    },
+    {
+      "key": "app.demo.notice.support.title",
+      "format": "text",
+      "description": "Demo notice title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your support request has an answer",
+      "ar": "وصل رد على طلب الدعم الخاص بك"
+    },
+    {
+      "key": "app.demo.notice_kind.account_frozen",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account on hold",
+      "ar": "الحساب موقوف مؤقتًا"
+    },
+    {
+      "key": "app.demo.notice_kind.account_ready",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account open",
+      "ar": "تم فتح الحساب"
+    },
+    {
+      "key": "app.demo.notice_kind.application_decided",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Application decision",
+      "ar": "القرار بشأن الطلب"
+    },
+    {
+      "key": "app.demo.notice_kind.approval_waiting",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "A payment waits for your approval",
+      "ar": "دفعة بانتظار موافقتك"
+    },
+    {
+      "key": "app.demo.notice_kind.card_frozen",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card frozen or cancelled",
+      "ar": "تم تجميد البطاقة أو إلغاؤها"
+    },
+    {
+      "key": "app.demo.notice_kind.closure_started",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account closing",
+      "ar": "إغلاق الحساب"
+    },
+    {
+      "key": "app.demo.notice_kind.details_needed",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Business details to confirm",
+      "ar": "بيانات تجارية بحاجة إلى تأكيد"
+    },
+    {
+      "key": "app.demo.notice_kind.limits_changed",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment limits changed",
+      "ar": "تغيّرت حدود الدفع"
+    },
+    {
+      "key": "app.demo.notice_kind.new_device",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "New device",
+      "ar": "جهاز جديد"
+    },
+    {
+      "key": "app.demo.notice_kind.payment_failed",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment not sent",
+      "ar": "لم تُرسل الدفعة"
+    },
+    {
+      "key": "app.demo.notice_kind.payment_returned",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment returned",
+      "ar": "أُعيدت الدفعة"
+    },
+    {
+      "key": "app.demo.notice_kind.payment_sent",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment sent",
+      "ar": "تم إرسال الدفعة"
+    },
+    {
+      "key": "app.demo.notice_kind.payment_settled",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment completed",
+      "ar": "اكتملت الدفعة"
+    },
+    {
+      "key": "app.demo.notice_kind.payment_with_bank",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment with the bank",
+      "ar": "الدفعة لدى البنك"
+    },
+    {
+      "key": "app.demo.notice_kind.schedule_failed",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Scheduled payment did not go",
+      "ar": "لم تُنفَّذ الدفعة المجدولة"
+    },
+    {
+      "key": "app.demo.notice_kind.support_update",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Support request update",
+      "ar": "تحديث على طلب الدعم"
+    },
+    {
+      "key": "app.demo.payment.return_reason",
+      "format": "text",
+      "description": "Demo: why the sample payment was returned",
+      "placeholders": [],
+      "meta": {},
+      "en": "Incorrect account number",
+      "ar": "رقم الحساب غير صحيح"
+    },
+    {
+      "key": "app.demo.ticket.card.answer",
+      "format": "text",
+      "description": "Demo support ticket: OnGem support's answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Yes. Add them as a cardholder and we will issue it.",
+      "ar": "نعم. أضِفه كحامل بطاقة وسنصدرها له."
+    },
+    {
+      "key": "app.demo.ticket.card.question",
+      "format": "text",
+      "description": "Demo support ticket: the founder's message",
+      "placeholders": [],
+      "meta": {},
+      "en": "Can we get a virtual card for our new designer?",
+      "ar": "هل يمكننا الحصول على بطاقة افتراضية للمصمم الجديد لدينا؟"
+    },
+    {
+      "key": "app.demo.ticket.card.subject",
+      "format": "text",
+      "description": "Demo support ticket subject",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card for a new hire",
+      "ar": "بطاقة لموظف جديد"
+    },
+    {
+      "key": "app.demo.ticket.statement.answer",
+      "format": "text",
+      "description": "Demo support ticket: OnGem support's answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accounts, Operating, Statements, September 2026.",
+      "ar": "الحسابات، الحساب التشغيلي، كشوف الحساب، سبتمبر 2026."
+    },
+    {
+      "key": "app.demo.ticket.statement.question",
+      "format": "text",
+      "description": "Demo support ticket: the founder's message",
+      "placeholders": [],
+      "meta": {},
+      "en": "Where do I find the September statement?",
+      "ar": "أين أجد كشف حساب شهر سبتمبر؟"
+    },
+    {
+      "key": "app.demo.ticket.statement.resolution",
+      "format": "text",
+      "description": "Demo support ticket resolution",
+      "placeholders": [],
+      "meta": {},
+      "en": "Statement shared in the app.",
+      "ar": "تمت مشاركة كشف الحساب في التطبيق."
+    },
+    {
+      "key": "app.demo.ticket.statement.subject",
+      "format": "text",
+      "description": "Demo support ticket subject",
+      "placeholders": [],
+      "meta": {},
+      "en": "Statement for September",
+      "ar": "كشف حساب شهر سبتمبر"
+    },
+    {
+      "key": "app.ds.account",
+      "format": "text",
+      "description": "Console shell account button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account",
+      "ar": "الحساب"
+    },
+    {
+      "key": "app.ds.copied",
+      "format": "text",
+      "description": "Copy button after copying",
+      "placeholders": [],
+      "meta": {},
+      "en": "Copied",
+      "ar": "تم النسخ"
+    },
+    {
+      "key": "app.ds.copy",
+      "format": "text",
+      "description": "Copy button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Copy",
+      "ar": "نسخ"
+    },
+    {
+      "key": "app.ds.copy_label",
+      "format": "text",
+      "description": "Copy button for screen readers; {label} names the value",
+      "placeholders": [
+        "label"
+      ],
+      "meta": {},
+      "en": "Copy {label}",
+      "ar": "نسخ {label}"
+    },
+    {
+      "key": "app.ds.dismiss",
+      "format": "text",
+      "description": "Close button on a toast message",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dismiss",
+      "ar": "إغلاق"
+    },
+    {
+      "key": "app.ds.loading",
+      "format": "text",
+      "description": "Default loading label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading",
+      "ar": "جارٍ التحميل"
+    },
+    {
+      "key": "app.ds.nothing_to_show",
+      "format": "text",
+      "description": "Empty table",
+      "placeholders": [],
+      "meta": {},
+      "en": "Nothing to show.",
+      "ar": "لا يوجد ما يُعرض."
+    },
+    {
+      "key": "app.ds.sign_in",
+      "format": "text",
+      "description": "Console shell sign-in button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sign in",
+      "ar": "تسجيل الدخول"
+    },
+    {
+      "key": "app.errors.capability_unavailable",
+      "format": "text",
+      "description": "Error for capability_unavailable: a scheduled internal transfer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Scheduled transfers between your own accounts are not available yet. Schedule a UAEFTS payment instead.",
+      "ar": "الجدولة للتحويلات بين حساباتك غير متاحة بعد. يمكنك جدولة دفعة عبر UAEFTS بدلاً من ذلك."
+    },
+    {
+      "key": "app.errors.company_not_member",
+      "format": "text",
+      "description": "Error shown for the API problem code company_not_member",
+      "placeholders": [],
+      "meta": {},
+      "en": "You are no longer a member of that company. OnGem opened your default company.",
+      "ar": "لم تعد عضواً في تلك الشركة. فتح OnGem شركتك الافتراضية."
+    },
+    {
+      "key": "app.errors.daily_limit_exceeded",
+      "format": "text",
+      "description": "Error shown for the API problem code daily_limit_exceeded",
+      "placeholders": [
+        "daily_limit"
+      ],
+      "meta": {},
+      "en": "This would go over the top-up limit of {daily_limit} a day.",
+      "ar": "ستتجاوز هذه العملية حد الإيداع اليومي البالغ {daily_limit}."
+    },
+    {
+      "key": "app.errors.device_required",
+      "format": "text",
+      "description": "Error shown for the API problem code device_required",
+      "placeholders": [],
+      "meta": {},
+      "en": "This browser is not registered with OnGem yet. Sign out, then sign in again.",
+      "ar": "لم يُسجَّل هذا المتصفح لدى OnGem بعد. سجّل الخروج ثم سجّل الدخول مجدداً."
+    },
+    {
+      "key": "app.errors.device_revoked",
+      "format": "text",
+      "description": "Error shown for the API problem code device_revoked",
+      "placeholders": [],
+      "meta": {},
+      "en": "This browser was signed out of OnGem. Sign in again.",
+      "ar": "تم تسجيل خروج هذا المتصفح من OnGem. سجّل الدخول مجدداً."
+    },
+    {
+      "key": "app.errors.draft_not_found",
+      "format": "text",
+      "description": "Error shown for the API problem code draft_not_found",
+      "placeholders": [],
+      "meta": {},
+      "en": "The assistant draft is no longer there.",
+      "ar": "لم تعد مسودة المساعد متاحة."
+    },
+    {
+      "key": "app.errors.draft_not_open",
+      "format": "text",
+      "description": "Error shown for the API problem code draft_not_open",
+      "placeholders": [],
+      "meta": {},
+      "en": "The assistant draft has expired or was already decided, so it was not confirmed.",
+      "ar": "انتهت صلاحية مسودة المساعد أو سبق البت فيها، لذلك لم تُؤكَّد."
+    },
+    {
+      "key": "app.errors.draft_result_mismatch",
+      "format": "text",
+      "description": "Error shown for the API problem code draft_result_mismatch",
+      "placeholders": [],
+      "meta": {},
+      "en": "This was not the action the assistant drafted, so the draft was not confirmed. Nothing else changed.",
+      "ar": "لم يكن هذا هو الإجراء الذي أعدّ المساعد مسودته، لذلك لم تُؤكَّد المسودة. لم يتغير أي شيء آخر."
+    },
+    {
+      "key": "app.errors.forbidden",
+      "format": "text",
+      "description": "Error shown for the API problem code forbidden",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your role does not allow this. An owner of the company can do it.",
+      "ar": "لا يسمح دورك بهذا الإجراء. يمكن لأحد مالكي الشركة القيام به."
+    },
+    {
+      "key": "app.errors.funding_source_not_found",
+      "format": "text",
+      "description": "Error shown for the API problem code funding_source_not_found",
+      "placeholders": [],
+      "meta": {},
+      "en": "That account is no longer linked.",
+      "ar": "لم يعد هذا الحساب مرتبطاً."
+    },
+    {
+      "key": "app.errors.funding_source_not_verified",
+      "format": "text",
+      "description": "Error shown for the API problem code funding_source_not_verified",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank has not verified this account yet, so nothing can be pulled from it. Check it again later.",
+      "ar": "لم يتحقق البنك من هذا الحساب بعد، لذلك لا يمكن السحب منه. تحقق منه لاحقاً."
+    },
+    {
+      "key": "app.errors.funding_source_refused",
+      "format": "text",
+      "description": "Error shown for the API problem code funding_source_refused",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank could not link this account. Check the numbers and try again.",
+      "ar": "تعذّر على البنك ربط هذا الحساب. تحقق من الأرقام وحاول مجدداً."
+    },
+    {
+      "key": "app.errors.idempotency_in_progress",
+      "format": "text",
+      "description": "Error shown for the API problem code idempotency_in_progress",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem is still working on this request. Wait a moment and check before trying again; it will not run twice.",
+      "ar": "لا يزال OnGem يعالج هذا الطلب. انتظر قليلاً وتحقق قبل المحاولة مجدداً؛ لن يُنفَّذ الطلب مرتين."
+    },
+    {
+      "key": "app.errors.insufficient_funds",
+      "format": "text",
+      "description": "Error shown for the API problem code insufficient_funds",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your available balance is lower than this payment.",
+      "ar": "رصيدك المتاح أقل من مبلغ هذه الدفعة."
+    },
+    {
+      "key": "app.errors.invalid_transition",
+      "format": "text",
+      "description": "Error shown for the API problem code invalid_transition",
+      "placeholders": [],
+      "meta": {},
+      "en": "This schedule cannot do that now. It may have ended or been cancelled.",
+      "ar": "لا يمكن تنفيذ ذلك على هذه الجدولة الآن. ربما انتهت أو أُلغيت."
+    },
+    {
+      "key": "app.errors.limit_exceeded",
+      "format": "text",
+      "description": "Error shown for the API problem code limit_exceeded",
+      "placeholders": [
+        "limit"
+      ],
+      "meta": {},
+      "en": "This top-up is over the limit of {limit} for one top-up.",
+      "ar": "تتجاوز عملية الإيداع هذه الحد الأقصى البالغ {limit} للعملية الواحدة."
+    },
+    {
+      "key": "app.errors.network",
+      "format": "text",
+      "description": "Error when the API cannot be reached",
+      "placeholders": [],
+      "meta": {},
+      "en": "Could not reach OnGem. Check your connection and try again.",
+      "ar": "تعذّر الاتصال بـ OnGem. تحقق من اتصالك وحاول مجدداً."
+    },
+    {
+      "key": "app.errors.payment_not_pending_approval",
+      "format": "text",
+      "description": "Error shown for the API problem code payment_not_pending_approval",
+      "placeholders": [],
+      "meta": {},
+      "en": "This payment is no longer waiting for approval.",
+      "ar": "لم تعد هذه الدفعة بانتظار الاعتماد."
+    },
+    {
+      "key": "app.errors.permission_denied",
+      "format": "text",
+      "description": "Error shown for the API problem code permission_denied",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your role does not allow this. An owner of the company can do it.",
+      "ar": "لا يسمح دورك بهذا الإجراء. يمكن لأحد مالكي الشركة القيام به."
+    },
+    {
+      "key": "app.errors.rail_unavailable",
+      "format": "text",
+      "description": "Error shown for the API problem code rail_unavailable",
+      "placeholders": [],
+      "meta": {},
+      "en": "Link this account for an OnGem account at the same bank.",
+      "ar": "اربط هذا الحساب بحساب OnGem في البنك نفسه."
+    },
+    {
+      "key": "app.errors.recipient_blocked",
+      "format": "text",
+      "description": "Error shown for the API problem code recipient_blocked",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments to this recipient are blocked.",
+      "ar": "المدفوعات إلى هذا المستفيد محظورة."
+    },
+    {
+      "key": "app.errors.reverification_cancelled",
+      "format": "text",
+      "description": "Error shown for the API problem code reverification_cancelled",
+      "placeholders": [],
+      "meta": {},
+      "en": "You did not confirm it is you, so nothing was changed.",
+      "ar": "لم تؤكد هويتك، لذلك لم يتم تغيير أي شيء."
+    },
+    {
+      "key": "app.errors.reverification_required",
+      "format": "text",
+      "description": "Error shown for the API problem code reverification_required",
+      "placeholders": [],
+      "meta": {},
+      "en": "This needs you to confirm it is you with your second factor. Nothing was changed. Try again and confirm.",
+      "ar": "يتطلب هذا الإجراء تأكيد هويتك بعامل التحقق الثاني. لم يتم تغيير أي شيء. حاول مجدداً وأكّد هويتك."
+    },
+    {
+      "key": "app.errors.schedule_not_found",
+      "format": "text",
+      "description": "Error shown for the API problem code schedule_not_found",
+      "placeholders": [],
+      "meta": {},
+      "en": "That schedule is no longer there.",
+      "ar": "لم تعد هذه الجدولة موجودة."
+    },
+    {
+      "key": "app.errors.self_approval_forbidden",
+      "format": "text",
+      "description": "Error shown for the API problem code self_approval_forbidden",
+      "placeholders": [],
+      "meta": {},
+      "en": "A second person approves this, not the person who made it.",
+      "ar": "يعتمد هذا الإجراء شخص آخر، وليس الشخص الذي أنشأه."
+    },
+    {
+      "key": "app.errors.unknown",
+      "format": "text",
+      "description": "Error with no known cause",
+      "placeholders": [],
+      "meta": {},
+      "en": "Something went wrong. Try again.",
+      "ar": "حدث خطأ ما. حاول مجدداً."
+    },
+    {
+      "key": "app.home.add_money",
+      "format": "text",
+      "description": "Home action button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add money",
+      "ar": "إضافة أموال"
+    },
+    {
+      "key": "app.home.all_payments",
+      "format": "text",
+      "description": "Home link to the payments list",
+      "placeholders": [],
+      "meta": {},
+      "en": "All payments",
+      "ar": "جميع المدفوعات"
+    },
+    {
+      "key": "app.home.ask_for_help",
+      "format": "text",
+      "description": "Home action button to open a support request",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ask for help",
+      "ar": "طلب المساعدة"
+    },
+    {
+      "key": "app.home.available",
+      "format": "text",
+      "description": "Home balance card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Available across your accounts",
+      "ar": "الرصيد المتاح في جميع حساباتك"
+    },
+    {
+      "key": "app.home.company",
+      "format": "text",
+      "description": "Home company card: company row label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Company",
+      "ar": "الشركة"
+    },
+    {
+      "key": "app.home.continue_application",
+      "format": "text",
+      "description": "Home button while the application is not finished",
+      "placeholders": [],
+      "meta": {},
+      "en": "Continue your application",
+      "ar": "متابعة طلبك"
+    },
+    {
+      "key": "app.home.hello",
+      "format": "text",
+      "description": "Home heading when the first name is not known",
+      "placeholders": [],
+      "meta": {},
+      "en": "Hello",
+      "ar": "مرحباً"
+    },
+    {
+      "key": "app.home.hello_name",
+      "format": "text",
+      "description": "Home heading with the founder's first name",
+      "placeholders": [
+        "name"
+      ],
+      "meta": {},
+      "en": "Hello, {name}",
+      "ar": "مرحباً {name}"
+    },
+    {
+      "key": "app.home.identity_at_bank",
+      "format": "text",
+      "description": "Home company card: the bank identity check row label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Identity at the bank",
+      "ar": "التحقق من الهوية لدى البنك"
+    },
+    {
+      "key": "app.home.new_payment",
+      "format": "text",
+      "description": "Home action button",
+      "placeholders": [],
+      "meta": {},
+      "en": "New payment",
+      "ar": "دفعة جديدة"
+    },
+    {
+      "key": "app.home.no_payments",
+      "format": "text",
+      "description": "Home recent payments empty state",
+      "placeholders": [],
+      "meta": {},
+      "en": "No payments yet.",
+      "ar": "لا توجد مدفوعات بعد."
+    },
+    {
+      "key": "app.home.recent_payments",
+      "format": "text",
+      "description": "Home card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recent payments",
+      "ar": "المدفوعات الأخيرة"
+    },
+    {
+      "key": "app.home.subtitle",
+      "format": "text",
+      "description": "Home subtitle when the company name is not known",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your company's money at a glance.",
+      "ar": "نظرة سريعة على أموال شركتك."
+    },
+    {
+      "key": "app.home.your_company",
+      "format": "text",
+      "description": "Home company card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your company",
+      "ar": "شركتك"
+    },
+    {
+      "key": "app.home.your_role",
+      "format": "text",
+      "description": "Home company card: role row label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your role",
+      "ar": "دورك"
+    },
+    {
+      "key": "app.nav.accounts",
+      "format": "text",
+      "description": "Signed-in navigation tab: Accounts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accounts",
+      "ar": "الحسابات"
+    },
+    {
+      "key": "app.nav.cards",
+      "format": "text",
+      "description": "Signed-in navigation tab: Cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cards",
+      "ar": "البطاقات"
+    },
+    {
+      "key": "app.nav.document_title",
+      "format": "text",
+      "description": "Browser tab title of a signed-in page; {page} is the page name",
+      "placeholders": [
+        "page"
+      ],
+      "meta": {},
+      "en": "{page} | OnGem",
+      "ar": "{page} | OnGem"
+    },
+    {
+      "key": "app.nav.home",
+      "format": "text",
+      "description": "Signed-in navigation tab: Home",
+      "placeholders": [],
+      "meta": {},
+      "en": "Home",
+      "ar": "الرئيسية"
+    },
+    {
+      "key": "app.nav.payments",
+      "format": "text",
+      "description": "Signed-in navigation tab: Payments",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments",
+      "ar": "المدفوعات"
+    },
+    {
+      "key": "app.nav.settings",
+      "format": "text",
+      "description": "Signed-in navigation tab: Settings",
+      "placeholders": [],
+      "meta": {},
+      "en": "Settings",
+      "ar": "الإعدادات"
+    },
+    {
+      "key": "app.nav.support",
+      "format": "text",
+      "description": "Signed-in navigation tab: Support",
+      "placeholders": [],
+      "meta": {},
+      "en": "Support",
+      "ar": "الدعم"
+    },
+    {
+      "key": "app.nav.title.accounts",
+      "format": "text",
+      "description": "Browser tab page name for the Accounts page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accounts",
+      "ar": "الحسابات"
+    },
+    {
+      "key": "app.nav.title.add_money",
+      "format": "text",
+      "description": "Browser tab page name for the Add money page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add money",
+      "ar": "إضافة أموال"
+    },
+    {
+      "key": "app.nav.title.cards",
+      "format": "text",
+      "description": "Browser tab page name for the Cards page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cards",
+      "ar": "البطاقات"
+    },
+    {
+      "key": "app.nav.title.home",
+      "format": "text",
+      "description": "Browser tab page name for the Home page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Home",
+      "ar": "الرئيسية"
+    },
+    {
+      "key": "app.nav.title.new_payment",
+      "format": "text",
+      "description": "Browser tab page name for the New payment page",
+      "placeholders": [],
+      "meta": {},
+      "en": "New payment",
+      "ar": "دفعة جديدة"
+    },
+    {
+      "key": "app.nav.title.new_request",
+      "format": "text",
+      "description": "Browser tab page name for the New request page",
+      "placeholders": [],
+      "meta": {},
+      "en": "New request",
+      "ar": "طلب جديد"
+    },
+    {
+      "key": "app.nav.title.notifications",
+      "format": "text",
+      "description": "Browser tab page name for the Notifications page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Notifications",
+      "ar": "الإشعارات"
+    },
+    {
+      "key": "app.nav.title.onboarding",
+      "format": "text",
+      "description": "Browser tab page name for the Your application page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your application",
+      "ar": "طلبك"
+    },
+    {
+      "key": "app.nav.title.payments",
+      "format": "text",
+      "description": "Browser tab page name for the Payments page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments",
+      "ar": "المدفوعات"
+    },
+    {
+      "key": "app.nav.title.recipients",
+      "format": "text",
+      "description": "Browser tab page name for the Recipients page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recipients",
+      "ar": "المستفيدون"
+    },
+    {
+      "key": "app.nav.title.schedules",
+      "format": "text",
+      "description": "Browser tab page name for the Scheduled payments page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Scheduled payments",
+      "ar": "المدفوعات المجدولة"
+    },
+    {
+      "key": "app.nav.title.settings",
+      "format": "text",
+      "description": "Browser tab page name for the Settings page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Settings",
+      "ar": "الإعدادات"
+    },
+    {
+      "key": "app.nav.title.support",
+      "format": "text",
+      "description": "Browser tab page name for the Support page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Support",
+      "ar": "الدعم"
+    },
+    {
+      "key": "app.notifications.all_read",
+      "format": "text",
+      "description": "Notifications subtitle when nothing is unread",
+      "placeholders": [],
+      "meta": {},
+      "en": "All read",
+      "ar": "تمت قراءة الكل"
+    },
+    {
+      "key": "app.notifications.bell_unread",
+      "format": "text",
+      "description": "Bell label for screen readers when some are unread",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "Notifications, {count} unread",
+      "ar": "الإشعارات، {count} غير مقروءة"
+    },
+    {
+      "key": "app.notifications.choices.always_email",
+      "format": "text",
+      "description": "Marks a notice kind that always goes by email",
+      "placeholders": [],
+      "meta": {},
+      "en": "(always by email)",
+      "ar": "(دائماً بالبريد الإلكتروني)"
+    },
+    {
+      "key": "app.notifications.choices.by_email",
+      "format": "text",
+      "description": "Email switch for a notice kind, read by screen readers",
+      "placeholders": [
+        "kind"
+      ],
+      "meta": {},
+      "en": "{kind} by email",
+      "ar": "{kind} بالبريد الإلكتروني"
+    },
+    {
+      "key": "app.notifications.choices.by_sms",
+      "format": "text",
+      "description": "SMS switch for a notice kind, read by screen readers",
+      "placeholders": [
+        "kind"
+      ],
+      "meta": {},
+      "en": "{kind} by SMS",
+      "ar": "{kind} برسالة نصية"
+    },
+    {
+      "key": "app.notifications.choices.code",
+      "format": "text",
+      "description": "SMS code field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Code from the text",
+      "ar": "الرمز الوارد في الرسالة"
+    },
+    {
+      "key": "app.notifications.choices.code_hint",
+      "format": "text",
+      "description": "SMS code field hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "6 digits. It works for 10 minutes and 5 tries.",
+      "ar": "6 أرقام، صالح لمدة 10 دقائق وخمس محاولات."
+    },
+    {
+      "key": "app.notifications.choices.email",
+      "format": "text",
+      "description": "Notification choices column",
+      "placeholders": [],
+      "meta": {},
+      "en": "Email",
+      "ar": "البريد الإلكتروني"
+    },
+    {
+      "key": "app.notifications.choices.group",
+      "format": "text",
+      "description": "Notification choices table name for screen readers",
+      "placeholders": [],
+      "meta": {},
+      "en": "Email and SMS per notice",
+      "ar": "البريد الإلكتروني والرسائل النصية لكل إشعار"
+    },
+    {
+      "key": "app.notifications.choices.intro",
+      "format": "text",
+      "description": "Notification choices intro",
+      "placeholders": [],
+      "meta": {},
+      "en": "Every notice is in Notifications. Choose which also reach you by email or SMS. Some always go by email because they are about your money or your account.",
+      "ar": "تجد كل الإشعارات في صفحة الإشعارات. اختر ما يصلك منها أيضاً عبر البريد الإلكتروني أو الرسائل النصية. تُرسل بعض الإشعارات دائماً بالبريد الإلكتروني لأنها تتعلق بأموالك أو حسابك."
+    },
+    {
+      "key": "app.notifications.choices.notice",
+      "format": "text",
+      "description": "Notification choices column",
+      "placeholders": [],
+      "meta": {},
+      "en": "Notice",
+      "ar": "الإشعار"
+    },
+    {
+      "key": "app.notifications.choices.send_code",
+      "format": "text",
+      "description": "Button that sends the SMS code",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send code",
+      "ar": "إرسال الرمز"
+    },
+    {
+      "key": "app.notifications.choices.sms",
+      "format": "text",
+      "description": "Notification choices column",
+      "placeholders": [],
+      "meta": {},
+      "en": "SMS",
+      "ar": "الرسائل النصية"
+    },
+    {
+      "key": "app.notifications.choices.sms_none",
+      "format": "text",
+      "description": "SMS number state, none",
+      "placeholders": [],
+      "meta": {},
+      "en": "No SMS number yet. Add one to get texts.",
+      "ar": "لا يوجد رقم للرسائل النصية بعد. أضف رقماً لتلقي الرسائل."
+    },
+    {
+      "key": "app.notifications.choices.sms_number",
+      "format": "text",
+      "description": "SMS number field",
+      "placeholders": [],
+      "meta": {},
+      "en": "SMS number",
+      "ar": "رقم الرسائل النصية"
+    },
+    {
+      "key": "app.notifications.choices.sms_number_hint",
+      "format": "text",
+      "description": "SMS number field hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "International form, like +971501234567.",
+      "ar": "بالصيغة الدولية، مثل +971501234567."
+    },
+    {
+      "key": "app.notifications.choices.sms_unverified",
+      "format": "text",
+      "description": "SMS number state, not verified",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "SMS number ending {last4}, not verified yet.",
+      "ar": "رقم الرسائل النصية المنتهي بـ {last4}، لم يتم التحقق منه بعد."
+    },
+    {
+      "key": "app.notifications.choices.sms_verified",
+      "format": "text",
+      "description": "SMS number state, verified",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "SMS number ending {last4}, verified.",
+      "ar": "رقم الرسائل النصية المنتهي بـ {last4}، تم التحقق منه."
+    },
+    {
+      "key": "app.notifications.choices.verify",
+      "format": "text",
+      "description": "Button that verifies the SMS code",
+      "placeholders": [],
+      "meta": {},
+      "en": "Verify number",
+      "ar": "تأكيد الرقم"
+    },
+    {
+      "key": "app.notifications.choose",
+      "format": "text",
+      "description": "Line under the inbox; {settings} is a link to Settings",
+      "placeholders": [
+        "settings"
+      ],
+      "meta": {},
+      "en": "Choose what reaches you by email or SMS in {settings}.",
+      "ar": "اختر ما يصلك عبر البريد الإلكتروني أو الرسائل النصية من {settings}."
+    },
+    {
+      "key": "app.notifications.empty_text",
+      "format": "text",
+      "description": "Notifications empty state text",
+      "placeholders": [],
+      "meta": {},
+      "en": "We tell you here when a payment moves, a card changes or support replies.",
+      "ar": "نُعلمك هنا عند تحرك دفعة أو تغيّر بطاقة أو رد فريق الدعم."
+    },
+    {
+      "key": "app.notifications.empty_title",
+      "format": "text",
+      "description": "Notifications empty state title",
+      "placeholders": [],
+      "meta": {},
+      "en": "No notifications yet",
+      "ar": "لا توجد إشعارات بعد"
+    },
+    {
+      "key": "app.notifications.mark_all_read",
+      "format": "text",
+      "description": "Notifications button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Mark all read",
+      "ar": "تحديد الكل كمقروء"
+    },
+    {
+      "key": "app.notifications.title",
+      "format": "text",
+      "description": "Notifications page heading, bell label and settings card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Notifications",
+      "ar": "الإشعارات"
+    },
+    {
+      "key": "app.notifications.unread.one",
+      "format": "text",
+      "description": "Notifications subtitle, one unread",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "{count} unread",
+      "ar": "{count} غير مقروء"
+    },
+    {
+      "key": "app.notifications.unread.other",
+      "format": "text",
+      "description": "Notifications subtitle, several unread",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "{count} unread",
+      "ar": "{count} غير مقروءة"
+    },
+    {
+      "key": "app.notifications.unread_prefix",
+      "format": "text",
+      "description": "Screen reader prefix of an unread notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unread:",
+      "ar": "غير مقروء:"
+    },
+    {
+      "key": "app.onboarding.accepted",
+      "format": "text",
+      "description": "Chip: a disclosure was accepted",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accepted",
+      "ar": "تم القبول"
+    },
+    {
+      "key": "app.onboarding.bank_waiting",
+      "format": "text",
+      "description": "Notice while the bank reviews the application",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank is reviewing your application. This can take a few days. Check back here for updates.",
+      "ar": "يراجع البنك طلبك، وقد يستغرق ذلك بضعة أيام. تابع هذه الصفحة لمعرفة المستجدات."
+    },
+    {
+      "key": "app.onboarding.capture_bad_url",
+      "format": "text",
+      "description": "Error: the bank's capture link is not https",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank sent a capture address we cannot open. Try Text me the link.",
+      "ar": "أرسل البنك رابط تصوير لا يمكننا فتحه. جرّب خيار إرسال الرابط برسالة نصية."
+    },
+    {
+      "key": "app.onboarding.capture_browser",
+      "format": "text",
+      "description": "Button: capture ID photos in this browser",
+      "placeholders": [],
+      "meta": {},
+      "en": "Capture in this browser",
+      "ar": "التصوير في هذا المتصفح"
+    },
+    {
+      "key": "app.onboarding.capture_captured",
+      "format": "text",
+      "description": "ID capture status",
+      "placeholders": [],
+      "meta": {},
+      "en": "Photos received. The bank is checking them.",
+      "ar": "تم استلام الصور، ويقوم البنك بالتحقق منها."
+    },
+    {
+      "key": "app.onboarding.capture_check",
+      "format": "text",
+      "description": "Button: check the capture status",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check status",
+      "ar": "التحقق من الحالة"
+    },
+    {
+      "key": "app.onboarding.capture_demo",
+      "format": "text",
+      "description": "Demo mode notice on ID capture",
+      "placeholders": [],
+      "meta": {},
+      "en": "Demo mode has no capture page. Check the status to see the next step.",
+      "ar": "لا توجد صفحة تصوير في الوضع التجريبي. تحقق من الحالة لمعرفة الخطوة التالية."
+    },
+    {
+      "key": "app.onboarding.capture_intro",
+      "format": "text",
+      "description": "ID capture introduction",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank may ask for photos of your ID. Take them in this browser or on your phone. It takes about two minutes.",
+      "ar": "قد يطلب البنك صورا لهويتك. التقطها في هذا المتصفح أو على هاتفك، ويستغرق ذلك نحو دقيقتين."
+    },
+    {
+      "key": "app.onboarding.capture_open",
+      "format": "text",
+      "description": "Link to the bank's capture page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open the capture page",
+      "ar": "فتح صفحة التصوير"
+    },
+    {
+      "key": "app.onboarding.capture_open_note",
+      "format": "text",
+      "description": "After the capture page link",
+      "placeholders": [],
+      "meta": {},
+      "en": "It opens in a new tab. Come back here when you are done.",
+      "ar": "ستفتح في علامة تبويب جديدة. عد إلى هنا عند الانتهاء."
+    },
+    {
+      "key": "app.onboarding.capture_rejected",
+      "format": "text",
+      "description": "ID capture status",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank could not verify this ID",
+      "ar": "تعذر على البنك التحقق من هذه الهوية"
+    },
+    {
+      "key": "app.onboarding.capture_reviewing",
+      "format": "text",
+      "description": "ID capture status",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank is reviewing your ID",
+      "ar": "يراجع البنك هويتك"
+    },
+    {
+      "key": "app.onboarding.capture_sms",
+      "format": "text",
+      "description": "Button: have the bank text the capture link",
+      "placeholders": [],
+      "meta": {},
+      "en": "Text me the link",
+      "ar": "أرسل لي الرابط برسالة نصية"
+    },
+    {
+      "key": "app.onboarding.capture_sms_sent",
+      "format": "text",
+      "description": "Notice after asking the bank to text the link",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank is texting the link to the phone number it holds for you. Open it on your phone.",
+      "ar": "يرسل البنك الرابط برسالة نصية إلى رقم الهاتف المسجل لديه. افتحه على هاتفك."
+    },
+    {
+      "key": "app.onboarding.capture_title",
+      "format": "text",
+      "description": "Card title: ID document capture",
+      "placeholders": [],
+      "meta": {},
+      "en": "Verify your ID document",
+      "ar": "التحقق من وثيقة هويتك"
+    },
+    {
+      "key": "app.onboarding.capture_verified",
+      "format": "text",
+      "description": "ID capture status",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your ID is verified",
+      "ar": "تم التحقق من هويتك"
+    },
+    {
+      "key": "app.onboarding.capture_waiting",
+      "format": "text",
+      "description": "ID capture status",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for your photos",
+      "ar": "بانتظار صورك"
+    },
+    {
+      "key": "app.onboarding.confirm_details",
+      "format": "text",
+      "description": "Application step and button: confirm the details",
+      "placeholders": [],
+      "meta": {},
+      "en": "Confirm details",
+      "ar": "تأكيد البيانات"
+    },
+    {
+      "key": "app.onboarding.disclosures",
+      "format": "text",
+      "description": "Application step and card title: bank disclosures",
+      "placeholders": [],
+      "meta": {},
+      "en": "Disclosures",
+      "ar": "الإفصاحات"
+    },
+    {
+      "key": "app.onboarding.doc_drivers_license",
+      "format": "text",
+      "description": "ID document option: driving licence",
+      "placeholders": [],
+      "meta": {},
+      "en": "Driving licence",
+      "ar": "رخصة القيادة"
+    },
+    {
+      "key": "app.onboarding.doc_id_card",
+      "format": "text",
+      "description": "ID document option: government ID card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Emirates ID card",
+      "ar": "بطاقة الهوية الإماراتية"
+    },
+    {
+      "key": "app.onboarding.doc_passport",
+      "format": "text",
+      "description": "ID document option: passport",
+      "placeholders": [],
+      "meta": {},
+      "en": "Passport",
+      "ar": "جواز السفر"
+    },
+    {
+      "key": "app.onboarding.document",
+      "format": "text",
+      "description": "Field label: ID document type",
+      "placeholders": [],
+      "meta": {},
+      "en": "Document",
+      "ar": "الوثيقة"
+    },
+    {
+      "key": "app.onboarding.done",
+      "format": "text",
+      "description": "Step status: done",
+      "placeholders": [],
+      "meta": {},
+      "en": "Done",
+      "ar": "مكتمل"
+    },
+    {
+      "key": "app.onboarding.i_accept",
+      "format": "text",
+      "description": "Button in the disclosure dialog",
+      "placeholders": [],
+      "meta": {},
+      "en": "I accept",
+      "ar": "أوافق"
+    },
+    {
+      "key": "app.onboarding.id_ending",
+      "format": "text",
+      "description": "Owner row: ID number's last four",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "ID ending {last4}",
+      "ar": "هوية تنتهي بـ {last4}"
+    },
+    {
+      "key": "app.onboarding.id_needed",
+      "format": "text",
+      "description": "Owner row: ID number still needed",
+      "placeholders": [],
+      "meta": {},
+      "en": "ID needed",
+      "ar": "الهوية مطلوبة"
+    },
+    {
+      "key": "app.onboarding.id_type",
+      "format": "text",
+      "description": "Field label: choose the owner's ID type",
+      "placeholders": [],
+      "meta": {},
+      "en": "ID type",
+      "ar": "نوع الهوية"
+    },
+    {
+      "key": "app.onboarding.issuing_country",
+      "format": "text",
+      "description": "Field label: country that issued the ID",
+      "placeholders": [],
+      "meta": {},
+      "en": "Issuing country",
+      "ar": "بلد الإصدار"
+    },
+    {
+      "key": "app.onboarding.issuing_country_hint",
+      "format": "text",
+      "description": "Hint for the issuing country field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Two letters, such as IN or GB.",
+      "ar": "حرفان، مثل IN أو GB."
+    },
+    {
+      "key": "app.onboarding.no_application",
+      "format": "text",
+      "description": "No application for the company",
+      "placeholders": [],
+      "meta": {},
+      "en": "There is no application for your company yet.",
+      "ar": "لا يوجد طلب لشركتك بعد."
+    },
+    {
+      "key": "app.onboarding.owners",
+      "format": "text",
+      "description": "Card title: company owners",
+      "placeholders": [],
+      "meta": {},
+      "en": "Owners",
+      "ar": "المالكون"
+    },
+    {
+      "key": "app.onboarding.read_and_accept",
+      "format": "text",
+      "description": "Button: open a disclosure to read and accept",
+      "placeholders": [],
+      "meta": {},
+      "en": "Read and accept",
+      "ar": "قراءة وقبول"
+    },
+    {
+      "key": "app.onboarding.save",
+      "format": "text",
+      "description": "Button: save the owner's ID number",
+      "placeholders": [],
+      "meta": {},
+      "en": "Save",
+      "ar": "حفظ"
+    },
+    {
+      "key": "app.onboarding.status",
+      "format": "text",
+      "description": "Card title before the application state chip",
+      "placeholders": [],
+      "meta": {},
+      "en": "Status",
+      "ar": "الحالة"
+    },
+    {
+      "key": "app.onboarding.step_owners",
+      "format": "text",
+      "description": "Application step: owners' identity",
+      "placeholders": [],
+      "meta": {},
+      "en": "Owner identity",
+      "ar": "هوية المالكين"
+    },
+    {
+      "key": "app.onboarding.steps",
+      "format": "text",
+      "description": "Accessible name of the application steps",
+      "placeholders": [],
+      "meta": {},
+      "en": "Application steps",
+      "ar": "خطوات الطلب"
+    },
+    {
+      "key": "app.onboarding.submit",
+      "format": "text",
+      "description": "Application step and button: submit to the bank",
+      "placeholders": [],
+      "meta": {},
+      "en": "Submit to the bank",
+      "ar": "الإرسال إلى البنك"
+    },
+    {
+      "key": "app.onboarding.subtitle",
+      "format": "text",
+      "description": "Application page subtitle",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank decides; we show each step as it happens.",
+      "ar": "القرار للبنك، ونعرض لك كل خطوة فور حدوثها."
+    },
+    {
+      "key": "app.onboarding.title",
+      "format": "text",
+      "description": "Application page title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account application",
+      "ar": "طلب فتح الحساب"
+    },
+    {
+      "key": "app.onboarding.to_do",
+      "format": "text",
+      "description": "Step status: still to do",
+      "placeholders": [],
+      "meta": {},
+      "en": "To do",
+      "ar": "مطلوب"
+    },
+    {
+      "key": "app.payments.add_money",
+      "format": "text",
+      "description": "Payments header button to top-up",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add money",
+      "ar": "إضافة أموال"
+    },
+    {
+      "key": "app.payments.approve",
+      "format": "text",
+      "description": "Button: approve a payment waiting for approval",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approve",
+      "ar": "موافقة"
+    },
+    {
+      "key": "app.payments.back",
+      "format": "text",
+      "description": "Button: close the detail column",
+      "placeholders": [],
+      "meta": {},
+      "en": "Back to payments",
+      "ar": "العودة إلى المدفوعات"
+    },
+    {
+      "key": "app.payments.decline",
+      "format": "text",
+      "description": "Button: decline a payment waiting for approval",
+      "placeholders": [],
+      "meta": {},
+      "en": "Decline",
+      "ar": "رفض"
+    },
+    {
+      "key": "app.payments.detail.bank_reference",
+      "format": "text",
+      "description": "Payment detail label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Bank reference",
+      "ar": "المرجع المصرفي"
+    },
+    {
+      "key": "app.payments.detail.internal_transfer",
+      "format": "text",
+      "description": "How a transfer between own accounts moves; detail and list",
+      "placeholders": [],
+      "meta": {},
+      "en": "Internal transfer",
+      "ar": "تحويل داخلي"
+    },
+    {
+      "key": "app.payments.detail.none",
+      "format": "text",
+      "description": "Payment detail: no reference given",
+      "placeholders": [],
+      "meta": {},
+      "en": "None",
+      "ar": "لا يوجد"
+    },
+    {
+      "key": "app.payments.detail.not_yet",
+      "format": "text",
+      "description": "Payment detail: bank reference not known yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not yet",
+      "ar": "ليس بعد"
+    },
+    {
+      "key": "app.payments.detail.rail",
+      "format": "text",
+      "description": "Payment detail label: how the payment moves",
+      "placeholders": [],
+      "meta": {},
+      "en": "Rail",
+      "ar": "طريقة الدفع"
+    },
+    {
+      "key": "app.payments.detail.reference",
+      "format": "text",
+      "description": "Payment detail label: the founder reference",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reference",
+      "ar": "المرجع"
+    },
+    {
+      "key": "app.payments.detail.returned",
+      "format": "text",
+      "description": "Payment detail label: return code and reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "Returned by the bank",
+      "ar": "أعادها البنك"
+    },
+    {
+      "key": "app.payments.detail.status",
+      "format": "text",
+      "description": "Payment detail label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Status",
+      "ar": "الحالة"
+    },
+    {
+      "key": "app.payments.detail.timeline",
+      "format": "text",
+      "description": "Accessible name of the payment timeline list",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment timeline",
+      "ar": "المسار الزمني للدفعة"
+    },
+    {
+      "key": "app.payments.empty.text",
+      "format": "text",
+      "description": "Empty payments list text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments you send show here with their status from the bank.",
+      "ar": "تظهر هنا الدفعات التي ترسلها مع حالتها لدى البنك."
+    },
+    {
+      "key": "app.payments.empty.title",
+      "format": "text",
+      "description": "Empty payments list title",
+      "placeholders": [],
+      "meta": {},
+      "en": "No payments yet",
+      "ar": "لا توجد مدفوعات بعد"
+    },
+    {
+      "key": "app.payments.form.account_ending",
+      "format": "text",
+      "description": "Account option: account name and last four digits",
+      "placeholders": [
+        "last4",
+        "name"
+      ],
+      "meta": {},
+      "en": "{name} ending {last4}",
+      "ar": "{name} المنتهي بـ {last4}"
+    },
+    {
+      "key": "app.payments.form.amount_error",
+      "format": "text",
+      "description": "Amount field error",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter an amount like 1,250.00",
+      "ar": "أدخل مبلغًا مثل 1,250.00"
+    },
+    {
+      "key": "app.payments.form.choose_account",
+      "format": "text",
+      "description": "Select placeholder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose an account",
+      "ar": "اختر حسابًا"
+    },
+    {
+      "key": "app.payments.form.choose_recipient",
+      "format": "text",
+      "description": "Select placeholder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a recipient",
+      "ar": "اختر مستفيدًا"
+    },
+    {
+      "key": "app.payments.form.internal",
+      "format": "text",
+      "description": "New payment type option",
+      "placeholders": [],
+      "meta": {},
+      "en": "Transfer between my accounts",
+      "ar": "تحويل بين حساباتي"
+    },
+    {
+      "key": "app.payments.form.recipient",
+      "format": "text",
+      "description": "New payment label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recipient",
+      "ar": "المستفيد"
+    },
+    {
+      "key": "app.payments.form.recipient_first",
+      "format": "text",
+      "description": "Hint when there is no recipient to pay",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add a recipient first.",
+      "ar": "أضف مستفيدًا أولًا."
+    },
+    {
+      "key": "app.payments.form.recipient_pending",
+      "format": "text",
+      "description": "Hint for a recipient not screened yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "Checked by the bank with the first payment.",
+      "ar": "يتحقق منه البنك مع أول دفعة."
+    },
+    {
+      "key": "app.payments.form.reference",
+      "format": "text",
+      "description": "Reference field label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reference (optional)",
+      "ar": "المرجع (اختياري)"
+    },
+    {
+      "key": "app.payments.form.review",
+      "format": "text",
+      "description": "Button: review the payment",
+      "placeholders": [],
+      "meta": {},
+      "en": "Review",
+      "ar": "مراجعة"
+    },
+    {
+      "key": "app.payments.form.title",
+      "format": "text",
+      "description": "New payment card title and button",
+      "placeholders": [],
+      "meta": {},
+      "en": "New payment",
+      "ar": "دفعة جديدة"
+    },
+    {
+      "key": "app.payments.form.to_account",
+      "format": "text",
+      "description": "New payment label for an internal transfer",
+      "placeholders": [],
+      "meta": {},
+      "en": "To account",
+      "ar": "إلى الحساب"
+    },
+    {
+      "key": "app.payments.form.type",
+      "format": "text",
+      "description": "New payment label: rail or internal transfer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Type",
+      "ar": "النوع"
+    },
+    {
+      "key": "app.payments.hint.text",
+      "format": "text",
+      "description": "Detail column before a payment is picked",
+      "placeholders": [],
+      "meta": {},
+      "en": "Its amount, recipient and each step from sent to settled show here.",
+      "ar": "يظهر هنا مبلغها والمستفيد وكل مرحلة من الإرسال حتى التسوية."
+    },
+    {
+      "key": "app.payments.hint.title",
+      "format": "text",
+      "description": "Detail column before a payment is picked",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pick a payment",
+      "ar": "اختر دفعة"
+    },
+    {
+      "key": "app.payments.kind.payment",
+      "format": "text",
+      "description": "Payment detail title for a payment to a recipient",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment",
+      "ar": "دفعة"
+    },
+    {
+      "key": "app.payments.kind.topup",
+      "format": "text",
+      "description": "A payment that tops up an OnGem account from another bank; title, list row and kind",
+      "placeholders": [],
+      "meta": {},
+      "en": "Top-up",
+      "ar": "إيداع"
+    },
+    {
+      "key": "app.payments.kind.transfer",
+      "format": "text",
+      "description": "Payment detail title for a transfer between own accounts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Transfer",
+      "ar": "تحويل"
+    },
+    {
+      "key": "app.payments.loading.accounts",
+      "format": "text",
+      "description": "What is loading, after the loading word",
+      "placeholders": [],
+      "meta": {},
+      "en": "accounts",
+      "ar": "الحسابات"
+    },
+    {
+      "key": "app.payments.loading.payment",
+      "format": "text",
+      "description": "What is loading, after the loading word",
+      "placeholders": [],
+      "meta": {},
+      "en": "payment",
+      "ar": "الدفعة"
+    },
+    {
+      "key": "app.payments.loading.payments",
+      "format": "text",
+      "description": "What is loading, after the loading word",
+      "placeholders": [],
+      "meta": {},
+      "en": "payments",
+      "ar": "المدفوعات"
+    },
+    {
+      "key": "app.payments.pager.label",
+      "format": "text",
+      "description": "Accessible name of the pager",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments pages",
+      "ar": "صفحات المدفوعات"
+    },
+    {
+      "key": "app.payments.pager.newer",
+      "format": "text",
+      "description": "Pager button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Newer",
+      "ar": "الأحدث"
+    },
+    {
+      "key": "app.payments.pager.older",
+      "format": "text",
+      "description": "Pager button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Older",
+      "ar": "الأقدم"
+    },
+    {
+      "key": "app.payments.pager.page",
+      "format": "text",
+      "description": "Pager: current page number",
+      "placeholders": [
+        "page"
+      ],
+      "meta": {},
+      "en": "Page {page}",
+      "ar": "صفحة {page}"
+    },
+    {
+      "key": "app.payments.recipients",
+      "format": "text",
+      "description": "Payments header link to recipients",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recipients",
+      "ar": "المستفيدون"
+    },
+    {
+      "key": "app.payments.review.amount",
+      "format": "text",
+      "description": "Review label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Amount",
+      "ar": "المبلغ"
+    },
+    {
+      "key": "app.payments.review.change",
+      "format": "text",
+      "description": "Button: back to the form",
+      "placeholders": [],
+      "meta": {},
+      "en": "Change",
+      "ar": "تعديل"
+    },
+    {
+      "key": "app.payments.review.from",
+      "format": "text",
+      "description": "Review and form label: the account money leaves",
+      "placeholders": [],
+      "meta": {},
+      "en": "From",
+      "ar": "من"
+    },
+    {
+      "key": "app.payments.review.how",
+      "format": "text",
+      "description": "Review label: how the payment moves",
+      "placeholders": [],
+      "meta": {},
+      "en": "How",
+      "ar": "الطريقة"
+    },
+    {
+      "key": "app.payments.review.internal_now",
+      "format": "text",
+      "description": "Review: how a transfer between own accounts moves",
+      "placeholders": [],
+      "meta": {},
+      "en": "Internal transfer, right away",
+      "ar": "تحويل داخلي فوري"
+    },
+    {
+      "key": "app.payments.review.note",
+      "format": "text",
+      "description": "Review: what happens on send",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank checks the live balance right before it leaves. You confirm it is you before it is sent.",
+      "ar": "يتحقق البنك من الرصيد الفعلي قبل خروج الدفعة مباشرة، وستؤكد هويتك قبل إرسالها."
+    },
+    {
+      "key": "app.payments.review.send",
+      "format": "text",
+      "description": "Button: send the payment",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send",
+      "ar": "إرسال"
+    },
+    {
+      "key": "app.payments.review.title",
+      "format": "text",
+      "description": "Card title: review before sending",
+      "placeholders": [],
+      "meta": {},
+      "en": "Review the payment",
+      "ar": "مراجعة الدفعة"
+    },
+    {
+      "key": "app.payments.review.to",
+      "format": "text",
+      "description": "Review label: where the money goes",
+      "placeholders": [],
+      "meta": {},
+      "en": "To",
+      "ar": "إلى"
+    },
+    {
+      "key": "app.payments.role_denied",
+      "format": "text",
+      "description": "New payment when the role cannot create payments",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your role does not allow this. An owner of the company can do it.",
+      "ar": "دورك لا يسمح بذلك، ويمكن لأحد مالكي الشركة القيام به."
+    },
+    {
+      "key": "app.payments.scheduled",
+      "format": "text",
+      "description": "Payments header button to scheduled payments",
+      "placeholders": [],
+      "meta": {},
+      "en": "Scheduled",
+      "ar": "المجدولة"
+    },
+    {
+      "key": "app.payments.status_line.pending_approval",
+      "format": "text",
+      "description": "Payment detail status: waiting for a second person to approve",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for a second person in your company to approve it. Nothing has moved yet.",
+      "ar": "بانتظار موافقة شخص آخر في شركتك. لم يُحوَّل أي مبلغ بعد."
+    },
+    {
+      "key": "app.payments.status_line.pending_approval_ongem",
+      "format": "text",
+      "description": "Payment detail status: waiting for OnGem to approve (one-person company)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for OnGem to approve it, because no one else in your company can approve payments. Nothing has moved yet.",
+      "ar": "بانتظار موافقة OnGem عليها، إذ لا يوجد في شركتك شخص آخر مخوّل بالموافقة على المدفوعات. لم يُحوَّل أي مبلغ بعد."
+    },
+    {
+      "key": "app.payments.status_line.rejected",
+      "format": "text",
+      "description": "Payment detail status: declined by the approver",
+      "placeholders": [],
+      "meta": {},
+      "en": "Declined by the approver. Nothing was moved.",
+      "ar": "رفضها المعتمِد. لم يُحوَّل أي مبلغ."
+    },
+    {
+      "key": "app.payments.status_line.sending",
+      "format": "text",
+      "description": "Payment detail status: sent to the bank, no answer yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sending. Our banking partner did not answer yet. We will not send it twice.",
+      "ar": "جارٍ الإرسال. لم يردّ شريكنا المصرفي بعد، ولن نرسلها مرتين."
+    },
+    {
+      "key": "app.payments.status_line.sent",
+      "format": "text",
+      "description": "Payment detail status: sent, bank reference not known yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sent. The bank reference follows.",
+      "ar": "أُرسلت. سيصل المرجع المصرفي لاحقًا."
+    },
+    {
+      "key": "app.payments.status_line.sent_reference",
+      "format": "text",
+      "description": "Payment detail status: sent, with the bank reference",
+      "placeholders": [
+        "reference"
+      ],
+      "meta": {},
+      "en": "Sent. Bank reference {reference}.",
+      "ar": "أُرسلت. المرجع المصرفي {reference}."
+    },
+    {
+      "key": "app.payments.status_line.settled",
+      "format": "text",
+      "description": "Payment detail status: settled",
+      "placeholders": [],
+      "meta": {},
+      "en": "Settled.",
+      "ar": "تمت التسوية."
+    },
+    {
+      "key": "app.payments.title",
+      "format": "text",
+      "description": "Payments page heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments",
+      "ar": "المدفوعات"
+    },
+    {
+      "key": "app.payments.to.recipient",
+      "format": "text",
+      "description": "Payments list: a payment whose recipient name is unknown",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recipient",
+      "ar": "المستفيد"
+    },
+    {
+      "key": "app.payments.to.topup_to",
+      "format": "text",
+      "description": "Payments list: who a top-up goes to; account is the OnGem account name",
+      "placeholders": [
+        "account"
+      ],
+      "meta": {},
+      "en": "Top-up to {account}",
+      "ar": "إيداع إلى {account}"
+    },
+    {
+      "key": "app.payments.to.your_account",
+      "format": "text",
+      "description": "Payments list: a transfer to an own account whose name is unknown",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your account",
+      "ar": "حسابك"
+    },
+    {
+      "key": "app.privacy.off",
+      "format": "text",
+      "description": "Privacy line while screen recording is off (shown on sign-in and in Settings)",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem does not record your screen. We keep a log of the changes you make, such as payments and approvals, because the bank requires it, and we use it only to run your account and to help when you ask for support.",
+      "ar": "لا يسجّل OnGem شاشتك. نحتفظ بسجل للتغييرات التي تجريها، مثل المدفوعات والاعتمادات، لأن البنك يشترط ذلك، ونستخدمه فقط لإدارة حسابك ومساعدتك عند طلب الدعم."
+    },
+    {
+      "key": "app.privacy.recording",
+      "format": "text",
+      "description": "Privacy line while screen recording is on (shown on sign-in and in Settings)",
+      "placeholders": [],
+      "meta": {},
+      "en": "We record the screens you use and what you tap, with account numbers, balances and identity details hidden, to improve OnGem and help when you ask for support. Recordings stay with OnGem.",
+      "ar": "نسجّل الشاشات التي تستخدمها وما تنقر عليه، مع إخفاء أرقام الحسابات والأرصدة وبيانات الهوية، لتحسين OnGem ومساعدتك عند طلب الدعم. تبقى التسجيلات لدى OnGem."
+    },
+    {
+      "key": "app.recipients.account_row",
+      "format": "text",
+      "description": "Recipient row: label before the account's last four",
+      "placeholders": [],
+      "meta": {},
+      "en": "IBAN",
+      "ar": "رقم IBAN"
+    },
+    {
+      "key": "app.recipients.add",
+      "format": "text",
+      "description": "Button: add a recipient",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add recipient",
+      "ar": "إضافة مستفيد"
+    },
+    {
+      "key": "app.recipients.added",
+      "format": "text",
+      "description": "Toast after a recipient is added, with the bank's screening state",
+      "placeholders": [
+        "name",
+        "screening"
+      ],
+      "meta": {},
+      "en": "{name} added. Screening: {screening}.",
+      "ar": "تمت إضافة {name}. حالة التدقيق: {screening}."
+    },
+    {
+      "key": "app.recipients.archive",
+      "format": "text",
+      "description": "Button: archive a recipient",
+      "placeholders": [],
+      "meta": {},
+      "en": "Archive",
+      "ar": "أرشفة"
+    },
+    {
+      "key": "app.recipients.archive_named",
+      "format": "text",
+      "description": "Accessible name of the archive button",
+      "placeholders": [
+        "name"
+      ],
+      "meta": {},
+      "en": "Archive {name}",
+      "ar": "أرشفة {name}"
+    },
+    {
+      "key": "app.recipients.empty_text",
+      "format": "text",
+      "description": "Empty recipients list text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add the people and companies you pay.",
+      "ar": "أضف الأشخاص والشركات الذين تدفع لهم."
+    },
+    {
+      "key": "app.recipients.empty_title",
+      "format": "text",
+      "description": "Empty recipients list title",
+      "placeholders": [],
+      "meta": {},
+      "en": "No recipients yet",
+      "ar": "لا يوجد مستفيدون بعد"
+    },
+    {
+      "key": "app.recipients.error_iban",
+      "format": "text",
+      "description": "Form error: invalid UAE IBAN",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter a valid UAE IBAN: AE and 21 digits.",
+      "ar": "أدخل رقم IBAN إماراتيا صحيحا: AE متبوعا بـ 21 رقما."
+    },
+    {
+      "key": "app.recipients.error_name",
+      "format": "text",
+      "description": "Form error: recipient name missing",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter the recipient name.",
+      "ar": "أدخل اسم المستفيد."
+    },
+    {
+      "key": "app.recipients.iban_hint",
+      "format": "text",
+      "description": "IBAN field hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "AE and 21 digits. Only the last four are kept.",
+      "ar": "AE متبوعا بـ 21 رقما. نحتفظ بآخر أربعة أرقام فقط."
+    },
+    {
+      "key": "app.recipients.iban_label",
+      "format": "text",
+      "description": "Field label: IBAN",
+      "placeholders": [],
+      "meta": {},
+      "en": "IBAN",
+      "ar": "رقم IBAN"
+    },
+    {
+      "key": "app.recipients.name_label",
+      "format": "text",
+      "description": "Field label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recipient name",
+      "ar": "اسم المستفيد"
+    },
+    {
+      "key": "app.recipients.new_title",
+      "format": "text",
+      "description": "Card title over the add recipient form",
+      "placeholders": [],
+      "meta": {},
+      "en": "New recipient",
+      "ar": "مستفيد جديد"
+    },
+    {
+      "key": "app.recipients.title",
+      "format": "text",
+      "description": "Recipients page title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recipients",
+      "ar": "المستفيدون"
+    },
+    {
+      "key": "app.region.amount_label",
+      "format": "text",
+      "description": "Amount field label on payment forms",
+      "placeholders": [],
+      "meta": {},
+      "en": "Amount in AED",
+      "ar": "المبلغ بالدرهم الإماراتي"
+    },
+    {
+      "key": "app.region.owner_id.emirates_id.error",
+      "format": "text",
+      "description": "Emirates ID number refused",
+      "placeholders": [],
+      "meta": {},
+      "en": "An Emirates ID has 15 digits and starts 784.",
+      "ar": "يتكوّن رقم الهوية الإماراتية من 15 رقماً ويبدأ بـ 784."
+    },
+    {
+      "key": "app.region.owner_id.emirates_id.hint",
+      "format": "text",
+      "description": "Emirates ID field hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "15 digits starting 784. Only the last four are shown back.",
+      "ar": "15 رقماً تبدأ بـ 784. تظهر آخر أربعة أرقام فقط."
+    },
+    {
+      "key": "app.region.owner_id.emirates_id.label",
+      "format": "text",
+      "description": "Owner identity type and field label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Emirates ID number",
+      "ar": "رقم الهوية الإماراتية"
+    },
+    {
+      "key": "app.region.owner_id.passport.error",
+      "format": "text",
+      "description": "Passport number refused",
+      "placeholders": [],
+      "meta": {},
+      "en": "A passport number has 6 to 9 letters and digits.",
+      "ar": "يتكوّن رقم جواز السفر من 6 إلى 9 أحرف وأرقام."
+    },
+    {
+      "key": "app.region.owner_id.passport.hint",
+      "format": "text",
+      "description": "Passport number field hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "6 to 9 letters and digits. Only the last four are shown back.",
+      "ar": "من 6 إلى 9 أحرف وأرقام. تظهر آخر أربعة فقط."
+    },
+    {
+      "key": "app.region.owner_id.passport.label",
+      "format": "text",
+      "description": "Owner identity type and field label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Passport number",
+      "ar": "رقم جواز السفر"
+    },
+    {
+      "key": "app.region.rail.aani.how",
+      "format": "text",
+      "description": "Payment review: how an Aani payment moves",
+      "placeholders": [],
+      "meta": {},
+      "en": "Aani, arrives in seconds",
+      "ar": "عبر Aani، يصل خلال ثوانٍ"
+    },
+    {
+      "key": "app.region.rail.aani.option",
+      "format": "text",
+      "description": "New payment form: the Aani option",
+      "placeholders": [],
+      "meta": {},
+      "en": "Aani to a recipient, instant",
+      "ar": "تحويل فوري عبر Aani إلى مستفيد"
+    },
+    {
+      "key": "app.region.rail.uaefts.how",
+      "format": "text",
+      "description": "Payment review: how a UAEFTS payment moves",
+      "placeholders": [],
+      "meta": {},
+      "en": "UAEFTS, the same or next business day",
+      "ar": "عبر UAEFTS، في يوم العمل نفسه أو التالي"
+    },
+    {
+      "key": "app.region.rail.uaefts.option",
+      "format": "text",
+      "description": "New payment form: the UAEFTS option",
+      "placeholders": [],
+      "meta": {},
+      "en": "UAEFTS to a recipient",
+      "ar": "تحويل عبر UAEFTS إلى مستفيد"
+    },
+    {
+      "key": "app.region.rail_name.aani",
+      "format": "text",
+      "description": "Rail name: Aani (UAE instant payments), kept in Latin script",
+      "placeholders": [],
+      "meta": {},
+      "en": "Aani",
+      "ar": "Aani"
+    },
+    {
+      "key": "app.region.rail_name.bank_transfer",
+      "format": "text",
+      "description": "Rail name when the payment rail is not Aani or UAEFTS",
+      "placeholders": [],
+      "meta": {},
+      "en": "Bank transfer",
+      "ar": "تحويل بنكي"
+    },
+    {
+      "key": "app.region.rail_name.book",
+      "format": "text",
+      "description": "Rail name on lists and statements: a transfer between own accounts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Transfer",
+      "ar": "تحويل"
+    },
+    {
+      "key": "app.region.rail_name.card",
+      "format": "text",
+      "description": "Rail name on lists and statements: a card payment",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card",
+      "ar": "بطاقة"
+    },
+    {
+      "key": "app.region.recipient_draft_hint",
+      "format": "text",
+      "description": "Assistant recipient draft: what the founder types in",
+      "placeholders": [],
+      "meta": {},
+      "en": "You enter the IBAN in the form.",
+      "ar": "تُدخل رقم IBAN في النموذج."
+    },
+    {
+      "key": "app.region.recipients_subtitle",
+      "format": "text",
+      "description": "Recipients screen subtitle",
+      "placeholders": [],
+      "meta": {},
+      "en": "Saved payees, paid to their UAE IBAN and screened by the bank. IBANs show as their last four.",
+      "ar": "المستفيدون المحفوظون، تُحوَّل إليهم المدفوعات على رقم IBAN الإماراتي بعد فحصهم من قِبل البنك. تظهر أرقام IBAN بآخر أربعة أرقام فقط."
+    },
+    {
+      "key": "app.region.schedule_as",
+      "format": "text",
+      "description": "How a scheduled payment goes, shown after the word \"as\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "a UAEFTS payment",
+      "ar": "دفعة عبر UAEFTS"
+    },
+    {
+      "key": "app.region.schedule_instead",
+      "format": "text",
+      "description": "Suggestion when a scheduled internal transfer is refused",
+      "placeholders": [],
+      "meta": {},
+      "en": "Schedule a UAEFTS payment instead.",
+      "ar": "يمكنك جدولة دفعة عبر UAEFTS بدلاً من ذلك."
+    },
+    {
+      "key": "app.region.top_up_how",
+      "format": "text",
+      "description": "How a top-up moves",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pulled from your other bank, 1 to 3 business days",
+      "ar": "يُسحب من حسابك في البنك الآخر، خلال يوم إلى ثلاثة أيام عمل"
+    },
+    {
+      "key": "app.region.top_up_rail",
+      "format": "text",
+      "description": "Top-up rail description",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pulled from your account at another bank",
+      "ar": "يُسحب من حسابك في بنك آخر"
+    },
+    {
+      "key": "app.schedules.cancel",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cancel schedule",
+      "ar": "إلغاء الجدول"
+    },
+    {
+      "key": "app.schedules.empty.text",
+      "format": "text",
+      "description": "Empty list text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Set up a payment that goes on its own, such as rent every month.",
+      "ar": "أعدّ دفعة تُنفَّذ تلقائيًا، مثل الإيجار كل شهر."
+    },
+    {
+      "key": "app.schedules.empty.title",
+      "format": "text",
+      "description": "Empty list title",
+      "placeholders": [],
+      "meta": {},
+      "en": "No scheduled payments",
+      "ar": "لا توجد دفعات مجدولة"
+    },
+    {
+      "key": "app.schedules.every_day.few",
+      "format": "text",
+      "description": "How often a schedule pays, every day or every n days; plural forms by count (Arabic 3 to 10)",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "Every {count} days",
+      "ar": "كل {count} أيام"
+    },
+    {
+      "key": "app.schedules.every_day.many",
+      "format": "text",
+      "description": "How often a schedule pays, every day or every n days; plural forms by count (Arabic 11 to 99)",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "Every {count} days",
+      "ar": "كل {count} يومًا"
+    },
+    {
+      "key": "app.schedules.every_day.one",
+      "format": "text",
+      "description": "How often a schedule pays, every day or every n days; plural forms by count",
+      "placeholders": [],
+      "meta": {},
+      "en": "Every day",
+      "ar": "كل يوم"
+    },
+    {
+      "key": "app.schedules.every_day.other",
+      "format": "text",
+      "description": "How often a schedule pays, every day or every n days; plural forms by count",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "Every {count} days",
+      "ar": "كل {count} يوم"
+    },
+    {
+      "key": "app.schedules.every_day.two",
+      "format": "text",
+      "description": "How often a schedule pays, every day or every n days; plural forms by count (Arabic dual form)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Every 2 days",
+      "ar": "كل يومين"
+    },
+    {
+      "key": "app.schedules.every_month.few",
+      "format": "text",
+      "description": "How often a schedule pays, every month or every n months; plural forms by count (Arabic 3 to 10)",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "Every {count} months",
+      "ar": "كل {count} أشهر"
+    },
+    {
+      "key": "app.schedules.every_month.many",
+      "format": "text",
+      "description": "How often a schedule pays, every month or every n months; plural forms by count (Arabic 11 to 99)",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "Every {count} months",
+      "ar": "كل {count} شهرًا"
+    },
+    {
+      "key": "app.schedules.every_month.one",
+      "format": "text",
+      "description": "How often a schedule pays, every month or every n months; plural forms by count",
+      "placeholders": [],
+      "meta": {},
+      "en": "Every month",
+      "ar": "كل شهر"
+    },
+    {
+      "key": "app.schedules.every_month.other",
+      "format": "text",
+      "description": "How often a schedule pays, every month or every n months; plural forms by count",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "Every {count} months",
+      "ar": "كل {count} شهر"
+    },
+    {
+      "key": "app.schedules.every_month.two",
+      "format": "text",
+      "description": "How often a schedule pays, every month or every n months; plural forms by count (Arabic dual form)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Every 2 months",
+      "ar": "كل شهرين"
+    },
+    {
+      "key": "app.schedules.every_unit",
+      "format": "text",
+      "description": "How often, for a unit the web does not know; unit is the API word",
+      "placeholders": [
+        "count",
+        "unit"
+      ],
+      "meta": {},
+      "en": "Every {count} {unit}",
+      "ar": "كل {count} {unit}"
+    },
+    {
+      "key": "app.schedules.every_week.few",
+      "format": "text",
+      "description": "How often a schedule pays, every week or every n weeks; plural forms by count (Arabic 3 to 10)",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "Every {count} weeks",
+      "ar": "كل {count} أسابيع"
+    },
+    {
+      "key": "app.schedules.every_week.many",
+      "format": "text",
+      "description": "How often a schedule pays, every week or every n weeks; plural forms by count (Arabic 11 to 99)",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "Every {count} weeks",
+      "ar": "كل {count} أسبوعًا"
+    },
+    {
+      "key": "app.schedules.every_week.one",
+      "format": "text",
+      "description": "How often a schedule pays, every week or every n weeks; plural forms by count",
+      "placeholders": [],
+      "meta": {},
+      "en": "Every week",
+      "ar": "كل أسبوع"
+    },
+    {
+      "key": "app.schedules.every_week.other",
+      "format": "text",
+      "description": "How often a schedule pays, every week or every n weeks; plural forms by count",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "Every {count} weeks",
+      "ar": "كل {count} أسبوع"
+    },
+    {
+      "key": "app.schedules.every_week.two",
+      "format": "text",
+      "description": "How often a schedule pays, every week or every n weeks; plural forms by count (Arabic dual form)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Every 2 weeks",
+      "ar": "كل أسبوعين"
+    },
+    {
+      "key": "app.schedules.form.amount_error",
+      "format": "text",
+      "description": "Amount field error",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter an amount like 1,250.00",
+      "ar": "أدخل مبلغًا مثل 1,250.00"
+    },
+    {
+      "key": "app.schedules.form.choose_recipient",
+      "format": "text",
+      "description": "Select placeholder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a recipient",
+      "ar": "اختر مستفيدًا"
+    },
+    {
+      "key": "app.schedules.form.count",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Number of payments",
+      "ar": "عدد الدفعات"
+    },
+    {
+      "key": "app.schedules.form.days",
+      "format": "text",
+      "description": "Frequency option",
+      "placeholders": [],
+      "meta": {},
+      "en": "Days",
+      "ar": "أيام"
+    },
+    {
+      "key": "app.schedules.form.end",
+      "format": "text",
+      "description": "Form label: end date",
+      "placeholders": [],
+      "meta": {},
+      "en": "No payment on or after",
+      "ar": "لا دفعات في هذا التاريخ أو بعده"
+    },
+    {
+      "key": "app.schedules.form.end_error",
+      "format": "text",
+      "description": "End date error",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a date after the first payment.",
+      "ar": "اختر تاريخًا بعد تاريخ أول دفعة."
+    },
+    {
+      "key": "app.schedules.form.ends",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ends",
+      "ar": "الانتهاء"
+    },
+    {
+      "key": "app.schedules.form.ends_count",
+      "format": "text",
+      "description": "Ends option",
+      "placeholders": [],
+      "meta": {},
+      "en": "After a number of payments",
+      "ar": "بعد عدد محدد من الدفعات"
+    },
+    {
+      "key": "app.schedules.form.ends_date",
+      "format": "text",
+      "description": "Ends option",
+      "placeholders": [],
+      "meta": {},
+      "en": "Before a date",
+      "ar": "قبل تاريخ محدد"
+    },
+    {
+      "key": "app.schedules.form.ends_never",
+      "format": "text",
+      "description": "Ends option",
+      "placeholders": [],
+      "meta": {},
+      "en": "When I cancel it",
+      "ar": "عندما ألغيه"
+    },
+    {
+      "key": "app.schedules.form.every",
+      "format": "text",
+      "description": "Form label: the interval",
+      "placeholders": [],
+      "meta": {},
+      "en": "Every",
+      "ar": "كل"
+    },
+    {
+      "key": "app.schedules.form.first_on",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "meta": {},
+      "en": "First payment on",
+      "ar": "تاريخ أول دفعة"
+    },
+    {
+      "key": "app.schedules.form.from",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "meta": {},
+      "en": "From",
+      "ar": "من"
+    },
+    {
+      "key": "app.schedules.form.how_often",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "meta": {},
+      "en": "How often",
+      "ar": "التكرار"
+    },
+    {
+      "key": "app.schedules.form.intro",
+      "format": "text",
+      "description": "New schedule intro; how is the region rail in words (a standard ACH, a UAEFTS payment)",
+      "placeholders": [
+        "how"
+      ],
+      "meta": {},
+      "en": "OnGem makes each payment on its date as {how}, with the same checks as one you send yourself. A date on a weekend or holiday goes on the next banking day.",
+      "ar": "تنفّذ OnGem كل دفعة في موعدها بوصفها {how}، مع عمليات التحقق ذاتها التي تخضع لها أي دفعة ترسلها بنفسك. وإذا وافق الموعد عطلة نهاية أسبوع أو عطلة رسمية، تُنفَّذ الدفعة في يوم العمل المصرفي التالي."
+    },
+    {
+      "key": "app.schedules.form.months",
+      "format": "text",
+      "description": "Frequency option",
+      "placeholders": [],
+      "meta": {},
+      "en": "Months",
+      "ar": "أشهر"
+    },
+    {
+      "key": "app.schedules.form.recipient_first",
+      "format": "text",
+      "description": "Hint when there is no recipient",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add a recipient first.",
+      "ar": "أضف مستفيدًا أولًا."
+    },
+    {
+      "key": "app.schedules.form.reference",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reference (optional)",
+      "ar": "المرجع (اختياري)"
+    },
+    {
+      "key": "app.schedules.form.save",
+      "format": "text",
+      "description": "Button: create the schedule",
+      "placeholders": [],
+      "meta": {},
+      "en": "Schedule payments",
+      "ar": "جدولة الدفعات"
+    },
+    {
+      "key": "app.schedules.form.start_error",
+      "format": "text",
+      "description": "Start date error",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose today or a later date.",
+      "ar": "اختر تاريخ اليوم أو تاريخًا لاحقًا."
+    },
+    {
+      "key": "app.schedules.form.summary",
+      "format": "text",
+      "description": "Summary before saving; frequency is the how often text in lower case",
+      "placeholders": [
+        "amount",
+        "date",
+        "frequency"
+      ],
+      "meta": {},
+      "en": "{amount} {frequency}, first on {date}. You confirm it is you before it is set up.",
+      "ar": "{amount} {frequency}، وأول دفعة في {date}. ستؤكد هويتك قبل إعداد الجدول."
+    },
+    {
+      "key": "app.schedules.form.title",
+      "format": "text",
+      "description": "New schedule card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "New scheduled payment",
+      "ar": "دفعة مجدولة جديدة"
+    },
+    {
+      "key": "app.schedules.form.weeks",
+      "format": "text",
+      "description": "Frequency option",
+      "placeholders": [],
+      "meta": {},
+      "en": "Weeks",
+      "ar": "أسابيع"
+    },
+    {
+      "key": "app.schedules.form.whole_number",
+      "format": "text",
+      "description": "Interval hint when invalid",
+      "placeholders": [],
+      "meta": {},
+      "en": "A whole number, 1 or more",
+      "ar": "عدد صحيح، 1 أو أكثر"
+    },
+    {
+      "key": "app.schedules.from_account",
+      "format": "text",
+      "description": "Schedule row: the account the payments leave",
+      "placeholders": [
+        "account"
+      ],
+      "meta": {},
+      "en": "from {account}",
+      "ar": "من {account}"
+    },
+    {
+      "key": "app.schedules.loading.list",
+      "format": "text",
+      "description": "What is loading, after the loading word",
+      "placeholders": [],
+      "meta": {},
+      "en": "scheduled payments",
+      "ar": "الدفعات المجدولة"
+    },
+    {
+      "key": "app.schedules.loading.runs",
+      "format": "text",
+      "description": "What is loading, after the loading word",
+      "placeholders": [],
+      "meta": {},
+      "en": "runs",
+      "ar": "الدفعات المنفذة"
+    },
+    {
+      "key": "app.schedules.next.none",
+      "format": "text",
+      "description": "Schedule row: schedule ended",
+      "placeholders": [],
+      "meta": {},
+      "en": "No more payments.",
+      "ar": "لا مزيد من الدفعات."
+    },
+    {
+      "key": "app.schedules.next.on",
+      "format": "text",
+      "description": "Schedule row: next payment date",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Next payment on {date}",
+      "ar": "الدفعة التالية في {date}"
+    },
+    {
+      "key": "app.schedules.next.paused",
+      "format": "text",
+      "description": "Schedule row: next payment line when paused",
+      "placeholders": [],
+      "meta": {},
+      "en": "Paused. No payment is made until you resume it.",
+      "ar": "متوقفة مؤقتًا. لن تُنفَّذ أي دفعة حتى تستأنفها."
+    },
+    {
+      "key": "app.schedules.pause",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pause",
+      "ar": "إيقاف مؤقت"
+    },
+    {
+      "key": "app.schedules.recipient",
+      "format": "text",
+      "description": "Schedule row when the recipient name is unknown; form label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recipient",
+      "ar": "المستفيد"
+    },
+    {
+      "key": "app.schedules.resume",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Resume",
+      "ar": "استئناف"
+    },
+    {
+      "key": "app.schedules.run.cancelled",
+      "format": "text",
+      "description": "State of one payment made by a schedule",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cancelled",
+      "ar": "ملغاة"
+    },
+    {
+      "key": "app.schedules.run.due",
+      "format": "text",
+      "description": "State of one payment made by a schedule",
+      "placeholders": [],
+      "meta": {},
+      "en": "Due",
+      "ar": "مستحقة"
+    },
+    {
+      "key": "app.schedules.run.failed",
+      "format": "text",
+      "description": "State of one payment made by a schedule",
+      "placeholders": [],
+      "meta": {},
+      "en": "Failed",
+      "ar": "لم تنجح"
+    },
+    {
+      "key": "app.schedules.run.sent",
+      "format": "text",
+      "description": "State of one payment made by a schedule",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sent",
+      "ar": "أُرسلت"
+    },
+    {
+      "key": "app.schedules.run.skipped",
+      "format": "text",
+      "description": "State of one payment made by a schedule",
+      "placeholders": [],
+      "meta": {},
+      "en": "Skipped",
+      "ar": "تم تخطيها"
+    },
+    {
+      "key": "app.schedules.runs.hide",
+      "format": "text",
+      "description": "Button: hide the payments made",
+      "placeholders": [],
+      "meta": {},
+      "en": "Hide payments",
+      "ar": "إخفاء الدفعات"
+    },
+    {
+      "key": "app.schedules.runs.none",
+      "format": "text",
+      "description": "Schedule runs: none yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "No payment has been made from this schedule yet.",
+      "ar": "لم تُنفَّذ أي دفعة من هذا الجدول بعد."
+    },
+    {
+      "key": "app.schedules.runs.show",
+      "format": "text",
+      "description": "Button: show the payments made",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments made",
+      "ar": "الدفعات المنفذة"
+    },
+    {
+      "key": "app.schedules.state.active",
+      "format": "text",
+      "description": "Schedule state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Active",
+      "ar": "نشطة"
+    },
+    {
+      "key": "app.schedules.state.cancelled",
+      "format": "text",
+      "description": "Schedule state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cancelled",
+      "ar": "ملغاة"
+    },
+    {
+      "key": "app.schedules.state.finished",
+      "format": "text",
+      "description": "Schedule state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Finished",
+      "ar": "منتهية"
+    },
+    {
+      "key": "app.schedules.state.paused",
+      "format": "text",
+      "description": "Schedule state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Paused",
+      "ar": "متوقفة مؤقتًا"
+    },
+    {
+      "key": "app.schedules.title",
+      "format": "text",
+      "description": "Scheduled payments card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Scheduled payments",
+      "ar": "الدفعات المجدولة"
+    },
+    {
+      "key": "app.session.reverify.code",
+      "format": "text",
+      "description": "Step-up dialog code field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Verification code",
+      "ar": "رمز التحقق"
+    },
+    {
+      "key": "app.session.reverify.text",
+      "format": "text",
+      "description": "Step-up dialog text in demo mode",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter the 6-digit code from your authenticator app. In demo mode any 6 digits work.",
+      "ar": "أدخل الرمز المكوّن من 6 أرقام من تطبيق المصادقة. في الوضع التجريبي تصلح أي 6 أرقام."
+    },
+    {
+      "key": "app.session.reverify.title",
+      "format": "text",
+      "description": "Step-up dialog title in demo mode",
+      "placeholders": [],
+      "meta": {},
+      "en": "Confirm it is you",
+      "ar": "تأكيد هويتك"
+    },
+    {
+      "key": "app.settings.appearance",
+      "format": "text",
+      "description": "Settings card title for the theme",
+      "placeholders": [],
+      "meta": {},
+      "en": "Appearance",
+      "ar": "المظهر"
+    },
+    {
+      "key": "app.settings.language.title",
+      "format": "text",
+      "description": "Settings card for choosing English or Arabic",
+      "placeholders": [],
+      "meta": {},
+      "en": "Language",
+      "ar": "اللغة"
+    },
+    {
+      "key": "app.settings.leave_demo",
+      "format": "text",
+      "description": "Button that leaves demo mode",
+      "placeholders": [],
+      "meta": {},
+      "en": "Leave demo",
+      "ar": "الخروج من الوضع التجريبي"
+    },
+    {
+      "key": "app.settings.mode",
+      "format": "text",
+      "description": "Session card: mode row label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Mode",
+      "ar": "الوضع"
+    },
+    {
+      "key": "app.settings.mode_demo",
+      "format": "text",
+      "description": "Session card: demo mode value",
+      "placeholders": [],
+      "meta": {},
+      "en": "Demo, sample data",
+      "ar": "تجريبي، ببيانات نموذجية"
+    },
+    {
+      "key": "app.settings.mode_live",
+      "format": "text",
+      "description": "Session card: live mode value",
+      "placeholders": [],
+      "meta": {},
+      "en": "Live",
+      "ar": "مباشر"
+    },
+    {
+      "key": "app.settings.privacy",
+      "format": "text",
+      "description": "Settings card title for the privacy line",
+      "placeholders": [],
+      "meta": {},
+      "en": "Privacy",
+      "ar": "الخصوصية"
+    },
+    {
+      "key": "app.settings.role",
+      "format": "text",
+      "description": "Session card: role row label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Role",
+      "ar": "الدور"
+    },
+    {
+      "key": "app.settings.role_none",
+      "format": "text",
+      "description": "Session card: no role",
+      "placeholders": [],
+      "meta": {},
+      "en": "None",
+      "ar": "لا يوجد"
+    },
+    {
+      "key": "app.settings.session",
+      "format": "text",
+      "description": "Settings card title for the session",
+      "placeholders": [],
+      "meta": {},
+      "en": "Session",
+      "ar": "الجلسة"
+    },
+    {
+      "key": "app.settings.theme",
+      "format": "text",
+      "description": "Theme picker label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Theme",
+      "ar": "السمة"
+    },
+    {
+      "key": "app.settings.title",
+      "format": "text",
+      "description": "Settings page heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "Settings",
+      "ar": "الإعدادات"
+    },
+    {
+      "key": "app.shell.company",
+      "format": "text",
+      "description": "Fallback company name in the company switcher",
+      "placeholders": [],
+      "meta": {},
+      "en": "Company",
+      "ar": "الشركة"
+    },
+    {
+      "key": "app.shell.company_error",
+      "format": "text",
+      "description": "Shell error; {error} is the error sentence",
+      "placeholders": [
+        "error"
+      ],
+      "meta": {},
+      "en": "We could not load your company. {error}",
+      "ar": "تعذّر تحميل بيانات شركتك. {error}"
+    },
+    {
+      "key": "app.shell.current",
+      "format": "text",
+      "description": "Marks the current company in the switcher",
+      "placeholders": [],
+      "meta": {},
+      "en": "Current",
+      "ar": "الحالية"
+    },
+    {
+      "key": "app.shell.env_demo",
+      "format": "text",
+      "description": "Top bar badge in demo mode",
+      "placeholders": [],
+      "meta": {},
+      "en": "Demo",
+      "ar": "تجريبي"
+    },
+    {
+      "key": "app.shell.env_live",
+      "format": "text",
+      "description": "Top bar badge when signed in for real",
+      "placeholders": [],
+      "meta": {},
+      "en": "Live",
+      "ar": "مباشر"
+    },
+    {
+      "key": "app.shell.loading_company",
+      "format": "text",
+      "description": "Loading state while the signed-in shell reads the person",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading your company",
+      "ar": "جارٍ تحميل بيانات شركتك"
+    },
+    {
+      "key": "app.shell.main_nav",
+      "format": "text",
+      "description": "Name of the main navigation, read by screen readers",
+      "placeholders": [],
+      "meta": {},
+      "en": "Main",
+      "ar": "القائمة الرئيسية"
+    },
+    {
+      "key": "app.shell.profile_menu",
+      "format": "text",
+      "description": "Top bar profile button, read by screen readers",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your profile and settings",
+      "ar": "ملفك الشخصي والإعدادات"
+    },
+    {
+      "key": "app.shell.switch_company",
+      "format": "text",
+      "description": "Company switcher dialog title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Switch company",
+      "ar": "تبديل الشركة"
+    },
+    {
+      "key": "app.shell.switch_company_label",
+      "format": "text",
+      "description": "Company switcher button, read by screen readers",
+      "placeholders": [
+        "company"
+      ],
+      "meta": {},
+      "en": "Switch company, current {company}",
+      "ar": "تبديل الشركة، الشركة الحالية {company}"
+    },
+    {
+      "key": "app.state.application.active.label",
+      "format": "text",
+      "description": "Application state ACTIVE: short label for chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open",
+      "ar": "مفتوح"
+    },
+    {
+      "key": "app.state.application.active.sentence",
+      "format": "text",
+      "description": "Application state ACTIVE: the sentence that explains it",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your account is open.",
+      "ar": "حسابك مفتوح."
+    },
+    {
+      "key": "app.state.application.approved.label",
+      "format": "text",
+      "description": "Application state APPROVED: short label for chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approved",
+      "ar": "تمت الموافقة"
+    },
+    {
+      "key": "app.state.application.approved.sentence",
+      "format": "text",
+      "description": "Application state APPROVED: the sentence that explains it",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank approved your company. Your account is being opened.",
+      "ar": "وافق البنك على شركتك، وجارٍ فتح حسابك."
+    },
+    {
+      "key": "app.state.application.collecting.label",
+      "format": "text",
+      "description": "Application state COLLECTING: short label for chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Details needed",
+      "ar": "بيانات مطلوبة"
+    },
+    {
+      "key": "app.state.application.collecting.sentence",
+      "format": "text",
+      "description": "Application state COLLECTING: the sentence that explains it",
+      "placeholders": [],
+      "meta": {},
+      "en": "We need a few details from you to finish your application.",
+      "ar": "نحتاج إلى بعض البيانات منك لإكمال طلبك."
+    },
+    {
+      "key": "app.state.application.edd.label",
+      "format": "text",
+      "description": "Application state EDD: short label for chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "More questions",
+      "ar": "أسئلة إضافية"
+    },
+    {
+      "key": "app.state.application.edd.sentence",
+      "format": "text",
+      "description": "Application state EDD: the sentence that explains it",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank asked a few more questions about your business.",
+      "ar": "طرح البنك بعض الأسئلة الإضافية حول نشاطك التجاري."
+    },
+    {
+      "key": "app.state.application.in_review.label",
+      "format": "text",
+      "description": "Application state IN_REVIEW: short label for chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "In review",
+      "ar": "قيد المراجعة"
+    },
+    {
+      "key": "app.state.application.in_review.sentence",
+      "format": "text",
+      "description": "Application state IN_REVIEW: the sentence that explains it",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank is reviewing your application. We will tell you when it decides.",
+      "ar": "يراجع البنك طلبك. سنُعلمك عند صدور قراره."
+    },
+    {
+      "key": "app.state.application.more_info.label",
+      "format": "text",
+      "description": "Application state MORE_INFO: short label for chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "More details needed",
+      "ar": "مطلوب مزيد من البيانات"
+    },
+    {
+      "key": "app.state.application.more_info.sentence",
+      "format": "text",
+      "description": "Application state MORE_INFO: the sentence that explains it",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank asked for more details. Open your application to send them.",
+      "ar": "طلب البنك مزيداً من البيانات. افتح طلبك لإرسالها."
+    },
+    {
+      "key": "app.state.application.other",
+      "format": "text",
+      "description": "Application in a state with no sentence of its own; {state} is the state in lower case",
+      "placeholders": [
+        "state"
+      ],
+      "meta": {},
+      "en": "Your application is {state}.",
+      "ar": "حالة طلبك: {state}."
+    },
+    {
+      "key": "app.state.application.pending_bank.label",
+      "format": "text",
+      "description": "Application state PENDING_BANK: short label for chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for the bank",
+      "ar": "بانتظار البنك"
+    },
+    {
+      "key": "app.state.application.pending_bank.sentence",
+      "format": "text",
+      "description": "Application state PENDING_BANK: the sentence that explains it",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for the bank to decide.",
+      "ar": "بانتظار قرار البنك."
+    },
+    {
+      "key": "app.state.application.prefilling.label",
+      "format": "text",
+      "description": "Application state PREFILLING: short label for chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Getting ready",
+      "ar": "قيد التجهيز"
+    },
+    {
+      "key": "app.state.application.prefilling.sentence",
+      "format": "text",
+      "description": "Application state PREFILLING: the sentence that explains it",
+      "placeholders": [],
+      "meta": {},
+      "en": "We are filling in what your partner already sent us.",
+      "ar": "نعمل على تعبئة البيانات التي أرسلها شريكك إلينا."
+    },
+    {
+      "key": "app.state.application.provisioning.label",
+      "format": "text",
+      "description": "Application state PROVISIONING: short label for chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Opening your account",
+      "ar": "جارٍ فتح حسابك"
+    },
+    {
+      "key": "app.state.application.provisioning.sentence",
+      "format": "text",
+      "description": "Application state PROVISIONING: the sentence that explains it",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank approved your company. Your account is being opened.",
+      "ar": "وافق البنك على شركتك، وجارٍ فتح حسابك."
+    },
+    {
+      "key": "app.state.application.ready_for_disclosures.label",
+      "format": "text",
+      "description": "Application state READY_FOR_DISCLOSURES: short label for chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Agreements to accept",
+      "ar": "اتفاقيات بانتظار موافقتك"
+    },
+    {
+      "key": "app.state.application.ready_for_disclosures.sentence",
+      "format": "text",
+      "description": "Application state READY_FOR_DISCLOSURES: the sentence that explains it",
+      "placeholders": [],
+      "meta": {},
+      "en": "Read and accept the bank agreements to send your application.",
+      "ar": "اقرأ اتفاقيات البنك ووافق عليها لإرسال طلبك."
+    },
+    {
+      "key": "app.state.application.rejected.label",
+      "format": "text",
+      "description": "Application state REJECTED: short label for chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not approved",
+      "ar": "لم تتم الموافقة"
+    },
+    {
+      "key": "app.state.application.rejected.sentence",
+      "format": "text",
+      "description": "Application state REJECTED: the sentence that explains it",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank could not approve your application.",
+      "ar": "تعذّر على البنك الموافقة على طلبك."
+    },
+    {
+      "key": "app.state.application.submitted.label",
+      "format": "text",
+      "description": "Application state SUBMITTED: short label for chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sent to the bank",
+      "ar": "أُرسل إلى البنك"
+    },
+    {
+      "key": "app.state.application.submitted.sentence",
+      "format": "text",
+      "description": "Application state SUBMITTED: the sentence that explains it",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your application is with the bank.",
+      "ar": "طلبك الآن لدى البنك."
+    },
+    {
+      "key": "app.state.application.verifying.label",
+      "format": "text",
+      "description": "Application state VERIFYING: short label for chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Being checked",
+      "ar": "قيد التحقق"
+    },
+    {
+      "key": "app.state.application.verifying.sentence",
+      "format": "text",
+      "description": "Application state VERIFYING: the sentence that explains it",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank is checking your company and its owners.",
+      "ar": "يتحقق البنك من شركتك ومالكيها."
+    },
+    {
+      "key": "app.state.payment.bank_review",
+      "format": "text",
+      "description": "Payment state BANK_REVIEW on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "With the bank",
+      "ar": "لدى البنك"
+    },
+    {
+      "key": "app.state.payment.cancelled",
+      "format": "text",
+      "description": "Payment state CANCELLED on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cancelled",
+      "ar": "ملغاة"
+    },
+    {
+      "key": "app.state.payment.draft",
+      "format": "text",
+      "description": "Payment state DRAFT on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sending",
+      "ar": "جارٍ الإرسال"
+    },
+    {
+      "key": "app.state.payment.failed",
+      "format": "text",
+      "description": "Payment state FAILED on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not sent",
+      "ar": "لم تُرسل"
+    },
+    {
+      "key": "app.state.payment.pending_approval",
+      "format": "text",
+      "description": "Payment state PENDING_APPROVAL on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for approval",
+      "ar": "بانتظار الاعتماد"
+    },
+    {
+      "key": "app.state.payment.prechecked",
+      "format": "text",
+      "description": "Payment state PRECHECKED on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sending",
+      "ar": "جارٍ الإرسال"
+    },
+    {
+      "key": "app.state.payment.rejected",
+      "format": "text",
+      "description": "Payment state REJECTED on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Declined",
+      "ar": "مرفوضة"
+    },
+    {
+      "key": "app.state.payment.returned",
+      "format": "text",
+      "description": "Payment state RETURNED on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Returned",
+      "ar": "مُرتجعة"
+    },
+    {
+      "key": "app.state.payment.settled",
+      "format": "text",
+      "description": "Payment state SETTLED on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Settled",
+      "ar": "تمت التسوية"
+    },
+    {
+      "key": "app.state.payment.submitted",
+      "format": "text",
+      "description": "Payment state SUBMITTED on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sent",
+      "ar": "أُرسلت"
+    },
+    {
+      "key": "app.state.word.accepted",
+      "format": "text",
+      "description": "API word ACCEPTED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accepted",
+      "ar": "مقبول"
+    },
+    {
+      "key": "app.state.word.account",
+      "format": "text",
+      "description": "API word ACCOUNT (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account",
+      "ar": "حساب"
+    },
+    {
+      "key": "app.state.word.active",
+      "format": "text",
+      "description": "API word ACTIVE (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Active",
+      "ar": "نشط"
+    },
+    {
+      "key": "app.state.word.admin",
+      "format": "text",
+      "description": "API word ADMIN (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Admin",
+      "ar": "مسؤول"
+    },
+    {
+      "key": "app.state.word.answered",
+      "format": "text",
+      "description": "API word ANSWERED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Answered",
+      "ar": "تم الرد"
+    },
+    {
+      "key": "app.state.word.approved",
+      "format": "text",
+      "description": "API word APPROVED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approved",
+      "ar": "معتمد"
+    },
+    {
+      "key": "app.state.word.approver",
+      "format": "text",
+      "description": "API word APPROVER (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approver",
+      "ar": "مُعتمِد"
+    },
+    {
+      "key": "app.state.word.archived",
+      "format": "text",
+      "description": "API word ARCHIVED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Archived",
+      "ar": "مؤرشف"
+    },
+    {
+      "key": "app.state.word.blocked",
+      "format": "text",
+      "description": "API word BLOCKED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Blocked",
+      "ar": "محظور"
+    },
+    {
+      "key": "app.state.word.cancelled",
+      "format": "text",
+      "description": "API word CANCELLED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cancelled",
+      "ar": "ملغاة"
+    },
+    {
+      "key": "app.state.word.card",
+      "format": "text",
+      "description": "API word CARD (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card",
+      "ar": "بطاقة"
+    },
+    {
+      "key": "app.state.word.checking",
+      "format": "text",
+      "description": "API word CHECKING (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Checking",
+      "ar": "جاري"
+    },
+    {
+      "key": "app.state.word.clear",
+      "format": "text",
+      "description": "API word CLEAR (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Clear",
+      "ar": "سليم"
+    },
+    {
+      "key": "app.state.word.closed",
+      "format": "text",
+      "description": "API word CLOSED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Closed",
+      "ar": "مغلق"
+    },
+    {
+      "key": "app.state.word.completed",
+      "format": "text",
+      "description": "API word COMPLETED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Completed",
+      "ar": "مكتمل"
+    },
+    {
+      "key": "app.state.word.confirmed",
+      "format": "text",
+      "description": "API word CONFIRMED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Confirmed",
+      "ar": "مؤكد"
+    },
+    {
+      "key": "app.state.word.dispute",
+      "format": "text",
+      "description": "API word DISPUTE (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dispute",
+      "ar": "اعتراض"
+    },
+    {
+      "key": "app.state.word.failed",
+      "format": "text",
+      "description": "API word FAILED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Failed",
+      "ar": "فشلت"
+    },
+    {
+      "key": "app.state.word.frozen",
+      "format": "text",
+      "description": "API word FROZEN (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Frozen",
+      "ar": "مجمّد"
+    },
+    {
+      "key": "app.state.word.in_review",
+      "format": "text",
+      "description": "API word IN_REVIEW (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "In review",
+      "ar": "قيد المراجعة"
+    },
+    {
+      "key": "app.state.word.member",
+      "format": "text",
+      "description": "API word MEMBER (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Member",
+      "ar": "عضو"
+    },
+    {
+      "key": "app.state.word.not_submitted",
+      "format": "text",
+      "description": "API word NOT_SUBMITTED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not submitted",
+      "ar": "لم يُقدَّم"
+    },
+    {
+      "key": "app.state.word.onboarding",
+      "format": "text",
+      "description": "API word ONBOARDING (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Onboarding",
+      "ar": "فتح الحساب"
+    },
+    {
+      "key": "app.state.word.open",
+      "format": "text",
+      "description": "API word OPEN (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open",
+      "ar": "مفتوح"
+    },
+    {
+      "key": "app.state.word.other",
+      "format": "text",
+      "description": "API word OTHER (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Other",
+      "ar": "أخرى"
+    },
+    {
+      "key": "app.state.word.owner",
+      "format": "text",
+      "description": "API word OWNER (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Owner",
+      "ar": "مالك"
+    },
+    {
+      "key": "app.state.word.payment",
+      "format": "text",
+      "description": "API word PAYMENT (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment",
+      "ar": "دفعة"
+    },
+    {
+      "key": "app.state.word.pending",
+      "format": "text",
+      "description": "API word PENDING (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pending",
+      "ar": "قيد الانتظار"
+    },
+    {
+      "key": "app.state.word.physical",
+      "format": "text",
+      "description": "API word PHYSICAL (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Physical",
+      "ar": "فعلية"
+    },
+    {
+      "key": "app.state.word.posted",
+      "format": "text",
+      "description": "API word POSTED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Posted",
+      "ar": "مُرحَّلة"
+    },
+    {
+      "key": "app.state.word.received",
+      "format": "text",
+      "description": "API word RECEIVED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Received",
+      "ar": "مستلَم"
+    },
+    {
+      "key": "app.state.word.refused",
+      "format": "text",
+      "description": "API word REFUSED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Refused",
+      "ar": "مرفوض"
+    },
+    {
+      "key": "app.state.word.rejected",
+      "format": "text",
+      "description": "API word REJECTED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Rejected",
+      "ar": "مرفوض"
+    },
+    {
+      "key": "app.state.word.removed",
+      "format": "text",
+      "description": "API word REMOVED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Removed",
+      "ar": "محذوف"
+    },
+    {
+      "key": "app.state.word.resolved",
+      "format": "text",
+      "description": "API word RESOLVED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Resolved",
+      "ar": "تمت المعالجة"
+    },
+    {
+      "key": "app.state.word.returned",
+      "format": "text",
+      "description": "API word RETURNED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Returned",
+      "ar": "مُرتجعة"
+    },
+    {
+      "key": "app.state.word.review",
+      "format": "text",
+      "description": "API word REVIEW (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Review",
+      "ar": "قيد المراجعة"
+    },
+    {
+      "key": "app.state.word.savings",
+      "format": "text",
+      "description": "API word SAVINGS (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Savings",
+      "ar": "توفير"
+    },
+    {
+      "key": "app.state.word.sent",
+      "format": "text",
+      "description": "API word SENT (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sent",
+      "ar": "مُرسلة"
+    },
+    {
+      "key": "app.state.word.settled",
+      "format": "text",
+      "description": "API word SETTLED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Settled",
+      "ar": "تمت التسوية"
+    },
+    {
+      "key": "app.state.word.suspended",
+      "format": "text",
+      "description": "API word SUSPENDED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Suspended",
+      "ar": "موقوف"
+    },
+    {
+      "key": "app.state.word.unverified",
+      "format": "text",
+      "description": "API word UNVERIFIED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unverified",
+      "ar": "لم يتم التحقق"
+    },
+    {
+      "key": "app.state.word.verified",
+      "format": "text",
+      "description": "API word VERIFIED (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Verified",
+      "ar": "تم التحقق"
+    },
+    {
+      "key": "app.state.word.viewer",
+      "format": "text",
+      "description": "API word VIEWER (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Viewer",
+      "ar": "مُطّلع"
+    },
+    {
+      "key": "app.state.word.virtual",
+      "format": "text",
+      "description": "API word VIRTUAL (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Virtual",
+      "ar": "افتراضية"
+    },
+    {
+      "key": "app.state.word.waiting",
+      "format": "text",
+      "description": "API word WAITING (a role, status, category or account type) shown on chips and lists",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting",
+      "ar": "بانتظار الرد"
+    },
+    {
+      "key": "app.support.about",
+      "format": "text",
+      "description": "Support form category field",
+      "placeholders": [],
+      "meta": {},
+      "en": "About",
+      "ar": "بخصوص"
+    },
+    {
+      "key": "app.support.attach",
+      "format": "text",
+      "description": "Support attach button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Attach a file",
+      "ar": "إرفاق ملف"
+    },
+    {
+      "key": "app.support.attached",
+      "format": "text",
+      "description": "A file attached to a support request; {name} is the file name",
+      "placeholders": [
+        "name"
+      ],
+      "meta": {},
+      "en": "Attached {name}",
+      "ar": "مرفق: {name}"
+    },
+    {
+      "key": "app.support.back",
+      "format": "text",
+      "description": "Back button from a support request",
+      "placeholders": [],
+      "meta": {},
+      "en": "Back to support",
+      "ar": "العودة إلى الدعم"
+    },
+    {
+      "key": "app.support.empty_text",
+      "format": "text",
+      "description": "Support list empty state text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ask us anything about your account, payments or cards.",
+      "ar": "اسألنا عن أي شيء يخص حسابك أو مدفوعاتك أو بطاقاتك."
+    },
+    {
+      "key": "app.support.empty_title",
+      "format": "text",
+      "description": "Support list empty state title",
+      "placeholders": [],
+      "meta": {},
+      "en": "No requests yet",
+      "ar": "لا توجد طلبات بعد"
+    },
+    {
+      "key": "app.support.message",
+      "format": "text",
+      "description": "Support form field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Message",
+      "ar": "الرسالة"
+    },
+    {
+      "key": "app.support.message_hint",
+      "format": "text",
+      "description": "Support form message hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "Never type a full card or account number.",
+      "ar": "لا تكتب أبداً رقم بطاقة أو حساب كاملاً."
+    },
+    {
+      "key": "app.support.new_request",
+      "format": "text",
+      "description": "Button and form title for a new support request",
+      "placeholders": [],
+      "meta": {},
+      "en": "New request",
+      "ar": "طلب جديد"
+    },
+    {
+      "key": "app.support.pick_text",
+      "format": "text",
+      "description": "Support detail column hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "The conversation with OnGem support and each status change show here.",
+      "ar": "تظهر هنا محادثتك مع فريق دعم OnGem وكل تغيير في حالة الطلب."
+    },
+    {
+      "key": "app.support.pick_title",
+      "format": "text",
+      "description": "Support detail column before a request is picked",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pick a request",
+      "ar": "اختر طلباً"
+    },
+    {
+      "key": "app.support.reply",
+      "format": "text",
+      "description": "Support reply field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reply",
+      "ar": "الرد"
+    },
+    {
+      "key": "app.support.send_reply",
+      "format": "text",
+      "description": "Support reply button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send reply",
+      "ar": "إرسال الرد"
+    },
+    {
+      "key": "app.support.send_request",
+      "format": "text",
+      "description": "Support form submit button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send request",
+      "ar": "إرسال الطلب"
+    },
+    {
+      "key": "app.support.subject",
+      "format": "text",
+      "description": "Support form field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Subject",
+      "ar": "الموضوع"
+    },
+    {
+      "key": "app.support.subtitle",
+      "format": "text",
+      "description": "Support page subtitle",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ask OnGem's team; we answer here.",
+      "ar": "تواصل مع فريق OnGem، وستجد ردنا هنا."
+    },
+    {
+      "key": "app.support.title",
+      "format": "text",
+      "description": "Support page heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "Support",
+      "ar": "الدعم"
+    },
+    {
+      "key": "app.topup.account_at_other_bank",
+      "format": "text",
+      "description": "Name of a linked account without a nickname",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account at another bank",
+      "ar": "حساب في بنك آخر"
+    },
+    {
+      "key": "app.topup.account_ending",
+      "format": "text",
+      "description": "Account option: name and last four digits",
+      "placeholders": [
+        "last4",
+        "name"
+      ],
+      "meta": {},
+      "en": "{name} ending {last4}",
+      "ar": "{name} المنتهي بـ {last4}"
+    },
+    {
+      "key": "app.topup.check_again",
+      "format": "text",
+      "description": "Button: read a linked account again at the bank",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check again",
+      "ar": "تحقق مرة أخرى"
+    },
+    {
+      "key": "app.topup.empty.text",
+      "format": "text",
+      "description": "Empty list text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Link your company's account at another bank to move money into OnGem.",
+      "ar": "اربط حساب شركتك في بنك آخر لتحويل الأموال إلى OnGem."
+    },
+    {
+      "key": "app.topup.empty.title",
+      "format": "text",
+      "description": "Empty list title",
+      "placeholders": [],
+      "meta": {},
+      "en": "No accounts linked yet",
+      "ar": "لا توجد حسابات مرتبطة بعد"
+    },
+    {
+      "key": "app.topup.form.amount_error",
+      "format": "text",
+      "description": "Amount field error",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter an amount like 1,250.00",
+      "ar": "أدخل مبلغًا مثل 1,250.00"
+    },
+    {
+      "key": "app.topup.form.limits",
+      "format": "text",
+      "description": "Amount hint with the limits",
+      "placeholders": [
+        "per_day",
+        "per_topup"
+      ],
+      "meta": {},
+      "en": "Up to {per_topup} a top-up and {per_day} a day.",
+      "ar": "حتى {per_topup} للإيداع الواحد و{per_day} في اليوم."
+    },
+    {
+      "key": "app.topup.form.reference",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reference (optional)",
+      "ar": "المرجع (اختياري)"
+    },
+    {
+      "key": "app.topup.form.review",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Review",
+      "ar": "مراجعة"
+    },
+    {
+      "key": "app.topup.link.for_account",
+      "format": "text",
+      "description": "Link form label",
+      "placeholders": [],
+      "meta": {},
+      "en": "For the OnGem account",
+      "ar": "لحساب OnGem"
+    },
+    {
+      "key": "app.topup.link.iban",
+      "format": "text",
+      "description": "Link form label (UAE)",
+      "placeholders": [],
+      "meta": {},
+      "en": "IBAN",
+      "ar": "IBAN"
+    },
+    {
+      "key": "app.topup.link.iban_hint",
+      "format": "text",
+      "description": "Link form hint (UAE)",
+      "placeholders": [],
+      "meta": {},
+      "en": "AE and 21 digits. Only the last four are kept.",
+      "ar": "يبدأ بـ AE ويليه 21 رقمًا. نحتفظ بآخر أربعة أرقام فقط."
+    },
+    {
+      "key": "app.topup.link.intro",
+      "format": "text",
+      "description": "Link form intro",
+      "placeholders": [],
+      "meta": {},
+      "en": "Use an account your company owns. The bank verifies it before you can pull money from it, which can take a few business days.",
+      "ar": "استخدم حسابًا تملكه شركتك. يتحقق البنك منه قبل أن تتمكن من سحب الأموال منه، وقد يستغرق ذلك بضعة أيام عمل."
+    },
+    {
+      "key": "app.topup.link.nickname",
+      "format": "text",
+      "description": "Link form label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Nickname (optional)",
+      "ar": "اسم مختصر (اختياري)"
+    },
+    {
+      "key": "app.topup.link.owner",
+      "format": "text",
+      "description": "Link form label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Name on the account",
+      "ar": "الاسم على الحساب"
+    },
+    {
+      "key": "app.topup.link.save",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Link account",
+      "ar": "ربط الحساب"
+    },
+    {
+      "key": "app.topup.link.title",
+      "format": "text",
+      "description": "Link form title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Link an account at another bank",
+      "ar": "ربط حساب في بنك آخر"
+    },
+    {
+      "key": "app.topup.loading.sources",
+      "format": "text",
+      "description": "What is loading, after the loading word",
+      "placeholders": [],
+      "meta": {},
+      "en": "accounts at other banks",
+      "ar": "الحسابات في بنوك أخرى"
+    },
+    {
+      "key": "app.topup.none_verified",
+      "format": "text",
+      "description": "Top-up when no linked account is verified",
+      "placeholders": [],
+      "meta": {},
+      "en": "Top-ups need an account the bank has verified. Link one, then check back once it shows Verified.",
+      "ar": "يتطلب الإيداع حسابًا تحقق منه البنك. اربط حسابًا، ثم عُد إلى هنا عندما تظهر حالته «تم التحقق»."
+    },
+    {
+      "key": "app.topup.remove",
+      "format": "text",
+      "description": "Button: remove a linked account",
+      "placeholders": [],
+      "meta": {},
+      "en": "Remove",
+      "ar": "إزالة"
+    },
+    {
+      "key": "app.topup.review.amount",
+      "format": "text",
+      "description": "Review label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Amount",
+      "ar": "المبلغ"
+    },
+    {
+      "key": "app.topup.review.change",
+      "format": "text",
+      "description": "Button: back to the form",
+      "placeholders": [],
+      "meta": {},
+      "en": "Change",
+      "ar": "تعديل"
+    },
+    {
+      "key": "app.topup.review.from",
+      "format": "text",
+      "description": "Review and form label",
+      "placeholders": [],
+      "meta": {},
+      "en": "From",
+      "ar": "من"
+    },
+    {
+      "key": "app.topup.review.how",
+      "format": "text",
+      "description": "Review label",
+      "placeholders": [],
+      "meta": {},
+      "en": "How",
+      "ar": "الطريقة"
+    },
+    {
+      "key": "app.topup.review.note",
+      "format": "text",
+      "description": "Review: approvals and step-up",
+      "placeholders": [],
+      "meta": {},
+      "en": "A second person in your company approves it before the bank pulls the money. If no one else in your company can approve, OnGem approves it. You confirm it is you first.",
+      "ar": "يوافق عليه شخص آخر في شركتك قبل أن يسحب البنك الأموال، وإذا لم يكن في شركتك من يمكنه الموافقة توافق عليه OnGem. ستؤكد هويتك أولًا."
+    },
+    {
+      "key": "app.topup.review.title",
+      "format": "text",
+      "description": "Review card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Review the top-up",
+      "ar": "مراجعة الإيداع"
+    },
+    {
+      "key": "app.topup.review.to",
+      "format": "text",
+      "description": "Review and form label",
+      "placeholders": [],
+      "meta": {},
+      "en": "To",
+      "ar": "إلى"
+    },
+    {
+      "key": "app.topup.sources.title",
+      "format": "text",
+      "description": "Linked accounts card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your accounts at other banks",
+      "ar": "حساباتك في بنوك أخرى"
+    },
+    {
+      "key": "app.topup.state.removed",
+      "format": "text",
+      "description": "Linked account state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Removed",
+      "ar": "تمت الإزالة"
+    },
+    {
+      "key": "app.topup.state.unverified",
+      "format": "text",
+      "description": "Linked account state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for the bank to verify it",
+      "ar": "بانتظار تحقق البنك منه"
+    },
+    {
+      "key": "app.topup.state.verified",
+      "format": "text",
+      "description": "Linked account state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Verified",
+      "ar": "تم التحقق"
+    },
+    {
+      "key": "app.topup.top_up",
+      "format": "text",
+      "description": "Top-up card title and send button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Top up",
+      "ar": "إيداع"
+    },
+    {
+      "key": "app.topup.type.checking",
+      "format": "text",
+      "description": "Linked account type in the list",
+      "placeholders": [],
+      "meta": {},
+      "en": "checking",
+      "ar": "جارٍ"
+    },
+    {
+      "key": "app.topup.type.current",
+      "format": "text",
+      "description": "Linked account type in the list",
+      "placeholders": [],
+      "meta": {},
+      "en": "current",
+      "ar": "جارٍ"
+    },
+    {
+      "key": "app.topup.type.savings",
+      "format": "text",
+      "description": "Linked account type in the list",
+      "placeholders": [],
+      "meta": {},
+      "en": "savings",
+      "ar": "توفير"
+    }
+  ]
+}

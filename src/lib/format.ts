@@ -1,3 +1,4 @@
+import { dateLocale, t } from '../i18n/store';
 import { IS_AE, REGION_CONFIG } from '../region';
 
 export interface MoneyValue {
@@ -5,7 +6,7 @@ export interface MoneyValue {
   currency: string;
 }
 
-/** US$ in the US build; every currency by its code in the AE build (AED 1,250.00). */
+/** Money keeps Latin digits and the en-US grouping in every language (OG-033 R10). US$ in the US build; every currency by its code in the AE build (AED 1,250.00). */
 const currencyPrefix = (currency: string) => (!IS_AE && currency === 'USD' ? 'US$' : `${currency} `);
 
 const number2 = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -24,7 +25,8 @@ const ET_LABEL = REGION_CONFIG.zoneLabel;
 function parts(iso: string | Date, withTime: boolean, timeZone: string) {
   const d = typeof iso === 'string' ? new Date(iso) : iso;
   if (Number.isNaN(d.getTime())) return null;
-  const fmt = new Intl.DateTimeFormat('en-GB', {
+  // English 20 Oct 2026; Arabic names the month in Arabic, with Latin digits (OG-033 R10).
+  const fmt = new Intl.DateTimeFormat(dateLocale(), {
     timeZone,
     day: 'numeric',
     month: 'short',
@@ -59,10 +61,10 @@ export function formatNumber(n: number): string {
 export function since(iso: string, now: Date = new Date()): string {
   const ms = now.getTime() - new Date(iso).getTime();
   const min = Math.max(0, Math.round(ms / 60000));
-  if (min < 60) return `${min} min`;
+  if (min < 60) return t('app.common.since.minutes', { count: min });
   const h = Math.round(min / 60);
-  if (h < 48) return `${h} h`;
-  return `${Math.round(h / 24)} days`;
+  if (h < 48) return t('app.common.since.hours', { count: h });
+  return t('app.common.since.days', { count: Math.round(h / 24) });
 }
 
 /** An amount in minor units with its currency, as the API sends money. */
