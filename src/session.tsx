@@ -1,10 +1,20 @@
-import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
 import { permissionsOf, type OnGemApi } from './api/client';
 import { DemoOnGemApi } from './api/demo';
 import { defaultDeviceKeys } from './api/device';
 import { LiveOnGemApi } from './api/live';
 import { useAuthSession } from './auth';
 import { Button, Field, Input, Modal } from './design-system';
+import { REGION } from './region';
 
 export type Mode = 'none' | 'demo' | 'live';
 
@@ -26,6 +36,24 @@ export interface Session {
 const SessionContext = createContext<Session | null>(null);
 
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.trim() || '/api-dev';
+
+/**
+ * OG-022 R11: the API base for banking calls once whereami has answered. The build's base stays when the company
+ * lives in the build's own region (or whereami fails); otherwise the region's base, if it is https on an OnGem host.
+ */
+export function regionApiBase(
+  answer: { region?: string | null; apiBaseUrl?: string | null } | null,
+  fallback: string = API_BASE_URL,
+): string {
+  if (!answer?.region || answer.region === REGION || !answer.apiBaseUrl) return fallback;
+  try {
+    const u = new URL(answer.apiBaseUrl);
+    const onGem = u.hostname === 'ongem.com' || u.hostname.endsWith('.ongem.com');
+    return u.protocol === 'https:' && onGem ? u.origin : fallback;
+  } catch {
+    return fallback;
+  }
+}
 
 interface Ask {
   purpose: string;
@@ -108,10 +136,11 @@ export function SessionProvider({
   authRef.current = auth;
   const userId = auth.user?.id ?? null;
   const [deviceKeys] = useState(defaultDeviceKeys);
+  const [apiBase, setApiBase] = useState(API_BASE_URL);
   const live = useMemo(
     () =>
       new LiveOnGemApi({
-        baseUrl: API_BASE_URL,
+        baseUrl: apiBase,
         personId: userId,
         deviceKeys,
         getToken: (o) => authRef.current.getToken(o),
@@ -120,10 +149,26 @@ export function SessionProvider({
           return r ? r(hint) : Promise.resolve(false);
         },
       }),
-    // A new client only when the person or the signed-in state changes.
+    // A new client only when the person, the signed-in state or the region's API base changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [userId, auth.signedIn],
+    [userId, auth.signedIn, apiBase],
   );
+  // After sign-in, ask where the company lives (OG-022 R11); the build's base is the first and the fallback.
+  useEffect(() => {
+    if (!auth.signedIn || injected) {
+      setApiBase(API_BASE_URL);
+      return;
+    }
+    let gone = false;
+    live
+      .whereami()
+      .then((w) => !gone && setApiBase(regionApiBase(w)))
+      .catch(() => undefined);
+    return () => {
+      gone = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId, auth.signedIn]);
   const mode: Mode = demoMode ? 'demo' : auth.signedIn ? 'live' : 'none';
   const base: OnGemApi = mode === 'live' ? live : demo;
   // The pick belongs to the client it was made on: a new person, demo or sign-in starts on the default company again.

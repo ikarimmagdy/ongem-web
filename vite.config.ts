@@ -2,8 +2,9 @@
 import { configDefaults } from 'vitest/config';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
-import { readFileSync, rmSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { readdirSync, readFileSync, rmSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import { seedSnapshot, type Snapshot } from './scripts/content.mjs';
 
 /**
  * The CloudFront response headers policy (security-headers.json, WEB-SEC-05) as plain headers, so the local preview and
@@ -52,6 +53,51 @@ function regionPublic(): Plugin {
   };
 }
 
+/**
+ * The content texts (OG-033 R1) as two virtual modules: `virtual:ongem-content` (English, in the main bundle) and
+ * `virtual:ongem-content-ar` (Arabic, its own chunk). A build reads the snapshot `scripts/build.mjs` pulled from the
+ * API (ONGEM_CONTENT_SNAPSHOT) and carries only its own region; the dev server and the tests read the seed files of
+ * both regions, so a test can switch region (VITE_REGION) at run time.
+ */
+function contentSnapshot(): Plugin {
+  const ID = 'virtual:ongem-content';
+  const AR = 'virtual:ongem-content-ar';
+  let snapshots: () => Snapshot[];
+  let root = '';
+  return {
+    name: 'ongem-content',
+    configResolved(config) {
+      root = config.root;
+      const file = process.env.ONGEM_CONTENT_SNAPSHOT;
+      if (config.command === 'build' && !config.build.ssr && !file && config.mode !== 'test')
+        throw new Error('content: no snapshot. Build with `npm run build`, which pulls one from the API.');
+      if (config.build.ssr && !file && config.mode !== 'test')
+        throw new Error('content: no snapshot for the prerender. Build with `npm run build`.');
+      snapshots = file
+        ? () => [JSON.parse(readFileSync(file, 'utf8')) as Snapshot]
+        : () => [seedSnapshot(root, 'us'), seedSnapshot(root, 'ae')];
+    },
+    resolveId(id) {
+      return id === ID || id === AR ? `\0${id}` : null;
+    },
+    load(id) {
+      if (id !== `\0${ID}` && id !== `\0${AR}`) return null;
+      if (!process.env.ONGEM_CONTENT_SNAPSHOT)
+        for (const region of ['us', 'ae']) {
+          const dir = join(root, 'content-seed', region);
+          try {
+            for (const f of readdirSync(dir)) this.addWatchFile(join(dir, f));
+          } catch {
+            /* no seed for this region */
+          }
+        }
+      const locale = id === `\0${AR}` ? 'ar' : 'en';
+      const out = Object.fromEntries(snapshots().map((s) => [s.region, s.locales[locale]]));
+      return `export default ${JSON.stringify(out)};`;
+    },
+  };
+}
+
 const devApi = {
   '/api-dev': {
     target: 'https://api-dev.ongem.com',
@@ -62,7 +108,7 @@ const devApi = {
 };
 
 export default defineConfig({
-  plugins: [react(), regionPublic()],
+  plugins: [react(), regionPublic(), contentSnapshot()],
   server: { port: 5190, strictPort: true, proxy: devApi },
   preview: { port: 5190, strictPort: true, proxy: devApi, headers: securityHeaders() },
   test: {

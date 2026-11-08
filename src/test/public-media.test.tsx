@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { DemoOnGemApi } from '../api/demo';
 import { parsePost, POSTS } from '../public/media/blog';
 import { APP_SHOTS, WEB_SHOTS } from '../public/media/gallery';
-import { Markdown } from '../public/media/markdown';
+import { Markdown } from '../i18n/markdown';
 import { isMediaPath } from '../public/media/paths';
 import { VIDEOS } from '../public/media/videos';
 import { render } from '@testing-library/react';

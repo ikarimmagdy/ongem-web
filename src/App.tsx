@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuthSession } from './auth';
+import { useContent } from './i18n';
 import { Button, Notice, Skeleton, ThemeProvider, ToastProvider } from './design-system';
 import { SessionProvider, useSession, type Mode } from './session';
 import { PRIVACY_LINE } from './recording/privacy';
@@ -95,6 +96,8 @@ export function SignInScreen() {
 }
 
 export function Routed() {
+  // Every text is read by key; a new language or a newer text from the API renders the page again (OG-033).
+  useContent();
   const { mode } = useSession();
   const { pendingTask } = useAuthSession();
   const { pathname } = useLocation();

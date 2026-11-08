@@ -11,7 +11,7 @@ vi.useFakeTimers({ now: new Date('2026-10-20T14:42:00Z'), toFake: ['Date'] });
 // jsdom has no layout, so its scrollTo only reports "not implemented"; the public site calls it on every page change.
 window.scrollTo = (() => undefined) as typeof window.scrollTo;
 
-afterEach(() => {
+afterEach(async () => {
   cleanup();
   try {
     localStorage.clear();
@@ -20,4 +20,6 @@ afterEach(() => {
     /* storage unavailable */
   }
   document.documentElement.removeAttribute('style');
+  // Imported here, not at the top, so a test file's VITE_REGION stub is set before region.ts loads.
+  (await import('../i18n/store')).resetContent();
 });

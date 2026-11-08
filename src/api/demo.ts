@@ -750,6 +750,12 @@ export class DemoOnGemApi implements OnGemApi {
 
   notificationPreferences = async () => this.log('notificationPreferences', this.preferencesState);
 
+  locale: 'en' | 'ar' = 'en';
+  setLocale = async (locale: 'en' | 'ar') => {
+    this.locale = locale;
+    await this.log('setLocale', locale);
+  };
+
   setNotificationPreferences = async (kinds: PreferenceChange[]) => {
     const known = new Map(this.preferencesState.kinds.map((k) => [k.kind, k]));
     for (const c of kinds) {

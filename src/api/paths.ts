@@ -5,6 +5,8 @@ const q = encodeURIComponent;
 
 export const paths = {
   me: '/v1/me',
+  preferences: '/v1/me/preferences',
+  whereami: '/v1/whereami',
   accounts: '/v1/accounts',
   account: (id: string) => `/v1/accounts/${q(id)}`,
   transactions: (id: string, limit: number) => `/v1/accounts/${q(id)}/transactions?limit=${limit}`,

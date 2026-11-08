@@ -292,6 +292,12 @@ export class LiveOnGemApi implements OnGemApi {
   readNotification: OnGemApi['readNotification'] = (id) => this.call('POST', paths.readNotification(id));
   readAllNotifications: OnGemApi['readAllNotifications'] = () =>
     this.call('POST', paths.readAllNotifications);
+  setLocale: OnGemApi['setLocale'] = async (locale) => {
+    await this.call('PUT', paths.preferences, { json: { locale } });
+  };
+  /** OG-022 R11: where the person's company lives and that region's API base URL. */
+  whereami = () =>
+    this.call<{ companyId: string | null; region: string | null; apiBaseUrl: string | null }>('GET', paths.whereami);
   notificationPreferences: OnGemApi['notificationPreferences'] = () =>
     this.call('GET', paths.notificationPreferences);
   setNotificationPreferences: OnGemApi['setNotificationPreferences'] = (kinds) =>

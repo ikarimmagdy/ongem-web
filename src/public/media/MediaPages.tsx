@@ -5,7 +5,7 @@ import { BrowserFrame, PhoneFrame } from '../art';
 import { formatPostDate, POSTS, postBySlug, type Post } from './blog';
 import { MEDIA } from './content';
 import { APP_SHOTS, WEB_SHOTS, type GalleryShot } from './gallery';
-import { Markdown } from './markdown';
+import { Markdown } from '../../i18n/markdown';
 import {
   FEATURED,
   formatDuration,
