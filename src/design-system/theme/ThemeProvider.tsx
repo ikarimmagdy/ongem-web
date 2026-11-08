@@ -137,7 +137,7 @@ export function ThemeProvider({ children, storage, remoteSources, initialThemeId
       try {
         parsed = JSON.parse(json);
       } catch {
-        return { ok: false, errors: ['The file is not valid JSON.'] };
+        return { ok: false, errors: ['The file is not valid JSON.'] }; // content-check: ignore (console theme import only)
       }
       const r = validateTheme(parsed);
       if (r.ok) {

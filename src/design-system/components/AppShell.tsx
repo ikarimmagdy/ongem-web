@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
+import { t } from '../../i18n/store';
 import { PRODUCT_NAME } from '../theme/branding';
 import { useTheme } from '../theme/ThemeProvider';
 import { Button } from './Button';
@@ -37,14 +38,14 @@ export function AppShell({
   return (
     <div className="og-shell">
       <a href="#main" className="og-skip">
-        Skip to content
+        {t('app.common.skip')}
       </a>
       <aside className="og-shell__side">
         <div className="og-shell__brand">
           <Logo />
           <span className="og-shell__product">{PRODUCT_NAME}</span>
         </div>
-        <nav aria-label="Main">
+        <nav aria-label={t('app.shell.main_nav')}>
           <ul className="og-nav">
             {nav.map((item) => (
               <li key={item.to}>
@@ -67,9 +68,9 @@ export function AppShell({
           </span>
           <div className="og-topbar__right">
             <label className="og-topbar__theme">
-              <span className="og-visually-hidden">Theme</span>
+              <span className="og-visually-hidden">{t('app.settings.theme')}</span>
               <Select
-                aria-label="Theme"
+                aria-label={t('app.settings.theme')}
                 value={theme.id}
                 onChange={(e) => setTheme(e.target.value)}
                 options={themes.map((t) => ({ value: t.id, label: t.name }))}
@@ -91,17 +92,17 @@ export function AppShell({
             )}
             {onManageAccount && (
               <Button variant="ghost" size="sm" onClick={onManageAccount}>
-                Account
+                {t('app.ds.account')}
               </Button>
             )}
             {onSignOut && (
               <Button variant="secondary" size="sm" onClick={onSignOut}>
-                Sign out
+                {t('app.common.sign_out')}
               </Button>
             )}
             {onSignIn && (
               <Button size="sm" onClick={onSignIn}>
-                Sign in
+                {t('app.ds.sign_in')}
               </Button>
             )}
           </div>

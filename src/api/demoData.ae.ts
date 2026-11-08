@@ -1,3 +1,4 @@
+// content-check: data (sample company names and amounts; sentences shown as UI copy are content keys)
 import type {
   Account,
   Amount,
@@ -12,6 +13,8 @@ import type {
   TicketDetail,
   Transaction,
 } from './types';
+import { t } from '../i18n/store';
+import { formatMinor } from '../lib/format';
 
 /**
  * The AE build's demo data (OG-022 R18): UAE companies with AED amounts, UAE IBANs (only the last four kept), Aani,
@@ -161,7 +164,7 @@ export const demoRecipients = (): Recipient[] => [
   },
 ];
 
-const t = (from: string | null, to: string, at: string) => ({ from, to, at });
+const step = (from: string | null, to: string, at: string) => ({ from, to, at });
 
 export const demoPayments = (): Payment[] => [
   {
@@ -175,10 +178,10 @@ export const demoPayments = (): Payment[] => [
     providerReference: 'fts_demo_77a1',
     createdAt: '2026-10-27T07:02:00Z',
     timeline: [
-      t(null, 'DRAFT', '2026-10-27T07:02:00Z'),
-      t('DRAFT', 'PRECHECKED', '2026-10-27T07:03:00Z'),
-      t('PRECHECKED', 'SUBMITTED', '2026-10-27T07:03:10Z'),
-      t('SUBMITTED', 'SENT', '2026-10-27T09:00:00Z'),
+      step(null, 'DRAFT', '2026-10-27T07:02:00Z'),
+      step('DRAFT', 'PRECHECKED', '2026-10-27T07:03:00Z'),
+      step('PRECHECKED', 'SUBMITTED', '2026-10-27T07:03:10Z'),
+      step('SUBMITTED', 'SENT', '2026-10-27T09:00:00Z'),
     ],
   },
   {
@@ -190,7 +193,7 @@ export const demoPayments = (): Payment[] => [
     toAccountId: TAX,
     reference: 'Q4 VAT reserve',
     createdAt: '2026-10-25T07:00:00Z',
-    timeline: [t(null, 'DRAFT', '2026-10-25T07:00:00Z'), t('DRAFT', 'SETTLED', '2026-10-25T07:00:05Z')],
+    timeline: [step(null, 'DRAFT', '2026-10-25T07:00:00Z'), step('DRAFT', 'SETTLED', '2026-10-25T07:00:05Z')],
   },
   {
     id: 'pay_demo_3',
@@ -204,12 +207,12 @@ export const demoPayments = (): Payment[] => [
     createdAt: '2026-10-24T06:30:00Z',
     failureCode: 'AC01',
     returnCode: 'AC01',
-    returnReason: 'Incorrect account number',
+    returnReason: t('app.demo.payment.return_reason'),
     timeline: [
-      t(null, 'DRAFT', '2026-10-24T06:30:00Z'),
-      t('DRAFT', 'SUBMITTED', '2026-10-24T06:31:00Z'),
-      t('SUBMITTED', 'SETTLED', '2026-10-24T06:31:04Z'),
-      t('SETTLED', 'RETURNED', '2026-10-26T10:12:00Z'),
+      step(null, 'DRAFT', '2026-10-24T06:30:00Z'),
+      step('DRAFT', 'SUBMITTED', '2026-10-24T06:31:00Z'),
+      step('SUBMITTED', 'SETTLED', '2026-10-24T06:31:04Z'),
+      step('SETTLED', 'RETURNED', '2026-10-26T10:12:00Z'),
     ],
   },
   ...Array.from({ length: 23 }, (_, i): Payment => {
@@ -283,7 +286,7 @@ export const demoTickets = (): TicketDetail[] => [
   {
     ticket: {
       id: 'tkt_demo_1',
-      subject: 'Card for a new hire',
+      subject: t('app.demo.ticket.card.subject'),
       category: 'CARD',
       status: 'IN_REVIEW',
       createdAt: '2026-10-27T10:00:00Z',
@@ -294,14 +297,14 @@ export const demoTickets = (): TicketDetail[] => [
         id: 'msg_demo_1',
         authorKind: 'MEMBER',
         authorName: 'Layla Al Mansoori',
-        body: 'Can we get a virtual card for our new designer?',
+        body: t('app.demo.ticket.card.question'),
         at: '2026-10-27T10:00:00Z',
       },
       {
         id: 'msg_demo_2',
         authorKind: 'OPS',
         authorName: 'OnGem support',
-        body: 'Yes. Add them as a cardholder and we will issue it.',
+        body: t('app.demo.ticket.card.answer'),
         at: '2026-10-28T12:00:00Z',
       },
     ],
@@ -310,26 +313,26 @@ export const demoTickets = (): TicketDetail[] => [
   {
     ticket: {
       id: 'tkt_demo_2',
-      subject: 'Statement for September',
+      subject: t('app.demo.ticket.statement.subject'),
       category: 'ACCOUNT',
       status: 'RESOLVED',
       createdAt: '2026-10-20T10:00:00Z',
       updatedAt: '2026-10-21T09:00:00Z',
     },
-    resolution: 'Statement shared in the app.',
+    resolution: t('app.demo.ticket.statement.resolution'),
     messages: [
       {
         id: 'msg_demo_3',
         authorKind: 'MEMBER',
         authorName: 'Layla Al Mansoori',
-        body: 'Where do I find the September statement?',
+        body: t('app.demo.ticket.statement.question'),
         at: '2026-10-20T10:00:00Z',
       },
       {
         id: 'msg_demo_4',
         authorKind: 'OPS',
         authorName: 'OnGem support',
-        body: 'Accounts, Operating, Statements, September 2026.',
+        body: t('app.demo.ticket.statement.answer'),
         at: '2026-10-21T09:00:00Z',
       },
     ],
@@ -341,8 +344,10 @@ export const demoNotices = (): NoticeView[] => [
   {
     id: 'ntc_demo_3',
     kind: 'APPROVAL_WAITING',
-    title: 'A payment needs your approval',
-    body: 'A payment of AED 9,000.00 is waiting for a second person to approve it.',
+    title: t('app.demo.notice.approval.title'),
+    body: t('app.demo.notice.approval.body', {
+      amount: formatMinor({ amountMinor: 900_000, currency: 'AED' }),
+    }),
     link: 'payments/pay_demo_2/approve',
     mandatory: false,
     occurredAt: '2026-10-29T14:20:00Z',
@@ -352,8 +357,8 @@ export const demoNotices = (): NoticeView[] => [
   {
     id: 'ntc_demo_2',
     kind: 'SUPPORT_UPDATE',
-    title: 'Your support request has an answer',
-    body: 'OnGem replied to your request.',
+    title: t('app.demo.notice.support.title'),
+    body: t('app.demo.notice.support.body'),
     link: 'support/tkt_demo_1',
     mandatory: false,
     occurredAt: '2026-10-29T10:05:00Z',
@@ -363,8 +368,10 @@ export const demoNotices = (): NoticeView[] => [
   {
     id: 'ntc_demo_1',
     kind: 'PAYMENT_SETTLED',
-    title: 'Payment completed',
-    body: 'Your payment of AED 4,590.00 has completed.',
+    title: t('app.demo.notice.settled.title'),
+    body: t('app.demo.notice.settled.body', {
+      amount: formatMinor({ amountMinor: 459_000, currency: 'AED' }),
+    }),
     link: 'payments/pay_demo_1',
     mandatory: false,
     occurredAt: '2026-10-28T16:00:00Z',

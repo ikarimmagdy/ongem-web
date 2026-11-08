@@ -1,0 +1,1103 @@
+{
+  "entries": [
+    {
+      "key": "app.assistant.title",
+      "format": "text",
+      "description": "Assistant panel heading, open button and region label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Assistant",
+      "ar": "المساعد"
+    },
+    {
+      "key": "app.assistant.close",
+      "format": "text",
+      "description": "Button that closes the assistant panel",
+      "placeholders": [],
+      "meta": {},
+      "en": "Close",
+      "ar": "إغلاق"
+    },
+    {
+      "key": "app.assistant.close_label",
+      "format": "text",
+      "description": "Screen reader label of the close button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Close the assistant",
+      "ar": "إغلاق المساعد"
+    },
+    {
+      "key": "app.assistant.intro",
+      "format": "text",
+      "description": "Assistant panel text before the first question",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ask about your balances, payments, cards or support. I draft actions; you confirm them on the normal screen.",
+      "ar": "اسأل عن أرصدتك أو مدفوعاتك أو بطاقاتك أو الدعم. أُعدّ لك الإجراءات كمسودات، وتؤكدها أنت من الشاشة المعتادة."
+    },
+    {
+      "key": "app.assistant.review",
+      "format": "text",
+      "description": "Button that opens the screen to review an assistant draft",
+      "placeholders": [],
+      "meta": {},
+      "en": "Review",
+      "ar": "مراجعة"
+    },
+    {
+      "key": "app.assistant.dismiss",
+      "format": "text",
+      "description": "Button that dismisses an assistant draft",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dismiss",
+      "ar": "تجاهل"
+    },
+    {
+      "key": "app.assistant.confirmed",
+      "format": "text",
+      "description": "State of a draft the founder confirmed",
+      "placeholders": [],
+      "meta": {},
+      "en": "Confirmed by you",
+      "ar": "أكّدته أنت"
+    },
+    {
+      "key": "app.assistant.dismissed",
+      "format": "text",
+      "description": "State of a draft the founder dismissed",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dismissed",
+      "ar": "تم التجاهل"
+    },
+    {
+      "key": "app.assistant.helpful",
+      "format": "text",
+      "description": "Rating button: the answer helped",
+      "placeholders": [],
+      "meta": {},
+      "en": "Helpful",
+      "ar": "مفيد"
+    },
+    {
+      "key": "app.assistant.not_helpful",
+      "format": "text",
+      "description": "Rating button: the answer did not help",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not helpful",
+      "ar": "غير مفيد"
+    },
+    {
+      "key": "app.assistant.input_label",
+      "format": "text",
+      "description": "Hidden label of the message field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Message the assistant",
+      "ar": "راسل المساعد"
+    },
+    {
+      "key": "app.assistant.placeholder",
+      "format": "text",
+      "description": "Placeholder of the message field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ask the assistant",
+      "ar": "اسأل المساعد"
+    },
+    {
+      "key": "app.assistant.send",
+      "format": "text",
+      "description": "Button that sends a message to the assistant",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send",
+      "ar": "إرسال"
+    },
+    {
+      "key": "app.assistant.toast.not_drafted",
+      "format": "text",
+      "description": "Toast after an action that differs from the assistant draft",
+      "placeholders": [],
+      "meta": {},
+      "en": "Done. This was not the action the assistant drafted, so the draft stays open.",
+      "ar": "تم. لم يكن هذا الإجراء هو ما أعدّه المساعد، لذا تبقى المسودة مفتوحة."
+    },
+    {
+      "key": "app.assistant.toast.confirmed",
+      "format": "text",
+      "description": "Toast after an action confirmed an assistant draft",
+      "placeholders": [],
+      "meta": {},
+      "en": "Done. The assistant recorded that you confirmed it.",
+      "ar": "تم. سجّل المساعد أنك أكدت الإجراء."
+    },
+    {
+      "key": "app.assistant.toast.done",
+      "format": "text",
+      "description": "Toast after an action whose draft confirmation failed; {reason} is the reason",
+      "placeholders": [
+        "reason"
+      ],
+      "meta": {},
+      "en": "Done. {reason}",
+      "ar": "تم. {reason}"
+    },
+    {
+      "key": "app.assistant.toast.not_recorded",
+      "format": "text",
+      "description": "Reason shown when the assistant could not record the confirmation",
+      "placeholders": [],
+      "meta": {},
+      "en": "The assistant could not record your confirmation.",
+      "ar": "تعذّر على المساعد تسجيل تأكيدك."
+    },
+    {
+      "key": "app.assistant.topic.profile",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "your profile",
+      "ar": "ملفك الشخصي"
+    },
+    {
+      "key": "app.assistant.topic.accounts",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "your accounts",
+      "ar": "حساباتك"
+    },
+    {
+      "key": "app.assistant.topic.transactions",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "transactions",
+      "ar": "المعاملات"
+    },
+    {
+      "key": "app.assistant.topic.statements",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "statements",
+      "ar": "كشوف الحساب"
+    },
+    {
+      "key": "app.assistant.topic.payments",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "payments",
+      "ar": "المدفوعات"
+    },
+    {
+      "key": "app.assistant.topic.recipients",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "recipients",
+      "ar": "المستفيدين"
+    },
+    {
+      "key": "app.assistant.topic.cards",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "cards",
+      "ar": "البطاقات"
+    },
+    {
+      "key": "app.assistant.topic.support",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "support requests",
+      "ar": "طلبات الدعم"
+    },
+    {
+      "key": "app.assistant.topic.application",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "your application",
+      "ar": "طلبك"
+    },
+    {
+      "key": "app.assistant.topic.disclosures",
+      "format": "text",
+      "description": "What the assistant looked at, inside \"Checked ...\"",
+      "placeholders": [],
+      "meta": {},
+      "en": "disclosures",
+      "ar": "الإفصاحات"
+    },
+    {
+      "key": "app.assistant.read.checked",
+      "format": "text",
+      "description": "Line under an assistant answer naming what it read; {list} is the topics",
+      "placeholders": [
+        "list"
+      ],
+      "meta": {},
+      "en": "Checked {list}",
+      "ar": "تم الاطلاع على {list}"
+    },
+    {
+      "key": "app.assistant.read.list",
+      "format": "text",
+      "description": "Joins topics: {items} are all but the last, {last} the last",
+      "placeholders": [
+        "items",
+        "last"
+      ],
+      "meta": {},
+      "en": "{items} and {last}",
+      "ar": "{items} و{last}"
+    },
+    {
+      "key": "app.assistant.read.separator",
+      "format": "text",
+      "description": "Separator between topics in a list",
+      "placeholders": [],
+      "meta": {},
+      "en": ", ",
+      "ar": "، "
+    },
+    {
+      "key": "app.assistant.demo.drafted_support",
+      "format": "text",
+      "description": "Demo assistant reply after drafting something for support; {summary} is the draft",
+      "placeholders": [
+        "summary"
+      ],
+      "meta": {},
+      "en": "I drafted this for our support team: {summary} Review it in Support and send it there.",
+      "ar": "أعددت هذه المسودة لفريق الدعم: {summary} راجعها في قسم الدعم وأرسلها من هناك."
+    },
+    {
+      "key": "app.assistant.demo.drafted",
+      "format": "text",
+      "description": "Demo assistant reply after drafting an action; {summary} is the draft",
+      "placeholders": [
+        "summary"
+      ],
+      "meta": {},
+      "en": "I drafted this for you: {summary} Review it and confirm it on the screen I open; nothing happens until you do.",
+      "ar": "أعددت لك هذه المسودة: {summary} راجعها وأكّدها في الشاشة التي سأفتحها، ولن يُنفَّذ شيء قبل أن تؤكدها."
+    },
+    {
+      "key": "app.assistant.demo.ticket_reply",
+      "format": "text",
+      "description": "Draft summary: a reply to a support ticket",
+      "placeholders": [
+        "subject"
+      ],
+      "meta": {},
+      "en": "Reply to \"{subject}\".",
+      "ar": "الرد على \"{subject}\"."
+    },
+    {
+      "key": "app.assistant.demo.your_ticket",
+      "format": "text",
+      "description": "Used in a reply draft when no open ticket exists",
+      "placeholders": [],
+      "meta": {},
+      "en": "your ticket",
+      "ar": "طلبك"
+    },
+    {
+      "key": "app.assistant.demo.support_subject",
+      "format": "text",
+      "description": "Subject of a support ticket the assistant drafts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Help from the assistant",
+      "ar": "مساعدة من المساعد"
+    },
+    {
+      "key": "app.assistant.demo.support_ticket",
+      "format": "text",
+      "description": "Draft summary: a new support ticket with the founder's words",
+      "placeholders": [
+        "text"
+      ],
+      "meta": {},
+      "en": "Open a support ticket for our team: \"{text}\".",
+      "ar": "فتح طلب دعم لفريقنا: \"{text}\"."
+    },
+    {
+      "key": "app.assistant.demo.freeze",
+      "format": "text",
+      "description": "Draft summary: freeze a card",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Freeze the card ending {last4}.",
+      "ar": "تجميد البطاقة المنتهية بـ {last4}."
+    },
+    {
+      "key": "app.assistant.demo.unfreeze",
+      "format": "text",
+      "description": "Draft summary: unfreeze a card",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Unfreeze the card ending {last4}.",
+      "ar": "إلغاء تجميد البطاقة المنتهية بـ {last4}."
+    },
+    {
+      "key": "app.assistant.demo.card_you_choose",
+      "format": "text",
+      "description": "Used when no card matches the request",
+      "placeholders": [],
+      "meta": {},
+      "en": "you choose",
+      "ar": "التي تختارها"
+    },
+    {
+      "key": "app.assistant.demo.add_recipient",
+      "format": "text",
+      "description": "Draft summary: add a recipient; {hint} says what the founder enters",
+      "placeholders": [
+        "name",
+        "hint"
+      ],
+      "meta": {},
+      "en": "Add {name}. {hint}",
+      "ar": "إضافة {name}. {hint}"
+    },
+    {
+      "key": "app.assistant.demo.new_recipient",
+      "format": "text",
+      "description": "Used when the founder named no recipient",
+      "placeholders": [],
+      "meta": {},
+      "en": "a new recipient",
+      "ar": "مستفيد جديد"
+    },
+    {
+      "key": "app.assistant.demo.move",
+      "format": "text",
+      "description": "Draft summary: transfer between own accounts",
+      "placeholders": [
+        "amount",
+        "from",
+        "to"
+      ],
+      "meta": {},
+      "en": "Move {amount} from {from} to {to}.",
+      "ar": "تحويل {amount} من {from} إلى {to}."
+    },
+    {
+      "key": "app.assistant.demo.send",
+      "format": "text",
+      "description": "Draft summary: payment to a recipient; {rail} is how it moves",
+      "placeholders": [
+        "amount",
+        "rail",
+        "from",
+        "recipient"
+      ],
+      "meta": {},
+      "en": "Send {amount} by {rail} from {from} to {recipient}.",
+      "ar": "إرسال {amount} عبر {rail} من {from} إلى {recipient}."
+    },
+    {
+      "key": "app.assistant.demo.recipient_you_choose",
+      "format": "text",
+      "description": "Used when no recipient matches the request",
+      "placeholders": [],
+      "meta": {},
+      "en": "a recipient you choose",
+      "ar": "مستفيد تختاره"
+    },
+    {
+      "key": "app.assistant.demo.payments_heading",
+      "format": "text",
+      "description": "Demo assistant: heading before a list of payments",
+      "placeholders": [],
+      "meta": {},
+      "en": "Here are your payments:",
+      "ar": "إليك مدفوعاتك:"
+    },
+    {
+      "key": "app.assistant.demo.cards_heading",
+      "format": "text",
+      "description": "Demo assistant: heading before a list of cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Here are your cards:",
+      "ar": "إليك بطاقاتك:"
+    },
+    {
+      "key": "app.assistant.demo.card_line",
+      "format": "text",
+      "description": "Demo assistant: one card in a list",
+      "placeholders": [
+        "last4",
+        "holder",
+        "state"
+      ],
+      "meta": {},
+      "en": "- Card ending {last4} ({holder}): {state}",
+      "ar": "- البطاقة المنتهية بـ {last4} ({holder}): {state}"
+    },
+    {
+      "key": "app.assistant.demo.recipients_heading",
+      "format": "text",
+      "description": "Demo assistant: heading before a list of recipients",
+      "placeholders": [],
+      "meta": {},
+      "en": "Here are your recipients:",
+      "ar": "إليك المستفيدون لديك:"
+    },
+    {
+      "key": "app.assistant.demo.recipient_line",
+      "format": "text",
+      "description": "Demo assistant: one recipient in a list",
+      "placeholders": [
+        "name",
+        "last4",
+        "screening"
+      ],
+      "meta": {},
+      "en": "- {name} (account ending {last4}): screening {screening}",
+      "ar": "- {name} (الحساب المنتهي بـ {last4}): الفحص {screening}",
+      "ae": {
+        "en": "- {name} (IBAN ending {last4}): screening {screening}",
+        "ar": "- {name} (IBAN المنتهي بـ {last4}): الفحص {screening}"
+      }
+    },
+    {
+      "key": "app.assistant.demo.tickets_heading",
+      "format": "text",
+      "description": "Demo assistant: heading before a list of support tickets",
+      "placeholders": [],
+      "meta": {},
+      "en": "Here are your support tickets:",
+      "ar": "إليك طلبات الدعم الخاصة بك:"
+    },
+    {
+      "key": "app.assistant.demo.application",
+      "format": "text",
+      "description": "Demo assistant: the application state",
+      "placeholders": [
+        "state"
+      ],
+      "meta": {},
+      "en": "Your application is {state}.",
+      "ar": "حالة طلبك: {state}."
+    },
+    {
+      "key": "app.assistant.demo.not_started",
+      "format": "text",
+      "description": "Application state when there is none",
+      "placeholders": [],
+      "meta": {},
+      "en": "not started",
+      "ar": "لم يبدأ بعد"
+    },
+    {
+      "key": "app.assistant.demo.accounts_heading",
+      "format": "text",
+      "description": "Demo assistant: heading before a list of accounts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Here are your accounts:",
+      "ar": "إليك حساباتك:"
+    },
+    {
+      "key": "app.assistant.demo.available",
+      "format": "text",
+      "description": "Demo assistant: an account's available balance",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "{amount} available",
+      "ar": "{amount} متاح"
+    },
+    {
+      "key": "app.assistant.demo.no_balance",
+      "format": "text",
+      "description": "Demo assistant: an account with no balance yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "no balance yet",
+      "ar": "لا يوجد رصيد بعد"
+    },
+    {
+      "key": "app.assistant.demo.fallback",
+      "format": "text",
+      "description": "Demo assistant: answer when it did not understand",
+      "placeholders": [],
+      "meta": {},
+      "en": "I can check your balances, payments, recipients, cards, support tickets and your application, and I can draft a payment, a transfer between your accounts, a card freeze, a recipient or a support ticket for you to review and confirm. Nothing changes until you confirm it yourself.",
+      "ar": "يمكنني الاطلاع على أرصدتك ومدفوعاتك والمستفيدين وبطاقاتك وطلبات الدعم وطلبك، ويمكنني إعداد مسودة دفعة أو تحويل بين حساباتك أو تجميد بطاقة أو إضافة مستفيد أو طلب دعم لتراجعه وتؤكده. لا يتغير شيء حتى تؤكده بنفسك."
+    },
+    {
+      "key": "app.demo.member",
+      "format": "text",
+      "description": "Name shown for a person with no name in demo mode",
+      "placeholders": [],
+      "meta": {},
+      "en": "Company member",
+      "ar": "عضو في الشركة"
+    },
+    {
+      "key": "app.demo.payment.return_reason",
+      "format": "text",
+      "description": "Demo: why the sample payment was returned",
+      "placeholders": [],
+      "meta": {},
+      "en": "No account, or unable to locate account",
+      "ar": "لا يوجد حساب، أو تعذّر العثور على الحساب",
+      "ae": {
+        "en": "Incorrect account number",
+        "ar": "رقم الحساب غير صحيح"
+      }
+    },
+    {
+      "key": "app.demo.ticket.card.subject",
+      "format": "text",
+      "description": "Demo support ticket subject",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card for a new hire",
+      "ar": "بطاقة لموظف جديد"
+    },
+    {
+      "key": "app.demo.ticket.card.question",
+      "format": "text",
+      "description": "Demo support ticket: the founder's message",
+      "placeholders": [],
+      "meta": {},
+      "en": "Can we get a virtual card for our new designer?",
+      "ar": "هل يمكننا الحصول على بطاقة افتراضية للمصمم الجديد لدينا؟"
+    },
+    {
+      "key": "app.demo.ticket.card.answer",
+      "format": "text",
+      "description": "Demo support ticket: OnGem support's answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Yes. Add them as a cardholder and we will issue it.",
+      "ar": "نعم. أضِفه كحامل بطاقة وسنصدرها له."
+    },
+    {
+      "key": "app.demo.ticket.statement.subject",
+      "format": "text",
+      "description": "Demo support ticket subject",
+      "placeholders": [],
+      "meta": {},
+      "en": "Statement for September",
+      "ar": "كشف حساب شهر سبتمبر"
+    },
+    {
+      "key": "app.demo.ticket.statement.resolution",
+      "format": "text",
+      "description": "Demo support ticket resolution",
+      "placeholders": [],
+      "meta": {},
+      "en": "Statement shared in the app.",
+      "ar": "تمت مشاركة كشف الحساب في التطبيق."
+    },
+    {
+      "key": "app.demo.ticket.statement.question",
+      "format": "text",
+      "description": "Demo support ticket: the founder's message",
+      "placeholders": [],
+      "meta": {},
+      "en": "Where do I find the September statement?",
+      "ar": "أين أجد كشف حساب شهر سبتمبر؟"
+    },
+    {
+      "key": "app.demo.ticket.statement.answer",
+      "format": "text",
+      "description": "Demo support ticket: OnGem support's answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accounts, Operating, Statements, September 2026.",
+      "ar": "الحسابات، الحساب التشغيلي، كشوف الحساب، سبتمبر 2026."
+    },
+    {
+      "key": "app.demo.notice.approval.title",
+      "format": "text",
+      "description": "Demo notice title",
+      "placeholders": [],
+      "meta": {},
+      "en": "A payment needs your approval",
+      "ar": "دفعة بانتظار موافقتك"
+    },
+    {
+      "key": "app.demo.notice.approval.body",
+      "format": "text",
+      "description": "Demo notice body; {amount} is the payment",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "A payment of {amount} is waiting for a second person to approve it.",
+      "ar": "دفعة بقيمة {amount} بانتظار موافقة شخص ثانٍ."
+    },
+    {
+      "key": "app.demo.notice.support.title",
+      "format": "text",
+      "description": "Demo notice title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your support request has an answer",
+      "ar": "وصل رد على طلب الدعم الخاص بك"
+    },
+    {
+      "key": "app.demo.notice.support.body",
+      "format": "text",
+      "description": "Demo notice body",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem replied to your request.",
+      "ar": "ردّ فريق OnGem على طلبك."
+    },
+    {
+      "key": "app.demo.notice.settled.title",
+      "format": "text",
+      "description": "Demo notice title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment completed",
+      "ar": "اكتملت الدفعة"
+    },
+    {
+      "key": "app.demo.notice.settled.body",
+      "format": "text",
+      "description": "Demo notice body; {amount} is the payment",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "Your payment of {amount} has completed.",
+      "ar": "اكتملت دفعتك بقيمة {amount}."
+    },
+    {
+      "key": "app.demo.disclosure.esign.title",
+      "format": "text",
+      "description": "Demo disclosure title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Consent to electronic records",
+      "ar": "الموافقة على السجلات الإلكترونية"
+    },
+    {
+      "key": "app.demo.disclosure.terms.title",
+      "format": "text",
+      "description": "Demo disclosure title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Business account terms",
+      "ar": "شروط الحساب التجاري"
+    },
+    {
+      "key": "app.demo.disclosure.body",
+      "format": "text",
+      "description": "Demo disclosure text; {title} is the disclosure",
+      "placeholders": [
+        "title"
+      ],
+      "meta": {},
+      "en": "Sample text for demo mode. {title}: the real text comes from the API and is shown here in full. You agree to receive records electronically, to keep your contact details current, and that this acceptance is recorded with its time and this device.",
+      "ar": "نص تجريبي لوضع العرض. {title}: يأتي النص الفعلي من واجهة البرمجة ويُعرض هنا كاملًا. أنت توافق على تلقي السجلات إلكترونيًا، وعلى تحديث بيانات التواصل الخاصة بك باستمرار، وعلى تسجيل هذه الموافقة مع وقتها وهذا الجهاز."
+    },
+    {
+      "key": "app.demo.notice_kind.approval_waiting",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "A payment waits for your approval",
+      "ar": "دفعة بانتظار موافقتك"
+    },
+    {
+      "key": "app.demo.notice_kind.payment_sent",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment sent",
+      "ar": "تم إرسال الدفعة"
+    },
+    {
+      "key": "app.demo.notice_kind.payment_with_bank",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment with the bank",
+      "ar": "الدفعة لدى البنك"
+    },
+    {
+      "key": "app.demo.notice_kind.payment_settled",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment completed",
+      "ar": "اكتملت الدفعة"
+    },
+    {
+      "key": "app.demo.notice_kind.payment_failed",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment not sent",
+      "ar": "لم تُرسل الدفعة"
+    },
+    {
+      "key": "app.demo.notice_kind.payment_returned",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment returned",
+      "ar": "أُعيدت الدفعة"
+    },
+    {
+      "key": "app.demo.notice_kind.schedule_failed",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Scheduled payment did not go",
+      "ar": "لم تُنفَّذ الدفعة المجدولة"
+    },
+    {
+      "key": "app.demo.notice_kind.card_frozen",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card frozen or cancelled",
+      "ar": "تم تجميد البطاقة أو إلغاؤها"
+    },
+    {
+      "key": "app.demo.notice_kind.application_decided",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Application decision",
+      "ar": "القرار بشأن الطلب"
+    },
+    {
+      "key": "app.demo.notice_kind.account_ready",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account open",
+      "ar": "تم فتح الحساب"
+    },
+    {
+      "key": "app.demo.notice_kind.limits_changed",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment limits changed",
+      "ar": "تغيّرت حدود الدفع"
+    },
+    {
+      "key": "app.demo.notice_kind.details_needed",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Business details to confirm",
+      "ar": "بيانات تجارية بحاجة إلى تأكيد"
+    },
+    {
+      "key": "app.demo.notice_kind.support_update",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Support request update",
+      "ar": "تحديث على طلب الدعم"
+    },
+    {
+      "key": "app.demo.notice_kind.new_device",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "New device",
+      "ar": "جهاز جديد"
+    },
+    {
+      "key": "app.demo.notice_kind.closure_started",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account closing",
+      "ar": "إغلاق الحساب"
+    },
+    {
+      "key": "app.demo.notice_kind.account_frozen",
+      "format": "text",
+      "description": "Demo notification choice: the kind of notice",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account on hold",
+      "ar": "الحساب موقوف مؤقتًا"
+    },
+    {
+      "key": "app.demo.error.forbidden",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your role does not allow this.",
+      "ar": "دورك لا يسمح بهذا الإجراء."
+    },
+    {
+      "key": "app.demo.error.reverification_cancelled",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "You did not confirm it is you, so nothing was changed.",
+      "ar": "لم تؤكد هويتك، لذا لم يتغير شيء."
+    },
+    {
+      "key": "app.demo.error.iban_format",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the IBAN: AE and 21 digits.",
+      "ar": "تحقق من رقم IBAN: يبدأ بـ AE ويليه 21 رقمًا.",
+      "only": "ae"
+    },
+    {
+      "key": "app.demo.error.amount_zero",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "The amount must be more than zero.",
+      "ar": "يجب أن يكون المبلغ أكبر من صفر."
+    },
+    {
+      "key": "app.demo.error.insufficient_funds",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "The available balance does not cover this payment.",
+      "ar": "الرصيد المتاح لا يغطي هذه الدفعة."
+    },
+    {
+      "key": "app.demo.error.not_pending_approval",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "This payment is not waiting for approval.",
+      "ar": "هذه الدفعة ليست بانتظار الموافقة."
+    },
+    {
+      "key": "app.demo.error.iban_and_name",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the IBAN and the name.",
+      "ar": "تحقق من رقم IBAN والاسم.",
+      "only": "ae"
+    },
+    {
+      "key": "app.demo.error.routing_account_name",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the routing number, account number and name.",
+      "ar": "تحقق من رقم التوجيه ورقم الحساب والاسم.",
+      "only": "us"
+    },
+    {
+      "key": "app.demo.error.amount_positive",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "The amount must be positive.",
+      "ar": "يجب أن يكون المبلغ موجبًا."
+    },
+    {
+      "key": "app.demo.error.schedule_fields",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the amount, how often and the dates.",
+      "ar": "تحقق من المبلغ وعدد مرات التكرار والتواريخ."
+    },
+    {
+      "key": "app.demo.error.card_not_active",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Only an active card can be frozen.",
+      "ar": "لا يمكن تجميد إلا بطاقة نشطة."
+    },
+    {
+      "key": "app.demo.error.card_not_frozen",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "The card is not frozen.",
+      "ar": "البطاقة ليست مجمّدة."
+    },
+    {
+      "key": "app.demo.error.card_details_unavailable",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "This card's details are not available.",
+      "ar": "تفاصيل هذه البطاقة غير متاحة."
+    },
+    {
+      "key": "app.demo.error.id_number",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the ID number.",
+      "ar": "تحقق من رقم الهوية."
+    },
+    {
+      "key": "app.demo.error.owner_id_missing",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "An owner's ID is missing.",
+      "ar": "هوية أحد المالكين غير موجودة."
+    },
+    {
+      "key": "app.demo.error.disclosures_first",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accept every disclosure first.",
+      "ar": "وافق على جميع الإفصاحات أولًا."
+    },
+    {
+      "key": "app.demo.error.capture_closed",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "ID capture is open only while the bank is checking the application.",
+      "ar": "التقاط الهوية متاح فقط أثناء تدقيق البنك للطلب."
+    },
+    {
+      "key": "app.demo.error.mandatory_kind",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "This notice always goes by email.",
+      "ar": "يُرسل هذا الإشعار دائمًا بالبريد الإلكتروني."
+    },
+    {
+      "key": "app.demo.error.sms_verify_first",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Verify your SMS number first.",
+      "ar": "تحقق من رقم الرسائل النصية أولًا."
+    },
+    {
+      "key": "app.demo.error.sms_number_format",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter the number in international form, like +15551234567.",
+      "ar": "أدخل الرقم بالصيغة الدولية، مثل +15551234567."
+    },
+    {
+      "key": "app.demo.error.sms_code_invalid",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "That code is not right. Check the text and try again.",
+      "ar": "الرمز غير صحيح. تحقق من الرسالة وحاول مرة أخرى."
+    },
+    {
+      "key": "app.demo.error.ticket_fields",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "A subject and a message are needed.",
+      "ar": "يجب إدخال الموضوع والرسالة."
+    },
+    {
+      "key": "app.demo.error.file_too_large",
+      "format": "text",
+      "description": "Demo mode refusal shown to the founder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Files can be up to 10 MB.",
+      "ar": "يمكن أن يصل حجم الملف إلى 10 ميغابايت كحد أقصى."
+    },
+    {
+      "key": "app.demo.error.schedule_state",
+      "format": "text",
+      "description": "Demo refusal of a schedule action; {state} is the schedule state",
+      "placeholders": [
+        "state"
+      ],
+      "meta": {},
+      "en": "A {state} schedule cannot do that.",
+      "ar": "لا يمكن تنفيذ ذلك على جدول دفعات في الحالة {state}."
+    },
+    {
+      "key": "app.demo.error.unknown_kind",
+      "format": "text",
+      "description": "Demo refusal of an unknown notice kind",
+      "placeholders": [
+        "kind"
+      ],
+      "meta": {},
+      "en": "Unknown notice kind {kind}.",
+      "ar": "نوع إشعار غير معروف: {kind}."
+    }
+  ]
+}

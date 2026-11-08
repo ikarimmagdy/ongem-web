@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
+import { t } from '../../i18n/store';
 import type { Status } from './StatusChip';
 
 interface ToastItem {
@@ -29,14 +30,14 @@ export function ToastProvider({ children, timeoutMs = 5000 }: { children: ReactN
     <ToastContext.Provider value={api}>
       {children}
       <div className="og-toasts" role="status" aria-live="polite">
-        {items.map((t) => (
-          <div key={t.id} className={`og-toast og-toast--${t.status}`}>
-            <span>{t.message}</span>
+        {items.map((x) => (
+          <div key={x.id} className={`og-toast og-toast--${x.status}`}>
+            <span>{x.message}</span>
             <button
               type="button"
               className="og-toast__close"
-              aria-label="Dismiss"
-              onClick={() => dismiss(t.id)}
+              aria-label={t('app.ds.dismiss')}
+              onClick={() => dismiss(x.id)}
             >
               ×
             </button>

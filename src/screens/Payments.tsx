@@ -19,6 +19,7 @@ import { decimalToMinor, formatDate, formatMinor, minorToDecimal } from '../lib/
 import { useAsync } from '../lib/useAsync';
 import { paymentLabel } from '../lib/states';
 import { useDrafts } from '../assistant/drafts';
+import { t } from '../i18n';
 import { REGION_CONFIG } from '../region';
 import { useSession } from '../session';
 import { AcctLast4, Amt, Load, stateStatus } from './common';
@@ -32,13 +33,13 @@ export const PAYMENTS_PAGE = 10;
 function to(p: Payment, accounts: Account[], recipients: Recipient[]) {
   if (p.fundingSourceId) {
     const a = accounts.find((x) => x.id === p.fromAccountId);
-    return a ? `Top-up to ${a.name}` : 'Top-up';
+    return a ? t('app.payments.to.topup_to', { account: a.name }) : t('app.payments.kind.topup');
   }
   if (p.toAccountId) {
     const a = accounts.find((x) => x.id === p.toAccountId);
-    return a ? `${a.name}` : 'Your account';
+    return a ? `${a.name}` : t('app.payments.to.your_account');
   }
-  return recipients.find((r) => r.id === p.recipientId)?.name ?? 'Recipient';
+  return recipients.find((r) => r.id === p.recipientId)?.name ?? t('app.payments.to.recipient');
 }
 
 /**
@@ -53,18 +54,20 @@ export function paymentStatusLine(
   switch (state.toUpperCase()) {
     case 'PENDING_APPROVAL':
       return approvalBy === 'ONGEM'
-        ? 'Waiting for OnGem to approve it, because no one else in your company can approve payments. Nothing has moved yet.'
-        : 'Waiting for a second person in your company to approve it. Nothing has moved yet.';
+        ? t('app.payments.status_line.pending_approval_ongem')
+        : t('app.payments.status_line.pending_approval');
     case 'REJECTED':
-      return 'Declined by the approver. Nothing was moved.';
+      return t('app.payments.status_line.rejected');
     case 'DRAFT':
     case 'PRECHECKED':
-      return 'Sending. Our banking partner did not answer yet. We will not send it twice.';
+      return t('app.payments.status_line.sending');
     case 'SUBMITTED':
     case 'BANK_REVIEW':
-      return bankReference ? `Sent. Bank reference ${bankReference}.` : 'Sent. The bank reference follows.';
+      return bankReference
+        ? t('app.payments.status_line.sent_reference', { reference: bankReference })
+        : t('app.payments.status_line.sent');
     case 'SETTLED':
-      return 'Settled.';
+      return t('app.payments.status_line.settled');
     default:
       return paymentLabel(state);
   }
@@ -101,14 +104,14 @@ function Approval({ id, onDone }: { id: string; onDone(): void }) {
           disabled={busy}
           onClick={() => void act(() => api.rejectPayment(id))}
         >
-          Decline
+          {t('app.payments.decline')}
         </Button>
         <Button
           data-testid="payment-approve"
           disabled={busy}
           onClick={() => void act(() => api.approvePayment(id))}
         >
-          Approve
+          {t('app.payments.approve')}
         </Button>
       </div>
     </>
@@ -117,7 +120,11 @@ function Approval({ id, onDone }: { id: string; onDone(): void }) {
 
 /** What a payment is, for its title: a top-up, a transfer between own accounts or a payment (R-UX-4). */
 export function paymentKind(p: { fundingSourceId?: string | null; toAccountId?: string | null }): string {
-  return p.fundingSourceId ? 'Top-up' : p.toAccountId ? 'Transfer' : 'Payment';
+  return p.fundingSourceId
+    ? t('app.payments.kind.topup')
+    : p.toAccountId
+      ? t('app.payments.kind.transfer')
+      : t('app.payments.kind.payment');
 }
 
 export function PaymentDetail({ id }: { id: string }) {
@@ -125,7 +132,7 @@ export function PaymentDetail({ id }: { id: string }) {
   const [n, setN] = useState(0);
   const payment = useAsync(() => api.payment(id), [api, id, n]);
   return (
-    <Load state={payment} label="payment">
+    <Load state={payment} label={t('app.payments.loading.payment')}>
       {(p) => (
         <Card
           title={
@@ -141,23 +148,29 @@ export function PaymentDetail({ id }: { id: string }) {
           <KeyValue
             items={[
               {
-                label: 'Status',
+                label: t('app.payments.detail.status'),
                 value: <StatusChip status={stateStatus(p.state)}>{paymentLabel(p.state)}</StatusChip>,
               },
               {
-                label: 'Rail',
+                label: t('app.payments.detail.rail'),
                 value: p.fundingSourceId
                   ? REGION_CONFIG.topUpRail
                   : p.toAccountId
-                    ? 'Internal transfer'
+                    ? t('app.payments.detail.internal_transfer')
                     : REGION_CONFIG.paymentRail(p.rail),
               },
-              { label: 'Reference', value: p.reference ?? 'None' },
-              { label: 'Bank reference', value: p.providerReference ?? 'Not yet' },
+              {
+                label: t('app.payments.detail.reference'),
+                value: p.reference ?? t('app.payments.detail.none'),
+              },
+              {
+                label: t('app.payments.detail.bank_reference'),
+                value: p.providerReference ?? t('app.payments.detail.not_yet'),
+              },
               ...(p.state === 'RETURNED'
                 ? [
                     {
-                      label: 'Returned by the bank',
+                      label: t('app.payments.detail.returned'),
                       value: (
                         <span data-testid="return-code">
                           {`${p.returnCode ?? ''} ${p.returnReason ?? ''}`.trim()}
@@ -171,14 +184,18 @@ export function PaymentDetail({ id }: { id: string }) {
           {p.state === 'PENDING_APPROVAL' && p.approvalBy !== 'ONGEM' && can(Permission.PAYMENT_APPROVE) && (
             <Approval id={p.id} onDone={() => setN((x) => x + 1)} />
           )}
-          <ol className="fw-timeline" aria-label="Payment timeline" data-testid="payment-timeline">
-            {p.timeline.map((t, i) => (
+          <ol
+            className="fw-timeline"
+            aria-label={t('app.payments.detail.timeline')}
+            data-testid="payment-timeline"
+          >
+            {p.timeline.map((step, i) => (
               <li
                 key={i}
                 className={i === p.timeline.length - 1 ? 'fw-timeline__step is-current' : 'fw-timeline__step'}
               >
-                <span className="fw-timeline__label">{paymentLabel(t.to)}</span>
-                <span className="fw-timeline__date">{formatDate(t.at, { time: true })}</span>
+                <span className="fw-timeline__label">{paymentLabel(step.to)}</span>
+                <span className="fw-timeline__date">{formatDate(step.at, { time: true })}</span>
               </li>
             ))}
           </ol>
@@ -217,7 +234,10 @@ export function NewPayment() {
   const inFlight = useRef(false);
   if (accounts.status !== 'success' || recipients.status !== 'success') {
     return (
-      <Load state={accounts.status !== 'success' ? accounts : (recipients as never)} label="accounts">
+      <Load
+        state={accounts.status !== 'success' ? accounts : (recipients as never)}
+        label={t('app.payments.loading.accounts')}
+      >
         {() => null}
       </Load>
     );
@@ -276,11 +296,11 @@ export function NewPayment() {
   if (review && minor) {
     const fromA = accs.find((a) => a.id === fromId);
     return (
-      <Card title="Review the payment" data-testid="payment-review">
+      <Card title={t('app.payments.review.title')} data-testid="payment-review">
         <KeyValue
           items={[
             {
-              label: 'Amount',
+              label: t('app.payments.review.amount'),
               value: (
                 <span data-mask="">
                   {formatMinor({ amountMinor: minor, currency: REGION_CONFIG.currency })}
@@ -288,7 +308,7 @@ export function NewPayment() {
               ),
             },
             {
-              label: 'From',
+              label: t('app.payments.review.from'),
               value: (
                 <>
                   {fromA?.name} <AcctLast4 value={fromA?.last4} />
@@ -296,35 +316,33 @@ export function NewPayment() {
               ),
             },
             {
-              label: 'To',
+              label: t('app.payments.review.to'),
               value:
                 kind === 'internal'
                   ? accs.find((a) => a.id === toId)?.name
                   : payable.find((r) => r.id === recipientId)?.name,
             },
             {
-              label: 'How',
-              value: kind === 'internal' ? 'Internal transfer, right away' : rail.how,
+              label: t('app.payments.review.how'),
+              value: kind === 'internal' ? t('app.payments.review.internal_now') : rail.how,
             },
           ]}
         />
-        <p>
-          The bank checks the live balance right before it leaves. You confirm it is you before it is sent.
-        </p>
+        <p>{t('app.payments.review.note')}</p>
         {error && <Notice status="failure">{error}</Notice>}
         <div className="fw-actions">
           <Button variant="secondary" disabled={busy} onClick={change}>
-            Change
+            {t('app.payments.review.change')}
           </Button>
           <Button data-testid="payment-send" disabled={busy} onClick={() => void send()}>
-            Send
+            {t('app.payments.review.send')}
           </Button>
         </div>
       </Card>
     );
   }
   return (
-    <Card title="New payment" data-testid="payment-form">
+    <Card title={t('app.payments.form.title')} data-testid="payment-form">
       <form
         className="fw-form"
         onSubmit={(e) => {
@@ -332,46 +350,49 @@ export function NewPayment() {
           if (valid) setReview(true);
         }}
       >
-        <Field label="Type">
+        <Field label={t('app.payments.form.type')}>
           <Select
             data-testid="payment-kind"
             value={kind}
             onChange={(e) => setKind(e.target.value)}
             options={[
               ...rails.map((r) => ({ value: railValue(r), label: r.option })),
-              { value: 'internal', label: 'Transfer between my accounts' },
+              { value: 'internal', label: t('app.payments.form.internal') },
             ]}
           />
         </Field>
-        <Field label="From">
+        <Field label={t('app.payments.review.from')}>
           <Select
             data-testid="payment-from"
             data-mask=""
             value={fromId}
             onChange={(e) => setFrom(e.target.value)}
-            options={accs.map((a) => ({ value: a.id, label: `${a.name} ending ${a.last4 ?? ''}` }))}
+            options={accs.map((a) => ({
+              value: a.id,
+              label: t('app.payments.form.account_ending', { name: a.name, last4: a.last4 ?? '' }),
+            }))}
           />
         </Field>
         {kind === 'internal' ? (
-          <Field label="To account">
+          <Field label={t('app.payments.form.to_account')}>
             <Select
               data-testid="payment-to-account"
               value={toId}
               onChange={(e) => setToAccount(e.target.value)}
               options={[
-                { value: '', label: 'Choose an account' },
+                { value: '', label: t('app.payments.form.choose_account') },
                 ...accs.filter((a) => a.id !== fromId).map((a) => ({ value: a.id, label: a.name })),
               ]}
             />
           </Field>
         ) : (
           <Field
-            label="Recipient"
+            label={t('app.payments.form.recipient')}
             hint={
               !payable.length
-                ? 'Add a recipient first.'
+                ? t('app.payments.form.recipient_first')
                 : payable.some((r) => r.id === recipientId && r.screening === 'PENDING')
-                  ? 'Checked by the bank with the first payment.'
+                  ? t('app.payments.form.recipient_pending')
                   : undefined
             }
           >
@@ -380,7 +401,7 @@ export function NewPayment() {
               value={recipientId}
               onChange={(e) => setRecipient(e.target.value)}
               options={[
-                { value: '', label: 'Choose a recipient' },
+                { value: '', label: t('app.payments.form.choose_recipient') },
                 ...payable.map((r) => ({ value: r.id, label: r.name })),
               ]}
             />
@@ -388,7 +409,7 @@ export function NewPayment() {
         )}
         <Field
           label={REGION_CONFIG.amountLabel}
-          error={amount && !minor ? 'Enter an amount like 1,250.00' : undefined}
+          error={amount && !minor ? t('app.payments.form.amount_error') : undefined}
         >
           <Input
             data-testid="payment-amount"
@@ -398,7 +419,7 @@ export function NewPayment() {
             onChange={(e) => setAmount(e.target.value)}
           />
         </Field>
-        <Field label="Reference (optional)">
+        <Field label={t('app.payments.form.reference')}>
           <Input
             data-testid="payment-reference"
             maxLength={80}
@@ -408,7 +429,7 @@ export function NewPayment() {
         </Field>
         <div className="fw-actions">
           <Button type="submit" data-testid="payment-review-button" disabled={!valid}>
-            Review
+            {t('app.payments.form.review')}
           </Button>
         </div>
       </form>
@@ -440,7 +461,7 @@ export function PaymentsScreen() {
   return (
     <>
       <PageHeader
-        title="Payments"
+        title={t('app.payments.title')}
         actions={
           <div className="fw-actions">
             <Link
@@ -448,7 +469,7 @@ export function PaymentsScreen() {
               className="og-btn og-btn--secondary og-btn--md"
               data-testid="payments-recipients"
             >
-              Recipients
+              {t('app.payments.recipients')}
             </Link>
             {can(Permission.PAYMENT_VIEW) && (
               <Button
@@ -456,7 +477,7 @@ export function PaymentsScreen() {
                 data-testid="scheduled"
                 onClick={() => navigate('/payments/schedules')}
               >
-                Scheduled
+                {t('app.payments.scheduled')}
               </Button>
             )}
             {can(Permission.PAYMENT_VIEW) && (
@@ -465,12 +486,12 @@ export function PaymentsScreen() {
                 data-testid="add-money"
                 onClick={() => navigate('/payments/top-up')}
               >
-                Add money
+                {t('app.payments.add_money')}
               </Button>
             )}
             {can(Permission.PAYMENT_CREATE) && (
               <Button data-testid="new-payment" onClick={() => navigate('/payments/new')}>
-                New payment
+                {t('app.payments.form.title')}
               </Button>
             )}
           </div>
@@ -478,7 +499,7 @@ export function PaymentsScreen() {
       />
       <div className={`fw-split${detail ? ' has-detail' : ''}`}>
         <div className="fw-split__list">
-          <Load state={list} label="payments">
+          <Load state={list} label={t('app.payments.loading.payments')}>
             {(page) =>
               page.items.length ? (
                 <>
@@ -494,9 +515,9 @@ export function PaymentsScreen() {
                             <strong>{to(p, accs, recs)}</strong>
                             <span className="fw-row__sub">
                               {p.fundingSourceId
-                                ? 'Top-up'
+                                ? t('app.payments.kind.topup')
                                 : p.toAccountId
-                                  ? 'Internal transfer'
+                                  ? t('app.payments.detail.internal_transfer')
                                   : REGION_CONFIG.paymentRail(p.rail)}{' '}
                               {p.createdAt ? `· ${formatDate(p.createdAt)}` : ''}
                             </span>
@@ -510,17 +531,21 @@ export function PaymentsScreen() {
                     ))}
                   </ul>
                   {(page.next || cursors.length > 1) && (
-                    <nav className="fw-pager" aria-label="Payments pages" data-testid="payments-pager">
+                    <nav
+                      className="fw-pager"
+                      aria-label={t('app.payments.pager.label')}
+                      data-testid="payments-pager"
+                    >
                       <Button
                         variant="secondary"
                         data-testid="payments-newer"
                         disabled={cursors.length === 1}
                         onClick={() => setCursors((x) => x.slice(0, -1))}
                       >
-                        Newer
+                        {t('app.payments.pager.newer')}
                       </Button>
                       <span className="fw-pager__label" aria-live="polite">
-                        Page {cursors.length}
+                        {t('app.payments.pager.page', { page: cursors.length })}
                       </span>
                       <Button
                         variant="secondary"
@@ -528,15 +553,13 @@ export function PaymentsScreen() {
                         disabled={!page.next}
                         onClick={() => setCursors((x) => [...x, page.next as string])}
                       >
-                        Older
+                        {t('app.payments.pager.older')}
                       </Button>
                     </nav>
                   )}
                 </>
               ) : (
-                <EmptyState title="No payments yet">
-                  Payments you send show here with their status from the bank.
-                </EmptyState>
+                <EmptyState title={t('app.payments.empty.title')}>{t('app.payments.empty.text')}</EmptyState>
               )
             }
           </Load>
@@ -544,7 +567,7 @@ export function PaymentsScreen() {
         <div>
           {detail && (
             <Button variant="ghost" onClick={() => navigate('/payments')}>
-              Back to payments
+              {t('app.payments.back')}
             </Button>
           )}
           {isSchedules ? (
@@ -555,14 +578,12 @@ export function PaymentsScreen() {
             can(Permission.PAYMENT_CREATE) ? (
               <NewPayment />
             ) : (
-              <Notice status="info">Your role does not allow this. An owner of the company can do it.</Notice>
+              <Notice status="info">{t('app.payments.role_denied')}</Notice>
             )
           ) : id ? (
             <PaymentDetail id={id} />
           ) : (
-            <SplitHint title="Pick a payment">
-              Its amount, recipient and each step from sent to settled show here.
-            </SplitHint>
+            <SplitHint title={t('app.payments.hint.title')}>{t('app.payments.hint.text')}</SplitHint>
           )}
         </div>
       </div>

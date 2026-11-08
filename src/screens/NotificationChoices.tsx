@@ -5,6 +5,7 @@ import { Button, Card, Field, Input, Notice } from '../design-system';
 import { useAsync } from '../lib/useAsync';
 import { useSession } from '../session';
 import { Load } from './common';
+import { t } from '../i18n';
 
 /**
  * OG-014 choices (M-3-R33, R34): email and SMS per kind, saved one change at a time; a mandatory kind's email is on and
@@ -38,32 +39,31 @@ export function NotificationChoices() {
   };
   const change = (c: PreferenceChange) => void once(() => api.setNotificationPreferences([c]));
   return (
-    <Card title="Notifications" data-testid="notice-choices">
+    <Card title={t('app.notifications.title')} data-testid="notice-choices">
       <Load state={loaded} label="notification choices">
         {(first) => {
           const p = prefs ?? first;
           return (
             <>
-              <p className="fw-row__sub">
-                Every notice is in Notifications. Choose which also reach you by email or SMS. Some always go
-                by email because they are about your money or your account.
-              </p>
-              <div className="fw-prefs" role="group" aria-label="Email and SMS per notice">
-                <span className="fw-prefs__head">Notice</span>
-                <span className="fw-prefs__head">Email</span>
-                <span className="fw-prefs__head">SMS</span>
+              <p className="fw-row__sub">{t('app.notifications.choices.intro')}</p>
+              <div className="fw-prefs" role="group" aria-label={t('app.notifications.choices.group')}>
+                <span className="fw-prefs__head">{t('app.notifications.choices.notice')}</span>
+                <span className="fw-prefs__head">{t('app.notifications.choices.email')}</span>
+                <span className="fw-prefs__head">{t('app.notifications.choices.sms')}</span>
                 {p.kinds.map((k) => (
                   <div key={k.kind} className="fw-prefs__row">
                     <span>
                       {k.label}
-                      {k.mandatory && <span className="fw-row__sub"> (always by email)</span>}
+                      {k.mandatory && (
+                        <span className="fw-row__sub"> {t('app.notifications.choices.always_email')}</span>
+                      )}
                     </span>
                     <label className="fw-toggle">
                       <input
                         type="checkbox"
                         role="switch"
                         className="fw-toggle__input"
-                        aria-label={`${k.label} by email`}
+                        aria-label={t('app.notifications.choices.by_email', { kind: k.label })}
                         data-testid={`pref-email-${k.kind}`}
                         checked={k.email || k.mandatory}
                         disabled={busy || k.mandatory}
@@ -75,7 +75,7 @@ export function NotificationChoices() {
                         type="checkbox"
                         role="switch"
                         className="fw-toggle__input"
-                        aria-label={`${k.label} by SMS`}
+                        aria-label={t('app.notifications.choices.by_sms', { kind: k.label })}
                         data-testid={`pref-sms-${k.kind}`}
                         checked={k.sms}
                         disabled={busy || !p.smsVerified}
@@ -88,10 +88,20 @@ export function NotificationChoices() {
               <div className="fw-form">
                 <p data-testid="sms-state">
                   {p.smsNumberLast4
-                    ? `SMS number ending ${p.smsNumberLast4}${p.smsVerified ? ', verified' : ', not verified yet'}.`
-                    : 'No SMS number yet. Add one to get texts.'}
+                    ? t(
+                        p.smsVerified
+                          ? 'app.notifications.choices.sms_verified'
+                          : 'app.notifications.choices.sms_unverified',
+                        {
+                          last4: p.smsNumberLast4,
+                        },
+                      )
+                    : t('app.notifications.choices.sms_none')}
                 </p>
-                <Field label="SMS number" hint="International form, like +15551234567.">
+                <Field
+                  label={t('app.notifications.choices.sms_number')}
+                  hint={t('app.notifications.choices.sms_number_hint')}
+                >
                   <Input
                     data-testid="sms-number"
                     inputMode="tel"
@@ -114,12 +124,15 @@ export function NotificationChoices() {
                       })
                     }
                   >
-                    Send code
+                    {t('app.notifications.choices.send_code')}
                   </Button>
                 </div>
                 {codeSent && !p.smsVerified && (
                   <>
-                    <Field label="Code from the text" hint="6 digits. It works for 10 minutes and 5 tries.">
+                    <Field
+                      label={t('app.notifications.choices.code')}
+                      hint={t('app.notifications.choices.code_hint')}
+                    >
                       <Input
                         data-testid="sms-code"
                         inputMode="numeric"
@@ -135,7 +148,7 @@ export function NotificationChoices() {
                         disabled={busy || code.length !== 6}
                         onClick={() => void once(() => api.verifySmsNumber(code))}
                       >
-                        Verify number
+                        {t('app.notifications.choices.verify')}
                       </Button>
                     </div>
                   </>

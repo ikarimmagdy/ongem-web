@@ -19,13 +19,15 @@ import { AssistantWidget } from './assistant/AssistantWidget';
 import { DraftProvider } from './assistant/drafts';
 import { RECORDING_ENABLED, Recorder } from './recording/Recorder';
 import { NAV, pageTitle } from './nav';
+import { t, useContent } from './i18n';
 
 /** Every route names its page in the browser tab (WCAG 2.4.2, UI review 2026-11-07). */
 function usePageTitle() {
   const { pathname } = useLocation();
+  const locale = useContent();
   useEffect(() => {
-    document.title = `${pageTitle(pathname)} | OnGem`;
-  }, [pathname]);
+    document.title = t('app.nav.document_title', { page: pageTitle(pathname) });
+  }, [pathname, locale]);
 }
 
 /** Settings, the company switch and sign out, behind one button on a phone where the bottom bar has five tabs. */
@@ -53,7 +55,7 @@ function ProfileMenu({ children, onLeave }: { children?: ReactNode; onLeave(): v
         type="button"
         className="fw-icon-button"
         data-testid="profile-menu"
-        aria-label="Your profile and settings"
+        aria-label={t('app.shell.profile_menu')}
         aria-expanded={open}
         aria-controls="profile-menu-list"
         onClick={() => setOpen((x) => !x)}
@@ -64,10 +66,10 @@ function ProfileMenu({ children, onLeave }: { children?: ReactNode; onLeave(): v
         <div className="fw-profile__menu" id="profile-menu-list" data-testid="profile-menu-list">
           {children}
           <NavLink to="/settings" className="fw-profile__item" data-testid="profile-settings">
-            Settings
+            {t('app.nav.settings')}
           </NavLink>
           <button type="button" className="fw-profile__item" onClick={onLeave}>
-            Sign out
+            {t('app.common.sign_out')}
           </button>
         </div>
       )}
@@ -100,7 +102,7 @@ function Shell({ children, assistant }: { children: ReactNode; assistant?: React
       <NavLink
         to={n.to}
         end={n.end}
-        data-testid={`nav-${n.label.toLowerCase()}`}
+        data-testid={`nav-${n.id}`}
         className={({ isActive }) => (isActive ? 'og-nav__link is-active' : 'og-nav__link')}
       >
         {n.label}
@@ -113,12 +115,12 @@ function Shell({ children, assistant }: { children: ReactNode; assistant?: React
   return (
     <div className="fw-shell" data-testid="shell">
       <a href="#main" className="og-skip">
-        Skip to content
+        {t('app.common.skip')}
       </a>
       <aside className="fw-side">
         <Logo />
         {membership?.companyName && <span className="fw-company">{membership.companyName}</span>}
-        <nav aria-label="Main">
+        <nav aria-label={t('app.shell.main_nav')}>
           <ul className="og-nav">{links}</ul>
         </nav>
       </aside>
@@ -128,7 +130,7 @@ function Shell({ children, assistant }: { children: ReactNode; assistant?: React
             <Logo />
           </span>
           <span className={`og-env og-env--${mode === 'demo' ? 'mock' : 'live'}`} data-testid="env-badge">
-            {mode === 'demo' ? 'Demo' : 'Live'}
+            {mode === 'demo' ? t('app.shell.env_demo') : t('app.shell.env_live')}
           </span>
           <span className="og-topbar__right">
             <span className="fw-topbar__company">
@@ -145,29 +147,31 @@ function Shell({ children, assistant }: { children: ReactNode; assistant?: React
         </header>
         <main className="fw-content" id="main">
           {me.status === 'loading' ? (
-            <Skeleton label="Loading your company" />
+            <Skeleton label={t('app.shell.loading_company')} />
           ) : me.status === 'error' ? (
             <Notice
               status="failure"
               action={
                 <span className="fw-actions">
                   <Button variant="secondary" onClick={me.reload}>
-                    Try again
+                    {t('app.common.try_again')}
                   </Button>
                   <Button variant="ghost" onClick={leave}>
-                    Sign out
+                    {t('app.common.sign_out')}
                   </Button>
                 </span>
               }
             >
-              <span data-testid="me-error">We could not load your company. {errorText(me.error)}</span>
+              <span data-testid="me-error">
+                {t('app.shell.company_error', { error: errorText(me.error) })}
+              </span>
             </Notice>
           ) : (
             children
           )}
         </main>
       </div>
-      <nav aria-label="Main" className="fw-bottom" data-testid="bottom-nav">
+      <nav aria-label={t('app.shell.main_nav')} className="fw-bottom" data-testid="bottom-nav">
         <ul className="og-nav fw-bottom__list">{bottomLinks}</ul>
       </nav>
     </div>

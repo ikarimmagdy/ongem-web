@@ -1,4 +1,5 @@
 import { useMemo, useState, type ReactNode } from 'react';
+import { t } from '../../i18n/store';
 
 export interface Column<T> {
   key: string;
@@ -70,7 +71,7 @@ export function Table<T>({ caption, columns, rows, rowKey, empty, initialSort, o
           {sorted.length === 0 ? (
             <tr>
               <td colSpan={columns.length} className="og-table__empty">
-                {empty ?? 'Nothing to show.'}
+                {empty ?? t('app.ds.nothing_to_show')}
               </td>
             </tr>
           ) : (

@@ -16,31 +16,31 @@ import {
 import { formatDate } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
 import { useSession } from '../session';
+import { t } from '../i18n';
 import { REGION_CONFIG } from '../region';
 import { AcctLast4, Amt, Load, human, stateStatus } from './common';
 import { SplitHint } from './SplitHint';
 
 const PAGE = 20;
 
-const RAILS: Record<string, string> = REGION_CONFIG.railNames;
-
 /**
  * A transaction's line: the API sends no counterparty, and `origin` (ONGEM or PROVIDER) says who recorded it, which is
  * not a description; the rail and the direction are what the founder can read.
  */
-export function describeTransaction(t: Pick<Transaction, 'rail' | 'direction'>): string {
-  const rail = t.rail ? (RAILS[t.rail] ?? human(t.rail)) : 'Transaction';
-  return `${rail} ${t.direction === 'CREDIT' ? 'in' : 'out'}`;
+export function describeTransaction(tx: Pick<Transaction, 'rail' | 'direction'>): string {
+  const rails: Record<string, string> = REGION_CONFIG.railNames;
+  const rail = tx.rail ? (rails[tx.rail] ?? human(tx.rail)) : t('app.accounts.txn_unknown_rail');
+  return t(tx.direction === 'CREDIT' ? 'app.accounts.txn_in' : 'app.accounts.txn_out', { rail });
 }
 
 function Balance({ a }: { a: Account }) {
-  if (!a.balance) return <span className="fw-row__sub">No balance from the bank yet</span>;
+  if (!a.balance) return <span className="fw-row__sub">{t('app.accounts.no_balance')}</span>;
   return (
     <span className="fw-row__main">
       <Amt value={a.balance.available} />
       {a.balance.stale && (
         <span className="fw-stale" data-testid={`stale-${a.id}`}>
-          The bank did not answer just now. Last known {formatDate(a.balance.asOf, { time: true })}.
+          {t('app.accounts.stale_last_known', { time: formatDate(a.balance.asOf, { time: true }) })}
         </span>
       )}
     </span>
@@ -72,43 +72,51 @@ function AccountDetail({ id }: { id: string }) {
           >
             <KeyValue
               items={[
-                { label: 'Available', value: a.balance ? <Amt value={a.balance.available} /> : 'Not known' },
-                { label: 'Posted', value: a.balance ? <Amt value={a.balance.posted} /> : 'Not known' },
                 {
-                  label: 'Status',
+                  label: t('app.accounts.available'),
+                  value: a.balance ? <Amt value={a.balance.available} /> : t('app.accounts.not_known'),
+                },
+                {
+                  label: t('app.accounts.posted'),
+                  value: a.balance ? <Amt value={a.balance.posted} /> : t('app.accounts.not_known'),
+                },
+                {
+                  label: t('app.accounts.status'),
                   value: <StatusChip status={stateStatus(a.status)}>{human(a.status)}</StatusChip>,
                 },
               ]}
             />
-            {a.balance?.stale && (
-              <p className="fw-stale">The bank did not answer just now; this is the last known balance.</p>
-            )}
+            {a.balance?.stale && <p className="fw-stale">{t('app.accounts.stale_balance')}</p>}
           </Card>
-          <Card title="Transactions">
+          <Card title={t('app.accounts.transactions')}>
             <Load state={txns} label="transactions">
               {(rows) => (
                 <>
                   <Table
-                    caption="Transactions, newest first"
+                    caption={t('app.accounts.transactions_caption')}
                     rows={rows}
-                    rowKey={(t) => t.id}
-                    empty="No transactions yet."
+                    rowKey={(tx) => tx.id}
+                    empty={t('app.accounts.no_transactions')}
                     columns={[
                       {
                         key: 'date',
-                        header: 'Date',
-                        render: (t) => (t.effectiveDate ? formatDate(t.effectiveDate) : ''),
+                        header: t('app.accounts.col_date'),
+                        render: (tx) => (tx.effectiveDate ? formatDate(tx.effectiveDate) : ''),
                       },
-                      { key: 'what', header: 'Description', render: (t) => describeTransaction(t) },
-                      { key: 'stage', header: 'Status', render: (t) => human(t.stage) },
+                      {
+                        key: 'what',
+                        header: t('app.accounts.col_description'),
+                        render: (tx) => describeTransaction(tx),
+                      },
+                      { key: 'stage', header: t('app.accounts.status'), render: (tx) => human(tx.stage) },
                       {
                         key: 'amount',
-                        header: 'Amount',
+                        header: t('app.accounts.col_amount'),
                         align: 'end',
-                        render: (t) => (
+                        render: (tx) => (
                           <span>
-                            {t.direction === 'CREDIT' ? '+' : '-'}
-                            <Amt value={t.amount} />
+                            {tx.direction === 'CREDIT' ? '+' : '-'}
+                            <Amt value={tx.amount} />
                           </span>
                         ),
                       },
@@ -120,14 +128,14 @@ function AccountDetail({ id }: { id: string }) {
                       data-testid="show-more"
                       onClick={() => setLimit(Math.min(100, limit + PAGE))}
                     >
-                      Show more
+                      {t('app.accounts.show_more')}
                     </Button>
                   )}
                 </>
               )}
             </Load>
           </Card>
-          <Card title="Statements">
+          <Card title={t('app.accounts.statements')}>
             <Load state={statements} label="statements">
               {(list) =>
                 list.length ? (
@@ -139,13 +147,13 @@ function AccountDetail({ id }: { id: string }) {
                           data-testid={`statement-${s.period}`}
                           onClick={() => openStatement(s.period)}
                         >
-                          Statement {s.period}
+                          {t('app.accounts.statement_period', { period: s.period })}
                         </button>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p>No statements yet.</p>
+                  <p>{t('app.accounts.no_statements')}</p>
                 )
               }
             </Load>
@@ -153,31 +161,35 @@ function AccountDetail({ id }: { id: string }) {
           </Card>
           <Modal
             open={Boolean(statement)}
-            title={`Statement ${statement?.period ?? ''}`}
+            title={t('app.accounts.statement_period', { period: statement?.period ?? '' })}
             onClose={() => setStatement(null)}
           >
             {statement && (
               <div data-testid="statement-view">
                 <KeyValue
                   items={[
-                    { label: 'Opening balance', value: <Amt value={statement.opening} /> },
-                    { label: 'Closing balance', value: <Amt value={statement.closing} /> },
+                    { label: t('app.accounts.opening_balance'), value: <Amt value={statement.opening} /> },
+                    { label: t('app.accounts.closing_balance'), value: <Amt value={statement.closing} /> },
                   ]}
                 />
                 <Table
-                  caption="Statement lines"
+                  caption={t('app.accounts.statement_lines')}
                   rows={statement.transactions.map((l, i) => ({ ...l, i }))}
                   rowKey={(l) => String(l.i)}
                   columns={[
-                    { key: 'date', header: 'Date', render: (l) => (l.date ? formatDate(l.date) : '') },
+                    {
+                      key: 'date',
+                      header: t('app.accounts.col_date'),
+                      render: (l) => (l.date ? formatDate(l.date) : ''),
+                    },
                     {
                       key: 'dir',
-                      header: 'In or out',
-                      render: (l) => (l.direction === 'CREDIT' ? 'In' : 'Out'),
+                      header: t('app.accounts.col_in_or_out'),
+                      render: (l) => t(l.direction === 'CREDIT' ? 'app.accounts.in' : 'app.accounts.out'),
                     },
                     {
                       key: 'amount',
-                      header: 'Amount',
+                      header: t('app.accounts.col_amount'),
                       align: 'end',
                       render: (l) => <Amt value={l.amount} />,
                     },
@@ -200,9 +212,9 @@ export function AccountsScreen() {
   return (
     <>
       <PageHeader
-        title="Accounts"
-        subtitle="Balances come from the bank."
-        actions={<Link to="/recipients">Recipients</Link>}
+        title={t('app.accounts.title')}
+        subtitle={t('app.accounts.subtitle')}
+        actions={<Link to="/recipients">{t('app.accounts.recipients_link')}</Link>}
       />
       <div className={`fw-split${id ? ' has-detail' : ''}`}>
         <div className="fw-split__list">
@@ -229,9 +241,7 @@ export function AccountsScreen() {
                   ))}
                 </ul>
               ) : (
-                <EmptyState title="No accounts yet">
-                  Your account appears here once the bank opens it.
-                </EmptyState>
+                <EmptyState title={t('app.accounts.empty_title')}>{t('app.accounts.empty_text')}</EmptyState>
               )
             }
           </Load>
@@ -239,14 +249,12 @@ export function AccountsScreen() {
         {id ? (
           <div>
             <Button variant="ghost" className="fw-back" onClick={() => navigate('/accounts')}>
-              Back to accounts
+              {t('app.accounts.back')}
             </Button>
             <AccountDetail id={id} />
           </div>
         ) : (
-          <SplitHint title="Pick an account">
-            Its balance from the bank, recent activity and monthly statements show here.
-          </SplitHint>
+          <SplitHint title={t('app.accounts.hint_title')}>{t('app.accounts.hint_text')}</SplitHint>
         )}
       </div>
     </>

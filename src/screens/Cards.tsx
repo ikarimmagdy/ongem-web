@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { errorText } from '../api/errors';
 import { Button, Card, EmptyState, KeyValue, Notice, PageHeader, StatusChip } from '../design-system';
+import { t } from '../i18n';
 import { useAsync } from '../lib/useAsync';
 import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
@@ -11,10 +12,10 @@ import { Last4, Load, human, stateStatus } from './common';
 import { SplitHint } from './SplitHint';
 
 const WIDGET_LABELS: Record<CardWidgetKind, string> = {
-  REVEAL: 'Show card details',
-  GET_PIN: 'Show PIN',
-  SET_PIN: 'Set PIN',
-  ACTIVATE: 'Activate card',
+  REVEAL: 'app.cards.widget_reveal',
+  GET_PIN: 'app.cards.widget_get_pin',
+  SET_PIN: 'app.cards.widget_set_pin',
+  ACTIVATE: 'app.cards.widget_activate',
 };
 
 function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void }) {
@@ -64,17 +65,17 @@ function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void 
         <Card
           title={
             <>
-              Card <Last4 value={c.last4} />
+              {t('app.cards.card')} <Last4 value={c.last4} />
             </>
           }
           data-testid="card-detail"
         >
           <KeyValue
             items={[
-              { label: 'Cardholder', value: c.holderName },
-              { label: 'Type', value: human(c.form) },
+              { label: t('app.cards.cardholder'), value: c.holderName },
+              { label: t('app.cards.type'), value: human(c.form) },
               {
-                label: 'Status',
+                label: t('app.cards.status'),
                 value: (
                   <StatusChip status={stateStatus(c.state)}>
                     <span data-testid="card-state">{human(c.state)}</span>
@@ -83,7 +84,7 @@ function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void 
               },
             ]}
           />
-          <p>The bank shows the card number and PIN in its own secure view. OnGem never sees them.</p>
+          <p>{t('app.cards.secure_view_note')}</p>
           {error && <Notice status="failure">{error}</Notice>}
           {widget && (
             <CardWidget
@@ -106,19 +107,19 @@ function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void 
                 disabled={opening !== null}
                 onClick={() => void openWidget(k)}
               >
-                {WIDGET_LABELS[k]}
+                {t(WIDGET_LABELS[k])}
               </Button>
             ))}
           </div>
           <div className="fw-actions">
             {c.state === 'ACTIVE' && (
               <Button data-testid="card-freeze" disabled={busy} onClick={() => void toggle(true)}>
-                Freeze card
+                {t('app.cards.freeze')}
               </Button>
             )}
             {c.state === 'FROZEN' && (
               <Button data-testid="card-unfreeze" disabled={busy} onClick={() => void toggle(false)}>
-                Unfreeze card
+                {t('app.cards.unfreeze')}
               </Button>
             )}
             <Button
@@ -126,11 +127,11 @@ function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void 
               data-testid="card-dispute"
               onClick={() =>
                 navigate(
-                  `/support/new?category=DISPUTE&subject=${encodeURIComponent(`Dispute a charge on card ending ${c.last4}`)}`,
+                  `/support/new?category=DISPUTE&subject=${encodeURIComponent(t('app.cards.dispute_subject', { last4: c.last4 ?? '' }))}`,
                 )
               }
             >
-              Dispute a charge
+              {t('app.cards.dispute')}
             </Button>
           </div>
         </Card>
@@ -153,7 +154,7 @@ export function CardsScreen() {
   }, [id, first, navigate]);
   return (
     <>
-      <PageHeader title="Cards" subtitle="Last four digits only." />
+      <PageHeader title={t('app.cards.title')} subtitle={t('app.cards.subtitle')} />
       <div className={`fw-split${id ? ' has-detail' : ''}`}>
         <div className="fw-split__list">
           <Load state={list} label="cards">
@@ -181,7 +182,7 @@ export function CardsScreen() {
                   ))}
                 </ul>
               ) : (
-                <EmptyState title="No cards yet">Cards ops issues for your company show here.</EmptyState>
+                <EmptyState title={t('app.cards.empty_title')}>{t('app.cards.empty_text')}</EmptyState>
               )
             }
           </Load>
@@ -190,16 +191,12 @@ export function CardsScreen() {
           {id && (
             <>
               <Button variant="ghost" onClick={() => navigate('/cards')}>
-                Back to cards
+                {t('app.cards.back')}
               </Button>
               <CardDetail id={id} onListChanged={() => setVersion((x) => x + 1)} />
             </>
           )}
-          {!id && (
-            <SplitHint title="Pick a card">
-              Freeze or unfreeze it, see its details in the bank's secure window, or dispute a charge.
-            </SplitHint>
-          )}
+          {!id && <SplitHint title={t('app.cards.hint_title')}>{t('app.cards.hint_text')}</SplitHint>}
         </div>
       </div>
     </>

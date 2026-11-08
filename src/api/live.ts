@@ -118,7 +118,7 @@ export class LiveOnGemApi implements OnGemApi {
   ) {
     const headers: Record<string, string> = {
       Authorization: `Bearer ${token}`,
-      Accept: 'application/json, application/problem+json',
+      Accept: 'application/json, application/problem+json', // content-check: ignore (media types)
     };
     if (key) headers['Idempotency-Key'] = key;
     if (device) {
@@ -297,7 +297,10 @@ export class LiveOnGemApi implements OnGemApi {
   };
   /** OG-022 R11: where the person's company lives and that region's API base URL. */
   whereami = () =>
-    this.call<{ companyId: string | null; region: string | null; apiBaseUrl: string | null }>('GET', paths.whereami);
+    this.call<{ companyId: string | null; region: string | null; apiBaseUrl: string | null }>(
+      'GET',
+      paths.whereami,
+    );
   notificationPreferences: OnGemApi['notificationPreferences'] = () =>
     this.call('GET', paths.notificationPreferences);
   setNotificationPreferences: OnGemApi['setNotificationPreferences'] = (kinds) =>

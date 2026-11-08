@@ -1,5 +1,4 @@
 import BUILT from 'virtual:ongem-content';
-import { REGION } from '../region';
 import type { Channel, ChannelContent, Locale, RegionContent } from './types';
 
 /**
@@ -8,7 +7,8 @@ import type { Channel, ChannelContent, Locale, RegionContent } from './types';
  * needs with the version it holds as If-None-Match, and keeps a newer answer in localStorage by version (R7).
  */
 
-const REGION_KEY = REGION === 'AE' ? 'ae' : 'us';
+// Read from the build's env, not region.ts: region.ts reads its texts from here, so importing it would be a cycle.
+const REGION_KEY = import.meta.env.VITE_REGION === 'AE' ? 'ae' : 'us';
 const LOCALE_KEY = 'ongem.locale';
 const cacheKey = (locale: Locale, channel: string) => `ongem.content.${REGION_KEY}.${locale}.${channel}`;
 
@@ -33,7 +33,8 @@ function rebuild() {
       if (l === locale) Object.assign(mergedMeta, c.meta);
     }
   if (locale === 'ar')
-    for (const c of Object.values(channels.en)) for (const [k, m] of Object.entries(c?.meta ?? {})) mergedMeta[k] ??= m;
+    for (const c of Object.values(channels.en))
+      for (const [k, m] of Object.entries(c?.meta ?? {})) mergedMeta[k] ??= m;
   revision++;
   listeners.forEach((l) => l());
 }

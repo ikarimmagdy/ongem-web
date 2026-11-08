@@ -3,6 +3,7 @@ import { errorText } from '../api/errors';
 import type { Amount } from '../api/types';
 import { Button, Notice, Skeleton, type Status } from '../design-system';
 import { formatMinor } from '../lib/format';
+import { has, t } from '../i18n';
 import { REGION_CONFIG } from '../region';
 import type { AsyncState } from '../lib/useAsync';
 
@@ -13,17 +14,21 @@ export function Load<T>({
   children,
 }: {
   state: AsyncState<T> & { reload(): void };
+  /** What is loading, such as `accounts`: the skeleton reads `app.common.loading.<label>`. */
   label: string;
   children(data: T): ReactNode;
 }) {
-  if (state.status === 'loading') return <Skeleton label={`Loading ${label}`} />;
+  if (state.status === 'loading') {
+    const k = `app.common.loading.${label.replace(/ /g, '_')}`;
+    return <Skeleton label={has(k) ? t(k) : t('app.common.loading.other', { what: label })} />;
+  }
   if (state.status === 'error') {
     return (
       <Notice
         status="failure"
         action={
           <Button variant="secondary" onClick={state.reload}>
-            Try again
+            {t('app.common.try_again')}
           </Button>
         }
       >
@@ -67,4 +72,8 @@ export function stateStatus(state: string): Status {
   return 'pending';
 }
 
-export const human = (s: string) => s.charAt(0) + s.slice(1).toLowerCase().replace(/_/g, ' ');
+/** An API word (a role, a status, a category) in the reader's language: `app.state.word.<word>`, else as written. */
+export const human = (s: string) => {
+  const k = `app.state.word.${s.toLowerCase()}`;
+  return has(k) ? t(k) : s.charAt(0) + s.slice(1).toLowerCase().replace(/_/g, ' ');
+};

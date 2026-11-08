@@ -1,3 +1,4 @@
+// content-check: data (SVG path data, no words)
 export type Category = 'banking' | 'global' | 'cards' | 'compliance' | 'treasury';
 
 const PATHS: Record<Category, string> = {

@@ -1,0 +1,1135 @@
+{
+  "entries": [
+    {
+      "key": "app.accounts.txn_unknown_rail",
+      "format": "text",
+      "description": "Transaction line when the payment rail is not known",
+      "placeholders": [],
+      "en": "Transaction",
+      "ar": "معاملة"
+    },
+    {
+      "key": "app.accounts.txn_in",
+      "format": "text",
+      "description": "Transaction line for money coming in, after the rail name",
+      "placeholders": [
+        "rail"
+      ],
+      "en": "{rail} in",
+      "ar": "{rail} وارد"
+    },
+    {
+      "key": "app.accounts.txn_out",
+      "format": "text",
+      "description": "Transaction line for money going out, after the rail name",
+      "placeholders": [
+        "rail"
+      ],
+      "en": "{rail} out",
+      "ar": "{rail} صادر"
+    },
+    {
+      "key": "app.accounts.no_balance",
+      "format": "text",
+      "description": "Account list row when the bank has sent no balance",
+      "placeholders": [],
+      "en": "No balance from the bank yet",
+      "ar": "لم يصل الرصيد من البنك بعد"
+    },
+    {
+      "key": "app.accounts.stale_last_known",
+      "format": "text",
+      "description": "Account row when the bank did not answer; time of last known balance",
+      "placeholders": [
+        "time"
+      ],
+      "en": "The bank did not answer just now. Last known {time}.",
+      "ar": "لم يستجب البنك في الوقت الحالي. آخر رصيد معروف في {time}."
+    },
+    {
+      "key": "app.accounts.available",
+      "format": "text",
+      "description": "Label: available balance",
+      "placeholders": [],
+      "en": "Available",
+      "ar": "المتاح"
+    },
+    {
+      "key": "app.accounts.posted",
+      "format": "text",
+      "description": "Label: posted balance",
+      "placeholders": [],
+      "en": "Posted",
+      "ar": "المقيد"
+    },
+    {
+      "key": "app.accounts.not_known",
+      "format": "text",
+      "description": "Value shown when the balance is not known",
+      "placeholders": [],
+      "en": "Not known",
+      "ar": "غير معروف"
+    },
+    {
+      "key": "app.accounts.status",
+      "format": "text",
+      "description": "Label and column header: status",
+      "placeholders": [],
+      "en": "Status",
+      "ar": "الحالة"
+    },
+    {
+      "key": "app.accounts.stale_balance",
+      "format": "text",
+      "description": "Account detail when the balance is the last known one",
+      "placeholders": [],
+      "en": "The bank did not answer just now; this is the last known balance.",
+      "ar": "لم يستجب البنك في الوقت الحالي، وهذا هو آخر رصيد معروف."
+    },
+    {
+      "key": "app.accounts.transactions",
+      "format": "text",
+      "description": "Card title: transactions",
+      "placeholders": [],
+      "en": "Transactions",
+      "ar": "المعاملات"
+    },
+    {
+      "key": "app.accounts.transactions_caption",
+      "format": "text",
+      "description": "Table caption for screen readers",
+      "placeholders": [],
+      "en": "Transactions, newest first",
+      "ar": "المعاملات، الأحدث أولا"
+    },
+    {
+      "key": "app.accounts.no_transactions",
+      "format": "text",
+      "description": "Empty transactions table",
+      "placeholders": [],
+      "en": "No transactions yet.",
+      "ar": "لا توجد معاملات بعد."
+    },
+    {
+      "key": "app.accounts.col_date",
+      "format": "text",
+      "description": "Column header: date",
+      "placeholders": [],
+      "en": "Date",
+      "ar": "التاريخ"
+    },
+    {
+      "key": "app.accounts.col_description",
+      "format": "text",
+      "description": "Column header: description",
+      "placeholders": [],
+      "en": "Description",
+      "ar": "الوصف"
+    },
+    {
+      "key": "app.accounts.col_amount",
+      "format": "text",
+      "description": "Column header: amount",
+      "placeholders": [],
+      "en": "Amount",
+      "ar": "المبلغ"
+    },
+    {
+      "key": "app.accounts.show_more",
+      "format": "text",
+      "description": "Button that loads more transactions",
+      "placeholders": [],
+      "en": "Show more",
+      "ar": "عرض المزيد"
+    },
+    {
+      "key": "app.accounts.statements",
+      "format": "text",
+      "description": "Card title: monthly statements",
+      "placeholders": [],
+      "en": "Statements",
+      "ar": "الكشوف"
+    },
+    {
+      "key": "app.accounts.statement_period",
+      "format": "text",
+      "description": "A statement by its period, e.g. Statement 2026-09",
+      "placeholders": [
+        "period"
+      ],
+      "en": "Statement {period}",
+      "ar": "كشف {period}"
+    },
+    {
+      "key": "app.accounts.no_statements",
+      "format": "text",
+      "description": "No statements yet",
+      "placeholders": [],
+      "en": "No statements yet.",
+      "ar": "لا توجد كشوف بعد."
+    },
+    {
+      "key": "app.accounts.opening_balance",
+      "format": "text",
+      "description": "Statement label",
+      "placeholders": [],
+      "en": "Opening balance",
+      "ar": "الرصيد الافتتاحي"
+    },
+    {
+      "key": "app.accounts.closing_balance",
+      "format": "text",
+      "description": "Statement label",
+      "placeholders": [],
+      "en": "Closing balance",
+      "ar": "الرصيد الختامي"
+    },
+    {
+      "key": "app.accounts.statement_lines",
+      "format": "text",
+      "description": "Statement table caption",
+      "placeholders": [],
+      "en": "Statement lines",
+      "ar": "بنود الكشف"
+    },
+    {
+      "key": "app.accounts.col_in_or_out",
+      "format": "text",
+      "description": "Statement column header: direction",
+      "placeholders": [],
+      "en": "In or out",
+      "ar": "وارد أو صادر"
+    },
+    {
+      "key": "app.accounts.in",
+      "format": "text",
+      "description": "Statement line direction: money in",
+      "placeholders": [],
+      "en": "In",
+      "ar": "وارد"
+    },
+    {
+      "key": "app.accounts.out",
+      "format": "text",
+      "description": "Statement line direction: money out",
+      "placeholders": [],
+      "en": "Out",
+      "ar": "صادر"
+    },
+    {
+      "key": "app.accounts.title",
+      "format": "text",
+      "description": "Accounts page title",
+      "placeholders": [],
+      "en": "Accounts",
+      "ar": "الحسابات"
+    },
+    {
+      "key": "app.accounts.subtitle",
+      "format": "text",
+      "description": "Accounts page subtitle",
+      "placeholders": [],
+      "en": "Balances come from the bank.",
+      "ar": "الأرصدة واردة من البنك."
+    },
+    {
+      "key": "app.accounts.recipients_link",
+      "format": "text",
+      "description": "Link to recipients from accounts",
+      "placeholders": [],
+      "en": "Recipients",
+      "ar": "المستفيدون"
+    },
+    {
+      "key": "app.accounts.empty_title",
+      "format": "text",
+      "description": "Empty accounts list title",
+      "placeholders": [],
+      "en": "No accounts yet",
+      "ar": "لا توجد حسابات بعد"
+    },
+    {
+      "key": "app.accounts.empty_text",
+      "format": "text",
+      "description": "Empty accounts list text",
+      "placeholders": [],
+      "en": "Your account appears here once the bank opens it.",
+      "ar": "سيظهر حسابك هنا بمجرد أن يفتحه البنك."
+    },
+    {
+      "key": "app.accounts.back",
+      "format": "text",
+      "description": "Back button on a narrow screen",
+      "placeholders": [],
+      "en": "Back to accounts",
+      "ar": "العودة إلى الحسابات"
+    },
+    {
+      "key": "app.accounts.hint_title",
+      "format": "text",
+      "description": "Detail column before an account is picked",
+      "placeholders": [],
+      "en": "Pick an account",
+      "ar": "اختر حسابا"
+    },
+    {
+      "key": "app.accounts.hint_text",
+      "format": "text",
+      "description": "Detail column hint",
+      "placeholders": [],
+      "en": "Its balance from the bank, recent activity and monthly statements show here.",
+      "ar": "يظهر هنا رصيده من البنك وآخر الحركات والكشوف الشهرية."
+    },
+    {
+      "key": "app.cards.widget_reveal",
+      "format": "text",
+      "description": "Button and widget toggle: open the card number in the bank's view",
+      "placeholders": [],
+      "en": "Show card details",
+      "ar": "عرض تفاصيل البطاقة"
+    },
+    {
+      "key": "app.cards.widget_get_pin",
+      "format": "text",
+      "description": "Button: show the card PIN",
+      "placeholders": [],
+      "en": "Show PIN",
+      "ar": "عرض الرقم السري"
+    },
+    {
+      "key": "app.cards.widget_set_pin",
+      "format": "text",
+      "description": "Button: set a new card PIN",
+      "placeholders": [],
+      "en": "Set PIN",
+      "ar": "تعيين الرقم السري"
+    },
+    {
+      "key": "app.cards.widget_activate",
+      "format": "text",
+      "description": "Button: activate a new card",
+      "placeholders": [],
+      "en": "Activate card",
+      "ar": "تفعيل البطاقة"
+    },
+    {
+      "key": "app.cards.card",
+      "format": "text",
+      "description": "Label: card (before its last four)",
+      "placeholders": [],
+      "en": "Card",
+      "ar": "البطاقة"
+    },
+    {
+      "key": "app.cards.cardholder",
+      "format": "text",
+      "description": "Label: cardholder name",
+      "placeholders": [],
+      "en": "Cardholder",
+      "ar": "حامل البطاقة"
+    },
+    {
+      "key": "app.cards.type",
+      "format": "text",
+      "description": "Label: card type (virtual or physical)",
+      "placeholders": [],
+      "en": "Type",
+      "ar": "النوع"
+    },
+    {
+      "key": "app.cards.status",
+      "format": "text",
+      "description": "Label: card status",
+      "placeholders": [],
+      "en": "Status",
+      "ar": "الحالة"
+    },
+    {
+      "key": "app.cards.secure_view_note",
+      "format": "text",
+      "description": "Card detail: where card numbers show",
+      "placeholders": [],
+      "en": "The bank shows the card number and PIN in its own secure view. OnGem never sees them.",
+      "ar": "يعرض البنك رقم البطاقة والرقم السري في نافذته الآمنة الخاصة، ولا يطلع عليهما OnGem أبدا."
+    },
+    {
+      "key": "app.cards.freeze",
+      "format": "text",
+      "description": "Button: freeze the card",
+      "placeholders": [],
+      "en": "Freeze card",
+      "ar": "تجميد البطاقة"
+    },
+    {
+      "key": "app.cards.unfreeze",
+      "format": "text",
+      "description": "Button: unfreeze the card",
+      "placeholders": [],
+      "en": "Unfreeze card",
+      "ar": "إلغاء تجميد البطاقة"
+    },
+    {
+      "key": "app.cards.dispute_subject",
+      "format": "text",
+      "description": "Support request subject prefilled when disputing a card charge",
+      "placeholders": [
+        "last4"
+      ],
+      "en": "Dispute a charge on card ending {last4}",
+      "ar": "الاعتراض على عملية على البطاقة المنتهية بـ {last4}"
+    },
+    {
+      "key": "app.cards.dispute",
+      "format": "text",
+      "description": "Button: dispute a card charge",
+      "placeholders": [],
+      "en": "Dispute a charge",
+      "ar": "الاعتراض على عملية"
+    },
+    {
+      "key": "app.cards.title",
+      "format": "text",
+      "description": "Cards page title",
+      "placeholders": [],
+      "en": "Cards",
+      "ar": "البطاقات"
+    },
+    {
+      "key": "app.cards.subtitle",
+      "format": "text",
+      "description": "Cards page subtitle",
+      "placeholders": [],
+      "en": "Last four digits only.",
+      "ar": "آخر أربعة أرقام فقط."
+    },
+    {
+      "key": "app.cards.empty_title",
+      "format": "text",
+      "description": "Empty cards list title",
+      "placeholders": [],
+      "en": "No cards yet",
+      "ar": "لا توجد بطاقات بعد"
+    },
+    {
+      "key": "app.cards.empty_text",
+      "format": "text",
+      "description": "Empty cards list text",
+      "placeholders": [],
+      "en": "Cards ops issues for your company show here.",
+      "ar": "تظهر هنا البطاقات التي يصدرها فريق العمليات لشركتك."
+    },
+    {
+      "key": "app.cards.back",
+      "format": "text",
+      "description": "Back button on a narrow screen",
+      "placeholders": [],
+      "en": "Back to cards",
+      "ar": "العودة إلى البطاقات"
+    },
+    {
+      "key": "app.cards.hint_title",
+      "format": "text",
+      "description": "Detail column before a card is picked",
+      "placeholders": [],
+      "en": "Pick a card",
+      "ar": "اختر بطاقة"
+    },
+    {
+      "key": "app.cards.hint_text",
+      "format": "text",
+      "description": "Detail column hint",
+      "placeholders": [],
+      "en": "Freeze or unfreeze it, see its details in the bank's secure window, or dispute a charge.",
+      "ar": "جمّد البطاقة أو ألغ تجميدها، واطلع على تفاصيلها في نافذة البنك الآمنة، أو اعترض على عملية."
+    },
+    {
+      "key": "app.cards.widget_title_reveal",
+      "format": "text",
+      "description": "Card widget title: card number",
+      "placeholders": [],
+      "en": "Card details",
+      "ar": "تفاصيل البطاقة"
+    },
+    {
+      "key": "app.cards.widget_title_get_pin",
+      "format": "text",
+      "description": "Card widget title: PIN",
+      "placeholders": [],
+      "en": "Card PIN",
+      "ar": "الرقم السري للبطاقة"
+    },
+    {
+      "key": "app.cards.widget_title_set_pin",
+      "format": "text",
+      "description": "Card widget title: set PIN",
+      "placeholders": [],
+      "en": "Set a new PIN",
+      "ar": "تعيين رقم سري جديد"
+    },
+    {
+      "key": "app.cards.widget_title_activate",
+      "format": "text",
+      "description": "Card widget title: activate",
+      "placeholders": [],
+      "en": "Activate the card",
+      "ar": "تفعيل البطاقة"
+    },
+    {
+      "key": "app.cards.widget_close",
+      "format": "text",
+      "description": "Button: close the expired widget notice",
+      "placeholders": [],
+      "en": "Close",
+      "ar": "إغلاق"
+    },
+    {
+      "key": "app.cards.widget_expired",
+      "format": "text",
+      "description": "Notice when the card widget closed itself; title is the widget's title",
+      "placeholders": [
+        "title"
+      ],
+      "en": "{title} closed after 5 minutes. Open it again to see it.",
+      "ar": "أُغلقت نافذة {title} بعد 5 دقائق. افتحها مرة أخرى لعرضها."
+    },
+    {
+      "key": "app.cards.widget_opening",
+      "format": "text",
+      "description": "Status while the bank's widget loads",
+      "placeholders": [],
+      "en": "Opening the bank's secure view.",
+      "ar": "جار فتح نافذة البنك الآمنة."
+    },
+    {
+      "key": "app.cards.widget_failed",
+      "format": "text",
+      "description": "The bank's widget failed to open",
+      "placeholders": [],
+      "en": "The bank's secure view did not open. Try again in a moment.",
+      "ar": "تعذر فتح نافذة البنك الآمنة. حاول مرة أخرى بعد قليل."
+    },
+    {
+      "key": "app.cards.widget_pin_set",
+      "format": "text",
+      "description": "Success: new PIN set",
+      "placeholders": [],
+      "en": "Your new PIN is set.",
+      "ar": "تم تعيين الرقم السري الجديد."
+    },
+    {
+      "key": "app.cards.widget_activated",
+      "format": "text",
+      "description": "Success: card activated",
+      "placeholders": [],
+      "en": "Your card is active.",
+      "ar": "تم تفعيل بطاقتك."
+    },
+    {
+      "key": "app.cards.widget_note",
+      "format": "text",
+      "description": "Under the card widget",
+      "placeholders": [],
+      "en": "Shown by the bank. OnGem never sees or stores these numbers.",
+      "ar": "يعرضها البنك. لا يطلع OnGem على هذه الأرقام ولا يحتفظ بها أبدا."
+    },
+    {
+      "key": "app.cards.widget_hide",
+      "format": "text",
+      "description": "Button: hide the card widget",
+      "placeholders": [],
+      "en": "Hide",
+      "ar": "إخفاء"
+    },
+    {
+      "key": "app.cards.sample_number",
+      "format": "text",
+      "description": "Simulator sample: card number label",
+      "placeholders": [],
+      "en": "Card number",
+      "ar": "رقم البطاقة"
+    },
+    {
+      "key": "app.cards.sample_expires",
+      "format": "text",
+      "description": "Simulator sample: expiry label",
+      "placeholders": [],
+      "en": "Expires",
+      "ar": "تاريخ الانتهاء"
+    },
+    {
+      "key": "app.cards.sample_cvv",
+      "format": "text",
+      "description": "Simulator sample: security code label",
+      "placeholders": [],
+      "en": "Security code",
+      "ar": "رمز الأمان"
+    },
+    {
+      "key": "app.cards.sample_pin",
+      "format": "text",
+      "description": "Simulator sample: PIN label",
+      "placeholders": [],
+      "en": "PIN",
+      "ar": "الرقم السري"
+    },
+    {
+      "key": "app.cards.sample_new_pin",
+      "format": "text",
+      "description": "Simulator sample: new PIN label",
+      "placeholders": [],
+      "en": "New PIN",
+      "ar": "الرقم السري الجديد"
+    },
+    {
+      "key": "app.cards.sample_new_pin_value",
+      "format": "text",
+      "description": "Simulator sample: where the new PIN is typed",
+      "placeholders": [],
+      "en": "Entered in the bank’s view",
+      "ar": "يُدخل في نافذة البنك"
+    },
+    {
+      "key": "app.cards.sample_ending",
+      "format": "text",
+      "description": "Simulator sample: card ending in last four",
+      "placeholders": [
+        "last4"
+      ],
+      "en": "Ending {last4}",
+      "ar": "تنتهي بـ {last4}"
+    },
+    {
+      "key": "app.cards.sample_notice",
+      "format": "text",
+      "description": "Simulator notice over sample card data",
+      "placeholders": [],
+      "en": "Sample data from the simulator, not a real card.",
+      "ar": "بيانات تجريبية من المحاكي، وليست بطاقة حقيقية."
+    },
+    {
+      "key": "app.onboarding.id_type",
+      "format": "text",
+      "description": "Field label: choose the owner's ID type",
+      "placeholders": [],
+      "en": "ID type",
+      "ar": "نوع الهوية"
+    },
+    {
+      "key": "app.onboarding.issuing_country",
+      "format": "text",
+      "description": "Field label: country that issued the ID",
+      "placeholders": [],
+      "en": "Issuing country",
+      "ar": "بلد الإصدار"
+    },
+    {
+      "key": "app.onboarding.issuing_country_hint",
+      "format": "text",
+      "description": "Hint for the issuing country field",
+      "placeholders": [],
+      "en": "Two letters, such as IN or GB.",
+      "ar": "حرفان، مثل IN أو GB."
+    },
+    {
+      "key": "app.onboarding.save",
+      "format": "text",
+      "description": "Button: save the owner's ID number",
+      "placeholders": [],
+      "en": "Save",
+      "ar": "حفظ"
+    },
+    {
+      "key": "app.onboarding.accepted",
+      "format": "text",
+      "description": "Chip: a disclosure was accepted",
+      "placeholders": [],
+      "en": "Accepted",
+      "ar": "تم القبول"
+    },
+    {
+      "key": "app.onboarding.read_and_accept",
+      "format": "text",
+      "description": "Button: open a disclosure to read and accept",
+      "placeholders": [],
+      "en": "Read and accept",
+      "ar": "قراءة وقبول"
+    },
+    {
+      "key": "app.onboarding.i_accept",
+      "format": "text",
+      "description": "Button in the disclosure dialog",
+      "placeholders": [],
+      "en": "I accept",
+      "ar": "أوافق"
+    },
+    {
+      "key": "app.onboarding.doc_drivers_license",
+      "format": "text",
+      "description": "ID document option: driving licence",
+      "placeholders": [],
+      "en": "Driver's license",
+      "ar": "رخصة القيادة",
+      "ae": {
+        "en": "Driving licence",
+        "ar": "رخصة القيادة"
+      }
+    },
+    {
+      "key": "app.onboarding.doc_passport",
+      "format": "text",
+      "description": "ID document option: passport",
+      "placeholders": [],
+      "en": "Passport",
+      "ar": "جواز السفر"
+    },
+    {
+      "key": "app.onboarding.doc_id_card",
+      "format": "text",
+      "description": "ID document option: government ID card",
+      "placeholders": [],
+      "en": "State ID card",
+      "ar": "بطاقة هوية حكومية",
+      "ae": {
+        "en": "Emirates ID card",
+        "ar": "بطاقة الهوية الإماراتية"
+      }
+    },
+    {
+      "key": "app.onboarding.capture_waiting",
+      "format": "text",
+      "description": "ID capture status",
+      "placeholders": [],
+      "en": "Waiting for your photos",
+      "ar": "بانتظار صورك"
+    },
+    {
+      "key": "app.onboarding.capture_captured",
+      "format": "text",
+      "description": "ID capture status",
+      "placeholders": [],
+      "en": "Photos received. The bank is checking them.",
+      "ar": "تم استلام الصور، ويقوم البنك بالتحقق منها."
+    },
+    {
+      "key": "app.onboarding.capture_verified",
+      "format": "text",
+      "description": "ID capture status",
+      "placeholders": [],
+      "en": "Your ID is verified",
+      "ar": "تم التحقق من هويتك"
+    },
+    {
+      "key": "app.onboarding.capture_rejected",
+      "format": "text",
+      "description": "ID capture status",
+      "placeholders": [],
+      "en": "The bank could not verify this ID",
+      "ar": "تعذر على البنك التحقق من هذه الهوية"
+    },
+    {
+      "key": "app.onboarding.capture_reviewing",
+      "format": "text",
+      "description": "ID capture status",
+      "placeholders": [],
+      "en": "The bank is reviewing your ID",
+      "ar": "يراجع البنك هويتك"
+    },
+    {
+      "key": "app.onboarding.capture_bad_url",
+      "format": "text",
+      "description": "Error: the bank's capture link is not https",
+      "placeholders": [],
+      "en": "The bank sent a capture address we cannot open. Try Text me the link.",
+      "ar": "أرسل البنك رابط تصوير لا يمكننا فتحه. جرّب خيار إرسال الرابط برسالة نصية."
+    },
+    {
+      "key": "app.onboarding.capture_title",
+      "format": "text",
+      "description": "Card title: ID document capture",
+      "placeholders": [],
+      "en": "Verify your ID document",
+      "ar": "التحقق من وثيقة هويتك"
+    },
+    {
+      "key": "app.onboarding.capture_intro",
+      "format": "text",
+      "description": "ID capture introduction",
+      "placeholders": [],
+      "en": "The bank may ask for photos of your ID. Take them in this browser or on your phone. It takes about two minutes.",
+      "ar": "قد يطلب البنك صورا لهويتك. التقطها في هذا المتصفح أو على هاتفك، ويستغرق ذلك نحو دقيقتين."
+    },
+    {
+      "key": "app.onboarding.capture_sms_sent",
+      "format": "text",
+      "description": "Notice after asking the bank to text the link",
+      "placeholders": [],
+      "en": "The bank is texting the link to the phone number it holds for you. Open it on your phone.",
+      "ar": "يرسل البنك الرابط برسالة نصية إلى رقم الهاتف المسجل لديه. افتحه على هاتفك."
+    },
+    {
+      "key": "app.onboarding.capture_open",
+      "format": "text",
+      "description": "Link to the bank's capture page",
+      "placeholders": [],
+      "en": "Open the capture page",
+      "ar": "فتح صفحة التصوير"
+    },
+    {
+      "key": "app.onboarding.capture_open_note",
+      "format": "text",
+      "description": "After the capture page link",
+      "placeholders": [],
+      "en": "It opens in a new tab. Come back here when you are done.",
+      "ar": "ستفتح في علامة تبويب جديدة. عد إلى هنا عند الانتهاء."
+    },
+    {
+      "key": "app.onboarding.capture_demo",
+      "format": "text",
+      "description": "Demo mode notice on ID capture",
+      "placeholders": [],
+      "en": "Demo mode has no capture page. Check the status to see the next step.",
+      "ar": "لا توجد صفحة تصوير في الوضع التجريبي. تحقق من الحالة لمعرفة الخطوة التالية."
+    },
+    {
+      "key": "app.onboarding.document",
+      "format": "text",
+      "description": "Field label: ID document type",
+      "placeholders": [],
+      "en": "Document",
+      "ar": "الوثيقة"
+    },
+    {
+      "key": "app.onboarding.capture_browser",
+      "format": "text",
+      "description": "Button: capture ID photos in this browser",
+      "placeholders": [],
+      "en": "Capture in this browser",
+      "ar": "التصوير في هذا المتصفح"
+    },
+    {
+      "key": "app.onboarding.capture_sms",
+      "format": "text",
+      "description": "Button: have the bank text the capture link",
+      "placeholders": [],
+      "en": "Text me the link",
+      "ar": "أرسل لي الرابط برسالة نصية"
+    },
+    {
+      "key": "app.onboarding.capture_check",
+      "format": "text",
+      "description": "Button: check the capture status",
+      "placeholders": [],
+      "en": "Check status",
+      "ar": "التحقق من الحالة"
+    },
+    {
+      "key": "app.onboarding.title",
+      "format": "text",
+      "description": "Application page title",
+      "placeholders": [],
+      "en": "Account application",
+      "ar": "طلب فتح الحساب"
+    },
+    {
+      "key": "app.onboarding.subtitle",
+      "format": "text",
+      "description": "Application page subtitle",
+      "placeholders": [],
+      "en": "The bank decides; we show each step as it happens.",
+      "ar": "القرار للبنك، ونعرض لك كل خطوة فور حدوثها."
+    },
+    {
+      "key": "app.onboarding.no_application",
+      "format": "text",
+      "description": "No application for the company",
+      "placeholders": [],
+      "en": "There is no application for your company yet.",
+      "ar": "لا يوجد طلب لشركتك بعد."
+    },
+    {
+      "key": "app.onboarding.status",
+      "format": "text",
+      "description": "Card title before the application state chip",
+      "placeholders": [],
+      "en": "Status",
+      "ar": "الحالة"
+    },
+    {
+      "key": "app.onboarding.steps",
+      "format": "text",
+      "description": "Accessible name of the application steps",
+      "placeholders": [],
+      "en": "Application steps",
+      "ar": "خطوات الطلب"
+    },
+    {
+      "key": "app.onboarding.step_owners",
+      "format": "text",
+      "description": "Application step: owners' identity",
+      "placeholders": [],
+      "en": "Owner identity",
+      "ar": "هوية المالكين"
+    },
+    {
+      "key": "app.onboarding.to_do",
+      "format": "text",
+      "description": "Step status: still to do",
+      "placeholders": [],
+      "en": "To do",
+      "ar": "مطلوب"
+    },
+    {
+      "key": "app.onboarding.done",
+      "format": "text",
+      "description": "Step status: done",
+      "placeholders": [],
+      "en": "Done",
+      "ar": "مكتمل"
+    },
+    {
+      "key": "app.onboarding.confirm_details",
+      "format": "text",
+      "description": "Application step and button: confirm the details",
+      "placeholders": [],
+      "en": "Confirm details",
+      "ar": "تأكيد البيانات"
+    },
+    {
+      "key": "app.onboarding.disclosures",
+      "format": "text",
+      "description": "Application step and card title: bank disclosures",
+      "placeholders": [],
+      "en": "Disclosures",
+      "ar": "الإفصاحات"
+    },
+    {
+      "key": "app.onboarding.submit",
+      "format": "text",
+      "description": "Application step and button: submit to the bank",
+      "placeholders": [],
+      "en": "Submit to the bank",
+      "ar": "الإرسال إلى البنك"
+    },
+    {
+      "key": "app.onboarding.bank_waiting",
+      "format": "text",
+      "description": "Notice while the bank reviews the application",
+      "placeholders": [],
+      "en": "The bank is reviewing your application. This can take a few days. Check back here for updates.",
+      "ar": "يراجع البنك طلبك، وقد يستغرق ذلك بضعة أيام. تابع هذه الصفحة لمعرفة المستجدات."
+    },
+    {
+      "key": "app.onboarding.owners",
+      "format": "text",
+      "description": "Card title: company owners",
+      "placeholders": [],
+      "en": "Owners",
+      "ar": "المالكون"
+    },
+    {
+      "key": "app.onboarding.id_ending",
+      "format": "text",
+      "description": "Owner row: ID number's last four",
+      "placeholders": [
+        "last4"
+      ],
+      "en": "ID ending {last4}",
+      "ar": "هوية تنتهي بـ {last4}"
+    },
+    {
+      "key": "app.onboarding.id_needed",
+      "format": "text",
+      "description": "Owner row: ID number still needed",
+      "placeholders": [],
+      "en": "ID needed",
+      "ar": "الهوية مطلوبة"
+    },
+    {
+      "key": "app.recipients.error_name",
+      "format": "text",
+      "description": "Form error: recipient name missing",
+      "placeholders": [],
+      "en": "Enter the recipient name.",
+      "ar": "أدخل اسم المستفيد."
+    },
+    {
+      "key": "app.recipients.error_routing",
+      "format": "text",
+      "description": "Form error: invalid US routing number",
+      "placeholders": [],
+      "en": "Enter a valid 9-digit routing number.",
+      "ar": "أدخل رقم توجيه مصرفي صحيحا من 9 أرقام.",
+      "only": "us"
+    },
+    {
+      "key": "app.recipients.error_account",
+      "format": "text",
+      "description": "Form error: invalid US account number",
+      "placeholders": [],
+      "en": "Enter 4 to 17 digits.",
+      "ar": "أدخل من 4 إلى 17 رقما.",
+      "only": "us"
+    },
+    {
+      "key": "app.recipients.error_iban",
+      "format": "text",
+      "description": "Form error: invalid UAE IBAN",
+      "placeholders": [],
+      "en": "Enter a valid UAE IBAN: AE and 21 digits.",
+      "ar": "أدخل رقم IBAN إماراتيا صحيحا: AE متبوعا بـ 21 رقما.",
+      "only": "ae"
+    },
+    {
+      "key": "app.recipients.added",
+      "format": "text",
+      "description": "Toast after a recipient is added, with the bank's screening state",
+      "placeholders": [
+        "name",
+        "screening"
+      ],
+      "en": "{name} added. Screening: {screening}.",
+      "ar": "تمت إضافة {name}. حالة التدقيق: {screening}."
+    },
+    {
+      "key": "app.recipients.name_label",
+      "format": "text",
+      "description": "Field label",
+      "placeholders": [],
+      "en": "Recipient name",
+      "ar": "اسم المستفيد"
+    },
+    {
+      "key": "app.recipients.iban_label",
+      "format": "text",
+      "description": "Field label: IBAN",
+      "placeholders": [],
+      "en": "IBAN",
+      "ar": "رقم IBAN",
+      "only": "ae"
+    },
+    {
+      "key": "app.recipients.iban_hint",
+      "format": "text",
+      "description": "IBAN field hint",
+      "placeholders": [],
+      "en": "AE and 21 digits. Only the last four are kept.",
+      "ar": "AE متبوعا بـ 21 رقما. نحتفظ بآخر أربعة أرقام فقط.",
+      "only": "ae"
+    },
+    {
+      "key": "app.recipients.routing_label",
+      "format": "text",
+      "description": "Field label: US routing number",
+      "placeholders": [],
+      "en": "Routing number",
+      "ar": "رقم التوجيه المصرفي",
+      "only": "us"
+    },
+    {
+      "key": "app.recipients.account_number_label",
+      "format": "text",
+      "description": "Field label: US account number",
+      "placeholders": [],
+      "en": "Account number",
+      "ar": "رقم الحساب",
+      "only": "us"
+    },
+    {
+      "key": "app.recipients.account_type_label",
+      "format": "text",
+      "description": "Field label: US account type",
+      "placeholders": [],
+      "en": "Account type",
+      "ar": "نوع الحساب",
+      "only": "us"
+    },
+    {
+      "key": "app.recipients.checking",
+      "format": "text",
+      "description": "Account type option: checking",
+      "placeholders": [],
+      "en": "Checking",
+      "ar": "حساب جار",
+      "only": "us"
+    },
+    {
+      "key": "app.recipients.savings",
+      "format": "text",
+      "description": "Account type option: savings",
+      "placeholders": [],
+      "en": "Savings",
+      "ar": "حساب توفير",
+      "only": "us"
+    },
+    {
+      "key": "app.recipients.add",
+      "format": "text",
+      "description": "Button: add a recipient",
+      "placeholders": [],
+      "en": "Add recipient",
+      "ar": "إضافة مستفيد"
+    },
+    {
+      "key": "app.recipients.title",
+      "format": "text",
+      "description": "Recipients page title",
+      "placeholders": [],
+      "en": "Recipients",
+      "ar": "المستفيدون"
+    },
+    {
+      "key": "app.recipients.new_title",
+      "format": "text",
+      "description": "Card title over the add recipient form",
+      "placeholders": [],
+      "en": "New recipient",
+      "ar": "مستفيد جديد"
+    },
+    {
+      "key": "app.recipients.account_row",
+      "format": "text",
+      "description": "Recipient row: label before the account's last four",
+      "placeholders": [],
+      "en": "Account",
+      "ar": "الحساب",
+      "ae": {
+        "en": "IBAN",
+        "ar": "رقم IBAN"
+      }
+    },
+    {
+      "key": "app.recipients.archive_named",
+      "format": "text",
+      "description": "Accessible name of the archive button",
+      "placeholders": [
+        "name"
+      ],
+      "en": "Archive {name}",
+      "ar": "أرشفة {name}"
+    },
+    {
+      "key": "app.recipients.archive",
+      "format": "text",
+      "description": "Button: archive a recipient",
+      "placeholders": [],
+      "en": "Archive",
+      "ar": "أرشفة"
+    },
+    {
+      "key": "app.recipients.empty_title",
+      "format": "text",
+      "description": "Empty recipients list title",
+      "placeholders": [],
+      "en": "No recipients yet",
+      "ar": "لا يوجد مستفيدون بعد"
+    },
+    {
+      "key": "app.recipients.empty_text",
+      "format": "text",
+      "description": "Empty recipients list text",
+      "placeholders": [],
+      "en": "Add the people and companies you pay.",
+      "ar": "أضف الأشخاص والشركات الذين تدفع لهم."
+    }
+  ]
+}

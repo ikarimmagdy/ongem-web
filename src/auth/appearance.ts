@@ -1,3 +1,4 @@
+// content-check: data (CSS values for Clerk's form, no words)
 import type { Theme } from '../design-system';
 
 /** Clerk's appearance from the active theme's tokens, so the sign-in form follows the theme switcher. */

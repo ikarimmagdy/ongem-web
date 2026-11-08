@@ -4,7 +4,7 @@ import { useAuthSession } from './auth';
 import { useContent } from './i18n';
 import { Button, Notice, Skeleton, ThemeProvider, ToastProvider } from './design-system';
 import { SessionProvider, useSession, type Mode } from './session';
-import { PRIVACY_LINE } from './recording/privacy';
+import { privacyLine } from './recording/privacy';
 import { AUTH, isPublicPath } from './public/content';
 import { Footer, Header, PublicSite } from './public/PublicSite';
 import './web.css';
@@ -85,7 +85,7 @@ export function SignInScreen() {
               <p className="fw-auth__hint">{AUTH.demoHint}</p>
             </div>
             <p className="fw-privacy" data-testid="privacy-line">
-              {PRIVACY_LINE}
+              {privacyLine()}
             </p>
           </section>
         </div>

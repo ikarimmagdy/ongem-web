@@ -19,6 +19,7 @@ import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
 import { Load, human, stateStatus } from './common';
 import { SplitHint } from './SplitHint';
+import { t } from '../i18n';
 
 const CATEGORIES = ['PAYMENT', 'CARD', 'ACCOUNT', 'ONBOARDING', 'DISPUTE', 'OTHER'];
 
@@ -39,9 +40,9 @@ function NewTicket() {
     setBusy(true);
     setError(null);
     try {
-      const t = await api.openTicket({ subject: subject.trim(), category, body: body.trim() });
-      await drafts.done(['SUPPORT_TICKET'], t.ticket.id);
-      navigate(`/support/${t.ticket.id}`);
+      const opened = await api.openTicket({ subject: subject.trim(), category, body: body.trim() });
+      await drafts.done(['SUPPORT_TICKET'], opened.ticket.id);
+      navigate(`/support/${opened.ticket.id}`);
     } catch (e) {
       setError(errorText(e));
     } finally {
@@ -50,9 +51,9 @@ function NewTicket() {
     }
   };
   return (
-    <Card title="New request" data-testid="ticket-form">
+    <Card title={t('app.support.new_request')} data-testid="ticket-form">
       <div className="fw-form">
-        <Field label="Subject">
+        <Field label={t('app.support.subject')}>
           <Input
             data-testid="ticket-subject"
             maxLength={200}
@@ -60,14 +61,14 @@ function NewTicket() {
             onChange={(e) => setSubject(e.target.value)}
           />
         </Field>
-        <Field label="About">
+        <Field label={t('app.support.about')}>
           <Select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             options={CATEGORIES.map((c) => ({ value: c, label: human(c) }))}
           />
         </Field>
-        <Field label="Message" hint="Never type a full card or account number.">
+        <Field label={t('app.support.message')} hint={t('app.support.message_hint')}>
           <TextArea
             data-testid="ticket-body"
             rows={5}
@@ -81,7 +82,7 @@ function NewTicket() {
           disabled={busy || !subject.trim() || !body.trim()}
           onClick={() => void open()}
         >
-          Send request
+          {t('app.support.send_request')}
         </Button>
       </div>
     </Card>
@@ -131,14 +132,14 @@ function Ticket({ id }: { id: string }) {
   };
   return (
     <Load state={ticket} label="ticket">
-      {(t) => (
+      {(tk) => (
         <Card
-          title={t.ticket.subject}
+          title={tk.ticket.subject}
           data-testid="ticket-detail"
-          actions={<StatusChip status={stateStatus(t.ticket.status)}>{human(t.ticket.status)}</StatusChip>}
+          actions={<StatusChip status={stateStatus(tk.ticket.status)}>{human(tk.ticket.status)}</StatusChip>}
         >
           <div className="fw-thread" data-testid="ticket-thread">
-            {t.messages.map((m) => (
+            {tk.messages.map((m) => (
               <div key={m.id} className={`fw-msg${m.authorKind === 'MEMBER' ? ' fw-msg--mine' : ''}`}>
                 <div className="fw-msg__who">
                   {m.authorName} · {formatDate(m.at, { time: true })}
@@ -146,15 +147,15 @@ function Ticket({ id }: { id: string }) {
                 <p className="og-message__body">{m.body}</p>
               </div>
             ))}
-            {t.attachments.map((a) => (
+            {tk.attachments.map((a) => (
               <div key={a.id} className="fw-row__sub" data-testid="ticket-attachment">
-                Attached {a.name}
+                {t('app.support.attached', { name: a.name })}
               </div>
             ))}
           </div>
-          {t.resolution && <Notice status="success">{t.resolution}</Notice>}
+          {tk.resolution && <Notice status="success">{tk.resolution}</Notice>}
           <div className="fw-form">
-            <Field label="Reply">
+            <Field label={t('app.support.reply')}>
               <TextArea
                 data-testid="ticket-reply"
                 rows={3}
@@ -168,10 +169,10 @@ function Ticket({ id }: { id: string }) {
                 disabled={busy || !reply.trim()}
                 onClick={() => void send()}
               >
-                Send reply
+                {t('app.support.send_reply')}
               </Button>
               <label className="og-btn og-btn--secondary og-btn--md">
-                Attach a file
+                {t('app.support.attach')}
                 <input
                   data-testid="ticket-file"
                   type="file"
@@ -201,11 +202,11 @@ export function SupportScreen() {
   return (
     <>
       <PageHeader
-        title="Support"
-        subtitle="Ask OnGem's team; we answer here."
+        title={t('app.support.title')}
+        subtitle={t('app.support.subtitle')}
         actions={
           <Button data-testid="ticket-new" onClick={() => navigate('/support/new')}>
-            New request
+            {t('app.support.new_request')}
           </Button>
         }
       />
@@ -215,26 +216,24 @@ export function SupportScreen() {
             {(rows) =>
               rows.length ? (
                 <ul className="fw-list" data-testid="tickets-list">
-                  {rows.map((t) => (
-                    <li key={t.id}>
+                  {rows.map((r) => (
+                    <li key={r.id}>
                       <button
-                        className={`fw-row${t.id === id ? ' is-active' : ''}`}
-                        data-testid={`ticket-${t.id}`}
-                        onClick={() => navigate(`/support/${t.id}`)}
+                        className={`fw-row${r.id === id ? ' is-active' : ''}`}
+                        data-testid={`ticket-${r.id}`}
+                        onClick={() => navigate(`/support/${r.id}`)}
                       >
                         <span className="fw-row__main">
-                          <strong>{t.subject}</strong>
-                          <span className="fw-row__sub">{formatDate(t.updatedAt)}</span>
+                          <strong>{r.subject}</strong>
+                          <span className="fw-row__sub">{formatDate(r.updatedAt)}</span>
                         </span>
-                        <StatusChip status={stateStatus(t.status)}>{human(t.status)}</StatusChip>
+                        <StatusChip status={stateStatus(r.status)}>{human(r.status)}</StatusChip>
                       </button>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <EmptyState title="No requests yet">
-                  Ask us anything about your account, payments or cards.
-                </EmptyState>
+                <EmptyState title={t('app.support.empty_title')}>{t('app.support.empty_text')}</EmptyState>
               )
             }
           </Load>
@@ -242,7 +241,7 @@ export function SupportScreen() {
         <div>
           {detail && (
             <Button variant="ghost" onClick={() => navigate('/support')}>
-              Back to support
+              {t('app.support.back')}
             </Button>
           )}
           {isNew ? (
@@ -250,9 +249,7 @@ export function SupportScreen() {
           ) : id ? (
             <Ticket id={id} />
           ) : (
-            <SplitHint title="Pick a request">
-              The conversation with OnGem support and each status change show here.
-            </SplitHint>
+            <SplitHint title={t('app.support.pick_title')}>{t('app.support.pick_text')}</SplitHint>
           )}
         </div>
       </div>

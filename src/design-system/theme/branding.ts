@@ -1,3 +1,4 @@
+// content-check: data (the ops console product name and the favicon SVG; the founder web's page titles come from content)
 import { BRAND_ASSETS } from '../../assets';
 import type { Theme } from './types';
 

@@ -1,17 +1,31 @@
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+import { dateLocale, getLocale, t, tn } from '../i18n/store';
 
-/** A bank date (2026-12-01) as 1 Dec 2026, read as a calendar day: no time zone can move it to another day. */
+/**
+ * A bank date (2026-12-01) as 1 Dec 2026, read as a calendar day: no time zone can move it to another day. In Arabic
+ * the month is named in Arabic, with Latin digits (OG-033 R10).
+ */
 export function formatDay(day: string | null | undefined): string {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(day ?? '');
   if (!m) return '';
-  return `${Number(m[3])} ${MONTHS[Number(m[2]) - 1]} ${m[1]}`;
+  const date = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
+  if (getLocale() === 'ar')
+    return new Intl.DateTimeFormat(dateLocale(), {
+      timeZone: 'UTC',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(date);
+  const month = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', month: 'short' }).format(date);
+  return `${Number(m[3])} ${month} ${m[1]}`;
 }
 
 /** How often, in words: Every day, Every 2 weeks, Every month. */
 export function frequencyText(frequency: string, interval: number): string {
-  const unit =
-    { DAILY: 'day', WEEKLY: 'week', MONTHLY: 'month' }[frequency.toUpperCase()] ?? frequency.toLowerCase();
-  return interval > 1 ? `Every ${interval} ${unit}s` : `Every ${unit}`;
+  const unit = ({ DAILY: 'day', WEEKLY: 'week', MONTHLY: 'month' } as Record<string, string>)[
+    frequency.toUpperCase()
+  ];
+  if (!unit) return t('app.schedules.every_unit', { count: interval, unit: frequency.toLowerCase() });
+  return tn(`app.schedules.every_${unit}`, interval);
 }
 
 /**

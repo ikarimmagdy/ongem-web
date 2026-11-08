@@ -1,4 +1,5 @@
 import { formatMinor } from '../lib/format';
+import { t } from '../i18n/store';
 import { REGION_CONFIG } from '../region';
 
 const limit = (amountMinor: number) => formatMinor({ amountMinor, currency: REGION_CONFIG.currency });
@@ -18,46 +19,45 @@ export class ApiError extends Error {
   }
 }
 
-/** What a founder reads for the API's problem codes; anything else falls back to the API's own detail. */
-const MESSAGES: Record<string, string> = {
-  reverification_cancelled: 'You did not confirm it is you, so nothing was changed.',
-  reverification_required:
-    'This needs you to confirm it is you with your second factor. Nothing was changed. Try again and confirm.',
-  permission_denied: 'Your role does not allow this. An owner of the company can do it.',
-  forbidden: 'Your role does not allow this. An owner of the company can do it.',
-  draft_result_mismatch:
-    'This was not the action the assistant drafted, so the draft was not confirmed. Nothing else changed.',
-  draft_not_open: 'The assistant draft has expired or was already decided, so it was not confirmed.',
-  draft_not_found: 'The assistant draft is no longer there.',
-  idempotency_in_progress:
-    'OnGem is still working on this request. Wait a moment and check before trying again; it will not run twice.',
-  insufficient_funds: 'Your available balance is lower than this payment.',
-  funding_source_not_verified:
-    'The bank has not verified this account yet, so nothing can be pulled from it. Check it again later.',
-  funding_source_refused: 'The bank could not link this account. Check the numbers and try again.',
-  funding_source_not_found: 'That account is no longer linked.',
-  limit_exceeded: `This top-up is over the limit of ${limit(REGION_CONFIG.topUpLimit)} for one top-up.`,
-  daily_limit_exceeded: `This would go over the top-up limit of ${limit(REGION_CONFIG.topUpDailyLimit)} a day.`,
-  rail_unavailable: 'Link this account for an OnGem account at the same bank.',
-  self_approval_forbidden: 'A second person approves this, not the person who made it.',
-  payment_not_pending_approval: 'This payment is no longer waiting for approval.',
-  invalid_transition: 'This schedule cannot do that now. It may have ended or been cancelled.',
-  schedule_not_found: 'That schedule is no longer there.',
-  recipient_blocked: 'Payments to this recipient are blocked.',
-  capability_unavailable: `Scheduled transfers between your own accounts are not available yet. ${REGION_CONFIG.scheduleInstead}`,
-  company_not_member: 'You are no longer a member of that company. OnGem opened your default company.',
-  device_revoked: 'This browser was signed out of OnGem. Sign in again.',
-  device_required: 'This browser is not registered with OnGem yet. Sign out, then sign in again.',
-};
+/** The problem codes a founder reads a sentence for: content entries `app.errors.<code>` (OG-033 R1). */
+const KNOWN = new Set([
+  'reverification_cancelled',
+  'reverification_required',
+  'permission_denied',
+  'forbidden',
+  'draft_result_mismatch',
+  'draft_not_open',
+  'draft_not_found',
+  'idempotency_in_progress',
+  'insufficient_funds',
+  'funding_source_not_verified',
+  'funding_source_refused',
+  'funding_source_not_found',
+  'limit_exceeded',
+  'daily_limit_exceeded',
+  'rail_unavailable',
+  'self_approval_forbidden',
+  'payment_not_pending_approval',
+  'invalid_transition',
+  'schedule_not_found',
+  'recipient_blocked',
+  'capability_unavailable',
+  'company_not_member',
+  'device_revoked',
+  'device_required',
+]);
 
-/** The line a screen shows for a failure. */
+/** The line a screen shows for a failure; anything unknown falls back to the API's own detail. */
 export function errorText(e: unknown): string {
   if (e instanceof ApiError) {
-    const known = e.code ? MESSAGES[e.code] : undefined;
-    if (known) return known;
-    if (e.status === 403) return 'Your role does not allow this. An owner of the company can do it.';
-    if (e.status === 0) return 'Could not reach OnGem. Check your connection and try again.';
+    if (e.code && KNOWN.has(e.code))
+      return t(`app.errors.${e.code}`, {
+        limit: limit(REGION_CONFIG.topUpLimit),
+        daily_limit: limit(REGION_CONFIG.topUpDailyLimit),
+      });
+    if (e.status === 403) return t('app.errors.forbidden');
+    if (e.status === 0) return t('app.errors.network');
     return e.message;
   }
-  return 'Something went wrong. Try again.';
+  return t('app.errors.unknown');
 }

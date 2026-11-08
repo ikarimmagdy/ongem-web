@@ -108,7 +108,7 @@ export async function registration(pair: CryptoKeyPair, challenge: { challengeId
       new TextEncoder().encode(challenge.nonce),
     ),
   );
-  return { challengeId: challenge.challengeId, publicKey, signature, platform: 'web', name: 'Web browser' };
+  return { challengeId: challenge.challengeId, publicKey, signature, platform: 'web', name: 'Web browser' }; // content-check: ignore (device name sent to the API)
 }
 
 /** The lines a device signs for one call (ongem-core DeviceProofs, CORE-SEC-04): the path has no query. */

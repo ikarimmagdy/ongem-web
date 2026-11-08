@@ -1,3 +1,4 @@
+// content-check: data (sample company names and amounts; sentences shown as UI copy are content keys)
 import type {
   Account,
   Amount,
@@ -14,6 +15,8 @@ import type {
   KindPreference,
   NoticeView,
 } from './types';
+import { t } from '../i18n/store';
+import { formatMinor } from '../lib/format';
 import { IS_AE } from '../region';
 import * as AE from './demoData.ae';
 
@@ -196,7 +199,7 @@ export const demoRecipients = IS_AE
       },
     ];
 
-const t = (from: string | null, to: string, at: string) => ({ from, to, at });
+const step = (from: string | null, to: string, at: string) => ({ from, to, at });
 
 export const demoPayments = IS_AE
   ? AE.demoPayments
@@ -212,10 +215,10 @@ export const demoPayments = IS_AE
         providerReference: 'ach_demo_77a1',
         createdAt: '2026-10-27T15:02:00Z',
         timeline: [
-          t(null, 'DRAFT', '2026-10-27T15:02:00Z'),
-          t('DRAFT', 'PRECHECKED', '2026-10-27T15:03:00Z'),
-          t('PRECHECKED', 'SUBMITTED', '2026-10-27T15:03:10Z'),
-          t('SUBMITTED', 'SENT', '2026-10-28T09:00:00Z'),
+          step(null, 'DRAFT', '2026-10-27T15:02:00Z'),
+          step('DRAFT', 'PRECHECKED', '2026-10-27T15:03:00Z'),
+          step('PRECHECKED', 'SUBMITTED', '2026-10-27T15:03:10Z'),
+          step('SUBMITTED', 'SENT', '2026-10-28T09:00:00Z'),
         ],
       },
       {
@@ -227,7 +230,10 @@ export const demoPayments = IS_AE
         toAccountId: TAX,
         reference: 'Q4 tax reserve',
         createdAt: '2026-10-25T11:00:00Z',
-        timeline: [t(null, 'DRAFT', '2026-10-25T11:00:00Z'), t('DRAFT', 'SETTLED', '2026-10-25T11:00:05Z')],
+        timeline: [
+          step(null, 'DRAFT', '2026-10-25T11:00:00Z'),
+          step('DRAFT', 'SETTLED', '2026-10-25T11:00:05Z'),
+        ],
       },
       {
         id: 'pay_demo_3',
@@ -241,12 +247,12 @@ export const demoPayments = IS_AE
         createdAt: '2026-10-24T08:30:00Z',
         failureCode: 'R03',
         returnCode: 'R03',
-        returnReason: 'No account, or unable to locate account',
+        returnReason: t('app.demo.payment.return_reason'),
         timeline: [
-          t(null, 'DRAFT', '2026-10-24T08:30:00Z'),
-          t('DRAFT', 'SUBMITTED', '2026-10-24T08:31:00Z'),
-          t('SUBMITTED', 'SENT', '2026-10-24T16:00:00Z'),
-          t('SENT', 'RETURNED', '2026-10-26T10:12:00Z'),
+          step(null, 'DRAFT', '2026-10-24T08:30:00Z'),
+          step('DRAFT', 'SUBMITTED', '2026-10-24T08:31:00Z'),
+          step('SUBMITTED', 'SENT', '2026-10-24T16:00:00Z'),
+          step('SENT', 'RETURNED', '2026-10-26T10:12:00Z'),
         ],
       },
       ...Array.from({ length: 23 }, (_, i): Payment => {
@@ -325,7 +331,7 @@ export const demoDisclosures = (): RequiredDisclosure[] => [
     versionId: 'dsv_demo_esign',
     type: 'E_SIGN',
     version: '1.0',
-    title: 'Consent to electronic records',
+    title: t('app.demo.disclosure.esign.title'),
     sha256: 'e3b0c442',
     subject: 'PERSON',
     acknowledged: false,
@@ -335,7 +341,7 @@ export const demoDisclosures = (): RequiredDisclosure[] => [
     versionId: 'dsv_demo_terms',
     type: 'ACCOUNT_TERMS',
     version: '1.0',
-    title: 'Business account terms',
+    title: t('app.demo.disclosure.terms.title'),
     sha256: 'a1b2c3d4',
     subject: 'BUSINESS',
     acknowledged: false,
@@ -343,9 +349,7 @@ export const demoDisclosures = (): RequiredDisclosure[] => [
   },
 ];
 
-export const disclosureBody = (title: string) =>
-  `Sample text for demo mode. ${title}: the real text comes from the API and is shown here in full. You agree to receive ` +
-  'records electronically, to keep your contact details current, and that this acceptance is recorded with its time and this device.';
+export const disclosureBody = (title: string) => t('app.demo.disclosure.body', { title });
 
 export const demoTickets = IS_AE
   ? AE.demoTickets
@@ -353,7 +357,7 @@ export const demoTickets = IS_AE
       {
         ticket: {
           id: 'tkt_demo_1',
-          subject: 'Card for a new hire',
+          subject: t('app.demo.ticket.card.subject'),
           category: 'CARD',
           status: 'IN_REVIEW',
           createdAt: '2026-10-27T10:00:00Z',
@@ -364,14 +368,14 @@ export const demoTickets = IS_AE
             id: 'msg_demo_1',
             authorKind: 'MEMBER',
             authorName: 'Dana Rivera',
-            body: 'Can we get a virtual card for our new designer?',
+            body: t('app.demo.ticket.card.question'),
             at: '2026-10-27T10:00:00Z',
           },
           {
             id: 'msg_demo_2',
             authorKind: 'OPS',
             authorName: 'OnGem support',
-            body: 'Yes. Add them as a cardholder and we will issue it.',
+            body: t('app.demo.ticket.card.answer'),
             at: '2026-10-28T12:00:00Z',
           },
         ],
@@ -380,26 +384,26 @@ export const demoTickets = IS_AE
       {
         ticket: {
           id: 'tkt_demo_2',
-          subject: 'Statement for September',
+          subject: t('app.demo.ticket.statement.subject'),
           category: 'ACCOUNT',
           status: 'RESOLVED',
           createdAt: '2026-10-20T10:00:00Z',
           updatedAt: '2026-10-21T09:00:00Z',
         },
-        resolution: 'Statement shared in the app.',
+        resolution: t('app.demo.ticket.statement.resolution'),
         messages: [
           {
             id: 'msg_demo_3',
             authorKind: 'MEMBER',
             authorName: 'Dana Rivera',
-            body: 'Where do I find the September statement?',
+            body: t('app.demo.ticket.statement.question'),
             at: '2026-10-20T10:00:00Z',
           },
           {
             id: 'msg_demo_4',
             authorKind: 'OPS',
             authorName: 'OnGem support',
-            body: 'Accounts, Operating, Statements, September 2026.',
+            body: t('app.demo.ticket.statement.answer'),
             at: '2026-10-21T09:00:00Z',
           },
         ],
@@ -407,28 +411,34 @@ export const demoTickets = IS_AE
       },
     ];
 
-/** OG-014 kinds as ongem-core's NoticeKind: label, mandatory (email always on) and the email default. */
-export const NOTICE_KINDS: Array<[kind: string, label: string, mandatory: boolean, email: boolean]> = [
-  ['APPROVAL_WAITING', 'A payment waits for your approval', false, true],
-  ['PAYMENT_SENT', 'Payment sent', false, false],
-  ['PAYMENT_WITH_BANK', 'Payment with the bank', false, false],
-  ['PAYMENT_SETTLED', 'Payment completed', false, true],
-  ['PAYMENT_FAILED', 'Payment not sent', true, true],
-  ['PAYMENT_RETURNED', 'Payment returned', true, true],
-  ['SCHEDULE_FAILED', 'Scheduled payment did not go', true, true],
-  ['CARD_FROZEN', 'Card frozen or cancelled', true, true],
-  ['APPLICATION_DECIDED', 'Application decision', false, true],
-  ['ACCOUNT_READY', 'Account open', false, true],
-  ['LIMITS_CHANGED', 'Payment limits changed', true, true],
-  ['DETAILS_NEEDED', 'Business details to confirm', true, true],
-  ['SUPPORT_UPDATE', 'Support request update', false, true],
-  ['NEW_DEVICE', 'New device', true, true],
-  ['CLOSURE_STARTED', 'Account closing', true, true],
-  ['ACCOUNT_FROZEN', 'Account on hold', true, true],
+/** OG-014 kinds as ongem-core's NoticeKind: mandatory (email always on) and the email default; the label is `app.demo.notice_kind.<kind>`. */
+export const NOTICE_KINDS: Array<[kind: string, mandatory: boolean, email: boolean]> = [
+  ['APPROVAL_WAITING', false, true],
+  ['PAYMENT_SENT', false, false],
+  ['PAYMENT_WITH_BANK', false, false],
+  ['PAYMENT_SETTLED', false, true],
+  ['PAYMENT_FAILED', true, true],
+  ['PAYMENT_RETURNED', true, true],
+  ['SCHEDULE_FAILED', true, true],
+  ['CARD_FROZEN', true, true],
+  ['APPLICATION_DECIDED', false, true],
+  ['ACCOUNT_READY', false, true],
+  ['LIMITS_CHANGED', true, true],
+  ['DETAILS_NEEDED', true, true],
+  ['SUPPORT_UPDATE', false, true],
+  ['NEW_DEVICE', true, true],
+  ['CLOSURE_STARTED', true, true],
+  ['ACCOUNT_FROZEN', true, true],
 ];
 
 export const demoPreferences = (): KindPreference[] =>
-  NOTICE_KINDS.map(([kind, label, mandatory, email]) => ({ kind, label, mandatory, email, sms: false }));
+  NOTICE_KINDS.map(([kind, mandatory, email]) => ({
+    kind,
+    label: t(`app.demo.notice_kind.${kind.toLowerCase()}`),
+    mandatory,
+    email,
+    sms: false,
+  }));
 
 /** Sample notices in ongem-core's wording, newest first; two unread. */
 export const demoNotices = IS_AE
@@ -437,8 +447,10 @@ export const demoNotices = IS_AE
       {
         id: 'ntc_demo_3',
         kind: 'APPROVAL_WAITING',
-        title: 'A payment needs your approval',
-        body: 'A payment of $2,450.00 is waiting for a second person to approve it.',
+        title: t('app.demo.notice.approval.title'),
+        body: t('app.demo.notice.approval.body', {
+          amount: formatMinor({ amountMinor: 245_000, currency: 'USD' }),
+        }),
         link: 'payments/pay_demo_2/approve',
         mandatory: false,
         occurredAt: '2026-10-29T14:20:00Z',
@@ -448,8 +460,8 @@ export const demoNotices = IS_AE
       {
         id: 'ntc_demo_2',
         kind: 'SUPPORT_UPDATE',
-        title: 'Your support request has an answer',
-        body: 'OnGem replied to your request.',
+        title: t('app.demo.notice.support.title'),
+        body: t('app.demo.notice.support.body'),
         link: 'support/tkt_demo_1',
         mandatory: false,
         occurredAt: '2026-10-29T10:05:00Z',
@@ -459,8 +471,10 @@ export const demoNotices = IS_AE
       {
         id: 'ntc_demo_1',
         kind: 'PAYMENT_SETTLED',
-        title: 'Payment completed',
-        body: 'Your payment of $1,200.00 has completed.',
+        title: t('app.demo.notice.settled.title'),
+        body: t('app.demo.notice.settled.body', {
+          amount: formatMinor({ amountMinor: 120_000, currency: 'USD' }),
+        }),
         link: 'payments/pay_demo_1',
         mandatory: false,
         occurredAt: '2026-10-28T16:00:00Z',

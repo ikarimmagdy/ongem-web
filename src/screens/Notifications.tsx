@@ -7,6 +7,7 @@ import { formatDate } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
 import { useSession } from '../session';
 import { Load } from './common';
+import { T, t, tn } from '../i18n';
 
 /** Fired after a notice is read, so the bell counts again without a page change. */
 export const NOTICES_CHANGED = 'og:notices-changed';
@@ -39,6 +40,8 @@ export function noticeRoute(link: string | null): string | null {
   }
 }
 
+const BELL = 'M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9'; // content-check: ignore (SVG path)
+
 /** The bell in the top bar: the unread count, read again on each page change and after a notice is read. */
 export function NoticeBell() {
   const { api } = useSession();
@@ -51,7 +54,7 @@ export function NoticeBell() {
   }, []);
   const inbox = useAsync(() => api.notifications({ unread: true, limit: 1 }), [api, location.pathname, n]);
   const unread = inbox.status === 'success' ? inbox.data.unread : 0;
-  const label = unread ? `Notifications, ${unread} unread` : 'Notifications';
+  const label = unread ? t('app.notifications.bell_unread', { count: unread }) : t('app.notifications.title');
   return (
     <Link to="/notifications" className="fw-bell" aria-label={label} data-testid="notice-bell">
       <svg
@@ -63,7 +66,7 @@ export function NoticeBell() {
         stroke="currentColor"
         strokeWidth="2"
       >
-        <path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+        <path d={BELL} />
         <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
       </svg>
       {unread > 0 && (
@@ -85,7 +88,7 @@ function Row({ n, onOpen }: { n: NoticeView; onOpen(n: NoticeView): void }) {
       >
         <span className="fw-row__main">
           <strong>
-            {!n.readAt && <span className="og-visually-hidden">Unread: </span>}
+            {!n.readAt && <span className="og-visually-hidden">{t('app.notifications.unread_prefix')} </span>}
             {n.title}
           </strong>
           <span>{n.body}</span>
@@ -129,8 +132,8 @@ export function NotificationsScreen() {
   return (
     <>
       <PageHeader
-        title="Notifications"
-        subtitle={unread ? `${unread} unread` : 'All read'}
+        title={t('app.notifications.title')}
+        subtitle={unread ? tn('app.notifications.unread', unread) : t('app.notifications.all_read')}
         actions={
           <Button
             variant="secondary"
@@ -138,7 +141,7 @@ export function NotificationsScreen() {
             disabled={!unread}
             onClick={() => void once(() => api.readAllNotifications())}
           >
-            Mark all read
+            {t('app.notifications.mark_all_read')}
           </Button>
         }
       />
@@ -153,15 +156,18 @@ export function NotificationsScreen() {
                 ))}
               </ul>
             ) : (
-              <EmptyState title="No notifications yet">
-                We tell you here when a payment moves, a card changes or support replies.
+              <EmptyState title={t('app.notifications.empty_title')}>
+                {t('app.notifications.empty_text')}
               </EmptyState>
             )
           }
         </Load>
       </Card>
       <p className="fw-row__sub">
-        Choose what reaches you by email or SMS in <Link to="/settings">Settings</Link>.
+        <T
+          k="app.notifications.choose"
+          vars={{ settings: <Link to="/settings">{t('app.nav.settings')}</Link> }}
+        />
       </p>
     </>
   );

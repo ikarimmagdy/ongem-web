@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ApiError, errorText } from '../api/errors';
 import type { AssistantDraft } from '../api/types';
 import { useToast } from '../design-system';
+import { t } from '../i18n';
 import { REGION_CONFIG } from '../region';
 import { useSession } from '../session';
 
@@ -109,18 +110,20 @@ export function DraftProvider({ children }: { children: ReactNode }) {
       if (!pending || !kinds.includes(pending.kind)) return;
       if (!matches(pending, facts)) {
         setPending(null);
-        toast.show('Done. This was not the action the assistant drafted, so the draft stays open.', 'info');
+        toast.show(t('app.assistant.toast.not_drafted'), 'info');
         return;
       }
       try {
         await api.confirmAssistantDraft(pending.id, ref);
         setDecided((x) => ({ ...x, [pending.id]: 'CONFIRMED' }));
-        toast.show('Done. The assistant recorded that you confirmed it.', 'success');
+        toast.show(t('app.assistant.toast.confirmed'), 'success');
       } catch (e) {
         // CORE-ASST-01, 05: the API checks the result against the draft and refuses an old or different one.
         const refused = e instanceof ApiError && e.code?.startsWith('draft_');
         toast.show(
-          `Done. ${refused ? errorText(e) : 'The assistant could not record your confirmation.'}`,
+          t('app.assistant.toast.done', {
+            reason: refused ? errorText(e) : t('app.assistant.toast.not_recorded'),
+          }),
           'info',
         );
       }

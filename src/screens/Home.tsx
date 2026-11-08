@@ -5,6 +5,7 @@ import { useAsync } from '../lib/useAsync';
 import { currentMembership } from '../lib/company';
 import { applicationSentence, paymentLabel } from '../lib/states';
 import { useSession } from '../session';
+import { t } from '../i18n';
 import { REGION_CONFIG } from '../region';
 import { AcctLast4, Amt, Load, human, stateStatus } from './common';
 
@@ -22,17 +23,19 @@ export function HomeScreen() {
   return (
     <>
       <PageHeader
-        title={person?.legalFirstName ? `Hello, ${person.legalFirstName}` : 'Hello'}
-        subtitle={
-          <span data-testid="home-company-name">{company ?? "Your company's money at a glance."}</span>
+        title={
+          person?.legalFirstName
+            ? t('app.home.hello_name', { name: person.legalFirstName })
+            : t('app.home.hello')
         }
+        subtitle={<span data-testid="home-company-name">{company ?? t('app.home.subtitle')}</span>}
       />
       {apps.status === 'success' && apps.data[0] && apps.data[0].state !== 'ACTIVE' && (
         <Notice
           status="info"
           action={
             <Link className="og-btn og-btn--secondary og-btn--md" to="/onboarding">
-              Continue your application
+              {t('app.home.continue_application')}
             </Link>
           }
         >
@@ -43,7 +46,7 @@ export function HomeScreen() {
         {(list) => {
           const total = list.reduce((s, a) => s + (a.balance?.available.amountMinor ?? 0), 0);
           return (
-            <Card title="Available across your accounts" data-testid="home-balance">
+            <Card title={t('app.home.available')} data-testid="home-balance">
               <p className="og-money og-money--xl" data-mask="" data-testid="home-total">
                 {formatMinor({ amountMinor: total, currency: list[0]?.currency ?? REGION_CONFIG.currency })}
               </p>
@@ -66,13 +69,13 @@ export function HomeScreen() {
               )}
               <div className="fw-actions" data-testid="home-actions">
                 <Link className="og-btn og-btn--primary og-btn--md" to="/payments/new">
-                  New payment
+                  {t('app.home.new_payment')}
                 </Link>
                 <Link className="og-btn og-btn--secondary og-btn--md" to="/payments/top-up">
-                  Add money
+                  {t('app.home.add_money')}
                 </Link>
                 <Link className="og-btn og-btn--secondary og-btn--md" to="/support/new">
-                  Ask for help
+                  {t('app.home.ask_for_help')}
                 </Link>
               </div>
             </Card>
@@ -80,7 +83,7 @@ export function HomeScreen() {
         }}
       </Load>
       <div className="fw-home-grid" data-testid="home-grid">
-        <Card title="Recent payments" data-testid="home-recent">
+        <Card title={t('app.home.recent_payments')} data-testid="home-recent">
           <Load state={recent} label="payments">
             {(page) =>
               page.items.length ? (
@@ -98,22 +101,22 @@ export function HomeScreen() {
                   ))}
                 </ul>
               ) : (
-                <p className="fw-row__sub">No payments yet.</p>
+                <p className="fw-row__sub">{t('app.home.no_payments')}</p>
               )
             }
           </Load>
           <Link className="og-btn og-btn--ghost og-btn--md" to="/payments">
-            All payments
+            {t('app.home.all_payments')}
           </Link>
         </Card>
         {membership && (
-          <Card title="Your company" data-testid="home-company">
+          <Card title={t('app.home.your_company')} data-testid="home-company">
             <KeyValue
               items={[
-                { label: 'Company', value: membership.companyName ?? membership.companyId },
-                { label: 'Your role', value: human(membership.role) },
+                { label: t('app.home.company'), value: membership.companyName ?? membership.companyId },
+                { label: t('app.home.your_role'), value: human(membership.role) },
                 {
-                  label: 'Identity at the bank',
+                  label: t('app.home.identity_at_bank'),
                   value: (
                     <StatusChip status={stateStatus(bankState)}>
                       <span data-testid="home-verification">{human(bankState)}</span>

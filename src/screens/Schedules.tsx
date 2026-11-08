@@ -14,6 +14,7 @@ import {
   type Status,
 } from '../design-system';
 import { decimalToMinor, formatMinor } from '../lib/format';
+import { T, has, t } from '../i18n';
 import { formatDay, frequencyText, today } from '../lib/schedule';
 import { useAsync } from '../lib/useAsync';
 import { REGION_CONFIG } from '../region';
@@ -24,29 +25,28 @@ import { Amt, Load } from './common';
 export function scheduleState(state: string): { status: Status; text: string } {
   switch (state.toUpperCase()) {
     case 'ACTIVE':
-      return { status: 'success', text: 'Active' };
+      return { status: 'success', text: t('app.schedules.state.active') };
     case 'PAUSED':
-      return { status: 'neutral', text: 'Paused' };
+      return { status: 'neutral', text: t('app.schedules.state.paused') };
     case 'CANCELLED':
-      return { status: 'failure', text: 'Cancelled' };
+      return { status: 'failure', text: t('app.schedules.state.cancelled') };
     default:
-      return { status: 'neutral', text: 'Finished' };
+      return { status: 'neutral', text: t('app.schedules.state.finished') };
   }
 }
 
 /** When the next payment goes, in words. */
 export function nextRunText(s: PaymentSchedule): string {
-  if (s.state === 'PAUSED') return 'Paused. No payment is made until you resume it.';
-  if (s.state === 'ACTIVE' && s.nextRunOn) return `Next payment on ${formatDay(s.nextRunOn)}`;
-  return 'No more payments.';
+  if (s.state === 'PAUSED') return t('app.schedules.next.paused');
+  if (s.state === 'ACTIVE' && s.nextRunOn)
+    return t('app.schedules.next.on', { date: formatDay(s.nextRunOn) });
+  return t('app.schedules.next.none');
 }
 
-const RUN_TEXT: Record<string, string> = {
-  DUE: 'Due',
-  SENT: 'Sent',
-  SKIPPED: 'Skipped',
-  FAILED: 'Failed',
-  CANCELLED: 'Cancelled',
+/** A run's state in words; a state the web does not know shows as the API sends it. */
+const runText = (state: string) => {
+  const key = `app.schedules.run.${state.toLowerCase()}`;
+  return has(key) ? t(key) : state;
 };
 
 function useOnce() {
@@ -77,7 +77,7 @@ function Runs({ id }: { id: string }) {
   const { api } = useSession();
   const detail = useAsync(() => api.schedule(id), [api, id]);
   return (
-    <Load state={detail} label="runs">
+    <Load state={detail} label={t('app.schedules.loading.runs')}>
       {(s) =>
         s.runs.length ? (
           <ul className="fw-list" data-testid={`schedule-runs-${id}`}>
@@ -85,14 +85,14 @@ function Runs({ id }: { id: string }) {
               <li key={r.id} className="fw-row">
                 <span>{formatDay(r.runOn)}</span>
                 <span>
-                  {RUN_TEXT[r.state] ?? r.state}
+                  {runText(r.state)}
                   {r.failureCode ? ` (${r.failureCode})` : ''}
                 </span>
               </li>
             ))}
           </ul>
         ) : (
-          <p data-testid={`schedule-runs-${id}`}>No payment has been made from this schedule yet.</p>
+          <p data-testid={`schedule-runs-${id}`}>{t('app.schedules.runs.none')}</p>
         )
       }
     </Load>
@@ -123,10 +123,12 @@ function ScheduleRow({
   return (
     <li className="fw-row" data-testid={`schedule-${s.id}`}>
       <span className="fw-row__main">
-        <strong>{recipients.find((r) => r.id === s.recipientId)?.name ?? 'Recipient'}</strong>
+        <strong>
+          {recipients.find((r) => r.id === s.recipientId)?.name ?? t('app.schedules.recipient')}
+        </strong>
         <span className="fw-row__sub">
           <Amt value={s.amount} /> · {frequencyText(s.frequency, s.interval)}
-          {from ? ` · from ${from.name}` : ''}
+          {from ? ` · ${t('app.schedules.from_account', { account: from.name })}` : ''}
         </span>
         <span className="fw-row__sub" data-testid={`schedule-next-${s.id}`}>
           {nextRunText(s)}
@@ -145,7 +147,7 @@ function ScheduleRow({
             data-testid={`schedule-runs-toggle-${s.id}`}
             onClick={() => setOpen((x) => !x)}
           >
-            {open ? 'Hide payments' : 'Payments made'}
+            {open ? t('app.schedules.runs.hide') : t('app.schedules.runs.show')}
           </Button>
           {manage && s.state === 'ACTIVE' && (
             <Button
@@ -155,7 +157,7 @@ function ScheduleRow({
               disabled={busy}
               onClick={() => act(() => api.pauseSchedule(s.id))}
             >
-              Pause
+              {t('app.schedules.pause')}
             </Button>
           )}
           {manage && s.state === 'PAUSED' && (
@@ -166,7 +168,7 @@ function ScheduleRow({
               disabled={busy}
               onClick={() => act(() => api.resumeSchedule(s.id))}
             >
-              Resume
+              {t('app.schedules.resume')}
             </Button>
           )}
           {manage && (s.state === 'ACTIVE' || s.state === 'PAUSED') && (
@@ -177,7 +179,7 @@ function ScheduleRow({
               disabled={busy}
               onClick={() => act(() => api.cancelSchedule(s.id))}
             >
-              Cancel schedule
+              {t('app.schedules.cancel')}
             </Button>
           )}
         </div>
@@ -245,11 +247,8 @@ function NewSchedule({
       onCreated();
     });
   return (
-    <Card title="New scheduled payment" data-testid="schedule-form">
-      <p>
-        OnGem makes each payment on its date as {REGION_CONFIG.scheduleAs}, with the same checks as one you
-        send yourself. A date on a weekend or holiday goes on the next banking day.
-      </p>
+    <Card title={t('app.schedules.form.title')} data-testid="schedule-form">
+      <p>{t('app.schedules.form.intro', { how: REGION_CONFIG.scheduleAs })}</p>
       <form
         className="fw-form"
         onSubmit={(e) => {
@@ -257,28 +256,34 @@ function NewSchedule({
           if (valid) void create();
         }}
       >
-        <Field label="From">
+        <Field label={t('app.schedules.form.from')}>
           <Select
             data-testid="schedule-from"
             value={fromId}
             onChange={(e) => setFrom(e.target.value)}
-            options={accounts.map((a) => ({ value: a.id, label: `${a.name} ending ${a.last4 ?? ''}` }))}
+            options={accounts.map((a) => ({
+              value: a.id,
+              label: t('app.payments.form.account_ending', { name: a.name, last4: a.last4 ?? '' }),
+            }))}
           />
         </Field>
-        <Field label="Recipient" hint={!payable.length ? 'Add a recipient first.' : undefined}>
+        <Field
+          label={t('app.schedules.recipient')}
+          hint={!payable.length ? t('app.schedules.form.recipient_first') : undefined}
+        >
           <Select
             data-testid="schedule-recipient"
             value={recipientId}
             onChange={(e) => setRecipient(e.target.value)}
             options={[
-              { value: '', label: 'Choose a recipient' },
+              { value: '', label: t('app.schedules.form.choose_recipient') },
               ...payable.map((r) => ({ value: r.id, label: r.name })),
             ]}
           />
         </Field>
         <Field
           label={REGION_CONFIG.amountLabel}
-          error={amount && !minor ? 'Enter an amount like 1,250.00' : undefined}
+          error={amount && !minor ? t('app.schedules.form.amount_error') : undefined}
         >
           <Input
             data-testid="schedule-amount"
@@ -288,24 +293,24 @@ function NewSchedule({
             onChange={(e) => setAmount(e.target.value)}
           />
         </Field>
-        <Field label="How often">
+        <Field label={t('app.schedules.form.how_often')}>
           <Select
             data-testid="schedule-frequency"
             value={frequency}
             onChange={(e) => setFrequency(e.target.value as 'DAILY' | 'WEEKLY' | 'MONTHLY')}
             options={[
-              { value: 'DAILY', label: 'Days' },
-              { value: 'WEEKLY', label: 'Weeks' },
-              { value: 'MONTHLY', label: 'Months' },
+              { value: 'DAILY', label: t('app.schedules.form.days') },
+              { value: 'WEEKLY', label: t('app.schedules.form.weeks') },
+              { value: 'MONTHLY', label: t('app.schedules.form.months') },
             ]}
           />
         </Field>
         <Field
-          label="Every"
+          label={t('app.schedules.form.every')}
           hint={
             Number.isInteger(every) && every >= 1
               ? frequencyText(frequency, every)
-              : 'A whole number, 1 or more'
+              : t('app.schedules.form.whole_number')
           }
         >
           <Input
@@ -316,8 +321,8 @@ function NewSchedule({
           />
         </Field>
         <Field
-          label="First payment on"
-          error={start && !dateOk ? 'Choose today or a later date.' : undefined}
+          label={t('app.schedules.form.first_on')}
+          error={start && !dateOk ? t('app.schedules.form.start_error') : undefined}
         >
           <Input
             data-testid="schedule-start"
@@ -326,20 +331,20 @@ function NewSchedule({
             onChange={(e) => setStart(e.target.value)}
           />
         </Field>
-        <Field label="Ends">
+        <Field label={t('app.schedules.form.ends')}>
           <Select
             data-testid="schedule-ends"
             value={ends}
             onChange={(e) => setEnds(e.target.value as Ends)}
             options={[
-              { value: 'never', label: 'When I cancel it' },
-              { value: 'count', label: 'After a number of payments' },
-              { value: 'date', label: 'Before a date' },
+              { value: 'never', label: t('app.schedules.form.ends_never') },
+              { value: 'count', label: t('app.schedules.form.ends_count') },
+              { value: 'date', label: t('app.schedules.form.ends_date') },
             ]}
           />
         </Field>
         {ends === 'count' && (
-          <Field label="Number of payments">
+          <Field label={t('app.schedules.form.count')}>
             <Input
               data-testid="schedule-count"
               inputMode="numeric"
@@ -350,8 +355,8 @@ function NewSchedule({
         )}
         {ends === 'date' && (
           <Field
-            label="No payment on or after"
-            error={end && !endOk ? 'Choose a date after the first payment.' : undefined}
+            label={t('app.schedules.form.end')}
+            error={end && !endOk ? t('app.schedules.form.end_error') : undefined}
           >
             <Input
               data-testid="schedule-end"
@@ -361,7 +366,7 @@ function NewSchedule({
             />
           </Field>
         )}
-        <Field label="Reference (optional)">
+        <Field label={t('app.schedules.form.reference')}>
           <Input
             data-testid="schedule-reference"
             maxLength={80}
@@ -371,15 +376,24 @@ function NewSchedule({
         </Field>
         {minor && valid && (
           <p data-testid="schedule-summary">
-            <span data-mask="">{formatMinor({ amountMinor: minor, currency: REGION_CONFIG.currency })}</span>{' '}
-            {frequencyText(frequency, every).toLowerCase()}, first on {formatDay(start)}. You confirm it is
-            you before it is set up.
+            <T
+              k="app.schedules.form.summary"
+              vars={{
+                amount: (
+                  <span data-mask="">
+                    {formatMinor({ amountMinor: minor, currency: REGION_CONFIG.currency })}
+                  </span>
+                ),
+                frequency: frequencyText(frequency, every).toLowerCase(),
+                date: formatDay(start),
+              }}
+            />
           </p>
         )}
         {error && <Notice status="failure">{error}</Notice>}
         <div className="fw-actions">
           <Button type="submit" data-testid="schedule-save" disabled={!valid || busy}>
-            Schedule payments
+            {t('app.schedules.form.save')}
           </Button>
         </div>
       </form>
@@ -403,8 +417,8 @@ export function Schedules() {
   const recs = recipients.status === 'success' ? recipients.data : [];
   return (
     <div className="fw-stack" data-testid="schedules">
-      <Card title="Scheduled payments">
-        <Load state={list} label="scheduled payments">
+      <Card title={t('app.schedules.title')}>
+        <Load state={list} label={t('app.schedules.loading.list')}>
           {(items) =>
             items.length ? (
               <ul className="fw-list" data-testid="schedules-list">
@@ -413,9 +427,7 @@ export function Schedules() {
                 ))}
               </ul>
             ) : (
-              <EmptyState title="No scheduled payments">
-                Set up a payment that goes on its own, such as rent every month.
-              </EmptyState>
+              <EmptyState title={t('app.schedules.empty.title')}>{t('app.schedules.empty.text')}</EmptyState>
             )
           }
         </Load>

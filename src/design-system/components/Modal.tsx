@@ -9,7 +9,7 @@ export interface ModalProps {
   footer?: ReactNode;
 }
 
-const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'; // content-check: ignore (CSS selector)
 
 export function Modal({ open, title, onClose, children, footer }: ModalProps) {
   const titleId = useId();

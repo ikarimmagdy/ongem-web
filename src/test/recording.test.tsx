@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { snapshot } from 'rrweb-snapshot';
 import { DemoOnGemApi } from '../api/demo';
 import { maskAll } from '../recording/mask';
-import { EventQueue, PRIVACY_LINE, RRWEB_OPTIONS } from '../recording/Recorder';
+import { EventQueue, privacyLine, RRWEB_OPTIONS } from '../recording/Recorder';
 import { renderApp } from './render';
 
 // The shell's recording switch is off (RECORDING_ENABLED); these tests cover the recorder itself, so they turn it on.
@@ -74,9 +74,9 @@ describe('recording (OG-031 R5, R6, R8)', () => {
 
   it('privacy_line_on_sign_in_and_settings_AC_R8_1', async () => {
     const { unmount } = renderApp('/sign-in', { mode: 'none' });
-    expect(screen.getByTestId('privacy-line')).toHaveTextContent(PRIVACY_LINE);
+    expect(screen.getByTestId('privacy-line')).toHaveTextContent(privacyLine());
     unmount();
     renderApp('/settings');
-    expect(await screen.findByTestId('privacy-line')).toHaveTextContent(PRIVACY_LINE);
+    expect(await screen.findByTestId('privacy-line')).toHaveTextContent(privacyLine());
   });
 });

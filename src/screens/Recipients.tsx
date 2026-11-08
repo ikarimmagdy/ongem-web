@@ -15,6 +15,7 @@ import {
 } from '../design-system';
 import { abaValid } from '../lib/aba';
 import { normaliseIban, uaeIbanValid } from '../lib/iban';
+import { t } from '../i18n';
 import { IS_AE, REGION_CONFIG } from '../region';
 import { useAsync } from '../lib/useAsync';
 import { useSearchParams } from 'react-router-dom';
@@ -25,18 +26,18 @@ import { AcctLast4, Load, human, stateStatus } from './common';
 /** Checked before any call (OG-030 AC-R3.1): name, ABA routing number, 4 to 17 digit account number. */
 export function recipientErrors(name: string, routing: string, account: string) {
   return {
-    name: name.trim() ? undefined : 'Enter the recipient name.',
-    routing: abaValid(routing) ? undefined : 'Enter a valid 9-digit routing number.',
-    account: /^\d{4,17}$/.test(account) ? undefined : 'Enter 4 to 17 digits.',
+    name: name.trim() ? undefined : t('app.recipients.error_name'),
+    routing: abaValid(routing) ? undefined : t('app.recipients.error_routing'),
+    account: /^\d{4,17}$/.test(account) ? undefined : t('app.recipients.error_account'),
   };
 }
 
 /** The AE build (OG-022 R18): name and UAE IBAN; the IBAN error shows on the account line. */
 export function ibanRecipientErrors(name: string, iban: string) {
   return {
-    name: name.trim() ? undefined : 'Enter the recipient name.',
+    name: name.trim() ? undefined : t('app.recipients.error_name'),
     routing: undefined,
-    account: uaeIbanValid(iban) ? undefined : 'Enter a valid UAE IBAN: AE and 21 digits.',
+    account: uaeIbanValid(iban) ? undefined : t('app.recipients.error_iban'),
   };
 }
 
@@ -86,7 +87,7 @@ export function AddRecipient({
       setAccount('');
       setRouting('');
       setName('');
-      toast.show(`${r.name} added. Screening: ${human(r.screening)}.`, 'success');
+      toast.show(t('app.recipients.added', { name: r.name, screening: human(r.screening) }), 'success');
       await drafts.done(['RECIPIENT_ADD'], r.id);
       onAdded?.(r.id);
     } catch (err) {
@@ -98,11 +99,15 @@ export function AddRecipient({
   };
   return (
     <form className="fw-form" onSubmit={submit} noValidate data-testid="add-recipient">
-      <Field label="Recipient name" error={errors.name}>
+      <Field label={t('app.recipients.name_label')} error={errors.name}>
         <Input data-testid="recipient-name" value={name} onChange={(e) => setName(e.target.value)} />
       </Field>
       {IS_AE ? (
-        <Field label="IBAN" hint="AE and 21 digits. Only the last four are kept." error={errors.account}>
+        <Field
+          label={t('app.recipients.iban_label')}
+          hint={t('app.recipients.iban_hint')}
+          error={errors.account}
+        >
           <Input
             data-testid="recipient-iban"
             data-mask=""
@@ -114,7 +119,7 @@ export function AddRecipient({
         </Field>
       ) : (
         <>
-          <Field label="Routing number" error={errors.routing}>
+          <Field label={t('app.recipients.routing_label')} error={errors.routing}>
             <Input
               data-testid="recipient-routing"
               inputMode="numeric"
@@ -124,7 +129,7 @@ export function AddRecipient({
               onChange={(e) => setRouting(e.target.value.replace(/\D/g, ''))}
             />
           </Field>
-          <Field label="Account number" error={errors.account}>
+          <Field label={t('app.recipients.account_number_label')} error={errors.account}>
             <Input
               data-testid="recipient-account"
               data-mask=""
@@ -134,13 +139,13 @@ export function AddRecipient({
               onChange={(e) => setAccount(e.target.value.replace(/\D/g, ''))}
             />
           </Field>
-          <Field label="Account type">
+          <Field label={t('app.recipients.account_type_label')}>
             <Select
               value={type}
               onChange={(e) => setType(e.target.value)}
               options={[
-                { value: 'CHECKING', label: 'Checking' },
-                { value: 'SAVINGS', label: 'Savings' },
+                { value: 'CHECKING', label: t('app.recipients.checking') },
+                { value: 'SAVINGS', label: t('app.recipients.savings') },
               ]}
             />
           </Field>
@@ -149,7 +154,7 @@ export function AddRecipient({
       {failure && <Notice status="failure">{failure}</Notice>}
       <div className="fw-actions">
         <Button type="submit" data-testid="recipient-save" disabled={busy}>
-          Add recipient
+          {t('app.recipients.add')}
         </Button>
       </div>
     </form>
@@ -187,18 +192,18 @@ export function RecipientsScreen() {
   return (
     <>
       <PageHeader
-        title="Recipients"
+        title={t('app.recipients.title')}
         subtitle={REGION_CONFIG.recipientsSubtitle}
         actions={
           manage && (
             <Button data-testid="recipient-add" onClick={() => setAdding((x) => !x)}>
-              Add recipient
+              {t('app.recipients.add')}
             </Button>
           )
         }
       />
       {adding && manage && (
-        <Card title="New recipient">
+        <Card title={t('app.recipients.new_title')}>
           <AddRecipient
             initialName={q.get('name') ?? ''}
             onAdded={() => {
@@ -218,7 +223,7 @@ export function RecipientsScreen() {
                   <span className="fw-row__main">
                     <strong>{r.name}</strong>
                     <span className="fw-row__sub">
-                      {IS_AE ? 'IBAN' : 'Account'} <AcctLast4 value={r.accountLast4} /> ·{' '}
+                      {t('app.recipients.account_row')} <AcctLast4 value={r.accountLast4} /> ·{' '}
                       {human(r.accountType)}
                     </span>
                   </span>
@@ -228,11 +233,11 @@ export function RecipientsScreen() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        aria-label={`Archive ${r.name}`}
+                        aria-label={t('app.recipients.archive_named', { name: r.name })}
                         disabled={archiving !== null}
                         onClick={() => archive(r.id)}
                       >
-                        Archive
+                        {t('app.recipients.archive')}
                       </Button>
                     )}
                   </span>
@@ -240,7 +245,7 @@ export function RecipientsScreen() {
               ))}
             </ul>
           ) : (
-            <EmptyState title="No recipients yet">Add the people and companies you pay.</EmptyState>
+            <EmptyState title={t('app.recipients.empty_title')}>{t('app.recipients.empty_text')}</EmptyState>
           )
         }
       </Load>

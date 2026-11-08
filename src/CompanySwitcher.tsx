@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Modal } from './design-system';
 import type { Membership } from './api/types';
 import { human } from './screens/common';
+import { t } from './i18n';
 
 /**
  * The company switcher (G-69), the same on web, iOS and Android: a button in the top bar with the current company's
@@ -19,7 +20,7 @@ export function CompanySwitcher({
 }) {
   const [open, setOpen] = useState(false);
   if (companies.length < 2) return <span className="fw-company">{current?.companyName}</span>;
-  const name = (m: Membership) => m.companyName ?? 'Company';
+  const name = (m: Membership) => m.companyName ?? t('app.shell.company');
   return (
     <>
       <button
@@ -27,13 +28,15 @@ export function CompanySwitcher({
         className="fw-switcher"
         data-testid="company-switcher"
         aria-haspopup="dialog"
-        aria-label={`Switch company, current ${current ? name(current) : 'company'}`}
+        aria-label={t('app.shell.switch_company_label', {
+          company: current ? name(current) : t('app.shell.company'),
+        })}
         onClick={() => setOpen(true)}
       >
-        <span className="fw-switcher__name">{current ? name(current) : 'Company'}</span>
+        <span className="fw-switcher__name">{current ? name(current) : t('app.shell.company')}</span>
         <span aria-hidden="true" className="fw-switcher__chevron" />
       </button>
-      <Modal open={open} title="Switch company" onClose={() => setOpen(false)}>
+      <Modal open={open} title={t('app.shell.switch_company')} onClose={() => setOpen(false)}>
         <ul className="fw-list" data-testid="company-options">
           {companies.map((m) => {
             const isCurrent = m.companyId === current?.companyId;
@@ -53,7 +56,7 @@ export function CompanySwitcher({
                     <span>{name(m)}</span>
                     <span className="fw-row__sub">{human(m.role)}</span>
                   </span>
-                  {isCurrent && <span className="fw-row__sub">Current</span>}
+                  {isCurrent && <span className="fw-row__sub">{t('app.shell.current')}</span>}
                 </button>
               </li>
             );

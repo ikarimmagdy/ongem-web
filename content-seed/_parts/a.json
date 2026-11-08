@@ -1,0 +1,1419 @@
+{
+  "entries": [
+    {
+      "key": "app.payments.title",
+      "format": "text",
+      "description": "Payments page heading",
+      "placeholders": [],
+      "en": "Payments",
+      "ar": "المدفوعات"
+    },
+    {
+      "key": "app.payments.kind.topup",
+      "format": "text",
+      "description": "A payment that tops up an OnGem account from another bank; title, list row and kind",
+      "placeholders": [],
+      "en": "Top-up",
+      "ar": "إيداع"
+    },
+    {
+      "key": "app.payments.kind.transfer",
+      "format": "text",
+      "description": "Payment detail title for a transfer between own accounts",
+      "placeholders": [],
+      "en": "Transfer",
+      "ar": "تحويل"
+    },
+    {
+      "key": "app.payments.kind.payment",
+      "format": "text",
+      "description": "Payment detail title for a payment to a recipient",
+      "placeholders": [],
+      "en": "Payment",
+      "ar": "دفعة"
+    },
+    {
+      "key": "app.payments.to.topup_to",
+      "format": "text",
+      "description": "Payments list: who a top-up goes to; account is the OnGem account name",
+      "placeholders": [
+        "account"
+      ],
+      "en": "Top-up to {account}",
+      "ar": "إيداع إلى {account}"
+    },
+    {
+      "key": "app.payments.to.your_account",
+      "format": "text",
+      "description": "Payments list: a transfer to an own account whose name is unknown",
+      "placeholders": [],
+      "en": "Your account",
+      "ar": "حسابك"
+    },
+    {
+      "key": "app.payments.to.recipient",
+      "format": "text",
+      "description": "Payments list: a payment whose recipient name is unknown",
+      "placeholders": [],
+      "en": "Recipient",
+      "ar": "المستفيد"
+    },
+    {
+      "key": "app.payments.status_line.pending_approval_ongem",
+      "format": "text",
+      "description": "Payment detail status: waiting for OnGem to approve (one-person company)",
+      "placeholders": [],
+      "en": "Waiting for OnGem to approve it, because no one else in your company can approve payments. Nothing has moved yet.",
+      "ar": "بانتظار موافقة OnGem عليها، إذ لا يوجد في شركتك شخص آخر مخوّل بالموافقة على المدفوعات. لم يُحوَّل أي مبلغ بعد."
+    },
+    {
+      "key": "app.payments.status_line.pending_approval",
+      "format": "text",
+      "description": "Payment detail status: waiting for a second person to approve",
+      "placeholders": [],
+      "en": "Waiting for a second person in your company to approve it. Nothing has moved yet.",
+      "ar": "بانتظار موافقة شخص آخر في شركتك. لم يُحوَّل أي مبلغ بعد."
+    },
+    {
+      "key": "app.payments.status_line.rejected",
+      "format": "text",
+      "description": "Payment detail status: declined by the approver",
+      "placeholders": [],
+      "en": "Declined by the approver. Nothing was moved.",
+      "ar": "رفضها المعتمِد. لم يُحوَّل أي مبلغ."
+    },
+    {
+      "key": "app.payments.status_line.sending",
+      "format": "text",
+      "description": "Payment detail status: sent to the bank, no answer yet",
+      "placeholders": [],
+      "en": "Sending. Our banking partner did not answer yet. We will not send it twice.",
+      "ar": "جارٍ الإرسال. لم يردّ شريكنا المصرفي بعد، ولن نرسلها مرتين."
+    },
+    {
+      "key": "app.payments.status_line.sent_reference",
+      "format": "text",
+      "description": "Payment detail status: sent, with the bank reference",
+      "placeholders": [
+        "reference"
+      ],
+      "en": "Sent. Bank reference {reference}.",
+      "ar": "أُرسلت. المرجع المصرفي {reference}."
+    },
+    {
+      "key": "app.payments.status_line.sent",
+      "format": "text",
+      "description": "Payment detail status: sent, bank reference not known yet",
+      "placeholders": [],
+      "en": "Sent. The bank reference follows.",
+      "ar": "أُرسلت. سيصل المرجع المصرفي لاحقًا."
+    },
+    {
+      "key": "app.payments.status_line.settled",
+      "format": "text",
+      "description": "Payment detail status: settled",
+      "placeholders": [],
+      "en": "Settled.",
+      "ar": "تمت التسوية."
+    },
+    {
+      "key": "app.payments.decline",
+      "format": "text",
+      "description": "Button: decline a payment waiting for approval",
+      "placeholders": [],
+      "en": "Decline",
+      "ar": "رفض"
+    },
+    {
+      "key": "app.payments.approve",
+      "format": "text",
+      "description": "Button: approve a payment waiting for approval",
+      "placeholders": [],
+      "en": "Approve",
+      "ar": "موافقة"
+    },
+    {
+      "key": "app.payments.detail.status",
+      "format": "text",
+      "description": "Payment detail label",
+      "placeholders": [],
+      "en": "Status",
+      "ar": "الحالة"
+    },
+    {
+      "key": "app.payments.detail.rail",
+      "format": "text",
+      "description": "Payment detail label: how the payment moves",
+      "placeholders": [],
+      "en": "Rail",
+      "ar": "طريقة الدفع"
+    },
+    {
+      "key": "app.payments.detail.internal_transfer",
+      "format": "text",
+      "description": "How a transfer between own accounts moves; detail and list",
+      "placeholders": [],
+      "en": "Internal transfer",
+      "ar": "تحويل داخلي"
+    },
+    {
+      "key": "app.payments.detail.reference",
+      "format": "text",
+      "description": "Payment detail label: the founder reference",
+      "placeholders": [],
+      "en": "Reference",
+      "ar": "المرجع"
+    },
+    {
+      "key": "app.payments.detail.none",
+      "format": "text",
+      "description": "Payment detail: no reference given",
+      "placeholders": [],
+      "en": "None",
+      "ar": "لا يوجد"
+    },
+    {
+      "key": "app.payments.detail.bank_reference",
+      "format": "text",
+      "description": "Payment detail label",
+      "placeholders": [],
+      "en": "Bank reference",
+      "ar": "المرجع المصرفي"
+    },
+    {
+      "key": "app.payments.detail.not_yet",
+      "format": "text",
+      "description": "Payment detail: bank reference not known yet",
+      "placeholders": [],
+      "en": "Not yet",
+      "ar": "ليس بعد"
+    },
+    {
+      "key": "app.payments.detail.returned",
+      "format": "text",
+      "description": "Payment detail label: return code and reason",
+      "placeholders": [],
+      "en": "Returned by the bank",
+      "ar": "أعادها البنك"
+    },
+    {
+      "key": "app.payments.detail.timeline",
+      "format": "text",
+      "description": "Accessible name of the payment timeline list",
+      "placeholders": [],
+      "en": "Payment timeline",
+      "ar": "المسار الزمني للدفعة"
+    },
+    {
+      "key": "app.payments.review.title",
+      "format": "text",
+      "description": "Card title: review before sending",
+      "placeholders": [],
+      "en": "Review the payment",
+      "ar": "مراجعة الدفعة"
+    },
+    {
+      "key": "app.payments.review.amount",
+      "format": "text",
+      "description": "Review label",
+      "placeholders": [],
+      "en": "Amount",
+      "ar": "المبلغ"
+    },
+    {
+      "key": "app.payments.review.from",
+      "format": "text",
+      "description": "Review and form label: the account money leaves",
+      "placeholders": [],
+      "en": "From",
+      "ar": "من"
+    },
+    {
+      "key": "app.payments.review.to",
+      "format": "text",
+      "description": "Review label: where the money goes",
+      "placeholders": [],
+      "en": "To",
+      "ar": "إلى"
+    },
+    {
+      "key": "app.payments.review.how",
+      "format": "text",
+      "description": "Review label: how the payment moves",
+      "placeholders": [],
+      "en": "How",
+      "ar": "الطريقة"
+    },
+    {
+      "key": "app.payments.review.internal_now",
+      "format": "text",
+      "description": "Review: how a transfer between own accounts moves",
+      "placeholders": [],
+      "en": "Internal transfer, right away",
+      "ar": "تحويل داخلي فوري"
+    },
+    {
+      "key": "app.payments.review.note",
+      "format": "text",
+      "description": "Review: what happens on send",
+      "placeholders": [],
+      "en": "The bank checks the live balance right before it leaves. You confirm it is you before it is sent.",
+      "ar": "يتحقق البنك من الرصيد الفعلي قبل خروج الدفعة مباشرة، وستؤكد هويتك قبل إرسالها."
+    },
+    {
+      "key": "app.payments.review.change",
+      "format": "text",
+      "description": "Button: back to the form",
+      "placeholders": [],
+      "en": "Change",
+      "ar": "تعديل"
+    },
+    {
+      "key": "app.payments.review.send",
+      "format": "text",
+      "description": "Button: send the payment",
+      "placeholders": [],
+      "en": "Send",
+      "ar": "إرسال"
+    },
+    {
+      "key": "app.payments.form.title",
+      "format": "text",
+      "description": "New payment card title and button",
+      "placeholders": [],
+      "en": "New payment",
+      "ar": "دفعة جديدة"
+    },
+    {
+      "key": "app.payments.form.type",
+      "format": "text",
+      "description": "New payment label: rail or internal transfer",
+      "placeholders": [],
+      "en": "Type",
+      "ar": "النوع"
+    },
+    {
+      "key": "app.payments.form.internal",
+      "format": "text",
+      "description": "New payment type option",
+      "placeholders": [],
+      "en": "Transfer between my accounts",
+      "ar": "تحويل بين حساباتي"
+    },
+    {
+      "key": "app.payments.form.account_ending",
+      "format": "text",
+      "description": "Account option: account name and last four digits",
+      "placeholders": [
+        "last4",
+        "name"
+      ],
+      "en": "{name} ending {last4}",
+      "ar": "{name} المنتهي بـ {last4}"
+    },
+    {
+      "key": "app.payments.form.to_account",
+      "format": "text",
+      "description": "New payment label for an internal transfer",
+      "placeholders": [],
+      "en": "To account",
+      "ar": "إلى الحساب"
+    },
+    {
+      "key": "app.payments.form.choose_account",
+      "format": "text",
+      "description": "Select placeholder",
+      "placeholders": [],
+      "en": "Choose an account",
+      "ar": "اختر حسابًا"
+    },
+    {
+      "key": "app.payments.form.recipient",
+      "format": "text",
+      "description": "New payment label",
+      "placeholders": [],
+      "en": "Recipient",
+      "ar": "المستفيد"
+    },
+    {
+      "key": "app.payments.form.recipient_first",
+      "format": "text",
+      "description": "Hint when there is no recipient to pay",
+      "placeholders": [],
+      "en": "Add a recipient first.",
+      "ar": "أضف مستفيدًا أولًا."
+    },
+    {
+      "key": "app.payments.form.recipient_pending",
+      "format": "text",
+      "description": "Hint for a recipient not screened yet",
+      "placeholders": [],
+      "en": "Checked by the bank with the first payment.",
+      "ar": "يتحقق منه البنك مع أول دفعة."
+    },
+    {
+      "key": "app.payments.form.choose_recipient",
+      "format": "text",
+      "description": "Select placeholder",
+      "placeholders": [],
+      "en": "Choose a recipient",
+      "ar": "اختر مستفيدًا"
+    },
+    {
+      "key": "app.payments.form.amount_error",
+      "format": "text",
+      "description": "Amount field error",
+      "placeholders": [],
+      "en": "Enter an amount like 1,250.00",
+      "ar": "أدخل مبلغًا مثل 1,250.00"
+    },
+    {
+      "key": "app.payments.form.reference",
+      "format": "text",
+      "description": "Reference field label",
+      "placeholders": [],
+      "en": "Reference (optional)",
+      "ar": "المرجع (اختياري)"
+    },
+    {
+      "key": "app.payments.form.review",
+      "format": "text",
+      "description": "Button: review the payment",
+      "placeholders": [],
+      "en": "Review",
+      "ar": "مراجعة"
+    },
+    {
+      "key": "app.payments.recipients",
+      "format": "text",
+      "description": "Payments header link to recipients",
+      "placeholders": [],
+      "en": "Recipients",
+      "ar": "المستفيدون"
+    },
+    {
+      "key": "app.payments.scheduled",
+      "format": "text",
+      "description": "Payments header button to scheduled payments",
+      "placeholders": [],
+      "en": "Scheduled",
+      "ar": "المجدولة"
+    },
+    {
+      "key": "app.payments.add_money",
+      "format": "text",
+      "description": "Payments header button to top-up",
+      "placeholders": [],
+      "en": "Add money",
+      "ar": "إضافة أموال"
+    },
+    {
+      "key": "app.payments.pager.label",
+      "format": "text",
+      "description": "Accessible name of the pager",
+      "placeholders": [],
+      "en": "Payments pages",
+      "ar": "صفحات المدفوعات"
+    },
+    {
+      "key": "app.payments.pager.newer",
+      "format": "text",
+      "description": "Pager button",
+      "placeholders": [],
+      "en": "Newer",
+      "ar": "الأحدث"
+    },
+    {
+      "key": "app.payments.pager.page",
+      "format": "text",
+      "description": "Pager: current page number",
+      "placeholders": [
+        "page"
+      ],
+      "en": "Page {page}",
+      "ar": "صفحة {page}"
+    },
+    {
+      "key": "app.payments.pager.older",
+      "format": "text",
+      "description": "Pager button",
+      "placeholders": [],
+      "en": "Older",
+      "ar": "الأقدم"
+    },
+    {
+      "key": "app.payments.empty.title",
+      "format": "text",
+      "description": "Empty payments list title",
+      "placeholders": [],
+      "en": "No payments yet",
+      "ar": "لا توجد مدفوعات بعد"
+    },
+    {
+      "key": "app.payments.empty.text",
+      "format": "text",
+      "description": "Empty payments list text",
+      "placeholders": [],
+      "en": "Payments you send show here with their status from the bank.",
+      "ar": "تظهر هنا الدفعات التي ترسلها مع حالتها لدى البنك."
+    },
+    {
+      "key": "app.payments.back",
+      "format": "text",
+      "description": "Button: close the detail column",
+      "placeholders": [],
+      "en": "Back to payments",
+      "ar": "العودة إلى المدفوعات"
+    },
+    {
+      "key": "app.payments.role_denied",
+      "format": "text",
+      "description": "New payment when the role cannot create payments",
+      "placeholders": [],
+      "en": "Your role does not allow this. An owner of the company can do it.",
+      "ar": "دورك لا يسمح بذلك، ويمكن لأحد مالكي الشركة القيام به."
+    },
+    {
+      "key": "app.payments.hint.title",
+      "format": "text",
+      "description": "Detail column before a payment is picked",
+      "placeholders": [],
+      "en": "Pick a payment",
+      "ar": "اختر دفعة"
+    },
+    {
+      "key": "app.payments.hint.text",
+      "format": "text",
+      "description": "Detail column before a payment is picked",
+      "placeholders": [],
+      "en": "Its amount, recipient and each step from sent to settled show here.",
+      "ar": "يظهر هنا مبلغها والمستفيد وكل مرحلة من الإرسال حتى التسوية."
+    },
+    {
+      "key": "app.payments.loading.payments",
+      "format": "text",
+      "description": "What is loading, after the loading word",
+      "placeholders": [],
+      "en": "payments",
+      "ar": "المدفوعات"
+    },
+    {
+      "key": "app.payments.loading.payment",
+      "format": "text",
+      "description": "What is loading, after the loading word",
+      "placeholders": [],
+      "en": "payment",
+      "ar": "الدفعة"
+    },
+    {
+      "key": "app.payments.loading.accounts",
+      "format": "text",
+      "description": "What is loading, after the loading word",
+      "placeholders": [],
+      "en": "accounts",
+      "ar": "الحسابات"
+    },
+    {
+      "key": "app.schedules.title",
+      "format": "text",
+      "description": "Scheduled payments card title",
+      "placeholders": [],
+      "en": "Scheduled payments",
+      "ar": "الدفعات المجدولة"
+    },
+    {
+      "key": "app.schedules.state.active",
+      "format": "text",
+      "description": "Schedule state",
+      "placeholders": [],
+      "en": "Active",
+      "ar": "نشطة"
+    },
+    {
+      "key": "app.schedules.state.paused",
+      "format": "text",
+      "description": "Schedule state",
+      "placeholders": [],
+      "en": "Paused",
+      "ar": "متوقفة مؤقتًا"
+    },
+    {
+      "key": "app.schedules.state.cancelled",
+      "format": "text",
+      "description": "Schedule state",
+      "placeholders": [],
+      "en": "Cancelled",
+      "ar": "ملغاة"
+    },
+    {
+      "key": "app.schedules.state.finished",
+      "format": "text",
+      "description": "Schedule state",
+      "placeholders": [],
+      "en": "Finished",
+      "ar": "منتهية"
+    },
+    {
+      "key": "app.schedules.next.paused",
+      "format": "text",
+      "description": "Schedule row: next payment line when paused",
+      "placeholders": [],
+      "en": "Paused. No payment is made until you resume it.",
+      "ar": "متوقفة مؤقتًا. لن تُنفَّذ أي دفعة حتى تستأنفها."
+    },
+    {
+      "key": "app.schedules.next.on",
+      "format": "text",
+      "description": "Schedule row: next payment date",
+      "placeholders": [
+        "date"
+      ],
+      "en": "Next payment on {date}",
+      "ar": "الدفعة التالية في {date}"
+    },
+    {
+      "key": "app.schedules.next.none",
+      "format": "text",
+      "description": "Schedule row: schedule ended",
+      "placeholders": [],
+      "en": "No more payments.",
+      "ar": "لا مزيد من الدفعات."
+    },
+    {
+      "key": "app.schedules.run.due",
+      "format": "text",
+      "description": "State of one payment made by a schedule",
+      "placeholders": [],
+      "en": "Due",
+      "ar": "مستحقة"
+    },
+    {
+      "key": "app.schedules.run.sent",
+      "format": "text",
+      "description": "State of one payment made by a schedule",
+      "placeholders": [],
+      "en": "Sent",
+      "ar": "أُرسلت"
+    },
+    {
+      "key": "app.schedules.run.skipped",
+      "format": "text",
+      "description": "State of one payment made by a schedule",
+      "placeholders": [],
+      "en": "Skipped",
+      "ar": "تم تخطيها"
+    },
+    {
+      "key": "app.schedules.run.failed",
+      "format": "text",
+      "description": "State of one payment made by a schedule",
+      "placeholders": [],
+      "en": "Failed",
+      "ar": "لم تنجح"
+    },
+    {
+      "key": "app.schedules.run.cancelled",
+      "format": "text",
+      "description": "State of one payment made by a schedule",
+      "placeholders": [],
+      "en": "Cancelled",
+      "ar": "ملغاة"
+    },
+    {
+      "key": "app.schedules.runs.none",
+      "format": "text",
+      "description": "Schedule runs: none yet",
+      "placeholders": [],
+      "en": "No payment has been made from this schedule yet.",
+      "ar": "لم تُنفَّذ أي دفعة من هذا الجدول بعد."
+    },
+    {
+      "key": "app.schedules.recipient",
+      "format": "text",
+      "description": "Schedule row when the recipient name is unknown; form label",
+      "placeholders": [],
+      "en": "Recipient",
+      "ar": "المستفيد"
+    },
+    {
+      "key": "app.schedules.from_account",
+      "format": "text",
+      "description": "Schedule row: the account the payments leave",
+      "placeholders": [
+        "account"
+      ],
+      "en": "from {account}",
+      "ar": "من {account}"
+    },
+    {
+      "key": "app.schedules.runs.hide",
+      "format": "text",
+      "description": "Button: hide the payments made",
+      "placeholders": [],
+      "en": "Hide payments",
+      "ar": "إخفاء الدفعات"
+    },
+    {
+      "key": "app.schedules.runs.show",
+      "format": "text",
+      "description": "Button: show the payments made",
+      "placeholders": [],
+      "en": "Payments made",
+      "ar": "الدفعات المنفذة"
+    },
+    {
+      "key": "app.schedules.pause",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "en": "Pause",
+      "ar": "إيقاف مؤقت"
+    },
+    {
+      "key": "app.schedules.resume",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "en": "Resume",
+      "ar": "استئناف"
+    },
+    {
+      "key": "app.schedules.cancel",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "en": "Cancel schedule",
+      "ar": "إلغاء الجدول"
+    },
+    {
+      "key": "app.schedules.form.title",
+      "format": "text",
+      "description": "New schedule card title",
+      "placeholders": [],
+      "en": "New scheduled payment",
+      "ar": "دفعة مجدولة جديدة"
+    },
+    {
+      "key": "app.schedules.form.intro",
+      "format": "text",
+      "description": "New schedule intro; how is the region rail in words (a standard ACH, a UAEFTS payment)",
+      "placeholders": [
+        "how"
+      ],
+      "en": "OnGem makes each payment on its date as {how}, with the same checks as one you send yourself. A date on a weekend or holiday goes on the next banking day.",
+      "ar": "تنفّذ OnGem كل دفعة في موعدها بوصفها {how}، مع عمليات التحقق ذاتها التي تخضع لها أي دفعة ترسلها بنفسك. وإذا وافق الموعد عطلة نهاية أسبوع أو عطلة رسمية، تُنفَّذ الدفعة في يوم العمل المصرفي التالي."
+    },
+    {
+      "key": "app.schedules.form.from",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "en": "From",
+      "ar": "من"
+    },
+    {
+      "key": "app.schedules.form.recipient_first",
+      "format": "text",
+      "description": "Hint when there is no recipient",
+      "placeholders": [],
+      "en": "Add a recipient first.",
+      "ar": "أضف مستفيدًا أولًا."
+    },
+    {
+      "key": "app.schedules.form.choose_recipient",
+      "format": "text",
+      "description": "Select placeholder",
+      "placeholders": [],
+      "en": "Choose a recipient",
+      "ar": "اختر مستفيدًا"
+    },
+    {
+      "key": "app.schedules.form.amount_error",
+      "format": "text",
+      "description": "Amount field error",
+      "placeholders": [],
+      "en": "Enter an amount like 1,250.00",
+      "ar": "أدخل مبلغًا مثل 1,250.00"
+    },
+    {
+      "key": "app.schedules.form.how_often",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "en": "How often",
+      "ar": "التكرار"
+    },
+    {
+      "key": "app.schedules.form.days",
+      "format": "text",
+      "description": "Frequency option",
+      "placeholders": [],
+      "en": "Days",
+      "ar": "أيام"
+    },
+    {
+      "key": "app.schedules.form.weeks",
+      "format": "text",
+      "description": "Frequency option",
+      "placeholders": [],
+      "en": "Weeks",
+      "ar": "أسابيع"
+    },
+    {
+      "key": "app.schedules.form.months",
+      "format": "text",
+      "description": "Frequency option",
+      "placeholders": [],
+      "en": "Months",
+      "ar": "أشهر"
+    },
+    {
+      "key": "app.schedules.form.every",
+      "format": "text",
+      "description": "Form label: the interval",
+      "placeholders": [],
+      "en": "Every",
+      "ar": "كل"
+    },
+    {
+      "key": "app.schedules.form.whole_number",
+      "format": "text",
+      "description": "Interval hint when invalid",
+      "placeholders": [],
+      "en": "A whole number, 1 or more",
+      "ar": "عدد صحيح، 1 أو أكثر"
+    },
+    {
+      "key": "app.schedules.form.first_on",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "en": "First payment on",
+      "ar": "تاريخ أول دفعة"
+    },
+    {
+      "key": "app.schedules.form.start_error",
+      "format": "text",
+      "description": "Start date error",
+      "placeholders": [],
+      "en": "Choose today or a later date.",
+      "ar": "اختر تاريخ اليوم أو تاريخًا لاحقًا."
+    },
+    {
+      "key": "app.schedules.form.ends",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "en": "Ends",
+      "ar": "الانتهاء"
+    },
+    {
+      "key": "app.schedules.form.ends_never",
+      "format": "text",
+      "description": "Ends option",
+      "placeholders": [],
+      "en": "When I cancel it",
+      "ar": "عندما ألغيه"
+    },
+    {
+      "key": "app.schedules.form.ends_count",
+      "format": "text",
+      "description": "Ends option",
+      "placeholders": [],
+      "en": "After a number of payments",
+      "ar": "بعد عدد محدد من الدفعات"
+    },
+    {
+      "key": "app.schedules.form.ends_date",
+      "format": "text",
+      "description": "Ends option",
+      "placeholders": [],
+      "en": "Before a date",
+      "ar": "قبل تاريخ محدد"
+    },
+    {
+      "key": "app.schedules.form.count",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "en": "Number of payments",
+      "ar": "عدد الدفعات"
+    },
+    {
+      "key": "app.schedules.form.end",
+      "format": "text",
+      "description": "Form label: end date",
+      "placeholders": [],
+      "en": "No payment on or after",
+      "ar": "لا دفعات في هذا التاريخ أو بعده"
+    },
+    {
+      "key": "app.schedules.form.end_error",
+      "format": "text",
+      "description": "End date error",
+      "placeholders": [],
+      "en": "Choose a date after the first payment.",
+      "ar": "اختر تاريخًا بعد تاريخ أول دفعة."
+    },
+    {
+      "key": "app.schedules.form.reference",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "en": "Reference (optional)",
+      "ar": "المرجع (اختياري)"
+    },
+    {
+      "key": "app.schedules.form.summary",
+      "format": "text",
+      "description": "Summary before saving; frequency is the how often text in lower case",
+      "placeholders": [
+        "amount",
+        "date",
+        "frequency"
+      ],
+      "en": "{amount} {frequency}, first on {date}. You confirm it is you before it is set up.",
+      "ar": "{amount} {frequency}، وأول دفعة في {date}. ستؤكد هويتك قبل إعداد الجدول."
+    },
+    {
+      "key": "app.schedules.form.save",
+      "format": "text",
+      "description": "Button: create the schedule",
+      "placeholders": [],
+      "en": "Schedule payments",
+      "ar": "جدولة الدفعات"
+    },
+    {
+      "key": "app.schedules.loading.list",
+      "format": "text",
+      "description": "What is loading, after the loading word",
+      "placeholders": [],
+      "en": "scheduled payments",
+      "ar": "الدفعات المجدولة"
+    },
+    {
+      "key": "app.schedules.loading.runs",
+      "format": "text",
+      "description": "What is loading, after the loading word",
+      "placeholders": [],
+      "en": "runs",
+      "ar": "الدفعات المنفذة"
+    },
+    {
+      "key": "app.schedules.empty.title",
+      "format": "text",
+      "description": "Empty list title",
+      "placeholders": [],
+      "en": "No scheduled payments",
+      "ar": "لا توجد دفعات مجدولة"
+    },
+    {
+      "key": "app.schedules.empty.text",
+      "format": "text",
+      "description": "Empty list text",
+      "placeholders": [],
+      "en": "Set up a payment that goes on its own, such as rent every month.",
+      "ar": "أعدّ دفعة تُنفَّذ تلقائيًا، مثل الإيجار كل شهر."
+    },
+    {
+      "key": "app.schedules.every_day.one",
+      "format": "text",
+      "description": "How often a schedule pays, every day or every n days; plural forms by count",
+      "placeholders": [],
+      "en": "Every day",
+      "ar": "كل يوم"
+    },
+    {
+      "key": "app.schedules.every_day.two",
+      "format": "text",
+      "description": "How often a schedule pays, every day or every n days; plural forms by count (Arabic dual form)",
+      "placeholders": [],
+      "en": "Every 2 days",
+      "ar": "كل يومين"
+    },
+    {
+      "key": "app.schedules.every_day.few",
+      "format": "text",
+      "description": "How often a schedule pays, every day or every n days; plural forms by count (Arabic 3 to 10)",
+      "placeholders": [
+        "count"
+      ],
+      "en": "Every {count} days",
+      "ar": "كل {count} أيام"
+    },
+    {
+      "key": "app.schedules.every_day.many",
+      "format": "text",
+      "description": "How often a schedule pays, every day or every n days; plural forms by count (Arabic 11 to 99)",
+      "placeholders": [
+        "count"
+      ],
+      "en": "Every {count} days",
+      "ar": "كل {count} يومًا"
+    },
+    {
+      "key": "app.schedules.every_day.other",
+      "format": "text",
+      "description": "How often a schedule pays, every day or every n days; plural forms by count",
+      "placeholders": [
+        "count"
+      ],
+      "en": "Every {count} days",
+      "ar": "كل {count} يوم"
+    },
+    {
+      "key": "app.schedules.every_week.one",
+      "format": "text",
+      "description": "How often a schedule pays, every week or every n weeks; plural forms by count",
+      "placeholders": [],
+      "en": "Every week",
+      "ar": "كل أسبوع"
+    },
+    {
+      "key": "app.schedules.every_week.two",
+      "format": "text",
+      "description": "How often a schedule pays, every week or every n weeks; plural forms by count (Arabic dual form)",
+      "placeholders": [],
+      "en": "Every 2 weeks",
+      "ar": "كل أسبوعين"
+    },
+    {
+      "key": "app.schedules.every_week.few",
+      "format": "text",
+      "description": "How often a schedule pays, every week or every n weeks; plural forms by count (Arabic 3 to 10)",
+      "placeholders": [
+        "count"
+      ],
+      "en": "Every {count} weeks",
+      "ar": "كل {count} أسابيع"
+    },
+    {
+      "key": "app.schedules.every_week.many",
+      "format": "text",
+      "description": "How often a schedule pays, every week or every n weeks; plural forms by count (Arabic 11 to 99)",
+      "placeholders": [
+        "count"
+      ],
+      "en": "Every {count} weeks",
+      "ar": "كل {count} أسبوعًا"
+    },
+    {
+      "key": "app.schedules.every_week.other",
+      "format": "text",
+      "description": "How often a schedule pays, every week or every n weeks; plural forms by count",
+      "placeholders": [
+        "count"
+      ],
+      "en": "Every {count} weeks",
+      "ar": "كل {count} أسبوع"
+    },
+    {
+      "key": "app.schedules.every_month.one",
+      "format": "text",
+      "description": "How often a schedule pays, every month or every n months; plural forms by count",
+      "placeholders": [],
+      "en": "Every month",
+      "ar": "كل شهر"
+    },
+    {
+      "key": "app.schedules.every_month.two",
+      "format": "text",
+      "description": "How often a schedule pays, every month or every n months; plural forms by count (Arabic dual form)",
+      "placeholders": [],
+      "en": "Every 2 months",
+      "ar": "كل شهرين"
+    },
+    {
+      "key": "app.schedules.every_month.few",
+      "format": "text",
+      "description": "How often a schedule pays, every month or every n months; plural forms by count (Arabic 3 to 10)",
+      "placeholders": [
+        "count"
+      ],
+      "en": "Every {count} months",
+      "ar": "كل {count} أشهر"
+    },
+    {
+      "key": "app.schedules.every_month.many",
+      "format": "text",
+      "description": "How often a schedule pays, every month or every n months; plural forms by count (Arabic 11 to 99)",
+      "placeholders": [
+        "count"
+      ],
+      "en": "Every {count} months",
+      "ar": "كل {count} شهرًا"
+    },
+    {
+      "key": "app.schedules.every_month.other",
+      "format": "text",
+      "description": "How often a schedule pays, every month or every n months; plural forms by count",
+      "placeholders": [
+        "count"
+      ],
+      "en": "Every {count} months",
+      "ar": "كل {count} شهر"
+    },
+    {
+      "key": "app.schedules.every_unit",
+      "format": "text",
+      "description": "How often, for a unit the web does not know; unit is the API word",
+      "placeholders": [
+        "count",
+        "unit"
+      ],
+      "en": "Every {count} {unit}",
+      "ar": "كل {count} {unit}"
+    },
+    {
+      "key": "app.topup.state.verified",
+      "format": "text",
+      "description": "Linked account state",
+      "placeholders": [],
+      "en": "Verified",
+      "ar": "تم التحقق"
+    },
+    {
+      "key": "app.topup.state.unverified",
+      "format": "text",
+      "description": "Linked account state",
+      "placeholders": [],
+      "en": "Waiting for the bank to verify it",
+      "ar": "بانتظار تحقق البنك منه"
+    },
+    {
+      "key": "app.topup.state.removed",
+      "format": "text",
+      "description": "Linked account state",
+      "placeholders": [],
+      "en": "Removed",
+      "ar": "تمت الإزالة"
+    },
+    {
+      "key": "app.topup.account_at_other_bank",
+      "format": "text",
+      "description": "Name of a linked account without a nickname",
+      "placeholders": [],
+      "en": "Account at another bank",
+      "ar": "حساب في بنك آخر"
+    },
+    {
+      "key": "app.topup.link.title",
+      "format": "text",
+      "description": "Link form title",
+      "placeholders": [],
+      "en": "Link an account at another bank",
+      "ar": "ربط حساب في بنك آخر"
+    },
+    {
+      "key": "app.topup.link.intro",
+      "format": "text",
+      "description": "Link form intro",
+      "placeholders": [],
+      "en": "Use an account your company owns. The bank verifies it before you can pull money from it, which can take a few business days.",
+      "ar": "استخدم حسابًا تملكه شركتك. يتحقق البنك منه قبل أن تتمكن من سحب الأموال منه، وقد يستغرق ذلك بضعة أيام عمل."
+    },
+    {
+      "key": "app.topup.link.for_account",
+      "format": "text",
+      "description": "Link form label",
+      "placeholders": [],
+      "en": "For the OnGem account",
+      "ar": "لحساب OnGem"
+    },
+    {
+      "key": "app.topup.account_ending",
+      "format": "text",
+      "description": "Account option: name and last four digits",
+      "placeholders": [
+        "last4",
+        "name"
+      ],
+      "en": "{name} ending {last4}",
+      "ar": "{name} المنتهي بـ {last4}"
+    },
+    {
+      "key": "app.topup.link.owner",
+      "format": "text",
+      "description": "Link form label",
+      "placeholders": [],
+      "en": "Name on the account",
+      "ar": "الاسم على الحساب"
+    },
+    {
+      "key": "app.topup.link.iban",
+      "format": "text",
+      "description": "Link form label (UAE)",
+      "placeholders": [],
+      "en": "IBAN",
+      "ar": "IBAN",
+      "only": "ae"
+    },
+    {
+      "key": "app.topup.link.iban_hint",
+      "format": "text",
+      "description": "Link form hint (UAE)",
+      "placeholders": [],
+      "en": "AE and 21 digits. Only the last four are kept.",
+      "ar": "يبدأ بـ AE ويليه 21 رقمًا. نحتفظ بآخر أربعة أرقام فقط.",
+      "only": "ae"
+    },
+    {
+      "key": "app.topup.link.routing",
+      "format": "text",
+      "description": "Link form label (US)",
+      "placeholders": [],
+      "en": "Routing number",
+      "ar": "رقم التوجيه المصرفي",
+      "only": "us"
+    },
+    {
+      "key": "app.topup.link.routing_hint",
+      "format": "text",
+      "description": "Link form hint (US)",
+      "placeholders": [],
+      "en": "9 digits",
+      "ar": "9 أرقام",
+      "only": "us"
+    },
+    {
+      "key": "app.topup.link.number",
+      "format": "text",
+      "description": "Link form label (US)",
+      "placeholders": [],
+      "en": "Account number",
+      "ar": "رقم الحساب",
+      "only": "us"
+    },
+    {
+      "key": "app.topup.link.number_hint",
+      "format": "text",
+      "description": "Link form hint (US)",
+      "placeholders": [],
+      "en": "Only the last four are kept.",
+      "ar": "نحتفظ بآخر أربعة أرقام فقط.",
+      "only": "us"
+    },
+    {
+      "key": "app.topup.link.type",
+      "format": "text",
+      "description": "Link form label (US)",
+      "placeholders": [],
+      "en": "Account type",
+      "ar": "نوع الحساب",
+      "only": "us"
+    },
+    {
+      "key": "app.topup.link.checking",
+      "format": "text",
+      "description": "Account type option (US)",
+      "placeholders": [],
+      "en": "Checking",
+      "ar": "حساب جارٍ",
+      "only": "us"
+    },
+    {
+      "key": "app.topup.link.savings",
+      "format": "text",
+      "description": "Account type option (US)",
+      "placeholders": [],
+      "en": "Savings",
+      "ar": "حساب توفير",
+      "only": "us"
+    },
+    {
+      "key": "app.topup.link.nickname",
+      "format": "text",
+      "description": "Link form label",
+      "placeholders": [],
+      "en": "Nickname (optional)",
+      "ar": "اسم مختصر (اختياري)"
+    },
+    {
+      "key": "app.topup.link.save",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "en": "Link account",
+      "ar": "ربط الحساب"
+    },
+    {
+      "key": "app.topup.type.checking",
+      "format": "text",
+      "description": "Linked account type in the list",
+      "placeholders": [],
+      "en": "checking",
+      "ar": "جارٍ"
+    },
+    {
+      "key": "app.topup.type.savings",
+      "format": "text",
+      "description": "Linked account type in the list",
+      "placeholders": [],
+      "en": "savings",
+      "ar": "توفير"
+    },
+    {
+      "key": "app.topup.type.current",
+      "format": "text",
+      "description": "Linked account type in the list",
+      "placeholders": [],
+      "en": "current",
+      "ar": "جارٍ"
+    },
+    {
+      "key": "app.topup.none_verified",
+      "format": "text",
+      "description": "Top-up when no linked account is verified",
+      "placeholders": [],
+      "en": "Top-ups need an account the bank has verified. Link one, then check back once it shows Verified.",
+      "ar": "يتطلب الإيداع حسابًا تحقق منه البنك. اربط حسابًا، ثم عُد إلى هنا عندما تظهر حالته «تم التحقق»."
+    },
+    {
+      "key": "app.topup.review.title",
+      "format": "text",
+      "description": "Review card title",
+      "placeholders": [],
+      "en": "Review the top-up",
+      "ar": "مراجعة الإيداع"
+    },
+    {
+      "key": "app.topup.review.amount",
+      "format": "text",
+      "description": "Review label",
+      "placeholders": [],
+      "en": "Amount",
+      "ar": "المبلغ"
+    },
+    {
+      "key": "app.topup.review.from",
+      "format": "text",
+      "description": "Review and form label",
+      "placeholders": [],
+      "en": "From",
+      "ar": "من"
+    },
+    {
+      "key": "app.topup.review.to",
+      "format": "text",
+      "description": "Review and form label",
+      "placeholders": [],
+      "en": "To",
+      "ar": "إلى"
+    },
+    {
+      "key": "app.topup.review.how",
+      "format": "text",
+      "description": "Review label",
+      "placeholders": [],
+      "en": "How",
+      "ar": "الطريقة"
+    },
+    {
+      "key": "app.topup.review.note",
+      "format": "text",
+      "description": "Review: approvals and step-up",
+      "placeholders": [],
+      "en": "A second person in your company approves it before the bank pulls the money. If no one else in your company can approve, OnGem approves it. You confirm it is you first.",
+      "ar": "يوافق عليه شخص آخر في شركتك قبل أن يسحب البنك الأموال، وإذا لم يكن في شركتك من يمكنه الموافقة توافق عليه OnGem. ستؤكد هويتك أولًا."
+    },
+    {
+      "key": "app.topup.review.change",
+      "format": "text",
+      "description": "Button: back to the form",
+      "placeholders": [],
+      "en": "Change",
+      "ar": "تعديل"
+    },
+    {
+      "key": "app.topup.top_up",
+      "format": "text",
+      "description": "Top-up card title and send button",
+      "placeholders": [],
+      "en": "Top up",
+      "ar": "إيداع"
+    },
+    {
+      "key": "app.topup.form.limits",
+      "format": "text",
+      "description": "Amount hint with the limits",
+      "placeholders": [
+        "per_day",
+        "per_topup"
+      ],
+      "en": "Up to {per_topup} a top-up and {per_day} a day.",
+      "ar": "حتى {per_topup} للإيداع الواحد و{per_day} في اليوم."
+    },
+    {
+      "key": "app.topup.form.amount_error",
+      "format": "text",
+      "description": "Amount field error",
+      "placeholders": [],
+      "en": "Enter an amount like 1,250.00",
+      "ar": "أدخل مبلغًا مثل 1,250.00"
+    },
+    {
+      "key": "app.topup.form.reference",
+      "format": "text",
+      "description": "Form label",
+      "placeholders": [],
+      "en": "Reference (optional)",
+      "ar": "المرجع (اختياري)"
+    },
+    {
+      "key": "app.topup.form.review",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "en": "Review",
+      "ar": "مراجعة"
+    },
+    {
+      "key": "app.topup.sources.title",
+      "format": "text",
+      "description": "Linked accounts card title",
+      "placeholders": [],
+      "en": "Your accounts at other banks",
+      "ar": "حساباتك في بنوك أخرى"
+    },
+    {
+      "key": "app.topup.loading.sources",
+      "format": "text",
+      "description": "What is loading, after the loading word",
+      "placeholders": [],
+      "en": "accounts at other banks",
+      "ar": "الحسابات في بنوك أخرى"
+    },
+    {
+      "key": "app.topup.check_again",
+      "format": "text",
+      "description": "Button: read a linked account again at the bank",
+      "placeholders": [],
+      "en": "Check again",
+      "ar": "تحقق مرة أخرى"
+    },
+    {
+      "key": "app.topup.remove",
+      "format": "text",
+      "description": "Button: remove a linked account",
+      "placeholders": [],
+      "en": "Remove",
+      "ar": "إزالة"
+    },
+    {
+      "key": "app.topup.empty.title",
+      "format": "text",
+      "description": "Empty list title",
+      "placeholders": [],
+      "en": "No accounts linked yet",
+      "ar": "لا توجد حسابات مرتبطة بعد"
+    },
+    {
+      "key": "app.topup.empty.text",
+      "format": "text",
+      "description": "Empty list text",
+      "placeholders": [],
+      "en": "Link your company's account at another bank to move money into OnGem.",
+      "ar": "اربط حساب شركتك في بنك آخر لتحويل الأموال إلى OnGem."
+    }
+  ]
+}

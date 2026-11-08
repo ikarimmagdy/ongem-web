@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CardWidgetKind, CardWidgetSession } from '../api/types';
 import { Button, KeyValue, Notice } from '../design-system';
+import { t } from '../i18n';
 import { IS_AE } from '../region';
 
+/** The content key of each widget's title. */
 export const WIDGET_TITLES: Record<CardWidgetKind, string> = {
-  REVEAL: 'Card details',
-  GET_PIN: 'Card PIN',
-  SET_PIN: 'Set a new PIN',
-  ACTIVATE: 'Activate the card',
+  REVEAL: 'app.cards.widget_title_reveal',
+  GET_PIN: 'app.cards.widget_title_get_pin',
+  SET_PIN: 'app.cards.widget_title_set_pin',
+  ACTIVATE: 'app.cards.widget_title_activate',
 };
 
 /**
@@ -54,8 +56,8 @@ export function CardWidget({ session, onClose }: { session: CardWidgetSession; o
 
   useEffect(() => {
     const left = Date.parse(session.expiresAt) - Date.now();
-    const t = window.setTimeout(() => setPhase('expired'), Math.max(0, left));
-    return () => window.clearTimeout(t);
+    const timer = window.setTimeout(() => setPhase('expired'), Math.max(0, left));
+    return () => window.clearTimeout(timer);
   }, [session.expiresAt]);
 
   useEffect(() => {
@@ -84,7 +86,7 @@ export function CardWidget({ session, onClose }: { session: CardWidgetSession; o
           el.setAttribute('last-four', session.last4);
           el.setAttribute('card-form', 'virtual');
           el.setAttribute('show-toggle', '');
-          el.setAttribute('toggle-label', 'Show card details');
+          el.setAttribute('toggle-label', t('app.cards.widget_reveal'));
         }
         if (session.kind === 'GET_PIN') el.setAttribute('show-toggle', '');
         el.addEventListener('load', on('ready'));
@@ -105,20 +107,18 @@ export function CardWidget({ session, onClose }: { session: CardWidgetSession; o
     };
   }, [session, simulator]);
 
-  const title = WIDGET_TITLES[session.kind];
+  const title = t(WIDGET_TITLES[session.kind]);
   if (phase === 'expired') {
     return (
       <Notice
         status="info"
         action={
           <Button variant="secondary" onClick={onClose}>
-            Close
+            {t('app.cards.widget_close')}
           </Button>
         }
       >
-        <span data-testid="card-widget-expired">
-          {title} closed after 5 minutes. Open it again to see it.
-        </span>
+        <span data-testid="card-widget-expired">{t('app.cards.widget_expired', { title })}</span>
       </Notice>
     );
   }
@@ -129,28 +129,26 @@ export function CardWidget({ session, onClose }: { session: CardWidgetSession; o
         <SampleWidget session={session} />
       ) : (
         <>
-          {phase === 'loading' && <p role="status">Opening the bank's secure view.</p>}
+          {phase === 'loading' && <p role="status">{t('app.cards.widget_opening')}</p>}
           <div ref={host} className="fw-widget__frame" data-block="" data-testid="card-widget-host" />
         </>
       )}
       {phase === 'failed' && (
         <Notice status="failure">
-          <span data-testid="card-widget-failed">
-            The bank's secure view did not open. Try again in a moment.
-          </span>
+          <span data-testid="card-widget-failed">{t('app.cards.widget_failed')}</span>
         </Notice>
       )}
       {phase === 'done' && (
         <Notice status="success">
           <span data-testid="card-widget-done">
-            {session.kind === 'SET_PIN' ? 'Your new PIN is set.' : 'Your card is active.'}
+            {t(session.kind === 'SET_PIN' ? 'app.cards.widget_pin_set' : 'app.cards.widget_activated')}
           </span>
         </Notice>
       )}
-      <p className="fw-widget__note">Shown by the bank. OnGem never sees or stores these numbers.</p>
+      <p className="fw-widget__note">{t('app.cards.widget_note')}</p>
       <div className="fw-actions">
         <Button variant="secondary" data-testid="card-widget-close" onClick={onClose}>
-          Hide
+          {t('app.cards.widget_hide')}
         </Button>
       </div>
     </section>
@@ -162,18 +160,18 @@ function SampleWidget({ session }: { session: CardWidgetSession }) {
   const items =
     session.kind === 'REVEAL'
       ? [
-          { label: 'Card number', value: `4000 0000 0000 ${session.last4}` },
-          { label: 'Expires', value: '12/29' },
-          { label: 'Security code', value: '123' },
+          { label: t('app.cards.sample_number'), value: `4000 0000 0000 ${session.last4}` },
+          { label: t('app.cards.sample_expires'), value: '12/29' },
+          { label: t('app.cards.sample_cvv'), value: '123' },
         ]
       : session.kind === 'GET_PIN'
-        ? [{ label: 'PIN', value: '1234' }]
+        ? [{ label: t('app.cards.sample_pin'), value: '1234' }]
         : session.kind === 'SET_PIN'
-          ? [{ label: 'New PIN', value: 'Entered in the bank’s view' }]
-          : [{ label: 'Card', value: `Ending ${session.last4}` }];
+          ? [{ label: t('app.cards.sample_new_pin'), value: t('app.cards.sample_new_pin_value') }]
+          : [{ label: t('app.cards.card'), value: t('app.cards.sample_ending', { last4: session.last4 }) }];
   return (
     <div data-mask="" data-testid="card-widget-sample">
-      <Notice status="info">Sample data from the simulator, not a real card.</Notice>
+      <Notice status="info">{t('app.cards.sample_notice')}</Notice>
       <KeyValue items={items} />
     </div>
   );

@@ -1,3 +1,4 @@
+// content-check: data (theme file validation messages for the ops console's theme editor; the founder web never imports a theme)
 import {
   ACTION_KEYS,
   BORDER_KEYS,

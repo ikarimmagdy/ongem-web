@@ -15,6 +15,7 @@ import { LiveOnGemApi } from './api/live';
 import { useAuthSession } from './auth';
 import { Button, Field, Input, Modal } from './design-system';
 import { REGION } from './region';
+import { t } from './i18n';
 
 export type Mode = 'none' | 'demo' | 'live';
 
@@ -71,21 +72,21 @@ function DemoReverify({ ask, onDone }: { ask: Ask | null; onDone(ok: boolean): v
   return (
     <Modal
       open={Boolean(ask)}
-      title="Confirm it is you"
+      title={t('app.session.reverify.title')}
       onClose={() => close(false)}
       footer={
         <>
           <Button variant="secondary" onClick={() => close(false)}>
-            Cancel
+            {t('app.common.cancel')}
           </Button>
           <Button data-testid="reverify-confirm" disabled={!valid} onClick={() => close(true)}>
-            Confirm
+            {t('app.common.confirm')}
           </Button>
         </>
       }
     >
-      <p>Enter the 6-digit code from your authenticator app. In demo mode any 6 digits work.</p>
-      <Field label="Verification code">
+      <p>{t('app.session.reverify.text')}</p>
+      <Field label={t('app.session.reverify.code')}>
         <Input
           data-testid="reverify-code"
           inputMode="numeric"

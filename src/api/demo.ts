@@ -20,6 +20,7 @@ import {
 } from './demoData';
 import { DemoAssistant } from '../assistant/demoAssistant';
 import { ApiError } from './errors';
+import { t } from '../i18n/store';
 import { normaliseIban, uaeIbanValid } from '../lib/iban';
 import { nthRun } from '../lib/schedule';
 import { IS_AE, REGION_CONFIG } from '../region';
@@ -124,18 +125,14 @@ export class DemoOnGemApi implements OnGemApi {
 
   private require(permission: string) {
     if (!permissionsOf(this.role).has(permission))
-      throw new ApiError(403, 'forbidden', 'Your role does not allow this.');
+      throw new ApiError(403, 'forbidden', t('app.demo.error.forbidden'));
   }
 
   private async stepUp(purpose: string) {
     this.stepUps.push(purpose);
     if (!this.opts.stepUp) return;
     if (!(await this.opts.stepUp(purpose))) {
-      throw new ApiError(
-        403,
-        REVERIFICATION_CANCELLED,
-        'You did not confirm it is you, so nothing was changed.',
-      );
+      throw new ApiError(403, REVERIFICATION_CANCELLED, t('app.demo.error.reverification_cancelled'));
     }
   }
 
@@ -221,7 +218,7 @@ export class DemoOnGemApi implements OnGemApi {
   createRecipient = async (r: CreateRecipient) => {
     this.require(Permission.RECIPIENT_MANAGE);
     if (IS_AE && !uaeIbanValid(r.iban ?? ''))
-      throw new ApiError(422, 'iban_invalid', 'Check the IBAN: AE and 21 digits.');
+      throw new ApiError(422, 'iban_invalid', t('app.demo.error.iban_format'));
     await this.stepUp('recipient');
     const created = {
       id: this.next('rcp'),
@@ -259,8 +256,7 @@ export class DemoOnGemApi implements OnGemApi {
   createPayment = async (r: CreatePayment) => {
     this.require(Permission.PAYMENT_CREATE);
     await this.account(r.fromAccountId);
-    if (r.amountMinor <= 0)
-      throw new ApiError(422, 'validation_failed', 'The amount must be more than zero.');
+    if (r.amountMinor <= 0) throw new ApiError(422, 'validation_failed', t('app.demo.error.amount_zero'));
     if (r.recipientId && !this.recipientsState.some((x) => x.id === r.recipientId))
       this.notFound('recipient');
     const p: Payment = {
@@ -286,7 +282,7 @@ export class DemoOnGemApi implements OnGemApi {
     await this.stepUp('payment');
     const from = this.accountsState.find((a) => a.id === p.fromAccountId);
     if ((from?.balance?.available.amountMinor ?? 0) < p.amount.amountMinor) {
-      throw new ApiError(409, 'insufficient_funds', 'The available balance does not cover this payment.');
+      throw new ApiError(409, 'insufficient_funds', t('app.demo.error.insufficient_funds'));
     }
     const internal = Boolean(p.toAccountId);
     const state = internal ? 'SETTLED' : 'SUBMITTED';
@@ -323,7 +319,7 @@ export class DemoOnGemApi implements OnGemApi {
     this.require(Permission.PAYMENT_APPROVE);
     const p = this.paymentsState.find((x) => x.id === id) ?? this.notFound('payment');
     if (p.state !== 'PENDING_APPROVAL')
-      throw new ApiError(409, 'payment_not_pending_approval', 'This payment is not waiting for approval.');
+      throw new ApiError(409, 'payment_not_pending_approval', t('app.demo.error.not_pending_approval'));
     await this.stepUp('payment');
     const sent: Payment = {
       ...p,
@@ -344,7 +340,7 @@ export class DemoOnGemApi implements OnGemApi {
     this.require(Permission.PAYMENT_APPROVE);
     const p = this.paymentsState.find((x) => x.id === id) ?? this.notFound('payment');
     if (p.state !== 'PENDING_APPROVAL')
-      throw new ApiError(409, 'payment_not_pending_approval', 'This payment is not waiting for approval.');
+      throw new ApiError(409, 'payment_not_pending_approval', t('app.demo.error.not_pending_approval'));
     const rejected: Payment = {
       ...p,
       state: 'REJECTED',
@@ -377,7 +373,7 @@ export class DemoOnGemApi implements OnGemApi {
     await this.account(r.accountId);
     const number = IS_AE ? normaliseIban(r.iban ?? '') : (r.accountNumber ?? '').replace(/\D/g, '');
     if (IS_AE && (!uaeIbanValid(number) || !r.ownerName.trim()))
-      throw new ApiError(422, 'iban_invalid', 'Check the IBAN and the name.');
+      throw new ApiError(422, 'iban_invalid', t('app.demo.error.iban_and_name'));
     if (
       !IS_AE &&
       (!/^\d{9}$/.test(r.routingNumber ?? '') ||
@@ -385,7 +381,7 @@ export class DemoOnGemApi implements OnGemApi {
         number.length > 17 ||
         !r.ownerName.trim())
     )
-      throw new ApiError(422, 'validation_failed', 'Check the routing number, account number and name.');
+      throw new ApiError(422, 'validation_failed', t('app.demo.error.routing_account_name'));
     await this.stepUp('funding_source');
     const f: FundingSource = {
       id: this.next('fsrc'),
@@ -419,7 +415,7 @@ export class DemoOnGemApi implements OnGemApi {
     const f = this.fundingState.find((x) => x.id === r.fundingSourceId && x.state !== 'REMOVED');
     if (!f) this.notFound('funding_source');
     await this.account(r.toAccountId);
-    if (r.amountMinor <= 0) throw new ApiError(422, 'validation_failed', 'The amount must be positive.');
+    if (r.amountMinor <= 0) throw new ApiError(422, 'validation_failed', t('app.demo.error.amount_positive'));
     if (f.state !== 'VERIFIED') throw new ApiError(409, 'funding_source_not_verified');
     if (r.amountMinor > REGION_CONFIG.topUpLimit) throw new ApiError(409, 'limit_exceeded');
     await this.stepUp('payment');
@@ -459,7 +455,11 @@ export class DemoOnGemApi implements OnGemApi {
       PAUSED: ['ACTIVE', 'CANCELLED'],
     };
     if (!(moves[s.state] ?? []).includes(to))
-      throw new ApiError(409, 'invalid_transition', `A ${s.state.toLowerCase()} schedule cannot do that.`);
+      throw new ApiError(
+        409,
+        'invalid_transition',
+        t('app.demo.error.schedule_state', { state: s.state.toLowerCase() }),
+      );
     const moved = change({ ...s, state: to });
     this.schedulesState = this.schedulesState.map((x) => (x.id === id ? moved : x));
     return moved;
@@ -491,7 +491,7 @@ export class DemoOnGemApi implements OnGemApi {
       r.startDate < today ||
       (r.endDate && r.endDate <= r.startDate)
     )
-      throw new ApiError(422, 'validation_failed', 'Check the amount, how often and the dates.');
+      throw new ApiError(422, 'validation_failed', t('app.demo.error.schedule_fields'));
     await this.stepUp('payment');
     const s: PaymentSchedule = {
       id: this.next('psch'),
@@ -560,9 +560,9 @@ export class DemoOnGemApi implements OnGemApi {
     this.require(Permission.CARD_MANAGE);
     const c = this.cardsState.find((x) => x.id === id) ?? this.notFound('card');
     if (frozen && c.state !== 'ACTIVE')
-      throw new ApiError(409, 'card_not_active', 'Only an active card can be frozen.');
+      throw new ApiError(409, 'card_not_active', t('app.demo.error.card_not_active'));
     if (!frozen && c.state !== 'FROZEN')
-      throw new ApiError(409, 'card_not_frozen', 'The card is not frozen.');
+      throw new ApiError(409, 'card_not_frozen', t('app.demo.error.card_not_frozen'));
     await this.stepUp('card');
     const changed = { ...c, state: frozen ? 'FROZEN' : 'ACTIVE', updatedAt: this.now() };
     this.cardsState = this.cardsState.map((x) => (x.id === id ? changed : x));
@@ -574,7 +574,7 @@ export class DemoOnGemApi implements OnGemApi {
     this.require(Permission.CARD_MANAGE);
     const c = this.cardsState.find((x) => x.id === id) ?? this.notFound('card');
     const ok = kind === 'ACTIVATE' ? c.state === 'PENDING' : c.state === 'ACTIVE' || c.state === 'FROZEN';
-    if (!ok) throw new ApiError(409, 'card_not_active', "This card's details are not available.");
+    if (!ok) throw new ApiError(409, 'card_not_active', t('app.demo.error.card_details_unavailable'));
     await this.stepUp('card_details');
     return this.log('cardWidget', {
       cardId: id,
@@ -614,7 +614,7 @@ export class DemoOnGemApi implements OnGemApi {
     const digits =
       kind?.numeric === false ? identity.number.trim().toUpperCase() : identity.number.replace(/\D/g, '');
     if (!kind?.pattern.test(digits))
-      throw new ApiError(422, 'validation_failed', kind?.error ?? 'Check the ID number.');
+      throw new ApiError(422, 'validation_failed', kind?.error ?? t('app.demo.error.id_number'));
     const owner = app.owners.find((o) => o.id === ownerId) ?? this.notFound('owner');
     const updated = {
       ...owner,
@@ -634,7 +634,7 @@ export class DemoOnGemApi implements OnGemApi {
     const app = this.applicationState;
     if (id !== app.id) this.notFound('application');
     if (app.requirements.length)
-      throw new ApiError(409, 'requirements_incomplete', "An owner's ID is missing.");
+      throw new ApiError(409, 'requirements_incomplete', t('app.demo.error.owner_id_missing'));
     if (app.state !== 'COLLECTING') throw new ApiError(409, 'invalid_state');
     this.applicationState = {
       ...app,
@@ -648,7 +648,7 @@ export class DemoOnGemApi implements OnGemApi {
     const app = this.applicationState;
     if (id !== app.id) this.notFound('application');
     if (this.disclosuresState.some((d) => !d.acknowledged))
-      throw new ApiError(409, 'disclosure_not_accepted', 'Accept every disclosure first.');
+      throw new ApiError(409, 'disclosure_not_accepted', t('app.demo.error.disclosures_first'));
     if (app.state !== 'READY_FOR_DISCLOSURES') throw new ApiError(409, 'invalid_state');
     this.applicationState = { ...app, state: 'SUBMITTED' };
     return this.log('submitApplication', this.applicationState);
@@ -660,11 +660,7 @@ export class DemoOnGemApi implements OnGemApi {
     const app = this.applicationState;
     if (id !== app.id) this.notFound('application');
     if (!CAPTURE_OPEN.includes(app.state))
-      throw new ApiError(
-        409,
-        'invalid_state',
-        'ID capture is open only while the bank is checking the application.',
-      );
+      throw new ApiError(409, 'invalid_state', t('app.demo.error.capture_closed'));
     const owner = app.owners.find((o) => o.founder) ?? this.notFound('owner');
     const at = this.now();
     const capture: IdCapture = {
@@ -760,11 +756,12 @@ export class DemoOnGemApi implements OnGemApi {
     const known = new Map(this.preferencesState.kinds.map((k) => [k.kind, k]));
     for (const c of kinds) {
       const k = known.get(c.kind);
-      if (!k) throw new ApiError(422, 'validation_failed', `Unknown notice kind ${c.kind}.`);
+      if (!k)
+        throw new ApiError(422, 'validation_failed', t('app.demo.error.unknown_kind', { kind: c.kind }));
       if (k.mandatory && c.email === false)
-        throw new ApiError(422, 'mandatory_kind', 'This notice always goes by email.');
+        throw new ApiError(422, 'mandatory_kind', t('app.demo.error.mandatory_kind'));
       if (c.sms && !this.preferencesState.smsVerified)
-        throw new ApiError(422, 'validation_failed', 'Verify your SMS number first.');
+        throw new ApiError(422, 'validation_failed', t('app.demo.error.sms_verify_first'));
     }
     this.preferencesState = {
       ...this.preferencesState,
@@ -778,11 +775,7 @@ export class DemoOnGemApi implements OnGemApi {
 
   setSmsNumber = async (number: string) => {
     if (!/^\+[1-9]\d{7,14}$/.test(number.trim()))
-      throw new ApiError(
-        422,
-        'sms_number_invalid',
-        'Enter the number in international form, like +15551234567.',
-      );
+      throw new ApiError(422, 'sms_number_invalid', t('app.demo.error.sms_number_format'));
     this.smsPending = true;
     this.preferencesState = {
       ...this.preferencesState,
@@ -795,7 +788,7 @@ export class DemoOnGemApi implements OnGemApi {
 
   verifySmsNumber = async (code: string) => {
     if (!this.smsPending || !/^\d{6}$/.test(code) || code === '000000')
-      throw new ApiError(422, 'sms_code_invalid', 'That code is not right. Check the text and try again.');
+      throw new ApiError(422, 'sms_code_invalid', t('app.demo.error.sms_code_invalid'));
     this.smsPending = false;
     this.preferencesState = { ...this.preferencesState, smsVerified: true };
     return this.log('verifySmsNumber', this.preferencesState);
@@ -817,13 +810,15 @@ export class DemoOnGemApi implements OnGemApi {
   }
 
   private get displayName() {
-    return [this.me_.legalFirstName, this.me_.legalLastName].filter(Boolean).join(' ') || 'Company member';
+    return (
+      [this.me_.legalFirstName, this.me_.legalLastName].filter(Boolean).join(' ') || t('app.demo.member')
+    );
   }
 
   openTicket = async (r: OpenTicket) => {
     if (!r.subject.trim() || !r.body.trim())
-      throw new ApiError(422, 'validation_failed', 'A subject and a message are needed.');
-    const t: TicketDetail = {
+      throw new ApiError(422, 'validation_failed', t('app.demo.error.ticket_fields'));
+    const created: TicketDetail = {
       ticket: {
         id: this.next('tkt'),
         subject: r.subject.trim(),
@@ -844,8 +839,8 @@ export class DemoOnGemApi implements OnGemApi {
       ],
       attachments: [],
     };
-    this.ticketsState = [t, ...this.ticketsState];
-    return this.log('openTicket', t);
+    this.ticketsState = [created, ...this.ticketsState];
+    return this.log('openTicket', created);
   };
 
   replyToTicket = async (id: string, body: string) =>
@@ -868,7 +863,8 @@ export class DemoOnGemApi implements OnGemApi {
     );
 
   attachToTicket = async (id: string, file: File) => {
-    if (file.size > 10 * 1024 * 1024) throw new ApiError(422, 'file_too_large', 'Files can be up to 10 MB.');
+    if (file.size > 10 * 1024 * 1024)
+      throw new ApiError(422, 'file_too_large', t('app.demo.error.file_too_large'));
     return this.log(
       'attachToTicket',
       this.update(id, (t) => ({

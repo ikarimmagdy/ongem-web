@@ -63,11 +63,11 @@ export function findings(root = ROOT) {
     const source = readFileSync(path, 'utf8');
     if (/^\/\/ content-check: data/m.test(source.slice(0, 400))) continue;
     const lines = source.split('\n');
-    const sf = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+    const sf = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, path.endsWith('.tsx') ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
     const report = (node, text) => {
       const line = sf.getLineAndCharacterOfPosition(node.getStart()).line;
       if (/content-check: ignore/.test(lines[line] ?? '')) return;
-      out.push(`${rel}:${line + 1}: ${text.trim().slice(0, 80)}`);
+      out.push(`${rel}:${line + 1}: ${text.trim().replace(/\s+/g, ' ').slice(0, 80)}`);
     };
     const visit = (node) => {
       if (ts.isJsxText(node)) {

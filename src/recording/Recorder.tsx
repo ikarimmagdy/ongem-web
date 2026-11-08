@@ -140,4 +140,4 @@ export function Recorder({ onSession }: { onSession?(id: string): void }) {
   return session ? <span hidden data-testid="recording-session" data-session={session} /> : null;
 }
 
-export { PRIVACY_LINE } from './privacy';
+export { privacyLine } from './privacy';

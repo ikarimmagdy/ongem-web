@@ -4,6 +4,8 @@
  * `IS_AE ? ae : us`. Written as that ternary, the bundler drops the other region's words, so an AE build carries no US
  * names (a helper function would keep both).
  */
+import { t } from './i18n/store';
+
 export type Region = 'US' | 'AE';
 
 export const IS_AE: boolean = import.meta.env.VITE_REGION === 'AE';
@@ -67,6 +69,8 @@ export interface RegionConfig {
   accountMask(last4: string): string;
 }
 
+// The words are content entries (OG-033 R1): one key per text, the US text in the US seed and the AE text in the AE
+// seed. They are getters, so a text is read when it is shown, in the reader's language.
 const US: RegionConfig = {
   currency: 'USD',
   timeZone: 'America/New_York',
@@ -74,30 +78,61 @@ const US: RegionConfig = {
   rails: [
     {
       rail: 'ACH',
-      option: 'ACH to a recipient',
-      how: 'Standard ACH, 1 to 2 business days',
+      get option() {
+        return t('app.region.rail.ach.option');
+      },
+      get how() {
+        return t('app.region.rail.ach.how');
+      },
       achTiming: 'STANDARD',
     },
   ],
   scheduleRail: 'ACH',
-  railNames: { ACH: 'ACH', BOOK: 'Transfer', CARD: 'Card', WIRE: 'Wire' },
+  get railNames() {
+    return {
+      ACH: 'ACH',
+      BOOK: t('app.region.rail_name.book'),
+      CARD: t('app.region.rail_name.card'),
+      WIRE: t('app.region.rail_name.wire'),
+    };
+  },
   paymentRail: () => 'ACH',
-  amountLabel: 'Amount in US$',
-  scheduleAs: 'a standard ACH',
-  scheduleInstead: 'Schedule an ACH instead.',
-  recipientsSubtitle: 'Saved ACH payees, screened by the bank. Account numbers show as their last four.',
-  recipientDraftHint: 'You enter the routing and account numbers in the form.',
-  topUpHow: 'ACH debit, 1 to 3 business days',
-  topUpRail: 'ACH debit from your account at another bank',
+  get amountLabel() {
+    return t('app.region.amount_label');
+  },
+  get scheduleAs() {
+    return t('app.region.schedule_as');
+  },
+  get scheduleInstead() {
+    return t('app.region.schedule_instead');
+  },
+  get recipientsSubtitle() {
+    return t('app.region.recipients_subtitle');
+  },
+  get recipientDraftHint() {
+    return t('app.region.recipient_draft_hint');
+  },
+  get topUpHow() {
+    return t('app.region.top_up_how');
+  },
+  get topUpRail() {
+    return t('app.region.top_up_rail');
+  },
   topUpLimit: 2_500_000,
   topUpDailyLimit: 5_000_000,
   ownerIds: [
     {
       idType: 'SSN',
-      label: 'Social Security number',
-      hint: '9 digits. Only the last four are shown back.',
+      get label() {
+        return t('app.region.owner_id.ssn.label');
+      },
+      get hint() {
+        return t('app.region.owner_id.ssn.hint');
+      },
       pattern: /^\d{9}$/,
-      error: 'An SSN has 9 digits.',
+      get error() {
+        return t('app.region.owner_id.ssn.error');
+      },
       maxLength: 9,
       numeric: true,
       country: 'US',
@@ -111,39 +146,89 @@ const AE: RegionConfig = {
   timeZone: 'Asia/Dubai',
   zoneLabel: 'GST',
   rails: [
-    { rail: 'AANI', option: 'Aani to a recipient, instant', how: 'Aani, arrives in seconds' },
-    { rail: 'UAEFTS', option: 'UAEFTS to a recipient', how: 'UAEFTS, the same or next business day' },
+    {
+      rail: 'AANI',
+      get option() {
+        return t('app.region.rail.aani.option');
+      },
+      get how() {
+        return t('app.region.rail.aani.how');
+      },
+    },
+    {
+      rail: 'UAEFTS',
+      get option() {
+        return t('app.region.rail.uaefts.option');
+      },
+      get how() {
+        return t('app.region.rail.uaefts.how');
+      },
+    },
   ],
   scheduleRail: 'UAEFTS',
-  railNames: { AANI: 'Aani', UAEFTS: 'UAEFTS', BOOK: 'Transfer', CARD: 'Card' },
-  paymentRail: (rail) => ({ AANI: 'Aani', UAEFTS: 'UAEFTS' })[rail] ?? 'Bank transfer',
-  amountLabel: 'Amount in AED',
-  scheduleAs: 'a UAEFTS payment',
-  scheduleInstead: 'Schedule a UAEFTS payment instead.',
-  recipientsSubtitle:
-    'Saved payees, paid to their UAE IBAN and screened by the bank. IBANs show as their last four.',
-  recipientDraftHint: 'You enter the IBAN in the form.',
-  topUpHow: 'Pulled from your other bank, 1 to 3 business days',
-  topUpRail: 'Pulled from your account at another bank',
+  get railNames() {
+    return {
+      AANI: t('app.region.rail_name.aani'),
+      UAEFTS: 'UAEFTS',
+      BOOK: t('app.region.rail_name.book'),
+      CARD: t('app.region.rail_name.card'),
+    };
+  },
+  paymentRail: (rail) =>
+    ({ AANI: t('app.region.rail_name.aani'), UAEFTS: 'UAEFTS' })[rail] ??
+    t('app.region.rail_name.bank_transfer'),
+  get amountLabel() {
+    return t('app.region.amount_label');
+  },
+  get scheduleAs() {
+    return t('app.region.schedule_as');
+  },
+  get scheduleInstead() {
+    return t('app.region.schedule_instead');
+  },
+  get recipientsSubtitle() {
+    return t('app.region.recipients_subtitle');
+  },
+  get recipientDraftHint() {
+    return t('app.region.recipient_draft_hint');
+  },
+  get topUpHow() {
+    return t('app.region.top_up_how');
+  },
+  get topUpRail() {
+    return t('app.region.top_up_rail');
+  },
   topUpLimit: 9_000_000,
   topUpDailyLimit: 18_000_000,
   ownerIds: [
     {
       idType: 'EMIRATES_ID',
-      label: 'Emirates ID number',
-      hint: '15 digits starting 784. Only the last four are shown back.',
+      get label() {
+        return t('app.region.owner_id.emirates_id.label');
+      },
+      get hint() {
+        return t('app.region.owner_id.emirates_id.hint');
+      },
       pattern: /^784\d{12}$/,
-      error: 'An Emirates ID has 15 digits and starts 784.',
+      get error() {
+        return t('app.region.owner_id.emirates_id.error');
+      },
       maxLength: 15,
       numeric: true,
       country: 'AE',
     },
     {
       idType: 'PASSPORT',
-      label: 'Passport number',
-      hint: '6 to 9 letters and digits. Only the last four are shown back.',
+      get label() {
+        return t('app.region.owner_id.passport.label');
+      },
+      get hint() {
+        return t('app.region.owner_id.passport.hint');
+      },
       pattern: /^[A-Z0-9]{6,9}$/,
-      error: 'A passport number has 6 to 9 letters and digits.',
+      get error() {
+        return t('app.region.owner_id.passport.error');
+      },
       maxLength: 9,
       numeric: false,
     },

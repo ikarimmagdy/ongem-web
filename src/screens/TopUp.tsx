@@ -15,6 +15,7 @@ import {
   StatusChip,
   type Status,
 } from '../design-system';
+import { has, t } from '../i18n';
 import { decimalToMinor, formatMinor } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
 import { normaliseIban, uaeIbanValid } from '../lib/iban';
@@ -26,15 +27,26 @@ import { AcctLast4, Load } from './common';
 export function fundingState(state: string): { status: Status; text: string } {
   switch (state.toUpperCase()) {
     case 'VERIFIED':
-      return { status: 'success', text: 'Verified' };
+      return { status: 'success', text: t('app.topup.state.verified') };
     case 'UNVERIFIED':
-      return { status: 'pending', text: 'Waiting for the bank to verify it' };
+      return { status: 'pending', text: t('app.topup.state.unverified') };
     default:
-      return { status: 'neutral', text: 'Removed' };
+      return { status: 'neutral', text: t('app.topup.state.removed') };
   }
 }
 
-export const fundingName = (f: FundingSource) => f.nickname?.trim() || 'Account at another bank';
+export const fundingName = (f: FundingSource) => f.nickname?.trim() || t('app.topup.account_at_other_bank');
+
+/** An account type in words, as the list shows it; a type the web does not know shows as the API sends it. */
+const accountTypeText = (type: string) => {
+  const key = `app.topup.type.${type.toLowerCase()}`;
+  return has(key) ? t(key) : type.toLowerCase();
+};
+
+const accountOption = (a: Account) => ({
+  value: a.id,
+  label: t('app.topup.account_ending', { name: a.name, last4: a.last4 ?? '' }),
+});
 
 /** Runs one write at a time, with its error line. */
 function useOnce() {
@@ -92,11 +104,8 @@ function LinkAccount({ accounts, onLinked }: { accounts: Account[]; onLinked(): 
       onLinked();
     });
   return (
-    <Card title="Link an account at another bank" data-testid="funding-link-form">
-      <p>
-        Use an account your company owns. The bank verifies it before you can pull money from it, which can
-        take a few business days.
-      </p>
+    <Card title={t('app.topup.link.title')} data-testid="funding-link-form">
+      <p>{t('app.topup.link.intro')}</p>
       <form
         className="fw-form"
         onSubmit={(e) => {
@@ -104,15 +113,15 @@ function LinkAccount({ accounts, onLinked }: { accounts: Account[]; onLinked(): 
           if (valid) void link();
         }}
       >
-        <Field label="For the OnGem account">
+        <Field label={t('app.topup.link.for_account')}>
           <Select
             data-testid="funding-link-account"
             value={to}
             onChange={(e) => setAccountId(e.target.value)}
-            options={accounts.map((a) => ({ value: a.id, label: `${a.name} ending ${a.last4 ?? ''}` }))}
+            options={accounts.map(accountOption)}
           />
         </Field>
-        <Field label="Name on the account">
+        <Field label={t('app.topup.link.owner')}>
           <Input
             data-testid="funding-link-owner"
             value={ownerName}
@@ -120,7 +129,7 @@ function LinkAccount({ accounts, onLinked }: { accounts: Account[]; onLinked(): 
           />
         </Field>
         {IS_AE ? (
-          <Field label="IBAN" hint="AE and 21 digits. Only the last four are kept.">
+          <Field label={t('app.topup.link.iban')} hint={t('app.topup.link.iban_hint')}>
             <Input
               data-testid="funding-link-iban"
               data-mask=""
@@ -132,7 +141,7 @@ function LinkAccount({ accounts, onLinked }: { accounts: Account[]; onLinked(): 
           </Field>
         ) : (
           <>
-            <Field label="Routing number" hint="9 digits">
+            <Field label={t('app.topup.link.routing')} hint={t('app.topup.link.routing_hint')}>
               <Input
                 data-testid="funding-link-routing"
                 inputMode="numeric"
@@ -142,7 +151,7 @@ function LinkAccount({ accounts, onLinked }: { accounts: Account[]; onLinked(): 
                 onChange={(e) => setRouting(e.target.value.replace(/\D/g, ''))}
               />
             </Field>
-            <Field label="Account number" hint="Only the last four are kept.">
+            <Field label={t('app.topup.link.number')} hint={t('app.topup.link.number_hint')}>
               <Input
                 data-testid="funding-link-number"
                 data-mask=""
@@ -153,20 +162,20 @@ function LinkAccount({ accounts, onLinked }: { accounts: Account[]; onLinked(): 
                 onChange={(e) => setNumber(e.target.value.replace(/\D/g, ''))}
               />
             </Field>
-            <Field label="Account type">
+            <Field label={t('app.topup.link.type')}>
               <Select
                 data-testid="funding-link-type"
                 value={type}
                 onChange={(e) => setType(e.target.value as 'CHECKING' | 'SAVINGS')}
                 options={[
-                  { value: 'CHECKING', label: 'Checking' },
-                  { value: 'SAVINGS', label: 'Savings' },
+                  { value: 'CHECKING', label: t('app.topup.link.checking') },
+                  { value: 'SAVINGS', label: t('app.topup.link.savings') },
                 ]}
               />
             </Field>
           </>
         )}
-        <Field label="Nickname (optional)">
+        <Field label={t('app.topup.link.nickname')}>
           <Input
             data-testid="funding-link-nickname"
             maxLength={40}
@@ -177,7 +186,7 @@ function LinkAccount({ accounts, onLinked }: { accounts: Account[]; onLinked(): 
         {error && <Notice status="failure">{error}</Notice>}
         <div className="fw-actions">
           <Button type="submit" data-testid="funding-link-save" disabled={!valid || busy}>
-            Link account
+            {t('app.topup.link.save')}
           </Button>
         </div>
       </form>
@@ -204,9 +213,7 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
   if (!verified.length) {
     return (
       <Notice status="info">
-        <span data-testid="topup-none-verified">
-          Top-ups need an account the bank has verified. Link one, then check back once it shows Verified.
-        </span>
+        <span data-testid="topup-none-verified">{t('app.topup.none_verified')}</span>
       </Notice>
     );
   }
@@ -225,11 +232,11 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
   if (review && minor && from) {
     const toA = accounts.find((a) => a.id === toId);
     return (
-      <Card title="Review the top-up" data-testid="topup-review">
+      <Card title={t('app.topup.review.title')} data-testid="topup-review">
         <KeyValue
           items={[
             {
-              label: 'Amount',
+              label: t('app.topup.review.amount'),
               value: (
                 <span data-mask="">
                   {formatMinor({ amountMinor: minor, currency: REGION_CONFIG.currency })}
@@ -237,7 +244,7 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
               ),
             },
             {
-              label: 'From',
+              label: t('app.topup.review.from'),
               value: (
                 <>
                   {fundingName(from)} <AcctLast4 value={from.last4} />
@@ -245,34 +252,31 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
               ),
             },
             {
-              label: 'To',
+              label: t('app.topup.review.to'),
               value: (
                 <>
                   {toA?.name} <AcctLast4 value={toA?.last4} />
                 </>
               ),
             },
-            { label: 'How', value: REGION_CONFIG.topUpHow },
+            { label: t('app.topup.review.how'), value: REGION_CONFIG.topUpHow },
           ]}
         />
-        <p>
-          A second person in your company approves it before the bank pulls the money. If no one else in your
-          company can approve, OnGem approves it. You confirm it is you first.
-        </p>
+        <p>{t('app.topup.review.note')}</p>
         {error && <Notice status="failure">{error}</Notice>}
         <div className="fw-actions">
           <Button variant="secondary" disabled={busy} onClick={() => setReview(false)}>
-            Change
+            {t('app.topup.review.change')}
           </Button>
           <Button data-testid="topup-send" disabled={busy} onClick={() => void send()}>
-            Top up
+            {t('app.topup.top_up')}
           </Button>
         </div>
       </Card>
     );
   }
   return (
-    <Card title="Top up" data-testid="topup-form">
+    <Card title={t('app.topup.top_up')} data-testid="topup-form">
       <form
         className="fw-form"
         onSubmit={(e) => {
@@ -280,26 +284,38 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
           if (valid) setReview(true);
         }}
       >
-        <Field label="From">
+        <Field label={t('app.topup.review.from')}>
           <Select
             data-testid="topup-from"
             value={fromId}
             onChange={(e) => setSource(e.target.value)}
-            options={verified.map((f) => ({ value: f.id, label: `${fundingName(f)} ending ${f.last4}` }))}
+            options={verified.map((f) => ({
+              value: f.id,
+              label: t('app.topup.account_ending', { name: fundingName(f), last4: f.last4 ?? '' }),
+            }))}
           />
         </Field>
-        <Field label="To">
+        <Field label={t('app.topup.review.to')}>
           <Select
             data-testid="topup-to"
             value={toId}
             onChange={(e) => setTo(e.target.value)}
-            options={accounts.map((a) => ({ value: a.id, label: `${a.name} ending ${a.last4 ?? ''}` }))}
+            options={accounts.map(accountOption)}
           />
         </Field>
         <Field
           label={REGION_CONFIG.amountLabel}
-          hint={`Up to ${formatMinor({ amountMinor: REGION_CONFIG.topUpLimit, currency: REGION_CONFIG.currency })} a top-up and ${formatMinor({ amountMinor: REGION_CONFIG.topUpDailyLimit, currency: REGION_CONFIG.currency })} a day.`}
-          error={amount && !minor ? 'Enter an amount like 1,250.00' : undefined}
+          hint={t('app.topup.form.limits', {
+            per_topup: formatMinor({
+              amountMinor: REGION_CONFIG.topUpLimit,
+              currency: REGION_CONFIG.currency,
+            }),
+            per_day: formatMinor({
+              amountMinor: REGION_CONFIG.topUpDailyLimit,
+              currency: REGION_CONFIG.currency,
+            }),
+          })}
+          error={amount && !minor ? t('app.topup.form.amount_error') : undefined}
         >
           <Input
             data-testid="topup-amount"
@@ -309,7 +325,7 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
             onChange={(e) => setAmount(e.target.value)}
           />
         </Field>
-        <Field label="Reference (optional)">
+        <Field label={t('app.topup.form.reference')}>
           <Input
             data-testid="topup-reference"
             maxLength={80}
@@ -319,7 +335,7 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
         </Field>
         <div className="fw-actions">
           <Button type="submit" data-testid="topup-review-button" disabled={!valid}>
-            Review
+            {t('app.topup.form.review')}
           </Button>
         </div>
       </form>
@@ -343,8 +359,8 @@ export function TopUp() {
   const remove = (id: string) => run(async () => void (await api.removeFundingSource(id)).id).then(refresh);
   return (
     <div className="fw-stack" data-testid="topup">
-      <Card title="Your accounts at other banks">
-        <Load state={sources} label="accounts at other banks">
+      <Card title={t('app.topup.sources.title')}>
+        <Load state={sources} label={t('app.topup.loading.sources')}>
           {(list) =>
             list.length ? (
               <ul className="fw-list" data-testid="funding-list">
@@ -355,7 +371,7 @@ export function TopUp() {
                       <span className="fw-row__main">
                         <strong>{fundingName(f)}</strong>
                         <span className="fw-row__sub">
-                          <AcctLast4 value={f.last4} /> {f.accountType ? f.accountType.toLowerCase() : ''}
+                          <AcctLast4 value={f.last4} /> {f.accountType ? accountTypeText(f.accountType) : ''}
                         </span>
                       </span>
                       <span className="fw-row__main">
@@ -370,7 +386,7 @@ export function TopUp() {
                             disabled={busy}
                             onClick={() => void check(f.id)}
                           >
-                            Check again
+                            {t('app.topup.check_again')}
                           </Button>
                         )}
                         {can(Permission.RECIPIENT_MANAGE) && (
@@ -381,7 +397,7 @@ export function TopUp() {
                             disabled={busy}
                             onClick={() => void remove(f.id)}
                           >
-                            Remove
+                            {t('app.topup.remove')}
                           </Button>
                         )}
                       </span>
@@ -390,9 +406,7 @@ export function TopUp() {
                 })}
               </ul>
             ) : (
-              <EmptyState title="No accounts linked yet">
-                Link your company's account at another bank to move money into OnGem.
-              </EmptyState>
+              <EmptyState title={t('app.topup.empty.title')}>{t('app.topup.empty.text')}</EmptyState>
             )
           }
         </Load>

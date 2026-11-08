@@ -1,8 +1,9 @@
 import type { OnGemApi } from '../api/client';
 import type { AssistantDraft, AssistantTurn } from '../api/types';
+import { t as tr } from '../i18n/store';
 import { formatMinor } from '../lib/format';
 import { maskText } from '../recording/mask';
-import { IS_AE, REGION_CONFIG } from '../region';
+import { REGION_CONFIG } from '../region';
 
 type Reads = Pick<
   OnGemApi,
@@ -50,17 +51,19 @@ export class DemoAssistant {
       draft = this.draft(
         'TICKET_REPLY',
         { ticketId: open?.id, body },
-        `Reply to "${open?.subject ?? 'your ticket'}".`,
+        tr('app.assistant.demo.ticket_reply', {
+          subject: open?.subject ?? tr('app.assistant.demo.your_ticket'),
+        }),
       );
-      reply = `I drafted this for our support team: ${draft.summary} Review it in Support and send it there.`;
+      reply = tr('app.assistant.demo.drafted_support', { summary: draft.summary });
       outcome = 'DRAFTED';
     } else if (/\b(human|person|someone|talk to|complain)\b/.test(t)) {
       draft = this.draft(
         'SUPPORT_TICKET',
-        { subject: 'Help from the assistant', category: 'OTHER', body: maskText(text) },
-        `Open a support ticket for our team: "${maskText(text)}".`,
+        { subject: tr('app.assistant.demo.support_subject'), category: 'OTHER', body: maskText(text) },
+        tr('app.assistant.demo.support_ticket', { text: maskText(text) }),
       );
-      reply = `I drafted this for our support team: ${draft.summary} Review it in Support and send it there.`;
+      reply = tr('app.assistant.demo.drafted_support', { summary: draft.summary });
       outcome = 'HANDOFF';
     } else if (t.includes('freeze')) {
       const unfreeze = t.includes('unfreeze');
@@ -69,18 +72,23 @@ export class DemoAssistant {
       draft = this.draft(
         unfreeze ? 'CARD_UNFREEZE' : 'CARD_FREEZE',
         { cardId: c?.id, last4: c?.last4 },
-        `${unfreeze ? 'Unfreeze' : 'Freeze'} the card ending ${c?.last4 ?? 'you choose'}.`,
+        tr(unfreeze ? 'app.assistant.demo.unfreeze' : 'app.assistant.demo.freeze', {
+          last4: c?.last4 ?? tr('app.assistant.demo.card_you_choose'),
+        }),
       );
-      reply = `I drafted this for you: ${draft.summary} Review it and confirm it on the screen I open; nothing happens until you do.`;
+      reply = tr('app.assistant.demo.drafted', { summary: draft.summary });
       outcome = 'DRAFTED';
     } else if (/\b(add|new)\b/.test(t) && /recipient|payee/.test(t)) {
       const name = /(?:named|called)\s+(.+)$/i.exec(text)?.[1]?.trim();
       draft = this.draft(
         'RECIPIENT_ADD',
         { name },
-        `Add ${name ?? 'a new recipient'}. ${REGION_CONFIG.recipientDraftHint}`,
+        tr('app.assistant.demo.add_recipient', {
+          name: name ?? tr('app.assistant.demo.new_recipient'),
+          hint: REGION_CONFIG.recipientDraftHint,
+        }),
       );
-      reply = `I drafted this for you: ${draft.summary} Review it and confirm it on the screen I open; nothing happens until you do.`;
+      reply = tr('app.assistant.demo.drafted', { summary: draft.summary });
       outcome = 'DRAFTED';
     } else if (/\b(send|pay|transfer|move)\b/.test(t) && minor > 0) {
       const accounts = await read('list_accounts', 'listAccounts', () => this.api.accounts());
@@ -107,7 +115,7 @@ export class DemoAssistant {
             amountMinor: minor,
             currency: REGION_CONFIG.currency,
           },
-          `Move ${shown} from ${from.name} to ${toAcc.name}.`,
+          tr('app.assistant.demo.move', { amount: shown, from: from.name, to: toAcc.name }),
         );
       } else {
         const r = recipients.find(
@@ -121,15 +129,21 @@ export class DemoAssistant {
             amountMinor: minor,
             currency: REGION_CONFIG.currency,
           },
-          `Send ${shown} by ${REGION_CONFIG.paymentRail(REGION_CONFIG.rails[0]!.rail)} from ${from.name} to ${r?.name ?? 'a recipient you choose'}.`,
+          tr('app.assistant.demo.send', {
+            amount: shown,
+            rail: REGION_CONFIG.paymentRail(REGION_CONFIG.rails[0]!.rail),
+            from: from.name,
+            recipient: r?.name ?? tr('app.assistant.demo.recipient_you_choose'),
+          }),
         );
       }
-      reply = `I drafted this for you: ${draft.summary} Review it and confirm it on the screen I open; nothing happens until you do.`;
+      reply = tr('app.assistant.demo.drafted', { summary: draft.summary });
       outcome = 'DRAFTED';
     } else if (t.includes('payment')) {
       const page = await read('list_payments', 'listPayments', () => this.api.payments(null, 5));
       reply =
-        'Here are your payments:\n' +
+        tr('app.assistant.demo.payments_heading') +
+        '\n' +
         page.items
           .slice(0, 5)
           .map((p) => `- ${formatMinor(p.amount)}: ${p.state}`)
@@ -137,39 +151,55 @@ export class DemoAssistant {
     } else if (t.includes('card')) {
       const cards = (await read('list_cards', 'listCards', () => this.api.cards())).items;
       reply =
-        'Here are your cards:\n' +
-        cards.map((c) => `- Card ending ${c.last4} (${c.holderName}): ${c.state}`).join('\n');
+        tr('app.assistant.demo.cards_heading') +
+        '\n' +
+        cards
+          .map((c) =>
+            tr('app.assistant.demo.card_line', { last4: c.last4, holder: c.holderName, state: c.state }),
+          )
+          .join('\n');
     } else if (/recipient|payee/.test(t)) {
       const rs = await read('list_recipients', 'listRecipients', () => this.api.recipients());
       reply =
-        'Here are your recipients:\n' +
+        tr('app.assistant.demo.recipients_heading') +
+        '\n' +
         rs
-          .map(
-            (r) =>
-              `- ${r.name} (${IS_AE ? 'IBAN' : 'account'} ending ${r.accountLast4}): screening ${r.screening}`,
+          .map((r) =>
+            tr('app.assistant.demo.recipient_line', {
+              name: r.name,
+              last4: r.accountLast4,
+              screening: r.screening,
+            }),
           )
           .join('\n');
     } else if (t.includes('ticket')) {
       const ts = await read('list_tickets', 'listTickets', () => this.api.tickets());
-      reply = 'Here are your support tickets:\n' + ts.map((x) => `- ${x.subject}: ${x.status}`).join('\n');
+      reply =
+        tr('app.assistant.demo.tickets_heading') +
+        '\n' +
+        ts.map((x) => `- ${x.subject}: ${x.status}`).join('\n');
     } else if (/application|onboarding/.test(t)) {
       const [app] = await read('list_applications', 'listApplications', () => this.api.applications());
-      reply = `Your application is ${app?.state.toLowerCase().replace(/_/g, ' ') ?? 'not started'}.`;
+      reply = tr('app.assistant.demo.application', {
+        state: app?.state.toLowerCase().replace(/_/g, ' ') ?? tr('app.assistant.demo.not_started'),
+      });
     } else if (/balance|how much|available/.test(t)) {
       const accounts = await read('list_accounts', 'listAccounts', () => this.api.accounts());
       reply =
-        'Here are your accounts:\n' +
+        tr('app.assistant.demo.accounts_heading') +
+        '\n' +
         accounts
           .map(
             (a) =>
-              `- ${a.name} ${REGION_CONFIG.accountMask(a.last4 ?? '')}: ${a.balance ? `${formatMinor(a.balance.available)} available` : 'no balance yet'}`,
+              `- ${a.name} ${REGION_CONFIG.accountMask(a.last4 ?? '')}: ${
+                a.balance
+                  ? tr('app.assistant.demo.available', { amount: formatMinor(a.balance.available) })
+                  : tr('app.assistant.demo.no_balance')
+              }`,
           )
           .join('\n');
     } else {
-      reply =
-        'I can check your balances, payments, recipients, cards, support tickets and your application, and I can draft a payment, ' +
-        'a transfer between your accounts, a card freeze, a recipient or a support ticket for you to review and confirm. ' +
-        'Nothing changes until you confirm it yourself.';
+      reply = tr('app.assistant.demo.fallback');
       outcome = 'UNRESOLVED';
     }
     return {

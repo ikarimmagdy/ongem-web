@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { errorText } from '../api/errors';
 import type { AssistantDraft, AssistantTurn } from '../api/types';
 import { Button, Input } from '../design-system';
+import { t } from '../i18n';
 import { useSession } from '../session';
 import { useDrafts } from './drafts';
 import { readLabel } from './readLabel';
@@ -39,7 +40,7 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
       const id = conversation ?? (await api.startConversation('WEB', recordingSessionId)).id;
       setConversation(id);
       const turn = await api.sendAssistantMessage(id, message);
-      setTurns((t) => [...t, turn]);
+      setTurns((x) => [...x, turn]);
       setText('');
     } catch (err) {
       setError(errorText(err));
@@ -50,7 +51,7 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
   const rate = async (turn: AssistantTurn, rating: 'UP' | 'DOWN') => {
     try {
       await api.rateAssistantTurn(turn.id, rating);
-      setTurns((t) => t.map((x) => (x.id === turn.id ? { ...x, rating } : x)));
+      setTurns((list) => list.map((x) => (x.id === turn.id ? { ...x, rating } : x)));
     } catch (err) {
       setError(errorText(err));
     }
@@ -69,7 +70,7 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
         <section
           id="assistant-panel"
           className="fw-assistant__panel"
-          aria-label="Assistant"
+          aria-label={t('app.assistant.title')}
           data-testid="assistant-panel"
           onKeyDown={(e) => {
             if (e.key === 'Escape') {
@@ -79,54 +80,56 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
           }}
         >
           <header className="fw-assistant__head">
-            <strong>Assistant</strong>
-            <Button variant="ghost" size="sm" aria-label="Close the assistant" onClick={() => setOpen(false)}>
-              Close
+            <strong>{t('app.assistant.title')}</strong>
+            <Button
+              variant="ghost"
+              size="sm"
+              aria-label={t('app.assistant.close_label')}
+              onClick={() => setOpen(false)}
+            >
+              {t('app.assistant.close')}
             </Button>
           </header>
           <div className="fw-assistant__body" aria-live="polite">
-            {turns.length === 0 && (
-              <p className="fw-row__sub">
-                Ask about your balances, payments, cards or support. I draft actions; you confirm them on the
-                normal screen.
-              </p>
-            )}
-            {turns.map((t) => {
-              const state = t.draft ? (drafts.decided[t.draft.id] ?? t.draft.state) : null;
+            {turns.length === 0 && <p className="fw-row__sub">{t('app.assistant.intro')}</p>}
+            {turns.map((turn) => {
+              const state = turn.draft ? (drafts.decided[turn.draft.id] ?? turn.draft.state) : null;
               return (
-                <div key={t.id} className="fw-thread" data-testid="assistant-turn">
+                <div key={turn.id} className="fw-thread" data-testid="assistant-turn">
                   <div className="fw-msg fw-msg--mine" data-mask="">
-                    {t.text}
+                    {turn.text}
                   </div>
                   <div className="fw-msg" data-testid="assistant-reply">
                     <p className="og-message__body" data-mask="">
-                      {t.reply}
+                      {turn.reply}
                     </p>
-                    {readLabel(t.reads.map((r) => r.tool)) && (
+                    {readLabel(turn.reads.map((r) => r.tool)) && (
                       <div className="fw-msg__who" data-testid="assistant-read">
-                        {readLabel(t.reads.map((r) => r.tool))}
+                        {readLabel(turn.reads.map((r) => r.tool))}
                       </div>
                     )}
                   </div>
-                  {t.draft && (
+                  {turn.draft && (
                     <div className="fw-assistant__draft" data-testid="assistant-draft">
-                      <span data-mask="">{t.draft.summary}</span>
+                      <span data-mask="">{turn.draft.summary}</span>
                       {state === 'OPEN' ? (
                         <div className="fw-actions">
                           <Button
                             size="sm"
                             data-testid="assistant-review"
-                            onClick={() => drafts.review(t.draft!)}
+                            onClick={() => drafts.review(turn.draft!)}
                           >
-                            Review
+                            {t('app.assistant.review')}
                           </Button>
-                          <Button size="sm" variant="ghost" onClick={() => void dismiss(t.draft!)}>
-                            Dismiss
+                          <Button size="sm" variant="ghost" onClick={() => void dismiss(turn.draft!)}>
+                            {t('app.assistant.dismiss')}
                           </Button>
                         </div>
                       ) : (
                         <span className="fw-row__sub" data-testid="assistant-draft-state">
-                          {state === 'CONFIRMED' ? 'Confirmed by you' : 'Dismissed'}
+                          {state === 'CONFIRMED'
+                            ? t('app.assistant.confirmed')
+                            : t('app.assistant.dismissed')}
                         </span>
                       )}
                     </div>
@@ -134,21 +137,21 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
                   <div className="fw-actions">
                     <Button
                       size="sm"
-                      variant={t.rating === 'UP' ? 'secondary' : 'ghost'}
-                      aria-label="Helpful"
-                      aria-pressed={t.rating === 'UP'}
-                      onClick={() => void rate(t, 'UP')}
+                      variant={turn.rating === 'UP' ? 'secondary' : 'ghost'}
+                      aria-label={t('app.assistant.helpful')}
+                      aria-pressed={turn.rating === 'UP'}
+                      onClick={() => void rate(turn, 'UP')}
                     >
-                      Helpful
+                      {t('app.assistant.helpful')}
                     </Button>
                     <Button
                       size="sm"
-                      variant={t.rating === 'DOWN' ? 'secondary' : 'ghost'}
-                      aria-label="Not helpful"
-                      aria-pressed={t.rating === 'DOWN'}
-                      onClick={() => void rate(t, 'DOWN')}
+                      variant={turn.rating === 'DOWN' ? 'secondary' : 'ghost'}
+                      aria-label={t('app.assistant.not_helpful')}
+                      aria-pressed={turn.rating === 'DOWN'}
+                      onClick={() => void rate(turn, 'DOWN')}
                     >
-                      Not helpful
+                      {t('app.assistant.not_helpful')}
                     </Button>
                   </div>
                 </div>
@@ -159,7 +162,7 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
           </div>
           <form className="fw-assistant__form" onSubmit={send}>
             <label className="og-visually-hidden" htmlFor="assistant-input">
-              Message the assistant
+              {t('app.assistant.input_label')}
             </label>
             <Input
               ref={input}
@@ -167,11 +170,11 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
               data-testid="assistant-input"
               value={text}
               maxLength={2000}
-              placeholder="Ask the assistant"
+              placeholder={t('app.assistant.placeholder')}
               onChange={(e) => setText(e.target.value)}
             />
             <Button type="submit" data-testid="assistant-send" disabled={busy || !text.trim()}>
-              Send
+              {t('app.assistant.send')}
             </Button>
           </form>
         </section>
@@ -184,7 +187,7 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
         aria-controls="assistant-panel"
         onClick={() => setOpen((x) => !x)}
       >
-        Assistant
+        {t('app.assistant.title')}
       </Button>
     </div>
   );
