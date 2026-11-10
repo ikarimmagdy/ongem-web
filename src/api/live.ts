@@ -33,6 +33,7 @@ export const IN_PROGRESS_BACKOFF_MS = [500, 1000, 2000, 4000];
 export const IDEMPOTENCY_IN_PROGRESS = 'idempotency_in_progress';
 
 const DEVICES = '/v1/devices';
+const DEVICE_PROOF = new Set(['device_proof_required', 'device_proof_invalid']);
 
 type Body = { json: unknown } | { form: FormData } | undefined;
 
@@ -161,7 +162,7 @@ export class LiveOnGemApi implements OnGemApi {
   async call<T>(method: string, path: string, body?: Body): Promise<T> {
     const key = method === 'GET' ? null : this.newKey();
     // Binding the device itself never needs one; every other customer call carries it.
-    const device = path === DEVICES || path.startsWith(`${DEVICES}/`) ? null : await this.deviceId();
+    let device = path === DEVICES || path.startsWith(`${DEVICES}/`) ? null : await this.deviceId();
     let token = await this.opts.getToken();
     if (!token) throw new ApiError(401, 'not_signed_in');
     const send = async (t: string) => {
@@ -175,8 +176,19 @@ export class LiveOnGemApi implements OnGemApi {
       return r;
     };
     let res = await send(token);
+    // PT-01: a refused proof gets one freshly signed retry, then this browser is bound again with a new key and tried
+    // once more. A 401 is answered before the body is read, so the same Idempotency-Key cannot run a write twice.
+    if (device && res.status === 401 && DEVICE_PROOF.has((await LiveOnGemApi.problem(res)).code ?? '')) {
+      res = await send(token);
+      if (res.status === 401 && DEVICE_PROOF.has((await LiveOnGemApi.problem(res)).code ?? '')) {
+        await this.forgetDevice();
+        device = await this.deviceId();
+        if (device) res = await send(token);
+      }
+    }
     if (res.status === 401) {
       const p = await LiveOnGemApi.problem(res);
+      if (p.code && DEVICE_PROOF.has(p.code)) throw new ApiError(401, p.code, p.detail);
       if (p.code === 'device_revoked') await this.forgetDevice();
       if (p.code === 'mfa_required' || p.code === 'device_revoked' || p.code === 'device_required')
         throw new ApiError(401, p.code, p.detail);

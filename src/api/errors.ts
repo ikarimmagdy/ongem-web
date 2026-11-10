@@ -45,6 +45,8 @@ const KNOWN = new Set([
   'company_not_member',
   'device_revoked',
   'device_required',
+  'device_proof_required',
+  'device_proof_invalid',
 ]);
 
 /** The line a screen shows for a failure; anything unknown falls back to the API's own detail. */

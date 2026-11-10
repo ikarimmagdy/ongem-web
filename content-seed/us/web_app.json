@@ -2106,6 +2106,24 @@
       "ar": "لم يُسجَّل هذا المتصفح لدى OnGem بعد. سجّل الخروج ثم سجّل الدخول مجدداً."
     },
     {
+      "key": "app.errors.device_proof_required",
+      "format": "text",
+      "description": "Error shown for the API problem code device_proof_required",
+      "placeholders": [],
+      "meta": {},
+      "en": "This browser could not prove it is the one you signed in on. Sign out, then sign in again.",
+      "ar": "تعذّر على هذا المتصفح إثبات أنه الجهاز الذي سجّلت الدخول منه. سجّل الخروج ثم سجّل الدخول مجدداً."
+    },
+    {
+      "key": "app.errors.device_proof_invalid",
+      "format": "text",
+      "description": "Error shown for the API problem code device_proof_invalid",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem could not confirm this browser. Check that this device sets its date and time automatically, then sign in again.",
+      "ar": "تعذّر على OnGem التحقق من هذا المتصفح. تأكد من أن هذا الجهاز يضبط التاريخ والوقت تلقائياً، ثم سجّل الدخول مجدداً."
+    },
+    {
       "key": "app.errors.device_revoked",
       "format": "text",
       "description": "Error shown for the API problem code device_revoked",
