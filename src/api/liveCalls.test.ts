@@ -123,7 +123,7 @@ function served(call: { method: string; path: string }) {
 describe('every live call is an ongem-core endpoint (OG-030 R8)', () => {
   it('every_live_call_is_in_the_openapi_AC_R8_1', async () => {
     const calls = await record();
-    expect(calls).toHaveLength(64);
+    expect(calls).toHaveLength(68);
     expect(calls.filter((c) => !served(c))).toEqual([]);
   });
 });
