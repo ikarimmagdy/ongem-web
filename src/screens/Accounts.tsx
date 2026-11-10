@@ -19,6 +19,7 @@ import { useSession } from '../session';
 import { t } from '../i18n';
 import { REGION_CONFIG } from '../region';
 import { AcctLast4, Amt, Load, human, stateStatus } from './common';
+import { ExportActivity } from './ExportActivity';
 import { SplitHint } from './SplitHint';
 
 const PAGE = 20;
@@ -159,6 +160,7 @@ function AccountDetail({ id }: { id: string }) {
             </Load>
             {statementError && <Notice status="failure">{statementError}</Notice>}
           </Card>
+          <ExportActivity accountId={a.id} />
           <Modal
             open={Boolean(statement)}
             title={t('app.accounts.statement_period', { period: statement?.period ?? '' })}

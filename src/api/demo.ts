@@ -51,6 +51,8 @@ import type {
   NoticeView,
   NotificationPreferences,
   PreferenceChange,
+  ExportRequest,
+  ExportRun,
 } from './types';
 
 export interface DemoOptions {
@@ -105,6 +107,10 @@ export class DemoOnGemApi implements OnGemApi {
   };
   /** The demo SMS code: any 6 digits but 000000, which the demo answers as wrong. */
   private smsPending = false;
+  /** OG-024: export runs; each read of a run moves it on one step (QUEUED, RUNNING, DONE), as the background job would. */
+  private exportsState: ExportRun[] = [];
+  /** A period the demo refuses as if the bank's statement disagreed (`statement_mismatch`), for the Refused screen. */
+  refuseExportOf: string | null = null;
   private seq = 0;
   readonly stepUps: string[] = [];
   /** Demo recording stays in memory: events are masked but never leave the browser. */
@@ -302,6 +308,87 @@ export class DemoOnGemApi implements OnGemApi {
     if (!demoStatements.some((s) => s.period === period)) this.notFound('statement');
     return this.log('statement', demoStatement(accountId, period));
   };
+
+  requestExport = async (accountId: string, r: ExportRequest) => {
+    this.require(Permission.EXPORT_CREATE);
+    await this.account(accountId);
+    // The real date, not the demo's clock: the default period is last month as the founder's calendar has it.
+    const today = new Date().toISOString().slice(0, 10);
+    const from = r.month ? `${r.month}-01` : (r.from ?? '');
+    const to = r.month ? demoMonthEnd(r.month) : (r.to ?? '');
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(from) || !/^\d{4}-\d{2}-\d{2}$/.test(to) || to < from || to > today)
+      throw new ApiError(422, 'period_invalid', t('app.exports.error.period_invalid'));
+    if (r.format !== 'CSV')
+      throw new ApiError(422, 'format_unavailable', t('app.exports.error.format_unavailable'));
+    if (
+      this.exportsState.some(
+        (e) => e.accountId === accountId && (e.state === 'QUEUED' || e.state === 'RUNNING'),
+      )
+    )
+      throw new ApiError(429, 'rate_limited', t('app.errors.rate_limited'));
+    const run: ExportRun = {
+      id: this.next('exp'),
+      accountId,
+      state: 'QUEUED',
+      from,
+      to,
+      format: r.format,
+      reason: null,
+      cutoffAt: null,
+      lineCount: null,
+      sha256: null,
+      fileName: null,
+      reexportOf: null,
+      requestedAt: this.now(),
+      finishedAt: null,
+      link: null,
+    };
+    this.exportsState.unshift(run);
+    return this.log('requestExport', run);
+  };
+
+  exports = async (accountId: string) => {
+    this.require(Permission.EXPORT_CREATE);
+    await this.account(accountId);
+    return this.log(
+      'exports',
+      this.exportsState.filter((e) => e.accountId === accountId).map((e) => ({ ...e, link: null })),
+    );
+  };
+
+  exportRun = async (accountId: string, runId: string) => {
+    this.require(Permission.EXPORT_CREATE);
+    const run =
+      this.exportsState.find((e) => e.id === runId && e.accountId === accountId) ?? this.notFound('export');
+    if (run.state === 'QUEUED') {
+      run.state = 'RUNNING';
+      run.cutoffAt = this.now();
+    } else if (run.state === 'RUNNING') {
+      run.finishedAt = this.now();
+      if (this.refuseExportOf === run.from.slice(0, 7)) {
+        run.state = 'REFUSED';
+        run.reason = 'statement_mismatch';
+      } else {
+        run.state = 'DONE';
+        run.lineCount = (demoTransactions[accountId] ?? []).length;
+        run.sha256 = '0'.repeat(64);
+        run.fileName = `ongem-activity-${run.from}-${run.to}.csv`;
+      }
+    }
+    return this.log('exportRun', run.state === 'DONE' ? { ...run, link: this.demoLink(run) } : run);
+  };
+
+  exportLink = async (accountId: string, runId: string) => {
+    const run = await this.exportRun(accountId, runId);
+    if (run.state !== 'DONE') throw new ApiError(409, 'export_not_ready');
+    return this.log('exportLink', this.demoLink(run));
+  };
+
+  /** Demo files never leave the browser: the link is the sample file itself. */
+  private demoLink(run: ExportRun) {
+    const csv = [run.from, run.to].join(',');
+    return { url: `data:text/csv;charset=utf-8,${encodeURIComponent(csv)}`, expiresAt: this.now() };
+  }
 
   recipients = async () =>
     this.log(
@@ -1034,3 +1121,10 @@ export class DemoOnGemApi implements OnGemApi {
 }
 
 export const DEMO_DEFAULT_ACCOUNT = OPS;
+
+/** The last day of [month] (YYYY-MM). */
+function demoMonthEnd(month: string): string {
+  const [y, m] = month.split('-').map(Number);
+  const last = new Date(Date.UTC(y!, m!, 0)).getUTCDate();
+  return `${month}-${String(last).padStart(2, '0')}`;
+}

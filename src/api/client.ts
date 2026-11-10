@@ -31,6 +31,9 @@ import type {
   RequiredDisclosure,
   Statement,
   StatementRef,
+  ExportLink,
+  ExportRequest,
+  ExportRun,
   TicketDetail,
   TicketSummary,
   Transaction,
@@ -76,6 +79,14 @@ export interface OnGemApi {
   transactions(accountId: string, limit: number): Promise<Transaction[]>;
   statements(accountId: string): Promise<StatementRef[]>;
   statement(accountId: string, period: string): Promise<Statement>;
+  /** OG-024: queues an export of the account's posted activity; 202 with the run (QUEUED). Needs export:create. */
+  requestExport(accountId: string, request: ExportRequest): Promise<ExportRun>;
+  /** Newest first, without links. */
+  exports(accountId: string): Promise<ExportRun[]>;
+  /** One run; a DONE run carries a fresh 15 minute link. */
+  exportRun(accountId: string, runId: string): Promise<ExportRun>;
+  /** A fresh link to a DONE run's file (429 rate_limited over the hourly limit). */
+  exportLink(accountId: string, runId: string): Promise<ExportLink>;
   recipients(): Promise<Recipient[]>;
   /** Step-up: a 403 reverification_required is answered before this returns. */
   createRecipient(request: CreateRecipient): Promise<Recipient>;
@@ -171,6 +182,8 @@ export const Permission = {
   CARD_MANAGE: 'card:manage',
   ONBOARDING_MANAGE: 'onboarding:manage',
   MEMBER_INVITE: 'member:invite',
+  /** OG-024: export an account's activity; OWNER only (ongem-core seeds it for OWNER alone). */
+  EXPORT_CREATE: 'export:create',
 } as const;
 
 /** The permissions a FROZEN, CLOSING or CLOSED company keeps (OG-023 R13): reading only. */

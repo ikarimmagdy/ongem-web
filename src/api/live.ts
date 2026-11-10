@@ -278,6 +278,10 @@ export class LiveOnGemApi implements OnGemApi {
   transactions: OnGemApi['transactions'] = (id: string, limit: number) =>
     this.call('GET', paths.transactions(id, Math.min(100, Math.max(1, limit))));
   statements: OnGemApi['statements'] = (id: string) => this.call('GET', paths.statements(id));
+  requestExport: OnGemApi['requestExport'] = (id, r) => this.call('POST', paths.exports(id), { json: r });
+  exports: OnGemApi['exports'] = (id) => this.call('GET', paths.exports(id));
+  exportRun: OnGemApi['exportRun'] = (id, run) => this.call('GET', paths.exportRun(id, run));
+  exportLink: OnGemApi['exportLink'] = (id, run) => this.call('POST', paths.exportLink(id, run));
   statement: OnGemApi['statement'] = (id: string, period: string) =>
     this.call('GET', paths.statement(id, period));
   /** ongem-core pages recipients (100 at most per page); the screens and the assistant want the whole list. */

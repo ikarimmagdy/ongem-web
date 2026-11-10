@@ -507,3 +507,39 @@ export interface PreferenceChange {
   email?: boolean;
   sms?: boolean;
 }
+
+/** OG-024: an export run of an account's posted activity (contract exports-api.md). */
+export type ExportState = 'QUEUED' | 'RUNNING' | 'DONE' | 'REFUSED' | 'FAILED';
+
+export interface ExportLink {
+  url: string;
+  expiresAt: string;
+}
+
+export interface ExportRun {
+  id: string;
+  accountId: string;
+  state: ExportState;
+  from: string;
+  to: string;
+  format: string;
+  /** statement_mismatch, format_unavailable, account_not_found or technical. */
+  reason: string | null;
+  cutoffAt: string | null;
+  lineCount: number | null;
+  sha256: string | null;
+  fileName: string | null;
+  reexportOf: string | null;
+  requestedAt: string;
+  finishedAt: string | null;
+  /** A fresh link on a DONE run read by itself; null in a list. */
+  link: ExportLink | null;
+}
+
+/** A month (YYYY-MM) or a range of posted dates, and a format. */
+export interface ExportRequest {
+  month?: string;
+  from?: string;
+  to?: string;
+  format: string;
+}

@@ -24,6 +24,10 @@ async function record() {
     api.transactions('a', 20),
     api.statements('a'),
     api.statement('a', '2026-09'),
+    api.requestExport('a', { month: '2026-10', format: 'CSV' }),
+    api.exports('a'),
+    api.exportRun('a', 'e'),
+    api.exportLink('a', 'e'),
     api.recipients(),
     api.createRecipient({
       kind: 'BUSINESS',

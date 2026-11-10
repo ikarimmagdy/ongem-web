@@ -6669,6 +6669,354 @@
       "meta": {},
       "en": "Transfer between your companies",
       "ar": "تحويل بين شركاتك"
+    },
+    {
+      "key": "app.exports.title",
+      "format": "text",
+      "description": "Card title on the account screen",
+      "placeholders": [],
+      "meta": {},
+      "en": "Export activity",
+      "ar": "تصدير الحركات"
+    },
+    {
+      "key": "app.exports.intro",
+      "format": "text",
+      "description": "What an export is",
+      "placeholders": [],
+      "meta": {},
+      "en": "A file of this account's posted transactions for your accountant.",
+      "ar": "ملف بالحركات المرحّلة في هذا الحساب لمحاسبك."
+    },
+    {
+      "key": "app.exports.start",
+      "format": "text",
+      "description": "Button that opens the export form",
+      "placeholders": [],
+      "meta": {},
+      "en": "Export activity",
+      "ar": "تصدير الحركات"
+    },
+    {
+      "key": "app.exports.period",
+      "format": "text",
+      "description": "Label: which period to export",
+      "placeholders": [],
+      "meta": {},
+      "en": "Period",
+      "ar": "الفترة"
+    },
+    {
+      "key": "app.exports.period_last_month",
+      "format": "text",
+      "description": "Option: the last full month, default",
+      "placeholders": [
+        "month"
+      ],
+      "meta": {},
+      "en": "Last full month ({month})",
+      "ar": "آخر شهر كامل ({month})"
+    },
+    {
+      "key": "app.exports.period_custom",
+      "format": "text",
+      "description": "Option: pick start and end dates",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose dates",
+      "ar": "اختيار التواريخ"
+    },
+    {
+      "key": "app.exports.from",
+      "format": "text",
+      "description": "Label: first date",
+      "placeholders": [],
+      "meta": {},
+      "en": "From",
+      "ar": "من"
+    },
+    {
+      "key": "app.exports.to",
+      "format": "text",
+      "description": "Label: last date",
+      "placeholders": [],
+      "meta": {},
+      "en": "To",
+      "ar": "إلى"
+    },
+    {
+      "key": "app.exports.format",
+      "format": "text",
+      "description": "Label: file format",
+      "placeholders": [],
+      "meta": {},
+      "en": "Format",
+      "ar": "الصيغة"
+    },
+    {
+      "key": "app.exports.format_csv",
+      "format": "text",
+      "description": "Format option: CSV",
+      "placeholders": [],
+      "meta": {},
+      "en": "CSV (spreadsheet)",
+      "ar": "CSV (جدول بيانات)"
+    },
+    {
+      "key": "app.exports.confirm",
+      "format": "text",
+      "description": "Button that starts the export",
+      "placeholders": [],
+      "meta": {},
+      "en": "Export",
+      "ar": "تصدير"
+    },
+    {
+      "key": "app.exports.cancel",
+      "format": "text",
+      "description": "Button that closes the form",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cancel",
+      "ar": "إلغاء"
+    },
+    {
+      "key": "app.exports.preparing",
+      "format": "text",
+      "description": "State title while the file is built",
+      "placeholders": [],
+      "meta": {},
+      "en": "Preparing your file",
+      "ar": "جارٍ تجهيز ملفك"
+    },
+    {
+      "key": "app.exports.preparing_text",
+      "format": "text",
+      "description": "Shown while preparing, before the cut-off is known",
+      "placeholders": [],
+      "meta": {},
+      "en": "You can leave this screen; the file keeps being prepared.",
+      "ar": "يمكنك مغادرة هذه الشاشة، وسيستمر تجهيز الملف."
+    },
+    {
+      "key": "app.exports.preparing_cutoff",
+      "format": "text",
+      "description": "Shown while preparing, with the read model cut-off",
+      "placeholders": [
+        "time"
+      ],
+      "meta": {},
+      "en": "Activity up to {time} is included. You can leave this screen; the file keeps being prepared.",
+      "ar": "تشمل الحركات حتى {time}. يمكنك مغادرة هذه الشاشة، وسيستمر تجهيز الملف."
+    },
+    {
+      "key": "app.exports.ready",
+      "format": "text",
+      "description": "State title when the file is ready",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your file is ready",
+      "ar": "ملفك جاهز"
+    },
+    {
+      "key": "app.exports.ready_text",
+      "format": "text",
+      "description": "Ready: what the file holds",
+      "placeholders": [
+        "from",
+        "lines",
+        "to"
+      ],
+      "meta": {},
+      "en": "{lines} transactions from {from} to {to}.",
+      "ar": "{lines} حركة من {from} إلى {to}."
+    },
+    {
+      "key": "app.exports.download",
+      "format": "text",
+      "description": "Download link naming the file",
+      "placeholders": [
+        "file"
+      ],
+      "meta": {},
+      "en": "Download {file}",
+      "ar": "تنزيل {file}"
+    },
+    {
+      "key": "app.exports.link_again",
+      "format": "text",
+      "description": "Button: a fresh download link",
+      "placeholders": [],
+      "meta": {},
+      "en": "Get a new download link",
+      "ar": "الحصول على رابط تنزيل جديد"
+    },
+    {
+      "key": "app.exports.link_expires",
+      "format": "text",
+      "description": "When the link stops working",
+      "placeholders": [
+        "time"
+      ],
+      "meta": {},
+      "en": "The link works until {time}.",
+      "ar": "يعمل الرابط حتى {time}."
+    },
+    {
+      "key": "app.exports.refused",
+      "format": "text",
+      "description": "State title when the run is refused",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not prepare this file",
+      "ar": "تعذّر تجهيز هذا الملف"
+    },
+    {
+      "key": "app.exports.refused_statement_mismatch",
+      "format": "text",
+      "description": "Refused: the activity does not match the bank statement",
+      "placeholders": [],
+      "meta": {},
+      "en": "The activity we hold for this period does not agree with the bank's statement, so no file was made. Our team has been told and will look into it.",
+      "ar": "الحركات المسجلة لدينا لهذه الفترة لا تطابق كشف حساب البنك، لذلك لم يُنشأ أي ملف. أُبلغ فريقنا وسيتابع الأمر."
+    },
+    {
+      "key": "app.exports.refused_other",
+      "format": "text",
+      "description": "Refused for another reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "This export could not be prepared. Try again or contact support.",
+      "ar": "تعذّر تجهيز هذا التصدير. حاول مرة أخرى أو تواصل مع الدعم."
+    },
+    {
+      "key": "app.exports.failed",
+      "format": "text",
+      "description": "State text when the run failed for a technical reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "Something went wrong while preparing the file. Try again in a few minutes.",
+      "ar": "حدث خطأ أثناء تجهيز الملف. حاول مرة أخرى بعد بضع دقائق."
+    },
+    {
+      "key": "app.exports.no_permission",
+      "format": "text",
+      "description": "Shown instead of the form to a member without export permission",
+      "placeholders": [],
+      "meta": {},
+      "en": "Only an owner of the company can export account activity.",
+      "ar": "يمكن لمالك الشركة فقط تصدير حركات الحساب."
+    },
+    {
+      "key": "app.exports.error.period_invalid",
+      "format": "text",
+      "description": "Date error",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose an end date that is not before the start date, not in the future, and at most 366 days after it.",
+      "ar": "اختر تاريخ نهاية لا يسبق تاريخ البداية، وليس في المستقبل، ولا يتجاوزه بأكثر من 366 يومًا."
+    },
+    {
+      "key": "app.exports.error.format_unavailable",
+      "format": "text",
+      "description": "The format is not offered in this region",
+      "placeholders": [],
+      "meta": {},
+      "en": "This format is not offered here.",
+      "ar": "هذه الصيغة غير متاحة هنا."
+    },
+    {
+      "key": "app.exports.recent",
+      "format": "text",
+      "description": "Heading of the recent exports list",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recent exports",
+      "ar": "عمليات التصدير الأخيرة"
+    },
+    {
+      "key": "app.exports.no_recent",
+      "format": "text",
+      "description": "No exports yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "No exports yet.",
+      "ar": "لا توجد عمليات تصدير بعد."
+    },
+    {
+      "key": "app.exports.row",
+      "format": "text",
+      "description": "A run in the list: its period",
+      "placeholders": [
+        "from",
+        "to"
+      ],
+      "meta": {},
+      "en": "{from} to {to}",
+      "ar": "من {from} إلى {to}"
+    },
+    {
+      "key": "app.exports.state.queued",
+      "format": "text",
+      "description": "Run state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting",
+      "ar": "في الانتظار"
+    },
+    {
+      "key": "app.exports.state.running",
+      "format": "text",
+      "description": "Run state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Preparing",
+      "ar": "قيد التجهيز"
+    },
+    {
+      "key": "app.exports.state.done",
+      "format": "text",
+      "description": "Run state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ready",
+      "ar": "جاهز"
+    },
+    {
+      "key": "app.exports.state.refused",
+      "format": "text",
+      "description": "Run state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Refused",
+      "ar": "مرفوض"
+    },
+    {
+      "key": "app.exports.state.failed",
+      "format": "text",
+      "description": "Run state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Failed",
+      "ar": "فشل"
+    },
+    {
+      "key": "app.exports.open",
+      "format": "text",
+      "description": "Button: open a run from the list",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open",
+      "ar": "فتح"
+    },
+    {
+      "key": "app.errors.rate_limited",
+      "format": "text",
+      "description": "Too many requests (429)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Too many requests. Wait a moment and try again.",
+      "ar": "طلبات كثيرة جدًا. انتظر قليلًا ثم حاول مرة أخرى."
     }
   ]
 }

@@ -12,6 +12,9 @@ export const paths = {
   transactions: (id: string, limit: number) => `/v1/accounts/${q(id)}/transactions?limit=${limit}`,
   statements: (id: string) => `/v1/accounts/${q(id)}/statements`,
   statement: (id: string, period: string) => `/v1/accounts/${q(id)}/statements/${q(period)}`,
+  exports: (id: string) => `/v1/accounts/${q(id)}/exports`,
+  exportRun: (id: string, run: string) => `/v1/accounts/${q(id)}/exports/${q(run)}`,
+  exportLink: (id: string, run: string) => `/v1/accounts/${q(id)}/exports/${q(run)}/link`,
   recipients: '/v1/recipients',
   recipientPage: (cursor?: string | null) =>
     `/v1/recipients?limit=100${cursor ? `&cursor=${q(cursor)}` : ''}`,

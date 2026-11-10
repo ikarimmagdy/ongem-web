@@ -59,6 +59,7 @@ const KNOWN = new Set([
   'device_required',
   'device_proof_required',
   'device_proof_invalid',
+  'rate_limited',
 ]);
 
 /** The line a screen shows for a failure; anything unknown falls back to the API's own detail. */

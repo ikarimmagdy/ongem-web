@@ -118,3 +118,7 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   region's dev API; a 409 `wrong_region` names it too). whereami never binds a device, and the signed-in screens wait
   (`regionPending`) until the region is known, so a region that does not hold the person gets no call that writes.
   Tests: `region-routing.test.tsx` (AC-R24.1, AC-R25.1, AC-R25.2).
+- 2026-11-10: OG-024 accounting exports (R16): `src/screens/ExportActivity.tsx` on the account screen. An owner
+  (`export:create`) picks last full month or dates and a format, the run is read again until Ready (download link naming
+  the file, fresh link), Refused or Failed; others see the no-permission text. Texts `app.exports.*` in both seeds.
+  Test `src/test/exports.test.tsx` (AC-R16.1, R16.2, R16.4).
