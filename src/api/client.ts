@@ -41,6 +41,7 @@ import type {
   NotificationPreferences,
   PreferenceChange,
 } from './types';
+import type { Whereami } from './live';
 
 /** The customer API as the founder web uses it: call for call the same as ongem-app's OnGemApi.kt. */
 export interface OnGemApi {
@@ -56,6 +57,11 @@ export interface OnGemApi {
    * region. The client's own region answers itself.
    */
   forRegion(region: string): OnGemApi | null;
+  /**
+   * OG-022 R2, R25: where the person's company lives, asked before anything else on a region that may not know the
+   * person; it writes nothing and binds no device. No company and no region means that region does not hold them.
+   */
+  whereami(): Promise<Whereami>;
   /** OG-023 R6: the company's invitations, newest first (member:invite). */
   invites(companyId: string): Promise<InviteView[]>;
   /** A role no wider than the caller's; the token and link come back this once. 409 invite_exists. */

@@ -182,10 +182,17 @@ export class DemoOnGemApi implements OnGemApi {
     if (other === 'down') {
       const down = new DemoOnGemApi({ ...this.opts, region, regions: {} });
       down.me = () => Promise.reject(new ApiError(0, 'network'));
+      down.whereami = () => Promise.reject(new ApiError(0, 'network'));
       return down;
     }
     return new DemoOnGemApi({ ...this.opts, me: other, region, companyId: null, regions: {} });
   }
+
+  /** A region that never saw the person (no membership there) answers no company and no region (ADR-0052). */
+  whereami = async () => {
+    const companyId = this.me_.memberships.length ? (this.me_.companyId ?? null) : null;
+    return this.log('whereami', { companyId, region: companyId ? this.region : null, apiBaseUrl: null });
+  };
 
   invites = async () => {
     this.require(Permission.MEMBER_INVITE);

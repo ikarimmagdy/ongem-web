@@ -12,8 +12,9 @@ const asRole = (role: string) =>
 describe('team invitations (OG-023 R6, client)', () => {
   it('an owner invites by email and the link is shown once AC-R6.1', async () => {
     renderApp('/settings');
-    const team = await screen.findByTestId('settings-team');
-    expect(await within(team).findByText('No invitations yet.')).toBeInTheDocument();
+    // The card may mount again once the shell knows the company, so it is found afresh each time.
+    expect(await screen.findByTestId('settings-team')).toBeInTheDocument();
+    expect(await screen.findByText('No invitations yet.')).toBeInTheDocument();
     await userEvent.type(screen.getByTestId('invite-email'), 'sam@example.com');
     await userEvent.selectOptions(screen.getByTestId('invite-role'), 'VIEWER');
     await userEvent.click(screen.getByTestId('invite-send'));

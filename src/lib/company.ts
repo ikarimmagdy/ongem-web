@@ -35,11 +35,20 @@ export async function loadCompanies(home: OnGemApi): Promise<Companies> {
   const clients = REGIONS.map((r) => (r === home.region ? home : home.forRegion(r))).filter(
     (c): c is OnGemApi => c !== null,
   );
-  const answers = await Promise.allSettled(clients.map((c) => c.me()));
+  // OG-022 R25, N4: another region is asked whereami first, which writes nothing there; only a region that holds the
+  // person (a company or a region in the answer) is then asked GET /v1/me, so no person record is made where they are
+  // unknown. A region that does not hold them is skipped without a notice.
+  const answers = await Promise.allSettled(
+    clients.map(async (c) => {
+      if (c === home) return c.me();
+      const w = await c.whereami();
+      return w.companyId || w.region ? c.me() : null;
+    }),
+  );
   const seen = new Set<string>();
   const items: Membership[] = [];
   answers.forEach((a, i) => {
-    if (a.status !== 'fulfilled') return;
+    if (a.status !== 'fulfilled' || !a.value) return;
     for (const m of switchable(a.value)) {
       if (seen.has(m.companyId)) continue;
       seen.add(m.companyId);
@@ -51,8 +60,8 @@ export async function loadCompanies(home: OnGemApi): Promise<Companies> {
     const failed = answers.find((a) => a.status === 'rejected') as PromiseRejectedResult;
     throw failed.reason;
   }
-  const first = answers[0];
-  const defaultCompanyId = first?.status === 'fulfilled' ? (first.value.companyId ?? null) : null;
+  const first = answers[clients.indexOf(home)];
+  const defaultCompanyId = first?.status === 'fulfilled' ? (first.value?.companyId ?? null) : null;
   return { items, partial, defaultCompanyId };
 }
 
