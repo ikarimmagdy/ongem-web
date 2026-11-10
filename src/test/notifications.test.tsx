@@ -1,6 +1,7 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { DemoOnGemApi } from '../api/demo';
+import { DemoOnGemApi, type DemoOptions } from '../api/demo';
+import { demoMe } from '../api/demoData';
 import { noticeRoute } from '../screens/Notifications';
 import { renderApp } from './render';
 
@@ -93,5 +94,51 @@ describe('notifications (M-3-R31 to R34, R36; OG-014 client)', () => {
     expect(noticeRoute('onboarding/review')).toBe('/onboarding');
     expect(noticeRoute('platform')).toBeNull();
     expect(noticeRoute(null)).toBeNull();
+  });
+});
+
+describe('notice links name their company (OG-023 R14)', () => {
+  const twoCompanies = {
+    ...demoMe,
+    memberships: [
+      ...demoMe.memberships,
+      {
+        id: 'mbr_g',
+        companyId: 'cmp_demo_gulf',
+        companyName: 'Gulf Trading FZE',
+        role: 'OWNER',
+        state: 'ACTIVE',
+      },
+    ],
+  };
+  class Spy extends DemoOnGemApi {
+    constructor(
+      opts: DemoOptions,
+      readonly made: Spy[] = [],
+    ) {
+      super(opts);
+    }
+    override forCompany(companyId: string | null): Spy {
+      const next = new Spy({ me: twoCompanies, companyId }, this.made);
+      this.made.push(next);
+      return next;
+    }
+  }
+
+  it('a notice link switches company first AC-R14.3', async () => {
+    const api = new Spy({ me: twoCompanies });
+    renderApp('/payments?company=cmp_demo_gulf', { api });
+    await waitFor(() => expect(screen.getByTestId('company-switcher')).toHaveTextContent('Gulf Trading FZE'));
+    const gulf = api.made.find((a) => a.companyId === 'cmp_demo_gulf')!;
+    await waitFor(() => expect(gulf.calls).toContain('payments'));
+    // The page was never loaded for the company being viewed before the link was opened.
+    expect(api.calls).not.toContain('payments');
+  });
+
+  it('a link naming a company the person is not in opens the page in the current company AC-R14.3', async () => {
+    const api = new Spy({ me: twoCompanies });
+    renderApp('/payments?company=cmp_stranger', { api });
+    await waitFor(() => expect(api.calls).toContain('payments'));
+    expect(api.made.some((a) => a.companyId === 'cmp_stranger')).toBe(false);
   });
 });

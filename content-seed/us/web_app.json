@@ -6281,6 +6281,394 @@
       "meta": {},
       "en": "savings",
       "ar": "توفير"
+    },
+    {
+      "key": "app.shell.switch_company_label_region",
+      "format": "text",
+      "description": "Company switcher button with the current company's region and unread notices, read by screen readers",
+      "placeholders": [
+        "company",
+        "region",
+        "unread"
+      ],
+      "meta": {},
+      "en": "Switch company, current {company} in {region}. Unread notices in your companies: {unread}",
+      "ar": "تبديل الشركة، الشركة الحالية {company} في {region}. الإشعارات غير المقروءة في شركاتك: {unread}"
+    },
+    {
+      "key": "app.shell.region.us",
+      "format": "text",
+      "description": "Region name of a company served in the United States, in the company switcher",
+      "placeholders": [],
+      "meta": {},
+      "en": "United States",
+      "ar": "الولايات المتحدة"
+    },
+    {
+      "key": "app.shell.region.ae",
+      "format": "text",
+      "description": "Region name of a company served in the United Arab Emirates, in the company switcher",
+      "placeholders": [],
+      "meta": {},
+      "en": "United Arab Emirates",
+      "ar": "الإمارات العربية المتحدة"
+    },
+    {
+      "key": "app.shell.company_state.frozen",
+      "format": "text",
+      "description": "Marks a frozen company in the company switcher",
+      "placeholders": [],
+      "meta": {},
+      "en": "Frozen",
+      "ar": "مجمّدة"
+    },
+    {
+      "key": "app.shell.company_state.closing",
+      "format": "text",
+      "description": "Marks a closing company in the company switcher",
+      "placeholders": [],
+      "meta": {},
+      "en": "Closing",
+      "ar": "قيد الإغلاق"
+    },
+    {
+      "key": "app.shell.company_state.closed",
+      "format": "text",
+      "description": "Marks a closed company in the company switcher",
+      "placeholders": [],
+      "meta": {},
+      "en": "Closed",
+      "ar": "مغلقة"
+    },
+    {
+      "key": "app.shell.unread",
+      "format": "text",
+      "description": "Unread notices of one company, next to it in the company switcher",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "{count} unread",
+      "ar": "{count} غير مقروءة"
+    },
+    {
+      "key": "app.shell.companies_partial",
+      "format": "text",
+      "description": "Notice in the company switcher when one region's companies could not be loaded",
+      "placeholders": [],
+      "meta": {},
+      "en": "Some of your companies could not be loaded. Try again later.",
+      "ar": "تعذّر تحميل بعض شركاتك. حاول مرة أخرى لاحقاً."
+    },
+    {
+      "key": "app.shell.read_only.frozen",
+      "format": "text",
+      "description": "Banner on every screen of a frozen company, whose write actions are hidden",
+      "placeholders": [],
+      "meta": {},
+      "en": "This company is frozen. You can view its records, but nothing new can be sent or changed.",
+      "ar": "هذه الشركة مجمّدة. يمكنك عرض سجلاتها، لكن لا يمكن إرسال أو تغيير أي شيء جديد."
+    },
+    {
+      "key": "app.shell.read_only.closing",
+      "format": "text",
+      "description": "Banner on every screen of a closing company, whose write actions are hidden",
+      "placeholders": [],
+      "meta": {},
+      "en": "This company is closing. You can view its records, but nothing new can be sent or changed.",
+      "ar": "هذه الشركة قيد الإغلاق. يمكنك عرض سجلاتها، لكن لا يمكن إرسال أو تغيير أي شيء جديد."
+    },
+    {
+      "key": "app.shell.read_only.closed",
+      "format": "text",
+      "description": "Banner on every screen of a closed company, whose write actions are hidden",
+      "placeholders": [],
+      "meta": {},
+      "en": "This company is closed. You can view its records, but nothing new can be sent or changed.",
+      "ar": "هذه الشركة مغلقة. يمكنك عرض سجلاتها، لكن لا يمكن إرسال أو تغيير أي شيء جديد."
+    },
+    {
+      "key": "app.shell.opening_company",
+      "format": "text",
+      "description": "Loading label while a link opens the company it belongs to",
+      "placeholders": [],
+      "meta": {},
+      "en": "Opening the company for this link",
+      "ar": "جارٍ فتح الشركة الخاصة بهذا الرابط"
+    },
+    {
+      "key": "app.team.title",
+      "format": "text",
+      "description": "Settings card title: invitations to the company",
+      "placeholders": [],
+      "meta": {},
+      "en": "Team invitations",
+      "ar": "دعوات الفريق"
+    },
+    {
+      "key": "app.team.text",
+      "format": "text",
+      "description": "Settings team invitations: what an invitation does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Invite a person by email. They join with the role you choose, which can be no wider than yours. An invitation lasts 7 days.",
+      "ar": "ادعُ شخصاً عبر البريد الإلكتروني. ينضم بالدور الذي تختاره، ولا يمكن أن يكون أوسع من دورك. تبقى الدعوة صالحة 7 أيام."
+    },
+    {
+      "key": "app.team.email",
+      "format": "text",
+      "description": "Team invitation form: email field label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Email",
+      "ar": "البريد الإلكتروني"
+    },
+    {
+      "key": "app.team.email_error",
+      "format": "text",
+      "description": "Team invitation form: the email is not valid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter a valid email address.",
+      "ar": "أدخل عنوان بريد إلكتروني صحيحاً."
+    },
+    {
+      "key": "app.team.role",
+      "format": "text",
+      "description": "Team invitation form: role field label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Role",
+      "ar": "الدور"
+    },
+    {
+      "key": "app.team.send",
+      "format": "text",
+      "description": "Team invitation form: send button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send invitation",
+      "ar": "إرسال الدعوة"
+    },
+    {
+      "key": "app.team.sent",
+      "format": "text",
+      "description": "Team invitation sent: the accept link is shown once",
+      "placeholders": [
+        "email",
+        "link"
+      ],
+      "meta": {},
+      "en": "Invitation sent to {email}. If the email does not arrive, share this link with them: {link}",
+      "ar": "أُرسلت الدعوة إلى {email}. إذا لم يصل البريد، شارك هذا الرابط معه: {link}"
+    },
+    {
+      "key": "app.team.empty",
+      "format": "text",
+      "description": "Team invitations: none yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "No invitations yet.",
+      "ar": "لا توجد دعوات بعد."
+    },
+    {
+      "key": "app.team.loading",
+      "format": "text",
+      "description": "Team invitations: loading label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading invitations",
+      "ar": "جارٍ تحميل الدعوات"
+    },
+    {
+      "key": "app.team.revoke",
+      "format": "text",
+      "description": "Team invitations: revoke a waiting invitation",
+      "placeholders": [],
+      "meta": {},
+      "en": "Revoke",
+      "ar": "إلغاء الدعوة"
+    },
+    {
+      "key": "app.team.expires",
+      "format": "text",
+      "description": "Team invitations: when a waiting invitation expires",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Expires {date}",
+      "ar": "تنتهي في {date}"
+    },
+    {
+      "key": "app.team.state.pending",
+      "format": "text",
+      "description": "Team invitation state: waiting to be accepted",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting",
+      "ar": "بانتظار القبول"
+    },
+    {
+      "key": "app.team.state.accepted",
+      "format": "text",
+      "description": "Team invitation state: accepted",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accepted",
+      "ar": "مقبولة"
+    },
+    {
+      "key": "app.team.state.revoked",
+      "format": "text",
+      "description": "Team invitation state: revoked",
+      "placeholders": [],
+      "meta": {},
+      "en": "Revoked",
+      "ar": "ملغاة"
+    },
+    {
+      "key": "app.team.state.expired",
+      "format": "text",
+      "description": "Team invitation state: expired",
+      "placeholders": [],
+      "meta": {},
+      "en": "Expired",
+      "ar": "منتهية"
+    },
+    {
+      "key": "app.invite.title",
+      "format": "text",
+      "description": "Invitation accept screen: title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Join a company",
+      "ar": "الانضمام إلى شركة"
+    },
+    {
+      "key": "app.invite.text",
+      "format": "text",
+      "description": "Invitation accept screen: what accepting does",
+      "placeholders": [],
+      "meta": {},
+      "en": "You were invited to join a company. Accept to add it to your companies. You keep the companies you have now.",
+      "ar": "تمت دعوتك للانضمام إلى شركة. اقبل الدعوة لإضافتها إلى شركاتك. ستبقى شركاتك الحالية كما هي."
+    },
+    {
+      "key": "app.invite.accept",
+      "format": "text",
+      "description": "Invitation accept screen: accept button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accept invitation",
+      "ar": "قبول الدعوة"
+    },
+    {
+      "key": "app.invite.joined",
+      "format": "text",
+      "description": "Invitation accepted: the company and role joined",
+      "placeholders": [
+        "company",
+        "role"
+      ],
+      "meta": {},
+      "en": "You joined {company} as {role}.",
+      "ar": "انضممت إلى {company} بدور {role}."
+    },
+    {
+      "key": "app.invite.open",
+      "format": "text",
+      "description": "Invitation accepted: open the company joined",
+      "placeholders": [
+        "company"
+      ],
+      "meta": {},
+      "en": "Open {company}",
+      "ar": "فتح {company}"
+    },
+    {
+      "key": "app.errors.invite_not_valid",
+      "format": "text",
+      "description": "Error shown for the API problem code invite_not_valid",
+      "placeholders": [],
+      "meta": {},
+      "en": "This invitation has expired, was revoked or was already used. Ask for a new one.",
+      "ar": "انتهت صلاحية هذه الدعوة أو أُلغيت أو استُخدمت من قبل. اطلب دعوة جديدة."
+    },
+    {
+      "key": "app.errors.invite_email_mismatch",
+      "format": "text",
+      "description": "Error shown for the API problem code invite_email_mismatch",
+      "placeholders": [],
+      "meta": {},
+      "en": "This invitation is for another email address. Sign in with the email it was sent to.",
+      "ar": "هذه الدعوة لعنوان بريد إلكتروني آخر. سجّل الدخول بالبريد الذي أُرسلت إليه."
+    },
+    {
+      "key": "app.errors.membership_limit",
+      "format": "text",
+      "description": "Error shown for the API problem code membership_limit",
+      "placeholders": [],
+      "meta": {},
+      "en": "You have reached the number of companies one person can join.",
+      "ar": "لقد بلغت الحد الأقصى لعدد الشركات التي يمكن لشخص واحد الانضمام إليها."
+    },
+    {
+      "key": "app.errors.invite_exists",
+      "format": "text",
+      "description": "Error shown for the API problem code invite_exists",
+      "placeholders": [],
+      "meta": {},
+      "en": "This person already has an invitation waiting for this company.",
+      "ar": "لدى هذا الشخص دعوة بانتظار القبول لهذه الشركة بالفعل."
+    },
+    {
+      "key": "app.errors.destination_not_allowed",
+      "format": "text",
+      "description": "Error shown for the API problem code destination_not_allowed",
+      "placeholders": [],
+      "meta": {},
+      "en": "You can transfer only to a company where you are an active member.",
+      "ar": "يمكنك التحويل فقط إلى شركة أنت عضو نشط فيها."
+    },
+    {
+      "key": "app.payments.form.between_companies",
+      "format": "text",
+      "description": "New payment type option: a transfer to an account of another of the person's companies",
+      "placeholders": [],
+      "meta": {},
+      "en": "Between my companies",
+      "ar": "بين شركاتي"
+    },
+    {
+      "key": "app.payments.form.company_account",
+      "format": "text",
+      "description": "New payment, between my companies: an account option with its company",
+      "placeholders": [
+        "company",
+        "name"
+      ],
+      "meta": {},
+      "en": "{company}, {name}",
+      "ar": "{company}، {name}"
+    },
+    {
+      "key": "app.payments.form.companies_loading",
+      "format": "text",
+      "description": "New payment, between my companies: loading the other companies' accounts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading your other companies' accounts",
+      "ar": "جارٍ تحميل حسابات شركاتك الأخرى"
+    },
+    {
+      "key": "app.payments.detail.company_transfer",
+      "format": "text",
+      "description": "Payment kind: a transfer to an account of another of the person's companies",
+      "placeholders": [],
+      "meta": {},
+      "en": "Transfer between your companies",
+      "ar": "تحويل بين شركاتك"
     }
   ]
 }

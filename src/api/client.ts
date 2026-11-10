@@ -35,6 +35,9 @@ import type {
   TicketSummary,
   Transaction,
   Inbox,
+  InviteAccepted,
+  InviteCreated,
+  InviteView,
   NotificationPreferences,
   PreferenceChange,
 } from './types';
@@ -46,6 +49,20 @@ export interface OnGemApi {
   readonly companyId: string | null;
   /** A new client for [companyId], so nothing the screens loaded for the previous company is reused (G-69). */
   forCompany(companyId: string | null): OnGemApi;
+  /** OG-023 R12: the region whose API this client calls (US or AE). */
+  readonly region: string;
+  /**
+   * The same person on [region]'s API, in their default company there; null when this build knows no API for that
+   * region. The client's own region answers itself.
+   */
+  forRegion(region: string): OnGemApi | null;
+  /** OG-023 R6: the company's invitations, newest first (member:invite). */
+  invites(companyId: string): Promise<InviteView[]>;
+  /** A role no wider than the caller's; the token and link come back this once. 409 invite_exists. */
+  createInvite(companyId: string, request: { email: string; role: string }): Promise<InviteCreated>;
+  revokeInvite(companyId: string, inviteId: string): Promise<InviteView>;
+  /** OG-023 R7: 410 invite_not_valid, 403 invite_email_mismatch, 409 membership_limit. */
+  acceptInvite(token: string): Promise<InviteAccepted>;
   me(): Promise<Me>;
   accounts(): Promise<Account[]>;
   account(id: string): Promise<Account>;
@@ -147,7 +164,20 @@ export const Permission = {
   RECIPIENT_MANAGE: 'recipient:manage',
   CARD_MANAGE: 'card:manage',
   ONBOARDING_MANAGE: 'onboarding:manage',
+  MEMBER_INVITE: 'member:invite',
 } as const;
+
+/** The permissions a FROZEN, CLOSING or CLOSED company keeps (OG-023 R13): reading only. */
+export const READ_ONLY = new Set<string>([Permission.ACCOUNT_VIEW, Permission.PAYMENT_VIEW]);
+
+/** The roles, widest first, as ongem-core's Role lists them. */
+export const ROLES = ['OWNER', 'ADMIN', 'APPROVER', 'MEMBER', 'VIEWER'] as const;
+
+/** The roles [role] may invite to (OG-023 R6): those granting nothing [role] does not hold. */
+export function invitableRoles(role: string | null | undefined): string[] {
+  const mine = permissionsOf(role);
+  return ROLES.filter((r) => [...permissionsOf(r)].every((p) => mine.has(p)));
+}
 
 export function permissionsOf(role: string | null | undefined): Set<string> {
   const p = Permission;
@@ -155,7 +185,14 @@ export function permissionsOf(role: string | null | undefined): Set<string> {
     case 'OWNER':
       return new Set(Object.values(p));
     case 'ADMIN':
-      return new Set([p.RECIPIENT_MANAGE, p.PAYMENT_CREATE, p.PAYMENT_VIEW, p.CARD_MANAGE, p.ACCOUNT_VIEW]);
+      return new Set([
+        p.MEMBER_INVITE,
+        p.RECIPIENT_MANAGE,
+        p.PAYMENT_CREATE,
+        p.PAYMENT_VIEW,
+        p.CARD_MANAGE,
+        p.ACCOUNT_VIEW,
+      ]);
     case 'APPROVER':
       return new Set([p.PAYMENT_APPROVE, p.PAYMENT_VIEW, p.ACCOUNT_VIEW]);
     case 'MEMBER':

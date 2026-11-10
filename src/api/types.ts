@@ -12,6 +12,40 @@ export interface Membership {
   role: string;
   state: string;
   companyStatus?: string;
+  /** OG-023 R13: the company's lifecycle state; FROZEN, CLOSING and CLOSED open read-only. */
+  companyState?: CompanyState;
+  /** OG-023 R14: unread notices of this person in this company. */
+  unreadNotices?: number;
+  /** OG-023 R12: the region whose API answered this membership; set by the client when it merges both regions. */
+  region?: string;
+}
+
+export type CompanyState = 'ACTIVE' | 'FROZEN' | 'CLOSING' | 'CLOSED';
+
+/** OG-023 R6: an invitation to the company, as the inviting members see it. */
+export interface InviteView {
+  id: string;
+  email: string;
+  role: string;
+  state: 'PENDING' | 'ACCEPTED' | 'REVOKED' | 'EXPIRED';
+  expiresAt: string;
+  createdAt: string;
+  invitedBy: string;
+}
+
+/** The answer to a new invitation: the token and its link come back this once only. */
+export interface InviteCreated {
+  invite: InviteView;
+  token: string;
+  acceptUrl: string;
+}
+
+/** OG-023 R7: the membership an accepted invitation made. */
+export interface InviteAccepted {
+  membershipId: string;
+  companyId: string;
+  companyName?: string | null;
+  role: string;
 }
 
 export interface Me {
@@ -110,6 +144,8 @@ export interface Payment {
   fromAccountId: string;
   recipientId?: string | null;
   toAccountId?: string | null;
+  /** OG-023 R11: set on a transfer to an account of another of the person's companies. */
+  toCompanyId?: string | null;
   reference?: string | null;
   providerReference?: string | null;
   failureCode?: string | null;
@@ -230,7 +266,7 @@ export interface CreatePayment {
   fromAccountId: string;
   recipientId?: string | null;
   toAccountId?: string | null;
-  rail: 'ACH' | 'BOOK' | 'AANI' | 'UAEFTS';
+  rail: 'ACH' | 'BOOK' | 'INTERNAL' | 'AANI' | 'UAEFTS';
   achTiming?: string | null;
   amountMinor: number;
   currency: string;

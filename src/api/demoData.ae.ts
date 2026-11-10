@@ -47,6 +47,9 @@ export const demoMe: Me = {
   issuer: 'customer',
 };
 
+/** OG-023: the company a demo invitation joins. */
+export const demoInviteCompany = { companyId: 'cmp_demo_harbor', companyName: 'Creek Logistics LLC' };
+
 const asOf = '2026-10-29T14:40:00Z';
 
 export const demoAccounts = (): Account[] => [

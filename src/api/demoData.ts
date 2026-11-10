@@ -56,6 +56,11 @@ export const demoMe: Me = IS_AE
       issuer: 'customer',
     };
 
+/** OG-023: the company a demo invitation joins. */
+export const demoInviteCompany = IS_AE
+  ? AE.demoInviteCompany
+  : { companyId: 'cmp_demo_harbor', companyName: 'Harbor Studio LLC' };
+
 const asOf = '2026-10-29T14:40:00Z';
 
 export const demoAccounts = IS_AE

@@ -61,6 +61,9 @@ export const paths = {
   turnFeedback: (id: string) => `/v1/assistant/turns/${q(id)}/feedback`,
   confirmDraft: (id: string) => `/v1/assistant/drafts/${q(id)}/confirm`,
   abandonDraft: (id: string) => `/v1/assistant/drafts/${q(id)}/abandon`,
+  invites: (company: string) => `/v1/companies/${q(company)}/invites`,
+  invite: (company: string, id: string) => `/v1/companies/${q(company)}/invites/${q(id)}`,
+  acceptInvite: (token: string) => `/v1/invites/${q(token)}/accept`,
   recordingSessions: '/v1/recording/sessions',
   recordingEvents: (id: string) => `/v1/recording/sessions/${q(id)}/events`,
 } as const;

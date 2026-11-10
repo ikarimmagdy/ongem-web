@@ -2,6 +2,7 @@ import type { OnGemApi } from './client';
 import { deviceProof, registration, type DeviceKeys } from './device';
 import { ApiError } from './errors';
 import { paths } from './paths';
+import { REGION } from '../region';
 import { REVERIFICATION_CANCELLED, REVERIFICATION_REQUIRED, type ReverificationHint } from './reverify';
 import type {
   CreatePayment,
@@ -11,6 +12,7 @@ import type {
   Recipient,
   RecipientPage,
   CardWidgetKind,
+  InviteView,
 } from './types';
 
 export interface LiveOptions {
@@ -26,6 +28,20 @@ export interface LiveOptions {
   sleep?: (ms: number) => Promise<void>;
   /** The company picked in the switcher (G-69): every call carries it as X-Company-Id; none means the default. */
   companyId?: string | null;
+  /** OG-023 R12: the region [baseUrl] serves (the build's region by default). */
+  region?: string;
+  /** The API base of each region this build may call (VITE_API_BASE_URL_US, VITE_API_BASE_URL_AE). */
+  regionBases?: Partial<Record<string, string>>;
+}
+
+/** The API base URL per region from the build's configuration; a region without one is not asked (OG-023 R12). */
+export function configuredRegionBases(): Partial<Record<string, string>> {
+  const bases: Partial<Record<string, string>> = {};
+  const us = import.meta.env.VITE_API_BASE_URL_US?.trim();
+  const ae = import.meta.env.VITE_API_BASE_URL_AE?.trim();
+  if (us) bases.US = us;
+  if (ae) bases.AE = ae;
+  return bases;
 }
 
 /** Waits before each retry of 409 idempotency_in_progress, with the same Idempotency-Key (CORE-COR-02). */
@@ -56,6 +72,18 @@ export class LiveOnGemApi implements OnGemApi {
   /** The same person and browser device in another of the person's companies; the device is not bound again. */
   forCompany(companyId: string | null): LiveOnGemApi {
     return new LiveOnGemApi({ ...this.opts, companyId }, { device: this.device });
+  }
+
+  get region(): string {
+    return this.opts.region ?? REGION;
+  }
+
+  /** The same person on another region's API (OG-023 R12), whose device binds there on its own. */
+  forRegion(region: string): LiveOnGemApi | null {
+    if (region === this.region) return this.forCompany(null);
+    const base = (this.opts.regionBases ?? configuredRegionBases())[region];
+    if (!base) return null;
+    return new LiveOnGemApi({ ...this.opts, baseUrl: base, region, companyId: null });
   }
 
   constructor(
@@ -333,6 +361,12 @@ export class LiveOnGemApi implements OnGemApi {
     this.call('POST', paths.abandonDraft(id));
   startRecording: OnGemApi['startRecording'] = (platform, appVersion) =>
     this.call('POST', paths.recordingSessions, { json: { platform, appVersion } });
+  invites: OnGemApi['invites'] = async (company) =>
+    (await this.call<{ items: InviteView[] }>('GET', paths.invites(company))).items;
+  createInvite: OnGemApi['createInvite'] = (company, r) =>
+    this.call('POST', paths.invites(company), { json: r });
+  revokeInvite: OnGemApi['revokeInvite'] = (company, id) => this.call('DELETE', paths.invite(company, id));
+  acceptInvite: OnGemApi['acceptInvite'] = (token) => this.call('POST', paths.acceptInvite(token));
   recordEvents: OnGemApi['recordEvents'] = (id, events) =>
     this.call('POST', paths.recordingEvents(id), { json: { events } });
 }

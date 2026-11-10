@@ -6,7 +6,8 @@ async function record() {
   const calls: Array<{ method: string; path: string }> = [];
   const fetchImpl = (async (url: string, init: RequestInit) => {
     calls.push({ method: init.method ?? 'GET', path: url.split('?')[0]! });
-    const page = url.startsWith('/v1/recipients?') && (init.method ?? 'GET') === 'GET';
+    const page =
+      (url.startsWith('/v1/recipients?') || url.endsWith('/invites')) && (init.method ?? 'GET') === 'GET';
     return new Response(page ? '{"items":[]}' : '{}', { status: 200 });
   }) as unknown as typeof fetch;
   const api = new LiveOnGemApi({
@@ -99,6 +100,10 @@ async function record() {
     api.setNotificationPreferences([{ kind: 'PAYMENT_SENT', email: true }]),
     api.setSmsNumber('+15551234567'),
     api.verifySmsNumber('123456'),
+    api.invites('c'),
+    api.createInvite('c', { email: 'x@example.com', role: 'VIEWER' }),
+    api.revokeInvite('c', 'i'),
+    api.acceptInvite('tok'),
   ]);
   return calls;
 }
@@ -114,7 +119,7 @@ function served(call: { method: string; path: string }) {
 describe('every live call is an ongem-core endpoint (OG-030 R8)', () => {
   it('every_live_call_is_in_the_openapi_AC_R8_1', async () => {
     const calls = await record();
-    expect(calls).toHaveLength(60);
+    expect(calls).toHaveLength(64);
     expect(calls.filter((c) => !served(c))).toEqual([]);
   });
 });

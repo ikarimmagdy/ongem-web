@@ -13,6 +13,7 @@ import {
   Notice,
   PageHeader,
   Select,
+  Skeleton,
   StatusChip,
 } from '../design-system';
 import { decimalToMinor, formatDate, formatMinor, minorToDecimal } from '../lib/format';
@@ -119,12 +120,18 @@ function Approval({ id, onDone }: { id: string; onDone(): void }) {
 }
 
 /** What a payment is, for its title: a top-up, a transfer between own accounts or a payment (R-UX-4). */
-export function paymentKind(p: { fundingSourceId?: string | null; toAccountId?: string | null }): string {
+export function paymentKind(p: {
+  fundingSourceId?: string | null;
+  toAccountId?: string | null;
+  toCompanyId?: string | null;
+}): string {
   return p.fundingSourceId
     ? t('app.payments.kind.topup')
-    : p.toAccountId
-      ? t('app.payments.kind.transfer')
-      : t('app.payments.kind.payment');
+    : p.toCompanyId
+      ? t('app.payments.detail.company_transfer')
+      : p.toAccountId
+        ? t('app.payments.kind.transfer')
+        : t('app.payments.kind.payment');
 }
 
 export function PaymentDetail({ id }: { id: string }) {
@@ -155,9 +162,11 @@ export function PaymentDetail({ id }: { id: string }) {
                 label: t('app.payments.detail.rail'),
                 value: p.fundingSourceId
                   ? REGION_CONFIG.topUpRail
-                  : p.toAccountId
-                    ? t('app.payments.detail.internal_transfer')
-                    : REGION_CONFIG.paymentRail(p.rail),
+                  : p.toCompanyId
+                    ? t('app.payments.detail.company_transfer')
+                    : p.toAccountId
+                      ? t('app.payments.detail.internal_transfer')
+                      : REGION_CONFIG.paymentRail(p.rail),
               },
               {
                 label: t('app.payments.detail.reference'),
@@ -207,7 +216,7 @@ export function PaymentDetail({ id }: { id: string }) {
 
 /** New payment: an ACH to a recipient or a transfer between own accounts; review, then send with step-up (OG-030 R4). */
 export function NewPayment() {
-  const { api } = useSession();
+  const { api, companies, currentCompanyId } = useSession();
   const drafts = useDrafts();
   const navigate = useNavigate();
   const [q] = useSearchParams();
@@ -216,6 +225,30 @@ export function NewPayment() {
   const rails = REGION_CONFIG.rails;
   const railValue = (r: (typeof rails)[number]) => r.rail.toLowerCase();
   const [kind, setKind] = useState(q.get('kind') === 'internal' ? 'internal' : railValue(rails[0]!));
+  // OG-023 R11: the person's other ACTIVE companies in this region, whose accounts can take a transfer.
+  const others = companies.filter(
+    (m) =>
+      m.companyId !== currentCompanyId &&
+      (m.region ?? api.region) === api.region &&
+      (m.companyState ?? 'ACTIVE') === 'ACTIVE',
+  );
+  const othersKey = others.map((m) => m.companyId).join(',');
+  const companyAccounts = useAsync(
+    async () =>
+      kind !== 'company'
+        ? []
+        : (
+            await Promise.all(
+              others.map(async (c) =>
+                (await api.forCompany(c.companyId).accounts())
+                  .filter((a) => a.status === 'ACTIVE')
+                  .map((a) => ({ company: c.companyName ?? t('app.shell.company'), account: a })),
+              ),
+            )
+          ).flat(),
+    [api, othersKey, kind],
+  );
+  const [toCompanyAccount, setToCompanyAccount] = useState('');
   const [from, setFrom] = useState(q.get('from') ?? '');
   const [toAccount, setToAccount] = useState(q.get('to') ?? '');
   const [recipient, setRecipient] = useState(q.get('recipient') ?? '');
@@ -252,7 +285,16 @@ export function NewPayment() {
   const payable = recipients.data.filter((r) => r.screening !== 'BLOCKED');
   const toId = accs.some((a) => a.id === toAccount && a.id !== fromId) ? toAccount : '';
   const recipientId = payable.some((r) => r.id === recipient) ? recipient : '';
-  const target = kind === 'internal' ? toId : recipientId;
+  const fromCurrency = accs.find((a) => a.id === fromId)?.currency;
+  const destinations =
+    companyAccounts.status === 'success'
+      ? companyAccounts.data.filter((d) => !fromCurrency || d.account.currency === fromCurrency)
+      : [];
+  const destination = destinations.find((d) => d.account.id === toCompanyAccount);
+  const companyToId = destination?.account.id ?? '';
+  const destinationLabel = (d: (typeof destinations)[number]) =>
+    t('app.payments.form.company_account', { company: d.company, name: d.account.name });
+  const target = kind === 'internal' ? toId : kind === 'company' ? companyToId : recipientId;
   const valid = Boolean(fromId && target && minor);
   const rail = rails.find((r) => railValue(r) === kind) ?? rails[0]!;
   const send = async () => {
@@ -265,10 +307,10 @@ export function NewPayment() {
         created.current ??
         (await api.createPayment({
           fromAccountId: fromId,
-          rail: kind === 'internal' ? 'BOOK' : rail.rail,
-          achTiming: kind === 'internal' ? null : (rail.achTiming ?? null),
-          recipientId: kind === 'internal' ? null : recipientId,
-          toAccountId: kind === 'internal' ? toId : null,
+          rail: kind === 'internal' ? 'BOOK' : kind === 'company' ? 'INTERNAL' : rail.rail,
+          achTiming: kind === 'internal' || kind === 'company' ? null : (rail.achTiming ?? null),
+          recipientId: kind === 'internal' || kind === 'company' ? null : recipientId,
+          toAccountId: kind === 'internal' ? toId : kind === 'company' ? companyToId : null,
           amountMinor: minor,
           currency: REGION_CONFIG.currency,
           reference: reference.trim() || null,
@@ -279,7 +321,11 @@ export function NewPayment() {
       await drafts.done(['PAYMENT', 'INTERNAL_TRANSFER'], sent.id, {
         fromAccountId: fromId,
         amountMinor: minor,
-        ...(kind === 'internal' ? { toAccountId: toId } : { recipientId }),
+        ...(kind === 'internal'
+          ? { toAccountId: toId }
+          : kind === 'company'
+            ? { toAccountId: companyToId }
+            : { recipientId }),
       });
       navigate(`/payments/${sent.id}`);
     } catch (e) {
@@ -320,11 +366,14 @@ export function NewPayment() {
               value:
                 kind === 'internal'
                   ? accs.find((a) => a.id === toId)?.name
-                  : payable.find((r) => r.id === recipientId)?.name,
+                  : kind === 'company' && destination
+                    ? destinationLabel(destination)
+                    : payable.find((r) => r.id === recipientId)?.name,
             },
             {
               label: t('app.payments.review.how'),
-              value: kind === 'internal' ? t('app.payments.review.internal_now') : rail.how,
+              value:
+                kind === 'internal' || kind === 'company' ? t('app.payments.review.internal_now') : rail.how,
             },
           ]}
         />
@@ -358,6 +407,9 @@ export function NewPayment() {
             options={[
               ...rails.map((r) => ({ value: railValue(r), label: r.option })),
               { value: 'internal', label: t('app.payments.form.internal') },
+              ...(others.length
+                ? [{ value: 'company', label: t('app.payments.form.between_companies') }]
+                : []),
             ]}
           />
         </Field>
@@ -373,7 +425,25 @@ export function NewPayment() {
             }))}
           />
         </Field>
-        {kind === 'internal' ? (
+        {kind === 'company' ? (
+          companyAccounts.status === 'loading' ? (
+            <Skeleton label={t('app.payments.form.companies_loading')} />
+          ) : companyAccounts.status === 'error' ? (
+            <Notice status="failure">{errorText(companyAccounts.error)}</Notice>
+          ) : (
+            <Field label={t('app.payments.form.to_account')}>
+              <Select
+                data-testid="payment-to-company-account"
+                value={companyToId}
+                onChange={(e) => setToCompanyAccount(e.target.value)}
+                options={[
+                  { value: '', label: t('app.payments.form.choose_account') },
+                  ...destinations.map((d) => ({ value: d.account.id, label: destinationLabel(d) })),
+                ]}
+              />
+            </Field>
+          )
+        ) : kind === 'internal' ? (
           <Field label={t('app.payments.form.to_account')}>
             <Select
               data-testid="payment-to-account"
@@ -438,7 +508,7 @@ export function NewPayment() {
 }
 
 export function PaymentsScreen() {
-  const { api, can } = useSession();
+  const { api, can, companyState } = useSession();
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -480,7 +550,7 @@ export function PaymentsScreen() {
                 {t('app.payments.scheduled')}
               </Button>
             )}
-            {can(Permission.PAYMENT_VIEW) && (
+            {can(Permission.PAYMENT_VIEW) && companyState === 'ACTIVE' && (
               <Button
                 variant="secondary"
                 data-testid="add-money"
@@ -516,9 +586,11 @@ export function PaymentsScreen() {
                             <span className="fw-row__sub">
                               {p.fundingSourceId
                                 ? t('app.payments.kind.topup')
-                                : p.toAccountId
-                                  ? t('app.payments.detail.internal_transfer')
-                                  : REGION_CONFIG.paymentRail(p.rail)}{' '}
+                                : p.toCompanyId
+                                  ? t('app.payments.detail.company_transfer')
+                                  : p.toAccountId
+                                    ? t('app.payments.detail.internal_transfer')
+                                    : REGION_CONFIG.paymentRail(p.rail)}{' '}
                               {p.createdAt ? `· ${formatDate(p.createdAt)}` : ''}
                             </span>
                           </span>

@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { InviteScreen } from './screens/Invite';
 import { Button, Logo, Notice, Skeleton } from './design-system';
 import { useAsync } from './lib/useAsync';
 import { ApiError, errorText } from './api/errors';
 import { CompanySwitcher } from './CompanySwitcher';
-import { currentMembership, switchable } from './lib/company';
+import { companyState, currentMembership, loadCompanies, switchable } from './lib/company';
 import { AccountsScreen } from './screens/Accounts';
 import { CardsScreen } from './screens/Cards';
 import { HomeScreen } from './screens/Home';
@@ -78,23 +79,55 @@ function ProfileMenu({ children, onLeave }: { children?: ReactNode; onLeave(): v
 }
 
 function Shell({ children, assistant }: { children: ReactNode; assistant?: ReactNode }) {
-  const { api, mode, setRole, leave, companyId, switchCompany } = useSession();
+  const {
+    api,
+    homeApi,
+    mode,
+    setRole,
+    leave,
+    companyId,
+    switchCompany,
+    setCompanies,
+    setCompanyState,
+    setCurrentCompanyId,
+  } = useSession();
   const navigate = useNavigate();
   usePageTitle();
   const me = useAsync(() => api.me(), [api]);
+  // OG-023 R12: the switcher lists the person's companies in every region, each asked with the same sign-in.
+  const all = useAsync(() => loadCompanies(homeApi), [homeApi]);
   const person = me.status === 'success' ? me.data : null;
-  const membership = currentMembership(person);
+  const found = currentMembership(person);
+  const merged = all.status === 'success' ? all.data.items : null;
+  const membership = found && {
+    ...(merged?.find((m) => m.companyId === found.companyId) ?? {}),
+    ...found,
+    region: api.region,
+  };
+  const companies =
+    merged && merged.length ? merged : switchable(person).map((m) => ({ ...m, region: api.region }));
+  const partial = all.status === 'success' && all.data.partial;
+  const state = companyState(membership);
   useEffect(() => {
     if (me.status === 'success') setRole(membership?.role ?? null);
   }, [me.status, membership?.role, setRole]);
+  useEffect(() => {
+    if (me.status === 'success') setCompanyState(state);
+  }, [me.status, state, setCompanyState]);
+  useEffect(() => {
+    if (me.status === 'success') setCurrentCompanyId(membership?.companyId ?? null);
+  }, [me.status, membership?.companyId, setCurrentCompanyId]);
+  useEffect(() => {
+    if (merged) setCompanies(merged);
+  }, [merged, setCompanies]);
   // A company the person was removed from since they picked it: back to the default company.
   const notMember =
     me.status === 'error' && me.error instanceof ApiError && me.error.code === 'company_not_member';
   useEffect(() => {
     if (notMember && companyId) switchCompany(null);
   }, [notMember, companyId, switchCompany]);
-  const pick = (id: string) => {
-    switchCompany(id);
+  const pick = (id: string, region: string | null) => {
+    switchCompany(id, region);
     navigate('/');
   };
   const link = (n: (typeof NAV)[number]) => (
@@ -134,13 +167,13 @@ function Shell({ children, assistant }: { children: ReactNode; assistant?: React
           </span>
           <span className="og-topbar__right">
             <span className="fw-topbar__company">
-              <CompanySwitcher companies={switchable(person)} current={membership} onPick={pick} />
+              <CompanySwitcher companies={companies} current={membership} onPick={pick} partial={partial} />
             </span>
             {me.status === 'success' && <NoticeBell />}
             {me.status === 'success' && assistant}
             <ProfileMenu onLeave={leave}>
-              {switchable(person).length > 1 && (
-                <CompanySwitcher companies={switchable(person)} current={membership} onPick={pick} />
+              {companies.length > 1 && (
+                <CompanySwitcher companies={companies} current={membership} onPick={pick} />
               )}
             </ProfileMenu>
           </span>
@@ -167,7 +200,16 @@ function Shell({ children, assistant }: { children: ReactNode; assistant?: React
               </span>
             </Notice>
           ) : (
-            children
+            <>
+              {state !== 'ACTIVE' && (
+                <Notice status="info">
+                  <span data-testid="company-read-only">
+                    {t(`app.shell.read_only.${state.toLowerCase()}`)}
+                  </span>
+                </Notice>
+              )}
+              {children}
+            </>
           )}
         </main>
       </div>
@@ -180,7 +222,42 @@ function Shell({ children, assistant }: { children: ReactNode; assistant?: React
 
 export default function SignedIn() {
   const { companyId } = useSession();
+  const { search } = useLocation();
+  if (new URLSearchParams(search).has('company')) return <LinkCompany />;
   return <CompanyScope key={companyId ?? 'default'} />;
+}
+
+/**
+ * OG-023 R14: a link that names its company (`?company=<id>`, from a notice) opens that company first, in its region,
+ * when it is one of the person's; then the page itself, without the parameter. Any other id is ignored.
+ */
+function LinkCompany() {
+  const { companyId, homeApi, switchCompany } = useSession();
+  const { pathname, search, hash } = useLocation();
+  const navigate = useNavigate();
+  const params = new URLSearchParams(search);
+  const wanted = params.get('company');
+  params.delete('company');
+  const rest = params.toString();
+  useEffect(() => {
+    let gone = false;
+    const open = () =>
+      !gone && navigate({ pathname, search: rest ? `?${rest}` : '', hash }, { replace: true });
+    loadCompanies(homeApi)
+      .then((c) => {
+        if (gone) return;
+        const m = c.items.find((x) => x.companyId === wanted);
+        const here = companyId ?? c.defaultCompanyId;
+        if (m && m.companyId !== here) switchCompany(m.companyId, m.region ?? null);
+      })
+      .catch(() => undefined)
+      .finally(open);
+    return () => {
+      gone = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wanted]);
+  return <Skeleton label={t('app.shell.opening_company')} />;
 }
 
 /** Everything under one company (G-69): a switch remounts it, so no screen, draft or recording outlives the company. */
@@ -208,6 +285,7 @@ function CompanyScope() {
           <Route path="/support/:id" element={<SupportScreen />} />
           <Route path="/settings" element={<SettingsScreen />} />
           <Route path="/notifications" element={<NotificationsScreen />} />
+          <Route path="/invite/:token" element={<InviteScreen />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Shell>

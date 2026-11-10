@@ -1,4 +1,4 @@
-import { permissionsOf, Permission, type OnGemApi } from './client';
+import { invitableRoles, permissionsOf, Permission, type OnGemApi } from './client';
 import {
   OPS,
   demoAccounts,
@@ -17,13 +17,14 @@ import {
   money,
   demoNotices,
   demoPreferences,
+  demoInviteCompany,
 } from './demoData';
 import { DemoAssistant } from '../assistant/demoAssistant';
 import { ApiError } from './errors';
 import { t } from '../i18n/store';
 import { normaliseIban, uaeIbanValid } from '../lib/iban';
 import { nthRun } from '../lib/schedule';
-import { IS_AE, REGION_CONFIG } from '../region';
+import { IS_AE, REGION, REGION_CONFIG } from '../region';
 import { REVERIFICATION_CANCELLED } from './reverify';
 import type {
   Account,
@@ -41,6 +42,7 @@ import type {
   IdCapture,
   LinkFundingSource,
   IdDocument,
+  InviteView,
   Me,
   OpenTicket,
   OwnerIdentity,
@@ -62,7 +64,15 @@ export interface DemoOptions {
   application?: Application;
   /** Who approves a new top-up (Q-091): ONGEM shows a one-person company (`/sign-in?demo=solo`). */
   approvalBy?: 'COMPANY' | 'ONGEM';
+  /** OG-023 R12: the region this demo client stands for (the build's region by default). */
+  region?: string;
+  /** The person as another region's API answers them, or 'down' when that region does not answer (tests). */
+  regions?: Partial<Record<string, Me | 'down'>>;
 }
+
+/** A demo account of a company other than the person's default carries the company in its id, so ids never clash. */
+const COMPANY_SUFFIX = /_(cmp_[A-Za-z0-9_]+)$/;
+const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 /** Submitted and not yet decided: the bank may still ask for an ID document (ongem-core FounderDocv.OPEN). */
 const CAPTURE_OPEN = ['SUBMITTED', 'VERIFYING', 'MORE_INFO', 'IN_REVIEW', 'EDD', 'PENDING_BANK'];
@@ -102,15 +112,21 @@ export class DemoOnGemApi implements OnGemApi {
   readonly assistant = new DemoAssistant(this);
   /** Every call the screens made, for the tests. */
   readonly calls: string[] = [];
-  private readonly me_: Me;
+  private me_: Me;
+  private readonly home: string | null;
+  private invitesState: InviteView[] = [];
   private readonly now: () => string;
 
   constructor(private readonly opts: DemoOptions = {}) {
     const me = opts.me ?? demoMe;
+    this.home = me.companyId ?? null;
     this.me_ = opts.companyId ? { ...me, companyId: opts.companyId } : me;
     this.now = opts.now ?? (() => '2026-10-29T15:00:00Z');
     this.applicationState = opts.application ?? demoApplication();
     if (opts.approvalBy) this.approvalBy = opts.approvalBy;
+    const company = opts.companyId;
+    if (company && company !== this.home)
+      this.accountsState = this.accountsState.map((a) => ({ ...a, id: `${a.id}_${company}` }));
   }
 
   private next(prefix: string) {
@@ -151,8 +167,79 @@ export class DemoOnGemApi implements OnGemApi {
 
   /** A fresh demo client for another company of the person: the sample data starts again, nothing is carried over. */
   forCompany(companyId: string | null): DemoOnGemApi {
-    return new DemoOnGemApi({ ...this.opts, companyId });
+    return new DemoOnGemApi({ ...this.opts, me: { ...this.me_, companyId: this.home }, companyId });
   }
+
+  get region(): string {
+    return this.opts.region ?? REGION;
+  }
+
+  /** OG-023 R12: the person in another region's demo, when the test gave one; a region marked down never answers. */
+  forRegion(region: string): DemoOnGemApi | null {
+    if (region === this.region) return this.forCompany(null);
+    const other = this.opts.regions?.[region];
+    if (!other) return null;
+    if (other === 'down') {
+      const down = new DemoOnGemApi({ ...this.opts, region, regions: {} });
+      down.me = () => Promise.reject(new ApiError(0, 'network'));
+      return down;
+    }
+    return new DemoOnGemApi({ ...this.opts, me: other, region, companyId: null, regions: {} });
+  }
+
+  invites = async () => {
+    this.require(Permission.MEMBER_INVITE);
+    return this.log('invites', this.invitesState);
+  };
+
+  createInvite = async (_company: string, r: { email: string; role: string }) => {
+    this.require(Permission.MEMBER_INVITE);
+    const email = r.email.trim();
+    if (!EMAIL.test(email)) throw new ApiError(422, 'validation_failed', t('app.team.email_error'));
+    if (!invitableRoles(this.role).includes(r.role.toUpperCase())) throw new ApiError(403, 'forbidden');
+    if (this.invitesState.some((i) => i.state === 'PENDING' && i.email.toLowerCase() === email.toLowerCase()))
+      throw new ApiError(409, 'invite_exists');
+    const invite: InviteView = {
+      id: this.next('inv'),
+      email,
+      role: r.role.toUpperCase(),
+      state: 'PENDING',
+      expiresAt: new Date(Date.parse(this.now()) + 7 * 86_400_000).toISOString(),
+      createdAt: this.now(),
+      invitedBy: this.me_.personId,
+    };
+    this.invitesState = [invite, ...this.invitesState];
+    const token = `demo_invite_${this.seq}`;
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    return this.log('createInvite', { invite, token, acceptUrl: `${origin}/invite/${token}` });
+  };
+
+  revokeInvite = async (_company: string, id: string) => {
+    this.require(Permission.MEMBER_INVITE);
+    const i = this.invitesState.find((x) => x.id === id) ?? this.notFound('invite');
+    if (i.state !== 'PENDING') throw new ApiError(409, 'invalid_transition');
+    const revoked: InviteView = { ...i, state: 'REVOKED' };
+    this.invitesState = this.invitesState.map((x) => (x.id === id ? revoked : x));
+    return this.log('revokeInvite', revoked);
+  };
+
+  /** Any `demo_invite_` token joins the sample company once; anything else is an invitation no longer valid. */
+  acceptInvite = async (token: string) => {
+    const { companyId, companyName } = demoInviteCompany;
+    if (!token.startsWith('demo_invite') || this.me_.memberships.some((m) => m.companyId === companyId))
+      throw new ApiError(410, 'invite_not_valid');
+    const membership = {
+      id: this.next('mbr'),
+      companyId,
+      companyName,
+      role: 'MEMBER',
+      state: 'ACTIVE',
+      companyState: 'ACTIVE' as const,
+      unreadNotices: 0,
+    };
+    this.me_ = { ...this.me_, memberships: [...this.me_.memberships, membership] };
+    return this.log('acceptInvite', { membershipId: membership.id, companyId, companyName, role: 'MEMBER' });
+  };
 
   me = async () => this.log('me', this.me_);
   accounts = async () => this.log('accounts', this.accountsState);
@@ -259,6 +346,7 @@ export class DemoOnGemApi implements OnGemApi {
     if (r.amountMinor <= 0) throw new ApiError(422, 'validation_failed', t('app.demo.error.amount_zero'));
     if (r.recipientId && !this.recipientsState.some((x) => x.id === r.recipientId))
       this.notFound('recipient');
+    const toCompanyId = this.destination(r);
     const p: Payment = {
       id: this.next('pay'),
       state: 'DRAFT',
@@ -268,6 +356,7 @@ export class DemoOnGemApi implements OnGemApi {
       fromAccountId: r.fromAccountId,
       recipientId: r.recipientId,
       toAccountId: r.toAccountId,
+      toCompanyId,
       reference: r.reference,
       createdAt: this.now(),
       timeline: [{ from: null, to: 'DRAFT', at: this.now() }],
@@ -275,6 +364,23 @@ export class DemoOnGemApi implements OnGemApi {
     this.paymentsState = [p, ...this.paymentsState];
     return this.log('createPayment', p);
   };
+
+  /**
+   * OG-023 R11: an INTERNAL transfer to an account of another of the person's companies (its id carries the company, or
+   * none for their default company); null for one of this company's own accounts. 409 destination_not_allowed for a
+   * company the person is not an active member of.
+   */
+  private destination(r: CreatePayment): string | null {
+    if (!r.toAccountId || this.accountsState.some((a) => a.id === r.toAccountId)) return null;
+    if (r.rail !== 'INTERNAL') this.notFound('account');
+    const company = COMPANY_SUFFIX.exec(r.toAccountId)?.[1] ?? this.home;
+    const here = this.me_.companyId;
+    const member = this.me_.memberships.some(
+      (m) => m.companyId === company && m.companyId !== here && m.state === 'ACTIVE',
+    );
+    if (!member) throw new ApiError(409, 'destination_not_allowed');
+    return company;
+  }
 
   sendPayment = async (id: string) => {
     this.require(Permission.PAYMENT_CREATE);

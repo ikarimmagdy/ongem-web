@@ -4,9 +4,11 @@ import { privacyLine } from '../recording/Recorder';
 import { useSession } from '../session';
 import { human } from './common';
 import { NotificationChoices } from './NotificationChoices';
+import { TeamInvites } from './TeamInvites';
+import { Permission } from '../api/client';
 
 export function SettingsScreen() {
-  const { api, mode, role, leave } = useSession();
+  const { api, mode, role, leave, can } = useSession();
   const { theme, themes, setTheme } = useTheme();
   return (
     <>
@@ -25,6 +27,7 @@ export function SettingsScreen() {
           />
         </label>
       </Card>
+      {can(Permission.MEMBER_INVITE) && <TeamInvites />}
       <NotificationChoices />
       <Card title={t('app.settings.privacy')}>
         <p className="fw-privacy" data-testid="privacy-line">
