@@ -113,3 +113,8 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   region)`). A FROZEN, CLOSING or CLOSED company opens read-only (`READ_ONLY` permissions and a banner). `?company=<id>`
   on any link switches first (`LinkCompany`). Team invitations in Settings (`TeamInvites`, member:invite), accept at
   `/invite/:token` (`screens/Invite.tsx`), and "Between my companies" transfers (rail INTERNAL) on the payment form.
+- 2026-11-10: OG-022 T15 (R24, R25, ADR-0052): after sign-in `findRegionBase` (`session.tsx`) asks whereami on the
+  build's region, then, when it knows no company, on the other region (`VITE_OTHER_REGION_API_BASE_URL`, default the other
+  region's dev API; a 409 `wrong_region` names it too). whereami never binds a device, and the signed-in screens wait
+  (`regionPending`) until the region is known, so a region that does not hold the person gets no call that writes.
+  Tests: `region-routing.test.tsx` (AC-R24.1, AC-R25.1, AC-R25.2).

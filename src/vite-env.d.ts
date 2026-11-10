@@ -9,4 +9,6 @@ interface ImportMetaEnv {
   /** OG-023 R12: each region's API, so the company switcher lists both regions' companies. */
   readonly VITE_API_BASE_URL_US?: string;
   readonly VITE_API_BASE_URL_AE?: string;
+  /** The other region's API base (OG-022 R25), asked when the build's region knows no company for the person. */
+  readonly VITE_OTHER_REGION_API_BASE_URL?: string;
 }

@@ -4,12 +4,19 @@ import { REGION_CONFIG } from '../region';
 
 const limit = (amountMinor: number) => formatMinor({ amountMinor, currency: REGION_CONFIG.currency });
 
+/** Where a 409 wrong_region says the company is served (OG-022 R24): its home region and that region's API base. */
+export interface WrongRegion {
+  homeRegion: string | null;
+  apiBaseUrl: string | null;
+}
+
 /** An API failure with OnGem's stable problem code. */
 export class ApiError extends Error {
   constructor(
     readonly status: number,
     readonly code: string | null,
     detail?: string,
+    readonly where?: WrongRegion,
   ) {
     super(detail || code || `HTTP ${status}`);
   }

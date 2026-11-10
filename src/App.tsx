@@ -101,13 +101,15 @@ export function SignInScreen() {
 export function Routed() {
   // Every text is read by key; a new language or a newer text from the API renders the page again (OG-033).
   useContent();
-  const { mode } = useSession();
+  const { mode, regionPending } = useSession();
   const { pendingTask } = useAuthSession();
   const { pathname } = useLocation();
   // Signed out, the public site answers its own paths (OG-032 R1, R5); every other path is sign-in, as before. A
   // sign-in that still has a task to finish (WEB-COR-07) always shows sign-in, so the task form is never hidden.
   if (mode === 'none')
     return isPublicPath(pathname) && !pendingTask ? <PublicSite path={pathname} /> : <SignInScreen />;
+  // OG-022 R25: no screen calls the API until the person's region is known.
+  if (regionPending) return <Skeleton label={t('app.shell.loading_company')} />;
   return (
     <Suspense fallback={<Skeleton label={t('app.shell.loading_company')} />}>
       <SignedIn />

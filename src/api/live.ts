@@ -49,6 +49,14 @@ export const IN_PROGRESS_BACKOFF_MS = [500, 1000, 2000, 4000];
 export const IDEMPOTENCY_IN_PROGRESS = 'idempotency_in_progress';
 
 const DEVICES = '/v1/devices';
+const WRONG_REGION = 'wrong_region';
+
+/** `GET /v1/whereami` (OG-022 R2): ids, a region and an API base only. */
+export interface Whereami {
+  companyId: string | null;
+  region: string | null;
+  apiBaseUrl: string | null;
+}
 const DEVICE_PROOF = new Set(['device_proof_required', 'device_proof_invalid']);
 
 type Body = { json: unknown } | { form: FormData } | undefined;
@@ -177,9 +185,13 @@ export class LiveOnGemApi implements OnGemApi {
     }
   }
 
-  private static async problem(
-    res: Response,
-  ): Promise<{ code?: string; detail?: string; reverification?: ReverificationHint }> {
+  private static async problem(res: Response): Promise<{
+    code?: string;
+    detail?: string;
+    reverification?: ReverificationHint;
+    homeRegion?: string;
+    apiBaseUrl?: string;
+  }> {
     try {
       return (await res.clone().json()) as { code?: string; detail?: string };
     } catch {
@@ -189,8 +201,12 @@ export class LiveOnGemApi implements OnGemApi {
 
   async call<T>(method: string, path: string, body?: Body): Promise<T> {
     const key = method === 'GET' ? null : this.newKey();
-    // Binding the device itself never needs one; every other customer call carries it.
-    let device = path === DEVICES || path.startsWith(`${DEVICES}/`) ? null : await this.deviceId();
+    // Binding the device itself never needs one, nor does whereami, which is asked before the person's region is known
+    // and must leave nothing in a region that does not hold them (OG-022 R25); every other customer call carries it.
+    let device =
+      path === DEVICES || path.startsWith(`${DEVICES}/`) || path === paths.whereami
+        ? null
+        : await this.deviceId();
     let token = await this.opts.getToken();
     if (!token) throw new ApiError(401, 'not_signed_in');
     const send = async (t: string) => {
@@ -246,7 +262,11 @@ export class LiveOnGemApi implements OnGemApi {
     }
     if (!res.ok) {
       const p = await LiveOnGemApi.problem(res);
-      throw new ApiError(res.status, p.code ?? null, p.detail);
+      const where =
+        p.code === WRONG_REGION
+          ? { homeRegion: p.homeRegion ?? null, apiBaseUrl: p.apiBaseUrl ?? null }
+          : undefined;
+      throw new ApiError(res.status, p.code ?? null, p.detail, where);
     }
     if (res.status === 204) return undefined as T;
     return (await res.json()) as T;
@@ -335,12 +355,23 @@ export class LiveOnGemApi implements OnGemApi {
   setLocale: OnGemApi['setLocale'] = async (locale) => {
     await this.call('PUT', paths.preferences, { json: { locale } });
   };
-  /** OG-022 R11: where the person's company lives and that region's API base URL. */
-  whereami = () =>
-    this.call<{ companyId: string | null; region: string | null; apiBaseUrl: string | null }>(
-      'GET',
-      paths.whereami,
-    );
+  /**
+   * OG-022 R11, R24, R25: where the person's company lives and that region's API base URL. A region that has never seen
+   * the person answers no company and no region; 409 wrong_region is read as the answer it carries.
+   */
+  whereami = async (): Promise<Whereami> => {
+    try {
+      return await this.call<Whereami>('GET', paths.whereami);
+    } catch (e) {
+      if (e instanceof ApiError && e.code === WRONG_REGION && e.where)
+        return {
+          companyId: this.companyId,
+          region: e.where.homeRegion,
+          apiBaseUrl: e.where.apiBaseUrl,
+        };
+      throw e;
+    }
+  };
   notificationPreferences: OnGemApi['notificationPreferences'] = () =>
     this.call('GET', paths.notificationPreferences);
   setNotificationPreferences: OnGemApi['setNotificationPreferences'] = (kinds) =>

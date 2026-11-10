@@ -12,10 +12,10 @@ import { permissionsOf, READ_ONLY, type OnGemApi } from './api/client';
 import type { CompanyState, Membership } from './api/types';
 import { DemoOnGemApi } from './api/demo';
 import { defaultDeviceKeys } from './api/device';
-import { LiveOnGemApi } from './api/live';
+import { LiveOnGemApi, type Whereami } from './api/live';
 import { useAuthSession } from './auth';
 import { Button, Field, Input, Modal } from './design-system';
-import { REGION } from './region';
+import { IS_AE, REGION } from './region';
 import { t } from './i18n';
 
 export type Mode = 'none' | 'demo' | 'live';
@@ -47,6 +47,8 @@ export interface Session {
   /** The company the screens run in, as the shell read it from GET /v1/me. */
   currentCompanyId: string | null;
   setCurrentCompanyId(companyId: string | null): void;
+  /** Signed in and still finding the person's region (OG-022 R25): no other call is made until it is known. */
+  regionPending: boolean;
 }
 
 const SessionContext = createContext<Session | null>(null);
@@ -68,6 +70,50 @@ export function regionApiBase(
     return u.protocol === 'https:' && onGem ? u.origin : fallback;
   } catch {
     return fallback;
+  }
+}
+
+/**
+ * OG-022 R25: the other region's API base, asked when the build's region knows no company for the person. From
+ * `VITE_OTHER_REGION_API_BASE_URL`, else the other region's dev API (ADR-0050 names); a 409 wrong_region names it too.
+ */
+export const OTHER_REGION_API_BASE_URL =
+  import.meta.env.VITE_OTHER_REGION_API_BASE_URL?.trim() ||
+  (IS_AE
+    ? import.meta.env.VITE_API_BASE_URL_US?.trim() || 'https://api-dev.ongem.com'
+    : import.meta.env.VITE_API_BASE_URL_AE?.trim() || 'https://api-dev.ae.platform.ongem.com');
+
+/**
+ * OG-022 R24, R25 (ADR-0052): the API base for the signed-in person. The build's region is asked first; a company there,
+ * or 409 wrong_region naming another region, settles it. When it knows no company (it may never have seen the person,
+ * and then records nothing), the other region is asked the same way. Neither knowing the person, or a failure, keeps
+ * the build's base. whereami never binds a device, so the region that does not hold the person is left with no record.
+ */
+export async function findRegionBase(
+  ask: (base: string) => Promise<Whereami>,
+  own: string = API_BASE_URL,
+  other: string = OTHER_REGION_API_BASE_URL,
+): Promise<{ url: string; region: string }> {
+  const stay = { url: own, region: REGION as string };
+  const settle = (w: Whereami) => {
+    const url = regionApiBase(w, own);
+    return url !== own && w.region ? { url, region: w.region } : stay;
+  };
+  let here: Whereami;
+  try {
+    here = await ask(own);
+  } catch {
+    return stay;
+  }
+  if (here.region) return settle(here);
+  const otherRegion = IS_AE ? 'US' : 'AE';
+  const otherBase = regionApiBase({ region: otherRegion, apiBaseUrl: other }, own);
+  if (otherBase === own) return stay;
+  try {
+    const there = await ask(otherBase);
+    return there.region ? settle(there) : stay;
+  } catch {
+    return stay;
   }
 }
 
@@ -153,6 +199,8 @@ export function SessionProvider({
   const userId = auth.user?.id ?? null;
   const [deviceKeys] = useState(defaultDeviceKeys);
   const [apiBase, setApiBase] = useState({ url: API_BASE_URL, region: REGION as string });
+  // The person whose region is known; until it is this person, the signed-in screens wait (OG-022 R25).
+  const [regionFor, setRegionFor] = useState<string | null>(null);
   const live = useMemo(
     () =>
       new LiveOnGemApi({
@@ -170,26 +218,32 @@ export function SessionProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [userId, auth.signedIn, apiBase],
   );
-  // After sign-in, ask where the company lives (OG-022 R11); the build's base is the first and the fallback.
+  // After sign-in, find the person's region before any other call (OG-022 R11, R25): the build's region first, then the
+  // other region; the build's base is the fallback. whereami binds no device, so nothing is left where they are unknown.
   useEffect(() => {
     if (!auth.signedIn || injected) {
       setApiBase({ url: API_BASE_URL, region: REGION });
+      setRegionFor(null);
       return;
     }
     let gone = false;
-    live
-      .whereami()
-      .then((w) => {
-        if (gone) return;
-        const url = regionApiBase(w);
-        setApiBase({ url, region: url !== API_BASE_URL && w.region ? w.region : REGION });
-      })
-      .catch(() => undefined);
+    const ask = (baseUrl: string) =>
+      new LiveOnGemApi({
+        baseUrl,
+        getToken: (o) => authRef.current.getToken(o),
+        reverify: () => Promise.resolve(false),
+      }).whereami();
+    void findRegionBase(ask).then((found) => {
+      if (gone) return;
+      setApiBase(found);
+      setRegionFor(userId);
+    });
     return () => {
       gone = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, auth.signedIn]);
+  const regionPending = auth.signedIn && !demoMode && !injected && regionFor !== userId;
   const mode: Mode = demoMode ? 'demo' : auth.signedIn ? 'live' : 'none';
   const base: OnGemApi = mode === 'live' ? live : demo;
   // The pick belongs to the client it was made on: a new person, demo or sign-in starts on the default company again.
@@ -243,6 +297,7 @@ export function SessionProvider({
       setCompanyState,
       currentCompanyId,
       setCurrentCompanyId,
+      regionPending,
     }),
     [
       mode,
@@ -256,6 +311,7 @@ export function SessionProvider({
       companies,
       companyState,
       currentCompanyId,
+      regionPending,
     ],
   );
   return (
