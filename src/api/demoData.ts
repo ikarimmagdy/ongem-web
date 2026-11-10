@@ -287,7 +287,7 @@ export const demoCards = IS_AE
         id: 'crd_demo_ops',
         holderName: 'Alex Kim',
         fundingAccountId: OPS,
-        form: 'PHYSICAL',
+        form: 'VIRTUAL',
         last4: '8830',
         state: 'FROZEN',
         createdAt: '2026-09-21T09:00:00Z',
