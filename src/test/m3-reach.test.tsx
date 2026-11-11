@@ -5,7 +5,7 @@ import { renderApp } from './render';
 /** M-3-R35: every M3 money and card flow opens from the founder web. */
 describe('M3 flows reachable (M-3-R35)', () => {
   it.each([
-    ['/payments', 'new-payment'],
+    ['/payments', 'payments-tab-send'],
     ['/payments/top-up', 'topup-form'],
     ['/payments/schedules', 'schedules'],
     ['/recipients', 'recipients-list'],

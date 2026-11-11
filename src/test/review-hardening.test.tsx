@@ -9,7 +9,7 @@ import { taskReturnUrl } from '../auth/ClerkAuth';
 import { AuthProvider, NO_AUTH, type AuthSession } from '../auth';
 import { ThemeProvider, ToastProvider } from '../design-system';
 import { SessionProvider } from '../session';
-import { renderApp } from './render';
+import { asPhone, renderApp } from './render';
 
 const at = (pathname: string, search = '') => ({ origin: 'https://web.ongem.com', pathname, search });
 
@@ -60,33 +60,45 @@ describe('review fixes: sign-in, shell, widget and headers', () => {
   });
 
   it('WEB-COR-05 a failed statement or dismiss shows an error instead of failing silently', async () => {
-    const api = new DemoOnGemApi();
-    api.statement = () => Promise.reject(new ApiError(503, 'bank_unavailable', 'The bank did not answer.'));
-    api.abandonAssistantDraft = () => Promise.reject(new ApiError(0, 'network'));
-    renderApp('/accounts/acc_demo_ops', { api });
-    await userEvent.click(await screen.findByTestId('statement-2026-09'));
-    expect(await screen.findByText('The bank did not answer.')).toBeInTheDocument();
-    await userEvent.click(screen.getByTestId('assistant-open'));
-    await userEvent.type(screen.getByTestId('assistant-input'), 'Freeze my card');
-    await userEvent.click(screen.getByTestId('assistant-send'));
-    await userEvent.click(await screen.findByRole('button', { name: 'Dismiss' }));
-    expect(
-      await screen.findByText('Could not reach OnGem. Check your connection and try again.'),
-    ).toBeInTheDocument();
-    expect(screen.getByTestId('assistant-review')).toBeInTheDocument();
+    // OG-035 R9: the floating button is the phone's way to the assistant.
+    const undo = asPhone();
+    try {
+      const api = new DemoOnGemApi();
+      api.statement = () => Promise.reject(new ApiError(503, 'bank_unavailable', 'The bank did not answer.'));
+      api.abandonAssistantDraft = () => Promise.reject(new ApiError(0, 'network'));
+      renderApp('/accounts/acc_demo_ops', { api });
+      await userEvent.click(await screen.findByTestId('statement-2026-09'));
+      expect(await screen.findByText('The bank did not answer.')).toBeInTheDocument();
+      await userEvent.click(screen.getByTestId('assistant-open'));
+      await userEvent.type(screen.getByTestId('assistant-input'), 'Freeze my card');
+      await userEvent.click(screen.getByTestId('assistant-send'));
+      await userEvent.click(await screen.findByRole('button', { name: 'Dismiss' }));
+      expect(
+        await screen.findByText('Could not reach OnGem. Check your connection and try again.'),
+      ).toBeInTheDocument();
+      expect(screen.getByTestId('assistant-review')).toBeInTheDocument();
+    } finally {
+      undo();
+    }
   });
 
   it('WEB-A11Y-01 the widget takes focus when opened and Escape closes it back to its button', async () => {
-    renderApp('/');
-    const open = await screen.findByTestId('assistant-open');
-    expect(open).toHaveAttribute('aria-controls', 'assistant-panel');
-    open.focus();
-    await userEvent.keyboard('{Enter}');
-    await waitFor(() => expect(screen.getByTestId('assistant-input')).toHaveFocus());
-    expect(screen.getByLabelText('Message the assistant')).toBe(screen.getByTestId('assistant-input'));
-    await userEvent.keyboard('{Escape}');
-    expect(screen.queryByTestId('assistant-panel')).not.toBeInTheDocument();
-    expect(screen.getByTestId('assistant-open')).toHaveFocus();
+    // OG-035 R9: the floating button is the phone's way to the assistant.
+    const undo = asPhone();
+    try {
+      renderApp('/');
+      const open = await screen.findByTestId('assistant-open');
+      expect(open).toHaveAttribute('aria-controls', 'assistant-panel');
+      open.focus();
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(screen.getByTestId('assistant-input')).toHaveFocus());
+      expect(screen.getByLabelText('Message the assistant')).toBe(screen.getByTestId('assistant-input'));
+      await userEvent.keyboard('{Escape}');
+      expect(screen.queryByTestId('assistant-panel')).not.toBeInTheDocument();
+      expect(screen.getByTestId('assistant-open')).toHaveFocus();
+    } finally {
+      undo();
+    }
   });
 
   it('WEB-SEC-05 the CloudFront headers policy carries a strict CSP and the security headers', () => {

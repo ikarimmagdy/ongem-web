@@ -48,6 +48,51 @@ function Balance({ a }: { a: Account }) {
   );
 }
 
+/** A statement's opening and closing balance and its lines, in a dialog (account detail and Documents, OG-035 R7). */
+export function StatementModal({ statement, onClose }: { statement: Statement | null; onClose(): void }) {
+  return (
+    <Modal
+      open={Boolean(statement)}
+      title={t('app.accounts.statement_period', { period: statement?.period ?? '' })}
+      onClose={onClose}
+    >
+      {statement && (
+        <div data-testid="statement-view">
+          <KeyValue
+            items={[
+              { label: t('app.accounts.opening_balance'), value: <Amt value={statement.opening} /> },
+              { label: t('app.accounts.closing_balance'), value: <Amt value={statement.closing} /> },
+            ]}
+          />
+          <Table
+            caption={t('app.accounts.statement_lines')}
+            rows={statement.transactions.map((l, i) => ({ ...l, i }))}
+            rowKey={(l) => String(l.i)}
+            columns={[
+              {
+                key: 'date',
+                header: t('app.accounts.col_date'),
+                render: (l) => (l.date ? formatBankDate(l.date) : ''),
+              },
+              {
+                key: 'dir',
+                header: t('app.accounts.col_in_or_out'),
+                render: (l) => t(l.direction === 'CREDIT' ? 'app.accounts.in' : 'app.accounts.out'),
+              },
+              {
+                key: 'amount',
+                header: t('app.accounts.col_amount'),
+                align: 'end',
+                render: (l) => <Amt value={l.amount} />,
+              },
+            ]}
+          />
+        </div>
+      )}
+    </Modal>
+  );
+}
+
 function AccountDetail({ id }: { id: string }) {
   const { api } = useSession();
   const [limit, setLimit] = useState(PAGE);
@@ -161,45 +206,7 @@ function AccountDetail({ id }: { id: string }) {
             {statementError && <Notice status="failure">{statementError}</Notice>}
           </Card>
           <ExportActivity accountId={a.id} />
-          <Modal
-            open={Boolean(statement)}
-            title={t('app.accounts.statement_period', { period: statement?.period ?? '' })}
-            onClose={() => setStatement(null)}
-          >
-            {statement && (
-              <div data-testid="statement-view">
-                <KeyValue
-                  items={[
-                    { label: t('app.accounts.opening_balance'), value: <Amt value={statement.opening} /> },
-                    { label: t('app.accounts.closing_balance'), value: <Amt value={statement.closing} /> },
-                  ]}
-                />
-                <Table
-                  caption={t('app.accounts.statement_lines')}
-                  rows={statement.transactions.map((l, i) => ({ ...l, i }))}
-                  rowKey={(l) => String(l.i)}
-                  columns={[
-                    {
-                      key: 'date',
-                      header: t('app.accounts.col_date'),
-                      render: (l) => (l.date ? formatBankDate(l.date) : ''),
-                    },
-                    {
-                      key: 'dir',
-                      header: t('app.accounts.col_in_or_out'),
-                      render: (l) => t(l.direction === 'CREDIT' ? 'app.accounts.in' : 'app.accounts.out'),
-                    },
-                    {
-                      key: 'amount',
-                      header: t('app.accounts.col_amount'),
-                      align: 'end',
-                      render: (l) => <Amt value={l.amount} />,
-                    },
-                  ]}
-                />
-              </div>
-            )}
-          </Modal>
+          <StatementModal statement={statement} onClose={() => setStatement(null)} />
         </div>
       )}
     </Load>

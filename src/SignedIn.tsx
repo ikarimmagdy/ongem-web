@@ -11,16 +11,22 @@ import { CardsScreen } from './screens/Cards';
 import { HomeScreen } from './screens/Home';
 import { OnboardingScreen } from './screens/Onboarding';
 import { PaymentsScreen } from './screens/Payments';
-import { RecipientsScreen } from './screens/Recipients';
 import { SettingsScreen } from './screens/Settings';
 import { SupportScreen } from './screens/Support';
 import { NoticeBell, NotificationsScreen } from './screens/Notifications';
 import { useSession } from './session';
 import { AssistantWidget } from './assistant/AssistantWidget';
 import { DraftProvider } from './assistant/drafts';
+import { AssistantProvider } from './assistant/control';
+import { CommandSearch } from './CommandSearch';
+import { useWide } from './lib/useWide';
+import { TeamScreen } from './screens/Team';
+import { DocumentsScreen } from './screens/Documents';
+import { MoreScreen } from './screens/More';
 import { RECORDING_ENABLED, Recorder } from './recording/Recorder';
-import { NAV, pageTitle } from './nav';
+import { MORE, NAV, PHONE_TABS, pageTitle } from './nav';
 import { t, useContent } from './i18n';
+import './app-shell.css';
 
 /** Every route names its page in the browser tab (WCAG 2.4.2, UI review 2026-11-07). */
 function usePageTitle() {
@@ -31,8 +37,8 @@ function usePageTitle() {
   }, [pathname, locale]);
 }
 
-/** Settings, the company switch and sign out, behind one button on a phone where the bottom bar has five tabs. */
-function ProfileMenu({ children, onLeave }: { children?: ReactNode; onLeave(): void }) {
+/** Settings and sign out behind one button in the desktop top bar (a phone has More for both, OG-035 R8). */
+function ProfileMenu({ onLeave }: { onLeave(): void }) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
@@ -65,7 +71,6 @@ function ProfileMenu({ children, onLeave }: { children?: ReactNode; onLeave(): v
       </button>
       {open && (
         <div className="fw-profile__menu" id="profile-menu-list" data-testid="profile-menu-list">
-          {children}
           <NavLink to="/settings" className="fw-profile__item" data-testid="profile-settings">
             {t('app.nav.settings')}
           </NavLink>
@@ -78,7 +83,16 @@ function ProfileMenu({ children, onLeave }: { children?: ReactNode; onLeave(): v
   );
 }
 
-function Shell({ children, assistant }: { children: ReactNode; assistant?: ReactNode }) {
+/** One glyph per phone tab; Pay is the centre tab, drawn larger (OG-035 R8). */
+const TAB_ICON: Record<string, string> = {
+  home: 'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z', // content-check: ignore (SVG path)
+  accounts: 'M3 10h18M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18M12 3l9 5H3z', // content-check: ignore (SVG path)
+  pay: 'M12 5v14M5 12h14', // content-check: ignore (SVG path)
+  cards: 'M3 6h18v12H3zM3 10h18', // content-check: ignore (SVG path)
+  more: 'M5 12h.01M12 12h.01M19 12h.01', // content-check: ignore (SVG path)
+};
+
+function Shell({ children, recording }: { children: ReactNode; recording: string | null }) {
   const {
     api,
     homeApi,
@@ -92,6 +106,10 @@ function Shell({ children, assistant }: { children: ReactNode; assistant?: React
     setCurrentCompanyId,
   } = useSession();
   const navigate = useNavigate();
+  const wide = useWide();
+  const { pathname } = useLocation();
+  // More stays marked while one of its screens is open on a phone.
+  const inMore = MORE.some((m) => pathname.startsWith(m.to));
   usePageTitle();
   const me = useAsync(() => api.me(), [api]);
   // OG-023 R12: the switcher lists the person's companies in every region, each asked with the same sign-in.
@@ -130,21 +148,11 @@ function Shell({ children, assistant }: { children: ReactNode; assistant?: React
     switchCompany(id, region);
     navigate('/');
   };
-  const link = (n: (typeof NAV)[number]) => (
-    <li key={n.to}>
-      <NavLink
-        to={n.to}
-        end={n.end}
-        data-testid={`nav-${n.id}`}
-        className={({ isActive }) => (isActive ? 'og-nav__link is-active' : 'og-nav__link')}
-      >
-        {n.label}
-      </NavLink>
-    </li>
+  // OG-035 R1: the company shows once, as the switcher: the top of the side bar, or the top bar on a phone.
+  const switcher = (
+    <CompanySwitcher companies={companies} current={membership} onPick={pick} partial={partial} />
   );
-  const links = NAV.map(link);
-  // A phone keeps five tabs; Settings moves to the profile menu (UI review 2026-11-07).
-  const bottomLinks = NAV.filter((n) => n.to !== '/settings').map(link);
+  const ready = me.status === 'success';
   return (
     <div className="fw-shell" data-testid="shell">
       <a href="#main" className="og-skip">
@@ -152,30 +160,42 @@ function Shell({ children, assistant }: { children: ReactNode; assistant?: React
       </a>
       <aside className="fw-side">
         <Logo />
-        {membership?.companyName && <span className="fw-company">{membership.companyName}</span>}
+        {wide && (
+          <div className="fw-side__company" data-testid="side-company">
+            {switcher}
+          </div>
+        )}
         <nav aria-label={t('app.shell.main_nav')}>
-          <ul className="og-nav">{links}</ul>
+          <ul className="og-nav">
+            {NAV.map((n) => (
+              <li key={n.to}>
+                <NavLink
+                  to={n.to}
+                  end={n.end}
+                  data-testid={`nav-${n.id}`}
+                  className={({ isActive }) => (isActive ? 'og-nav__link is-active' : 'og-nav__link')}
+                >
+                  {n.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
         </nav>
       </aside>
       <div className="fw-main">
         <header className="og-topbar fw-topbar">
-          <span className="fw-topbar__logo" aria-hidden="true">
-            <Logo />
-          </span>
+          {!wide && (
+            <span className="fw-topbar__company" data-testid="top-company">
+              {switcher}
+            </span>
+          )}
           <span className={`og-env og-env--${mode === 'demo' ? 'mock' : 'live'}`} data-testid="env-badge">
             {mode === 'demo' ? t('app.shell.env_demo') : t('app.shell.env_live')}
           </span>
           <span className="og-topbar__right">
-            <span className="fw-topbar__company">
-              <CompanySwitcher companies={companies} current={membership} onPick={pick} partial={partial} />
-            </span>
-            {me.status === 'success' && <NoticeBell />}
-            {me.status === 'success' && assistant}
-            <ProfileMenu onLeave={leave}>
-              {companies.length > 1 && (
-                <CompanySwitcher companies={companies} current={membership} onPick={pick} />
-              )}
-            </ProfileMenu>
+            {ready && wide && <CommandSearch />}
+            {ready && <NoticeBell />}
+            {wide && <ProfileMenu onLeave={leave} />}
           </span>
         </header>
         <main className="fw-content" id="main">
@@ -213,9 +233,41 @@ function Shell({ children, assistant }: { children: ReactNode; assistant?: React
           )}
         </main>
       </div>
-      <nav aria-label={t('app.shell.main_nav')} className="fw-bottom" data-testid="bottom-nav">
-        <ul className="og-nav fw-bottom__list">{bottomLinks}</ul>
+      <nav aria-label={t('app.nav.tab_bar')} className="fw-bottom" data-testid="bottom-nav">
+        <ul className="og-nav fw-bottom__list">
+          {PHONE_TABS.map((n) => (
+            <li key={n.id}>
+              <NavLink
+                to={n.to}
+                end={n.end || n.id === 'pay'}
+                data-testid={`tab-${n.id}`}
+                className={({ isActive }) =>
+                  `og-nav__link fw-tab${n.id === 'pay' ? ' fw-tab--pay' : ''}${
+                    isActive || (n.id === 'more' && inMore) ? ' is-active' : ''
+                  }`
+                }
+              >
+                <svg
+                  aria-hidden="true"
+                  className="fw-tab__icon"
+                  viewBox="0 0 24 24"
+                  width="22"
+                  height="22"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={n.id === 'more' ? 3 : 1.8}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d={TAB_ICON[n.id]} />
+                </svg>
+                <span className="fw-tab__label">{n.label}</span>
+              </NavLink>
+            </li>
+          ))}
+        </ul>
       </nav>
+      {ready && <AssistantWidget fab={!wide} recordingSessionId={recording} />}
     </div>
   );
 }
@@ -265,30 +317,43 @@ function CompanyScope() {
   const [recording, setRecording] = useState<string | null>(null);
   return (
     <DraftProvider>
-      <Shell assistant={<AssistantWidget recordingSessionId={recording} />}>
-        {RECORDING_ENABLED && <Recorder onSession={setRecording} />}
-        <Routes>
-          <Route path="/" element={<HomeScreen />} />
-          <Route path="/accounts" element={<AccountsScreen />} />
-          <Route path="/accounts/:id" element={<AccountsScreen />} />
-          <Route path="/payments" element={<PaymentsScreen />} />
-          <Route path="/payments/new" element={<PaymentsScreen />} />
-          <Route path="/payments/top-up" element={<PaymentsScreen />} />
-          <Route path="/payments/schedules" element={<PaymentsScreen />} />
-          <Route path="/payments/:id" element={<PaymentsScreen />} />
-          <Route path="/recipients" element={<RecipientsScreen />} />
-          <Route path="/cards" element={<CardsScreen />} />
-          <Route path="/cards/:id" element={<CardsScreen />} />
-          <Route path="/onboarding" element={<OnboardingScreen />} />
-          <Route path="/support" element={<SupportScreen />} />
-          <Route path="/support/new" element={<SupportScreen />} />
-          <Route path="/support/:id" element={<SupportScreen />} />
-          <Route path="/settings" element={<SettingsScreen />} />
-          <Route path="/notifications" element={<NotificationsScreen />} />
-          <Route path="/invite/:token" element={<InviteScreen />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Shell>
+      <AssistantProvider>
+        <Shell recording={recording}>
+          {RECORDING_ENABLED && <Recorder onSession={setRecording} />}
+          <Routes>
+            <Route path="/" element={<HomeScreen />} />
+            <Route path="/accounts" element={<AccountsScreen />} />
+            <Route path="/accounts/:id" element={<AccountsScreen />} />
+            <Route path="/payments" element={<PaymentsScreen />} />
+            <Route path="/payments/new" element={<PaymentsScreen />} />
+            <Route path="/payments/top-up" element={<PaymentsScreen />} />
+            <Route path="/payments/schedules" element={<PaymentsScreen />} />
+            <Route path="/payments/recipients" element={<PaymentsScreen />} />
+            <Route path="/payments/approvals" element={<PaymentsScreen />} />
+            <Route path="/payments/:id" element={<PaymentsScreen />} />
+            <Route path="/recipients" element={<ToRecipients />} />
+            <Route path="/cards" element={<CardsScreen />} />
+            <Route path="/cards/:id" element={<CardsScreen />} />
+            <Route path="/team" element={<TeamScreen />} />
+            <Route path="/documents" element={<DocumentsScreen />} />
+            <Route path="/more" element={<MoreScreen />} />
+            <Route path="/onboarding" element={<OnboardingScreen />} />
+            <Route path="/support" element={<SupportScreen />} />
+            <Route path="/support/new" element={<SupportScreen />} />
+            <Route path="/support/:id" element={<SupportScreen />} />
+            <Route path="/settings" element={<SettingsScreen />} />
+            <Route path="/notifications" element={<NotificationsScreen />} />
+            <Route path="/invite/:token" element={<InviteScreen />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Shell>
+      </AssistantProvider>
     </DraftProvider>
   );
+}
+
+/** OG-035 R6: Recipients moved into Payments; the old route keeps working, with its query (`?add=1`, `?name=`). */
+function ToRecipients() {
+  const { search } = useLocation();
+  return <Navigate to={`/payments/recipients${search}`} replace />;
 }

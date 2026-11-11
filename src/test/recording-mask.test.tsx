@@ -14,7 +14,7 @@ import {
 import { formatMinor, minorToDecimal } from '../lib/format';
 import { EventQueue, RRWEB_OPTIONS } from '../recording/Recorder';
 import { maskHref } from '../recording/mask';
-import { renderApp } from './render';
+import { asPhone, renderApp } from './render';
 
 /** Every string value in the recorded events, so ids and timestamps cannot match a secret by accident. */
 function strings(value: unknown, out: string[] = []): string[] {
@@ -73,6 +73,13 @@ async function recordWhile(route: string, walk: () => Promise<void>) {
 }
 
 describe('recording masks every sensitive screen (OG-031 R6)', () => {
+  // OG-035 R9: the floating assistant button is the phone's way in; these tests open it there.
+  let undoPhone: () => void = () => undefined;
+  beforeEach(() => {
+    undoPhone = asPhone();
+  });
+  afterEach(() => undoPhone());
+
   it('WEB-SEC-01 no raw balance, amount, number or identity value in recorded rrweb events', async () => {
     const events = [
       ...(await recordWhile('/', async () => {

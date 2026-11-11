@@ -209,6 +209,22 @@ const step = (from: string | null, to: string, at: string) => ({ from, to, at })
 export const demoPayments = IS_AE
   ? AE.demoPayments
   : (): Payment[] => [
+      // OG-035: a payment another member made, waiting for a second person (Needs you, Waiting for approval).
+      {
+        id: 'pay_demo_approval',
+        state: 'PENDING_APPROVAL',
+        rail: 'ACH',
+        amount: usd(420_000),
+        fromAccountId: OPS,
+        recipientId: 'rcp_demo_harbor',
+        reference: 'November rent',
+        approvalBy: 'COMPANY',
+        createdAt: '2026-10-29T10:00:00Z',
+        timeline: [
+          { from: null, to: 'DRAFT', at: '2026-10-29T10:00:00Z' },
+          { from: 'DRAFT', to: 'PENDING_APPROVAL', at: '2026-10-29T10:00:05Z' },
+        ],
+      },
       {
         id: 'pay_demo_1',
         state: 'SENT',

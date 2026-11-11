@@ -1,25 +1,61 @@
 import { Link } from 'react-router-dom';
-import { Card, KeyValue, Notice, PageHeader, StatusChip } from '../design-system';
+import { Permission } from '../api/client';
+import { ApiError } from '../api/errors';
+import { Card, PageHeader, StatusChip } from '../design-system';
 import { formatDate, formatMinor } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
-import { currentMembership } from '../lib/company';
-import { applicationSentence, paymentLabel } from '../lib/states';
+import { needsItems } from '../lib/needs';
+import { paymentLabel } from '../lib/states';
 import { useSession } from '../session';
 import { t } from '../i18n';
 import { REGION_CONFIG } from '../region';
-import { AcctLast4, Amt, Load, human, stateStatus } from './common';
+import { ApplicationSteps } from './ApplicationSteps';
+import { NeedsYou } from './NeedsYou';
+import { payeeName } from './Payments';
+import { AcctLast4, Amt, Load, stateStatus } from './common';
 
-/** Home leads with the money (UI review 2026-11-07, OG-030 R-UX-6): the total, where it sits, and what to do next. */
+/** Payments read once for recent payments and the approvals in Needs you (OG-035 R3, R4). */
+export const HOME_PAYMENTS = 20;
+const RECENT = 5;
+
+/** A read the role may not make counts as nothing waiting, not as a failure. */
+const orNone =
+  <T,>(none: T) =>
+  (e: unknown): T => {
+    if (e instanceof ApiError && e.status === 403) return none;
+    throw e;
+  };
+
+/**
+ * Home (OG-035): the greeting, the application's steps while the account is not open, the balance card (total, accounts,
+ * actions), what needs this person and recent payments by payee. Two columns on wide screens (CSS grid); on a phone
+ * Needs you sits between the balance card and recent payments.
+ */
 export function HomeScreen() {
-  const { api } = useSession();
+  const { api, can, companyState } = useSession();
   const accounts = useAsync(() => api.accounts(), [api]);
   const apps = useAsync(() => api.applications(), [api]);
   const me = useAsync(() => api.me(), [api]);
-  const recent = useAsync(() => api.payments(null, 5), [api]);
+  const payments = useAsync(() => api.payments(null, HOME_PAYMENTS), [api]);
+  const recipients = useAsync(() => api.recipients().catch(orNone([])), [api]);
+  const cards = useAsync(() => api.cards().catch(orNone({ items: [] })), [api]);
+  const notices = useAsync(() => api.notifications({ unread: true, limit: 3 }).catch(orNone(null)), [api]);
   const person = me.status === 'success' ? me.data : null;
-  const membership = currentMembership(person);
-  const bankState = person?.providerState ?? 'NOT_SUBMITTED';
-  const company = membership?.companyName ?? undefined;
+  const accs = accounts.status === 'success' ? accounts.data : [];
+  const recs = recipients.status === 'success' ? recipients.data : [];
+  const app = apps.status === 'success' ? apps.data[0] : undefined;
+  const reads = [payments, apps, cards, notices];
+  const items = needsItems({
+    payments: payments.status === 'success' ? payments.data.items : [],
+    canApprove: can(Permission.PAYMENT_APPROVE),
+    payee: (p) => payeeName(p, accs, recs),
+    applicationState: app?.state,
+    applicationId: app?.id,
+    cards: cards.status === 'success' ? cards.data.items : [],
+    notices: notices.status === 'success' && notices.data ? notices.data.items : [],
+  });
+  const canPay = can(Permission.PAYMENT_CREATE);
+  const canAddMoney = can(Permission.PAYMENT_CREATE) && companyState === 'ACTIVE';
   return (
     <>
       <PageHeader
@@ -28,74 +64,94 @@ export function HomeScreen() {
             ? t('app.home.hello_name', { name: person.legalFirstName })
             : t('app.home.hello')
         }
-        subtitle={<span data-testid="home-company-name">{company ?? t('app.home.subtitle')}</span>}
       />
-      {apps.status === 'success' && apps.data[0] && apps.data[0].state !== 'ACTIVE' && (
-        <Notice
-          status="info"
-          action={
-            <Link className="og-btn og-btn--secondary og-btn--md" to="/onboarding">
-              {t('app.home.continue_application')}
+      {app && app.state !== 'ACTIVE' && <ApplicationSteps state={app.state} />}
+      <div className="fw-home" data-testid="home-grid">
+        <Card title={t('app.home.available')} className="fw-home__balance" data-testid="home-balance">
+          <Load state={accounts} label="accounts">
+            {(list) => {
+              const total = list.reduce((s, a) => s + (a.balance?.available.amountMinor ?? 0), 0);
+              return (
+                <>
+                  <p className="og-money og-money--xl fw-total" data-mask="" data-testid="home-total">
+                    {formatMinor({
+                      amountMinor: total,
+                      currency: list[0]?.currency ?? REGION_CONFIG.currency,
+                    })}
+                  </p>
+                  {list.length > 0 && (
+                    <ul className="fw-breakdown" data-testid="home-breakdown">
+                      {list.map((a) => (
+                        <li key={a.id}>
+                          <Link className="fw-breakdown__row" to={`/accounts/${a.id}`}>
+                            <span className="fw-row__main">
+                              <span>{a.name}</span>
+                              <span className="fw-row__sub">
+                                <AcctLast4 value={a.last4} />
+                              </span>
+                            </span>
+                            {a.balance && <Amt value={a.balance.available} />}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </>
+              );
+            }}
+          </Load>
+          <div className="fw-home-actions" data-testid="home-actions">
+            {canPay && (
+              <Link
+                className="og-btn og-btn--primary og-btn--md"
+                to="/payments/new"
+                data-testid="home-new-payment"
+              >
+                {t('app.home.new_payment')}
+              </Link>
+            )}
+            {canAddMoney && (
+              <Link
+                className="og-btn og-btn--secondary og-btn--md"
+                to="/payments/top-up"
+                data-testid="home-add-money"
+              >
+                {t('app.home.add_money')}
+              </Link>
+            )}
+            <Link className="og-btn og-btn--secondary og-btn--md" to="/support/new" data-testid="home-help">
+              {t('app.home.ask_for_help')}
             </Link>
-          }
-        >
-          <span data-testid="home-application">{applicationSentence(apps.data[0].state)}</span>
-        </Notice>
-      )}
-      <Load state={accounts} label="accounts">
-        {(list) => {
-          const total = list.reduce((s, a) => s + (a.balance?.available.amountMinor ?? 0), 0);
-          return (
-            <Card title={t('app.home.available')} data-testid="home-balance">
-              <p className="og-money og-money--xl" data-mask="" data-testid="home-total">
-                {formatMinor({ amountMinor: total, currency: list[0]?.currency ?? REGION_CONFIG.currency })}
-              </p>
-              {list.length > 0 && (
-                <ul className="fw-breakdown" data-testid="home-breakdown">
-                  {list.map((a) => (
-                    <li key={a.id}>
-                      <Link className="fw-breakdown__row" to={`/accounts/${a.id}`}>
-                        <span className="fw-row__main">
-                          <span>{a.name}</span>
-                          <span className="fw-row__sub">
-                            <AcctLast4 value={a.last4} />
-                          </span>
-                        </span>
-                        {a.balance && <Amt value={a.balance.available} />}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <div className="fw-actions" data-testid="home-actions">
-                <Link className="og-btn og-btn--primary og-btn--md" to="/payments/new">
-                  {t('app.home.new_payment')}
-                </Link>
-                <Link className="og-btn og-btn--secondary og-btn--md" to="/payments/top-up">
-                  {t('app.home.add_money')}
-                </Link>
-                <Link className="og-btn og-btn--secondary og-btn--md" to="/support/new">
-                  {t('app.home.ask_for_help')}
-                </Link>
-              </div>
-            </Card>
-          );
-        }}
-      </Load>
-      <div className="fw-home-grid" data-testid="home-grid">
-        <Card title={t('app.home.recent_payments')} data-testid="home-recent">
-          <Load state={recent} label="payments">
+          </div>
+        </Card>
+        <div className="fw-home__needs">
+          <NeedsYou
+            items={items}
+            loading={reads.some((r) => r.status === 'loading')}
+            failed={reads.some((r) => r.status === 'error')}
+            onRetry={() => reads.filter((r) => r.status === 'error').forEach((r) => r.reload())}
+          />
+        </div>
+        <Card title={t('app.home.recent_payments')} className="fw-home__recent" data-testid="home-recent">
+          <Load state={payments} label="payments">
             {(page) =>
               page.items.length ? (
-                <ul className="fw-list">
-                  {page.items.map((p) => (
+                <ul className="fw-list" data-testid="recent-list">
+                  {page.items.slice(0, RECENT).map((p) => (
                     <li key={p.id}>
-                      <Link className="fw-row" to={`/payments/${p.id}`}>
-                        <span className="fw-row__main">
-                          <strong>{paymentLabel(p.state)}</strong>
+                      <Link
+                        className="fw-row fw-row--payment"
+                        to={`/payments/${p.id}`}
+                        data-testid={`recent-${p.id}`}
+                      >
+                        <span className="fw-row__line">
+                          <strong className="fw-row__payee">{payeeName(p, accs, recs)}</strong>
+                          <Amt value={p.amount} />
+                        </span>
+                        <span className="fw-row__line">
+                          <StatusChip status={stateStatus(p.state)}>{paymentLabel(p.state)}</StatusChip>
                           <span className="fw-row__sub">{p.createdAt ? formatDate(p.createdAt) : ''}</span>
                         </span>
-                        <Amt value={p.amount} />
                       </Link>
                     </li>
                   ))}
@@ -109,24 +165,6 @@ export function HomeScreen() {
             {t('app.home.all_payments')}
           </Link>
         </Card>
-        {membership && (
-          <Card title={t('app.home.your_company')} data-testid="home-company">
-            <KeyValue
-              items={[
-                { label: t('app.home.company'), value: membership.companyName ?? membership.companyId },
-                { label: t('app.home.your_role'), value: human(membership.role) },
-                {
-                  label: t('app.home.identity_at_bank'),
-                  value: (
-                    <StatusChip status={stateStatus(bankState)}>
-                      <span data-testid="home-verification">{human(bankState)}</span>
-                    </StatusChip>
-                  ),
-                },
-              ]}
-            />
-          </Card>
-        )}
       </div>
     </>
   );

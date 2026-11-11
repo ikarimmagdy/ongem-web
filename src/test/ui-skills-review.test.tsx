@@ -4,14 +4,15 @@ import { Logo, ThemeProvider } from '../design-system';
 import { pageTitle } from '../nav';
 import { applicationLabel, applicationSentence, paymentLabel } from '../lib/states';
 import { paymentKind } from '../screens/Payments';
-import { renderApp } from './render';
+import { asPhone, renderApp } from './render';
 
 /** UI Skills review of 2026-11-07 (ongem-engineering outputs/review/ui-skills-2026-11-07, spec OG-030 R12 to R21). */
 describe('UI Skills review 2026-11-07 (OG-030 R-UX)', () => {
-  it('AC_R12_1 the assistant is docked in the top bar, never floating over the page', async () => {
+  it('AC_R12_1 the assistant never floats over a desktop page: the top bar search opens it (superseded by OG-035 R9)', async () => {
     renderApp('/');
-    const open = await screen.findByTestId('assistant-open');
-    expect(open.closest('header')).not.toBeNull();
+    const search = await screen.findByTestId('command-search-open');
+    expect(search.closest('header')).not.toBeNull();
+    expect(screen.queryByTestId('assistant-open')).not.toBeInTheDocument();
   });
 
   it('AC_R13_1 every founder route names its page in the browser tab', async () => {
@@ -68,12 +69,12 @@ describe('UI Skills review 2026-11-07 (OG-030 R-UX)', () => {
   it('AC_R17_1 Home leads with the total, its breakdown and quick actions as buttons', async () => {
     renderApp('/');
     const balance = await screen.findByTestId('home-balance');
-    expect(within(balance).getByTestId('home-total')).toBeInTheDocument();
+    expect(await within(balance).findByTestId('home-total')).toBeInTheDocument();
     expect(await within(balance).findByTestId('home-breakdown')).toBeInTheDocument();
     const actions = within(balance).getByTestId('home-actions');
     for (const a of within(actions).getAllByRole('link')) expect(a.className).toMatch(/og-btn/);
-    const grid = screen.getByTestId('home-grid');
-    expect(balance.compareDocumentPosition(grid) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const recent = screen.getByTestId('home-recent');
+    expect(balance.compareDocumentPosition(recent) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
   it('AC_R18_1 notification choices are switches in a 44px target', async () => {
@@ -98,13 +99,18 @@ describe('UI Skills review 2026-11-07 (OG-030 R-UX)', () => {
     }
   });
 
-  it('AC_R20_1 a phone has five tabs and Settings in the profile menu', async () => {
-    renderApp('/');
-    const bottom = await screen.findByTestId('bottom-nav');
-    expect(within(bottom).getAllByRole('link')).toHaveLength(5);
-    expect(within(bottom).queryByTestId('nav-settings')).toBeNull();
-    await userEvent.click(screen.getByTestId('profile-menu'));
-    expect(screen.getByTestId('profile-settings')).toHaveAttribute('href', '/settings');
+  it('AC_R20_1 a phone has five tabs and Settings under More (OG-035 R8)', async () => {
+    const undo = asPhone();
+    try {
+      renderApp('/');
+      const bottom = await screen.findByTestId('bottom-nav');
+      expect(within(bottom).getAllByRole('link')).toHaveLength(5);
+      expect(within(bottom).queryByTestId('tab-settings')).toBeNull();
+      await userEvent.click(within(bottom).getByTestId('tab-more'));
+      expect(await screen.findByTestId('more-settings')).toHaveAttribute('href', '/settings');
+    } finally {
+      undo();
+    }
   });
 
   it('AC_R21_1 a dark theme shows the light-ink wordmark without a plate', () => {

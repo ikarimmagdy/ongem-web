@@ -47,7 +47,8 @@ class Spy extends DemoOnGemApi {
 describe('company switcher (G-69)', () => {
   it('is not shown with one company AC-R4.1', async () => {
     renderApp('/');
-    expect(await screen.findByTestId('home-company')).toHaveTextContent('Northwind Labs LLC');
+    // OG-035 R1: one company is its name at the top of the side bar, with no menu.
+    await waitFor(() => expect(screen.getByTestId('side-company')).toHaveTextContent('Northwind Labs LLC'));
     expect(screen.queryByTestId('company-switcher')).not.toBeInTheDocument();
   });
 
@@ -68,8 +69,10 @@ describe('company switcher (G-69)', () => {
     const gulf = api.made[0]!;
     // A new client: Home is loaded again from it, the old client's answers are not reused.
     await waitFor(() => expect(gulf.calls).toEqual(expect.arrayContaining(['me', 'accounts'])));
-    expect(await screen.findByTestId('home-company')).toHaveTextContent('Gulf Trading FZE');
-    expect(screen.getByTestId('home-company')).toHaveTextContent('Viewer');
+    // OG-035 R1, R2: the company shows in the switcher only; as a Viewer there, Home offers no New payment.
+    expect(await screen.findByTestId('home-balance')).toBeInTheDocument();
+    expect(screen.getByTestId('side-company')).toHaveTextContent('Gulf Trading FZE');
+    await waitFor(() => expect(screen.queryByTestId('home-new-payment')).not.toBeInTheDocument());
   });
 });
 
@@ -212,9 +215,9 @@ describe('company switcher across regions (OG-023)', () => {
     renderApp('/payments', { api });
     expect(await screen.findByTestId('company-read-only')).toHaveTextContent('This company is closed.');
     // The owner keeps reading, but no write action is offered in a closed company.
-    expect(await screen.findByTestId('scheduled')).toBeInTheDocument();
-    expect(screen.queryByTestId('new-payment')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('add-money')).not.toBeInTheDocument();
+    expect(await screen.findByTestId('payments-tab-scheduled')).toBeInTheDocument();
+    expect(screen.queryByTestId('payments-tab-send')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('payments-tab-add_money')).not.toBeInTheDocument();
     await userEvent.click(screen.getByTestId('company-switcher'));
     expect(screen.getByTestId('company-state-cmp_demo_northwind')).toHaveTextContent('Closed');
     expect(screen.queryByTestId('company-state-cmp_demo_gulf')).not.toBeInTheDocument();
@@ -229,7 +232,7 @@ describe('company switcher across regions (OG-023)', () => {
     };
     renderApp('/payments', { api: new DemoOnGemApi({ me: frozen }) });
     expect(await screen.findByTestId('company-read-only')).toHaveTextContent('This company is frozen.');
-    expect(screen.queryByTestId('new-payment')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('payments-tab-send')).not.toBeInTheDocument();
   });
 
   it('the switcher shows each company unread notices AC-R14.1', async () => {

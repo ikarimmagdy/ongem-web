@@ -12,7 +12,16 @@ describe('shell and sign-in (OG-030 R1)', () => {
     expect(await screen.findByTestId('home-total')).toBeInTheDocument();
     expect(screen.getByTestId('env-badge')).toHaveTextContent('Demo');
     const nav = screen.getAllByRole('navigation', { name: 'Main' })[0]!;
-    for (const label of ['Home', 'Accounts', 'Payments', 'Cards', 'Support', 'Settings']) {
+    for (const label of [
+      'Home',
+      'Accounts',
+      'Payments',
+      'Cards',
+      'Team',
+      'Documents',
+      'Support',
+      'Settings',
+    ]) {
       expect(within(nav).getByRole('link', { name: label })).toBeInTheDocument();
     }
   });
@@ -43,9 +52,11 @@ describe('home (G-157)', () => {
   it('greets the founder by name and shows the company name and the bank identity state G_157', async () => {
     renderApp('/');
     expect(await screen.findByRole('heading', { name: 'Hello, Dana' })).toBeInTheDocument();
-    const company = await screen.findByTestId('home-company');
+    // OG-035 R1: the company name is the switcher's; the identity state moved to Settings.
+    const company = await screen.findByTestId('side-company');
     expect(company).toHaveTextContent('Northwind Labs LLC');
     expect(company).not.toHaveTextContent(/cmp_/);
-    expect(screen.getByTestId('home-verification')).toHaveTextContent('Accepted');
+    await userEvent.click(screen.getAllByTestId('nav-settings')[0]!);
+    expect(await screen.findByTestId('home-verification')).toHaveTextContent('Accepted');
   });
 });

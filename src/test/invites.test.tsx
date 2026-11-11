@@ -11,7 +11,7 @@ const asRole = (role: string) =>
 
 describe('team invitations (OG-023 R6, client)', () => {
   it('an owner invites by email and the link is shown once AC-R6.1', async () => {
-    renderApp('/settings');
+    renderApp('/team');
     // The card may mount again once the shell knows the company, so it is found afresh each time.
     expect(await screen.findByTestId('settings-team')).toBeInTheDocument();
     expect(await screen.findByText('No invitations yet.')).toBeInTheDocument();
@@ -27,19 +27,19 @@ describe('team invitations (OG-023 R6, client)', () => {
   });
 
   it('no invitations without member invite, and no role wider than mine AC-R6.2', async () => {
-    renderApp('/settings', { api: asRole('VIEWER') });
-    expect(await screen.findByTestId('settings-language')).toBeInTheDocument();
+    renderApp('/team', { api: asRole('VIEWER') });
+    expect(await screen.findByTestId('team-no-invite')).toBeInTheDocument();
     expect(screen.queryByTestId('settings-team')).not.toBeInTheDocument();
     expect(invitableRoles('ADMIN')).not.toContain('OWNER');
     expect(invitableRoles('ADMIN')).not.toContain('APPROVER');
     expect(invitableRoles('OWNER')).toEqual(['OWNER', 'ADMIN', 'APPROVER', 'MEMBER', 'VIEWER']);
-    renderApp('/settings', { api: asRole('ADMIN') });
+    renderApp('/team', { api: asRole('ADMIN') });
     const role = await screen.findByTestId('invite-role');
     expect(within(role).queryByRole('option', { name: 'Owner' })).not.toBeInTheDocument();
   });
 
   it('a second invite for the same email is invite_exists AC-R6.3', async () => {
-    renderApp('/settings');
+    renderApp('/team');
     await userEvent.type(await screen.findByTestId('invite-email'), 'sam@example.com');
     await userEvent.click(screen.getByTestId('invite-send'));
     await screen.findByTestId('invite-sent');
@@ -53,7 +53,7 @@ describe('team invitations (OG-023 R6, client)', () => {
   it('a revoked invitation lists as revoked AC-R6.4', async () => {
     const api = new DemoOnGemApi();
     const made = await api.createInvite('cmp_demo_northwind', { email: 'kim@example.com', role: 'MEMBER' });
-    renderApp('/settings', { api });
+    renderApp('/team', { api });
     await userEvent.click(await screen.findByTestId(`invite-revoke-${made.invite.id}`));
     await waitFor(() => expect(screen.getByTestId(`invite-${made.invite.id}`)).toHaveTextContent('Revoked'));
     expect(screen.queryByTestId(`invite-revoke-${made.invite.id}`)).not.toBeInTheDocument();

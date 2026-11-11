@@ -8,7 +8,7 @@ import type { AssistantDraft } from '../api/types';
 import { matches, routeFor } from '../assistant/drafts';
 import { AuthProvider, type AuthSession } from '../auth';
 import { SessionProvider, useSession } from '../session';
-import { renderApp } from './render';
+import { asPhone, renderApp } from './render';
 
 const slow = <T,>(f: () => Promise<T>) => new Promise<T>((r) => setTimeout(() => r(f()), 20));
 
@@ -31,6 +31,13 @@ const draft = (kind: string, params: Record<string, unknown>): AssistantDraft =>
 });
 
 describe('review fixes: payments and drafts', () => {
+  // OG-035 R9: the floating assistant button is the phone's way in; these tests open it there.
+  let undoPhone: () => void = () => undefined;
+  beforeEach(() => {
+    undoPhone = asPhone();
+  });
+  afterEach(() => undoPhone());
+
   it('WEB-COR-01 a retry after a failed send sends the same payment, and a double click creates one', async () => {
     let answers = [false, true];
     const api = new DemoOnGemApi({ stepUp: () => Promise.resolve(answers.shift() ?? true) });
@@ -52,7 +59,7 @@ describe('review fixes: payments and drafts', () => {
 
     answers = [true];
     create.mockClear();
-    await userEvent.click(screen.getByTestId('new-payment'));
+    await userEvent.click(screen.getByTestId('payments-tab-send'));
     await userEvent.selectOptions(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('payment-amount'), '41.00');
     await userEvent.click(screen.getByTestId('payment-review-button'));

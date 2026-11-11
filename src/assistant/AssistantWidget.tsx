@@ -6,12 +6,23 @@ import { t } from '../i18n';
 import { useSession } from '../session';
 import { useDrafts } from './drafts';
 import { readLabel } from './readLabel';
+import { useAssistantControl } from './control';
 
-/** The floating assistant (OG-031 R4): reads and drafts only; a draft opens the normal screen for the founder to confirm. */
-export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: string | null }) {
+/**
+ * The assistant (OG-031 R4): reads and drafts only; a draft opens the normal screen for the founder to confirm. A
+ * floating button opens it on a phone; on a desktop the command search opens it (OG-035 R9).
+ */
+export function AssistantWidget({
+  recordingSessionId,
+  fab = true,
+}: {
+  recordingSessionId?: string | null;
+  /** The floating button (a phone); on a desktop the command search opens the assistant. */
+  fab?: boolean;
+}) {
   const { api } = useSession();
   const drafts = useDrafts();
-  const [open, setOpen] = useState(false);
+  const { open, setOpen, pending, clearPending } = useAssistantControl();
   const [conversation, setConversation] = useState<string | null>(null);
   const [turns, setTurns] = useState<AssistantTurn[]>([]);
   const [text, setText] = useState('');
@@ -32,7 +43,9 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
 
   const send = async (e: FormEvent) => {
     e.preventDefault();
-    const message = text.trim();
+    await say(text.trim());
+  };
+  const say = async (message: string) => {
     if (!message) return;
     setBusy(true);
     setError(null);
@@ -48,6 +61,14 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
       setBusy(false);
     }
   };
+  // A query handed over by the command search (OG-035 R9) is sent once, as if typed.
+  useEffect(() => {
+    if (!open || pending === null) return;
+    const q = pending;
+    clearPending();
+    void say(q);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, pending]);
   const rate = async (turn: AssistantTurn, rating: 'UP' | 'DOWN') => {
     try {
       await api.rateAssistantTurn(turn.id, rating);
@@ -179,16 +200,19 @@ export function AssistantWidget({ recordingSessionId }: { recordingSessionId?: s
           </form>
         </section>
       )}
-      <Button
-        variant="secondary"
-        className="fw-assistant__fab"
-        data-testid="assistant-open"
-        aria-expanded={open}
-        aria-controls="assistant-panel"
-        onClick={() => setOpen((x) => !x)}
-      >
-        {t('app.assistant.title')}
-      </Button>
+      {fab && (
+        <Button
+          variant="primary"
+          className="fw-assistant__fab"
+          data-testid="assistant-open"
+          aria-label={t('app.assistant.fab_label')}
+          aria-expanded={open}
+          aria-controls="assistant-panel"
+          onClick={() => setOpen((x) => !x)}
+        >
+          {t('app.assistant.title')}
+        </Button>
+      )}
     </div>
   );
 }

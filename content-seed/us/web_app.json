@@ -6473,11 +6473,11 @@
     {
       "key": "app.team.title",
       "format": "text",
-      "description": "Settings card title: invitations to the company",
+      "description": "Team screen title",
       "placeholders": [],
       "meta": {},
-      "en": "Team invitations",
-      "ar": "دعوات الفريق"
+      "en": "Team",
+      "ar": "الفريق"
     },
     {
       "key": "app.team.text",
@@ -9526,6 +9526,688 @@
       "meta": {},
       "en": "More information needed",
       "ar": "مطلوب مزيد من المعلومات"
+    },
+    {
+      "key": "app.nav.team",
+      "format": "text",
+      "description": "Navigation: team members and invitations",
+      "placeholders": [],
+      "meta": {},
+      "en": "Team",
+      "ar": "الفريق"
+    },
+    {
+      "key": "app.nav.documents",
+      "format": "text",
+      "description": "Navigation: statements, exports and agreements",
+      "placeholders": [],
+      "meta": {},
+      "en": "Documents",
+      "ar": "المستندات"
+    },
+    {
+      "key": "app.nav.pay",
+      "format": "text",
+      "description": "Phone tab bar centre tab: opens Send",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pay",
+      "ar": "ادفع"
+    },
+    {
+      "key": "app.nav.more",
+      "format": "text",
+      "description": "Phone tab bar: more destinations",
+      "placeholders": [],
+      "meta": {},
+      "en": "More",
+      "ar": "المزيد"
+    },
+    {
+      "key": "app.nav.notifications",
+      "format": "text",
+      "description": "More list: the notices inbox",
+      "placeholders": [],
+      "meta": {},
+      "en": "Notifications",
+      "ar": "الإشعارات"
+    },
+    {
+      "key": "app.nav.title.team",
+      "format": "text",
+      "description": "Browser tab title: Team",
+      "placeholders": [],
+      "meta": {},
+      "en": "Team",
+      "ar": "الفريق"
+    },
+    {
+      "key": "app.nav.title.documents",
+      "format": "text",
+      "description": "Browser tab title: Documents",
+      "placeholders": [],
+      "meta": {},
+      "en": "Documents",
+      "ar": "المستندات"
+    },
+    {
+      "key": "app.nav.title.more",
+      "format": "text",
+      "description": "Browser tab title: More",
+      "placeholders": [],
+      "meta": {},
+      "en": "More",
+      "ar": "المزيد"
+    },
+    {
+      "key": "app.nav.title.approvals",
+      "format": "text",
+      "description": "Browser tab title: payments waiting for approval",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for approval",
+      "ar": "بانتظار الموافقة"
+    },
+    {
+      "key": "app.nav.tab_bar",
+      "format": "text",
+      "description": "Accessible name of the phone tab bar",
+      "placeholders": [],
+      "meta": {},
+      "en": "Main tabs",
+      "ar": "علامات التبويب الرئيسية"
+    },
+    {
+      "key": "app.home.needs.title",
+      "format": "text",
+      "description": "Home panel title: items waiting on this person",
+      "placeholders": [],
+      "meta": {},
+      "en": "Needs you",
+      "ar": "بحاجة إليك"
+    },
+    {
+      "key": "app.home.needs.empty",
+      "format": "text",
+      "description": "Home panel empty state title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Nothing needs you",
+      "ar": "لا شيء بحاجة إليك"
+    },
+    {
+      "key": "app.home.needs.empty_text",
+      "format": "text",
+      "description": "Home panel empty state text",
+      "placeholders": [],
+      "meta": {},
+      "en": "You are up to date.",
+      "ar": "أنت على اطلاع بكل شيء."
+    },
+    {
+      "key": "app.home.needs.loading",
+      "format": "text",
+      "description": "Home panel loading label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Checking what needs you",
+      "ar": "نتحقق مما يحتاج إليك"
+    },
+    {
+      "key": "app.home.needs.error",
+      "format": "text",
+      "description": "Home panel: one of the reads failed",
+      "placeholders": [],
+      "meta": {},
+      "en": "Some items could not be loaded.",
+      "ar": "تعذر تحميل بعض العناصر."
+    },
+    {
+      "key": "app.home.needs.approval",
+      "format": "text",
+      "description": "Home panel item: a payment waiting for this person's approval",
+      "placeholders": [
+        "amount",
+        "payee"
+      ],
+      "meta": {},
+      "en": "Approve {amount} to {payee}",
+      "ar": "وافق على {amount} إلى {payee}"
+    },
+    {
+      "key": "app.home.needs.review",
+      "format": "text",
+      "description": "Home panel action: open the payment to approve or decline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Review",
+      "ar": "مراجعة"
+    },
+    {
+      "key": "app.home.needs.application",
+      "format": "text",
+      "description": "Home panel item: application step left",
+      "placeholders": [
+        "step"
+      ],
+      "meta": {},
+      "en": "Your application: {step}",
+      "ar": "طلبك: {step}"
+    },
+    {
+      "key": "app.home.needs.continue",
+      "format": "text",
+      "description": "Home panel action: open the application",
+      "placeholders": [],
+      "meta": {},
+      "en": "Continue",
+      "ar": "متابعة"
+    },
+    {
+      "key": "app.home.needs.card_frozen",
+      "format": "text",
+      "description": "Home panel item: a frozen card",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Card ending {last4} is frozen",
+      "ar": "البطاقة المنتهية بـ {last4} مجمدة"
+    },
+    {
+      "key": "app.home.needs.card_pending",
+      "format": "text",
+      "description": "Home panel item: a card to activate",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Card ending {last4} is waiting to be activated",
+      "ar": "البطاقة المنتهية بـ {last4} بانتظار التفعيل"
+    },
+    {
+      "key": "app.home.needs.open_card",
+      "format": "text",
+      "description": "Home panel action: open the card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open card",
+      "ar": "فتح البطاقة"
+    },
+    {
+      "key": "app.home.needs.read",
+      "format": "text",
+      "description": "Home panel action: open the notices",
+      "placeholders": [],
+      "meta": {},
+      "en": "Read",
+      "ar": "قراءة"
+    },
+    {
+      "key": "app.home.steps.label",
+      "format": "text",
+      "description": "Accessible name of the application steps",
+      "placeholders": [],
+      "meta": {},
+      "en": "Application progress",
+      "ar": "تقدم الطلب"
+    },
+    {
+      "key": "app.home.steps.sign_in",
+      "format": "text",
+      "description": "Application step 1",
+      "placeholders": [],
+      "meta": {},
+      "en": "Create sign-in",
+      "ar": "إنشاء تسجيل الدخول"
+    },
+    {
+      "key": "app.home.steps.company",
+      "format": "text",
+      "description": "Application step 2",
+      "placeholders": [],
+      "meta": {},
+      "en": "About your company",
+      "ar": "عن شركتك"
+    },
+    {
+      "key": "app.home.steps.bank",
+      "format": "text",
+      "description": "Application step 3",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank decides",
+      "ar": "قرار البنك"
+    },
+    {
+      "key": "app.home.steps.open",
+      "format": "text",
+      "description": "Application step 4",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account opens",
+      "ar": "فتح الحساب"
+    },
+    {
+      "key": "app.home.steps.current",
+      "format": "text",
+      "description": "Application banner: the current step",
+      "placeholders": [
+        "n",
+        "step"
+      ],
+      "meta": {},
+      "en": "Step {n} of 4: {step}",
+      "ar": "الخطوة {n} من 4: {step}"
+    },
+    {
+      "key": "app.home.steps.done",
+      "format": "text",
+      "description": "Screen reader word for a finished step",
+      "placeholders": [],
+      "meta": {},
+      "en": "Done",
+      "ar": "مكتملة"
+    },
+    {
+      "key": "app.home.steps.now",
+      "format": "text",
+      "description": "Screen reader word for the current step",
+      "placeholders": [],
+      "meta": {},
+      "en": "Current step",
+      "ar": "الخطوة الحالية"
+    },
+    {
+      "key": "app.home.steps.later",
+      "format": "text",
+      "description": "Screen reader word for a step not reached",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not started",
+      "ar": "لم تبدأ"
+    },
+    {
+      "key": "app.payments.tabs.label",
+      "format": "text",
+      "description": "Accessible name of the Payments tabs",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments sections",
+      "ar": "أقسام المدفوعات"
+    },
+    {
+      "key": "app.payments.tabs.all",
+      "format": "text",
+      "description": "Payments tab: the list",
+      "placeholders": [],
+      "meta": {},
+      "en": "All payments",
+      "ar": "كل المدفوعات"
+    },
+    {
+      "key": "app.payments.tabs.send",
+      "format": "text",
+      "description": "Payments tab: new payment",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send",
+      "ar": "إرسال"
+    },
+    {
+      "key": "app.payments.tabs.scheduled",
+      "format": "text",
+      "description": "Payments tab: scheduled payments",
+      "placeholders": [],
+      "meta": {},
+      "en": "Scheduled",
+      "ar": "المجدولة"
+    },
+    {
+      "key": "app.payments.tabs.recipients",
+      "format": "text",
+      "description": "Payments tab: recipients",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recipients",
+      "ar": "المستفيدون"
+    },
+    {
+      "key": "app.payments.tabs.add_money",
+      "format": "text",
+      "description": "Payments tab: add money",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add money",
+      "ar": "إضافة أموال"
+    },
+    {
+      "key": "app.payments.tabs.approvals",
+      "format": "text",
+      "description": "Payments tab: payments waiting for a second person",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for approval",
+      "ar": "بانتظار الموافقة"
+    },
+    {
+      "key": "app.payments.approvals.empty.title",
+      "format": "text",
+      "description": "Approvals tab empty state title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Nothing is waiting for your approval",
+      "ar": "لا شيء بانتظار موافقتك"
+    },
+    {
+      "key": "app.payments.approvals.empty.text",
+      "format": "text",
+      "description": "Approvals tab empty state text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments that need a second person show here.",
+      "ar": "تظهر هنا المدفوعات التي تحتاج إلى موافقة شخص ثانٍ."
+    },
+    {
+      "key": "app.payments.approvals.role_denied",
+      "format": "text",
+      "description": "Approvals tab without payment:approve",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your role does not approve payments.",
+      "ar": "دورك لا يسمح بالموافقة على المدفوعات."
+    },
+    {
+      "key": "app.search.open",
+      "format": "text",
+      "description": "Top bar button that opens the command search",
+      "placeholders": [],
+      "meta": {},
+      "en": "Search or ask",
+      "ar": "ابحث أو اسأل"
+    },
+    {
+      "key": "app.search.title",
+      "format": "text",
+      "description": "Command search dialog title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Search",
+      "ar": "البحث"
+    },
+    {
+      "key": "app.search.label",
+      "format": "text",
+      "description": "Command search input label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Search screens, accounts and recipients",
+      "ar": "ابحث في الشاشات والحسابات والمستفيدين"
+    },
+    {
+      "key": "app.search.placeholder",
+      "format": "text",
+      "description": "Command search input placeholder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Search or ask the assistant",
+      "ar": "ابحث أو اسأل المساعد"
+    },
+    {
+      "key": "app.search.shortcut.mac",
+      "format": "text",
+      "description": "Keyboard shortcut hint on a Mac",
+      "placeholders": [],
+      "meta": {},
+      "en": "⌘ K",
+      "ar": "⌘ K"
+    },
+    {
+      "key": "app.search.shortcut.other",
+      "format": "text",
+      "description": "Keyboard shortcut hint on other systems",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ctrl K",
+      "ar": "Ctrl K"
+    },
+    {
+      "key": "app.search.group.screens",
+      "format": "text",
+      "description": "Command search group",
+      "placeholders": [],
+      "meta": {},
+      "en": "Screens",
+      "ar": "الشاشات"
+    },
+    {
+      "key": "app.search.group.accounts",
+      "format": "text",
+      "description": "Command search group",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accounts",
+      "ar": "الحسابات"
+    },
+    {
+      "key": "app.search.group.recipients",
+      "format": "text",
+      "description": "Command search group",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recipients",
+      "ar": "المستفيدون"
+    },
+    {
+      "key": "app.search.ask",
+      "format": "text",
+      "description": "Command search: send the query to the assistant",
+      "placeholders": [
+        "query"
+      ],
+      "meta": {},
+      "en": "Ask the assistant: {query}",
+      "ar": "اسأل المساعد: {query}"
+    },
+    {
+      "key": "app.search.empty",
+      "format": "text",
+      "description": "Command search: no match",
+      "placeholders": [],
+      "meta": {},
+      "en": "No screens, accounts or recipients match.",
+      "ar": "لا توجد شاشات أو حسابات أو مستفيدون مطابقون."
+    },
+    {
+      "key": "app.search.close",
+      "format": "text",
+      "description": "Command search close button label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Close search",
+      "ar": "إغلاق البحث"
+    },
+    {
+      "key": "app.assistant.fab_label",
+      "format": "text",
+      "description": "Floating assistant button label on a phone",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open the assistant",
+      "ar": "فتح المساعد"
+    },
+    {
+      "key": "app.more.title",
+      "format": "text",
+      "description": "More screen title",
+      "placeholders": [],
+      "meta": {},
+      "en": "More",
+      "ar": "المزيد"
+    },
+    {
+      "key": "app.more.unread",
+      "format": "text",
+      "description": "More list: unread notices count",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "{count} unread",
+      "ar": "{count} غير مقروءة"
+    },
+    {
+      "key": "app.team.members",
+      "format": "text",
+      "description": "Team: members card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Members",
+      "ar": "الأعضاء"
+    },
+    {
+      "key": "app.team.you",
+      "format": "text",
+      "description": "Team: the signed-in person",
+      "placeholders": [],
+      "meta": {},
+      "en": "You",
+      "ar": "أنت"
+    },
+    {
+      "key": "app.team.no_invite",
+      "format": "text",
+      "description": "Team: role without member:invite",
+      "placeholders": [],
+      "meta": {},
+      "en": "Owners and admins can invite people to this company.",
+      "ar": "يمكن للمالكين والمسؤولين دعوة أشخاص إلى هذه الشركة."
+    },
+    {
+      "key": "app.team.members_note",
+      "format": "text",
+      "description": "Team: members card note",
+      "placeholders": [],
+      "meta": {},
+      "en": "People who accepted an invitation show here too.",
+      "ar": "يظهر هنا أيضًا من قبلوا دعوة."
+    },
+    {
+      "key": "app.documents.title",
+      "format": "text",
+      "description": "Documents screen title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Documents",
+      "ar": "المستندات"
+    },
+    {
+      "key": "app.documents.subtitle",
+      "format": "text",
+      "description": "Documents screen subtitle",
+      "placeholders": [],
+      "meta": {},
+      "en": "Statements, exports and the agreements you accepted.",
+      "ar": "كشوف الحساب والتصدير والاتفاقيات التي قبلتها."
+    },
+    {
+      "key": "app.documents.statements",
+      "format": "text",
+      "description": "Documents: statements card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Statements",
+      "ar": "كشوف الحساب"
+    },
+    {
+      "key": "app.documents.no_statements",
+      "format": "text",
+      "description": "Documents: no statement for an account",
+      "placeholders": [],
+      "meta": {},
+      "en": "No statements yet.",
+      "ar": "لا توجد كشوف حساب بعد."
+    },
+    {
+      "key": "app.documents.exports",
+      "format": "text",
+      "description": "Documents: exports card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accounting exports",
+      "ar": "تصدير الحسابات"
+    },
+    {
+      "key": "app.documents.account",
+      "format": "text",
+      "description": "Documents: account picker label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account",
+      "ar": "الحساب"
+    },
+    {
+      "key": "app.documents.disclosures",
+      "format": "text",
+      "description": "Documents: agreements card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Agreements and disclosures",
+      "ar": "الاتفاقيات والإفصاحات"
+    },
+    {
+      "key": "app.documents.no_disclosures",
+      "format": "text",
+      "description": "Documents: no agreements",
+      "placeholders": [],
+      "meta": {},
+      "en": "No agreements to show.",
+      "ar": "لا توجد اتفاقيات لعرضها."
+    },
+    {
+      "key": "app.documents.read",
+      "format": "text",
+      "description": "Documents: open an agreement",
+      "placeholders": [],
+      "meta": {},
+      "en": "Read",
+      "ar": "قراءة"
+    },
+    {
+      "key": "app.documents.no_accounts",
+      "format": "text",
+      "description": "Documents: no account yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "Statements show here once an account is open.",
+      "ar": "تظهر كشوف الحساب هنا بعد فتح حساب."
+    },
+    {
+      "key": "app.team.invitations",
+      "format": "text",
+      "description": "Team: invitations card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Invitations",
+      "ar": "الدعوات"
+    },
+    {
+      "key": "app.common.loading.team",
+      "format": "text",
+      "description": "Loading label: team members",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading your team",
+      "ar": "جارٍ تحميل فريقك"
+    },
+    {
+      "key": "app.common.loading.disclosures",
+      "format": "text",
+      "description": "Loading label: agreements and disclosures",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading your agreements",
+      "ar": "جارٍ تحميل اتفاقياتك"
     }
   ]
 }

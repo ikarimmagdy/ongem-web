@@ -2,7 +2,7 @@ import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DemoOnGemApi } from '../api/demo';
 import { readLabel } from '../assistant/readLabel';
-import { renderApp } from './render';
+import { asPhone, renderApp } from './render';
 
 async function ask(text: string) {
   if (!screen.queryByTestId('assistant-panel'))
@@ -14,6 +14,13 @@ async function ask(text: string) {
 }
 
 describe('assistant widget on the web (OG-031 R4)', () => {
+  // OG-035 R9: the floating assistant button is the phone's way in; these tests open it there.
+  let undoPhone: () => void = () => undefined;
+  beforeEach(() => {
+    undoPhone = asPhone();
+  });
+  afterEach(() => undoPhone());
+
   it('draft_review_prefills_and_confirms_AC_R4_3', async () => {
     const api = new DemoOnGemApi({ stepUp: () => Promise.resolve(true) });
     renderApp('/', { api });

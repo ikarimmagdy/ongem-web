@@ -5,7 +5,7 @@ import type { AuthSession } from '../auth';
 import { NO_AUTH } from '../auth';
 import { t } from '../i18n';
 import { privacyLine, privacyLineOff, RECORDING_ENABLED } from '../recording/privacy';
-import { renderApp } from './render';
+import { asPhone, renderApp } from './render';
 
 /** UI and UX review of 2026-11-07 (ongem-engineering specs OG-030 and OG-032, outputs/review/ui-ux.md). */
 describe('UX review 2026-11-07', () => {
@@ -72,10 +72,11 @@ describe('UX review 2026-11-07', () => {
     expect(document.querySelectorAll('[data-testid^="shot-narrow-"]').length).toBeGreaterThan(2);
   });
 
-  it('UX_10 Recipients in the payments header looks like the other actions', async () => {
+  it('UX_10 Recipients sits with the other payments sections (now a tab, OG-035 R6)', async () => {
     renderApp('/payments');
-    const link = await screen.findByTestId('payments-recipients');
-    expect(link).toHaveClass('og-btn', 'og-btn--secondary');
+    const link = await screen.findByTestId('payments-tab-recipients');
+    expect(link).toHaveClass('fw-tabs__tab');
+    expect(link.closest('nav')).toBe(screen.getByTestId('payments-tabs'));
   });
 
   it('UX_11 an owner and the identity form stack instead of sharing a narrow row', async () => {
@@ -84,10 +85,17 @@ describe('UX review 2026-11-07', () => {
     for (const r of rows) expect(r).toHaveClass('fw-row--stack');
   });
 
-  it('UX_12 the top bar carries the logo for narrow screens, where the side bar is hidden', async () => {
-    renderApp('/');
-    await screen.findByTestId('home-total');
-    expect(document.querySelector('.fw-topbar .fw-topbar__logo')).not.toBeNull();
+  it('UX_12 the top bar on a narrow screen starts with the company switcher (OG-035 R1 replaces the logo there)', async () => {
+    const undo = asPhone();
+    try {
+      renderApp('/');
+      await screen.findByTestId('home-total');
+      expect(document.querySelector('.fw-topbar [data-testid="top-company"]')).toHaveTextContent(
+        'Northwind Labs LLC',
+      );
+    } finally {
+      undo();
+    }
   });
   it('UX_16 payments come in pages of ten with Newer and Older, not one long list', async () => {
     renderApp('/payments');
@@ -110,6 +118,6 @@ describe('UX review 2026-11-07', () => {
     renderApp('/');
     const grid = await screen.findByTestId('home-grid');
     expect(within(grid).getByTestId('home-recent')).toBeInTheDocument();
-    expect(await within(grid).findByTestId('home-company')).toBeInTheDocument();
+    expect(await within(grid).findByTestId('home-needs')).toBeInTheDocument();
   });
 });

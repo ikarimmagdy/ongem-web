@@ -9,14 +9,31 @@ async function demo(page: Page) {
 }
 
 async function nav(page: Page, label: string) {
-  const link = page.locator(`[data-testid="nav-${label}"]:visible`).first();
-  // On a phone Settings sits in the profile menu, not the five bottom tabs (OG-030 R-UX-10).
-  if (label === 'settings' && !(await link.count())) {
-    await page.getByTestId('profile-menu').click();
-    await page.getByTestId('profile-settings').click();
+  // OG-035 R8: the side bar on a wide screen; on a phone the tab bar, Pay for Payments, and More for the rest.
+  const side = page.locator(`.fw-side [data-testid="nav-${label}"]:visible`);
+  if (await side.count()) return side.first().click();
+  const tab = page.locator(`[data-testid="tab-${label}"]:visible`);
+  if (await tab.count()) return tab.first().click();
+  if (label === 'payments') {
+    await page.getByTestId('tab-pay').click();
+    await page.getByTestId('payments-tab-all').click();
     return;
   }
-  await link.click();
+  await page.getByTestId('tab-more').click();
+  await page.getByTestId(`more-${label}`).click();
+}
+
+/** OG-035 R9: the floating button on a phone; on a desktop the command search's Assistant entry. Toggles it. */
+async function toggleAssistant(page: Page) {
+  const fab = page.getByTestId('assistant-open');
+  if (await fab.isVisible()) return fab.click();
+  if (await page.getByTestId('assistant-panel').isVisible()) {
+    await page.getByTestId('assistant-input').press('Escape');
+    return;
+  }
+  await page.getByTestId('command-search-open').click();
+  await page.getByTestId('command-search-input').fill('Assistant');
+  await page.getByTestId('search-option-screen-assistant').click();
 }
 
 async function noSideScroll(page: Page) {
@@ -64,7 +81,7 @@ test('journeys_desktop_and_mobile_AC_R1_2', async ({ page }, info) => {
   await page.screenshot({ path: `e2e-output/screens/${info.project.name}-account.png`, fullPage: true });
 
   await nav(page, 'payments');
-  await page.getByTestId('new-payment').click();
+  await page.getByTestId('payments-tab-send').click();
   await page.getByTestId('payment-recipient').selectOption('rcp_demo_acme');
   await page.getByTestId('payment-amount').fill('250.00');
   await page.getByTestId('payment-review-button').click();
@@ -95,7 +112,7 @@ test('storage_holds_no_secrets_AC_R10_2', async ({ page }) => {
   await nav(page, 'accounts');
   await page.getByTestId('account-acc_demo_ops').click();
   await nav(page, 'payments');
-  await page.getByTestId('new-payment').click();
+  await page.getByTestId('payments-tab-send').click();
   await page.getByTestId('payment-recipient').selectOption('rcp_demo_acme');
   await page.getByTestId('payment-amount').fill('99.00');
   await page.getByTestId('payment-review-button').click();
@@ -118,7 +135,7 @@ test('dev_url_and_api_health_AC_R11_1', async ({ page, request }) => {
 test('assistant_widget_AC_R4_4', async ({ page }, info) => {
   await demo(page);
   await expect(page.getByTestId('privacy-line')).toHaveCount(0);
-  await page.getByTestId('assistant-open').click();
+  await toggleAssistant(page);
   await page.getByTestId('assistant-input').fill('What is my balance?');
   await page.getByTestId('assistant-send').click();
   await expect(page.getByTestId('assistant-reply').last()).toContainText('Operating •••• 4821');
@@ -131,12 +148,12 @@ test('assistant_widget_AC_R4_4', async ({ page }, info) => {
   await page.screenshot({ path: `e2e-output/screens/${info.project.name}-assistant-draft.png` });
   await page.getByTestId('assistant-review').last().click();
   await expect(page.getByTestId('payment-amount')).toHaveValue('100.00');
-  await page.getByTestId('assistant-open').click();
+  await toggleAssistant(page);
   await page.getByTestId('payment-review-button').click();
   await page.getByTestId('payment-send').click();
   await stepUp(page);
   await expect(page.getByTestId('payment-detail')).toContainText('Settled');
-  await page.getByTestId('assistant-open').click();
+  await toggleAssistant(page);
   await expect(page.getByTestId('assistant-draft-state').last()).toHaveText('Confirmed by you');
   await noSideScroll(page);
   await page.screenshot({ path: `e2e-output/screens/${info.project.name}-assistant-confirmed.png` });
@@ -163,10 +180,11 @@ test('WEB-SEC-05 security headers are served and the journey runs under the CSP'
   await nav(page, 'accounts');
   await page.getByTestId('account-acc_demo_ops').click();
   await expect(page.getByTestId('account-detail')).toBeVisible();
-  await page.getByTestId('assistant-open').click();
+  await toggleAssistant(page);
   await page.getByTestId('assistant-input').fill('What is my balance?');
   await page.getByTestId('assistant-send').click();
   await expect(page.getByTestId('assistant-reply').last()).toContainText('Operating');
+  await toggleAssistant(page);
   await nav(page, 'settings');
   await page.getByRole('combobox', { name: 'Theme' }).selectOption({ index: 1 });
   await page.waitForTimeout(500);
@@ -349,7 +367,8 @@ test('UX_12 the top bar is one row on a phone', async ({ page }, info) => {
   await demo(page);
   const bar = (await page.locator('.fw-topbar').boundingBox())!;
   expect(bar.height).toBeLessThanOrEqual(72);
-  await expect(page.locator('.fw-topbar__logo')).toBeVisible();
+  // OG-035 R1: the company switcher starts the bar where the logo was.
+  await expect(page.getByTestId('top-company')).toBeVisible();
 });
 
 test('UX_13 the notch of a phone frame sits in the bezel, above the screen', async ({ page }) => {
@@ -390,18 +409,19 @@ test('AC_R18_2 the assistant never covers content, titles name the page, contras
 }) => {
   await demo(page);
   await expect(page).toHaveTitle('Home | OnGem');
+  // OG-035 R9 (supersedes the docked button): the desktop opens the assistant from the top bar search; a phone's
+  // floating button sits above the tab bar, clear of it.
   const fab = page.getByTestId('assistant-open');
-  const header = page.locator('header.fw-topbar');
-  const f = await fab.boundingBox();
-  const h = await header.boundingBox();
-  expect(f && h && f.y >= h.y && f.y + f.height <= h.y + h.height + 1).toBeTruthy();
-  const goSettings = async () => {
-    const menu = page.getByTestId('profile-menu');
-    if (await menu.isVisible()) {
-      await menu.click();
-      await page.getByTestId('profile-settings').click();
-    } else await nav(page, 'settings');
-  };
+  if (await fab.isVisible()) {
+    const f = (await fab.boundingBox())!;
+    const bar = (await page.getByTestId('bottom-nav').boundingBox())!;
+    expect(f.y + f.height).toBeLessThanOrEqual(bar.y);
+  } else {
+    const s = (await page.getByTestId('command-search-open').boundingBox())!;
+    const h = (await page.locator('header.fw-topbar').boundingBox())!;
+    expect(s.y >= h.y && s.y + s.height <= h.y + h.height + 1).toBeTruthy();
+  }
+  const goSettings = () => nav(page, 'settings');
   const check = async (label: string) => {
     await page.waitForLoadState('networkidle');
     const r = await new AxeBuilder({ page }).withRules(['color-contrast', 'target-size']).analyze();
@@ -419,4 +439,71 @@ test('AC_R18_2 the assistant never covers content, titles name the page, contras
   const toggle = page.getByTestId('pref-email-PAYMENT_SENT').locator('xpath=..');
   const t = await toggle.boundingBox();
   expect(t && t.width >= 40 && t.height >= 40).toBeTruthy();
+});
+
+/** OG-035: layout checks at 1440 and 390 px that need a real browser (spec OG-035 R2, R3, R5, R10). */
+test('OG-035 AC_R2_3 AC_R3_5 AC_R5_2 Home layout: actions on one row, Needs you placement, steps action', async ({
+  page,
+}, info) => {
+  await demo(page);
+  const mobile = info.project.name === 'mobile';
+  const actions = page.getByTestId('home-actions').locator('a');
+  const boxes = await Promise.all((await actions.all()).map((a) => a.boundingBox()));
+  const tops = boxes.map((b) => Math.round(b!.y));
+  expect(new Set(tops).size, 'AC_R2_3 one row').toBe(1);
+  if (mobile) {
+    const widths = boxes.map((b) => Math.round(b!.width));
+    expect(Math.max(...widths) - Math.min(...widths), 'AC_R2_3 equal width').toBeLessThanOrEqual(2);
+  }
+  const balance = (await page.getByTestId('home-balance').boundingBox())!;
+  const needs = (await page.getByTestId('home-needs').boundingBox())!;
+  const recent = (await page.getByTestId('home-recent').boundingBox())!;
+  if (mobile) {
+    expect(needs.y, 'AC_R3_5 after balance').toBeGreaterThan(balance.y + balance.height - 1);
+    expect(recent.y, 'AC_R3_5 before recent').toBeGreaterThan(needs.y + needs.height - 1);
+  } else {
+    expect(needs.x, 'AC_R3_5 end column').toBeGreaterThan(balance.x + balance.width - 1);
+    expect(Math.abs(needs.y - balance.y)).toBeLessThanOrEqual(2);
+    expect(recent.y).toBeGreaterThan(balance.y + balance.height - 1);
+  }
+  const text = (await page.locator('.fw-appsteps__text').boundingBox())!;
+  const action = (await page.getByTestId('application-action').boundingBox())!;
+  if (mobile) expect(action.y, 'AC_R5_2 under the text').toBeGreaterThanOrEqual(text.y + text.height - 1);
+  else expect(action.x).toBeGreaterThan(text.x + text.width - 1);
+  const total = (await page.getByTestId('home-total').boundingBox())!;
+  const rows = (await page.getByTestId('home-breakdown').boundingBox())!;
+  expect(Math.abs(total.x - rows.x), 'AC_R2_1 total starts where the accounts start').toBeLessThanOrEqual(2);
+  await noSideScroll(page);
+});
+
+test('OG-035 AC_R10_4 axe on Home, Payments, Team, Documents and More, English and Arabic', async ({
+  page,
+}) => {
+  await demo(page);
+  for (const lang of ['en', 'ar']) {
+    if (lang === 'ar') {
+      await page.evaluate(() => localStorage.setItem('ongem.locale', 'ar'));
+      await demo(page);
+      await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+    }
+    for (const route of ['/', '/payments', '/payments/approvals', '/team', '/documents', '/more']) {
+      await page.evaluate((to) => {
+        window.history.pushState({}, '', to);
+        window.dispatchEvent(new PopStateEvent('popstate'));
+      }, route);
+      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(300);
+      await axe(page);
+      await noSideScroll(page);
+    }
+  }
+});
+
+test('OG-035 AC_R9_2 Ctrl K opens the command search on a desktop', async ({ page }, info) => {
+  test.skip(info.project.name !== 'desktop', 'desktop only');
+  await demo(page);
+  await page.keyboard.press('Control+k');
+  await page.getByTestId('command-search-input').fill('payroll');
+  await page.keyboard.press('Enter');
+  await expect(page.getByTestId('account-detail')).toContainText('Payroll');
 });

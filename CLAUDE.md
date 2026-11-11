@@ -132,3 +132,18 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   load eagerly. The AE build says coming soon (Talk to us) and has no card page, post or claim. The build's snapshot
   backs keys the API does not serve yet (`src/i18n/store.ts`), so deploy ongem-core first, then the web. Tests
   `og034-site.test.tsx`, `og034-site-ae.test.tsx`.
+- 2026-11-11: OG-035 information structure and Home (spec `ongem-engineering/specs/OG-035-app-structure-home/`), the same
+  as ongem-app. `src/nav.ts`: `NAV` (side bar: Home, Accounts, Payments, Cards, Team, Documents, Support, Settings),
+  `PHONE_TABS` (Home, Accounts, Pay to /payments/new, Cards, More), `MORE`. The shell (`SignedIn.tsx`, `src/app-shell.css`,
+  `lib/useWide.ts` at 901 px) shows the company once, as the switcher: top of the side bar, or start of the phone top bar.
+  Desktop has the command search (`CommandSearch.tsx`, Cmd K or Ctrl K: screens, accounts, recipients, Assistant,
+  "Ask the assistant" hands the query over through `assistant/control.tsx`) and a profile menu; a phone has the
+  floating assistant button and More (`screens/More.tsx`). Home: application steps (`ApplicationSteps.tsx`), compact
+  balance card, Needs you (`NeedsYou.tsx`, pure `lib/needs.ts`; approvals need payment:approve) beside it from 1024 px,
+  recent payments by payee (`payeeName`). Payments tabs (`PAYMENT_TABS`, `visiblePaymentTabs`): All payments, Send,
+  Scheduled, Recipients (`/payments/recipients`; `/recipients` redirects with its query), Add money, Waiting for
+  approval (`Approvals`). Team (`screens/Team.tsx`, invitations moved out of Settings) and Documents
+  (`screens/Documents.tsx`: statements by account through `StatementModal`, exports, agreements). The bank identity
+  state moved from Home to Settings. Demo data has `pay_demo_approval` (US and AE). Tests: `og035.test.tsx`,
+  `og035-ae.test.tsx`, `lib/needs.test.ts`, e2e `OG-035 ...` in `founder.e2e.ts`; `asPhone()` in `test/render.tsx` lays
+  the shell out at phone width in jsdom.

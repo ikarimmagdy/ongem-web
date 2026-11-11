@@ -69,7 +69,7 @@ export function TeamInvites() {
       setEmail('');
     });
   return (
-    <Card title={t('app.team.title')} data-testid="settings-team">
+    <Card title={t('app.team.invitations')} data-testid="settings-team">
       <p>{t('app.team.text')}</p>
       <form
         className="fw-form"

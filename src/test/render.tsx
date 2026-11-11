@@ -22,3 +22,20 @@ export function renderApp(route = '/', opts: { api?: OnGemApi; mode?: Mode; auth
     </AuthProvider>,
   );
 }
+
+/**
+ * A phone-width layout for the shell (OG-035): `useWide` reads matchMedia, which jsdom lacks, so without this the
+ * desktop layout renders (side bar switcher, command search, no floating assistant button). Returns the undo.
+ */
+export function asPhone(): () => void {
+  const original = window.matchMedia;
+  window.matchMedia = ((q: string) => ({
+    matches: !q.includes('min-width'),
+    media: q,
+    addEventListener: () => undefined,
+    removeEventListener: () => undefined,
+  })) as unknown as typeof window.matchMedia;
+  return () => {
+    window.matchMedia = original;
+  };
+}

@@ -27,11 +27,13 @@ import { AcctLast4, Amt, Load, stateStatus } from './common';
 import { Schedules } from './Schedules';
 import { TopUp } from './TopUp';
 import { SplitHint } from './SplitHint';
+import { RecipientsScreen } from './Recipients';
 
 /** Payments per page on the list (UX-16): the list stays short and the form beside it stays in view. */
 export const PAYMENTS_PAGE = 10;
 
-function to(p: Payment, accounts: Account[], recipients: Recipient[]) {
+/** Who a payment goes to, for lists (OG-035 R4): the recipient, an own account, or Top-up. */
+export function payeeName(p: Payment, accounts: Account[], recipients: Recipient[]) {
   if (p.fundingSourceId) {
     const a = accounts.find((x) => x.id === p.fromAccountId);
     return a ? t('app.payments.to.topup_to', { account: a.name }) : t('app.payments.kind.topup');
@@ -507,158 +509,264 @@ export function NewPayment() {
   );
 }
 
-export function PaymentsScreen() {
-  const { api, can, companyState } = useSession();
-  const { id } = useParams();
+/** The Payments tabs (OG-035 R6), each a route; the old routes are the tab routes. */
+export const PAYMENT_TABS = [
+  { id: 'all', to: '/payments' },
+  { id: 'send', to: '/payments/new' },
+  { id: 'scheduled', to: '/payments/schedules' },
+  { id: 'recipients', to: '/payments/recipients' },
+  { id: 'add_money', to: '/payments/top-up' },
+  { id: 'approvals', to: '/payments/approvals' },
+] as const;
+export type PaymentTab = (typeof PAYMENT_TABS)[number]['id'];
+
+/** The tab a route belongs to; a payment's detail belongs to All payments. */
+export function paymentTabOf(pathname: string): PaymentTab {
+  const end = pathname.replace(/\/+$/, '');
+  return PAYMENT_TABS.find((x) => x.id !== 'all' && end === x.to)?.id ?? 'all';
+}
+
+/** The tabs this person may open: Send needs payment:create, Add money an ACTIVE company, approvals payment:approve. */
+export function visiblePaymentTabs(can: (p: string) => boolean, companyState: string) {
+  return PAYMENT_TABS.filter((x) =>
+    x.id === 'send'
+      ? can(Permission.PAYMENT_CREATE)
+      : x.id === 'scheduled'
+        ? can(Permission.PAYMENT_VIEW)
+        : x.id === 'add_money'
+          ? can(Permission.PAYMENT_VIEW) && companyState === 'ACTIVE'
+          : x.id === 'approvals'
+            ? can(Permission.PAYMENT_APPROVE)
+            : true,
+  );
+}
+
+function PaymentsTabs({ current }: { current: PaymentTab }) {
+  const { can, companyState } = useSession();
+  return (
+    <nav className="fw-tabs" aria-label={t('app.payments.tabs.label')} data-testid="payments-tabs">
+      <ul className="fw-tabs__list">
+        {visiblePaymentTabs(can, companyState).map((x) => (
+          <li key={x.id}>
+            <Link
+              to={x.to}
+              className={`fw-tabs__tab${x.id === current ? ' is-active' : ''}`}
+              aria-current={x.id === current ? 'page' : undefined}
+              data-testid={`payments-tab-${x.id}`}
+            >
+              {t(`app.payments.tabs.${x.id}`)}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+/** Payments waiting for a second person (OG-035 R6), each with Approve and Decline; OnGem's own approvals are left out. */
+export function Approvals() {
+  const { api } = useSession();
   const navigate = useNavigate();
-  const location = useLocation();
-  const isNew = location.pathname.endsWith('/payments/new');
-  const isTopUp = location.pathname.endsWith('/payments/top-up');
-  const isSchedules = location.pathname.endsWith('/payments/schedules');
-  // Cursors of the pages before the current one; the last entry is the current page's cursor (null = first page).
-  const [cursors, setCursors] = useState<(string | null)[]>([null]);
-  const cursor = cursors[cursors.length - 1];
-  // Reloaded after a payment or a top-up is created, from the first page, so the new item shows at once (R-UX-4).
-  useEffect(() => {
-    if (isNew || isTopUp) setCursors([null]);
-  }, [isNew, isTopUp]);
-  const list = useAsync(() => api.payments(cursor, PAYMENTS_PAGE), [api, cursor, isNew, isTopUp]);
+  const [n, setN] = useState(0);
+  const list = useAsync(() => api.payments(null, 100), [api, n]);
   const accounts = useAsync(() => api.accounts(), [api]);
   const recipients = useAsync(() => api.recipients(), [api]);
   const accs = accounts.status === 'success' ? accounts.data : [];
   const recs = recipients.status === 'success' ? recipients.data : [];
-  const detail = isNew || isTopUp || isSchedules || Boolean(id);
+  return (
+    <Load state={list} label="payments">
+      {(page) => {
+        const waiting = page.items.filter((p) => p.state === 'PENDING_APPROVAL' && p.approvalBy !== 'ONGEM');
+        return waiting.length ? (
+          <ul className="fw-list" data-testid="approvals-list">
+            {waiting.map((p) => (
+              <li key={p.id} className="fw-approval" data-testid={`approval-${p.id}`}>
+                <button className="fw-row" onClick={() => navigate(`/payments/${p.id}`)}>
+                  <span className="fw-row__main">
+                    <strong>{payeeName(p, accs, recs)}</strong>
+                    <span className="fw-row__sub">
+                      {p.reference ?? paymentKind(p)}
+                      {p.createdAt ? ` · ${formatDate(p.createdAt)}` : ''}
+                    </span>
+                  </span>
+                  <Amt value={p.amount} />
+                </button>
+                <Approval id={p.id} onDone={() => setN((x) => x + 1)} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <EmptyState title={t('app.payments.approvals.empty.title')}>
+            {t('app.payments.approvals.empty.text')}
+          </EmptyState>
+        );
+      }}
+    </Load>
+  );
+}
+
+export function PaymentsScreen() {
+  const { api, can } = useSession();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const tab = paymentTabOf(location.pathname);
+  // Cursors of the pages before the current one; the last entry is the current page's cursor (null = first page).
+  const [cursors, setCursors] = useState<(string | null)[]>([null]);
+  const cursor = cursors[cursors.length - 1];
+  // Reloaded from the first page whenever another tab was open, so a payment or top-up just made shows at once (R-UX-4).
+  useEffect(() => {
+    if (tab !== 'all') setCursors([null]);
+  }, [tab]);
+  const accounts = useAsync(() => api.accounts(), [api]);
+  const recipients = useAsync(() => api.recipients(), [api]);
+  const accs = accounts.status === 'success' ? accounts.data : [];
+  const recs = recipients.status === 'success' ? recipients.data : [];
   return (
     <>
-      <PageHeader
-        title={t('app.payments.title')}
-        actions={
-          <div className="fw-actions">
-            <Link
-              to="/recipients"
-              className="og-btn og-btn--secondary og-btn--md"
-              data-testid="payments-recipients"
-            >
-              {t('app.payments.recipients')}
-            </Link>
-            {can(Permission.PAYMENT_VIEW) && (
-              <Button
-                variant="secondary"
-                data-testid="scheduled"
-                onClick={() => navigate('/payments/schedules')}
-              >
-                {t('app.payments.scheduled')}
-              </Button>
-            )}
-            {can(Permission.PAYMENT_VIEW) && companyState === 'ACTIVE' && (
-              <Button
-                variant="secondary"
-                data-testid="add-money"
-                onClick={() => navigate('/payments/top-up')}
-              >
-                {t('app.payments.add_money')}
-              </Button>
-            )}
-            {can(Permission.PAYMENT_CREATE) && (
-              <Button data-testid="new-payment" onClick={() => navigate('/payments/new')}>
-                {t('app.payments.form.title')}
-              </Button>
-            )}
-          </div>
-        }
-      />
-      <div className={`fw-split${detail ? ' has-detail' : ''}`}>
-        <div className="fw-split__list">
-          <Load state={list} label={t('app.payments.loading.payments')}>
-            {(page) =>
-              page.items.length ? (
-                <>
-                  <ul className="fw-list" data-testid="payments-list">
-                    {page.items.map((p) => (
-                      <li key={p.id}>
-                        <button
-                          className={`fw-row${p.id === id ? ' is-active' : ''}`}
-                          data-testid={`payment-${p.id}`}
-                          onClick={() => navigate(`/payments/${p.id}`)}
-                        >
-                          <span className="fw-row__main">
-                            <strong>{to(p, accs, recs)}</strong>
-                            <span className="fw-row__sub">
-                              {p.fundingSourceId
-                                ? t('app.payments.kind.topup')
-                                : p.toCompanyId
-                                  ? t('app.payments.detail.company_transfer')
-                                  : p.toAccountId
-                                    ? t('app.payments.detail.internal_transfer')
-                                    : REGION_CONFIG.paymentRail(p.rail)}{' '}
-                              {p.createdAt ? `· ${formatDate(p.createdAt)}` : ''}
-                            </span>
-                          </span>
-                          <span className="fw-row__main">
-                            <Amt value={p.amount} />
-                            <StatusChip status={stateStatus(p.state)}>{paymentLabel(p.state)}</StatusChip>
-                          </span>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                  {(page.next || cursors.length > 1) && (
-                    <nav
-                      className="fw-pager"
-                      aria-label={t('app.payments.pager.label')}
-                      data-testid="payments-pager"
-                    >
-                      <Button
-                        variant="secondary"
-                        data-testid="payments-newer"
-                        disabled={cursors.length === 1}
-                        onClick={() => setCursors((x) => x.slice(0, -1))}
-                      >
-                        {t('app.payments.pager.newer')}
-                      </Button>
-                      <span className="fw-pager__label" aria-live="polite">
-                        {t('app.payments.pager.page', { page: cursors.length })}
-                      </span>
-                      <Button
-                        variant="secondary"
-                        data-testid="payments-older"
-                        disabled={!page.next}
-                        onClick={() => setCursors((x) => [...x, page.next as string])}
-                      >
-                        {t('app.payments.pager.older')}
-                      </Button>
-                    </nav>
-                  )}
-                </>
-              ) : (
-                <EmptyState title={t('app.payments.empty.title')}>{t('app.payments.empty.text')}</EmptyState>
-              )
-            }
-          </Load>
-        </div>
-        <div>
-          {detail && (
-            <Button variant="ghost" onClick={() => navigate('/payments')}>
-              {t('app.payments.back')}
-            </Button>
-          )}
-          {isSchedules ? (
+      <PageHeader title={t('app.payments.title')} />
+      <PaymentsTabs current={tab} />
+      {tab === 'all' ? (
+        <PaymentsList
+          id={id}
+          cursors={cursors}
+          setCursors={setCursors}
+          cursor={cursor ?? null}
+          accs={accs}
+          recs={recs}
+          onOpen={(pid) => navigate(`/payments/${pid}`)}
+          onBack={() => navigate('/payments')}
+        />
+      ) : (
+        <div className="fw-tab-panel" data-testid={`payments-panel-${tab}`}>
+          {tab === 'scheduled' ? (
             <Schedules />
-          ) : isTopUp ? (
+          ) : tab === 'add_money' ? (
             <TopUp />
-          ) : isNew ? (
-            can(Permission.PAYMENT_CREATE) ? (
-              <NewPayment />
+          ) : tab === 'recipients' ? (
+            <RecipientsScreen embedded />
+          ) : tab === 'approvals' ? (
+            can(Permission.PAYMENT_APPROVE) ? (
+              <Approvals />
             ) : (
-              <Notice status="info">{t('app.payments.role_denied')}</Notice>
+              <Notice status="info">
+                <span data-testid="approvals-denied">{t('app.payments.approvals.role_denied')}</span>
+              </Notice>
             )
-          ) : id ? (
-            <PaymentDetail id={id} />
+          ) : can(Permission.PAYMENT_CREATE) ? (
+            <NewPayment />
           ) : (
-            <SplitHint title={t('app.payments.hint.title')}>{t('app.payments.hint.text')}</SplitHint>
+            <Notice status="info">{t('app.payments.role_denied')}</Notice>
           )}
         </div>
-      </div>
+      )}
     </>
+  );
+}
+
+function PaymentsList({
+  id,
+  cursors,
+  setCursors,
+  cursor,
+  accs,
+  recs,
+  onOpen,
+  onBack,
+}: {
+  id?: string;
+  cursors: (string | null)[];
+  setCursors: (f: (x: (string | null)[]) => (string | null)[]) => void;
+  cursor: string | null;
+  accs: Account[];
+  recs: Recipient[];
+  onOpen(id: string): void;
+  onBack(): void;
+}) {
+  const { api } = useSession();
+  const list = useAsync(() => api.payments(cursor, PAYMENTS_PAGE), [api, cursor]);
+  return (
+    <div className={`fw-split${id ? ' has-detail' : ''}`}>
+      <div className="fw-split__list">
+        <Load state={list} label={t('app.payments.loading.payments')}>
+          {(page) =>
+            page.items.length ? (
+              <>
+                <ul className="fw-list" data-testid="payments-list">
+                  {page.items.map((p) => (
+                    <li key={p.id}>
+                      <button
+                        className={`fw-row${p.id === id ? ' is-active' : ''}`}
+                        data-testid={`payment-${p.id}`}
+                        onClick={() => onOpen(p.id)}
+                      >
+                        <span className="fw-row__main">
+                          <strong>{payeeName(p, accs, recs)}</strong>
+                          <span className="fw-row__sub">
+                            {p.fundingSourceId
+                              ? t('app.payments.kind.topup')
+                              : p.toCompanyId
+                                ? t('app.payments.detail.company_transfer')
+                                : p.toAccountId
+                                  ? t('app.payments.detail.internal_transfer')
+                                  : REGION_CONFIG.paymentRail(p.rail)}{' '}
+                            {p.createdAt ? `· ${formatDate(p.createdAt)}` : ''}
+                          </span>
+                        </span>
+                        <span className="fw-row__main">
+                          <Amt value={p.amount} />
+                          <StatusChip status={stateStatus(p.state)}>{paymentLabel(p.state)}</StatusChip>
+                        </span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                {(page.next || cursors.length > 1) && (
+                  <nav
+                    className="fw-pager"
+                    aria-label={t('app.payments.pager.label')}
+                    data-testid="payments-pager"
+                  >
+                    <Button
+                      variant="secondary"
+                      data-testid="payments-newer"
+                      disabled={cursors.length === 1}
+                      onClick={() => setCursors((x) => x.slice(0, -1))}
+                    >
+                      {t('app.payments.pager.newer')}
+                    </Button>
+                    <span className="fw-pager__label" aria-live="polite">
+                      {t('app.payments.pager.page', { page: cursors.length })}
+                    </span>
+                    <Button
+                      variant="secondary"
+                      data-testid="payments-older"
+                      disabled={!page.next}
+                      onClick={() => setCursors((x) => [...x, page.next as string])}
+                    >
+                      {t('app.payments.pager.older')}
+                    </Button>
+                  </nav>
+                )}
+              </>
+            ) : (
+              <EmptyState title={t('app.payments.empty.title')}>{t('app.payments.empty.text')}</EmptyState>
+            )
+          }
+        </Load>
+      </div>
+      <div>
+        {id && (
+          <Button variant="ghost" onClick={onBack}>
+            {t('app.payments.back')}
+          </Button>
+        )}
+        {id ? (
+          <PaymentDetail id={id} />
+        ) : (
+          <SplitHint title={t('app.payments.hint.title')}>{t('app.payments.hint.text')}</SplitHint>
+        )}
+      </div>
+    </div>
   );
 }

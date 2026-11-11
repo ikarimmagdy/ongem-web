@@ -4,7 +4,7 @@ import { DemoOnGemApi } from '../api/demo';
 import { MemoryDeviceKeys, registration } from '../api/device';
 import { ApiError, errorText } from '../api/errors';
 import { IN_PROGRESS_BACKOFF_MS, LiveOnGemApi } from '../api/live';
-import { renderApp } from './render';
+import { asPhone, renderApp } from './render';
 
 type Sent = { url: string; method: string; headers: Record<string, string>; init: RequestInit };
 
@@ -42,6 +42,13 @@ const client = (
 const customerCalls = (sent: Sent[]) => sent.filter((s) => !s.url.includes('/v1/devices'));
 
 describe('cross-repo follow-ups 2026-10-31', () => {
+  // OG-035 R9: the floating assistant button is the phone's way in; these tests open it there.
+  let undoPhone: () => void = () => undefined;
+  beforeEach(() => {
+    undoPhone = asPhone();
+  });
+  afterEach(() => undoPhone());
+
   it('CORE-SEC-03 every customer call carries X-Device-Id from a device bound once with a signed challenge', async () => {
     const { sent, fetchImpl } = server(
       [200, []],

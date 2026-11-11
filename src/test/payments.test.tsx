@@ -10,7 +10,7 @@ import { renderApp } from './render';
 describe('payments (OG-030 R4)', () => {
   it('ach_review_send_with_step_up_AC_R4_1', async () => {
     renderApp('/payments');
-    await userEvent.click(await screen.findByTestId('new-payment'));
+    await userEvent.click(await screen.findByTestId('payments-tab-send'));
     await userEvent.selectOptions(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('payment-amount'), '1,250.00');
     await userEvent.click(screen.getByTestId('payment-review-button'));
@@ -120,7 +120,7 @@ describe('add money from another bank (G-40)', () => {
     const api = new DemoOnGemApi();
     api.approvalBy = 'ONGEM';
     renderApp('/payments', { api });
-    await userEvent.click(await screen.findByTestId('add-money'));
+    await userEvent.click(await screen.findByTestId('payments-tab-add_money'));
     await userEvent.type(await screen.findByTestId('topup-amount'), '5,000.00');
     await userEvent.click(screen.getByTestId('topup-review-button'));
     expect(await screen.findByTestId('topup-review')).toHaveTextContent(
@@ -135,7 +135,7 @@ describe('add money from another bank (G-40)', () => {
   it('tops up from a verified account and waits for approval, then the approver approves G_40_2', async () => {
     const api = new DemoOnGemApi();
     renderApp('/payments', { api });
-    await userEvent.click(await screen.findByTestId('add-money'));
+    await userEvent.click(await screen.findByTestId('payments-tab-add_money'));
     await userEvent.type(await screen.findByTestId('topup-amount'), '5,000.00');
     await userEvent.click(screen.getByTestId('topup-review-button'));
     const review = await screen.findByTestId('topup-review');
@@ -219,7 +219,7 @@ describe('scheduled payments (G-120)', () => {
   it('creates a monthly ACH schedule and shows the next payment date G_120_1', async () => {
     const api = new DemoOnGemApi();
     renderApp('/payments', { api });
-    await userEvent.click(await screen.findByTestId('scheduled'));
+    await userEvent.click(await screen.findByTestId('payments-tab-scheduled'));
     await userEvent.selectOptions(await screen.findByTestId('schedule-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('schedule-amount'), '2,000.00');
     const start = screen.getByTestId('schedule-start');

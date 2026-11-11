@@ -161,7 +161,8 @@ export function AddRecipient({
   );
 }
 
-export function RecipientsScreen() {
+/** The recipients list and form; inside the Payments tab ([embedded], OG-035 R6) the page title is the tab's. */
+export function RecipientsScreen({ embedded = false }: { embedded?: boolean } = {}) {
   const { api, can } = useSession();
   const drafts = useDrafts();
   const [q] = useSearchParams();
@@ -191,17 +192,28 @@ export function RecipientsScreen() {
   };
   return (
     <>
-      <PageHeader
-        title={t('app.recipients.title')}
-        subtitle={REGION_CONFIG.recipientsSubtitle}
-        actions={
-          manage && (
+      {embedded ? (
+        <div className="fw-tab-toolbar">
+          <p className="fw-row__sub">{REGION_CONFIG.recipientsSubtitle}</p>
+          {manage && (
             <Button data-testid="recipient-add" onClick={() => setAdding((x) => !x)}>
               {t('app.recipients.add')}
             </Button>
-          )
-        }
-      />
+          )}
+        </div>
+      ) : (
+        <PageHeader
+          title={t('app.recipients.title')}
+          subtitle={REGION_CONFIG.recipientsSubtitle}
+          actions={
+            manage && (
+              <Button data-testid="recipient-add" onClick={() => setAdding((x) => !x)}>
+                {t('app.recipients.add')}
+              </Button>
+            )
+          }
+        />
+      )}
       {adding && manage && (
         <Card title={t('app.recipients.new_title')}>
           <AddRecipient

@@ -10,7 +10,7 @@ describe('permissions (OG-030 R9)', () => {
   it('viewer_sees_no_write_actions_AC_R9_1', async () => {
     renderApp('/payments', { api: viewer() });
     await screen.findByTestId('payments-list');
-    expect(screen.queryByTestId('new-payment')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('payments-tab-send')).not.toBeInTheDocument();
   });
 
   it('a forced 403 says why AC_R9_1', async () => {

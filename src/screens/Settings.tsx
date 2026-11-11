@@ -1,15 +1,17 @@
-import { Button, Card, KeyValue, PageHeader, Select, useTheme } from '../design-system';
+import { Button, Card, KeyValue, PageHeader, Select, StatusChip, useTheme } from '../design-system';
+import { useAsync } from '../lib/useAsync';
 import { LanguageSwitch, t } from '../i18n';
 import { privacyLine } from '../recording/Recorder';
 import { useSession } from '../session';
-import { human } from './common';
+import { human, stateStatus } from './common';
 import { NotificationChoices } from './NotificationChoices';
-import { TeamInvites } from './TeamInvites';
-import { Permission } from '../api/client';
 
 export function SettingsScreen() {
-  const { api, mode, role, leave, can } = useSession();
+  const { api, mode, role, leave } = useSession();
   const { theme, themes, setTheme } = useTheme();
+  // G-157: the person's identity state at the bank (it moved here from Home's company card, OG-035 R1).
+  const me = useAsync(() => api.me(), [api]);
+  const bankState = me.status === 'success' ? (me.data.providerState ?? 'NOT_SUBMITTED') : null;
   return (
     <>
       <PageHeader title={t('app.settings.title')} />
@@ -27,7 +29,6 @@ export function SettingsScreen() {
           />
         </label>
       </Card>
-      {can(Permission.MEMBER_INVITE) && <TeamInvites />}
       <NotificationChoices />
       <Card title={t('app.settings.privacy')}>
         <p className="fw-privacy" data-testid="privacy-line">
@@ -42,6 +43,18 @@ export function SettingsScreen() {
               value: mode === 'demo' ? t('app.settings.mode_demo') : t('app.settings.mode_live'),
             },
             { label: t('app.settings.role'), value: role ? human(role) : t('app.settings.role_none') },
+            ...(bankState
+              ? [
+                  {
+                    label: t('app.home.identity_at_bank'),
+                    value: (
+                      <StatusChip status={stateStatus(bankState)}>
+                        <span data-testid="home-verification">{human(bankState)}</span>
+                      </StatusChip>
+                    ),
+                  },
+                ]
+              : []),
           ]}
         />
         <div className="fw-actions">
