@@ -9514,7 +9514,7 @@
       "placeholders": [],
       "meta": {},
       "en": "Waiting for approval",
-      "ar": "بانتظار الاعتماد"
+      "ar": "بانتظار الموافقة"
     },
     {
       "key": "app.mobile.status.more_info",
@@ -10495,6 +10495,335 @@
       "meta": {},
       "en": "Sent",
       "ar": "أُرسلت"
+    },
+    {
+      "key": "app.mobile.cards.face_label",
+      "format": "text",
+      "description": "Screen reader label of a card face: type, last four digits and holder (FA-002)",
+      "placeholders": [
+        "type",
+        "last4",
+        "name"
+      ],
+      "meta": {},
+      "en": "{type} card ending {last4}, {name}",
+      "ar": "بطاقة {type} تنتهي بـ {last4}، {name}"
+    },
+    {
+      "key": "app.mobile.payments.detail_title",
+      "format": "text",
+      "description": "Payment detail title naming the payee (FA-035)",
+      "placeholders": [
+        "payee"
+      ],
+      "meta": {},
+      "en": "Payment to {payee}",
+      "ar": "دفعة إلى {payee}"
+    },
+    {
+      "key": "app.mobile.payments.arrives_label",
+      "format": "text",
+      "description": "Label: when the money is expected to arrive (FA-034)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Expected arrival",
+      "ar": "موعد الوصول المتوقع"
+    },
+    {
+      "key": "app.mobile.payments.arrives_ach",
+      "format": "text",
+      "description": "Expected arrival of a payment to a recipient at another bank (FA-034)",
+      "placeholders": [],
+      "meta": {},
+      "en": "In 1 to 2 business days",
+      "ar": "خلال يوم إلى يومي عمل"
+    },
+    {
+      "key": "app.mobile.payments.arrives_internal",
+      "format": "text",
+      "description": "Expected arrival of a transfer between own accounts (FA-034)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Right away",
+      "ar": "فورًا"
+    },
+    {
+      "key": "app.mobile.payments.send_title",
+      "format": "text",
+      "description": "Title of the send form; Send is the one verb for paying (FA-023)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send money",
+      "ar": "إرسال أموال"
+    },
+    {
+      "key": "app.mobile.payments.over_balance",
+      "format": "text",
+      "description": "Amount field error when the amount is more than the account's available balance (FA-031)",
+      "placeholders": [
+        "available"
+      ],
+      "meta": {},
+      "en": "This is more than the {available} available in this account.",
+      "ar": "هذا المبلغ أكبر من الرصيد المتاح في هذا الحساب وهو {available}."
+    },
+    {
+      "key": "app.mobile.payments.available_from",
+      "format": "text",
+      "description": "Under the amount field: the chosen account's available balance (FA-031)",
+      "placeholders": [
+        "available"
+      ],
+      "meta": {},
+      "en": "{available} available in this account",
+      "ar": "المتاح في هذا الحساب: {available}"
+    },
+    {
+      "key": "app.mobile.payments.send_another",
+      "format": "text",
+      "description": "Button after a payment is sent: start a new one (FA-034)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send another payment",
+      "ar": "إرسال دفعة أخرى"
+    },
+    {
+      "key": "app.mobile.payments.done_waiting_title",
+      "format": "text",
+      "description": "Title after sending when a second person must approve (FA-034)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment waiting for approval",
+      "ar": "الدفعة بانتظار الموافقة"
+    },
+    {
+      "key": "app.mobile.stepup.send",
+      "format": "text",
+      "description": "Step-up dialog: what is being confirmed when sending (FA-032)",
+      "placeholders": [
+        "amount",
+        "payee"
+      ],
+      "meta": {},
+      "en": "Send {amount} to {payee}",
+      "ar": "إرسال {amount} إلى {payee}"
+    },
+    {
+      "key": "app.mobile.stepup.decline",
+      "format": "text",
+      "description": "Step-up dialog: declining a payment waiting for approval (FA-032)",
+      "placeholders": [
+        "amount",
+        "payee"
+      ],
+      "meta": {},
+      "en": "Decline {amount} to {payee}",
+      "ar": "رفض {amount} إلى {payee}"
+    },
+    {
+      "key": "app.mobile.stepup.freeze",
+      "format": "text",
+      "description": "Step-up dialog: freezing a card (FA-032)",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Freeze card ending {last4}",
+      "ar": "تجميد البطاقة المنتهية بـ {last4}"
+    },
+    {
+      "key": "app.mobile.stepup.unfreeze",
+      "format": "text",
+      "description": "Step-up dialog: unfreezing a card (FA-032)",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Unfreeze card ending {last4}",
+      "ar": "إلغاء تجميد البطاقة المنتهية بـ {last4}"
+    },
+    {
+      "key": "app.mobile.stepup.card_view",
+      "format": "text",
+      "description": "Step-up dialog: opening the bank's secure card view; action is the button's words (FA-032)",
+      "placeholders": [
+        "action",
+        "last4"
+      ],
+      "meta": {},
+      "en": "{action} for card ending {last4}",
+      "ar": "{action} للبطاقة المنتهية بـ {last4}"
+    },
+    {
+      "key": "app.mobile.stepup.topup",
+      "format": "text",
+      "description": "Step-up dialog: adding money from another bank (FA-032)",
+      "placeholders": [
+        "amount",
+        "account"
+      ],
+      "meta": {},
+      "en": "Add {amount} to {account}",
+      "ar": "إضافة {amount} إلى {account}"
+    },
+    {
+      "key": "app.mobile.stepup.recipient",
+      "format": "text",
+      "description": "Step-up dialog: saving a recipient (FA-032)",
+      "placeholders": [
+        "name"
+      ],
+      "meta": {},
+      "en": "Save {name} as a recipient",
+      "ar": "حفظ {name} كمستفيد"
+    },
+    {
+      "key": "app.mobile.needs.open",
+      "format": "text",
+      "description": "Needs you: open a notice (FA-026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open",
+      "ar": "فتح"
+    },
+    {
+      "key": "app.mobile.shell.bank_disclosure",
+      "format": "text",
+      "description": "Who holds the money, in Settings and More (FA-055); the AE text names no bank",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem is a financial technology company, not a bank. Banking services are provided by a licensed UAE bank.",
+      "ar": "OnGem شركة تقنية مالية وليست بنكًا. تقدّم الخدمات المصرفية بنك مرخّص في الإمارات العربية المتحدة."
+    },
+    {
+      "key": "app.mobile.dispute.pick",
+      "format": "text",
+      "description": "Dispute form: pick the card charge (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Which charge?",
+      "ar": "أي عملية خصم؟"
+    },
+    {
+      "key": "app.mobile.dispute.no_charges",
+      "format": "text",
+      "description": "Dispute form: no card charges on the account (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "No card charges on this card's account yet.",
+      "ar": "لا توجد عمليات خصم بالبطاقة على حساب هذه البطاقة بعد."
+    },
+    {
+      "key": "app.mobile.dispute.reason",
+      "format": "text",
+      "description": "Dispute form: reason group (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "What is wrong?",
+      "ar": "ما المشكلة؟"
+    },
+    {
+      "key": "app.mobile.dispute.reason_not_mine",
+      "format": "text",
+      "description": "Dispute reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "I did not make this charge",
+      "ar": "لم أقم بهذه العملية"
+    },
+    {
+      "key": "app.mobile.dispute.reason_twice",
+      "format": "text",
+      "description": "Dispute reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "I was charged more than once",
+      "ar": "خُصم المبلغ أكثر من مرة"
+    },
+    {
+      "key": "app.mobile.dispute.reason_wrong_amount",
+      "format": "text",
+      "description": "Dispute reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "The amount is wrong",
+      "ar": "المبلغ غير صحيح"
+    },
+    {
+      "key": "app.mobile.dispute.reason_not_received",
+      "format": "text",
+      "description": "Dispute reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "I did not get what I paid for",
+      "ar": "لم أستلم ما دفعت مقابله"
+    },
+    {
+      "key": "app.mobile.dispute.reason_other",
+      "format": "text",
+      "description": "Dispute reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "Something else",
+      "ar": "سبب آخر"
+    },
+    {
+      "key": "app.mobile.dispute.details",
+      "format": "text",
+      "description": "Dispute form: optional details field (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Anything else we should know (optional)",
+      "ar": "أي تفاصيل أخرى يجب أن نعرفها (اختياري)"
+    },
+    {
+      "key": "app.mobile.dispute.missing",
+      "format": "text",
+      "description": "Dispute form: charge or reason not chosen (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose the charge and what is wrong.",
+      "ar": "اختر عملية الخصم والمشكلة."
+    },
+    {
+      "key": "app.mobile.dispute.next",
+      "format": "text",
+      "description": "Dispute form: what happens next (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem support checks the charge with the bank and replies in Support, usually within 2 business days. Keep any receipt; we may ask for it.",
+      "ar": "يتحقق فريق دعم OnGem من العملية مع البنك ويرد في قسم الدعم، عادةً خلال يومي عمل. احتفظ بأي إيصال، فقد نطلبه منك."
+    },
+    {
+      "key": "app.mobile.dispute.send",
+      "format": "text",
+      "description": "Dispute form: send button (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send dispute",
+      "ar": "إرسال الاعتراض"
+    },
+    {
+      "key": "app.mobile.dispute.sent_title",
+      "format": "text",
+      "description": "Dispute form: sent (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your dispute is with OnGem support",
+      "ar": "اعتراضك لدى فريق دعم OnGem"
+    },
+    {
+      "key": "app.mobile.dispute.subject",
+      "format": "text",
+      "description": "Support ticket subject for a disputed card charge (FA-039)",
+      "placeholders": [
+        "amount",
+        "date",
+        "last4"
+      ],
+      "meta": {},
+      "en": "Dispute: {amount} on {date}, card ending {last4}",
+      "ar": "اعتراض: {amount} بتاريخ {date}، البطاقة المنتهية بـ {last4}"
     }
   ]
 }
