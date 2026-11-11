@@ -1284,7 +1284,7 @@ input[type='color'].og-input {
   align-items: center;
   justify-content: center;
   gap: var(--space-xs);
-  background: color-mix(in srgb, var(--color-surface-canvas) 55%, transparent);
-  backdrop-filter: blur(2px);
+  /* The frost keeps the face readable: the last four and the holder still show through. */
+  background: color-mix(in srgb, var(--color-surface-canvas) 35%, transparent);
   color: var(--color-text-primary);
 }
