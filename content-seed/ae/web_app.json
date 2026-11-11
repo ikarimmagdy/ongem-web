@@ -2841,6 +2841,71 @@
       "ar": "تأكيد الرقم"
     },
     {
+      "key": "app.notifications.choices.push",
+      "format": "text",
+      "description": "Notification choices column: a short alert on the person's phones",
+      "placeholders": [],
+      "meta": {},
+      "en": "Push",
+      "ar": "تنبيه"
+    },
+    {
+      "key": "app.notifications.choices.by_push",
+      "format": "text",
+      "description": "Push switch for a notice kind, read by screen readers",
+      "placeholders": [
+        "kind"
+      ],
+      "meta": {},
+      "en": "{kind} by push",
+      "ar": "{kind} بتنبيه على الجهاز"
+    },
+    {
+      "key": "app.notifications.push.title",
+      "format": "text",
+      "description": "Card after sign-in that asks to turn on alerts on this device (OG-014 R14)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Get alerts on this device",
+      "ar": "استلم التنبيهات على هذا الجهاز"
+    },
+    {
+      "key": "app.notifications.push.text",
+      "format": "text",
+      "description": "Card after sign-in that asks to turn on alerts: what an alert holds",
+      "placeholders": [],
+      "meta": {},
+      "en": "We send a short alert when a payment needs you or something changes in your company. The details stay in the app.",
+      "ar": "نرسل تنبيهاً قصيراً عندما تحتاجك دفعة أو يتغيّر شيء في شركتك. تبقى التفاصيل داخل التطبيق."
+    },
+    {
+      "key": "app.notifications.push.allow",
+      "format": "text",
+      "description": "Button on the alerts card that asks the phone for permission",
+      "placeholders": [],
+      "meta": {},
+      "en": "Turn on alerts",
+      "ar": "تفعيل التنبيهات"
+    },
+    {
+      "key": "app.notifications.push.later",
+      "format": "text",
+      "description": "Button on the alerts card that hides it",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not now",
+      "ar": "ليس الآن"
+    },
+    {
+      "key": "app.notifications.push.off",
+      "format": "text",
+      "description": "Line in notification choices when the phone does not allow alerts for the app",
+      "placeholders": [],
+      "meta": {},
+      "en": "Alerts are off for this device. You can turn them on in your phone's settings.",
+      "ar": "التنبيهات متوقفة على هذا الجهاز. يمكنك تفعيلها من إعدادات هاتفك."
+    },
+    {
       "key": "app.notifications.choose",
       "format": "text",
       "description": "Line under the inbox; {settings} is a link to Settings",
