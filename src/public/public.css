@@ -1358,7 +1358,8 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.pub-icon-btn {
+/* Not on the phone menu button, which stays hidden on wide screens. */
+.pub-icon-btn:not(.pub-menu-btn) {
   display: inline-flex;
   align-items: center;
   justify-content: center;

@@ -4,11 +4,17 @@
 import { chromium } from '@playwright/test';
 import { mkdirSync, readFileSync } from 'node:fs';
 
-const theme = JSON.parse(readFileSync('src/themes/ongem-themes.json', 'utf8')).themes.find((t) => t.id === 'ongem');
+const theme = JSON.parse(readFileSync('src/themes/ongem-themes.json', 'utf8')).themes.find(
+  (t) => t.id === 'ongem',
+);
 const c = theme.color;
 const font = (path) => `data:font/woff2;base64,${readFileSync(path).toString('base64')}`;
-const display = font('node_modules/@fontsource/roboto-condensed/files/roboto-condensed-latin-700-normal.woff2');
-const arabic = font('node_modules/@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-700-normal.woff2');
+const display = font(
+  'node_modules/@fontsource/roboto-condensed/files/roboto-condensed-latin-700-normal.woff2',
+);
+const arabic = font(
+  'node_modules/@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-700-normal.woff2',
+);
 const body = font('node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2');
 const wordmark = `data:image/png;base64,${readFileSync('src/assets/ongem-wordmark-light.png').toString('base64')}`;
 const mark = `data:image/png;base64,${readFileSync('src/assets/ongem-favicon.png').toString('base64')}`;

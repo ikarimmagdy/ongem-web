@@ -40,7 +40,9 @@ html = html
   .replace(
     '</head>',
     () =>
-      shell.social.map((m) => `  <meta ${m.attr}="${attr(m.name)}" content="${attr(m.content)}" />\n`).join('') +
+      shell.social
+        .map((m) => `  <meta ${m.attr}="${attr(m.name)}" content="${attr(m.content)}" />\n`)
+        .join('') +
       `  <script type="application/ld+json" id="${attr(shell.ld.id)}">${shell.ld.json.replace(/</g, '\\u003c')}</script>\n  </head>`,
   )
   .replace('<div id="root"></div>', `<div id="root">${shell.html}</div>`);

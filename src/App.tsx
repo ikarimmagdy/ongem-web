@@ -60,7 +60,8 @@ export function SignInScreen() {
       <Header />
       <main className="fw-auth__main" id="main">
         <div className="pub-wrap fw-auth__grid">
-          <section className="fw-auth__intro" aria-labelledby="auth-title">
+          {/* Not a landmark of its own: the form section beside it carries the same name (axe landmark-unique). */}
+          <div className="fw-auth__intro">
             <p className="pub-eyebrow">{t('web.auth.eyebrow')}</p>
             <h1 id="auth-title" className="pub-display fw-auth__title">
               {signUp ? t('web.auth.sign_up_title') : t('web.auth.sign_in_title')}
@@ -71,7 +72,7 @@ export function SignInScreen() {
                 <li key={p}>{p}</li>
               ))}
             </ul>
-          </section>
+          </div>
           <section
             className="fw-auth__form"
             aria-label={signUp ? t('web.auth.sign_up_title') : t('web.auth.sign_in_title')}

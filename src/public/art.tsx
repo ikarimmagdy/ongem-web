@@ -201,10 +201,20 @@ const ART: Record<ArtName, () => ReactNode> = {
   cards: () => (
     <div className="pub-cardart" role="img" aria-label={t('web.art.label.cards')}>
       <span className="pub-cardart__card pub-cardart__card--back">
-        <CardFace base="navy" kind={t('web.art.card_business')} holder={t('web.art.card_holder.1')} last4="4417" />
+        <CardFace
+          base="navy"
+          kind={t('web.art.card_business')}
+          holder={t('web.art.card_holder.1')}
+          last4="4417"
+        />
       </span>
       <span className="pub-cardart__card pub-cardart__card--front">
-        <CardFace base="navy" kind={t('web.art.card_business')} holder={t('web.art.card_holder.2')} last4="2081" />
+        <CardFace
+          base="navy"
+          kind={t('web.art.card_business')}
+          holder={t('web.art.card_holder.2')}
+          last4="2081"
+        />
       </span>
     </div>
   ),

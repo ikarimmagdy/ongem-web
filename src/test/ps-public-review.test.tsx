@@ -301,7 +301,9 @@ describe('public site review fixes (US)', () => {
       'href',
       '/product/payments',
     );
-    expect(css).toMatch(/\.pub-link-light \{\s*display: inline-flex;\s*align-items: center;\s*min-height: 24px;/);
+    expect(css).toMatch(
+      /\.pub-link-light \{\s*display: inline-flex;\s*align-items: center;\s*min-height: 24px;/,
+    );
   });
 
   it('PS_034_faq_heading_column_has_a_line_and_the_next_step', () => {
@@ -319,6 +321,8 @@ describe('public site review fixes (US)', () => {
     expect(document.title).toBe(t('web.page.sign_in.title'));
     expect(meta('meta[name="description"]')).toBe(t('web.page.sign_in.description'));
     expect(meta('meta[name="robots"]')).toBe('noindex');
+    // One region named for the sign-in form, not two with the same name.
+    expect(screen.getAllByRole('region', { name: t('web.auth.sign_in_title') })).toHaveLength(1);
     signIn.unmount();
     renderApp('/sign-in?mode=sign-up', { mode: 'none' });
     expect(document.title).toBe(t('web.page.sign_up.title'));
@@ -326,6 +330,12 @@ describe('public site review fixes (US)', () => {
 
   it('PS_041_current_section_has_a_bar_not_only_colour', () => {
     expect(css).toMatch(/\.pub-menu__button\.is-current \{\s*box-shadow: inset 0 -2px 0 currentColor;/);
+  });
+
+  it('PS_042_the_phone_menu_button_stays_hidden_on_wide_screens', () => {
+    // Only the media query below 1120 px shows it; no later rule may display every icon button.
+    expect(css).not.toMatch(/\n\.pub-icon-btn \{\s*display: inline-flex/);
+    expect(css).toMatch(/\.pub-menu-btn \{\s*display: none;/);
   });
 
   it('PS_042_theme_and_menu_icons_are_drawn', () => {
@@ -351,6 +361,8 @@ describe('public site review fixes (US)', () => {
   });
 
   it('PS_049_chips_are_40px', () => {
-    expect(css).toMatch(/\.pub-chips a \{\s*display: inline-flex;\s*align-items: center;\s*min-height: 40px;/);
+    expect(css).toMatch(
+      /\.pub-chips a \{\s*display: inline-flex;\s*align-items: center;\s*min-height: 40px;/,
+    );
   });
 });

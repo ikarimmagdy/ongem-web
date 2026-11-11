@@ -61,7 +61,13 @@ for (const scale of [2, 1]) {
   await page.getByTestId('command-search-open').click();
   await page.getByTestId('command-search-input').fill('What did we pay Acme Supplies this month?');
   await page.getByTestId('search-option-ask').click();
-  if (!(await page.getByTestId('assistant-reply').first().isVisible().catch(() => false))) {
+  if (
+    !(await page
+      .getByTestId('assistant-reply')
+      .first()
+      .isVisible()
+      .catch(() => false))
+  ) {
     const send = page.getByTestId('assistant-send');
     if (await send.isEnabled().catch(() => false)) await send.click();
   }

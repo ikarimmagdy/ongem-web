@@ -245,14 +245,7 @@ export function FaqPage() {
       <PageHead title={t('web.labels.faq_title')} lede={t('web.faq_page.lede')} cta={false} />
       <Faq items={faq()} title={t('web.faq_page.general')} id="faq-general" tint={false} aside={false} />
       {capabilities().map((c, i) => (
-        <Faq
-          key={c.id}
-          items={faq(c.id)}
-          title={c.nav}
-          id={`faq-${c.id}`}
-          tint={i % 2 === 0}
-          aside={false}
-        />
+        <Faq key={c.id} items={faq(c.id)} title={c.nav} id={`faq-${c.id}`} tint={i % 2 === 0} aside={false} />
       ))}
       <FinalCta />
     </div>

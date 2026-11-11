@@ -3,7 +3,8 @@
 // the site falls back to the dev hosts, which a production build refuses.
 
 /** Hosts that belong to development or preview, never to the public site. */
-const DEV_HOST = /(^|[.-])(dev|preview|staging|test)([.-]|$)|localhost|127\.0\.0\.1|\.web\.core\.windows\.net$|\.cloudfront\.net$/i;
+const DEV_HOST =
+  /(^|[.-])(dev|preview|staging|test)([.-]|$)|localhost|127\.0\.0\.1|\.web\.core\.windows\.net$|\.cloudfront\.net$/i;
 
 /** The problems with [env] for a production build; empty when it is not one or when it is fine. */
 export function siteConfigErrors(env) {

@@ -22,7 +22,9 @@ const region = regionOf();
 const siteErrors = siteConfigErrors({ ...loadEnv('production', process.cwd(), 'VITE_'), ...process.env });
 if (siteErrors.length) {
   for (const e of siteErrors) console.error(`site: ${e}`);
-  console.error('site: a production build needs the public URLs of both regions (VITE_SITE_URL, VITE_OTHER_SITE_URL).');
+  console.error(
+    'site: a production build needs the public URLs of both regions (VITE_SITE_URL, VITE_OTHER_SITE_URL).',
+  );
   process.exit(1);
 }
 

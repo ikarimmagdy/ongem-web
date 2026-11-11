@@ -115,9 +115,7 @@ export function Home() {
         return (
           <section
             key={id}
-            className={
-              i % 2 ? 'pub-section pub-band pub-phone-hide' : 'pub-section pub-section--tint'
-            }
+            className={i % 2 ? 'pub-section pub-band pub-phone-hide' : 'pub-section pub-section--tint'}
             aria-labelledby={`row-${id}`}
             data-testid={`feature-row-${id}`}
           >
