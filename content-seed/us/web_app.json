@@ -7486,6 +7486,24 @@
       "ar": "لا يحتوي هذا الجهاز على قياسات حيوية أو رمز مرور، لذا لا يمكن قفل التطبيق."
     },
     {
+      "key": "app.mobile.settings.analytics_toggle",
+      "format": "text",
+      "description": "Founder app: switch that lets OnGem collect app usage analytics (off by default, OG-036)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Share usage data",
+      "ar": "مشاركة بيانات الاستخدام"
+    },
+    {
+      "key": "app.mobile.settings.analytics_detail",
+      "format": "text",
+      "description": "Founder app: what the usage data switch shares; crash reports are always sent (OG-036)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Helps us improve OnGem by counting which screens you open. It never includes your name, your company or your money. Crash reports are always sent so we can fix problems.",
+      "ar": "يساعدنا على تحسين OnGem بحساب الشاشات التي تفتحها. لا يتضمن أبدا اسمك أو شركتك أو أموالك. تُرسل تقارير الأعطال دائما لنتمكن من إصلاح المشكلات."
+    },
+    {
       "key": "app.mobile.settings.devices",
       "format": "text",
       "description": "Founder app: settings section for devices",
