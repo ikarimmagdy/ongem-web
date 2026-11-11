@@ -10188,6 +10188,163 @@
       "meta": {},
       "en": "Loading your agreements",
       "ar": "جارٍ تحميل اتفاقياتك"
+    },
+    {
+      "key": "app.payments.form.available",
+      "format": "text",
+      "description": "Hint under the From account on the send form: its available balance (FA-031)",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "Available: {amount}",
+      "ar": "المتاح: {amount}"
+    },
+    {
+      "key": "app.payments.form.over_balance",
+      "format": "text",
+      "description": "Send form error: the amount is more than the From account holds (FA-031)",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "This is more than the {amount} available in this account.",
+      "ar": "هذا المبلغ أكبر من {amount} المتاح في هذا الحساب."
+    },
+    {
+      "key": "app.session.reverify.action.card_details",
+      "format": "text",
+      "description": "Step-up dialog title when showing full card details (FA-032)",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Show details of the card ending {last4}",
+      "ar": "عرض تفاصيل البطاقة المنتهية بـ {last4}"
+    },
+    {
+      "key": "app.session.reverify.action.card_freeze",
+      "format": "text",
+      "description": "Step-up dialog title when freezing a card (FA-032)",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Freeze the card ending {last4}",
+      "ar": "تجميد البطاقة المنتهية بـ {last4}"
+    },
+    {
+      "key": "app.session.reverify.action.card_unfreeze",
+      "format": "text",
+      "description": "Step-up dialog title when unfreezing a card (FA-032)",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Unfreeze the card ending {last4}",
+      "ar": "إلغاء تجميد البطاقة المنتهية بـ {last4}"
+    },
+    {
+      "key": "app.session.reverify.action.funding_link",
+      "format": "text",
+      "description": "Step-up dialog title when linking an account at another bank (FA-032)",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Link the account ending {last4}",
+      "ar": "ربط الحساب المنتهي بـ {last4}"
+    },
+    {
+      "key": "app.session.reverify.action.funding_remove",
+      "format": "text",
+      "description": "Step-up dialog title when removing a linked account (FA-032)",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Remove the account ending {last4}",
+      "ar": "إزالة الحساب المنتهي بـ {last4}"
+    },
+    {
+      "key": "app.session.reverify.action.payment_approve",
+      "format": "text",
+      "description": "Step-up dialog title when approving a payment (FA-032)",
+      "placeholders": [
+        "amount",
+        "payee"
+      ],
+      "meta": {},
+      "en": "Approve {amount} to {payee}",
+      "ar": "الموافقة على {amount} إلى {payee}"
+    },
+    {
+      "key": "app.session.reverify.action.payment_send",
+      "format": "text",
+      "description": "Step-up dialog title when sending a payment (FA-032)",
+      "placeholders": [
+        "amount",
+        "payee"
+      ],
+      "meta": {},
+      "en": "Send {amount} to {payee}",
+      "ar": "إرسال {amount} إلى {payee}"
+    },
+    {
+      "key": "app.session.reverify.action.recipient",
+      "format": "text",
+      "description": "Step-up dialog title when adding a recipient (FA-032)",
+      "placeholders": [
+        "payee"
+      ],
+      "meta": {},
+      "en": "Add {payee} as a recipient",
+      "ar": "إضافة {payee} كمستفيد"
+    },
+    {
+      "key": "app.session.reverify.action.schedule",
+      "format": "text",
+      "description": "Step-up dialog title when scheduling payments (FA-032)",
+      "placeholders": [
+        "amount",
+        "payee"
+      ],
+      "meta": {},
+      "en": "Schedule {amount} to {payee}",
+      "ar": "جدولة {amount} إلى {payee}"
+    },
+    {
+      "key": "app.session.reverify.action.schedule_resume",
+      "format": "text",
+      "description": "Step-up dialog title when resuming scheduled payments (FA-032)",
+      "placeholders": [
+        "amount",
+        "payee"
+      ],
+      "meta": {},
+      "en": "Resume payments of {amount} to {payee}",
+      "ar": "استئناف دفعات {amount} إلى {payee}"
+    },
+    {
+      "key": "app.session.reverify.action.topup",
+      "format": "text",
+      "description": "Step-up dialog title when adding money from another bank (FA-032)",
+      "placeholders": [
+        "amount",
+        "last4"
+      ],
+      "meta": {},
+      "en": "Add {amount} from the account ending {last4}",
+      "ar": "إضافة {amount} من الحساب المنتهي بـ {last4}"
+    },
+    {
+      "key": "app.session.reverify.payee_unknown",
+      "format": "text",
+      "description": "Step-up dialog: payee when the name is not known (FA-032)",
+      "placeholders": [],
+      "meta": {},
+      "en": "the recipient",
+      "ar": "المستفيد"
     }
   ]
 }

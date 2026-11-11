@@ -647,7 +647,8 @@ input[type='color'].og-input {
   display: grid;
   place-items: center;
   padding: var(--space-md);
-  z-index: 20;
+  /* FA-033: above the floating assistant (30) and the profile menu (40). */
+  z-index: 50;
 }
 .og-modal {
   background: var(--color-surface-raised);
@@ -674,6 +675,9 @@ input[type='color'].og-input {
   gap: var(--space-md);
   min-height: 0;
   overflow-y: auto;
+  /* FA-047: room inside the scroller for a field's 2px focus ring and its offset, so no edge of it is cut. */
+  padding: var(--space-xs);
+  margin: calc(var(--space-xs) * -1);
 }
 .og-modal__footer {
   display: flex;

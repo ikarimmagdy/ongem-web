@@ -46,6 +46,8 @@ export function CommandSearch() {
     const onKey = (e: globalThis.KeyboardEvent) => {
       if (isSearchShortcut(e)) {
         e.preventDefault();
+        // FA-033: never over another dialog (a step-up confirmation): the open dialog keeps the keyboard.
+        if (document.querySelector('[aria-modal="true"]')) return;
         setOpen(true);
       }
     };

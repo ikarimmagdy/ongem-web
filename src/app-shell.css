@@ -84,7 +84,7 @@
 }
 .fw-palette__option.is-active,
 .fw-palette__option:hover {
-  background: var(--color-surface-tint-blue);
+  background: var(--color-status-info-bg);
 }
 
 /* R9: on a desktop the assistant panel drops from under the top bar's end; it has no floating button there. */
@@ -445,4 +445,12 @@
   .fw-content {
     padding-bottom: calc(var(--space-3xl) * 2);
   }
+}
+
+/* UI and UX review 2026-11-12 (ongem-engineering outputs/review/ui-ux-2026-11-12/founder-app, FA-xxx). */
+
+/* FA-043: each Settings switch sits in a 44px target, the phone minimum. */
+.fw-toggle {
+  min-width: calc(var(--space-2xl) - var(--space-xs));
+  min-height: calc(var(--space-2xl) - var(--space-xs));
 }

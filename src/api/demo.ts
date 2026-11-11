@@ -55,10 +55,32 @@ import type {
   ExportRun,
 } from './types';
 
+/**
+ * What a step-up confirms (FA-032): the action and, where it has them, the amount, the payee and a card or account's
+ * last four, so the dialog names what the code approves.
+ */
+export interface StepUpDetail {
+  action:
+    | 'payment_send'
+    | 'payment_approve'
+    | 'topup'
+    | 'schedule'
+    | 'schedule_resume'
+    | 'recipient'
+    | 'funding_link'
+    | 'funding_remove'
+    | 'card_freeze'
+    | 'card_unfreeze'
+    | 'card_details';
+  amount?: { amountMinor: number; currency: string };
+  payee?: string;
+  last4?: string;
+}
+
 export interface DemoOptions {
   me?: Me;
   /** Step-up in demo mode: the same dialog as live, any six digits; false when cancelled. */
-  stepUp?: (purpose: string) => Promise<boolean>;
+  stepUp?: (purpose: string, detail?: StepUpDetail) => Promise<boolean>;
   now?: () => string;
   /** The company picked in the switcher (G-69); null is the person's default. */
   companyId?: string | null;
@@ -150,12 +172,19 @@ export class DemoOnGemApi implements OnGemApi {
       throw new ApiError(403, 'forbidden', t('app.demo.error.forbidden'));
   }
 
-  private async stepUp(purpose: string) {
+  private async stepUp(purpose: string, detail?: StepUpDetail) {
     this.stepUps.push(purpose);
     if (!this.opts.stepUp) return;
-    if (!(await this.opts.stepUp(purpose))) {
+    if (!(await this.opts.stepUp(purpose, detail))) {
       throw new ApiError(403, REVERIFICATION_CANCELLED, t('app.demo.error.reverification_cancelled'));
     }
+  }
+
+  /** Who a payment goes to, by name, for the step-up dialog (FA-032). */
+  private payeeOf(p: Payment): string | undefined {
+    if (p.recipientId) return this.recipientsState.find((r) => r.id === p.recipientId)?.name;
+    if (p.toAccountId) return this.accountsState.find((a) => a.id === p.toAccountId)?.name;
+    return undefined;
   }
 
   private notFound(what: string): never {
@@ -400,7 +429,7 @@ export class DemoOnGemApi implements OnGemApi {
     this.require(Permission.RECIPIENT_MANAGE);
     if (IS_AE && !uaeIbanValid(r.iban ?? ''))
       throw new ApiError(422, 'iban_invalid', t('app.demo.error.iban_format'));
-    await this.stepUp('recipient');
+    await this.stepUp('recipient', { action: 'recipient', payee: r.name.trim() });
     const created = {
       id: this.next('rcp'),
       kind: r.kind,
@@ -479,7 +508,7 @@ export class DemoOnGemApi implements OnGemApi {
   sendPayment = async (id: string) => {
     this.require(Permission.PAYMENT_CREATE);
     const p = this.paymentsState.find((x) => x.id === id) ?? this.notFound('payment');
-    await this.stepUp('payment');
+    await this.stepUp('payment', { action: 'payment_send', amount: p.amount, payee: this.payeeOf(p) });
     const from = this.accountsState.find((a) => a.id === p.fromAccountId);
     if ((from?.balance?.available.amountMinor ?? 0) < p.amount.amountMinor) {
       throw new ApiError(409, 'insufficient_funds', t('app.demo.error.insufficient_funds'));
@@ -520,7 +549,7 @@ export class DemoOnGemApi implements OnGemApi {
     const p = this.paymentsState.find((x) => x.id === id) ?? this.notFound('payment');
     if (p.state !== 'PENDING_APPROVAL')
       throw new ApiError(409, 'payment_not_pending_approval', t('app.demo.error.not_pending_approval'));
-    await this.stepUp('payment');
+    await this.stepUp('payment', { action: 'payment_approve', amount: p.amount, payee: this.payeeOf(p) });
     const sent: Payment = {
       ...p,
       state: 'SUBMITTED',
@@ -582,7 +611,7 @@ export class DemoOnGemApi implements OnGemApi {
         !r.ownerName.trim())
     )
       throw new ApiError(422, 'validation_failed', t('app.demo.error.routing_account_name'));
-    await this.stepUp('funding_source');
+    await this.stepUp('funding_source', { action: 'funding_link', last4: number.slice(-4) });
     const f: FundingSource = {
       id: this.next('fsrc'),
       accountId: r.accountId,
@@ -603,7 +632,7 @@ export class DemoOnGemApi implements OnGemApi {
   removeFundingSource = async (id: string) => {
     this.require(Permission.RECIPIENT_MANAGE);
     const f = this.fundingState.find((x) => x.id === id) ?? this.notFound('funding_source');
-    await this.stepUp('funding_source');
+    await this.stepUp('funding_source', { action: 'funding_remove', last4: f.last4 ?? undefined });
     const removed = { ...f, state: 'REMOVED' };
     this.fundingState = this.fundingState.map((x) => (x.id === id ? removed : x));
     return this.log('removeFundingSource', removed);
@@ -618,7 +647,7 @@ export class DemoOnGemApi implements OnGemApi {
     if (r.amountMinor <= 0) throw new ApiError(422, 'validation_failed', t('app.demo.error.amount_positive'));
     if (f.state !== 'VERIFIED') throw new ApiError(409, 'funding_source_not_verified');
     if (r.amountMinor > REGION_CONFIG.topUpLimit) throw new ApiError(409, 'limit_exceeded');
-    await this.stepUp('payment');
+    await this.stepUp('payment', { action: 'topup', amount: money(r.amountMinor), last4: f.last4 ?? undefined });
     const p: Payment = {
       id: this.next('pay'),
       state: 'PENDING_APPROVAL',
@@ -692,7 +721,7 @@ export class DemoOnGemApi implements OnGemApi {
       (r.endDate && r.endDate <= r.startDate)
     )
       throw new ApiError(422, 'validation_failed', t('app.demo.error.schedule_fields'));
-    await this.stepUp('payment');
+    await this.stepUp('payment', { action: 'schedule', amount: money(r.amountMinor), payee: recipient.name });
     const s: PaymentSchedule = {
       id: this.next('psch'),
       fromAccountId: r.fromAccountId,
@@ -724,7 +753,12 @@ export class DemoOnGemApi implements OnGemApi {
   /** Active again from today: dates that passed while paused are not made. */
   resumeSchedule = async (id: string) => {
     this.require(Permission.PAYMENT_CREATE);
-    await this.stepUp('payment');
+    const sch = this.schedulesState.find((x) => x.id === id);
+    await this.stepUp('payment', {
+      action: 'schedule_resume',
+      amount: sch?.amount,
+      payee: this.recipientsState.find((x) => x.id === sch?.recipientId)?.name,
+    });
     const today = this.now().slice(0, 10);
     return this.log(
       'resumeSchedule',
@@ -763,7 +797,10 @@ export class DemoOnGemApi implements OnGemApi {
       throw new ApiError(409, 'card_not_active', t('app.demo.error.card_not_active'));
     if (!frozen && c.state !== 'FROZEN')
       throw new ApiError(409, 'card_not_frozen', t('app.demo.error.card_not_frozen'));
-    await this.stepUp('card');
+    await this.stepUp('card', {
+      action: frozen ? 'card_freeze' : 'card_unfreeze',
+      last4: c.last4 ?? undefined,
+    });
     const changed = { ...c, state: frozen ? 'FROZEN' : 'ACTIVE', updatedAt: this.now() };
     this.cardsState = this.cardsState.map((x) => (x.id === id ? changed : x));
     return this.log('setCardFrozen', changed);
@@ -775,7 +812,7 @@ export class DemoOnGemApi implements OnGemApi {
     const c = this.cardsState.find((x) => x.id === id) ?? this.notFound('card');
     const ok = kind === 'ACTIVATE' ? c.state === 'PENDING' : c.state === 'ACTIVE' || c.state === 'FROZEN';
     if (!ok) throw new ApiError(409, 'card_not_active', t('app.demo.error.card_details_unavailable'));
-    await this.stepUp('card_details');
+    await this.stepUp('card_details', { action: 'card_details', last4: c.last4 ?? undefined });
     return this.log('cardWidget', {
       cardId: id,
       kind,

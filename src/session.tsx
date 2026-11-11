@@ -10,13 +10,14 @@ import {
 } from 'react';
 import { permissionsOf, READ_ONLY, type OnGemApi } from './api/client';
 import type { CompanyState, Membership } from './api/types';
-import { DemoOnGemApi } from './api/demo';
+import { DemoOnGemApi, type StepUpDetail } from './api/demo';
 import { defaultDeviceKeys } from './api/device';
 import { LiveOnGemApi, type Whereami } from './api/live';
 import { useAuthSession } from './auth';
 import { Button, Field, Input, Modal } from './design-system';
 import { IS_AE, REGION } from './region';
 import { t } from './i18n';
+import { formatMinor } from './lib/format';
 
 export type Mode = 'none' | 'demo' | 'live';
 
@@ -119,7 +120,21 @@ export async function findRegionBase(
 
 interface Ask {
   purpose: string;
+  detail?: StepUpDetail;
   resolve(ok: boolean): void;
+}
+
+/**
+ * FA-032: the step-up dialog names what the code confirms ("Send US$1,250.00 to Acme Supplies LLC"), from the action the
+ * API asked it for; without one it falls back to the general title.
+ */
+export function stepUpTitle(detail?: StepUpDetail): string {
+  if (!detail) return t('app.session.reverify.title');
+  return t(`app.session.reverify.action.${detail.action}`, {
+    amount: detail.amount ? formatMinor(detail.amount) : '',
+    payee: detail.payee ?? t('app.session.reverify.payee_unknown'),
+    last4: detail.last4 ?? '',
+  });
 }
 
 /** Demo step-up: the same dialog as live (OG-003), and any six digits confirm it. */
@@ -133,7 +148,7 @@ function DemoReverify({ ask, onDone }: { ask: Ask | null; onDone(ok: boolean): v
   return (
     <Modal
       open={Boolean(ask)}
-      title={t('app.session.reverify.title')}
+      title={<span data-testid="reverify-title">{stepUpTitle(ask?.detail)}</span>}
       onClose={() => close(false)}
       footer={
         <>
@@ -146,7 +161,10 @@ function DemoReverify({ ask, onDone }: { ask: Ask | null; onDone(ok: boolean): v
         </>
       }
     >
-      <p>{t('app.session.reverify.text')}</p>
+      <p>
+        {ask?.detail && <strong className="fw-reverify__lead">{t('app.session.reverify.title')}. </strong>}
+        {t('app.session.reverify.text')}
+      </p>
       <Field label={t('app.session.reverify.code')}>
         <Input
           data-testid="reverify-code"
@@ -174,15 +192,18 @@ export function SessionProvider({
   const [demoMode, setDemoMode] = useState(initialMode === 'demo');
   const [role, setRole] = useState<string | null>(null);
   const [ask, setAsk] = useState<Ask | null>(null);
-  const askRef = useRef<(purpose: string) => Promise<boolean>>(() => Promise.resolve(false));
-  askRef.current = (purpose) => new Promise<boolean>((resolve) => setAsk({ purpose, resolve }));
+  const askRef = useRef<(purpose: string, detail?: StepUpDetail) => Promise<boolean>>(() =>
+    Promise.resolve(false),
+  );
+  askRef.current = (purpose, detail) =>
+    new Promise<boolean>((resolve) => setAsk({ purpose, detail, resolve }));
 
   // A new demo API each time demo mode is entered, so a fresh demo starts from the sample data.
   const demo = useMemo(
     () =>
       injected ??
       new DemoOnGemApi({
-        stepUp: (p) => askRef.current(p),
+        stepUp: (p, d) => askRef.current(p, d),
         // `?demo=solo` shows the demo as a one-person company, where OnGem approves (Q-091; videos, OG-032 R16).
         approvalBy:
           typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('demo') === 'solo'

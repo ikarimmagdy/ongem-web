@@ -14,6 +14,21 @@ const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabi
 export function Modal({ open, title, onClose, children, footer }: ModalProps) {
   const titleId = useId();
   const ref = useRef<HTMLDivElement>(null);
+  const backdrop = useRef<HTMLDivElement>(null);
+
+  // FA-033: while a dialog is open the page behind it is inert, so no shortcut, floating button or panel can take focus
+  // or open over it; a dialog opened from another dialog leaves only the newest one live.
+  useEffect(() => {
+    if (!open) return;
+    const own = backdrop.current;
+    const made: Element[] = [];
+    for (const el of Array.from(document.body.children)) {
+      if (el === own || el.hasAttribute('inert') || el.tagName === 'SCRIPT') continue;
+      el.setAttribute('inert', '');
+      made.push(el);
+    }
+    return () => made.forEach((el) => el.removeAttribute('inert'));
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -50,7 +65,7 @@ export function Modal({ open, title, onClose, children, footer }: ModalProps) {
 
   if (!open) return null;
   return createPortal(
-    <div className="og-modal__backdrop" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+    <div ref={backdrop} className="og-modal__backdrop" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div
         ref={ref}
         className="og-modal"

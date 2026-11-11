@@ -297,7 +297,10 @@ export function NewPayment() {
   const destinationLabel = (d: (typeof destinations)[number]) =>
     t('app.payments.form.company_account', { company: d.company, name: d.account.name });
   const target = kind === 'internal' ? toId : kind === 'company' ? companyToId : recipientId;
-  const valid = Boolean(fromId && target && minor);
+  // FA-031: the From account's available balance shows under it, and an amount over it is refused before Review.
+  const fromAvailable = accs.find((a) => a.id === fromId)?.balance?.available ?? null;
+  const overBalance = Boolean(minor && fromAvailable && minor > fromAvailable.amountMinor);
+  const valid = Boolean(fromId && target && minor && !overBalance);
   const rail = rails.find((r) => railValue(r) === kind) ?? rails[0]!;
   const send = async () => {
     if (!minor || inFlight.current) return;
@@ -415,7 +418,16 @@ export function NewPayment() {
             ]}
           />
         </Field>
-        <Field label={t('app.payments.review.from')}>
+        <Field
+          label={t('app.payments.review.from')}
+          hint={
+            fromAvailable ? (
+              <span data-testid="payment-from-available" data-mask="">
+                {t('app.payments.form.available', { amount: formatMinor(fromAvailable) })}
+              </span>
+            ) : undefined
+          }
+        >
           <Select
             data-testid="payment-from"
             data-mask=""
@@ -481,7 +493,13 @@ export function NewPayment() {
         )}
         <Field
           label={REGION_CONFIG.amountLabel}
-          error={amount && !minor ? t('app.payments.form.amount_error') : undefined}
+          error={
+            amount && !minor
+              ? t('app.payments.form.amount_error')
+              : overBalance && fromAvailable
+                ? t('app.payments.form.over_balance', { amount: formatMinor(fromAvailable) })
+                : undefined
+          }
         >
           <Input
             data-testid="payment-amount"
