@@ -770,22 +770,13 @@
   text-align: center;
 }
 .fw-sent__mark {
+  display: inline-grid;
+  place-items: center;
   width: var(--space-2xl);
   height: var(--space-2xl);
   border-radius: var(--radius-pill);
   background: var(--color-status-success);
-  position: relative;
-}
-.fw-sent__mark::after {
-  content: '';
-  position: absolute;
-  inset-inline-start: 34%;
-  inset-block-start: 22%;
-  width: 26%;
-  height: 46%;
-  border-inline-end: 4px solid var(--color-surface-card);
-  border-block-end: 4px solid var(--color-surface-card);
-  transform: rotate(45deg);
+  color: var(--color-surface-card);
 }
 .fw-sent__title {
   font-size: var(--font-size-xl);

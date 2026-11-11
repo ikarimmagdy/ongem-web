@@ -224,7 +224,20 @@ export function PaymentDetail({ id, justSent = false }: { id: string; justSent?:
             {justSent && (
               // FA-034: a confirmation after sending: what left, to whom, from where and when it arrives.
               <section className="fw-sent" data-testid="payment-sent" aria-labelledby="payment-sent-title">
-                <span className="fw-sent__mark" aria-hidden="true" />
+                <span className="fw-sent__mark" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="28"
+                    height="28"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 12.5l4.5 4.5L19 7.5" />
+                  </svg>
+                </span>
                 <h2 id="payment-sent-title" className="fw-sent__title">
                   {p.state === 'PENDING_APPROVAL'
                     ? t('app.payments.sent.waiting_title')
