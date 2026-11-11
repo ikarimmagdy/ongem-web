@@ -55,8 +55,8 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
 ## Git
 
 - Identity: Karim Magdy <ikarimmagdy@gmail.com> (`.claude/git-identity`; `git config core.hooksPath .githooks`).
-- Local git only, branch `develop`. Karim creates the GitHub repositories (GenZone-LLC/ongem-web and ikarimmagdy/ongem-web)
-  and adds the remotes; until then nothing is pushed. No AI references in commits.
+- Branch `develop` (main is production). `origin` fetches GenZone-LLC/ongem-web and pushes to both GenZone-LLC/ongem-web
+  and ikarimmagdy/ongem-web (remote `personal`); first pushed 2026-11-12. No AI references in commits.
 
 ## Change log
 
