@@ -15,6 +15,15 @@ import schedules from '../assets/public/screen-payments-schedules.jpg';
 import payments from '../assets/public/screen-payments.jpg';
 import supportPhone from '../assets/public/screen-support-phone.jpg';
 import support from '../assets/public/screen-support.jpg';
+import approvals1x from '../assets/public/screen-approvals-1x.jpg';
+import assistant1x from '../assets/public/screen-assistant-1x.jpg';
+import cards1x from '../assets/public/screen-cards-1x.jpg';
+import companies1x from '../assets/public/screen-companies-1x.jpg';
+import home1x from '../assets/public/screen-home-1x.jpg';
+import notifications1x from '../assets/public/screen-notifications-1x.jpg';
+import payments1x from '../assets/public/screen-payments-1x.jpg';
+import schedules1x from '../assets/public/screen-payments-schedules-1x.jpg';
+import support1x from '../assets/public/screen-support-1x.jpg';
 
 /**
  * Product screens captured from demo mode (sample data only) by `scripts/public-screenshots.mjs` at twice the pixel
@@ -111,3 +120,31 @@ export const PHONE_SCREENS: Partial<Record<ScreenName, string>> = {
   notifications: notificationsPhone,
   support: supportPhone,
 };
+
+/** Each desktop screen at its displayed size (1x) besides the capture at twice that (2x), for `srcset` (PS-013). */
+const ONE_X: Partial<Record<ScreenName, string>> = {
+  home: home1x,
+  payments: payments1x,
+  schedules: schedules1x,
+  cards: cards1x,
+  notifications: notifications1x,
+  support: support1x,
+  approvals: approvals1x,
+  companies: companies1x,
+  assistant: assistant1x,
+};
+
+export function screenSrcSet(name: ScreenName): string | undefined {
+  const one = ONE_X[name];
+  const s = SCREENSHOTS[name];
+  return one ? `${one} ${s.width}w, ${s.src} ${s.width * 2}w` : undefined;
+}
+
+/** The widths a framed screen is shown at: the whole column on a phone, about half the page beside text. */
+export const SHOT_SIZES = '(max-width: 860px) 100vw, 640px'; // content-check: ignore
+/** The hero's desktop screen sits beside the copy, about 420 px wide. */
+export const HERO_SIZES = '(max-width: 860px) 100vw, 420px'; // content-check: ignore
+export const NARROW = '(max-width: 640px)'; // content-check: ignore
+export const WIDE = '(min-width: 641px)'; // content-check: ignore
+/** A transparent pixel for the frame a width hides, so the browser requests no image for it. */
+export const BLANK_IMAGE = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';

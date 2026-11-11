@@ -24,6 +24,12 @@ export const SITE = {
   contactEmail: import.meta.env.VITE_CONTACT_EMAIL?.trim() ?? '',
 };
 
+/**
+ * A production build (`VITE_ENVIRONMENT=production`); anything else (dev, preview, tests) is not. A production build
+ * hides the draft disclosures and their draft note (PS-002), which stay on every other build for legal review.
+ */
+export const isProduction = () => import.meta.env.VITE_ENVIRONMENT?.trim().toLowerCase() === 'production';
+
 export const OTHER_REGION: Region = IS_AE ? 'US' : 'AE';
 
 export const siteOf = (region: Region) => (region === SITE.region ? SITE.url : SITE.otherUrl);

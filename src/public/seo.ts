@@ -50,14 +50,44 @@ function setLd(id: string, data: object | null) {
   el.textContent = JSON.stringify(data);
 }
 
-function setMeta(name: string, content: string) {
-  let tag = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
+function setMeta(name: string, content: string | null, attr: 'name' | 'property' = 'name') {
+  let tag = document.querySelector<HTMLMetaElement>(`meta[${attr}="${name}"]`);
+  if (content === null) {
+    tag?.remove();
+    return;
+  }
   if (!tag) {
     tag = document.createElement('meta');
-    tag.name = name;
+    tag.setAttribute(attr, name);
     document.head.appendChild(tag);
   }
   tag.content = content;
+}
+
+/** The branded share image of this build's region and the page's language (PS-015), an absolute URL. */
+export const shareImage = (locale: string) =>
+  `${SITE.url}/og/ongem-${SITE.region.toLowerCase()}-${locale === 'ar' ? 'ar' : 'en'}.png`;
+
+/** Open Graph and Twitter card tags (PS-015): title, description, canonical URL, image, type and locale. */
+export function socialTags(path: string, meta: { title: string; description: string }, locale: string) {
+  const og: Array<[string, string]> = [
+    ['og:type', path.startsWith('/blog/') ? 'article' : 'website'],
+    ['og:site_name', 'OnGem'],
+    ['og:title', meta.title],
+    ['og:description', meta.description],
+    ['og:url', `${SITE.url}${path}`],
+    ['og:image', shareImage(locale)],
+    ['og:image:width', '1200'],
+    ['og:image:height', '630'],
+    ['og:locale', `${locale === 'ar' ? 'ar' : 'en'}_${SITE.region}`],
+  ];
+  const twitter: Array<[string, string]> = [
+    ['twitter:card', 'summary_large_image'],
+    ['twitter:title', meta.title],
+    ['twitter:description', meta.description],
+    ['twitter:image', shareImage(locale)],
+  ];
+  return { og, twitter };
 }
 
 function setLinks(path: string) {
@@ -81,6 +111,7 @@ export function usePageHead(
   path: string,
   meta: { title: string; description: string },
   qa: Array<{ q: string; a: string }>,
+  { noindex = false }: { noindex?: boolean } = {},
 ) {
   const locale = useContent();
   const { search } = useLocation();
@@ -93,10 +124,15 @@ export function usePageHead(
   useEffect(() => {
     document.title = meta.title;
     setMeta('description', meta.description);
+    // Not-found, sign-in and the demo's opening page stay out of search (PS-008, PS-035).
+    setMeta('robots', noindex ? 'noindex' : null);
     setLinks(path);
+    const { og, twitter } = socialTags(path, meta, locale);
+    for (const [k, v] of og) setMeta(k, v, 'property');
+    for (const [k, v] of twitter) setMeta(k, v);
     setLd(ORG_LD_ID, organizationLd());
     setLd(FAQ_LD_ID, qa.length ? faqLd(qa) : null);
     // qa is read through faqKey, its content.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [path, locale, meta.title, meta.description, faqKey]);
+  }, [path, locale, meta.title, meta.description, faqKey, noindex]);
 }

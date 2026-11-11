@@ -243,9 +243,16 @@ export function FaqPage() {
   return (
     <div data-testid="public-faq">
       <PageHead title={t('web.labels.faq_title')} lede={t('web.faq_page.lede')} cta={false} />
-      <Faq items={faq()} title={t('web.faq_page.general')} id="faq-general" tint={false} />
+      <Faq items={faq()} title={t('web.faq_page.general')} id="faq-general" tint={false} aside={false} />
       {capabilities().map((c, i) => (
-        <Faq key={c.id} items={faq(c.id)} title={c.nav} id={`faq-${c.id}`} tint={i % 2 === 0} />
+        <Faq
+          key={c.id}
+          items={faq(c.id)}
+          title={c.nav}
+          id={`faq-${c.id}`}
+          tint={i % 2 === 0}
+          aside={false}
+        />
       ))}
       <FinalCta />
     </div>
@@ -277,7 +284,7 @@ export function Contact() {
     <div data-testid="public-contact">
       <PageHead title={t('web.contact.title')} lede={t('web.contact.lede')} cta={false} />
       <section className="pub-section pub-section--tint">
-        <div className="pub-wrap pub-cards pub-cards--3">
+        <div className="pub-wrap pub-cards pub-cards--2" data-testid="contact-ways">
           <article className="pub-card">
             <h2 className="pub-h3">{t('web.contact.customers_title')}</h2>
             <p>{t('web.contact.customers_text')}</p>
@@ -298,6 +305,14 @@ export function Contact() {
             <p>{t('web.contact.partners_text')}</p>
             <Link to="/partners" className="pub-more">
               {t('web.labels.partner_link')}
+            </Link>
+          </article>
+          {/* PS-010: without a public address the page still gives every way in; no write-to-us link is invented. */}
+          <article className="pub-card">
+            <h2 className="pub-h3">{t('web.contact.questions_title')}</h2>
+            <p>{t('web.contact.questions_text')}</p>
+            <Link to="/faq" className="pub-more">
+              {t('web.faq.all')}
             </Link>
           </article>
         </div>

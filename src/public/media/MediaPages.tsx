@@ -76,9 +76,6 @@ export function VideoPlayer({ video }: { video: Video }) {
                 <path d="M8 5.5v13l11-6.5z" /> {/* content-check: ignore */}
               </svg>
             </span>
-            <span className="pub-video__play-title" aria-hidden="true">
-              {videoTitle(video)}
-            </span>
           </button>
         )}
       </div>

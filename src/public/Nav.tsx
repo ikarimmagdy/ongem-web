@@ -1,9 +1,11 @@
-import { useEffect, useId, useRef, useState, type RefObject } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useId, useRef, useState, type FocusEvent, type RefObject } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { BRAND_ASSET_ON_DARK, BRAND_ASSET_SIZES, BRAND_ASSETS } from '../assets';
 import { Logo, useTheme } from '../design-system';
-import { LanguageSwitch, t, tList } from '../i18n';
-import { groupOf, legalSlugs, navGroups, navLinks, type NavGroup } from './content';
-import { OTHER_REGION, SITE, siteOf } from './site';
+import { getLocale, LanguageSwitch, t, tList, useContent } from '../i18n';
+import { groupOf, legalSlugs, legalTitle, navGroups, navLinks, type NavGroup } from './content';
+import { inBothBuilds } from './seo';
+import { isProduction, OTHER_REGION, SITE, siteOf } from './site';
 
 export const SIGN_IN = '/sign-in';
 export const SIGN_UP = '/sign-in?mode=sign-up';
@@ -38,6 +40,13 @@ function useDismiss(
   }, [open, onClose, root, button]);
 }
 
+/** Closes an open menu when focus moves out of it, by Tab or a click elsewhere (PS-026). */
+const closeOnFocusOut =
+  (open: boolean, onClose: () => void, root: RefObject<HTMLElement | null>) => (e: FocusEvent) => {
+    const next = e.relatedTarget as Node | null;
+    if (open && next && root.current && !root.current.contains(next)) onClose();
+  };
+
 /** One header menu: a disclosure button and its list of links (OG-034 R3), not an ARIA menu, so links stay links. */
 function Menu({
   group,
@@ -58,7 +67,7 @@ function Menu({
   useDismiss(open, onClose, root, button);
   const holds = groupOf(path) === group.id;
   return (
-    <div className="pub-menu" ref={root}>
+    <div className="pub-menu" ref={root} onBlur={closeOnFocusOut(open, onClose, root)}>
       <button
         ref={button}
         type="button"
@@ -85,27 +94,59 @@ function Menu({
   );
 }
 
-function ThemeToggle() {
+/** Sun and moon as drawn icons, not text characters (PS-042). */
+function ThemeIcon({ dark }: { dark: boolean }) {
+  return (
+    <svg className="pub-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      {dark ? (
+        <>
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4" />
+        </>
+      ) : (
+        <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />
+      )}
+    </svg>
+  );
+}
+
+/** Light or dark theme; light stays the default (brand). In the phone panel it carries its words (PS-045). */
+function ThemeToggle({ labelled = false }: { labelled?: boolean }) {
   const { theme, setTheme, themes } = useTheme();
   const dark = theme.mode === 'dark';
   const target = themes.find((x) => (dark ? !x.id.endsWith('-dark') : x.id.endsWith('-dark')));
   if (!target) return null;
+  const label = dark ? t('web.labels.light_theme') : t('web.labels.dark_theme');
   return (
     <button
       type="button"
-      className="pub-icon-btn"
+      className={labelled ? 'og-btn og-btn--secondary og-btn--md pub-theme-btn' : 'pub-icon-btn'}
       onClick={() => setTheme(target.id)}
-      aria-label={dark ? t('web.labels.light_theme') : t('web.labels.dark_theme')}
-      data-testid="theme-toggle"
+      aria-label={labelled ? undefined : label}
+      data-testid={labelled ? 'theme-toggle-labelled' : 'theme-toggle'}
     >
-      <span aria-hidden="true">{dark ? '☀' : '☾'}</span>
+      <ThemeIcon dark={dark} />
+      {labelled && <span>{label}</span>}
     </button>
+  );
+}
+
+/** Three lines, or a cross when the phone panel is open. */
+function MenuIcon({ open }: { open: boolean }) {
+  return (
+    <svg className="pub-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d={open ? 'M6 6l12 12M18 6 6 18' : 'M4 7h16M4 12h16M4 17h16'} />
+    </svg>
   );
 }
 
 /** The two regions: this one marked current, the other a link to its build (OG-034 R6). */
 export function RegionLinks({ testid }: { testid?: string }) {
   const regions = (['US', 'AE'] as const).filter((r) => r === SITE.region || r === OTHER_REGION);
+  useContent();
+  const { pathname } = useLocation();
+  // The same page in the other build where it has one, in the language the visitor reads (PS-028).
+  const there = `${inBothBuilds(pathname) ? pathname : '/'}?lang=${getLocale()}`;
   return (
     <ul className="pub-region__list" data-testid={testid}>
       {regions.map((r) => {
@@ -118,7 +159,7 @@ export function RegionLinks({ testid }: { testid?: string }) {
               </span>
             ) : (
               <a
-                href={`${siteOf(r)}/`}
+                href={`${siteOf(r)}${there}`}
                 hrefLang={key === 'ae' ? 'en-AE' : 'en-US'}
                 data-testid={`region-${key}`}
               >
@@ -162,7 +203,12 @@ function RegionChooser() {
   );
 }
 
-/** Get started, or, where accounts are not open yet (the UAE, OG-034 R7), Talk to us. */
+/**
+ * Get started, or, where accounts are not open yet (the UAE, OG-034 R7), Talk to us once OnGem has a public address.
+ * Until then the UAE offers no Talk to us (PS-010): the demo is the primary action and this renders nothing.
+ */
+export const hasPrimaryCta = () => SITE.live || Boolean(SITE.contactEmail);
+
 export function PrimaryCta({
   testid,
   className = 'og-btn og-btn--primary og-btn--md',
@@ -170,17 +216,21 @@ export function PrimaryCta({
   testid?: string;
   className?: string;
 }) {
-  return SITE.live ? (
-    <Link to={SIGN_UP} className={className} data-testid={testid}>
-      {t('web.hero.primary')}
-    </Link>
-  ) : (
+  if (SITE.live)
+    return (
+      <Link to={SIGN_UP} className={className} data-testid={testid}>
+        {t('web.hero.primary')}
+      </Link>
+    );
+  if (!SITE.contactEmail) return null;
+  return (
     <Link to="/contact" className={className} data-testid={testid}>
       {t('web.soon.talk')}
     </Link>
   );
 }
 
+/** Try the demo: secondary beside Get started, primary where the build has no other main action (PS-010). */
 export function DemoLink({
   testid,
   className = 'og-btn og-btn--secondary og-btn--md',
@@ -188,17 +238,49 @@ export function DemoLink({
   testid?: string;
   className?: string;
 }) {
+  const cls = hasPrimaryCta() ? className : className.replace('og-btn--secondary', 'og-btn--primary');
   return (
-    <Link to={DEMO} className={className} data-testid={testid}>
+    <Link to={DEMO} className={cls} data-testid={testid}>
       {t('web.nav.demo')}
     </Link>
   );
+}
+
+/**
+ * The phone panel (PS-027): an overlay under the header; Escape closes it and returns focus to its button, the page
+ * behind is inert and does not scroll, and a new page closes it.
+ */
+function usePhonePanel(open: boolean, close: () => void, button: RefObject<HTMLButtonElement | null>) {
+  const { pathname } = useLocation();
+  useEffect(() => close(), [pathname, close]);
+  useEffect(() => {
+    if (!open) return;
+    const behind = Array.from(document.querySelectorAll<HTMLElement>('.pub > main, .pub > .pub-footer'));
+    behind.forEach((el) => el.setAttribute('inert', ''));
+    const root = document.documentElement;
+    const overflow = root.style.overflow;
+    root.style.overflow = 'hidden';
+    const key = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      close();
+      button.current?.focus();
+    };
+    document.addEventListener('keydown', key);
+    return () => {
+      behind.forEach((el) => el.removeAttribute('inert'));
+      root.style.overflow = overflow;
+      document.removeEventListener('keydown', key);
+    };
+  }, [open, close, button]);
 }
 
 /** The site header (OG-034 R3); sign-in uses it too, with no page marked current. */
 export function Header({ path }: { path?: string }) {
   const [phone, setPhone] = useState(false);
   const [menu, setMenu] = useState<string | null>(null);
+  const phoneButton = useRef<HTMLButtonElement>(null);
+  const [closePhone] = useState(() => () => setPhone(false));
+  usePhonePanel(phone, closePhone, phoneButton);
   const groups = navGroups();
   const [product, who, resources] = groups as [NavGroup, NavGroup, NavGroup];
   const menuOf = (g: NavGroup) => (
@@ -241,13 +323,21 @@ export function Header({ path }: { path?: string }) {
           >
             {t('web.hero.secondary')}
           </Link>
-          <DemoLink testid="pub-demo" className="og-btn og-btn--secondary og-btn--md pub-header__demo" />
+          <DemoLink
+            testid="pub-demo"
+            className={
+              hasPrimaryCta()
+                ? 'og-btn og-btn--secondary og-btn--md pub-header__demo'
+                : 'og-btn og-btn--secondary og-btn--md pub-header__demo pub-header__main'
+            }
+          />
           <PrimaryCta
             testid="pub-get-started"
-            className="og-btn og-btn--primary og-btn--md pub-header__start"
+            className="og-btn og-btn--primary og-btn--md pub-header__start pub-header__main"
           />
         </div>
         <button
+          ref={phoneButton}
           type="button"
           className="pub-icon-btn pub-menu-btn"
           aria-expanded={phone}
@@ -256,7 +346,7 @@ export function Header({ path }: { path?: string }) {
           onClick={() => setPhone((o) => !o)}
           data-testid="phone-menu-button"
         >
-          <span aria-hidden="true">{phone ? '✕' : '☰'}</span>
+          <MenuIcon open={phone} />
         </button>
       </div>
       <div id="pub-phone-nav" className="pub-phone-nav" hidden={!phone} data-testid="pub-phone-nav">
@@ -289,8 +379,8 @@ export function Header({ path }: { path?: string }) {
               <p className="pub-menu__title">{t('web.footer.region_language')}</p>
               <RegionLinks />
               <div className="pub-phone-nav__lang">
-                <LanguageSwitch className="pub-icon-btn pub-lang" />
-                <ThemeToggle />
+                <LanguageSwitch className="og-btn og-btn--secondary og-btn--md pub-lang" />
+                <ThemeToggle labelled />
               </div>
             </div>
           )}
@@ -307,10 +397,29 @@ export function Header({ path }: { path?: string }) {
   );
 }
 
-/** The site footer (OG-034 R5): five columns, the regulatory text and the region and language chooser. */
-export function Footer() {
+/** The wordmark in light ink for the navy footer in every theme (PS-025); the theme's name where it has no file. */
+function FooterLogo() {
+  const { theme } = useTheme();
+  const named = theme.logo.wordmark;
+  const file = named ? BRAND_ASSET_ON_DARK[named] : undefined;
+  const src = file ? BRAND_ASSETS[file] : undefined;
+  if (!src || !file) return <span className="og-logo og-logo--text">{theme.logo.alt}</span>;
+  const size = BRAND_ASSET_SIZES[file];
+  return (
+    <span className="og-logo og-logo--image og-logo--ink pub-footer__logo">
+      <img src={src} alt={theme.logo.alt} width={size?.width} height={size?.height} />
+    </span>
+  );
+}
+
+/**
+ * The site footer (OG-034 R5): five columns, the regulatory text and the region and language chooser. The page you are
+ * on is marked (PS-007). A production build leaves out the draft disclosures and their draft note (PS-002).
+ */
+export function Footer({ path }: { path?: string }) {
   const legal = legalSlugs();
   const groups = navGroups();
+  const draft = !isProduction();
   const company = [
     { to: '/contact', label: t('web.nav.contact') },
     { to: '/security', label: t('web.nav.security') },
@@ -324,19 +433,14 @@ export function Footer() {
     {
       id: 'legal',
       label: t('web.legal.nav'),
-      links: [
-        ...legal.map((slug) => ({ to: `/legal/${slug}`, label: t(`legal.${slug}.title`) })),
-        ...(legal.includes('disclosures')
-          ? []
-          : [{ to: '#pub-disclosures', label: t('web.labels.disclosures') }]),
-      ],
+      links: legal.map((slug) => ({ to: `/legal/${slug}`, label: legalTitle(slug) })),
     },
   ];
   return (
     <footer className="pub-footer">
       <div className="pub-wrap">
         <div className="pub-footer__top">
-          <Logo />
+          <FooterLogo />
           <div className="pub-footer__chooser" data-testid="footer-chooser">
             <p className="pub-menu__title">{t('web.footer.region_language')}</p>
             <RegionLinks testid="footer-regions" />
@@ -355,26 +459,33 @@ export function Footer() {
               <ul>
                 {c.links.map((l) => (
                   <li key={l.to}>
-                    {l.to.startsWith('#') ? <a href={l.to}>{l.label}</a> : <Link to={l.to}>{l.label}</Link>}
+                    <Link to={l.to} aria-current={current(l.to, path)}>
+                      {l.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
             </nav>
           ))}
         </div>
-        <section aria-labelledby="pub-disclosures" className="pub-disclosures" data-testid="pub-disclosures">
-          <h2 id="pub-disclosures" className="pub-disclosures__title">
-            {t('web.labels.disclosures')}
-          </h2>
+        <section
+          aria-label={t('web.labels.disclosures')}
+          className="pub-disclosures"
+          data-testid="pub-disclosures"
+        >
           <p className="pub-bank">{t('web.bank_statement')}</p>
-          <p className="pub-draft" data-testid="pub-draft-note">
-            {t('web.disclosures.note')}
-          </p>
-          <ol>
-            {tList('web.disclosures').map((d) => (
-              <li key={d}>{d}</li>
-            ))}
-          </ol>
+          {draft && (
+            <>
+              <p className="pub-draft" data-testid="pub-draft-note">
+                {t('web.disclosures.note')}
+              </p>
+              <ol data-testid="pub-draft-disclosures">
+                {tList('web.disclosures').map((d) => (
+                  <li key={d}>{d}</li>
+                ))}
+              </ol>
+            </>
+          )}
           <p className="pub-copyright">{t('web.footer.copyright', { year: new Date().getFullYear() })}</p>
         </section>
       </div>

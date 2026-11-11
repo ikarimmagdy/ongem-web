@@ -76,7 +76,8 @@ describe('public media (OG-032)', () => {
     expect(isMediaPath('/blog/not-a-post')).toBe(false);
     renderApp('/blog/not-a-post', { mode: 'none' });
     expect(screen.queryByTestId('public-post')).not.toBeInTheDocument();
-    expect(screen.getByTestId('explore-demo')).toBeInTheDocument();
+    // PS-008: the public not-found page, not sign-in.
+    expect(screen.getByTestId('public-not-found')).toBeInTheDocument();
   });
 
   it('markdown_renders_elements_never_html_AC_R15_5', () => {

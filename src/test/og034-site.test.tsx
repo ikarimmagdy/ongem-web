@@ -211,7 +211,6 @@ describe('OG-034 public site structure (US build)', () => {
         '/security',
         '/guides',
         '/faq',
-        '/status',
         '/demo',
       ]),
     );
@@ -239,9 +238,10 @@ describe('OG-034 public site structure (US build)', () => {
     expect(
       within(screen.getByTestId('footer-company')).getByRole('link', { name: 'Contact' }),
     ).toHaveAttribute('href', '/contact');
+    // PS-029: Status stays out of the menus until it has a real page.
     expect(
-      within(screen.getByTestId('footer-resources')).getByRole('link', { name: 'Status' }),
-    ).toHaveAttribute('href', '/status');
+      within(screen.getByTestId('footer-resources')).queryByRole('link', { name: 'Status' }),
+    ).not.toBeInTheDocument();
     expect(
       within(screen.getByTestId('pub-legal-links')).getByRole('link', { name: 'Disclosures' }),
     ).toBeInTheDocument();
@@ -269,7 +269,7 @@ describe('OG-034 public site structure (US build)', () => {
     expect(within(panel).getByText('United States')).toHaveAttribute('aria-current', 'true');
     expect(within(panel).getByRole('link', { name: 'United Arab Emirates' })).toHaveAttribute(
       'href',
-      `${SITE.otherUrl}/`,
+      `${SITE.otherUrl}/?lang=en`,
     );
     expect(SITE.otherUrl).toBe('https://ongemuaedevweb.z1.web.core.windows.net');
   });

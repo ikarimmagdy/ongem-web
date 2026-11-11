@@ -4,9 +4,9 @@ import { US_MEDIA } from '../../region';
 import { BrowserFrame, CapabilityArt, GemGlow, HeroArt, ShieldArt } from '../art';
 import { capabilities, capability, faq, securityControls, trustParties, who, WHO_IDS } from '../content';
 import { VideoStrip } from '../media/MediaPages';
-import { SCREENSHOTS } from '../screenshots';
+import { BLANK_IMAGE, HERO_SIZES, NARROW, SCREENSHOTS, screenSrcSet } from '../screenshots';
 import { SITE } from '../site';
-import { Cta, DemoBand, Facts, Faq, FinalCta, Shot } from './blocks';
+import { Cta, DemoBand, DemoTile, Facts, Faq, FinalCta, Shot } from './blocks';
 
 /** Two capabilities shown large on the home page, each with its real screen. */
 const HIGHLIGHTS = [
@@ -21,12 +21,15 @@ export function Home() {
         <GemGlow className="pub-hero__glow" />
         <div className="pub-wrap pub-hero__grid">
           <div className="pub-hero__copy">
-            {!SITE.live && (
-              <p className="pub-badge pub-badge--hero" data-testid="hero-soon">
-                {t('web.soon.badge')}
-              </p>
-            )}
-            <p className="pub-eyebrow pub-eyebrow--on-dark">{t('web.hero.eyebrow')}</p>
+            {/* One eyebrow line; where accounts are not open the coming-soon badge sits in it (PS-023). */}
+            <p className="pub-eyebrow pub-eyebrow--on-dark pub-hero__eyebrow">
+              {!SITE.live && (
+                <span className="pub-badge pub-badge--hero" data-testid="hero-soon">
+                  {t('web.soon.badge')}
+                </span>
+              )}
+              <span>{t('web.hero.eyebrow')}</span>
+            </p>
             <h1 className="pub-display">{t('web.hero.title')}</h1>
             <p className="pub-lede pub-lede--full">{t('web.hero.intro')}</p>
             <p className="pub-lede pub-lede--short">{t('web.hero.intro_short')}</p>
@@ -41,18 +44,24 @@ export function Home() {
             <div className="pub-hero__stage" data-testid="hero-stage">
               <div className="pub-hero__desk">
                 <BrowserFrame address="app.ongem.com">
-                  <img
-                    src={SCREENSHOTS.home.src}
-                    alt={t('web.shots.home.alt')}
-                    width={SCREENSHOTS.home.width}
-                    height={SCREENSHOTS.home.height}
-                    fetchPriority="high"
-                    decoding="async"
-                  />
+                  {/* A phone hides the desktop screen, so it never downloads it (PS-013). */}
+                  <picture>
+                    <source media={NARROW} srcSet={BLANK_IMAGE} />
+                    <img
+                      src={SCREENSHOTS.home.src}
+                      srcSet={screenSrcSet('home')}
+                      sizes={HERO_SIZES}
+                      alt={t('web.shots.home.alt')}
+                      width={SCREENSHOTS.home.width}
+                      height={SCREENSHOTS.home.height}
+                      fetchPriority="high"
+                      decoding="async"
+                    />
+                  </picture>
                 </BrowserFrame>
               </div>
               <div className="pub-hero__phone">
-                <Shot name="homePhone" frame="phone" />
+                <Shot name="homePhone" frame="phone" priority="high" />
               </div>
             </div>
           ) : (
@@ -96,6 +105,7 @@ export function Home() {
                 <span className="pub-more">{t('web.labels.see_how')}</span>
               </Link>
             ))}
+            <DemoTile count={capabilities().length} />
           </div>
         </div>
       </section>
@@ -105,7 +115,9 @@ export function Home() {
         return (
           <section
             key={id}
-            className={i % 2 ? 'pub-section pub-band' : 'pub-section pub-section--tint'}
+            className={
+              i % 2 ? 'pub-section pub-band pub-phone-hide' : 'pub-section pub-section--tint'
+            }
             aria-labelledby={`row-${id}`}
             data-testid={`feature-row-${id}`}
           >
@@ -122,7 +134,7 @@ export function Home() {
                   ))}
                 </ul>
                 <Link to={c.path} className={i % 2 ? 'pub-link-light' : 'pub-more'}>
-                  {t('web.labels.read_more')}
+                  {t('web.labels.read_more_about', { topic: c.nav })}
                 </Link>
               </div>
               <div className="pub-feature__shot" data-reveal>
@@ -147,7 +159,7 @@ export function Home() {
                 <Link key={id} to={w.path} className="pub-card" data-reveal>
                   <h3>{w.nav}</h3>
                   <p>{w.lede}</p>
-                  <span className="pub-more">{t('web.labels.read_more')}</span>
+                  <span className="pub-more">{t('web.labels.read_more_about', { topic: w.nav })}</span>
                 </Link>
               );
             })}

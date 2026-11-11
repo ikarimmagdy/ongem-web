@@ -57,17 +57,25 @@ function pageIds(): Record<string, string> {
 export type PublicPath = string;
 export type PagePath = string;
 
-/** The legal pages in the footer, in this order first; any other `legal.<slug>.title` follows. */
-const LEGAL_ORDER = ['terms', 'privacy', 'cookies', 'disclosures'];
+/**
+ * The legal pages (PS-001): terms, privacy, cookies and disclosures always exist, so the footer never holds an anchor
+ * only; any other published `legal.<slug>.title` follows. Their text is the `legal` channel, written by OnGem's legal
+ * team (OG-033); until a page is published it shows a holding line.
+ */
+export const LEGAL_PAGES = ['terms', 'privacy', 'cookies', 'disclosures'];
 
 export function legalSlugs(): string[] {
-  const slugs = keysUnder('legal.')
+  const published = keysUnder('legal.')
     .filter((k) => k.endsWith('.title'))
     .map((k) => k.slice(6, -6))
-    .filter((s) => /^[a-z0-9-]+$/.test(s) && has(`legal.${s}.body`));
-  const rank = (s: string) => (LEGAL_ORDER.includes(s) ? LEGAL_ORDER.indexOf(s) : LEGAL_ORDER.length);
-  return [...new Set(slugs)].sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
+    .filter((s) => /^[a-z0-9-]+$/.test(s) && has(`legal.${s}.body`) && !LEGAL_PAGES.includes(s))
+    .sort((a, b) => a.localeCompare(b));
+  return [...LEGAL_PAGES, ...new Set(published)];
 }
+
+/** The page's own published title, else its name from the site's texts. */
+export const legalTitle = (slug: string) =>
+  has(`legal.${slug}.title`) ? t(`legal.${slug}.title`) : t(`web.legal.page.${slug}`);
 
 export const isLegalPath = (path: string) =>
   path.startsWith('/legal/') && legalSlugs().includes(path.slice(7));
@@ -80,6 +88,21 @@ export const whoOfPath = (path: string): WhoId | undefined => WHO_IDS.find((id) 
 export function isPublicPath(path: string): boolean {
   return isPagePath(path) || isMediaPath(path) || isLegalPath(path);
 }
+
+/** Old paths a build does not have, to the page that now holds them (PS-008): no card page or videos in the UAE. */
+export function movedPath(path: string): string | undefined {
+  if (path === '/product/cards' && !SITE.cards) return '/product';
+  if (path === '/videos' && !US_MEDIA) return '/blog';
+  return undefined;
+}
+
+/**
+ * The signed-in app's paths and sign-in's own (`src/SignedIn.tsx` routes): signed out, they show sign-in so the
+ * founder lands there after it. Any other unknown path is the public not-found page (PS-008).
+ */
+const APP_PATHS =
+  /^\/(sign-in|sign-up|sso-callback|accounts|payments|recipients|cards|team|documents|more|onboarding|support|settings|notifications|invite)(\/|$)/;
+export const isAppPath = (path: string) => APP_PATHS.test(path);
 
 export const pageMeta = (path: string) => {
   const id = pageId(path) ?? 'home';
@@ -126,7 +149,7 @@ export function navGroups(): NavGroup[] {
         { to: '/blog', label: t('web.nav.blog') },
         ...(US_MEDIA ? [{ to: '/videos', label: t('web.nav.videos') }] : []),
         { to: '/faq', label: t('web.nav.faq') },
-        { to: '/status', label: t('web.nav.status') },
+        // Status stays out of the menus until the monitoring work (OG-002) gives it a real page (PS-029).
       ],
     },
   ];

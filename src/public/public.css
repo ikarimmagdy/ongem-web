@@ -27,8 +27,11 @@
   border-radius: var(--radius-md);
   z-index: 20;
 }
+/* PS-047: on focus the skip link takes its own row above the header, so it never covers the logo. */
 .pub-skip:focus {
-  top: var(--space-md);
+  position: static;
+  display: block;
+  text-align: center;
 }
 
 /* Header */
@@ -53,23 +56,36 @@
   height: 28px;
   width: auto;
 }
+/* PS-006: 8 px between items, 16 px type, each item 40 px tall like the tools and buttons beside it, Roboto Condensed
+   Medium (brand: navigation) with the label tracking. */
 .pub-nav {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   margin-inline-start: auto;
 }
 .pub-nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
   color: var(--color-text-primary);
   text-decoration: none;
   font-family: var(--font-label);
   font-weight: var(--font-label-weight);
-  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-md);
+  line-height: 1.25;
+  letter-spacing: var(--font-label-tracking, 0.06em);
+  padding: var(--space-sm) calc(var(--space-sm) + var(--space-xs));
   border-radius: var(--radius-sm);
 }
 .pub-nav__link[aria-current='page'],
 .pub-nav__link:hover {
   color: var(--color-text-link);
+}
+/* PS-041: the current page or section is marked by a bar as well as the colour. */
+.pub-nav__link[aria-current='page'],
+.pub-menu__button.is-current {
+  box-shadow: inset 0 -2px 0 currentColor;
 }
 .pub-nav a:focus-visible,
 .pub-icon-btn:focus-visible,
@@ -886,7 +902,7 @@
 /* Motion (OG-034 R1): a section rises a little as it scrolls into view and is never hidden or transparent, so a
    full-page capture, print or a page without script shows everything. Off with reduced motion and in print. */
 .pub [data-reveal].is-rising {
-  animation: pub-rise-in 0.5s ease both;
+  animation: pub-rise-in 0.25s ease-out both;
 }
 @keyframes pub-rise-in {
   from {
@@ -897,7 +913,7 @@
   }
 }
 .pub-hero__stage {
-  animation: pub-rise 0.8s ease both;
+  animation: pub-rise 0.3s ease-out both;
 }
 @keyframes pub-rise {
   from {
@@ -1033,9 +1049,6 @@
 .pub-header__row {
   gap: var(--space-md);
 }
-.pub-nav {
-  gap: var(--space-xs);
-}
 .pub-menu {
   position: relative;
 }
@@ -1146,9 +1159,10 @@
   display: none;
 }
 @media (max-width: 1120px) {
+  /* PS-018: the primary action stays in the header at every width; sign-in and the demo move to the panel. */
   .pub-nav,
   .pub-header__actions .pub-nav__signin,
-  .pub-header__actions .pub-header__start {
+  .pub-header__actions .pub-header__demo:not(.pub-header__main) {
     display: none;
   }
   .pub-menu-btn {
@@ -1156,12 +1170,19 @@
     align-items: center;
     justify-content: center;
   }
+  /* PS-027: an overlay under the header, not a block that pushes the page down. */
   .pub-phone-nav {
     display: block;
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
     border-top: 1px solid var(--color-border-subtle);
+    border-bottom: 1px solid var(--color-border-subtle);
     background: var(--color-surface-card);
-    max-height: calc(100vh - 68px);
+    box-shadow: var(--shadow-raised);
+    max-height: calc(100dvh - 68px);
     overflow-y: auto;
+    overscroll-behavior: contain;
     padding-block: var(--space-md) var(--space-lg);
   }
   .pub-phone-nav ul {
@@ -1171,7 +1192,7 @@
   }
   .pub-phone-nav li a {
     display: block;
-    padding: var(--space-sm) 0;
+    padding: calc(var(--space-sm) + var(--space-xs)) 0;
     color: var(--color-text-primary);
     text-decoration: none;
     border-bottom: 1px solid var(--color-border-subtle);
@@ -1200,7 +1221,7 @@
   .pub-header__actions {
     margin-inline-start: auto;
   }
-  .pub-header__demo {
+  .pub-header__main {
     padding-inline: var(--space-sm);
   }
 }
@@ -1311,6 +1332,270 @@
 }
 .pub-demo-band .og-btn {
   text-decoration: none;
+}
+
+/* Public site review fixes (12 Nov 2026, PS-0xx). Theme tokens and logical properties only. */
+
+/* Text wrap: balanced headings, no widows in ledes (PS-023). */
+.pub-display,
+.pub-h2,
+.pub-h3 {
+  text-wrap: balance;
+}
+.pub-lede,
+.pub-card p,
+.pub-faq__item p {
+  text-wrap: pretty;
+}
+
+/* Drawn icons (PS-042). */
+.pub-icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.pub-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.pub-theme-btn {
+  gap: var(--space-sm);
+}
+
+/* PS-023: one eyebrow line with the coming-soon badge inside it. */
+.pub-hero__eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.pub-hero__eyebrow .pub-badge--hero {
+  margin: 0;
+}
+
+/* PS-024: on a phone the hero drawing sits inside the hero, with no empty band under it. */
+@media (max-width: 860px) {
+  .pub-hero {
+    padding-block-end: var(--space-2xl);
+  }
+  .pub-hero__stage {
+    margin-block: var(--space-xl) 0;
+  }
+  .pub-hero__stage .pub-art--hero {
+    max-width: 420px;
+    margin-inline: auto;
+  }
+  .pub-hero + .pub-trust {
+    padding-top: var(--space-2xl);
+  }
+}
+
+/* PS-021: every value on one line at the top of its fact, labels under it from the same line. */
+.pub-fact {
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.pub-fact dd {
+  order: -1;
+  line-height: 1;
+}
+
+/* PS-030: text links are at least 24 px tall, 44 px on touch screens. */
+.pub-more,
+.pub-link-light {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+@media (pointer: coarse) {
+  .pub-more,
+  .pub-link-light {
+    min-height: 44px;
+  }
+}
+
+/* PS-031: the demo tile closes a row of capability tiles. */
+.pub-card--demo {
+  background: var(--color-surface-tint-blue);
+  border-color: var(--color-border-default);
+}
+.pub-card--demo h3,
+.pub-card--demo p {
+  color: var(--color-brand-deep);
+}
+.pub-card--demo .pub-more {
+  color: var(--color-brand-primary);
+}
+.pub-cards--2 {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+@media (min-width: 900px) {
+  .pub-cards--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* PS-034: the heading column of a FAQ carries a line and the next step; the FAQ page itself is one column. */
+.pub-faq__side-text {
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-md);
+  max-width: 40ch;
+}
+.pub-faq__side .og-btn {
+  text-decoration: none;
+}
+.pub-faq--single {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 860px;
+  gap: var(--space-lg);
+}
+
+/* PS-038: one walkthrough on a phone; the second feature row and extra videos are a click away. */
+@media (max-width: 640px) {
+  .pub-phone-hide {
+    display: none;
+  }
+  .pub-video-grid .pub-video + .pub-video {
+    display: none;
+  }
+}
+
+/* PS-039: the UAE coming-soon note is one notice. */
+.pub-soon-note {
+  border-inline-start: 4px solid var(--color-status-pending);
+}
+
+/* PS-050: Coming soon is a neutral label, not a third accent. */
+.pub-badge {
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--font-body);
+  font-weight: var(--font-body-strong-weight);
+  background: var(--color-status-neutral-bg);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border-default);
+}
+.pub-hero .pub-badge {
+  background: var(--color-surface-tint-blue);
+  color: var(--color-brand-deep);
+}
+
+/* PS-049: chips 40 px tall. */
+.pub-chips a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: var(--space-sm) var(--space-md);
+}
+
+/* PS-040: Arabic headings get room for their marks and the Arabic face's own weight. */
+:lang(ar) .pub-display,
+:lang(ar) .pub-h2,
+:lang(ar) .pub-h3,
+:lang(ar) .pub-card h3,
+:lang(ar) .pub-trust__name {
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+:lang(ar) .pub-nav__link,
+:lang(ar) .pub-eyebrow,
+:lang(ar) .pub-menu__title {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* PS-048: a post or legal page heading at 48 px with a readable measure. */
+.pub-post__head .pub-display,
+.pub-display--page {
+  font-size: clamp(var(--font-size-2xl), 4vw, calc(var(--font-size-3xl) * 4 / 3));
+  max-width: 30ch;
+}
+
+/* PS-022: drawings in tiles carry no small words; the same drawing shown large stays at one scale. */
+.pub-card .pub-art .pub-art__label {
+  display: none;
+}
+.pub-feature__shot > .pub-art {
+  max-width: 440px;
+  margin-inline: auto;
+}
+
+/* PS-025: the footer is the navy band that anchors the page, in both themes. */
+.pub-footer {
+  background: var(--color-brand-deep);
+  border-top: 1px solid var(--color-border-subtle);
+  color: var(--color-surface-tint-blue);
+}
+.pub-footer .pub-menu__title {
+  color: var(--color-surface-tint-blue);
+}
+.pub-footer__col a,
+.pub-footer .pub-region__list a,
+.pub-footer .pub-region__current {
+  color: var(--color-action-primary-text);
+}
+.pub-footer__col a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+}
+.pub-footer__col a[aria-current='page'] {
+  font-weight: var(--font-body-strong-weight);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.pub-footer__col a:hover,
+.pub-footer .pub-region__list a:hover {
+  color: var(--color-action-primary-text);
+  text-decoration: underline;
+}
+.pub-footer a:focus-visible,
+.pub-footer button:focus-visible {
+  outline-color: var(--color-surface-tint-blue);
+}
+.pub-footer .pub-disclosures {
+  border-top-color: color-mix(in srgb, var(--color-surface-tint-blue) 25%, transparent);
+}
+.pub-footer .pub-bank,
+.pub-footer .pub-disclosures ol,
+.pub-footer .pub-copyright {
+  color: var(--color-surface-tint-blue);
+}
+.pub-footer .pub-draft {
+  background: var(--color-surface-tint-blue);
+  color: var(--color-brand-deep);
+}
+.pub-footer .fw-lang .og-btn--secondary {
+  background: transparent;
+  color: var(--color-action-primary-text);
+  border-color: color-mix(in srgb, var(--color-surface-tint-blue) 50%, transparent);
+}
+
+/* PS-012: tags and quotes on surfaces that turn dark with the theme, so their text stays readable. */
+.pub .pub-tags li {
+  background: var(--color-status-info-bg);
+  color: var(--color-text-primary);
+}
+.pub .pub-prose blockquote {
+  background: var(--color-status-neutral-bg);
+  color: var(--color-text-primary);
+}
+
+/* PS-020: clean posters: the title is only under the video, the play button sits in a corner. */
+.pub .pub-video__play {
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: var(--space-md);
+  background: transparent;
+}
+.pub .pub-video__play-icon {
+  width: 56px;
+  height: 56px;
 }
 
 @media print {

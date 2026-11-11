@@ -169,8 +169,8 @@
       "description": "FAQ general: answer",
       "placeholders": [],
       "meta": {},
-      "en": "No. OnGem is a financial technology company. Your deposits are held at a licensed UAE bank, which provides the accounts. OnGem shows you the bank’s balance and never holds your funds.¹",
-      "ar": "لا. OnGem شركة تقنية مالية. تُحفظ ودائعك لدى بنك مرخّص في الإمارات العربية المتحدة، وهو الذي يقدّم الحسابات. تعرض لك OnGem رصيد البنك ولا تحتفظ بأموالك أبدًا.¹"
+      "en": "No. OnGem is a financial technology company. Your deposits are held at a licensed UAE bank, which provides the accounts. OnGem shows you the bank’s balance and never holds your funds.",
+      "ar": "لا. OnGem شركة تقنية مالية. تُحفظ ودائعك لدى بنك مرخّص في الإمارات العربية المتحدة، وهو الذي يقدّم الحسابات. تعرض لك OnGem رصيد البنك ولا تحتفظ بأموالك أبدًا."
     },
     {
       "key": "faq.general.1.q",

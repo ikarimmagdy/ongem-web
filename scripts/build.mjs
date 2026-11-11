@@ -7,8 +7,9 @@
 // instead, such as one made from the seed by `npm run content:snapshot` for CI and tests.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { build } from 'vite';
+import { build, loadEnv } from 'vite';
 import { DEFAULT_API, fetchSnapshot, LOCALES, PUBLIC_CHANNELS, regionOf } from './content.mjs';
+import { siteConfigErrors } from './site-check.mjs';
 
 const arg = (name) => {
   const at = process.argv.indexOf(name);
@@ -16,6 +17,14 @@ const arg = (name) => {
 };
 const outDir = arg('--outDir') ?? 'dist';
 const region = regionOf();
+
+// PS-014: a production build stops when its public site URLs are missing or point at development hosts.
+const siteErrors = siteConfigErrors({ ...loadEnv('production', process.cwd(), 'VITE_'), ...process.env });
+if (siteErrors.length) {
+  for (const e of siteErrors) console.error(`site: ${e}`);
+  console.error('site: a production build needs the public URLs of both regions (VITE_SITE_URL, VITE_OTHER_SITE_URL).');
+  process.exit(1);
+}
 
 let file = arg('--content-snapshot') ?? process.env.ONGEM_CONTENT_SNAPSHOT;
 if (file) {

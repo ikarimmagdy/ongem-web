@@ -72,9 +72,8 @@ describe('AE build shows UAE content only (OG-022 R18)', () => {
 
   it('disclosures_name_a_licensed_uae_bank_AC_R18_1', () => {
     expect(t('web.bank_statement')).toContain('Banking services are provided by a licensed UAE bank.');
-    expect(tList('web.disclosures')[0]).toBe(
-      'OnGem is a financial technology company, not a bank. Banking services are provided by a licensed UAE bank.',
-    );
+    // PS-033: the bank statement is said once; the disclosures no longer repeat it.
+    expect(tList('web.disclosures')).not.toContain(t('web.bank_statement'));
     renderApp('/', { mode: 'none' });
     expect(screen.getByTestId('pub-draft-note')).toHaveTextContent(t('web.disclosures.note'));
     expect(t('web.disclosures.note')).toContain('Draft for legal review');

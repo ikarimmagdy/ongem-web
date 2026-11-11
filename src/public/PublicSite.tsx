@@ -1,9 +1,20 @@
 import { useEffect, type ReactNode } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { t, useChannels } from '../i18n';
-import { capOfPath, faqFor, isLegalPath, isPagePath, pageMeta, whoOfPath } from './content';
+import {
+  capOfPath,
+  faqFor,
+  isLegalPath,
+  isPagePath,
+  isPublicPath,
+  movedPath,
+  pageMeta,
+  whoOfPath,
+} from './content';
 import { LegalPage, legalMeta } from './LegalPage';
+import { isMediaPath } from './media/paths';
 import { MediaPage, mediaMeta } from './media/MediaPages';
+import { NotFound, notFoundMeta } from './pages/NotFound';
 import { Footer, Header } from './Nav';
 import { Home } from './pages/Home';
 import {
@@ -52,14 +63,17 @@ function useReveal(path: string) {
   }, [path]);
 }
 
-/** A new page starts at its top; a link to /product#cards lands on that section, below the sticky header (UX-02). */
+/**
+ * A new page starts at its top; a link to /product#cards lands on that section, below the sticky header (UX-02). Every
+ * navigation counts, a link to the page you are on too (PS-007): it has a new location key, not a new path.
+ */
 function useScrollToTop(path: string) {
-  const { hash } = useLocation();
+  const { hash, key } = useLocation();
   useEffect(() => {
     const target = hash ? document.getElementById(hash.slice(1)) : null;
     if (target) target.scrollIntoView?.({ block: 'start' });
     else window.scrollTo?.(0, 0);
-  }, [path, hash]);
+  }, [path, hash, key]);
 }
 
 const STATIC_PAGES: Record<string, () => ReactNode> = {
@@ -83,19 +97,36 @@ function Page({ path }: { path: string }) {
   const Static = STATIC_PAGES[path];
   if (Static) return <Static />;
   if (isLegalPath(path)) return <LegalPage slug={path.slice(7)} />;
-  return <MediaPage path={path} />;
+  if (isMediaPath(path)) return <MediaPage path={path} />;
+  return <NotFound />;
 }
 
-/** The signed-out public site (OG-032, OG-034): one page per path, header and footer around it. */
+function metaOf(path: string) {
+  if (isPagePath(path)) return pageMeta(path);
+  if (isLegalPath(path)) return legalMeta(path);
+  if (isMediaPath(path)) return mediaMeta(path);
+  return notFoundMeta();
+}
+
+/**
+ * The signed-out public site (OG-032, OG-034): one page per path, header and footer around it. An old path this build
+ * moved goes to its page; any other path it does not know is the not-found page, never sign-in (PS-008).
+ */
 export function PublicSite({ path }: { path: string }) {
+  const moved = movedPath(path);
+  if (moved) return <Navigate to={moved} replace />;
+  return <PublicPage path={path} />;
+}
+
+function PublicPage({ path }: { path: string }) {
   useChannels(
     'web_public',
     'faq',
     'legal',
     ...(path.startsWith('/blog') || path === '/guides' ? (['blog'] as const) : []),
   );
-  const meta = isPagePath(path) ? pageMeta(path) : isLegalPath(path) ? legalMeta(path) : mediaMeta(path);
-  usePageHead(path, meta, faqFor(path));
+  const known = isPublicPath(path);
+  usePageHead(path, metaOf(path), faqFor(path), { noindex: !known || path === '/demo' });
   useReveal(path);
   useScrollToTop(path);
   return (
@@ -107,7 +138,7 @@ export function PublicSite({ path }: { path: string }) {
       <main id="main">
         <Page path={path} />
       </main>
-      <Footer />
+      <Footer path={path} />
     </div>
   );
 }

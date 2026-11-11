@@ -57,13 +57,6 @@
   fill: var(--color-action-primary-text);
   margin-inline-start: 3px;
 }
-.pub-video__play-title {
-  font-family: var(--font-display);
-  font-weight: var(--font-display-weight);
-  font-size: var(--font-size-lg);
-  padding-inline: var(--space-md);
-  text-align: center;
-}
 .pub-video--phone .pub-video__stage {
   max-width: 300px;
   margin-inline: auto;

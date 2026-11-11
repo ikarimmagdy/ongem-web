@@ -5,8 +5,9 @@ import { Md, t, tList, useChannels, useContent } from './i18n';
 import { Button, Notice, Skeleton, ThemeProvider, ToastProvider } from './design-system';
 import { SessionProvider, useSession, type Mode } from './session';
 import { privacyLine } from './recording/privacy';
-import { isPublicPath } from './public/content';
+import { isAppPath, isPublicPath } from './public/content';
 import { Footer, Header, PublicSite } from './public/PublicSite';
+import { usePageHead } from './public/seo';
 import './web.css';
 
 export { NAV } from './nav';
@@ -42,6 +43,17 @@ export function SignInScreen() {
   // it does not compete with the first screen for bandwidth (OG-030-N3).
   useEffect(() => prefetchAfterLoad(loadSignedIn), []);
   useChannels('web_public', 'legal');
+  // Its own title and description, out of search (PS-035); the missing key is a note for developers only (PS-009).
+  const page = signUp ? 'sign_up' : 'sign_in';
+  usePageHead(
+    '/sign-in',
+    { title: t(`web.page.${page}.title`), description: t(`web.page.${page}.description`) },
+    [],
+    { noindex: true },
+  );
+  useEffect(() => {
+    if (!auth.available) console.info('sign-in: this build has no VITE_CLERK_PUBLISHABLE_KEY; demo only');
+  }, [auth.available]);
   const Form = signUp ? (auth.SignUp ?? auth.SignIn) : auth.SignIn;
   return (
     <div className="pub fw-auth">
@@ -106,8 +118,13 @@ export function Routed() {
   const { pathname } = useLocation();
   // Signed out, the public site answers its own paths (OG-032 R1, R5); every other path is sign-in, as before. A
   // sign-in that still has a task to finish (WEB-COR-07) always shows sign-in, so the task form is never hidden.
+  // A path that is neither public nor the app's is the public not-found page, never sign-in (PS-008).
   if (mode === 'none')
-    return isPublicPath(pathname) && !pendingTask ? <PublicSite path={pathname} /> : <SignInScreen />;
+    return (isPublicPath(pathname) || !isAppPath(pathname)) && !pendingTask ? (
+      <PublicSite path={pathname} />
+    ) : (
+      <SignInScreen />
+    );
   // OG-022 R25: no screen calls the API until the person's region is known.
   if (regionPending) return <Skeleton label={t('app.shell.loading_company')} />;
   return (

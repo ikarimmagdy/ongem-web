@@ -30,10 +30,13 @@ describe('OG-034 public site, UAE build: coming soon, no cards (R7)', () => {
     renderApp('/', { mode: 'none' });
     expect(screen.getByTestId('hero-soon')).toHaveTextContent('Coming soon to the UAE');
     expect(screen.getByText(t('web.hero.intro'))).toHaveTextContent('Accounts are not open yet.');
-    expect(screen.getByTestId('hero-get-started')).toHaveTextContent('Talk to us');
-    expect(screen.getByTestId('hero-get-started')).toHaveAttribute('href', '/contact');
+    // PS-010: no public address yet, so no Talk to us leading to a page without one; the demo is the main action.
+    expect(SITE.contactEmail).toBe('');
+    expect(screen.queryByTestId('hero-get-started')).not.toBeInTheDocument();
     expect(screen.getByTestId('hero-demo')).toHaveAttribute('href', '/demo');
-    expect(screen.getByTestId('final-get-started')).toHaveTextContent('Talk to us');
+    expect(screen.getByTestId('hero-demo')).toHaveClass('og-btn--primary');
+    expect(screen.queryByTestId('final-get-started')).not.toBeInTheDocument();
+    expect(document.body.textContent).not.toMatch(/Talk to us/);
     for (const path of pages()) {
       const { unmount } = renderApp(path, { mode: 'none' });
       expect(text(), path).not.toMatch(/Open your business account|accounts are open/i);
@@ -82,7 +85,7 @@ describe('OG-034 public site, UAE build: coming soon, no cards (R7)', () => {
     expect(within(panel).getByText('United Arab Emirates')).toHaveAttribute('aria-current', 'true');
     expect(within(panel).getByRole('link', { name: 'United States' })).toHaveAttribute(
       'href',
-      'https://app-dev.platform.ongem.com/',
+      'https://app-dev.platform.ongem.com/?lang=en',
     );
   });
 });

@@ -7,7 +7,7 @@ import { renderApp } from './render';
 describe('shell and sign-in (OG-030 R1)', () => {
   it('sign_in_not_configured_and_demo_AC_R1_1', async () => {
     renderApp('/sign-in', { mode: 'none' });
-    expect(screen.getByText(/Sign-in is not configured for this build/)).toBeInTheDocument();
+    expect(screen.getByText(/Sign-in opens soon/)).toBeInTheDocument();
     await userEvent.click(screen.getByTestId('explore-demo'));
     expect(await screen.findByTestId('home-total')).toBeInTheDocument();
     expect(screen.getByTestId('env-badge')).toHaveTextContent('Demo');

@@ -2,6 +2,7 @@ import { t } from '../i18n';
 import { useId, type ReactNode } from 'react';
 import { formatMinor } from '../lib/format';
 import { REGION_CONFIG } from '../region';
+import brandMark from '../assets/ongem-favicon.png';
 import { SITE } from './site';
 import type { ArtName } from './content';
 
@@ -29,17 +30,9 @@ function Svg({
   );
 }
 
-/** The brand gem: a cut stone of five facets. */
+/** The brand mark from the logo file, never redrawn or recoloured (PS-016); 48 units square at scale 1. */
 export function Gem({ x, y, s = 1 }: { x: number; y: number; s?: number }) {
-  return (
-    <g transform={`translate(${x} ${y}) scale(${s})`}>
-      <polygon className="f-signature" points="0,14 14,0 34,0 48,14 24,44" />
-      <polygon className="f-primary" points="0,14 14,0 24,14" />
-      <polygon className="f-soft" points="24,14 34,0 48,14" />
-      <polygon className="f-deep" points="0,14 24,14 24,44" />
-      <polygon className="f-accent" points="24,14 48,14 24,44" opacity="0.85" />
-    </g>
-  );
+  return <image href={brandMark} x={x} y={y} width={48 * s} height={48 * s} />;
 }
 
 function Panel({ x, y, w, h }: { x: number; y: number; w: number; h: number }) {
@@ -71,7 +64,7 @@ export function HeroArt() {
       <rect className="f-tint" x="40" y="70" width="360" height="40" rx="14" />
       <Gem x={58} y={78} s={0.5} />
       <Bar x={96} y={86} w={80} cls="f-deep" />
-      <text className="t-muted" x="64" y="146" fontSize="13">
+      <text className="t-muted pub-art__label" x="64" y="146" fontSize="13">
         {t('web.art.operating_account')}
       </text>
       <text className="t-primary pub-art__money" x="64" y="180" fontSize="30">
@@ -79,7 +72,7 @@ export function HeroArt() {
       </text>
       <rect className="f-tint-mint" x="64" y="200" width="150" height="26" rx="13" />
       <circle className="f-success" cx="80" cy="213" r="5" />
-      <text className="t-on-tint" x="92" y="218" fontSize="12">
+      <text className="t-on-tint pub-art__label" x="92" y="218" fontSize="12">
         {t('web.art.payment_settled')}
       </text>
       <polyline
@@ -107,7 +100,7 @@ export function HeroArt() {
         <Bar x={18} y={104} w={80} />
         <Bar x={18} y={122} w={60} />
         <rect className="f-primary" x="18" y="196" width="94" height="26" rx="13" />
-        <text className="t-on-primary" x="40" y="213" fontSize="11">
+        <text className="t-on-primary pub-art__label" x="40" y="213" fontSize="11">
           {t('web.art.approve')}
         </text>
       </g>
@@ -139,7 +132,7 @@ export function PartnerArt() {
   return (
     <Svg label={t('web.art.label.partner')}>
       <Panel x={20} y={50} w={110} h={120} />
-      <text className="t-muted" x="34" y="78" fontSize="12">
+      <text className="t-muted pub-art__label" x="34" y="78" fontSize="12">
         {t('web.art.new_company')}
       </text>
       <Bar x={34} y={92} w={80} />
@@ -186,13 +179,13 @@ const ART: Record<ArtName, () => ReactNode> = {
       ))}
       <line className="s-primary" x1="84" y1="100" x2="136" y2="100" strokeWidth="4" />
       <line className="s-success" x1="184" y1="100" x2="236" y2="100" strokeWidth="4" />
-      <text className="t-muted" x="40" y="150" fontSize="12">
+      <text className="t-muted pub-art__label" x="40" y="150" fontSize="12">
         {t('web.art.sent')}
       </text>
-      <text className="t-muted" x="130" y="150" fontSize="12">
+      <text className="t-muted pub-art__label" x="130" y="150" fontSize="12">
         {t('web.art.at_the_bank')}
       </text>
-      <text className="t-muted" x="238" y="150" fontSize="12">
+      <text className="t-muted pub-art__label" x="238" y="150" fontSize="12">
         {t('web.art.settled')}
       </text>
     </Svg>
@@ -239,9 +232,9 @@ const ART: Record<ArtName, () => ReactNode> = {
         </g>
       ))}
       <path className="s-border-strong" d="M120 80 H200" strokeWidth="3" strokeDasharray="5 6" />
-      <rect className="f-tint-mint" x="100" y="130" width="120" height="40" rx="20" />
-      <polyline className="s-success" points="128,150 138,160 156,140" fill="none" strokeWidth="4" />
-      <text className="t-on-tint" x="164" y="155" fontSize="12">
+      <rect className="f-tint-mint" x="86" y="130" width="148" height="40" rx="20" />
+      <polyline className="s-success" points="116,150 126,160 144,140" fill="none" strokeWidth="4" />
+      <text className="t-on-tint pub-art__label" x="154" y="155" fontSize="12">
         {t('web.art.approved')}
       </text>
     </Svg>
@@ -288,7 +281,7 @@ const ART: Record<ArtName, () => ReactNode> = {
       <Bar x={96} y={62} w={150} />
       <Bar x={96} y={80} w={110} />
       <rect className="f-tint-violet" x="56" y="110" width="208" height="50" rx="12" />
-      <text className="t-on-tint" x="70" y="140" fontSize="12">
+      <text className="t-on-tint pub-art__label" x="70" y="140" fontSize="12">
         {t('web.art.draft_ready')}
       </text>
     </Svg>
@@ -319,8 +312,12 @@ export function CapabilityArt({ name }: { name: ArtName }) {
   return <>{ART[name]()}</>;
 }
 
-/** A large faceted gem drawn as a soft backdrop for dark bands (decorative, hidden from assistive technology). */
+/**
+ * A soft light in the brand's signature colours behind dark bands (decorative, hidden from assistive technology). It is
+ * no longer a gem: the mark is never redrawn (PS-016).
+ */
 export function GemGlow({ className }: { className?: string }) {
+  const g = useId();
   return (
     <svg
       className={`pub-art pub-glow ${className ?? ''}`}
@@ -328,12 +325,13 @@ export function GemGlow({ className }: { className?: string }) {
       aria-hidden="true"
       focusable="false"
     >
-      <g opacity="0.22">
-        <polygon className="f-signature" points="0,140 140,0 340,0 480,140 240,440" />
-        <polygon className="f-primary" points="0,140 140,0 240,140" />
-        <polygon className="f-soft" points="240,140 340,0 480,140" />
-        <polygon className="f-accent" points="240,140 480,140 240,440" opacity="0.6" />
-      </g>
+      <defs>
+        <radialGradient id={g} cx="0.5" cy="0.45" r="0.5">
+          <stop className="stop-signature" offset="0" stopOpacity="0.5" />
+          <stop className="stop-deep" offset="1" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <ellipse cx="240" cy="200" rx="240" ry="200" fill={`url(#${g})`} />
     </svg>
   );
 }

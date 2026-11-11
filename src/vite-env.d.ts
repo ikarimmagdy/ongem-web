@@ -15,4 +15,6 @@ interface ImportMetaEnv {
   readonly VITE_SITE_URL?: string;
   readonly VITE_OTHER_SITE_URL?: string;
   readonly VITE_CONTACT_EMAIL?: string;
+  /** `production` for a production build (PS-002, PS-014); anything else is a dev or preview build. */
+  readonly VITE_ENVIRONMENT?: string;
 }

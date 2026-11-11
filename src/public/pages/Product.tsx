@@ -4,7 +4,7 @@ import { CapabilityArt } from '../art';
 import { capabilities, capability, faq, type CapId } from '../content';
 import { Gallery, VideoStrip } from '../media/MediaPages';
 import type { ScreenName } from '../screenshots';
-import { DemoBand, Faq, FinalCta, PageHead, Shot, Soon } from './blocks';
+import { DemoBand, DemoTile, Faq, FinalCta, PageHead, Shot, Soon } from './blocks';
 
 /** The real screen of each capability page (OG-034 R2). */
 const CAP_SCREEN: Record<CapId, ScreenName> = {
@@ -39,6 +39,7 @@ export function ProductOverview() {
                 <span className="pub-more">{t('web.labels.see_how')}</span>
               </Link>
             ))}
+            <DemoTile count={capabilities().length} />
           </div>
         </div>
       </section>

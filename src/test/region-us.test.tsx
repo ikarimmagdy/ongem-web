@@ -32,7 +32,7 @@ describe('US build unchanged (OG-022 R18)', () => {
     ]);
     expect(navGroups().map((g) => g.label)).toEqual(['Product', 'Who it’s for', 'Resources']);
     expect(navLinks().map((l) => l.label)).toEqual(['Pricing', 'Security']);
-    expect(navGroups()[2]!.links.map((l) => l.label)).toEqual(['Guides', 'Blog', 'Videos', 'FAQ', 'Status']);
+    expect(navGroups()[2]!.links.map((l) => l.label)).toEqual(['Guides', 'Blog', 'Videos', 'FAQ']);
     expect(posts().map((p) => p.slug)).toEqual(
       expect.arrayContaining([
         'from-genzone-to-ongem',

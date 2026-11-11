@@ -241,8 +241,8 @@
       "description": "Sign-in page when the build has no sign-in key (markdown)",
       "placeholders": [],
       "meta": {},
-      "en": "**Sign-in is not configured for this build**. This build has no sign-in key. You can explore the app with sample data.",
-      "ar": "**تسجيل الدخول غير مُفعّل في هذا الإصدار**. لا يحتوي هذا الإصدار على مفتاح تسجيل الدخول. يمكنك استكشاف التطبيق باستخدام بيانات نموذجية."
+      "en": "Sign-in opens soon. Until then, explore OnGem on sample data in the demo.",
+      "ar": "سيُتاح تسجيل الدخول قريبًا. وإلى ذلك الحين، استكشف OnGem ببيانات تجريبية في النسخة التجريبية."
     },
     {
       "key": "web.auth.promises.1",
@@ -398,6 +398,24 @@
       "ar": "شركات التأسيس والترخيص"
     },
     {
+      "key": "web.contact.questions_text",
+      "format": "text",
+      "description": "Contact page: text of the questions card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Most questions about accounts, payments, approvals and fees are answered on one page.",
+      "ar": "معظم الأسئلة عن الحسابات والمدفوعات والموافقات والرسوم مُجاب عنها في صفحة واحدة."
+    },
+    {
+      "key": "web.contact.questions_title",
+      "format": "text",
+      "description": "Contact page: card for visitors with a question before they start",
+      "placeholders": [],
+      "meta": {},
+      "en": "A question first",
+      "ar": "لديك سؤال أولًا"
+    },
+    {
       "key": "web.contact.title",
       "format": "text",
       "description": "Contact page: headline",
@@ -490,6 +508,24 @@
       },
       "en": "1,189",
       "ar": "1,189"
+    },
+    {
+      "key": "web.faq.all",
+      "format": "text",
+      "description": "Link to the FAQ page from a list of questions",
+      "placeholders": [],
+      "meta": {},
+      "en": "All questions",
+      "ar": "جميع الأسئلة"
+    },
+    {
+      "key": "web.faq.side_text",
+      "format": "text",
+      "description": "Beside a list of questions: a short line before the actions",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not here? Try the demo on sample data, or read every question.",
+      "ar": "لم تجد سؤالك؟ جرّب النسخة التجريبية ببيانات تجريبية، أو اطّلع على جميع الأسئلة."
     },
     {
       "key": "web.faq_page.general",
@@ -1096,6 +1132,15 @@
       "ar": "المزيد من OnGem"
     },
     {
+      "key": "web.labels.open_demo",
+      "format": "text",
+      "description": "Tile in a capability grid that opens the demo",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open the demo",
+      "ar": "افتح النسخة التجريبية"
+    },
+    {
       "key": "web.labels.open_menu",
       "format": "text",
       "description": "Public site label: open menu",
@@ -1130,6 +1175,17 @@
       "meta": {},
       "en": "Read more",
       "ar": "اقرأ المزيد"
+    },
+    {
+      "key": "web.labels.read_more_about",
+      "format": "text",
+      "description": "Link under a feature or audience: names its target for screen readers and sighted readers",
+      "placeholders": [
+        "topic"
+      ],
+      "meta": {},
+      "en": "Read more about {topic}",
+      "ar": "اقرأ المزيد عن {topic}"
     },
     {
       "key": "web.labels.security_link",
@@ -1249,6 +1305,15 @@
       "ar": "التبديل إلى الإنجليزية"
     },
     {
+      "key": "web.legal.contact_link",
+      "format": "text",
+      "description": "Legal page: link to the contact page under the holding line",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ways to reach OnGem",
+      "ar": "طرق التواصل مع OnGem"
+    },
+    {
       "key": "web.legal.effective",
       "format": "text",
       "description": "Legal page: the date the text takes effect",
@@ -1258,6 +1323,24 @@
       "meta": {},
       "en": "Effective {date}",
       "ar": "ساري المفعول اعتبارًا من {date}"
+    },
+    {
+      "key": "web.legal.holding",
+      "format": "text",
+      "description": "Legal page: shown where OnGem's legal team has not published the text yet (never legal terms)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This page is being prepared by our legal team.",
+      "ar": "يعدّ الفريق القانوني لدينا هذه الصفحة حاليًا."
+    },
+    {
+      "key": "web.legal.holding_contact",
+      "format": "text",
+      "description": "Legal page: under the holding line, before the link to the contact page",
+      "placeholders": [],
+      "meta": {},
+      "en": "If you have a question about it in the meantime, reach us through the contact page.",
+      "ar": "إذا كان لديك سؤال بشأنها في هذه الأثناء، تواصل معنا عبر صفحة التواصل."
     },
     {
       "key": "web.legal.meta_description",
@@ -1288,6 +1371,42 @@
       "meta": {},
       "en": "Legal",
       "ar": "المعلومات القانونية"
+    },
+    {
+      "key": "web.legal.page.cookies",
+      "format": "text",
+      "description": "Legal page name used until the legal team publishes the page's own title (footer link, page heading)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cookies",
+      "ar": "ملفات تعريف الارتباط"
+    },
+    {
+      "key": "web.legal.page.disclosures",
+      "format": "text",
+      "description": "Legal page name used until the legal team publishes the page's own title (footer link, page heading)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Disclosures",
+      "ar": "الإفصاحات"
+    },
+    {
+      "key": "web.legal.page.privacy",
+      "format": "text",
+      "description": "Legal page name used until the legal team publishes the page's own title (footer link, page heading)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Privacy notice",
+      "ar": "إشعار الخصوصية"
+    },
+    {
+      "key": "web.legal.page.terms",
+      "format": "text",
+      "description": "Legal page name used until the legal team publishes the page's own title (footer link, page heading)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Terms of use",
+      "ar": "شروط الاستخدام"
     },
     {
       "key": "web.legal.version",
@@ -1786,6 +1905,33 @@
       "ar": "لمن OnGem"
     },
     {
+      "key": "web.not_found.home",
+      "format": "text",
+      "description": "Not-found page: button to the home page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Go to the home page",
+      "ar": "الانتقال إلى الصفحة الرئيسية"
+    },
+    {
+      "key": "web.not_found.lede",
+      "format": "text",
+      "description": "Not-found page: one sentence under the heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "This page does not exist or has moved. Start from the home page, see what OnGem does or try the demo.",
+      "ar": "هذه الصفحة غير موجودة أو نُقلت. ابدأ من الصفحة الرئيسية، أو تعرّف على ما تقدّمه OnGem، أو جرّب النسخة التجريبية."
+    },
+    {
+      "key": "web.not_found.title",
+      "format": "text",
+      "description": "Not-found page: heading for a path the site does not have",
+      "placeholders": [],
+      "meta": {},
+      "en": "Page not found",
+      "ar": "الصفحة غير موجودة"
+    },
+    {
       "key": "web.numbers.1.label",
       "format": "text",
       "description": "Numbers band: what the number means",
@@ -2064,6 +2210,24 @@
       "ar": "للشركات المؤسسة حديثًا | OnGem"
     },
     {
+      "key": "web.page.not_found.description",
+      "format": "text",
+      "description": "Meta description of the not-found page",
+      "placeholders": [],
+      "meta": {},
+      "en": "The page you asked for is not on the OnGem site.",
+      "ar": "الصفحة التي طلبتها غير موجودة على موقع OnGem."
+    },
+    {
+      "key": "web.page.not_found.title",
+      "format": "text",
+      "description": "Browser tab title of the not-found page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Page not found | OnGem",
+      "ar": "الصفحة غير موجودة | OnGem"
+    },
+    {
       "key": "web.page.partners.description",
       "format": "text",
       "description": "Page description for search results: partners",
@@ -2170,6 +2334,42 @@
       "meta": {},
       "en": "For founders with several companies | OnGem",
       "ar": "للمؤسسين الذين يملكون عدة شركات | OnGem"
+    },
+    {
+      "key": "web.page.sign_in.description",
+      "format": "text",
+      "description": "Meta description of the sign-in page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sign in to OnGem to see your company's accounts, payments and approvals.",
+      "ar": "سجّل الدخول إلى OnGem لترى حسابات شركتك ومدفوعاتها والموافقات."
+    },
+    {
+      "key": "web.page.sign_in.title",
+      "format": "text",
+      "description": "Browser tab title of the sign-in page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sign in | OnGem",
+      "ar": "تسجيل الدخول | OnGem"
+    },
+    {
+      "key": "web.page.sign_up.description",
+      "format": "text",
+      "description": "Meta description of the sign-up page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Create your OnGem sign-in, then tell us about your company.",
+      "ar": "أنشئ بيانات الدخول إلى OnGem، ثم أخبرنا عن شركتك."
+    },
+    {
+      "key": "web.page.sign_up.title",
+      "format": "text",
+      "description": "Browser tab title of the sign-up page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Create your account | OnGem",
+      "ar": "أنشئ حسابك | OnGem"
     },
     {
       "key": "web.page.status.description",
@@ -3013,8 +3213,8 @@
       "description": "Home: what party 1 does",
       "placeholders": [],
       "meta": {},
-      "en": "holds your deposits and issues your cards¹",
-      "ar": "يحتفظ بودائعك ويصدر بطاقاتك¹"
+      "en": "Holds your deposits and issues your cards.¹",
+      "ar": "يحتفظ بودائعك ويُصدر بطاقاتك.¹"
     },
     {
       "key": "web.trust.2.name",
@@ -3030,8 +3230,8 @@
       "description": "Home: what party 2 does",
       "placeholders": [],
       "meta": {},
-      "en": "connects OnGem to the bank",
-      "ar": "تربط OnGem بالبنك"
+      "en": "Connects OnGem to the bank.",
+      "ar": "تربط OnGem بالبنك."
     },
     {
       "key": "web.trust.3.name",
@@ -3047,8 +3247,8 @@
       "description": "Home: what party 3 does",
       "placeholders": [],
       "meta": {},
-      "en": "sends the companies it forms, prefilled",
-      "ar": "ترسل الشركات التي تؤسسها، معبأة مسبقًا"
+      "en": "Sends the companies it forms, with their details filled in.",
+      "ar": "ترسل الشركات التي تؤسسها مع تعبئة بياناتها مسبقًا."
     },
     {
       "key": "web.trust.label",
