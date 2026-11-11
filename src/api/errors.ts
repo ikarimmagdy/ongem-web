@@ -65,6 +65,9 @@ const KNOWN = new Set([
 /** The line a screen shows for a failure; anything unknown falls back to the API's own detail. */
 export function errorText(e: unknown): string {
   if (e instanceof ApiError) {
+    // 409 is a transfer between accounts at different banks or regions (OG-023); 422 is a rail that cannot be scheduled.
+    if (e.code === 'capability_unavailable' && e.status === 409)
+      return t('app.errors.capability_unavailable_accounts');
     if (e.code && KNOWN.has(e.code))
       return t(`app.errors.${e.code}`, {
         limit: limit(REGION_CONFIG.topUpLimit),

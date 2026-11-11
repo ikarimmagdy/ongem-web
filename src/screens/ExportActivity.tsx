@@ -4,7 +4,7 @@ import { ApiError, errorText } from '../api/errors';
 import type { ExportRun } from '../api/types';
 import { Button, Card, Field, Input, Notice, Select, StatusChip } from '../design-system';
 import { t } from '../i18n';
-import { formatDate } from '../lib/format';
+import { formatBankDate, formatDate } from '../lib/format';
 import { useSession } from '../session';
 import { stateStatus } from './common';
 
@@ -60,8 +60,8 @@ function RunState({ run, onLink }: { run: ExportRun; onLink: () => void }) {
           <p>
             {t('app.exports.ready_text', {
               lines: run.lineCount ?? 0,
-              from: formatDate(run.from),
-              to: formatDate(run.to),
+              from: formatBankDate(run.from),
+              to: formatBankDate(run.to),
             })}
           </p>
           {run.link ? (
@@ -259,7 +259,7 @@ export function ExportActivity({ accountId }: { accountId: string }) {
                   }
                 >
                   <span className="fw-row__main">
-                    {t('app.exports.row', { from: formatDate(r.from), to: formatDate(r.to) })}
+                    {t('app.exports.row', { from: formatBankDate(r.from), to: formatBankDate(r.to) })}
                   </span>
                   <StatusChip status={stateStatus(r.state === 'DONE' ? 'SETTLED' : r.state)}>
                     {t(`app.exports.state.${r.state.toLowerCase()}`)}

@@ -2077,6 +2077,15 @@
       "ar": "الجدولة للتحويلات بين حساباتك غير متاحة بعد. يمكنك جدولة تحويل ACH بدلاً من ذلك."
     },
     {
+      "key": "app.errors.capability_unavailable_accounts",
+      "format": "text",
+      "description": "Error shown when a transfer between companies is refused with 409 capability_unavailable (accounts at different banks or regions)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This transfer is not available for these accounts: both need to be at the same bank and in the same region.",
+      "ar": "هذا التحويل غير متاح لهذين الحسابين: يجب أن يكون الحسابان لدى البنك نفسه وفي المنطقة نفسها."
+    },
+    {
       "key": "app.errors.company_not_member",
       "format": "text",
       "description": "Error shown for the API problem code company_not_member",

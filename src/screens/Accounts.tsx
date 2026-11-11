@@ -13,7 +13,7 @@ import {
   StatusChip,
   Table,
 } from '../design-system';
-import { formatDate } from '../lib/format';
+import { formatBankDate, formatDate } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
 import { useSession } from '../session';
 import { t } from '../i18n';
@@ -102,7 +102,7 @@ function AccountDetail({ id }: { id: string }) {
                       {
                         key: 'date',
                         header: t('app.accounts.col_date'),
-                        render: (tx) => (tx.effectiveDate ? formatDate(tx.effectiveDate) : ''),
+                        render: (tx) => (tx.effectiveDate ? formatBankDate(tx.effectiveDate) : ''),
                       },
                       {
                         key: 'what',
@@ -182,7 +182,7 @@ function AccountDetail({ id }: { id: string }) {
                     {
                       key: 'date',
                       header: t('app.accounts.col_date'),
-                      render: (l) => (l.date ? formatDate(l.date) : ''),
+                      render: (l) => (l.date ? formatBankDate(l.date) : ''),
                     },
                     {
                       key: 'dir',

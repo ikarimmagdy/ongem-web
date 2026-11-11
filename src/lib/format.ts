@@ -1,3 +1,4 @@
+import { formatDay } from './schedule';
 import { dateLocale, t } from '../i18n/store';
 import { IS_AE, REGION_CONFIG } from '../region';
 
@@ -38,6 +39,11 @@ function parts(iso: string | Date, withTime: boolean, timeZone: string) {
 }
 
 /** 20 Oct 2026, or 20 Oct 2026 10:42 ET with time (GST in the AE build). */
+/** A bank date (YYYY-MM-DD) as its calendar day; a full timestamp falls back to [formatDate]. */
+export function formatBankDate(v: string): string {
+  return /^\d{4}-\d{2}-\d{2}$/.test(v) ? formatDay(v) : formatDate(v);
+}
+
 export function formatDate(iso: string | Date, opts: { time?: boolean; timeZone?: string } = {}): string {
   const tz = opts.timeZone ?? ET;
   const p = parts(iso, Boolean(opts.time), tz);
