@@ -29,6 +29,33 @@
       "ar": "لدى البنك"
     },
     {
+      "key": "web.art.card_business",
+      "format": "text",
+      "description": "Illustration: the line on an OnGem card face that names it a business card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Business",
+      "ar": "أعمال"
+    },
+    {
+      "key": "web.art.card_holder.1",
+      "format": "text",
+      "description": "Illustration: sample name on the first card face (sample data, not a real person)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dana Rivera",
+      "ar": "دانة ريفيرا"
+    },
+    {
+      "key": "web.art.card_holder.2",
+      "format": "text",
+      "description": "Illustration: sample name on the second card face (sample data, not a real person)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Alex Kim",
+      "ar": "أليكس كيم"
+    },
+    {
       "key": "web.art.draft_ready",
       "format": "text",
       "description": "Illustration: words inside or describing a drawing",
@@ -436,6 +463,33 @@
       "ar": "راسلنا على {email}"
     },
     {
+      "key": "web.demo.back",
+      "format": "text",
+      "description": "Demo bar: leaves the demo and opens the public site's home page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Back to the site",
+      "ar": "العودة إلى الموقع"
+    },
+    {
+      "key": "web.demo.bar_label",
+      "format": "text",
+      "description": "Demo bar: name of the region for screen readers",
+      "placeholders": [],
+      "meta": {},
+      "en": "Demo",
+      "ar": "النسخة التجريبية"
+    },
+    {
+      "key": "web.demo.bar_text",
+      "format": "text",
+      "description": "Demo bar over the app in demo mode: what the visitor is looking at",
+      "placeholders": [],
+      "meta": {},
+      "en": "You are exploring OnGem on sample data. Nothing you do reaches a bank.",
+      "ar": "أنت تستكشف OnGem ببيانات تجريبية. لا يصل أي شيء تفعله إلى أي بنك."
+    },
+    {
       "key": "web.demo.opening",
       "format": "text",
       "description": "Loading label while the demo opens",
@@ -574,24 +628,6 @@
       "ar": "المنطقة واللغة"
     },
     {
-      "key": "web.gallery.app_android_payment_returned.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The OnGem app on a Pixel phone: a payment the bank returned, on sample data",
-      "ar": "تطبيق OnGem على هاتف Pixel: دفعة أعادها البنك، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.app_android_payment_returned.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "A returned payment on Android",
-      "ar": "دفعة معادة على Android"
-    },
-    {
       "key": "web.gallery.app_ipad_accounts.alt",
       "format": "text",
       "description": "Gallery: description of the screen for screen readers",
@@ -628,24 +664,6 @@
       "ar": "الحسابات على iPhone"
     },
     {
-      "key": "web.gallery.app_iphone_dark_account.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The OnGem app on iPhone in the dark theme: an account and its transactions, on sample data",
-      "ar": "تطبيق OnGem على iPhone بالمظهر الداكن: حساب ومعاملاته، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.app_iphone_dark_account.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Dark theme",
-      "ar": "المظهر الداكن"
-    },
-    {
       "key": "web.gallery.app_iphone_payment_review.alt",
       "format": "text",
       "description": "Gallery: description of the screen for screen readers",
@@ -662,24 +680,6 @@
       "meta": {},
       "en": "Review before you send",
       "ar": "راجع قبل الإرسال"
-    },
-    {
-      "key": "web.gallery.app_iphone_payment_sent.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "The OnGem app on iPhone: a payment sent to the bank, on sample data",
-      "ar": "تطبيق OnGem على iPhone: دفعة أُرسلت إلى البنك، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.app_iphone_payment_sent.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Sent, and followed to settled",
-      "ar": "أُرسلت، ومتابَعة حتى التسوية"
     },
     {
       "key": "web.gallery.web_add_money.alt",
@@ -716,42 +716,6 @@
       "meta": {},
       "en": "A virtual card and its controls",
       "ar": "بطاقة افتراضية وأدوات التحكم بها"
-    },
-    {
-      "key": "web.gallery.web_dispute.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "A new support request about a charge on the card ending 5521, on sample data",
-      "ar": "طلب دعم جديد بشأن عملية على البطاقة المنتهية بـ 5521، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.web_dispute.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Dispute a charge from the card",
-      "ar": "اعترض على عملية من البطاقة"
-    },
-    {
-      "key": "web.gallery.web_notification_choices.alt",
-      "format": "text",
-      "description": "Gallery: description of the screen for screen readers",
-      "placeholders": [],
-      "meta": {},
-      "en": "Notification settings: email and text for each kind of notice, with the important ones always on, on sample data",
-      "ar": "إعدادات الإشعارات: البريد الإلكتروني والرسائل النصية لكل نوع من الإشعارات، مع بقاء المهمة منها مفعّلة دائمًا، ببيانات نموذجية"
-    },
-    {
-      "key": "web.gallery.web_notification_choices.caption",
-      "format": "text",
-      "description": "Gallery: caption under a screen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Choose how each notice reaches you",
-      "ar": "اختر كيف يصلك كل إشعار"
     },
     {
       "key": "web.gallery.web_onboarding.alt",

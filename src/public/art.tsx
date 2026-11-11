@@ -3,7 +3,7 @@ import { useId, type ReactNode } from 'react';
 import { formatMinor } from '../lib/format';
 import { REGION_CONFIG } from '../region';
 import brandMark from '../assets/ongem-favicon.png';
-import { SITE } from './site';
+import { CardFace } from '../design-system';
 import type { ArtName } from './content';
 
 /** Sample amounts in the build's currency (US$48,250.00, or AED in the AE build). */
@@ -89,14 +89,7 @@ export function HeroArt() {
         <rect className="f-card" x="8" y="12" width="114" height="226" rx="16" />
         <rect fill={`url(#${g})`} x="18" y="30" width="94" height="58" rx="10" />
         <Gem x={26} y={38} s={0.4} />
-        {/* A card where the bank issues cards; a plain tile where it has none (the UAE in v0, OG-034 R7). */}
-        {SITE.cards ? (
-          <text className="t-on-primary" x="26" y="80" fontSize="10">
-            •••• 2412
-          </text>
-        ) : (
-          <Bar x={26} y={72} w={60} cls="f-card" />
-        )}
+        <Bar x={26} y={72} w={60} cls="f-card" />
         <Bar x={18} y={104} w={80} />
         <Bar x={18} y={122} w={60} />
         <rect className="f-primary" x="18" y="196" width="94" height="26" rx="13" />
@@ -203,25 +196,18 @@ const ART: Record<ArtName, () => ReactNode> = {
       <Gem x={246} y={96} s={1} />
     </Svg>
   ),
-  cards: () => {
-    const Card = ({ x, y, cls }: { x: number; y: number; cls: string }) => (
-      <g transform={`translate(${x} ${y})`}>
-        <rect className={cls} width="170" height="106" rx="14" />
-        <Gem x={14} y={14} s={0.55} />
-        <text className="t-on-primary" x="16" y="88" fontSize="12">
-          •••• 2412
-        </text>
-      </g>
-    );
-    return (
-      <Svg label={t('web.art.label.cards')}>
-        <Card x={40} y={40} cls="f-primary" />
-        <Card x={110} y={80} cls="f-signature" />
-        <circle className="f-card s-border" cx="268" cy="70" r="24" />
-        <path className="s-primary" d="M268 56 V84 M256 63 L280 77 M256 77 L280 63" strokeWidth="3" />
-      </Svg>
-    );
-  },
+  // Two virtual cards on the design system's branded face (PS-003): navy base, gem gradient detail, wordmark,
+  // Business, a different last four each. No physical card while physical cards are coming soon.
+  cards: () => (
+    <div className="pub-cardart" role="img" aria-label={t('web.art.label.cards')}>
+      <span className="pub-cardart__card pub-cardart__card--back">
+        <CardFace base="navy" kind={t('web.art.card_business')} holder={t('web.art.card_holder.1')} last4="4417" />
+      </span>
+      <span className="pub-cardart__card pub-cardart__card--front">
+        <CardFace base="navy" kind={t('web.art.card_business')} holder={t('web.art.card_holder.2')} last4="2081" />
+      </span>
+    </div>
+  ),
   approvals: () => (
     <Svg label={t('web.art.label.approvals')}>
       {[90, 230].map((cx, i) => (

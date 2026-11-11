@@ -23,7 +23,9 @@ describe('public media (OG-032)', () => {
     const gallery = screen.getByTestId('gallery');
     const imgs = within(gallery).getAllByRole('img');
     expect(imgs).toHaveLength(WEB_SHOTS.length + APP_SHOTS.length);
-    expect(WEB_SHOTS.length).toBeGreaterThanOrEqual(6);
+    // PS-037: fewer, larger screens: four web and three app (two phones and a tablet).
+    expect(WEB_SHOTS.length).toBe(4);
+    expect(APP_SHOTS.length).toBe(3);
     expect(APP_SHOTS.some((s) => s.device === 'tablet')).toBe(true);
     for (const img of imgs) {
       expect(img.getAttribute('alt')).toMatch(/sample data/);

@@ -1,5 +1,5 @@
-// OG-032 R14: captures the product gallery's web screens from demo mode (sample data only) at twice the pixel density:
-// onboarding, add money, OnGem approval for a one-person company, a card, the notifications choices and a dispute.
+// OG-032 R14, PS-005, PS-037: captures the product gallery's web screens from demo mode (sample data only) at twice the pixel density:
+// onboarding, add money, OnGem approval for a one-person company and a card.
 // Run with the dev server up (`npm run dev`), then `node scripts/gallery-screenshots.mjs [base]`
 // (default http://localhost:5190). The app screens in src/assets/public/gallery/app-*.jpg are the ongem-app device
 // captures of the OG-028 run (ongem-engineering specs/OG-028-founder-app-banking/outputs/test-runs/2026-10-29-screens).
@@ -22,6 +22,8 @@ async function start(query = '') {
   await page.goto(`${base}/sign-in${query}`);
   await page.getByTestId('explore-demo').click();
   await page.getByTestId('home-total').waitFor();
+  // The demo bar (PS-019) is not part of the product screen.
+  await page.addStyleTag({ content: '.pub-demobar { display: none !important; }' });
   return { ctx, page };
 }
 
@@ -58,13 +60,6 @@ async function shot(page, name) {
   await go(page, '/cards');
   await page.getByTestId('card-crd_demo_dana').click();
   await shot(page, 'card');
-  await page.getByTestId('card-dispute').click();
-  await page.getByTestId('ticket-form').waitFor();
-  await shot(page, 'dispute');
-  await go(page, '/settings');
-  await page.getByTestId('notice-choices').scrollIntoViewIfNeeded();
-  await page.evaluate(() => window.scrollBy(0, -80));
-  await page.screenshot({ path: `${out}/web-notification-choices.jpg`, type: 'jpeg', quality: 82, clip });
   await ctx.close();
 }
 {

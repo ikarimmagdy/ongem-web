@@ -110,12 +110,14 @@
   gap: var(--space-xl);
   margin-block: var(--space-lg) var(--space-2xl);
 }
+/* PS-037: fewer, larger screens: two web screens a row, two phones beside one tablet. */
 .pub-gallery--web {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .pub-gallery--app {
-  grid-template-columns: repeat(5, minmax(0, 1fr)) minmax(0, 2fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2fr);
   align-items: end;
+  max-width: 980px;
 }
 .pub-gallery__item {
   margin: 0;

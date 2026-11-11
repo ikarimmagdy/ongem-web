@@ -29,6 +29,33 @@
       "ar": "لدى البنك"
     },
     {
+      "key": "web.art.card_business",
+      "format": "text",
+      "description": "Illustration: the line on an OnGem card face that names it a business card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Business",
+      "ar": "أعمال"
+    },
+    {
+      "key": "web.art.card_holder.1",
+      "format": "text",
+      "description": "Illustration: sample name on the first card face (sample data, not a real person)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dana Rivera",
+      "ar": "دانة ريفيرا"
+    },
+    {
+      "key": "web.art.card_holder.2",
+      "format": "text",
+      "description": "Illustration: sample name on the second card face (sample data, not a real person)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Alex Kim",
+      "ar": "أليكس كيم"
+    },
+    {
       "key": "web.art.draft_ready",
       "format": "text",
       "description": "Illustration: words inside or describing a drawing",
@@ -434,6 +461,33 @@
       "meta": {},
       "en": "Write to us at {email}",
       "ar": "راسلنا على {email}"
+    },
+    {
+      "key": "web.demo.back",
+      "format": "text",
+      "description": "Demo bar: leaves the demo and opens the public site's home page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Back to the site",
+      "ar": "العودة إلى الموقع"
+    },
+    {
+      "key": "web.demo.bar_label",
+      "format": "text",
+      "description": "Demo bar: name of the region for screen readers",
+      "placeholders": [],
+      "meta": {},
+      "en": "Demo",
+      "ar": "النسخة التجريبية"
+    },
+    {
+      "key": "web.demo.bar_text",
+      "format": "text",
+      "description": "Demo bar over the app in demo mode: what the visitor is looking at",
+      "placeholders": [],
+      "meta": {},
+      "en": "You are exploring OnGem on sample data. Nothing you do reaches a bank.",
+      "ar": "أنت تستكشف OnGem ببيانات تجريبية. لا يصل أي شيء تفعله إلى أي بنك."
     },
     {
       "key": "web.demo.opening",

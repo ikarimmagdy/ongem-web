@@ -1,0 +1,23 @@
+/* PS-019: the demo bar over the signed-in shell. Theme tokens and logical properties only. */
+.pub-demobar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs) var(--space-md);
+  padding: var(--space-xs) var(--space-md);
+  background: var(--color-status-info-bg);
+  color: var(--color-text-primary);
+  border-block-end: 1px solid var(--color-border-subtle);
+  font-size: var(--font-size-sm);
+}
+.pub-demobar__text {
+  margin: 0;
+}
+.pub-demobar__actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+.pub-demobar .og-btn {
+  min-height: 32px;
+}

@@ -1598,6 +1598,33 @@
   height: 56px;
 }
 
+/* PS-003: card drawings are the design system's branded card face, two virtual cards offset. */
+.pub-cardart {
+  position: relative;
+  width: 320px;
+  height: 220px;
+  margin-inline: auto;
+}
+.pub-cardart__card {
+  position: absolute;
+  width: 240px;
+}
+.pub-cardart__card--back {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+}
+.pub-cardart__card--front {
+  inset-block-start: 69px;
+  inset-inline-start: 80px;
+}
+.pub-cardart .og-cardface__kind {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.pub-card .pub-cardart {
+  zoom: 0.55;
+}
+
 @media print {
   .pub *,
   .pub *::before,

@@ -76,6 +76,21 @@ describe('public site review fixes (US)', () => {
     expect(screen.getByTestId('pub-disclosures')).toHaveTextContent(t('web.bank_statement'));
   });
 
+  it('PS_003_card_drawings_are_branded_virtual_cards_with_distinct_numbers', () => {
+    renderApp('/product', { mode: 'none' });
+    const tile = screen.getByTestId('cap-card-cards');
+    const faces = within(tile).getAllByTestId('card-face');
+    expect(faces).toHaveLength(2);
+    for (const f of faces) {
+      expect(f).toHaveAttribute('data-base', 'navy');
+      expect(within(f).getByRole('img', { name: 'OnGem' })).toBeInTheDocument();
+      expect(f).toHaveTextContent(t('web.art.card_business'));
+    }
+    const numbers = faces.map((f) => f.querySelector('.og-cardface__number')!.textContent);
+    expect(new Set(numbers).size).toBe(2);
+    expect(readFileSync(join(root, 'src/public/art.tsx'), 'utf8')).not.toMatch(/2412/);
+  });
+
   it('PS_006_menu_items_are_40px_tall_with_8px_gaps_and_16px_type', () => {
     const nav = css.match(/\.pub-nav \{[^}]*\}/g) ?? [];
     expect(nav.join('\n')).not.toMatch(/gap: var\(--space-xs\)/);
@@ -204,6 +219,22 @@ describe('public site review fixes (US)', () => {
     expect(hidden).not.toMatch(/pub-header__start/);
     renderApp('/', { mode: 'none' });
     expect(screen.getByTestId('pub-get-started')).toHaveClass('pub-header__main');
+  });
+
+  it('PS_019_the_demo_has_a_way_back_to_the_site_and_to_sign_up', async () => {
+    renderApp('/demo', { mode: 'none' });
+    const bar = await screen.findByTestId('demo-bar');
+    expect(bar).toHaveTextContent(t('web.demo.bar_text'));
+    expect(within(bar).getByTestId('demo-get-started')).toHaveTextContent('Get started');
+    await userEvent.click(within(bar).getByTestId('demo-back-to-site'));
+    expect(await screen.findByTestId('public-home')).toBeInTheDocument();
+    expect(screen.queryByTestId('demo-bar')).not.toBeInTheDocument();
+  });
+
+  it('PS_019_get_started_leaves_the_demo_for_sign_up', async () => {
+    renderApp('/demo', { mode: 'none' });
+    await userEvent.click(await screen.findByTestId('demo-get-started'));
+    expect(await screen.findByText(t('web.auth.sign_up_title'))).toBeInTheDocument();
   });
 
   it('PS_020_video_posters_carry_no_title_over_the_frame', () => {

@@ -27,6 +27,7 @@ import { MoreScreen } from './screens/More';
 import { RECORDING_ENABLED, Recorder } from './recording/Recorder';
 import { MORE, NAV, PHONE_TABS, pageTitle } from './nav';
 import { t, useContent } from './i18n';
+import { DemoBar } from './public/DemoBar';
 import './app-shell.css';
 
 /** Every route names its page in the browser tab (WCAG 2.4.2, UI review 2026-11-07). */
@@ -204,6 +205,7 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
         </p>
       </aside>
       <div className="fw-main">
+        <DemoBar />
         <header className="og-topbar fw-topbar">
           {wide ? (
             // FA-010: the page's name starts the desktop bar.
