@@ -9954,24 +9954,6 @@
       "ar": "ابحث أو اسأل المساعد"
     },
     {
-      "key": "app.search.shortcut.mac",
-      "format": "text",
-      "description": "Keyboard shortcut hint on a Mac",
-      "placeholders": [],
-      "meta": {},
-      "en": "⌘ K",
-      "ar": "⌘ K"
-    },
-    {
-      "key": "app.search.shortcut.other",
-      "format": "text",
-      "description": "Keyboard shortcut hint on other systems",
-      "placeholders": [],
-      "meta": {},
-      "en": "Ctrl K",
-      "ar": "Ctrl K"
-    },
-    {
       "key": "app.search.group.screens",
       "format": "text",
       "description": "Command search group",

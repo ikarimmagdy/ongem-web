@@ -19,6 +19,9 @@ interface Option {
 }
 
 const SHORTCUTS = 'Meta+K Control+K'; // content-check: ignore (key names)
+/** Key caps, not words: the same in every language. */
+const KEYCAP_MAC = '⌘ K'; // content-check: ignore (key cap)
+const KEYCAP_OTHER = 'Ctrl K'; // content-check: ignore (key cap)
 
 const isMac = () =>
   typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
@@ -151,9 +154,7 @@ export function CommandSearch() {
           <path d="m20 20-3.5-3.5" />
         </svg>
         <span>{t('app.search.open')}</span>
-        <kbd className="fw-search__kbd">
-          {isMac() ? t('app.search.shortcut.mac') : t('app.search.shortcut.other')}
-        </kbd>
+        <kbd className="fw-search__kbd">{isMac() ? KEYCAP_MAC : KEYCAP_OTHER}</kbd>
       </button>
       <Modal open={open} title={t('app.search.title')} onClose={() => setOpen(false)}>
         <div className="fw-palette" data-testid="command-search">
