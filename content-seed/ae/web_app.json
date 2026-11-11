@@ -7006,6 +7006,2441 @@
       "meta": {},
       "en": "Too many requests. Wait a moment and try again.",
       "ar": "طلبات كثيرة جدًا. انتظر قليلًا ثم حاول مرة أخرى."
+    },
+    {
+      "key": "app.mobile.brand.alt",
+      "format": "text",
+      "description": "Founder app: the word mark read aloud (a name, kept in English)",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem"
+    },
+    {
+      "key": "app.mobile.demo.badge_description",
+      "format": "text",
+      "description": "Founder app: screen reader text of the demo badge",
+      "placeholders": [],
+      "meta": {},
+      "en": "Demo mode, sample data",
+      "ar": "الوضع التجريبي، بيانات نموذجية"
+    },
+    {
+      "key": "app.mobile.home.company_line",
+      "format": "text",
+      "description": "Founder app: home line with the company name and the person's role",
+      "placeholders": [
+        "company",
+        "role"
+      ],
+      "meta": {},
+      "en": "{company}, {role}",
+      "ar": "{company}، {role}"
+    },
+    {
+      "key": "app.mobile.back",
+      "format": "text",
+      "description": "Founder app: back button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Back",
+      "ar": "رجوع"
+    },
+    {
+      "key": "app.mobile.signin.title",
+      "format": "text",
+      "description": "Founder app: sign-in heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "Business banking for founders",
+      "ar": "خدمات مصرفية للشركات الناشئة ومؤسسيها"
+    },
+    {
+      "key": "app.mobile.signin.body",
+      "format": "text",
+      "description": "Founder app: sign-in explanation",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sign in with the email your partner used to set up your company. You will confirm it with a code and your authenticator app.",
+      "ar": "سجّل الدخول بالبريد الإلكتروني الذي استخدمه شريكك لتأسيس شركتك. ستؤكده برمز وبتطبيق المصادقة."
+    },
+    {
+      "key": "app.mobile.signin.not_configured",
+      "format": "text",
+      "description": "Founder app: sign-in heading when the build has no sign-in key",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sign-in is not configured for this build",
+      "ar": "تسجيل الدخول غير مُعدّ في هذا الإصدار"
+    },
+    {
+      "key": "app.mobile.signin.not_configured_body",
+      "format": "text",
+      "description": "Founder app: body when the build has no sign-in key",
+      "placeholders": [],
+      "meta": {},
+      "en": "This build has no sign-in key. You can explore the app with sample data.",
+      "ar": "لا يحتوي هذا الإصدار على مفتاح تسجيل الدخول. يمكنك استكشاف التطبيق ببيانات نموذجية."
+    },
+    {
+      "key": "app.mobile.signin.demo",
+      "format": "text",
+      "description": "Founder app: button that opens demo mode",
+      "placeholders": [],
+      "meta": {},
+      "en": "Explore demo",
+      "ar": "استكشف النسخة التجريبية"
+    },
+    {
+      "key": "app.mobile.signin.demo_hint",
+      "format": "text",
+      "description": "Founder app: hint under the demo button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sample data only. Nothing is sent to OnGem.",
+      "ar": "بيانات نموذجية فقط. لا يُرسل أي شيء إلى OnGem."
+    },
+    {
+      "key": "app.mobile.signin.session_rejected",
+      "format": "text",
+      "description": "Founder app: sign-in notice after the API refused the session",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your session was not accepted. Sign in again.",
+      "ar": "لم تُقبل جلستك. سجّل الدخول مجدداً."
+    },
+    {
+      "key": "app.mobile.signin.device_revoked",
+      "format": "text",
+      "description": "Founder app: sign-in notice after this device was revoked",
+      "placeholders": [],
+      "meta": {},
+      "en": "This device was removed from your account. Sign in again to use it.",
+      "ar": "أُزيل هذا الجهاز من حسابك. سجّل الدخول مجدداً لاستخدامه."
+    },
+    {
+      "key": "app.mobile.home.not_linked_title",
+      "format": "text",
+      "description": "Founder app: home heading when no company is linked",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your company is not linked yet",
+      "ar": "لم تُربط شركتك بعد"
+    },
+    {
+      "key": "app.mobile.home.not_linked_body",
+      "format": "text",
+      "description": "Founder app: home body when no company is linked; {email} is the support address",
+      "placeholders": [
+        "email"
+      ],
+      "meta": {},
+      "en": "Sign in with the email your partner has on file for you. If you did and still see this, contact OnGem support at {email} and name the partner that invited you.",
+      "ar": "سجّل الدخول بالبريد الإلكتروني المسجّل لدى شريكك. إذا فعلت ذلك وما زلت ترى هذه الرسالة، فتواصل مع دعم OnGem على {email} واذكر اسم الشريك الذي دعاك."
+    },
+    {
+      "key": "app.mobile.home.next_title",
+      "format": "text",
+      "description": "Founder app: home card heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "Next for your company",
+      "ar": "الخطوة التالية لشركتك"
+    },
+    {
+      "key": "app.mobile.home.next_onboarding",
+      "format": "text",
+      "description": "Founder app: home action to finish onboarding",
+      "placeholders": [],
+      "meta": {},
+      "en": "Finish onboarding",
+      "ar": "أكمل فتح الحساب"
+    },
+    {
+      "key": "app.mobile.home.error",
+      "format": "text",
+      "description": "Founder app: home load error",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not load your company. Retry.",
+      "ar": "تعذّر تحميل بيانات شركتك. أعد المحاولة."
+    },
+    {
+      "key": "app.mobile.offline.banner",
+      "format": "text",
+      "description": "Founder app: banner while offline",
+      "placeholders": [],
+      "meta": {},
+      "en": "You are offline. Check your connection.",
+      "ar": "أنت غير متصل. تحقّق من اتصالك."
+    },
+    {
+      "key": "app.mobile.retry",
+      "format": "text",
+      "description": "Founder app: retry button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Retry",
+      "ar": "إعادة المحاولة"
+    },
+    {
+      "key": "app.mobile.mfa.title",
+      "format": "text",
+      "description": "Founder app: heading asking to turn on two-step verification",
+      "placeholders": [],
+      "meta": {},
+      "en": "Turn on two-step verification",
+      "ar": "فعّل التحقق بخطوتين"
+    },
+    {
+      "key": "app.mobile.mfa.body",
+      "format": "text",
+      "description": "Founder app: body asking to turn on two-step verification",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem needs a second factor on your account before it shows any company data. Add an authenticator app, then continue.",
+      "ar": "يحتاج OnGem إلى عامل تحقق ثانٍ على حسابك قبل عرض أي بيانات للشركة. أضف تطبيق مصادقة، ثم تابع."
+    },
+    {
+      "key": "app.mobile.mfa.setup",
+      "format": "text",
+      "description": "Founder app: button that opens authenticator setup",
+      "placeholders": [],
+      "meta": {},
+      "en": "Set up authenticator app",
+      "ar": "إعداد تطبيق المصادقة"
+    },
+    {
+      "key": "app.mobile.mfa.continue",
+      "format": "text",
+      "description": "Founder app: continue after authenticator setup",
+      "placeholders": [],
+      "meta": {},
+      "en": "I have set it up, continue",
+      "ar": "أعددته، تابع"
+    },
+    {
+      "key": "app.mobile.reverify.body_totp",
+      "format": "text",
+      "description": "Founder app: step-up dialog body for an authenticator code",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter the 6-digit code from your authenticator app.",
+      "ar": "أدخل الرمز المكوّن من 6 أرقام من تطبيق المصادقة."
+    },
+    {
+      "key": "app.mobile.reverify.body_email",
+      "format": "text",
+      "description": "Founder app: step-up dialog body for an email code",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter the code we sent to your email.",
+      "ar": "أدخل الرمز الذي أرسلناه إلى بريدك الإلكتروني."
+    },
+    {
+      "key": "app.mobile.reverify.code",
+      "format": "text",
+      "description": "Founder app: step-up code field label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Code",
+      "ar": "الرمز"
+    },
+    {
+      "key": "app.mobile.reverify.demo_hint",
+      "format": "text",
+      "description": "Founder app: step-up hint in demo mode",
+      "placeholders": [],
+      "meta": {},
+      "en": "Demo mode: any 6 digits confirm it.",
+      "ar": "الوضع التجريبي: أي 6 أرقام تؤكد العملية."
+    },
+    {
+      "key": "app.mobile.reverify.failed",
+      "format": "text",
+      "description": "Founder app: step-up code refused",
+      "placeholders": [],
+      "meta": {},
+      "en": "That code did not work. Try again.",
+      "ar": "لم يعمل هذا الرمز. حاول مجدداً."
+    },
+    {
+      "key": "app.mobile.lock.title",
+      "format": "text",
+      "description": "Founder app: app lock heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem is locked",
+      "ar": "OnGem مقفل"
+    },
+    {
+      "key": "app.mobile.lock.body",
+      "format": "text",
+      "description": "Founder app: app lock body",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unlock with Face ID, Touch ID or your fingerprint.",
+      "ar": "افتح القفل باستخدام Face ID أو Touch ID أو بصمة إصبعك."
+    },
+    {
+      "key": "app.mobile.lock.unlock",
+      "format": "text",
+      "description": "Founder app: unlock button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unlock",
+      "ar": "فتح القفل"
+    },
+    {
+      "key": "app.mobile.lock.cancelled",
+      "format": "text",
+      "description": "Founder app: unlock was cancelled",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unlock was cancelled. Your data stays hidden.",
+      "ar": "أُلغي فتح القفل. تبقى بياناتك مخفية."
+    },
+    {
+      "key": "app.mobile.lock.reason",
+      "format": "text",
+      "description": "Founder app: reason shown in the system biometric prompt",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unlock OnGem",
+      "ar": "افتح قفل OnGem"
+    },
+    {
+      "key": "app.mobile.capture.cover",
+      "format": "text",
+      "description": "Founder app: cover shown while the screen is recorded or shared",
+      "placeholders": [],
+      "meta": {},
+      "en": "Hidden while your screen is recorded or shared. Stop the recording or mirroring to see your account.",
+      "ar": "مخفي أثناء تسجيل شاشتك أو مشاركتها. أوقف التسجيل أو النسخ المتطابق لرؤية حسابك."
+    },
+    {
+      "key": "app.mobile.settings.appearance_summary",
+      "format": "text",
+      "description": "Founder app: settings row summary for appearance",
+      "placeholders": [],
+      "meta": {},
+      "en": "System, light or dark",
+      "ar": "النظام أو الفاتح أو الداكن"
+    },
+    {
+      "key": "app.mobile.appearance.system",
+      "format": "text",
+      "description": "Founder app: appearance choice that follows the device",
+      "placeholders": [],
+      "meta": {},
+      "en": "Use the device setting",
+      "ar": "استخدام إعداد الجهاز"
+    },
+    {
+      "key": "app.mobile.appearance.light",
+      "format": "text",
+      "description": "Founder app: light appearance",
+      "placeholders": [],
+      "meta": {},
+      "en": "Light",
+      "ar": "فاتح"
+    },
+    {
+      "key": "app.mobile.appearance.dark",
+      "format": "text",
+      "description": "Founder app: dark appearance",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dark",
+      "ar": "داكن"
+    },
+    {
+      "key": "app.mobile.settings.security",
+      "format": "text",
+      "description": "Founder app: settings section for the app lock",
+      "placeholders": [],
+      "meta": {},
+      "en": "App lock",
+      "ar": "قفل التطبيق"
+    },
+    {
+      "key": "app.mobile.settings.security_summary",
+      "format": "text",
+      "description": "Founder app: settings summary for the app lock",
+      "placeholders": [],
+      "meta": {},
+      "en": "Face ID, Touch ID or fingerprint",
+      "ar": "Face ID أو Touch ID أو بصمة الإصبع"
+    },
+    {
+      "key": "app.mobile.settings.lock_toggle",
+      "format": "text",
+      "description": "Founder app: switch that turns the app lock on",
+      "placeholders": [],
+      "meta": {},
+      "en": "Lock OnGem with biometrics",
+      "ar": "قفل OnGem بالقياسات الحيوية"
+    },
+    {
+      "key": "app.mobile.settings.lock_detail",
+      "format": "text",
+      "description": "Founder app: how long until the app locks; {minutes} is a number",
+      "placeholders": [
+        "minutes"
+      ],
+      "meta": {},
+      "en": "OnGem locks after {minutes} minutes in the background.",
+      "ar": "يُقفل OnGem بعد {minutes} دقائق في الخلفية."
+    },
+    {
+      "key": "app.mobile.settings.lock_unavailable",
+      "format": "text",
+      "description": "Founder app: app lock unavailable on this device",
+      "placeholders": [],
+      "meta": {},
+      "en": "This device has no biometrics or passcode set up, so the app cannot lock.",
+      "ar": "لا يحتوي هذا الجهاز على قياسات حيوية أو رمز مرور، لذا لا يمكن قفل التطبيق."
+    },
+    {
+      "key": "app.mobile.settings.devices",
+      "format": "text",
+      "description": "Founder app: settings section for devices",
+      "placeholders": [],
+      "meta": {},
+      "en": "Devices",
+      "ar": "الأجهزة"
+    },
+    {
+      "key": "app.mobile.settings.devices_summary",
+      "format": "text",
+      "description": "Founder app: settings summary for devices",
+      "placeholders": [],
+      "meta": {},
+      "en": "Where you are signed in",
+      "ar": "الأجهزة التي سجّلت الدخول منها"
+    },
+    {
+      "key": "app.mobile.settings.about_summary",
+      "format": "text",
+      "description": "Founder app: settings summary for About",
+      "placeholders": [],
+      "meta": {},
+      "en": "Version and build",
+      "ar": "الإصدار والبناء"
+    },
+    {
+      "key": "app.mobile.settings.select",
+      "format": "text",
+      "description": "Founder app: empty detail pane in settings",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a setting",
+      "ar": "اختر إعداداً"
+    },
+    {
+      "key": "app.mobile.settings.signed_in_as",
+      "format": "text",
+      "description": "Founder app: label before the signed-in email",
+      "placeholders": [],
+      "meta": {},
+      "en": "Signed in as",
+      "ar": "مسجّل الدخول باسم"
+    },
+    {
+      "key": "app.mobile.settings.version",
+      "format": "text",
+      "description": "Founder app: About row label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Version",
+      "ar": "الإصدار"
+    },
+    {
+      "key": "app.mobile.settings.build",
+      "format": "text",
+      "description": "Founder app: About row label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Build",
+      "ar": "البناء"
+    },
+    {
+      "key": "app.mobile.settings.api",
+      "format": "text",
+      "description": "Founder app: About row label for the API address",
+      "placeholders": [],
+      "meta": {},
+      "en": "API",
+      "ar": "واجهة البرمجة"
+    },
+    {
+      "key": "app.mobile.settings.key_storage",
+      "format": "text",
+      "description": "Founder app: About row label for where the device key lives",
+      "placeholders": [],
+      "meta": {},
+      "en": "Device key",
+      "ar": "مفتاح الجهاز"
+    },
+    {
+      "key": "app.mobile.devices.this",
+      "format": "text",
+      "description": "Founder app: marks the device in use",
+      "placeholders": [],
+      "meta": {},
+      "en": "This device",
+      "ar": "هذا الجهاز"
+    },
+    {
+      "key": "app.mobile.devices.last_seen",
+      "format": "text",
+      "description": "Founder app: when a device was last seen",
+      "placeholders": [
+        "time"
+      ],
+      "meta": {},
+      "en": "Last seen {time}",
+      "ar": "آخر ظهور {time}"
+    },
+    {
+      "key": "app.mobile.devices.empty",
+      "format": "text",
+      "description": "Founder app: devices empty state",
+      "placeholders": [],
+      "meta": {},
+      "en": "No devices are registered yet.",
+      "ar": "لا توجد أجهزة مسجلة بعد."
+    },
+    {
+      "key": "app.mobile.devices.not_available",
+      "format": "text",
+      "description": "Founder app: device binding not available",
+      "placeholders": [],
+      "meta": {},
+      "en": "Device binding is not available on this server yet. The app registers this device when it is.",
+      "ar": "ربط الأجهزة غير متاح على هذا الخادم بعد. سيسجّل التطبيق هذا الجهاز عند إتاحته."
+    },
+    {
+      "key": "app.mobile.devices.revoke_title",
+      "format": "text",
+      "description": "Founder app: revoke device dialog title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Revoke this device?",
+      "ar": "إلغاء هذا الجهاز؟"
+    },
+    {
+      "key": "app.mobile.devices.revoke_body",
+      "format": "text",
+      "description": "Founder app: revoke device dialog body",
+      "placeholders": [],
+      "meta": {},
+      "en": "It will have to sign in again before it can use OnGem.",
+      "ar": "سيتعيّن عليه تسجيل الدخول مجدداً قبل استخدام OnGem."
+    },
+    {
+      "key": "app.mobile.devices.revoke_self_body",
+      "format": "text",
+      "description": "Founder app: revoke the device in use",
+      "placeholders": [],
+      "meta": {},
+      "en": "This is the device you are using. You will be signed out.",
+      "ar": "هذا هو الجهاز الذي تستخدمه. سيتم تسجيل خروجك."
+    },
+    {
+      "key": "app.mobile.devices.error",
+      "format": "text",
+      "description": "Founder app: devices load error",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not load your devices. Retry.",
+      "ar": "تعذّر تحميل أجهزتك. أعد المحاولة."
+    },
+    {
+      "key": "app.mobile.sample.data",
+      "format": "text",
+      "description": "Founder app: marks sample data",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sample data",
+      "ar": "بيانات نموذجية"
+    },
+    {
+      "key": "app.mobile.assistant.closed",
+      "format": "text",
+      "description": "Founder app: an assistant draft that is no longer open",
+      "placeholders": [],
+      "meta": {},
+      "en": "No longer open",
+      "ar": "لم يعد مفتوحاً"
+    },
+    {
+      "key": "app.mobile.company.state_frozen",
+      "format": "text",
+      "description": "Founder app: company on hold in the switcher",
+      "placeholders": [],
+      "meta": {},
+      "en": "On hold, view only",
+      "ar": "معلّقة، للعرض فقط"
+    },
+    {
+      "key": "app.mobile.company.state_closing",
+      "format": "text",
+      "description": "Founder app: company closing in the switcher",
+      "placeholders": [],
+      "meta": {},
+      "en": "Closing, view only",
+      "ar": "قيد الإغلاق، للعرض فقط"
+    },
+    {
+      "key": "app.mobile.company.state_closed",
+      "format": "text",
+      "description": "Founder app: company closed in the switcher",
+      "placeholders": [],
+      "meta": {},
+      "en": "Closed, view only",
+      "ar": "مغلقة، للعرض فقط"
+    },
+    {
+      "key": "app.mobile.company.switch_label_full",
+      "format": "text",
+      "description": "Founder app: screen reader label of the company switcher",
+      "placeholders": [
+        "company",
+        "region",
+        "count"
+      ],
+      "meta": {},
+      "en": "Switch company, current {company}, {region}, {count} unread",
+      "ar": "تبديل الشركة، الحالية {company}، {region}، {count} غير مقروءة"
+    },
+    {
+      "key": "app.mobile.company.option_label",
+      "format": "text",
+      "description": "Founder app: screen reader label of a company in the switcher; {marks} is the region and state",
+      "placeholders": [
+        "company",
+        "role",
+        "marks",
+        "count"
+      ],
+      "meta": {},
+      "en": "{company}, {role}, {marks}, {count} unread",
+      "ar": "{company}، {role}، {marks}، {count} غير مقروءة"
+    },
+    {
+      "key": "app.mobile.company.read_only_title",
+      "format": "text",
+      "description": "Founder app: view-only banner title",
+      "placeholders": [],
+      "meta": {},
+      "en": "View only",
+      "ar": "للعرض فقط"
+    },
+    {
+      "key": "app.mobile.company.read_only_body",
+      "format": "text",
+      "description": "Founder app: view-only banner body; {state} is on hold, closing or closed",
+      "placeholders": [
+        "state"
+      ],
+      "meta": {},
+      "en": "This company is {state}, so you can see its accounts and payments but cannot make changes.",
+      "ar": "هذه الشركة {state}، لذا يمكنك الاطلاع على حساباتها ومدفوعاتها دون إجراء تغييرات."
+    },
+    {
+      "key": "app.mobile.company.read_only_frozen",
+      "format": "text",
+      "description": "Founder app: inside the view-only banner",
+      "placeholders": [],
+      "meta": {},
+      "en": "on hold",
+      "ar": "معلّقة"
+    },
+    {
+      "key": "app.mobile.company.read_only_closing",
+      "format": "text",
+      "description": "Founder app: inside the view-only banner",
+      "placeholders": [],
+      "meta": {},
+      "en": "closing",
+      "ar": "قيد الإغلاق"
+    },
+    {
+      "key": "app.mobile.company.read_only_closed",
+      "format": "text",
+      "description": "Founder app: inside the view-only banner",
+      "placeholders": [],
+      "meta": {},
+      "en": "closed",
+      "ar": "مغلقة"
+    },
+    {
+      "key": "app.mobile.settings.team",
+      "format": "text",
+      "description": "Founder app: settings section for the team",
+      "placeholders": [],
+      "meta": {},
+      "en": "Team",
+      "ar": "الفريق"
+    },
+    {
+      "key": "app.mobile.settings.team_summary",
+      "format": "text",
+      "description": "Founder app: settings summary for the team",
+      "placeholders": [],
+      "meta": {},
+      "en": "Invite people and join a company",
+      "ar": "ادعُ أشخاصاً وانضم إلى شركة"
+    },
+    {
+      "key": "app.mobile.team.invites",
+      "format": "text",
+      "description": "Founder app: team invites heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "Invites",
+      "ar": "الدعوات"
+    },
+    {
+      "key": "app.mobile.team.invites_empty",
+      "format": "text",
+      "description": "Founder app: team invites empty state",
+      "placeholders": [],
+      "meta": {},
+      "en": "No invites yet.",
+      "ar": "لا توجد دعوات بعد."
+    },
+    {
+      "key": "app.mobile.team.invite_title",
+      "format": "text",
+      "description": "Founder app: invite form heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "Invite someone",
+      "ar": "دعوة شخص"
+    },
+    {
+      "key": "app.mobile.team.invite_email",
+      "format": "text",
+      "description": "Founder app: invite email field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Email address",
+      "ar": "البريد الإلكتروني"
+    },
+    {
+      "key": "app.mobile.team.invite_send",
+      "format": "text",
+      "description": "Founder app: send invite button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send invite",
+      "ar": "إرسال الدعوة"
+    },
+    {
+      "key": "app.mobile.team.invite_sent",
+      "format": "text",
+      "description": "Founder app: invite sent",
+      "placeholders": [
+        "email"
+      ],
+      "meta": {},
+      "en": "Invite sent to {email}. They can also join with this link:",
+      "ar": "أُرسلت الدعوة إلى {email}. يمكنه أيضاً الانضمام بهذا الرابط:"
+    },
+    {
+      "key": "app.mobile.team.invite_revoke",
+      "format": "text",
+      "description": "Founder app: withdraw invite button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Withdraw invite",
+      "ar": "سحب الدعوة"
+    },
+    {
+      "key": "app.mobile.team.invite_no_permission",
+      "format": "text",
+      "description": "Founder app: no permission to invite",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your role does not let you invite people to this company.",
+      "ar": "لا يسمح لك دورك بدعوة أشخاص إلى هذه الشركة."
+    },
+    {
+      "key": "app.mobile.team.join_body",
+      "format": "text",
+      "description": "Founder app: join a company explanation",
+      "placeholders": [],
+      "meta": {},
+      "en": "Paste the invite link or code you were sent. You join with the email address you signed in with.",
+      "ar": "الصق رابط الدعوة أو رمزها الذي وصلك. تنضم بالبريد الإلكتروني الذي سجّلت الدخول به."
+    },
+    {
+      "key": "app.mobile.team.join_field",
+      "format": "text",
+      "description": "Founder app: join field label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Invite link or code",
+      "ar": "رابط الدعوة أو رمزها"
+    },
+    {
+      "key": "app.mobile.team.join_button",
+      "format": "text",
+      "description": "Founder app: join button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Join",
+      "ar": "انضمام"
+    },
+    {
+      "key": "app.mobile.team.joined",
+      "format": "text",
+      "description": "Founder app: joined a company",
+      "placeholders": [
+        "company"
+      ],
+      "meta": {},
+      "en": "You joined {company}.",
+      "ar": "انضممت إلى {company}."
+    },
+    {
+      "key": "app.mobile.error.invite_exists",
+      "format": "text",
+      "description": "Founder app error: invite_exists",
+      "placeholders": [],
+      "meta": {},
+      "en": "This person already has an invite waiting",
+      "ar": "لدى هذا الشخص دعوة بانتظاره بالفعل"
+    },
+    {
+      "key": "app.mobile.error.invite_not_valid",
+      "format": "text",
+      "description": "Founder app error: invite not valid",
+      "placeholders": [],
+      "meta": {},
+      "en": "This invite has expired, was withdrawn or was already used",
+      "ar": "انتهت صلاحية هذه الدعوة أو سُحبت أو استُخدمت من قبل"
+    },
+    {
+      "key": "app.mobile.error.invite_email_mismatch",
+      "format": "text",
+      "description": "Founder app error: invite_email_mismatch",
+      "placeholders": [],
+      "meta": {},
+      "en": "This invite was sent to another email address",
+      "ar": "أُرسلت هذه الدعوة إلى بريد إلكتروني آخر"
+    },
+    {
+      "key": "app.mobile.error.membership_limit",
+      "format": "text",
+      "description": "Founder app error: membership_limit",
+      "placeholders": [],
+      "meta": {},
+      "en": "You belong to as many companies as allowed",
+      "ar": "أنت عضو في الحد الأقصى المسموح به من الشركات"
+    },
+    {
+      "key": "app.mobile.error.destination_not_allowed",
+      "format": "text",
+      "description": "Founder app error: destination_not_allowed",
+      "placeholders": [],
+      "meta": {},
+      "en": "You can move money only to your own companies",
+      "ar": "يمكنك تحويل الأموال إلى شركاتك فقط"
+    },
+    {
+      "key": "app.mobile.error.capability_unavailable",
+      "format": "text",
+      "description": "Founder app error: capability_unavailable",
+      "placeholders": [],
+      "meta": {},
+      "en": "This transfer is not available between these accounts",
+      "ar": "هذا التحويل غير متاح بين هذين الحسابين"
+    },
+    {
+      "key": "app.mobile.error.company_read_only",
+      "format": "text",
+      "description": "Founder app error: company_read_only",
+      "placeholders": [],
+      "meta": {},
+      "en": "This company is view only",
+      "ar": "هذه الشركة للعرض فقط"
+    },
+    {
+      "key": "app.mobile.payments.my_companies_none",
+      "format": "text",
+      "description": "Founder app: no other company to pay",
+      "placeholders": [],
+      "meta": {},
+      "en": "None of your other companies has an open account here.",
+      "ar": "لا تملك أي من شركاتك الأخرى حساباً مفتوحاً هنا."
+    },
+    {
+      "key": "app.mobile.error.forbidden",
+      "format": "text",
+      "description": "Founder app error: forbidden",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your role does not allow this",
+      "ar": "لا يسمح دورك بذلك"
+    },
+    {
+      "key": "app.mobile.error.step_up_cancelled",
+      "format": "text",
+      "description": "Founder app error: step-up cancelled",
+      "placeholders": [],
+      "meta": {},
+      "en": "Nothing was changed",
+      "ar": "لم يتغير شيء"
+    },
+    {
+      "key": "app.mobile.error.offline",
+      "format": "text",
+      "description": "Founder app error: offline",
+      "placeholders": [],
+      "meta": {},
+      "en": "You are offline, so nothing was sent",
+      "ar": "أنت غير متصل، لذا لم يُرسل شيء"
+    },
+    {
+      "key": "app.mobile.error.not_found",
+      "format": "text",
+      "description": "Founder app error: not found",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not find it",
+      "ar": "لم نتمكن من العثور عليه"
+    },
+    {
+      "key": "app.mobile.error.generic",
+      "format": "text",
+      "description": "Founder app error: anything else",
+      "placeholders": [],
+      "meta": {},
+      "en": "That did not work",
+      "ar": "لم ينجح ذلك"
+    },
+    {
+      "key": "app.mobile.error.in_progress",
+      "format": "text",
+      "description": "Founder app error: idempotency in progress",
+      "placeholders": [],
+      "meta": {},
+      "en": "That request is still being processed. Check again in a moment before you try again.",
+      "ar": "ما زال هذا الطلب قيد المعالجة. تحقّق بعد لحظة قبل أن تحاول مجدداً."
+    },
+    {
+      "key": "app.mobile.error.draft_mismatch",
+      "format": "text",
+      "description": "Founder app error: action does not match the assistant draft",
+      "placeholders": [],
+      "meta": {},
+      "en": "What you did does not match the assistant's draft, so the draft is still open. Do what it describes, or dismiss it.",
+      "ar": "ما فعلته لا يطابق مسودة المساعد، لذا ما زالت المسودة مفتوحة. نفّذ ما تصفه أو تجاهلها."
+    },
+    {
+      "key": "app.mobile.error.draft_not_open",
+      "format": "text",
+      "description": "Founder app error: assistant draft no longer open",
+      "placeholders": [],
+      "meta": {},
+      "en": "This draft is no longer open. Ask the assistant again if you still need it.",
+      "ar": "لم تعد هذه المسودة مفتوحة. اسأل المساعد مجدداً إن كنت ما زلت بحاجة إليها."
+    },
+    {
+      "key": "app.mobile.accounts.empty",
+      "format": "text",
+      "description": "Founder app: accounts empty state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your company has no accounts yet.",
+      "ar": "لا توجد حسابات لشركتك بعد."
+    },
+    {
+      "key": "app.mobile.accounts.select",
+      "format": "text",
+      "description": "Founder app: accounts empty detail pane",
+      "placeholders": [],
+      "meta": {},
+      "en": "Select an account to see its balance and transactions.",
+      "ar": "اختر حساباً لعرض رصيده ومعاملاته."
+    },
+    {
+      "key": "app.mobile.accounts.current",
+      "format": "text",
+      "description": "Founder app: current balance label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Current balance",
+      "ar": "الرصيد الحالي"
+    },
+    {
+      "key": "app.mobile.accounts.no_balance",
+      "format": "text",
+      "description": "Founder app: no balance yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank has not reported a balance yet.",
+      "ar": "لم يُبلغ البنك عن رصيد بعد."
+    },
+    {
+      "key": "app.mobile.accounts.as_of",
+      "format": "text",
+      "description": "Founder app: when the bank reported the balance",
+      "placeholders": [
+        "time"
+      ],
+      "meta": {},
+      "en": "From the bank at {time}",
+      "ar": "من البنك في {time}"
+    },
+    {
+      "key": "app.mobile.accounts.stale",
+      "format": "text",
+      "description": "Founder app: stale balance",
+      "placeholders": [
+        "time"
+      ],
+      "meta": {},
+      "en": "The bank did not answer just now. This balance is from {time}.",
+      "ar": "لم يستجب البنك الآن. هذا الرصيد من {time}."
+    },
+    {
+      "key": "app.mobile.accounts.stale_short",
+      "format": "text",
+      "description": "Founder app: short stale balance marker",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not current",
+      "ar": "غير محدّث"
+    },
+    {
+      "key": "app.mobile.statement.title",
+      "format": "text",
+      "description": "Founder app: statement heading",
+      "placeholders": [
+        "month"
+      ],
+      "meta": {},
+      "en": "Statement for {month}",
+      "ar": "كشف حساب {month}"
+    },
+    {
+      "key": "app.mobile.statement.lines",
+      "format": "text",
+      "description": "Founder app: number of statement lines",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "{count} lines",
+      "ar": "{count} سطر"
+    },
+    {
+      "key": "app.mobile.transactions.empty",
+      "format": "text",
+      "description": "Founder app: transactions empty state",
+      "placeholders": [],
+      "meta": {},
+      "en": "No transactions match.",
+      "ar": "لا توجد معاملات مطابقة."
+    },
+    {
+      "key": "app.mobile.transactions.loading_more",
+      "format": "text",
+      "description": "Founder app: loading more transactions",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading more",
+      "ar": "جارٍ تحميل المزيد"
+    },
+    {
+      "key": "app.mobile.transactions.count.one",
+      "format": "text",
+      "description": "Founder app: number of transactions shown",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "{count} transaction, newest first",
+      "ar": "{count} معاملة، الأحدث أولاً"
+    },
+    {
+      "key": "app.mobile.transactions.count.other",
+      "format": "text",
+      "description": "Founder app: number of transactions shown",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "{count} transactions, newest first",
+      "ar": "{count} معاملة، الأحدث أولاً"
+    },
+    {
+      "key": "app.mobile.filter.all",
+      "format": "text",
+      "description": "Founder app: transaction filter",
+      "placeholders": [],
+      "meta": {},
+      "en": "All",
+      "ar": "الكل"
+    },
+    {
+      "key": "app.mobile.filter.in",
+      "format": "text",
+      "description": "Founder app: transaction filter",
+      "placeholders": [],
+      "meta": {},
+      "en": "Money in",
+      "ar": "الأموال الواردة"
+    },
+    {
+      "key": "app.mobile.filter.out",
+      "format": "text",
+      "description": "Founder app: transaction filter",
+      "placeholders": [],
+      "meta": {},
+      "en": "Money out",
+      "ar": "الأموال الصادرة"
+    },
+    {
+      "key": "app.mobile.filter.any_month",
+      "format": "text",
+      "description": "Founder app: transaction month filter",
+      "placeholders": [],
+      "meta": {},
+      "en": "Any month",
+      "ar": "أي شهر"
+    },
+    {
+      "key": "app.mobile.cards.dispute_subject",
+      "format": "text",
+      "description": "Founder app: subject of a dispute ticket",
+      "placeholders": [
+        "card"
+      ],
+      "meta": {},
+      "en": "Charge on card {card}",
+      "ar": "رسوم على البطاقة {card}"
+    },
+    {
+      "key": "app.mobile.cards.empty",
+      "format": "text",
+      "description": "Founder app: cards empty state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your company has no cards yet.",
+      "ar": "لا توجد بطاقات لشركتك بعد."
+    },
+    {
+      "key": "app.mobile.cards.select",
+      "format": "text",
+      "description": "Founder app: cards empty detail pane",
+      "placeholders": [],
+      "meta": {},
+      "en": "Select a card to see it here.",
+      "ar": "اختر بطاقة لعرضها هنا."
+    },
+    {
+      "key": "app.mobile.cards.no_permission",
+      "format": "text",
+      "description": "Founder app: no permission for cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your role cannot see or manage the company's cards. Ask an owner or an admin.",
+      "ar": "لا يسمح لك دورك برؤية بطاقات الشركة أو إدارتها. اطلب ذلك من مالك أو مسؤول."
+    },
+    {
+      "key": "app.mobile.cards.state",
+      "format": "text",
+      "description": "Founder app: card state label",
+      "placeholders": [],
+      "meta": {},
+      "en": "State",
+      "ar": "الحالة"
+    },
+    {
+      "key": "app.mobile.cards.funding",
+      "format": "text",
+      "description": "Founder app: account a card is paid from",
+      "placeholders": [],
+      "meta": {},
+      "en": "Paid from",
+      "ar": "تُدفع من"
+    },
+    {
+      "key": "app.mobile.cards.widget_sample_new_pin_value",
+      "format": "text",
+      "description": "Founder app: sample card widget, new PIN",
+      "placeholders": [],
+      "meta": {},
+      "en": "Entered in the bank's view",
+      "ar": "يُدخل في واجهة البنك"
+    },
+    {
+      "key": "app.mobile.cards.widget_phone_only",
+      "format": "text",
+      "description": "Founder app: where the bank's secure view opens",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank's secure view opens on your phone, tablet or the web app.",
+      "ar": "تفتح واجهة البنك الآمنة على هاتفك أو جهازك اللوحي أو تطبيق الويب."
+    },
+    {
+      "key": "app.mobile.cards.step_up_note",
+      "format": "text",
+      "description": "Founder app: card step-up note",
+      "placeholders": [],
+      "meta": {},
+      "en": "Freezing or unfreezing asks you to confirm it is you, and is recorded.",
+      "ar": "يطلب منك التجميد أو إلغاء التجميد تأكيد هويتك، ويُسجَّل ذلك."
+    },
+    {
+      "key": "app.mobile.payments.select",
+      "format": "text",
+      "description": "Founder app: payments empty detail pane",
+      "placeholders": [],
+      "meta": {},
+      "en": "Select a payment to see its timeline.",
+      "ar": "اختر دفعة لعرض مراحلها."
+    },
+    {
+      "key": "app.mobile.payments.count",
+      "format": "text",
+      "description": "Founder app: number of payments",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "{count} payments, newest first",
+      "ar": "{count} دفعة، الأحدث أولاً"
+    },
+    {
+      "key": "app.mobile.payments.ach",
+      "format": "text",
+      "description": "Founder app: payment type, external bank payment",
+      "placeholders": [],
+      "meta": {},
+      "en": "Bank transfer",
+      "ar": "تحويل بنكي"
+    },
+    {
+      "key": "app.mobile.payments.internal",
+      "format": "text",
+      "description": "Founder app: payment type, between own accounts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Transfer between your accounts",
+      "ar": "تحويل بين حساباتك"
+    },
+    {
+      "key": "app.mobile.payments.amount_error",
+      "format": "text",
+      "description": "Founder app: amount error",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter an amount above zero, with up to two decimals.",
+      "ar": "أدخل مبلغاً أكبر من صفر، بخانتين عشريتين كحد أقصى."
+    },
+    {
+      "key": "app.mobile.payments.choose",
+      "format": "text",
+      "description": "Founder app: payment form intro",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose where the money comes from and where it goes.",
+      "ar": "اختر مصدر الأموال ووجهتها."
+    },
+    {
+      "key": "app.mobile.payments.review_to",
+      "format": "text",
+      "description": "Founder app: payment review recipient",
+      "placeholders": [
+        "name"
+      ],
+      "meta": {},
+      "en": "To {name}",
+      "ar": "إلى {name}"
+    },
+    {
+      "key": "app.mobile.payments.step_up_note",
+      "format": "text",
+      "description": "Founder app: payment review step-up note",
+      "placeholders": [],
+      "meta": {},
+      "en": "Nothing has been sent. When you send it, you confirm it is you with your authenticator app.",
+      "ar": "لم يُرسل شيء بعد. عند الإرسال، تؤكد هويتك بتطبيق المصادقة."
+    },
+    {
+      "key": "app.mobile.payments.send",
+      "format": "text",
+      "description": "Founder app: send payment button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send payment",
+      "ar": "إرسال الدفعة"
+    },
+    {
+      "key": "app.mobile.payments.edit",
+      "format": "text",
+      "description": "Founder app: change the payment before sending",
+      "placeholders": [],
+      "meta": {},
+      "en": "Change it",
+      "ar": "تعديلها"
+    },
+    {
+      "key": "app.mobile.payments.sent_body",
+      "format": "text",
+      "description": "Founder app: payment sent line; {amount} then its state",
+      "placeholders": [
+        "amount",
+        "state"
+      ],
+      "meta": {},
+      "en": "{amount} {state}",
+      "ar": "{amount} {state}"
+    },
+    {
+      "key": "app.mobile.payments.sent_detail",
+      "format": "text",
+      "description": "Founder app: after a payment is sent",
+      "placeholders": [],
+      "meta": {},
+      "en": "Follow it in Payments. The bank updates its status as it moves.",
+      "ar": "تابعها في المدفوعات. يحدّث البنك حالتها أثناء تقدمها."
+    },
+    {
+      "key": "app.mobile.payments.view",
+      "format": "text",
+      "description": "Founder app: open the payment",
+      "placeholders": [],
+      "meta": {},
+      "en": "View payment",
+      "ar": "عرض الدفعة"
+    },
+    {
+      "key": "app.mobile.payments.ach_timing",
+      "format": "text",
+      "description": "Founder app: how long an external payment takes",
+      "placeholders": [],
+      "meta": {},
+      "en": "Bank transfer. Arrives in 1 to 2 business days.",
+      "ar": "تحويل بنكي. يصل خلال يوم إلى يومي عمل."
+    },
+    {
+      "key": "app.mobile.payments.created",
+      "format": "text",
+      "description": "Founder app: payment created time label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Created",
+      "ar": "أُنشئت"
+    },
+    {
+      "key": "app.mobile.payments.timeline",
+      "format": "text",
+      "description": "Founder app: payment timeline heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "Timeline",
+      "ar": "المراحل"
+    },
+    {
+      "key": "app.mobile.payments.returned_title",
+      "format": "text",
+      "description": "Founder app: payment returned with a return code",
+      "placeholders": [
+        "code"
+      ],
+      "meta": {},
+      "en": "Returned by the bank, code {code}",
+      "ar": "أرجعها البنك، الرمز {code}"
+    },
+    {
+      "key": "app.mobile.payments.returned_no_reason",
+      "format": "text",
+      "description": "Founder app: returned with no reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank did not give a reason.",
+      "ar": "لم يذكر البنك سبباً."
+    },
+    {
+      "key": "app.mobile.payments.failed_title",
+      "format": "text",
+      "description": "Founder app: payment failed",
+      "placeholders": [],
+      "meta": {},
+      "en": "The payment failed",
+      "ar": "فشلت الدفعة"
+    },
+    {
+      "key": "app.mobile.recipients.empty",
+      "format": "text",
+      "description": "Founder app: recipients empty state",
+      "placeholders": [],
+      "meta": {},
+      "en": "No recipients yet.",
+      "ar": "لا يوجد مستفيدون بعد."
+    },
+    {
+      "key": "app.mobile.recipients.select",
+      "format": "text",
+      "description": "Founder app: recipients empty detail pane",
+      "placeholders": [],
+      "meta": {},
+      "en": "Select a recipient to see it here.",
+      "ar": "اختر مستفيداً لعرضه هنا."
+    },
+    {
+      "key": "app.mobile.recipients.name",
+      "format": "text",
+      "description": "Founder app: recipient name field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Name",
+      "ar": "الاسم"
+    },
+    {
+      "key": "app.mobile.recipients.name_error",
+      "format": "text",
+      "description": "Founder app: recipient name error",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter the recipient's name.",
+      "ar": "أدخل اسم المستفيد."
+    },
+    {
+      "key": "app.mobile.recipients.routing_hint",
+      "format": "text",
+      "description": "Founder app: bank code field hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "The IBAN starts with AE and has 23 characters",
+      "ar": "يبدأ رقم الآيبان بـ AE ويتكون من 23 خانة"
+    },
+    {
+      "key": "app.mobile.recipients.routing_error",
+      "format": "text",
+      "description": "Founder app: bank code field error",
+      "placeholders": [],
+      "meta": {},
+      "en": "This is not a valid UAE IBAN. Check the 23 characters.",
+      "ar": "هذا ليس رقم آيبان إماراتياً صالحاً. تحقّق من الخانات الـ 23."
+    },
+    {
+      "key": "app.mobile.recipients.save",
+      "format": "text",
+      "description": "Founder app: save recipient button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Save recipient",
+      "ar": "حفظ المستفيد"
+    },
+    {
+      "key": "app.mobile.recipients.screening",
+      "format": "text",
+      "description": "Founder app: recipient screening label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Screening",
+      "ar": "الفحص"
+    },
+    {
+      "key": "app.mobile.recipients.screening_note",
+      "format": "text",
+      "description": "Founder app: recipient screening note",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank checks this recipient when you send the first payment. If the check does not pass, the payment is not sent.",
+      "ar": "يفحص البنك هذا المستفيد عند إرسال الدفعة الأولى. إذا لم يجتز الفحص، فلن تُرسل الدفعة."
+    },
+    {
+      "key": "app.mobile.recipients.checked_first_payment",
+      "format": "text",
+      "description": "Founder app: recipient not yet screened",
+      "placeholders": [],
+      "meta": {},
+      "en": "Checked by the bank with the first payment",
+      "ar": "يفحصه البنك مع الدفعة الأولى"
+    },
+    {
+      "key": "app.mobile.recipients.added",
+      "format": "text",
+      "description": "Founder app: recipient added date label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Added",
+      "ar": "تاريخ الإضافة"
+    },
+    {
+      "key": "app.mobile.recipients.archive",
+      "format": "text",
+      "description": "Founder app: archive recipient button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Archive recipient",
+      "ar": "أرشفة المستفيد"
+    },
+    {
+      "key": "app.mobile.recipients.not_clear",
+      "format": "text",
+      "description": "Founder app: recipient screening state",
+      "placeholders": [
+        "state"
+      ],
+      "meta": {},
+      "en": "Screening: {state}",
+      "ar": "الفحص: {state}"
+    },
+    {
+      "key": "app.mobile.topup.sources_empty",
+      "format": "text",
+      "description": "Founder app: no linked accounts",
+      "placeholders": [],
+      "meta": {},
+      "en": "No accounts linked yet. Link your company's account at another bank to move money into OnGem.",
+      "ar": "لا توجد حسابات مرتبطة بعد. اربط حساب شركتك في بنك آخر لتحويل الأموال إلى OnGem."
+    },
+    {
+      "key": "app.mobile.topup.linked",
+      "format": "text",
+      "description": "Founder app: account linked",
+      "placeholders": [],
+      "meta": {},
+      "en": "Linked. The bank verifies it before you can top up from it.",
+      "ar": "تم الربط. يتحقق البنك منه قبل أن تتمكن من الإيداع منه."
+    },
+    {
+      "key": "app.mobile.topup.amount_hint",
+      "format": "text",
+      "description": "Founder app: top-up limits",
+      "placeholders": [],
+      "meta": {},
+      "en": "Each top-up and each day has a limit set by the bank.",
+      "ar": "لكل إيداع ولكل يوم حد يضعه البنك."
+    },
+    {
+      "key": "app.mobile.topup.done_title",
+      "format": "text",
+      "description": "Founder app: top-up made",
+      "placeholders": [],
+      "meta": {},
+      "en": "Top-up made",
+      "ar": "تم الإيداع"
+    },
+    {
+      "key": "app.mobile.topup.again",
+      "format": "text",
+      "description": "Founder app: make another top-up",
+      "placeholders": [],
+      "meta": {},
+      "en": "Another top-up",
+      "ar": "إيداع آخر"
+    },
+    {
+      "key": "app.mobile.error.topup_limit",
+      "format": "text",
+      "description": "Founder app error: topup_limit",
+      "placeholders": [],
+      "meta": {},
+      "en": "This top-up is over the limit for one top-up.",
+      "ar": "هذا الإيداع يتجاوز الحد المسموح للإيداع الواحد."
+    },
+    {
+      "key": "app.mobile.error.topup_daily_limit",
+      "format": "text",
+      "description": "Founder app error: topup_daily_limit",
+      "placeholders": [],
+      "meta": {},
+      "en": "This would go over the daily top-up limit.",
+      "ar": "سيتجاوز هذا حد الإيداع اليومي."
+    },
+    {
+      "key": "app.mobile.schedules.empty",
+      "format": "text",
+      "description": "Founder app: scheduled payments empty state",
+      "placeholders": [],
+      "meta": {},
+      "en": "No scheduled payments. Set up a payment that goes on its own, such as rent every month.",
+      "ar": "لا توجد مدفوعات مجدولة. أعدّ دفعة تُنفّذ تلقائياً، مثل الإيجار كل شهر."
+    },
+    {
+      "key": "app.mobile.schedules.new_body",
+      "format": "text",
+      "description": "Founder app: how scheduled payments work",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem makes each payment on its date as a UAEFTS payment, with the same checks as one you send yourself. A date on a weekend or holiday goes on the next banking day.",
+      "ar": "ينفّذ OnGem كل دفعة في موعدها بتحويل عبر UAEFTS، بنفس الفحوص التي تخضع لها الدفعة التي ترسلها بنفسك. الموعد الذي يصادف عطلة نهاية أسبوع أو عطلة رسمية يُنفّذ في يوم العمل المصرفي التالي."
+    },
+    {
+      "key": "app.mobile.schedules.date_hint",
+      "format": "text",
+      "description": "Founder app: date field hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "As 2026-12-01",
+      "ar": "بالصيغة 2026-12-01"
+    },
+    {
+      "key": "app.mobile.schedules.start_error",
+      "format": "text",
+      "description": "Founder app: first date error",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter today or a later date, as 2026-12-01.",
+      "ar": "أدخل تاريخ اليوم أو تاريخاً لاحقاً، بالصيغة 2026-12-01."
+    },
+    {
+      "key": "app.mobile.schedules.end_error",
+      "format": "text",
+      "description": "Founder app: end date error",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter a date after the first payment, as 2026-12-01.",
+      "ar": "أدخل تاريخاً بعد الدفعة الأولى، بالصيغة 2026-12-01."
+    },
+    {
+      "key": "app.mobile.schedules.summary",
+      "format": "text",
+      "description": "Founder app: scheduled payment summary",
+      "placeholders": [
+        "amount",
+        "frequency",
+        "date"
+      ],
+      "meta": {},
+      "en": "{amount}, {frequency}, first on {date}. You confirm it is you before it is set up.",
+      "ar": "{amount}، {frequency}، أول دفعة في {date}. تؤكد هويتك قبل إعدادها."
+    },
+    {
+      "key": "app.mobile.schedules.from_account",
+      "format": "text",
+      "description": "Founder app: scheduled payment source",
+      "placeholders": [
+        "account"
+      ],
+      "meta": {},
+      "en": "From {account}",
+      "ar": "من {account}"
+    },
+    {
+      "key": "app.mobile.notices.empty",
+      "format": "text",
+      "description": "Founder app: notifications empty state",
+      "placeholders": [],
+      "meta": {},
+      "en": "No notifications yet. We tell you here when a payment moves, a card changes or support replies.",
+      "ar": "لا توجد إشعارات بعد. نُعلمك هنا عند تحرك دفعة أو تغيّر بطاقة أو رد الدعم."
+    },
+    {
+      "key": "app.mobile.notices.unread_marker",
+      "format": "text",
+      "description": "Founder app: unread marker",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unread",
+      "ar": "غير مقروء"
+    },
+    {
+      "key": "app.mobile.notices.choose",
+      "format": "text",
+      "description": "Founder app: notification choices hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose what reaches you by email or SMS in Settings.",
+      "ar": "اختر ما يصلك بالبريد الإلكتروني أو الرسائل النصية من الإعدادات."
+    },
+    {
+      "key": "app.mobile.settings.notifications_summary",
+      "format": "text",
+      "description": "Founder app: settings summary for notifications",
+      "placeholders": [],
+      "meta": {},
+      "en": "Email and SMS choices",
+      "ar": "خيارات البريد الإلكتروني والرسائل النصية"
+    },
+    {
+      "key": "app.mobile.prefs.always_email",
+      "format": "text",
+      "description": "Founder app: notice kind always sent by email",
+      "placeholders": [],
+      "meta": {},
+      "en": "Always by email",
+      "ar": "دائماً بالبريد الإلكتروني"
+    },
+    {
+      "key": "app.mobile.onboarding.state",
+      "format": "text",
+      "description": "Founder app: application state",
+      "placeholders": [
+        "state"
+      ],
+      "meta": {},
+      "en": "Application: {state}",
+      "ar": "الطلب: {state}"
+    },
+    {
+      "key": "app.mobile.onboarding.continue",
+      "format": "text",
+      "description": "Founder app: continue to the next onboarding step",
+      "placeholders": [
+        "step"
+      ],
+      "meta": {},
+      "en": "Continue: {step}",
+      "ar": "متابعة: {step}"
+    },
+    {
+      "key": "app.mobile.onboarding.refresh",
+      "format": "text",
+      "description": "Founder app: refresh onboarding",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check for updates",
+      "ar": "التحقق من التحديثات"
+    },
+    {
+      "key": "app.mobile.onboarding.select",
+      "format": "text",
+      "description": "Founder app: onboarding empty detail pane",
+      "placeholders": [],
+      "meta": {},
+      "en": "Select a step to see it here.",
+      "ar": "اختر خطوة لعرضها هنا."
+    },
+    {
+      "key": "app.mobile.state.current",
+      "format": "text",
+      "description": "Founder app: onboarding step state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your turn",
+      "ar": "دورك"
+    },
+    {
+      "key": "app.mobile.state.needs_you",
+      "format": "text",
+      "description": "Founder app: onboarding step state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Needs you",
+      "ar": "بحاجة إليك"
+    },
+    {
+      "key": "app.mobile.state.failed",
+      "format": "text",
+      "description": "Founder app: onboarding step state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not accepted",
+      "ar": "غير مقبول"
+    },
+    {
+      "key": "app.mobile.step.company",
+      "format": "text",
+      "description": "Founder app: onboarding step",
+      "placeholders": [],
+      "meta": {},
+      "en": "Company details",
+      "ar": "بيانات الشركة"
+    },
+    {
+      "key": "app.mobile.step.company_body",
+      "format": "text",
+      "description": "Founder app: onboarding company step body",
+      "placeholders": [],
+      "meta": {},
+      "en": "These come from your partner's application. Contact support if anything is wrong.",
+      "ar": "هذه البيانات من طلب شريكك. تواصل مع الدعم إن كان فيها أي خطأ."
+    },
+    {
+      "key": "app.mobile.step.identity",
+      "format": "text",
+      "description": "Founder app: onboarding step",
+      "placeholders": [],
+      "meta": {},
+      "en": "Owners' identity",
+      "ar": "هوية المالكين"
+    },
+    {
+      "key": "app.mobile.owner.share",
+      "format": "text",
+      "description": "Founder app: ownership share; {percent} is a number",
+      "placeholders": [
+        "percent"
+      ],
+      "meta": {},
+      "en": "{percent}% owner",
+      "ar": "مالك بنسبة {percent}%"
+    },
+    {
+      "key": "app.mobile.owner.id_on_file",
+      "format": "text",
+      "description": "Founder app: owner ID on file",
+      "placeholders": [
+        "document",
+        "last4"
+      ],
+      "meta": {},
+      "en": "{document} ending {last4} is on file",
+      "ar": "{document} المنتهي بـ {last4} مسجّل لدينا"
+    },
+    {
+      "key": "app.mobile.owner.ssn_hint",
+      "format": "text",
+      "description": "Founder app: owner ID number hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "Only the last 4 show. It is sent once and not kept on this device.",
+      "ar": "تظهر آخر 4 خانات فقط. يُرسل مرة واحدة ولا يُحفظ على هذا الجهاز."
+    },
+    {
+      "key": "app.mobile.owner.ssn_send",
+      "format": "text",
+      "description": "Founder app: send owner ID number",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send securely",
+      "ar": "إرسال آمن"
+    },
+    {
+      "key": "app.mobile.step.confirm",
+      "format": "text",
+      "description": "Founder app: onboarding step",
+      "placeholders": [],
+      "meta": {},
+      "en": "Confirm the details",
+      "ar": "تأكيد البيانات"
+    },
+    {
+      "key": "app.mobile.step.confirm_body",
+      "format": "text",
+      "description": "Founder app: onboarding confirm step body",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the owners. Confirming sends your company and its owners to the bank.",
+      "ar": "راجع بيانات المالكين. بالتأكيد تُرسل شركتك ومالكوها إلى البنك."
+    },
+    {
+      "key": "app.mobile.step.disclosures_body",
+      "format": "text",
+      "description": "Founder app: onboarding disclosures step body",
+      "placeholders": [],
+      "meta": {},
+      "en": "Read each disclosure in full and accept it. Each acceptance is recorded.",
+      "ar": "اقرأ كل إفصاح كاملاً ووافق عليه. تُسجَّل كل موافقة."
+    },
+    {
+      "key": "app.mobile.disclosure.version",
+      "format": "text",
+      "description": "Founder app: disclosure version",
+      "placeholders": [
+        "version"
+      ],
+      "meta": {},
+      "en": "Version {version}",
+      "ar": "الإصدار {version}"
+    },
+    {
+      "key": "app.mobile.disclosure.read",
+      "format": "text",
+      "description": "Founder app: open a disclosure",
+      "placeholders": [],
+      "meta": {},
+      "en": "Read",
+      "ar": "قراءة"
+    },
+    {
+      "key": "app.mobile.disclosure.accept",
+      "format": "text",
+      "description": "Founder app: accept a disclosure",
+      "placeholders": [],
+      "meta": {},
+      "en": "I have read it and accept",
+      "ar": "قرأته وأوافق عليه"
+    },
+    {
+      "key": "app.mobile.disclosure.not_accepted",
+      "format": "text",
+      "description": "Founder app: disclosure not yet accepted",
+      "placeholders": [],
+      "meta": {},
+      "en": "To accept",
+      "ar": "بانتظار الموافقة"
+    },
+    {
+      "key": "app.mobile.step.submit_body",
+      "format": "text",
+      "description": "Founder app: onboarding submit step body",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank checks your company (KYB) and its owners (KYC), then decides.",
+      "ar": "يتحقق البنك من شركتك (KYB) ومن مالكيها (KYC)، ثم يقرر."
+    },
+    {
+      "key": "app.mobile.step.submit_action",
+      "format": "text",
+      "description": "Founder app: submit the application",
+      "placeholders": [],
+      "meta": {},
+      "en": "Submit",
+      "ar": "إرسال"
+    },
+    {
+      "key": "app.mobile.step.bank",
+      "format": "text",
+      "description": "Founder app: onboarding step",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank's review",
+      "ar": "مراجعة البنك"
+    },
+    {
+      "key": "app.mobile.step.bank_waiting",
+      "format": "text",
+      "description": "Founder app: bank review in progress",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank is reviewing your application",
+      "ar": "يراجع البنك طلبك"
+    },
+    {
+      "key": "app.mobile.step.bank_waiting_body",
+      "format": "text",
+      "description": "Founder app: bank review body",
+      "placeholders": [],
+      "meta": {},
+      "en": "This can take a few days. Check back here for updates.",
+      "ar": "قد يستغرق ذلك بضعة أيام. عُد إلى هنا لمتابعة التحديثات."
+    },
+    {
+      "key": "app.mobile.step.bank_done",
+      "format": "text",
+      "description": "Founder app: bank review done",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank has finished its review.",
+      "ar": "أنهى البنك مراجعته."
+    },
+    {
+      "key": "app.mobile.step.decision",
+      "format": "text",
+      "description": "Founder app: onboarding step",
+      "placeholders": [],
+      "meta": {},
+      "en": "Decision",
+      "ar": "القرار"
+    },
+    {
+      "key": "app.mobile.step.upcoming_body",
+      "format": "text",
+      "description": "Founder app: later onboarding step",
+      "placeholders": [],
+      "meta": {},
+      "en": "This step comes later.",
+      "ar": "تأتي هذه الخطوة لاحقاً."
+    },
+    {
+      "key": "app.mobile.docs.title",
+      "format": "text",
+      "description": "Founder app: bank needs documents",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank needs documents",
+      "ar": "يحتاج البنك إلى مستندات"
+    },
+    {
+      "key": "app.mobile.docs.web_view",
+      "format": "text",
+      "description": "Founder app: take ID photos here",
+      "placeholders": [],
+      "meta": {},
+      "en": "Take photos of the ID here.",
+      "ar": "التقط صور الهوية هنا."
+    },
+    {
+      "key": "app.mobile.id.capture_body",
+      "format": "text",
+      "description": "Founder app: ID capture explanation",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank may ask for photos of your ID. We ask the bank to text you a link: open it on your phone to take the photos. It takes about two minutes.",
+      "ar": "قد يطلب البنك صوراً لهويتك. نطلب من البنك أن يرسل إليك رابطاً برسالة نصية: افتحه على هاتفك لالتقاط الصور. يستغرق ذلك نحو دقيقتين."
+    },
+    {
+      "key": "app.mobile.decision.accepted",
+      "format": "text",
+      "description": "Founder app: application accepted",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accepted. Your account is open.",
+      "ar": "تم القبول. حسابك مفتوح."
+    },
+    {
+      "key": "app.mobile.decision.accepted_body",
+      "format": "text",
+      "description": "Founder app: where accounts are",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your accounts are in Accounts.",
+      "ar": "تجد حساباتك في الحسابات."
+    },
+    {
+      "key": "app.mobile.decision.approved_body",
+      "format": "text",
+      "description": "Founder app: bank approved",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank approved your company and is opening the account.",
+      "ar": "وافق البنك على شركتك ويعمل على فتح الحساب."
+    },
+    {
+      "key": "app.mobile.decision.rejected",
+      "format": "text",
+      "description": "Founder app: application rejected",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank did not accept the application",
+      "ar": "لم يقبل البنك الطلب"
+    },
+    {
+      "key": "app.mobile.decision.rejected_body",
+      "format": "text",
+      "description": "Founder app: application rejected body",
+      "placeholders": [],
+      "meta": {},
+      "en": "Contact support to hear what you can do next.",
+      "ar": "تواصل مع الدعم لمعرفة ما يمكنك فعله بعد ذلك."
+    },
+    {
+      "key": "app.mobile.support.new",
+      "format": "text",
+      "description": "Founder app: new support ticket",
+      "placeholders": [],
+      "meta": {},
+      "en": "New ticket",
+      "ar": "طلب جديد"
+    },
+    {
+      "key": "app.mobile.support.empty",
+      "format": "text",
+      "description": "Founder app: support empty state",
+      "placeholders": [],
+      "meta": {},
+      "en": "You have no tickets.",
+      "ar": "ليست لديك طلبات."
+    },
+    {
+      "key": "app.mobile.support.select",
+      "format": "text",
+      "description": "Founder app: support empty detail pane",
+      "placeholders": [],
+      "meta": {},
+      "en": "Select a ticket to see the conversation.",
+      "ar": "اختر طلباً لعرض المحادثة."
+    },
+    {
+      "key": "app.mobile.support.updated",
+      "format": "text",
+      "description": "Founder app: ticket updated time",
+      "placeholders": [
+        "time"
+      ],
+      "meta": {},
+      "en": "updated {time}",
+      "ar": "حُدّث {time}"
+    },
+    {
+      "key": "app.mobile.support.email",
+      "format": "text",
+      "description": "Founder app: support email line",
+      "placeholders": [
+        "email"
+      ],
+      "meta": {},
+      "en": "You can also write to {email}.",
+      "ar": "يمكنك أيضاً مراسلتنا على {email}."
+    },
+    {
+      "key": "app.mobile.support.category",
+      "format": "text",
+      "description": "Founder app: support category question",
+      "placeholders": [],
+      "meta": {},
+      "en": "What is it about?",
+      "ar": "بخصوص ماذا؟"
+    },
+    {
+      "key": "app.mobile.support.cat_payment",
+      "format": "text",
+      "description": "Founder app: support category",
+      "placeholders": [],
+      "meta": {},
+      "en": "A payment you sent, or one that has not arrived",
+      "ar": "دفعة أرسلتها أو دفعة لم تصل"
+    },
+    {
+      "key": "app.mobile.support.cat_dispute",
+      "format": "text",
+      "description": "Founder app: support category",
+      "placeholders": [],
+      "meta": {},
+      "en": "A charge or payment you did not make or do not recognise",
+      "ar": "رسوم أو دفعة لم تقم بها أو لا تعرفها"
+    },
+    {
+      "key": "app.mobile.support.cat_card",
+      "format": "text",
+      "description": "Founder app: support category",
+      "placeholders": [],
+      "meta": {},
+      "en": "A card: lost, frozen, declined or a limit",
+      "ar": "بطاقة: مفقودة أو مجمّدة أو مرفوضة أو حدّ"
+    },
+    {
+      "key": "app.mobile.support.cat_account",
+      "format": "text",
+      "description": "Founder app: support category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your account, balance or statements",
+      "ar": "حسابك أو رصيدك أو كشوفاتك"
+    },
+    {
+      "key": "app.mobile.support.cat_onboarding",
+      "format": "text",
+      "description": "Founder app: support category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your application or documents",
+      "ar": "طلبك أو مستنداتك"
+    },
+    {
+      "key": "app.mobile.support.cat_other",
+      "format": "text",
+      "description": "Founder app: support category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Anything else",
+      "ar": "أي شيء آخر"
+    },
+    {
+      "key": "app.mobile.support.required",
+      "format": "text",
+      "description": "Founder app: required field",
+      "placeholders": [],
+      "meta": {},
+      "en": "This is needed.",
+      "ar": "هذا الحقل مطلوب."
+    },
+    {
+      "key": "app.mobile.support.send",
+      "format": "text",
+      "description": "Founder app: send ticket",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send ticket",
+      "ar": "إرسال الطلب"
+    },
+    {
+      "key": "app.mobile.support.refresh",
+      "format": "text",
+      "description": "Founder app: refresh ticket",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check for replies",
+      "ar": "التحقق من الردود"
+    },
+    {
+      "key": "app.mobile.support.resolution",
+      "format": "text",
+      "description": "Founder app: ticket resolution",
+      "placeholders": [],
+      "meta": {},
+      "en": "Resolution",
+      "ar": "الحل"
+    },
+    {
+      "key": "app.mobile.attach.title",
+      "format": "text",
+      "description": "Founder app: attachments heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "Files",
+      "ar": "الملفات"
+    },
+    {
+      "key": "app.mobile.attach.camera",
+      "format": "text",
+      "description": "Founder app: attach from camera",
+      "placeholders": [],
+      "meta": {},
+      "en": "Take a photo",
+      "ar": "التقاط صورة"
+    },
+    {
+      "key": "app.mobile.attach.library",
+      "format": "text",
+      "description": "Founder app: attach from photos",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a photo",
+      "ar": "اختيار صورة"
+    },
+    {
+      "key": "app.mobile.attach.files",
+      "format": "text",
+      "description": "Founder app: attach a file",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a file",
+      "ar": "اختيار ملف"
+    },
+    {
+      "key": "app.mobile.attach.sample",
+      "format": "text",
+      "description": "Founder app: demo attachment",
+      "placeholders": [],
+      "meta": {},
+      "en": "Attach a sample photo",
+      "ar": "إرفاق صورة نموذجية"
+    },
+    {
+      "key": "app.mobile.attach.limits",
+      "format": "text",
+      "description": "Founder app: attachment limits",
+      "placeholders": [],
+      "meta": {},
+      "en": "PDF, PNG, JPEG or text, up to 10 MB each.",
+      "ar": "PDF أو PNG أو JPEG أو نص، حتى 10 MB لكل ملف."
+    },
+    {
+      "key": "app.mobile.attach.too_large",
+      "format": "text",
+      "description": "Founder app: attachment too large",
+      "placeholders": [],
+      "meta": {},
+      "en": "That file is over 10 MB.",
+      "ar": "هذا الملف أكبر من 10 MB."
+    },
+    {
+      "key": "app.mobile.attach.wrong_type",
+      "format": "text",
+      "description": "Founder app: attachment wrong type",
+      "placeholders": [],
+      "meta": {},
+      "en": "Only PDF, PNG, JPEG or text files can be attached.",
+      "ar": "يمكن إرفاق ملفات PDF أو PNG أو JPEG أو النصوص فقط."
+    },
+    {
+      "key": "app.mobile.settings.language_summary",
+      "format": "text",
+      "description": "Founder app: settings summary for the language choice",
+      "placeholders": [],
+      "meta": {},
+      "en": "English or العربية",
+      "ar": "English أو العربية"
+    },
+    {
+      "key": "app.mobile.lang.en",
+      "format": "text",
+      "description": "Founder app: the English language, named in English in both languages",
+      "placeholders": [],
+      "meta": {},
+      "en": "English"
+    },
+    {
+      "key": "app.mobile.lang.ar",
+      "format": "text",
+      "description": "Founder app: the Arabic language, named in Arabic in both languages",
+      "placeholders": [],
+      "meta": {},
+      "en": "العربية",
+      "ar": "العربية"
+    },
+    {
+      "key": "app.mobile.date.month.1",
+      "format": "text",
+      "description": "Founder app: short month name in dates (27 Oct 2026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Jan",
+      "ar": "يناير"
+    },
+    {
+      "key": "app.mobile.date.month.2",
+      "format": "text",
+      "description": "Founder app: short month name in dates (27 Oct 2026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Feb",
+      "ar": "فبراير"
+    },
+    {
+      "key": "app.mobile.date.month.3",
+      "format": "text",
+      "description": "Founder app: short month name in dates (27 Oct 2026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Mar",
+      "ar": "مارس"
+    },
+    {
+      "key": "app.mobile.date.month.4",
+      "format": "text",
+      "description": "Founder app: short month name in dates (27 Oct 2026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Apr",
+      "ar": "أبريل"
+    },
+    {
+      "key": "app.mobile.date.month.5",
+      "format": "text",
+      "description": "Founder app: short month name in dates (27 Oct 2026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "May",
+      "ar": "مايو"
+    },
+    {
+      "key": "app.mobile.date.month.6",
+      "format": "text",
+      "description": "Founder app: short month name in dates (27 Oct 2026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Jun",
+      "ar": "يونيو"
+    },
+    {
+      "key": "app.mobile.date.month.7",
+      "format": "text",
+      "description": "Founder app: short month name in dates (27 Oct 2026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Jul",
+      "ar": "يوليو"
+    },
+    {
+      "key": "app.mobile.date.month.8",
+      "format": "text",
+      "description": "Founder app: short month name in dates (27 Oct 2026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Aug",
+      "ar": "أغسطس"
+    },
+    {
+      "key": "app.mobile.date.month.9",
+      "format": "text",
+      "description": "Founder app: short month name in dates (27 Oct 2026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sep",
+      "ar": "سبتمبر"
+    },
+    {
+      "key": "app.mobile.date.month.10",
+      "format": "text",
+      "description": "Founder app: short month name in dates (27 Oct 2026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Oct",
+      "ar": "أكتوبر"
+    },
+    {
+      "key": "app.mobile.date.month.11",
+      "format": "text",
+      "description": "Founder app: short month name in dates (27 Oct 2026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Nov",
+      "ar": "نوفمبر"
+    },
+    {
+      "key": "app.mobile.date.month.12",
+      "format": "text",
+      "description": "Founder app: short month name in dates (27 Oct 2026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dec",
+      "ar": "ديسمبر"
+    },
+    {
+      "key": "app.mobile.status.collecting",
+      "format": "text",
+      "description": "Founder app: plain words for an API state",
+      "placeholders": [],
+      "meta": {},
+      "en": "In progress",
+      "ar": "قيد التنفيذ"
+    },
+    {
+      "key": "app.mobile.status.submitted",
+      "format": "text",
+      "description": "Founder app: plain words for an API state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sent",
+      "ar": "أُرسل"
+    },
+    {
+      "key": "app.mobile.status.bank_review",
+      "format": "text",
+      "description": "Founder app: plain words for an API state",
+      "placeholders": [],
+      "meta": {},
+      "en": "With the bank",
+      "ar": "لدى البنك"
+    },
+    {
+      "key": "app.mobile.status.pending_bank",
+      "format": "text",
+      "description": "Founder app: plain words for an API state",
+      "placeholders": [],
+      "meta": {},
+      "en": "With the bank",
+      "ar": "لدى البنك"
+    },
+    {
+      "key": "app.mobile.status.prechecked",
+      "format": "text",
+      "description": "Founder app: plain words for an API state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ready to send",
+      "ar": "جاهزة للإرسال"
+    },
+    {
+      "key": "app.mobile.status.draft",
+      "format": "text",
+      "description": "Founder app: plain words for an API state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not sent yet",
+      "ar": "لم تُرسل بعد"
+    },
+    {
+      "key": "app.mobile.status.pending_approval",
+      "format": "text",
+      "description": "Founder app: plain words for an API state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for approval",
+      "ar": "بانتظار الاعتماد"
+    },
+    {
+      "key": "app.mobile.status.more_info",
+      "format": "text",
+      "description": "Founder app: plain words for an API state",
+      "placeholders": [],
+      "meta": {},
+      "en": "More information needed",
+      "ar": "مطلوب مزيد من المعلومات"
     }
   ]
 }
