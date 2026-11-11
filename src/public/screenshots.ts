@@ -27,38 +27,40 @@ import support1x from '../assets/public/screen-support-1x.jpg';
 
 /**
  * Product screens captured from demo mode (sample data only) by `scripts/public-screenshots.mjs` at twice the pixel
- * density (OG-032 R7, R10); the approvals screen is the gallery's, the companies and assistant screens were captured for OG-034. Their descriptions are content entries. Width and height are the displayed size in CSS pixels, so the browser reserves the space.
+ * density (OG-032 R7, R10), recaptured on the OG-035 shell (PS-005): desktop screens are the 940 x 640 content column,
+ * so they read at the size the site shows them (PS-017); the approvals screen is the gallery's. Their descriptions are
+ * content entries. Width and height are the displayed size in CSS pixels, so the browser reserves the space.
  */
 export const SCREENSHOTS = {
   home: {
     src: home,
-    width: 1440,
-    height: 900,
+    width: 940,
+    height: 640,
   },
   payments: {
     src: payments,
-    width: 1080,
-    height: 720,
+    width: 940,
+    height: 640,
   },
   schedules: {
     src: schedules,
-    width: 1080,
-    height: 720,
+    width: 940,
+    height: 640,
   },
   cards: {
     src: cards,
-    width: 1080,
-    height: 720,
+    width: 940,
+    height: 640,
   },
   notifications: {
     src: notifications,
-    width: 1080,
-    height: 720,
+    width: 940,
+    height: 640,
   },
   support: {
     src: support,
-    width: 1080,
-    height: 720,
+    width: 940,
+    height: 640,
   },
   approvals: {
     src: approvals,
@@ -67,13 +69,13 @@ export const SCREENSHOTS = {
   },
   companies: {
     src: companies,
-    width: 1440,
-    height: 900,
+    width: 940,
+    height: 640,
   },
   assistant: {
     src: assistant,
-    width: 1080,
-    height: 720,
+    width: 940,
+    height: 640,
   },
   homePhone: {
     src: homePhone,

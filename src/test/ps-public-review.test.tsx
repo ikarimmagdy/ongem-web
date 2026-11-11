@@ -168,7 +168,7 @@ describe('public site review fixes (US)', () => {
     const desk = hero.querySelector('.pub-hero__desk picture')!;
     expect(desk.querySelector('source')).toHaveAttribute('media', '(max-width: 640px)');
     expect(desk.querySelector('source')!.getAttribute('srcset')).toMatch(/^data:image\/gif/);
-    expect(desk.querySelector('img')!.getAttribute('srcset')).toMatch(/ 1440w, .* 2880w$/);
+    expect(desk.querySelector('img')!.getAttribute('srcset')).toMatch(/ 940w, .* 1880w$/);
     expect(desk.querySelector('img')).toHaveAttribute('fetchpriority', 'high');
     const row = screen.getByTestId('feature-row-payments');
     const narrow = within(row).getByTestId('shot-narrow-payments').querySelector('source')!;

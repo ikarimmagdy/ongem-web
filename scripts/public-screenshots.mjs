@@ -45,16 +45,26 @@ for (const scale of [2, 1]) {
     await go(page, p);
     await page.screenshot({ path: file(name(p), scale), type: 'jpeg', quality: 84, clip: CLIP });
   }
-  // Several companies: the switcher open over Home (OG-034).
-  await go(page, '/');
+  // Several companies: the demo invitation joins a second sample company, then the switcher opens over Home (OG-034).
+  await go(page, '/invite/demo_invite_capture');
+  await page.getByTestId('invite-accept').click();
+  await page.getByTestId('invite-joined').waitFor();
+  await page.getByTestId('invite-open').click();
+  await page.waitForTimeout(1200);
+  await page.mouse.move(0, 0);
   await page.getByTestId('company-switcher').first().click();
   await page.waitForTimeout(400);
   await page.screenshot({ path: file('companies', scale), type: 'jpeg', quality: 84, clip: CLIP });
   await page.keyboard.press('Escape');
   // The assistant open with a question answered.
-  await page.getByTestId('assistant-open').first().click();
-  await page.getByTestId('assistant-input').fill('What did we pay Acme Supplies this month?');
-  await page.getByTestId('assistant-send').click();
+  // On a desktop the assistant opens from the command search: Ask the assistant hands the question over (OG-035).
+  await page.getByTestId('command-search-open').click();
+  await page.getByTestId('command-search-input').fill('What did we pay Acme Supplies this month?');
+  await page.getByTestId('search-option-ask').click();
+  if (!(await page.getByTestId('assistant-reply').first().isVisible().catch(() => false))) {
+    const send = page.getByTestId('assistant-send');
+    if (await send.isEnabled().catch(() => false)) await send.click();
+  }
   await page.getByTestId('assistant-reply').first().waitFor();
   await page.waitForTimeout(600);
   await page.screenshot({ path: file('assistant', scale), type: 'jpeg', quality: 84, clip: CLIP });
