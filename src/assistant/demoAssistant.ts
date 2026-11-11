@@ -1,3 +1,4 @@
+import { paymentLabel } from '../lib/states';
 import type { OnGemApi } from '../api/client';
 import type { AssistantDraft, AssistantTurn } from '../api/types';
 import { t as tr } from '../i18n/store';
@@ -146,7 +147,7 @@ export class DemoAssistant {
         '\n' +
         page.items
           .slice(0, 5)
-          .map((p) => `- ${formatMinor(p.amount)}: ${p.state}`)
+          .map((p) => `- ${formatMinor(p.amount)}: ${paymentLabel(p.state)}`)
           .join('\n');
     } else if (t.includes('card')) {
       const cards = (await read('list_cards', 'listCards', () => this.api.cards())).items;
@@ -183,6 +184,34 @@ export class DemoAssistant {
       reply = tr('app.assistant.demo.application', {
         state: app?.state.toLowerCase().replace(/_/g, ' ') ?? tr('app.assistant.demo.not_started'),
       });
+    } else if (/how much|total/.test(t) && /\b(pay|paid|sent|spend|spent)\b/.test(t)) {
+      // FA-054: "How much did we pay Acme this month?" totals this month's payments to that recipient.
+      const rs = await read('list_recipients', 'listRecipients', () => this.api.recipients());
+      const who = rs.find((r) =>
+        r.name
+          .toLowerCase()
+          .split(/\s+/)
+          .some((w) => w.length > 2 && t.includes(w)),
+      );
+      if (!who) {
+        reply = tr('app.assistant.demo.paid_who');
+        outcome = 'UNRESOLVED';
+      } else {
+        const page = await read('list_payments', 'listPayments', () => this.api.payments(null, 100));
+        const month = new Date().toISOString().slice(0, 7);
+        const paid = page.items.filter(
+          (p) =>
+            p.recipientId === who.id &&
+            (p.createdAt ?? '').startsWith(month) &&
+            !['REJECTED', 'RETURNED', 'FAILED', 'CANCELLED', 'PENDING_APPROVAL', 'DRAFT'].includes(p.state),
+        );
+        const total = paid.reduce((n, p) => n + p.amount.amountMinor, 0);
+        reply = tr('app.assistant.demo.paid_to', {
+          payee: who.name,
+          amount: formatMinor({ amountMinor: total, currency: REGION_CONFIG.currency }),
+          count: String(paid.length),
+        });
+      }
     } else if (/balance|how much|available/.test(t)) {
       const accounts = await read('list_accounts', 'listAccounts', () => this.api.accounts());
       reply =

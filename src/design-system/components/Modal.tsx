@@ -7,11 +7,13 @@ export interface ModalProps {
   onClose(): void;
   children: ReactNode;
   footer?: ReactNode;
+  /** The title names the dialog for screen readers only (a search box that speaks for itself, FA-027). */
+  hideTitle?: boolean;
 }
 
 const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'; // content-check: ignore (CSS selector)
 
-export function Modal({ open, title, onClose, children, footer }: ModalProps) {
+export function Modal({ open, title, onClose, children, footer, hideTitle = false }: ModalProps) {
   const titleId = useId();
   const ref = useRef<HTMLDivElement>(null);
   const backdrop = useRef<HTMLDivElement>(null);
@@ -74,7 +76,7 @@ export function Modal({ open, title, onClose, children, footer }: ModalProps) {
         aria-labelledby={titleId}
         tabIndex={-1}
       >
-        <h2 id={titleId} className="og-modal__title">
+        <h2 id={titleId} className={hideTitle ? 'og-visually-hidden' : 'og-modal__title'}>
           {title}
         </h2>
         <div className="og-modal__body">{children}</div>

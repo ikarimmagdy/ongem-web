@@ -11,6 +11,7 @@ import { t } from '../i18n';
 import { REGION_CONFIG } from '../region';
 import { ApplicationSteps } from './ApplicationSteps';
 import { NeedsYou } from './NeedsYou';
+import { noticeRoute } from './Notifications';
 import { payeeName } from './Payments';
 import { AcctLast4, Amt, Load, stateStatus } from './common';
 
@@ -32,7 +33,7 @@ const orNone =
  * Needs you sits between the balance card and recent payments.
  */
 export function HomeScreen() {
-  const { api, can, companyState } = useSession();
+  const { api, can, companyState, mode } = useSession();
   const accounts = useAsync(() => api.accounts(), [api]);
   const apps = useAsync(() => api.applications(), [api]);
   const me = useAsync(() => api.me(), [api]);
@@ -53,6 +54,7 @@ export function HomeScreen() {
     applicationId: app?.id,
     cards: cards.status === 'success' ? cards.data.items : [],
     notices: notices.status === 'success' && notices.data ? notices.data.items : [],
+    noticeTo: noticeRoute,
   });
   const canPay = can(Permission.PAYMENT_CREATE);
   const canAddMoney = can(Permission.PAYMENT_CREATE) && companyState === 'ACTIVE';
@@ -67,7 +69,19 @@ export function HomeScreen() {
       />
       {app && app.state !== 'ACTIVE' && <ApplicationSteps state={app.state} />}
       <div className="fw-home" data-testid="home-grid">
-        <Card title={t('app.home.available')} className="fw-home__balance" data-testid="home-balance">
+        <Card
+          title={t('app.home.available')}
+          className="fw-home__balance"
+          data-testid="home-balance"
+          actions={
+            mode === 'demo' ? (
+              // FA-057: the same "Sample data" mark as the app's balance card.
+              <span className="og-chip og-chip--neutral" data-testid="home-sample">
+                {t('app.home.sample_data')}
+              </span>
+            ) : undefined
+          }
+        >
           <Load state={accounts} label="accounts">
             {(list) => {
               const total = list.reduce((s, a) => s + (a.balance?.available.amountMinor ?? 0), 0);

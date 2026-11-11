@@ -7,12 +7,13 @@ import { NAV } from './nav';
 import { t } from './i18n';
 import { useSession } from './session';
 import { useAssistantControl } from './assistant/control';
-import { PAYMENT_TABS, visiblePaymentTabs } from './screens/Payments';
 import { REGION_CONFIG } from './region';
+import { formatMinor } from './lib/format';
+import { PAYMENT_TABS, payeeName, visiblePaymentTabs } from './screens/Payments';
 
 interface Option {
   id: string;
-  group: 'screens' | 'accounts' | 'recipients' | 'ask';
+  group: 'screens' | 'accounts' | 'recipients' | 'payments' | 'cards' | 'ask';
   label: string;
   hint?: string;
   to?: string;
@@ -22,6 +23,9 @@ const SHORTCUTS = 'Meta+K Control+K'; // content-check: ignore (key names)
 /** Key caps, not words: the same in every language. */
 const KEYCAP_MAC = '⌘ K'; // content-check: ignore (key cap)
 const KEYCAP_OTHER = 'Ctrl K'; // content-check: ignore (key cap)
+const KEY_ARROWS = '↑ ↓'; // content-check: ignore (key cap)
+const KEY_ENTER = 'Enter'; // content-check: ignore (key cap)
+const KEY_ESC = 'Esc'; // content-check: ignore (key cap)
 
 const isMac = () =>
   typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
@@ -62,6 +66,21 @@ export function CommandSearch() {
     () => (open ? api.recipients().catch(() => []) : Promise.resolve([])),
     [api, open],
   );
+  // FA-027: payments by payee or amount, and cards by last four or holder.
+  const payments = useAsync(
+    () =>
+      open && can(Permission.PAYMENT_VIEW)
+        ? api.payments(null, 50).then((p) => p.items, () => [])
+        : Promise.resolve([]),
+    [api, open],
+  );
+  const cards = useAsync(
+    () =>
+      open && can(Permission.CARD_MANAGE)
+        ? api.cards().then((c) => c.items, () => [])
+        : Promise.resolve([]),
+    [api, open],
+  );
   const options = useMemo(() => {
     const q = query.trim().toLowerCase();
     const match = (s: string) => !q || s.toLowerCase().includes(q);
@@ -82,6 +101,21 @@ export function CommandSearch() {
         label: t('app.nav.notifications'),
         to: '/notifications',
       },
+      // FA-027: the sections people look for by name.
+      ...(['statements', 'exports', 'agreements'] as const).map((k) => ({
+        id: `screen-documents-${k}`,
+        group: 'screens' as const,
+        label: t(`app.search.section.${k}`),
+        hint: t('app.nav.documents'),
+        to: '/documents',
+      })),
+      ...(['language', 'appearance', 'notifications', 'security'] as const).map((k) => ({
+        id: `screen-settings-${k}`,
+        group: 'screens' as const,
+        label: t(`app.search.section.${k}`),
+        hint: t('app.nav.settings'),
+        to: '/settings',
+      })),
     ];
     const accs: Option[] = (accounts.status === 'success' ? accounts.data : []).map((a) => ({
       id: `account-${a.id}`,
@@ -99,15 +133,40 @@ export function CommandSearch() {
         ? `/payments/new?recipient=${encodeURIComponent(r.id)}`
         : PAYMENT_TABS[3].to,
     }));
+    const accsById = accounts.status === 'success' ? accounts.data : [];
+    const recsById = recipients.status === 'success' ? recipients.data : [];
+    const pays: Option[] = (payments.status === 'success' ? payments.data : []).map((p) => ({
+      id: `payment-${p.id}`,
+      group: 'payments',
+      label: payeeName(p, accsById, recsById),
+      hint: formatMinor(p.amount),
+      to: `/payments/${p.id}`,
+    }));
+    const cardOptions: Option[] = (cards.status === 'success' ? cards.data : []).map((c) => ({
+      id: `card-${c.id}`,
+      group: 'cards',
+      label: c.holderName,
+      hint: `•••• ${c.last4}`,
+      to: `/cards/${c.id}`,
+    }));
+    const digits = q.replace(/[^\d]/g, '');
     const found = [
       ...screens.filter((o) => match(o.label) || (o.hint !== undefined && match(o.hint) && q.length > 0)),
       ...(q ? accs.filter((o) => match(o.label)) : []),
       ...(q ? recs.filter((o) => match(o.label)) : []),
+      ...(q
+        ? pays
+            .filter((o) => match(o.label) || (digits.length > 0 && o.hint!.replace(/[^\d]/g, '').includes(digits)))
+            .slice(0, 5)
+        : []),
+      ...(q
+        ? cardOptions.filter((o) => match(o.label) || (digits.length > 0 && o.hint!.includes(digits)))
+        : []),
     ];
     return q
       ? [...found, { id: 'ask', group: 'ask' as const, label: t('app.search.ask', { query: query.trim() }) }]
       : found;
-  }, [query, accounts, recipients, can, companyState]);
+  }, [query, accounts, recipients, payments, cards, can, companyState]);
   useEffect(() => setActive(0), [query]);
   const choose = (o: Option | undefined) => {
     if (!o) return;
@@ -129,7 +188,7 @@ export function CommandSearch() {
     }
   };
   const optionId = (o: Option) => `${base}-${o.id}`;
-  const groups = (['screens', 'accounts', 'recipients', 'ask'] as const)
+  const groups = (['screens', 'accounts', 'recipients', 'payments', 'cards', 'ask'] as const)
     .map((g) => ({ g, items: options.filter((o) => o.group === g) }))
     .filter((x) => x.items.length > 0);
   const current = options[active];
@@ -158,7 +217,7 @@ export function CommandSearch() {
         <span>{t('app.search.open')}</span>
         <kbd className="fw-search__kbd" dir="ltr">{isMac() ? KEYCAP_MAC : KEYCAP_OTHER}</kbd>
       </button>
-      <Modal open={open} title={t('app.search.title')} onClose={() => setOpen(false)}>
+      <Modal open={open} title={t('app.search.title')} onClose={() => setOpen(false)} hideTitle>
         <div className="fw-palette" data-testid="command-search">
           <input
             className="og-input fw-palette__input"
@@ -216,6 +275,18 @@ export function CommandSearch() {
               </div>
             ))}
           </div>
+          {/* FA-027: how to use the list from the keyboard. */}
+          <p className="fw-palette__keys" data-testid="command-search-keys">
+            <span>
+              <kbd dir="ltr">{KEY_ARROWS}</kbd> {t('app.search.keys.move')}
+            </span>
+            <span>
+              <kbd dir="ltr">{KEY_ENTER}</kbd> {t('app.search.keys.open')}
+            </span>
+            <span>
+              <kbd dir="ltr">{KEY_ESC}</kbd> {t('app.search.keys.close')}
+            </span>
+          </p>
         </div>
       </Modal>
     </>

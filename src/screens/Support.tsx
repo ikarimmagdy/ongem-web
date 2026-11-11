@@ -19,6 +19,7 @@ import { useDrafts } from '../assistant/drafts';
 import { useSession } from '../session';
 import { Load, human, stateStatus } from './common';
 import { SplitHint } from './SplitHint';
+import { DisputeForm } from './Dispute';
 import { t } from '../i18n';
 
 const CATEGORIES = ['PAYMENT', 'CARD', 'ACCOUNT', 'ONBOARDING', 'DISPUTE', 'OTHER'];
@@ -34,6 +35,8 @@ function NewTicket() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const inFlight = useRef(false);
+  // FA-039: a card dispute is its own form, starting from the charge.
+  if (category === 'DISPUTE') return <DisputeForm />;
   const open = async () => {
     if (inFlight.current) return;
     inFlight.current = true;
@@ -240,7 +243,7 @@ export function SupportScreen() {
         </div>
         <div>
           {detail && (
-            <Button variant="ghost" onClick={() => navigate('/support')}>
+            <Button variant="ghost" className="fw-split__back" onClick={() => navigate('/support')}>
               {t('app.support.back')}
             </Button>
           )}

@@ -365,9 +365,9 @@ export const demoNotices = (): NoticeView[] => [
     kind: 'APPROVAL_WAITING',
     title: t('app.demo.notice.approval.title'),
     body: t('app.demo.notice.approval.body', {
-      amount: formatMinor({ amountMinor: 900_000, currency: 'AED' }),
+      amount: formatMinor({ amountMinor: 420_000, currency: 'AED' }),
     }),
-    link: 'payments/pay_demo_2/approve',
+    link: 'payments/pay_demo_approval/approve',
     mandatory: false,
     occurredAt: '2026-10-29T14:20:00Z',
     createdAt: '2026-10-29T14:20:01Z',
@@ -389,9 +389,9 @@ export const demoNotices = (): NoticeView[] => [
     kind: 'PAYMENT_SETTLED',
     title: t('app.demo.notice.settled.title'),
     body: t('app.demo.notice.settled.body', {
-      amount: formatMinor({ amountMinor: 459_000, currency: 'AED' }),
+      amount: formatMinor({ amountMinor: 1_835_000, currency: 'AED' }),
     }),
-    link: 'payments/pay_demo_1',
+    link: 'payments/pay_demo_2',
     mandatory: false,
     occurredAt: '2026-10-28T16:00:00Z',
     createdAt: '2026-10-28T16:00:01Z',

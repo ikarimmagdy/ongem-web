@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { Account, Statement, Transaction } from '../api/types';
 import { errorText } from '../api/errors';
@@ -236,6 +236,12 @@ export function AccountsScreen() {
   const { id } = useParams();
   const navigate = useNavigate();
   const list = useAsync(() => api.accounts(), [api]);
+  // FA-018: on a wide screen the first account opens at once instead of an empty detail column.
+  const first = list.status === 'success' ? list.data[0]?.id : undefined;
+  useEffect(() => {
+    if (id || !first || typeof window.matchMedia !== 'function') return;
+    if (window.matchMedia('(min-width: 901px)').matches) navigate(`/accounts/${first}`, { replace: true });
+  }, [id, first, navigate]);
   return (
     <>
       <PageHeader title={t('app.accounts.title')} />
@@ -271,7 +277,7 @@ export function AccountsScreen() {
         </div>
         {id ? (
           <div>
-            <Button variant="ghost" className="fw-back" onClick={() => navigate('/accounts')}>
+            <Button variant="ghost" className="fw-back fw-split__back" onClick={() => navigate('/accounts')}>
               {t('app.accounts.back')}
             </Button>
             <AccountDetail id={id} />

@@ -176,6 +176,31 @@ export async function initContent(): Promise<void> {
 const fetched = new Set<string>();
 
 /**
+ * FA-059: a channel checked in this tab is not asked again for ten minutes, and a 429 waits as long as the API says
+ * (Retry-After, else a minute), so moving between screens never floods the content API.
+ */
+const FRESH_MS = 10 * 60_000;
+const holdKey = (l: Locale, channel: string) => `ongem.content.hold.${REGION_KEY}.${l}.${channel}`;
+function session(): Storage | null {
+  try {
+    return typeof window === 'undefined' ? null : window.sessionStorage;
+  } catch {
+    return null;
+  }
+}
+function holdUntil(l: Locale, channel: string, until: number) {
+  try {
+    session()?.setItem(holdKey(l, channel), String(until));
+  } catch {
+    /* storage unavailable: this page load still asks once */
+  }
+}
+export function held(l: Locale, channel: string, now = Date.now()): boolean {
+  const v = Number(session()?.getItem(holdKey(l, channel)) ?? 0);
+  return v > now;
+}
+
+/**
  * Asks the API for one channel in the current locale with the held version as If-None-Match: 304 keeps it, 200
  * replaces it and is cached in localStorage. A failure keeps what the page has; it never blanks a text.
  */
@@ -191,6 +216,12 @@ export async function refreshChannel(
       headers: have ? { 'If-None-Match': have.etag ?? have.version } : {},
       credentials: 'omit',
     });
+    if (res.status === 429) {
+      const wait = Number(res.headers.get('Retry-After'));
+      holdUntil(l, channel, Date.now() + (Number.isFinite(wait) && wait > 0 ? wait * 1000 : 60_000));
+      return have;
+    }
+    if (res.status === 304 || res.ok) holdUntil(l, channel, Date.now() + FRESH_MS);
     if (res.status === 304 || !res.ok) return have;
     const body = (await res.json()) as Partial<ChannelContent>;
     if (!body.entries) return have;
@@ -226,6 +257,7 @@ export function refreshOnce(list: Channel[]) {
     const id = `${locale}:${ch}`;
     if (fetched.has(id)) continue;
     fetched.add(id);
+    if (held(locale, ch) && channels[locale][ch]) continue;
     void refreshChannel(ch);
   }
 }

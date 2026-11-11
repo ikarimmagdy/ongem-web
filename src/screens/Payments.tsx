@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ComponentProps } from 'react';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Permission } from '../api/client';
 import { errorText } from '../api/errors';
@@ -10,6 +10,7 @@ import {
   Field,
   Input,
   KeyValue,
+  Modal,
   Notice,
   PageHeader,
   Select,
@@ -65,10 +66,11 @@ export function paymentStatusLine(
     case 'PRECHECKED':
       return t('app.payments.status_line.sending');
     case 'SUBMITTED':
+    case 'SENT':
     case 'BANK_REVIEW':
-      return bankReference
-        ? t('app.payments.status_line.sent_reference', { reference: bankReference })
-        : t('app.payments.status_line.sent');
+      // FA-035: the bank's own reference is an internal id; the founder reads where the payment is.
+      void bankReference;
+      return t('app.payments.status_line.sent');
     case 'SETTLED':
       return t('app.payments.status_line.settled');
     default:
@@ -80,6 +82,7 @@ export function paymentStatusLine(
 function Approval({ id, onDone }: { id: string; onDone(): void }) {
   const { api } = useSession();
   const [busy, setBusy] = useState(false);
+  const [declining, setDeclining] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inFlight = useRef(false);
   const act = async (f: () => Promise<unknown>) => {
@@ -100,12 +103,37 @@ function Approval({ id, onDone }: { id: string; onDone(): void }) {
   return (
     <>
       {error && <Notice status="failure">{error}</Notice>}
-      <div className="fw-actions">
+      {/* FA-037: Decline says what it does before it does it. */}
+      <Modal
+        open={declining}
+        title={t('app.payments.decline_confirm.title')}
+        onClose={() => setDeclining(false)}
+        footer={
+          <>
+            <Button variant="secondary" onClick={() => setDeclining(false)}>
+              {t('app.common.cancel')}
+            </Button>
+            <Button
+              variant="danger"
+              data-testid="payment-reject-confirm"
+              onClick={() => {
+                setDeclining(false);
+                void act(() => api.rejectPayment(id));
+              }}
+            >
+              {t('app.payments.decline')}
+            </Button>
+          </>
+        }
+      >
+        <p>{t('app.payments.decline_confirm.text')}</p>
+      </Modal>
+      <div className="fw-actions fw-approval__actions">
         <Button
           variant="secondary"
           data-testid="payment-reject"
           disabled={busy}
-          onClick={() => void act(() => api.rejectPayment(id))}
+          onClick={() => setDeclining(true)}
         >
           {t('app.payments.decline')}
         </Button>
@@ -136,82 +164,167 @@ export function paymentKind(p: {
         : t('app.payments.kind.payment');
 }
 
-export function PaymentDetail({ id }: { id: string }) {
+/** How a payment travels, in words, never a rail code (FA-035): the method and when it arrives. */
+export function paymentMethod(p: Payment): string {
+  if (p.fundingSourceId) return REGION_CONFIG.topUpRail;
+  if (p.toCompanyId) return t('app.payments.detail.company_transfer');
+  if (p.toAccountId) return t('app.payments.review.internal_now');
+  return REGION_CONFIG.rails.find((r) => r.rail === p.rail)?.how ?? REGION_CONFIG.paymentRail(p.rail);
+}
+
+/** The timeline without repeats (FA-035): consecutive steps that read the same are one step, at its first time. */
+export function timelineSteps(timeline: Payment['timeline']): { label: string; at: string }[] {
+  const out: { label: string; at: string }[] = [];
+  for (const step of timeline) {
+    const label = paymentLabel(step.to);
+    if (out[out.length - 1]?.label !== label) out.push({ label, at: step.at });
+  }
+  return out;
+}
+
+/** A payment's title: "Payment to Acme Supplies LLC", a transfer or a top-up to an account (FA-035). */
+export function paymentTitle(p: Payment, payee: string): string {
+  return p.fundingSourceId
+    ? t('app.payments.detail.title_topup', { payee })
+    : p.toAccountId
+      ? t('app.payments.detail.title_transfer', { payee })
+      : t('app.payments.detail.title_payment', { payee });
+}
+
+export function PaymentDetail({ id, justSent = false }: { id: string; justSent?: boolean }) {
   const { api, can } = useSession();
+  const navigate = useNavigate();
   const [n, setN] = useState(0);
   const payment = useAsync(() => api.payment(id), [api, id, n]);
+  const accounts = useAsync(() => api.accounts(), [api]);
+  const recipients = useAsync(() => api.recipients().catch(() => []), [api]);
+  const accs = accounts.status === 'success' ? accounts.data : [];
+  const recs = recipients.status === 'success' ? recipients.data : [];
+  const loaded = payment.status === 'success' ? payment.data : null;
+  const titleOf = (p: Payment) =>
+    paymentTitle(
+      p,
+      p.fundingSourceId
+        ? (accs.find((a) => a.id === p.fromAccountId)?.name ?? t('app.payments.to.your_account'))
+        : payeeName(p, accs, recs),
+    );
+  const title = loaded ? titleOf(loaded) : null;
+  // FA-035: the browser tab names the payment, not the list.
+  useEffect(() => {
+    if (title) document.title = t('app.nav.document_title', { page: title });
+  }, [title]);
   return (
     <Load state={payment} label={t('app.payments.loading.payment')}>
-      {(p) => (
-        <Card
-          title={
-            <>
-              <span data-testid="payment-kind">{paymentKind(p)}</span> <Amt value={p.amount} />
-            </>
-          }
-          data-testid="payment-detail"
-        >
-          <p role="status" data-testid="payment-status-line">
-            {paymentStatusLine(p.state, p.providerReference, p.approvalBy)}
-          </p>
-          <KeyValue
-            items={[
-              {
-                label: t('app.payments.detail.status'),
-                value: <StatusChip status={stateStatus(p.state)}>{paymentLabel(p.state)}</StatusChip>,
-              },
-              {
-                label: t('app.payments.detail.rail'),
-                value: p.fundingSourceId
-                  ? REGION_CONFIG.topUpRail
-                  : p.toCompanyId
-                    ? t('app.payments.detail.company_transfer')
-                    : p.toAccountId
-                      ? t('app.payments.detail.internal_transfer')
-                      : REGION_CONFIG.paymentRail(p.rail),
-              },
-              {
-                label: t('app.payments.detail.reference'),
-                value: p.reference ?? t('app.payments.detail.none'),
-              },
-              {
-                label: t('app.payments.detail.bank_reference'),
-                value: p.providerReference ?? t('app.payments.detail.not_yet'),
-              },
-              ...(p.state === 'RETURNED'
-                ? [
-                    {
-                      label: t('app.payments.detail.returned'),
-                      value: (
-                        <span data-testid="return-code">
-                          {`${p.returnCode ?? ''} ${p.returnReason ?? ''}`.trim()}
-                        </span>
-                      ),
-                    },
-                  ]
-                : []),
-            ]}
-          />
-          {p.state === 'PENDING_APPROVAL' && p.approvalBy !== 'ONGEM' && can(Permission.PAYMENT_APPROVE) && (
-            <Approval id={p.id} onDone={() => setN((x) => x + 1)} />
-          )}
-          <ol
-            className="fw-timeline"
-            aria-label={t('app.payments.detail.timeline')}
-            data-testid="payment-timeline"
-          >
-            {p.timeline.map((step, i) => (
-              <li
-                key={i}
-                className={i === p.timeline.length - 1 ? 'fw-timeline__step is-current' : 'fw-timeline__step'}
+      {(p) => {
+        const payee = payeeName(p, accs, recs);
+        const from = accs.find((a) => a.id === (p.fundingSourceId ? undefined : p.fromAccountId));
+        const steps = timelineSteps(p.timeline);
+        return (
+          <>
+            {justSent && (
+              // FA-034: a confirmation after sending: what left, to whom, from where and when it arrives.
+              <section className="fw-sent" data-testid="payment-sent" aria-labelledby="payment-sent-title">
+                <span className="fw-sent__mark" aria-hidden="true" />
+                <h2 id="payment-sent-title" className="fw-sent__title">
+                  {p.state === 'PENDING_APPROVAL'
+                    ? t('app.payments.sent.waiting_title')
+                    : t('app.payments.sent.title')}
+                </h2>
+                <p className="og-money og-money--xl fw-sent__amount" data-mask="">
+                  {formatMinor(p.amount)}
+                </p>
+                <p className="fw-sent__to">{t('app.payments.sent.to', { payee })}</p>
+                <div className="fw-actions fw-sent__actions">
+                  <Button data-testid="payment-send-another" onClick={() => navigate('/payments/new')}>
+                    {t('app.payments.sent.another')}
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    data-testid="payment-print"
+                    onClick={() => typeof window.print === 'function' && window.print()}
+                  >
+                    {t('app.payments.sent.print')}
+                  </Button>
+                </div>
+              </section>
+            )}
+            <Card
+              title={
+                <>
+                  <span data-testid="payment-kind">{titleOf(p)}</span>
+                </>
+              }
+              data-testid="payment-detail"
+            >
+              <p className="og-money og-money--xl fw-detail__amount" data-mask="">
+                {formatMinor(p.amount)}
+              </p>
+              <p role="status" data-testid="payment-status-line">
+                {paymentStatusLine(p.state, p.providerReference, p.approvalBy)}
+              </p>
+              <KeyValue
+                items={[
+                  {
+                    label: t('app.payments.detail.status'),
+                    value: <StatusChip status={stateStatus(p.state)}>{paymentLabel(p.state)}</StatusChip>,
+                  },
+                  { label: t('app.payments.review.to'), value: <span data-testid="payment-to">{payee}</span> },
+                  ...(from
+                    ? [
+                        {
+                          label: t('app.payments.review.from'),
+                          value: (
+                            <span data-testid="payment-from-account">
+                              {from.name} <AcctLast4 value={from.last4} />
+                            </span>
+                          ),
+                        },
+                      ]
+                    : []),
+                  {
+                    label: t('app.payments.detail.method'),
+                    value: <span data-testid="payment-method">{paymentMethod(p)}</span>,
+                  },
+                  {
+                    label: t('app.payments.detail.reference'),
+                    value: p.reference ?? t('app.payments.detail.none'),
+                  },
+                  ...(p.state === 'RETURNED'
+                    ? [
+                        {
+                          label: t('app.payments.detail.returned'),
+                          value: (
+                            <span data-testid="return-code">
+                              {`${p.returnCode ?? ''} ${p.returnReason ?? ''}`.trim()}
+                            </span>
+                          ),
+                        },
+                      ]
+                    : []),
+                ]}
+              />
+              {p.state === 'PENDING_APPROVAL' &&
+                p.approvalBy !== 'ONGEM' &&
+                can(Permission.PAYMENT_APPROVE) && <Approval id={p.id} onDone={() => setN((x) => x + 1)} />}
+              <ol
+                className="fw-timeline"
+                aria-label={t('app.payments.detail.timeline')}
+                data-testid="payment-timeline"
               >
-                <span className="fw-timeline__label">{paymentLabel(step.to)}</span>
-                <span className="fw-timeline__date">{formatDate(step.at, { time: true })}</span>
-              </li>
-            ))}
-          </ol>
-        </Card>
-      )}
+                {steps.map((step, i) => (
+                  <li
+                    key={i}
+                    className={i === steps.length - 1 ? 'fw-timeline__step is-current' : 'fw-timeline__step'}
+                  >
+                    <span className="fw-timeline__label">{step.label}</span>
+                    <span className="fw-timeline__date">{formatDate(step.at, { time: true })}</span>
+                  </li>
+                ))}
+              </ol>
+            </Card>
+          </>
+        );
+      }}
     </Load>
   );
 }
@@ -262,6 +375,8 @@ export function NewPayment() {
   });
   const [reference, setReference] = useState(q.get('ref') ?? '');
   const [review, setReview] = useState(false);
+  // FA-036: Review is always offered; pressing it with something missing says what.
+  const [tried, setTried] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   // The payment created for this review: a retry after a failed send sends it again, never a second payment.
@@ -332,7 +447,7 @@ export function NewPayment() {
             ? { toAccountId: companyToId }
             : { recipientId }),
       });
-      navigate(`/payments/${sent.id}`);
+      navigate(`/payments/${sent.id}?sent=1`);
     } catch (e) {
       setError(errorText(e));
     } finally {
@@ -395,15 +510,28 @@ export function NewPayment() {
       </Card>
     );
   }
+  const missing = [
+    !target && t('app.payments.form.missing.to'),
+    !minor && t('app.payments.form.missing.amount'),
+  ].filter(Boolean) as string[];
+  const toName =
+    kind === 'internal'
+      ? accs.find((a) => a.id === toId)?.name
+      : kind === 'company' && destination
+        ? destinationLabel(destination)
+        : payable.find((r) => r.id === recipientId)?.name;
   return (
-    <Card title={t('app.payments.form.title')} data-testid="payment-form">
-      <form
-        className="fw-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (valid) setReview(true);
-        }}
-      >
+    <div className="fw-send">
+      <Card title={t('app.payments.form.title')} data-testid="payment-form">
+        <form
+          className="fw-form"
+          noValidate
+          onSubmit={(e) => {
+            e.preventDefault();
+            setTried(true);
+            if (valid) setReview(true);
+          }}
+        >
         <Field label={t('app.payments.form.type')}>
           <Select
             data-testid="payment-kind"
@@ -416,27 +544,6 @@ export function NewPayment() {
                 ? [{ value: 'company', label: t('app.payments.form.between_companies') }]
                 : []),
             ]}
-          />
-        </Field>
-        <Field
-          label={t('app.payments.review.from')}
-          hint={
-            fromAvailable ? (
-              <span data-testid="payment-from-available" data-mask="">
-                {t('app.payments.form.available', { amount: formatMinor(fromAvailable) })}
-              </span>
-            ) : undefined
-          }
-        >
-          <Select
-            data-testid="payment-from"
-            data-mask=""
-            value={fromId}
-            onChange={(e) => setFrom(e.target.value)}
-            options={accs.map((a) => ({
-              value: a.id,
-              label: t('app.payments.form.account_ending', { name: a.name, last4: a.last4 ?? '' }),
-            }))}
           />
         </Field>
         {kind === 'company' ? (
@@ -477,7 +584,7 @@ export function NewPayment() {
                 ? t('app.payments.form.recipient_first')
                 : payable.some((r) => r.id === recipientId && r.screening === 'PENDING')
                   ? t('app.payments.form.recipient_pending')
-                  : undefined
+                  : rail.how
             }
           >
             <Select
@@ -492,6 +599,27 @@ export function NewPayment() {
           </Field>
         )}
         <Field
+          label={t('app.payments.review.from')}
+          hint={
+            fromAvailable ? (
+              <span data-testid="payment-from-available" data-mask="">
+                {t('app.payments.form.available', { amount: formatMinor(fromAvailable) })}
+              </span>
+            ) : undefined
+          }
+        >
+          <Select
+            data-testid="payment-from"
+            data-mask=""
+            value={fromId}
+            onChange={(e) => setFrom(e.target.value)}
+            options={accs.map((a) => ({
+              value: a.id,
+              label: t('app.payments.form.account_ending', { name: a.name, last4: a.last4 ?? '' }),
+            }))}
+          />
+        </Field>
+        <Field
           label={REGION_CONFIG.amountLabel}
           error={
             amount && !minor
@@ -501,7 +629,8 @@ export function NewPayment() {
                 : undefined
           }
         >
-          <Input
+          <PrefixedInput
+            prefix={currencyPrefix()}
             data-testid="payment-amount"
             data-mask=""
             inputMode="decimal"
@@ -517,15 +646,64 @@ export function NewPayment() {
             onChange={(e) => setReference(e.target.value)}
           />
         </Field>
-        <div className="fw-actions">
-          <Button type="submit" data-testid="payment-review-button" disabled={!valid}>
-            {t('app.payments.form.review')}
-          </Button>
-        </div>
-      </form>
-    </Card>
+          {tried && missing.length > 0 && !overBalance && (
+            <p className="og-field__error" role="alert" data-testid="payment-missing">
+              {t('app.payments.form.missing.intro', { items: missing.join(', ') })}
+            </p>
+          )}
+          <div className="fw-actions">
+            <Button type="submit" data-testid="payment-review-button" disabled={overBalance}>
+              {t('app.payments.form.review')}
+            </Button>
+          </div>
+        </form>
+      </Card>
+      {/* FA-019: a live summary beside the form on a wide screen. */}
+      <aside className="fw-send__summary" aria-label={t('app.payments.summary.title')} data-testid="payment-summary">
+        <h2 className="og-card__title">{t('app.payments.summary.title')}</h2>
+        <KeyValue
+          items={[
+            {
+              label: t('app.payments.review.amount'),
+              value: (
+                <span data-mask="">
+                  {minor ? formatMinor({ amountMinor: minor, currency: REGION_CONFIG.currency }) : t('app.payments.summary.not_chosen')}
+                </span>
+              ),
+            },
+            { label: t('app.payments.review.to'), value: toName ?? t('app.payments.summary.not_chosen') },
+            {
+              label: t('app.payments.review.from'),
+              value: accs.find((a) => a.id === fromId)?.name ?? t('app.payments.summary.not_chosen'),
+            },
+            {
+              label: t('app.payments.review.how'),
+              value: kind === 'internal' || kind === 'company' ? t('app.payments.review.internal_now') : rail.how,
+            },
+          ]}
+        />
+      </aside>
+    </div>
   );
 }
+
+/** The amount field with the currency in front of it (FA-036), forwarding the field's id and aria to the input. */
+function PrefixedInput({ prefix, ...rest }: { prefix: string } & ComponentProps<typeof Input>) {
+  return (
+    <span className="fw-prefixed">
+      <span className="fw-prefixed__prefix" aria-hidden="true">
+        {prefix}
+      </span>
+      <Input {...rest} />
+    </span>
+  );
+}
+
+/** US$ or AED, as the amounts are written (from the money format, never typed in). */
+const currencyPrefix = () =>
+  formatMinor({ amountMinor: 0, currency: REGION_CONFIG.currency })
+    .replace(/[\d.,\s\u00a0]/g, '')
+    .trim();
 
 /** The Payments tabs (OG-035 R6), each a route; the old routes are the tab routes. */
 export const PAYMENT_TABS = [
@@ -559,25 +737,66 @@ export function visiblePaymentTabs(can: (p: string) => boolean, companyState: st
   );
 }
 
-function PaymentsTabs({ current }: { current: PaymentTab }) {
+/** FA-023: the tabs are lists only; Send and Add money are actions in the page header. */
+const LIST_TABS: PaymentTab[] = ['all', 'scheduled', 'approvals', 'recipients'];
+const ACTION_TABS: PaymentTab[] = ['send', 'add_money'];
+
+function PaymentsTabs({ current, waiting }: { current: PaymentTab; waiting: number }) {
   const { can, companyState } = useSession();
+  const list = useRef<HTMLUListElement>(null);
+  // FA-022: the selected tab is scrolled into view on a phone.
+  useEffect(() => {
+    list.current
+      ?.querySelector<HTMLElement>('[aria-current="page"]')
+      ?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+  }, [current]);
+  const visible = visiblePaymentTabs(can, companyState);
   return (
     <nav className="fw-tabs" aria-label={t('app.payments.tabs.label')} data-testid="payments-tabs">
-      <ul className="fw-tabs__list">
-        {visiblePaymentTabs(can, companyState).map((x) => (
-          <li key={x.id}>
-            <Link
-              to={x.to}
-              className={`fw-tabs__tab${x.id === current ? ' is-active' : ''}`}
-              aria-current={x.id === current ? 'page' : undefined}
-              data-testid={`payments-tab-${x.id}`}
-            >
-              {t(`app.payments.tabs.${x.id}`)}
-            </Link>
-          </li>
-        ))}
+      <ul className="fw-tabs__list" ref={list}>
+        {LIST_TABS.map((id) => visible.find((x) => x.id === id))
+          .filter((x): x is (typeof PAYMENT_TABS)[number] => Boolean(x))
+          .map((x) => (
+            <li key={x.id}>
+              <Link
+                to={x.to}
+                className={`fw-tabs__tab${x.id === current ? ' is-active' : ''}`}
+                aria-current={x.id === current ? 'page' : undefined}
+                data-testid={`payments-tab-${x.id}`}
+              >
+                {t(`app.payments.tabs.${x.id}`)}
+                {x.id === 'approvals' && waiting > 0 && (
+                  <span className="fw-tabs__count" data-testid="approvals-count">
+                    {waiting}
+                  </span>
+                )}
+              </Link>
+            </li>
+          ))}
       </ul>
     </nav>
+  );
+}
+
+function PaymentsActions({ current }: { current: PaymentTab }) {
+  const { can, companyState } = useSession();
+  const visible = visiblePaymentTabs(can, companyState);
+  return (
+    <>
+      {ACTION_TABS.map((id) => visible.find((x) => x.id === id))
+        .filter((x): x is (typeof PAYMENT_TABS)[number] => Boolean(x))
+        .map((x) => (
+          <Link
+            key={x.id}
+            to={x.to}
+            className={`og-btn og-btn--md ${x.id === 'send' ? 'og-btn--primary' : 'og-btn--secondary'}`}
+            aria-current={x.id === current ? 'page' : undefined}
+            data-testid={`payments-tab-${x.id}`}
+          >
+            {t(`app.payments.tabs.${x.id}`)}
+          </Link>
+        ))}
+    </>
   );
 }
 
@@ -602,9 +821,14 @@ export function Approvals() {
                 <button className="fw-row" onClick={() => navigate(`/payments/${p.id}`)}>
                   <span className="fw-row__main">
                     <strong>{payeeName(p, accs, recs)}</strong>
-                    <span className="fw-row__sub">
-                      {p.reference ?? paymentKind(p)}
-                      {p.createdAt ? ` · ${formatDate(p.createdAt)}` : ''}
+                    <span className="fw-row__sub">{p.reference ?? paymentKind(p)}</span>
+                    {/* FA-037: from which account and when it was asked for. */}
+                    <span className="fw-row__sub" data-testid={`approval-from-${p.id}`}>
+                      {t('app.payments.approvals.from_on', {
+                        account:
+                          accs.find((a) => a.id === p.fromAccountId)?.name ?? t('app.payments.to.your_account'),
+                        date: p.createdAt ? formatDate(p.createdAt) : '',
+                      })}
                     </span>
                   </span>
                   <Amt value={p.amount} />
@@ -640,10 +864,20 @@ export function PaymentsScreen() {
   const recipients = useAsync(() => api.recipients(), [api]);
   const accs = accounts.status === 'success' ? accounts.data : [];
   const recs = recipients.status === 'success' ? recipients.data : [];
+  const approver = can(Permission.PAYMENT_APPROVE);
+  const pending = useAsync(
+    () => (approver ? api.payments(null, 100) : Promise.resolve(null)),
+    [api, tab, id, approver],
+  );
+  const waiting =
+    pending.status === 'success' && pending.data
+      ? pending.data.items.filter((p) => p.state === 'PENDING_APPROVAL' && p.approvalBy !== 'ONGEM').length
+      : 0;
+  const [search] = useSearchParams();
   return (
     <>
-      <PageHeader title={t('app.payments.title')} />
-      <PaymentsTabs current={tab} />
+      <PageHeader title={t('app.payments.title')} actions={<PaymentsActions current={tab} />} />
+      <PaymentsTabs current={tab} waiting={waiting} />
       {tab === 'all' ? (
         <PaymentsList
           id={id}
@@ -654,6 +888,7 @@ export function PaymentsScreen() {
           recs={recs}
           onOpen={(pid) => navigate(`/payments/${pid}`)}
           onBack={() => navigate('/payments')}
+          justSent={search.get('sent') === '1'}
         />
       ) : (
         <div className="fw-tab-panel" data-testid={`payments-panel-${tab}`}>
@@ -691,6 +926,7 @@ function PaymentsList({
   recs,
   onOpen,
   onBack,
+  justSent,
 }: {
   id?: string;
   cursors: (string | null)[];
@@ -700,9 +936,17 @@ function PaymentsList({
   recs: Recipient[];
   onOpen(id: string): void;
   onBack(): void;
+  justSent: boolean;
 }) {
   const { api } = useSession();
+  const navigate = useNavigate();
   const list = useAsync(() => api.payments(cursor, PAYMENTS_PAGE), [api, cursor]);
+  // FA-018: on a wide screen the newest payment opens at once instead of an empty detail column.
+  const first = list.status === 'success' ? list.data.items[0]?.id : undefined;
+  useEffect(() => {
+    if (id || !first || typeof window.matchMedia !== 'function') return;
+    if (window.matchMedia('(min-width: 901px)').matches) navigate(`/payments/${first}`, { replace: true });
+  }, [id, first, navigate]);
   return (
     <div className={`fw-split${id ? ' has-detail' : ''}`}>
       <div className="fw-split__list">
@@ -775,12 +1019,12 @@ function PaymentsList({
       </div>
       <div>
         {id && (
-          <Button variant="ghost" onClick={onBack}>
+          <Button variant="ghost" className="fw-split__back" onClick={onBack}>
             {t('app.payments.back')}
           </Button>
         )}
         {id ? (
-          <PaymentDetail id={id} />
+          <PaymentDetail id={id} justSent={justSent} />
         ) : (
           <SplitHint title={t('app.payments.hint.title')}>{t('app.payments.hint.text')}</SplitHint>
         )}

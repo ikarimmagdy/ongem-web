@@ -88,6 +88,18 @@ function ProfileMenu({ onLeave }: { onLeave(): void }) {
 /** Screens that end in a form's primary action: no floating button over them on a phone (FA-016). */
 const FORM_ROUTES = [/^\/payments\/(new|top-up|schedules)/, /^\/support\/new/, /^\/onboarding/];
 
+/** FA-008: the side bar's outline icons, each in a pale container of its brand category. */
+const NAV_ICON: Record<string, { d: string; cat: string }> = {
+  home: { d: 'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z', cat: 'banking' }, // content-check: ignore (SVG path)
+  accounts: { d: 'M3 10h18M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18M12 3l9 5H3z', cat: 'banking' }, // content-check: ignore (SVG path)
+  payments: { d: 'M4 8h13l-3-3M20 16H7l3 3', cat: 'global' }, // content-check: ignore (SVG path)
+  cards: { d: 'M3 6h18v12H3zM3 10h18M7 15h4', cat: 'cards' }, // content-check: ignore (SVG path)
+  team: { d: 'M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 6.5M18 14a6 6 0 0 1 3.5 6', cat: 'compliance' }, // content-check: ignore (SVG path)
+  documents: { d: 'M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6', cat: 'treasury' }, // content-check: ignore (SVG path)
+  support: { d: 'M4 5h16v11H9l-5 4zM8 9h8M8 12h5', cat: 'compliance' }, // content-check: ignore (SVG path)
+  settings: { d: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM4 12h2M18 12h2M12 4v2M12 18v2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M6.3 17.7l1.4-1.4M16.3 7.7l1.4-1.4', cat: 'banking' }, // content-check: ignore (SVG path)
+};
+
 /** One glyph per phone tab; Pay is the centre tab, drawn larger (OG-035 R8). */
 const TAB_ICON: Record<string, string> = {
   home: 'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z', // content-check: ignore (SVG path)
@@ -193,7 +205,23 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
                   data-testid={`nav-${n.id}`}
                   className={({ isActive }) => (isActive ? 'og-nav__link is-active' : 'og-nav__link')}
                 >
-                  {n.label}
+                  {NAV_ICON[n.id] && (
+                    <span className={`fw-nav__icon fw-nav__icon--${NAV_ICON[n.id]!.cat}`} aria-hidden="true">
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d={NAV_ICON[n.id]!.d} />
+                      </svg>
+                    </span>
+                  )}
+                  <span>{n.label}</span>
                 </NavLink>
               </li>
             ))}

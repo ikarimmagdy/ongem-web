@@ -26,7 +26,23 @@ export function ApplicationSteps({ state }: { state: string }) {
                 data-step={id}
               >
                 <span className="fw-appsteps__marker" aria-hidden="true">
-                  {n}
+                  {/* FA-058: a finished step shows a check, not its number. */}
+                  {where === 'done' ? (
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="14"
+                      height="14"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M5 12.5l4.5 4.5L19 7.5" />
+                    </svg>
+                  ) : (
+                    n
+                  )}
                 </span>
                 <span className="fw-appsteps__name">{name(i)}</span>
                 <span className="og-visually-hidden">{t(`app.home.steps.${where}`)}</span>

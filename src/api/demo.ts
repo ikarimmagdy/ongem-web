@@ -90,6 +90,11 @@ export interface DemoOptions {
   application?: Application;
   /** Who approves a new top-up (Q-091): ONGEM shows a one-person company (`/sign-in?demo=solo`). */
   approvalBy?: 'COMPANY' | 'ONGEM';
+  /**
+   * FA-056: review switches for states demo data never reaches (`/demo?state=` in the address): `readonly` opens the
+   * company FROZEN, `slow` answers every read after 1.5 s, `error` fails every read but the person's own.
+   */
+  scenario?: 'readonly' | 'slow' | 'error' | null;
   /** OG-023 R12: the region this demo client stands for (the build's region by default). */
   region?: string;
   /** The person as another region's API answers them, or 'down' when that region does not answer (tests). */
@@ -151,6 +156,13 @@ export class DemoOnGemApi implements OnGemApi {
     const me = opts.me ?? demoMe;
     this.home = me.companyId ?? null;
     this.me_ = opts.companyId ? { ...me, companyId: opts.companyId } : me;
+    if (opts.scenario === 'readonly')
+      this.me_ = {
+        ...this.me_,
+        memberships: this.me_.memberships.map((m) =>
+          m.companyId === (this.me_.companyId ?? m.companyId) ? { ...m, companyState: 'FROZEN' } : m,
+        ),
+      };
     this.now = opts.now ?? (() => '2026-10-29T15:00:00Z');
     this.applicationState = opts.application ?? demoApplication();
     if (opts.approvalBy) this.approvalBy = opts.approvalBy;
@@ -195,6 +207,11 @@ export class DemoOnGemApi implements OnGemApi {
 
   private log<T>(name: string, v: T): Promise<T> {
     this.calls.push(name);
+    const scenario = this.opts.scenario;
+    if (scenario === 'error' && name !== 'me')
+      return Promise.reject(new ApiError(503, 'provider_unavailable', t('app.demo.error.scenario')));
+    if (scenario === 'slow')
+      return new Promise((resolve) => setTimeout(() => resolve(structuredClone(v)), 1500));
     return Promise.resolve(structuredClone(v));
   }
 

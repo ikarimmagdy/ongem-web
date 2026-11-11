@@ -40,6 +40,8 @@ export function needsItems(input: {
   applicationId?: string | null;
   cards: Card[];
   notices: NoticeView[];
+  /** FA-025: the screen a notice's link opens; without it a notice opens the inbox. */
+  noticeTo?(link: string | null): string | null;
 }): NeedItem[] {
   const out: NeedItem[] = [];
   if (input.canApprove)
@@ -66,7 +68,13 @@ export function needsItems(input: {
   for (const c of input.cards)
     if (c.state === 'FROZEN' || c.state === 'PENDING')
       out.push({ kind: 'card', id: c.id, state: c.state, last4: c.last4, to: `/cards/${c.id}` });
-  for (const n of input.notices.filter((x) => !x.readAt).slice(0, MAX_NOTICES))
-    out.push({ kind: 'notice', id: n.id, title: n.title, to: '/notifications' });
+  // FA-026: a notice about something already listed here (the approval it announces) is not listed twice.
+  const listed = new Set(out.map((x) => x.to));
+  for (const n of input.notices.filter((x) => !x.readAt)) {
+    if (out.filter((x) => x.kind === 'notice').length >= MAX_NOTICES) break;
+    const to = input.noticeTo?.(n.link) ?? '/notifications';
+    if (listed.has(to)) continue;
+    out.push({ kind: 'notice', id: n.id, title: n.title, to });
+  }
   return out;
 }

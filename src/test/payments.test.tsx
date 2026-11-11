@@ -28,7 +28,8 @@ describe('payments (OG-030 R4)', () => {
     expect(paymentStatusLine('PRECHECKED')).toBe(
       'Sending. Our banking partner did not answer yet. We will not send it twice.',
     );
-    expect(paymentStatusLine('SUBMITTED', 'ach_5c2e')).toBe('Sent. Bank reference ach_5c2e.');
+    // FA-035: no raw bank reference in front of a founder.
+    expect(paymentStatusLine('SUBMITTED', 'ach_5c2e')).toBe('Sent. The bank has it and it is on its way.');
     expect(paymentStatusLine('SETTLED')).toBe('Settled.');
     expect(paymentStatusLine('PENDING_APPROVAL', null, 'COMPANY')).toBe(
       'Waiting for a second person in your company to approve it. Nothing has moved yet.',
@@ -152,7 +153,7 @@ describe('add money from another bank (G-40)', () => {
       fromAccountId: 'acc_demo_ops',
     });
     await userEvent.click(within(detail).getByTestId('payment-approve'));
-    expect(await screen.findByText(/^Sent\. Bank reference/)).toBeInTheDocument();
+    expect(await screen.findByText(/^Sent\. The bank has it/)).toBeInTheDocument();
     expect(api.stepUps.filter((s) => s === 'payment')).toHaveLength(2);
   });
 
@@ -166,6 +167,7 @@ describe('add money from another bank (G-40)', () => {
     });
     renderApp(`/payments/${p.id}`, { api });
     await userEvent.click(await screen.findByTestId('payment-reject'));
+    await userEvent.click(await screen.findByTestId('payment-reject-confirm')); // FA-037: Decline asks first
     expect(await screen.findByText('Declined by the approver. Nothing was moved.')).toBeInTheDocument();
     expect(screen.queryByTestId('payment-approve')).not.toBeInTheDocument();
   });

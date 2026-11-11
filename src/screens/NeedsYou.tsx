@@ -19,12 +19,19 @@ function text(item: NeedItem): string {
   }
 }
 
-const ACTION = {
-  approval: 'app.home.needs.review',
-  application: 'app.home.needs.continue',
-  card: 'app.home.needs.open_card',
-  notice: 'app.home.needs.read',
-} as const;
+/** FA-026: each action says its outcome. */
+function action(item: NeedItem): string {
+  switch (item.kind) {
+    case 'approval':
+      return t('app.home.needs.review');
+    case 'application':
+      return t('app.home.needs.continue');
+    case 'card':
+      return item.state === 'FROZEN' ? t('app.home.needs.unfreeze') : t('app.home.needs.activate');
+    case 'notice':
+      return t('app.home.needs.read');
+  }
+}
 
 /**
  * What waits on this person (OG-035 R3), each with one action. Shows what loaded; a read that failed leaves an error line
@@ -62,7 +69,7 @@ export function NeedsYou({
                 to={item.to}
                 data-testid={`need-action-${item.kind}-${item.id}`}
               >
-                {t(ACTION[item.kind])}
+                {action(item)}
               </Link>
             </li>
           ))}

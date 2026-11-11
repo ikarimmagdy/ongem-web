@@ -173,15 +173,6 @@
       "ar": "المقيد"
     },
     {
-      "key": "app.accounts.recipients_link",
-      "format": "text",
-      "description": "Link to recipients from accounts",
-      "placeholders": [],
-      "meta": {},
-      "en": "Recipients",
-      "ar": "المستفيدون"
-    },
-    {
       "key": "app.accounts.show_more",
       "format": "text",
       "description": "Button that loads more transactions",
@@ -247,15 +238,6 @@
       "meta": {},
       "en": "Status",
       "ar": "الحالة"
-    },
-    {
-      "key": "app.accounts.subtitle",
-      "format": "text",
-      "description": "Accounts page subtitle",
-      "placeholders": [],
-      "meta": {},
-      "en": "Balances come from the bank.",
-      "ar": "الأرصدة واردة من البنك."
     },
     {
       "key": "app.accounts.title",
@@ -497,6 +479,28 @@
       "meta": {},
       "en": "not started",
       "ar": "لم يبدأ بعد"
+    },
+    {
+      "key": "app.assistant.demo.paid_to",
+      "format": "text",
+      "description": "Demo assistant: total paid to a recipient this month (FA-054)",
+      "placeholders": [
+        "amount",
+        "count",
+        "payee"
+      ],
+      "meta": {},
+      "en": "This month you paid {payee} {amount}, in {count} payments.",
+      "ar": "دفعت هذا الشهر إلى {payee} مبلغ {amount} في {count} دفعات."
+    },
+    {
+      "key": "app.assistant.demo.paid_who",
+      "format": "text",
+      "description": "Demo assistant: which recipient to total (FA-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "I can total what you paid one recipient. Name them, for example: How much did we pay Acme this month?",
+      "ar": "يمكنني حساب ما دفعته لمستفيد واحد. اذكر اسمه، مثلا: كم دفعنا لـ Acme هذا الشهر؟"
     },
     {
       "key": "app.assistant.demo.payments_heading",
@@ -897,17 +901,6 @@
       "meta": {},
       "en": "Dispute a charge",
       "ar": "الاعتراض على عملية"
-    },
-    {
-      "key": "app.cards.dispute_subject",
-      "format": "text",
-      "description": "Support request subject prefilled when disputing a card charge",
-      "placeholders": [
-        "last4"
-      ],
-      "meta": {},
-      "en": "Dispute a charge on card ending {last4}",
-      "ar": "الاعتراض على عملية على البطاقة المنتهية بـ {last4}"
     },
     {
       "key": "app.cards.empty_text",
@@ -2421,8 +2414,8 @@
       "description": "Home action button",
       "placeholders": [],
       "meta": {},
-      "en": "New payment",
-      "ar": "دفعة جديدة"
+      "en": "Send",
+      "ar": "إرسال"
     },
     {
       "key": "app.home.no_payments",
@@ -3382,15 +3375,6 @@
       "ar": "رفض"
     },
     {
-      "key": "app.payments.detail.bank_reference",
-      "format": "text",
-      "description": "Payment detail label",
-      "placeholders": [],
-      "meta": {},
-      "en": "Bank reference",
-      "ar": "المرجع المصرفي"
-    },
-    {
       "key": "app.payments.detail.internal_transfer",
       "format": "text",
       "description": "How a transfer between own accounts moves; detail and list",
@@ -3407,24 +3391,6 @@
       "meta": {},
       "en": "None",
       "ar": "لا يوجد"
-    },
-    {
-      "key": "app.payments.detail.not_yet",
-      "format": "text",
-      "description": "Payment detail: bank reference not known yet",
-      "placeholders": [],
-      "meta": {},
-      "en": "Not yet",
-      "ar": "ليس بعد"
-    },
-    {
-      "key": "app.payments.detail.rail",
-      "format": "text",
-      "description": "Payment detail label: how the payment moves",
-      "placeholders": [],
-      "meta": {},
-      "en": "Rail",
-      "ar": "طريقة الدفع"
     },
     {
       "key": "app.payments.detail.reference",
@@ -3597,8 +3563,8 @@
       "description": "New payment label: rail or internal transfer",
       "placeholders": [],
       "meta": {},
-      "en": "Type",
-      "ar": "النوع"
+      "en": "Send to",
+      "ar": "الإرسال إلى"
     },
     {
       "key": "app.payments.hint.text",
@@ -3860,19 +3826,8 @@
       "description": "Payment detail status: sent, bank reference not known yet",
       "placeholders": [],
       "meta": {},
-      "en": "Sent. The bank reference follows.",
-      "ar": "أُرسلت. سيصل المرجع المصرفي لاحقًا."
-    },
-    {
-      "key": "app.payments.status_line.sent_reference",
-      "format": "text",
-      "description": "Payment detail status: sent, with the bank reference",
-      "placeholders": [
-        "reference"
-      ],
-      "meta": {},
-      "en": "Sent. Bank reference {reference}.",
-      "ar": "أُرسلت. المرجع المصرفي {reference}."
+      "en": "Sent. The bank has it and it is on its way.",
+      "ar": "أُرسلت. البنك استلمها وهي في الطريق."
     },
     {
       "key": "app.payments.status_line.settled",
@@ -9569,8 +9524,8 @@
       "description": "Phone tab bar centre tab: opens Send",
       "placeholders": [],
       "meta": {},
-      "en": "Pay",
-      "ar": "ادفع"
+      "en": "Send",
+      "ar": "إرسال"
     },
     {
       "key": "app.nav.more",
@@ -9698,8 +9653,8 @@
       "description": "Home panel action: open the payment to approve or decline",
       "placeholders": [],
       "meta": {},
-      "en": "Review",
-      "ar": "مراجعة"
+      "en": "Approve",
+      "ar": "الموافقة"
     },
     {
       "key": "app.home.needs.application",
@@ -9718,8 +9673,8 @@
       "description": "Home panel action: open the application",
       "placeholders": [],
       "meta": {},
-      "en": "Continue",
-      "ar": "متابعة"
+      "en": "Continue application",
+      "ar": "متابعة الطلب"
     },
     {
       "key": "app.home.needs.card_frozen",
@@ -9744,22 +9699,13 @@
       "ar": "البطاقة المنتهية بـ {last4} بانتظار التفعيل"
     },
     {
-      "key": "app.home.needs.open_card",
-      "format": "text",
-      "description": "Home panel action: open the card",
-      "placeholders": [],
-      "meta": {},
-      "en": "Open card",
-      "ar": "فتح البطاقة"
-    },
-    {
       "key": "app.home.needs.read",
       "format": "text",
       "description": "Home panel action: open the notices",
       "placeholders": [],
       "meta": {},
-      "en": "Read",
-      "ar": "قراءة"
+      "en": "Open",
+      "ar": "فتح"
     },
     {
       "key": "app.home.steps.label",
@@ -9905,8 +9851,8 @@
       "description": "Payments tab: payments waiting for a second person",
       "placeholders": [],
       "meta": {},
-      "en": "Waiting for approval",
-      "ar": "بانتظار الموافقة"
+      "en": "Approvals",
+      "ar": "الموافقات"
     },
     {
       "key": "app.payments.approvals.empty.title",
@@ -10217,6 +10163,334 @@
       "meta": {},
       "en": "Loading your agreements",
       "ar": "جارٍ تحميل اتفاقياتك"
+    },
+    {
+      "key": "app.demo.error.scenario",
+      "format": "text",
+      "description": "Demo review switch ?state=error: every read fails (FA-056)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank did not answer. Try again in a moment.",
+      "ar": "لم يستجب البنك. حاول مرة أخرى بعد قليل."
+    },
+    {
+      "key": "app.dispute.amount",
+      "format": "text",
+      "description": "Dispute form: the amount disputed (FA-039)",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "Amount disputed: {amount}",
+      "ar": "المبلغ المعترض عليه: {amount}"
+    },
+    {
+      "key": "app.dispute.body.card",
+      "format": "text",
+      "description": "Dispute request body line (FA-039)",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Card ending {last4}",
+      "ar": "البطاقة المنتهية بـ {last4}"
+    },
+    {
+      "key": "app.dispute.body.charge",
+      "format": "text",
+      "description": "Dispute request body line (FA-039)",
+      "placeholders": [
+        "charge",
+        "id"
+      ],
+      "meta": {},
+      "en": "Charge: {charge} ({id})",
+      "ar": "العملية: {charge} ({id})"
+    },
+    {
+      "key": "app.dispute.body.details",
+      "format": "text",
+      "description": "Dispute request body line (FA-039)",
+      "placeholders": [
+        "details"
+      ],
+      "meta": {},
+      "en": "Details: {details}",
+      "ar": "التفاصيل: {details}"
+    },
+    {
+      "key": "app.dispute.body.reason",
+      "format": "text",
+      "description": "Dispute request body line (FA-039)",
+      "placeholders": [
+        "reason"
+      ],
+      "meta": {},
+      "en": "Reason: {reason}",
+      "ar": "السبب: {reason}"
+    },
+    {
+      "key": "app.dispute.card",
+      "format": "text",
+      "description": "Dispute form: which card (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card",
+      "ar": "البطاقة"
+    },
+    {
+      "key": "app.dispute.card_option",
+      "format": "text",
+      "description": "Dispute form: a card option (FA-039)",
+      "placeholders": [
+        "holder",
+        "last4"
+      ],
+      "meta": {},
+      "en": "Card ending {last4}, {holder}",
+      "ar": "البطاقة المنتهية بـ {last4}، {holder}"
+    },
+    {
+      "key": "app.dispute.charge",
+      "format": "text",
+      "description": "Dispute form: one charge (FA-039)",
+      "placeholders": [
+        "amount",
+        "date"
+      ],
+      "meta": {},
+      "en": "{amount} on {date}",
+      "ar": "{amount} في {date}"
+    },
+    {
+      "key": "app.dispute.details",
+      "format": "text",
+      "description": "Dispute form: details field (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Details",
+      "ar": "التفاصيل"
+    },
+    {
+      "key": "app.dispute.details_hint",
+      "format": "text",
+      "description": "Dispute form: details hint (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "What happened, and anything you already tried with the merchant.",
+      "ar": "ما الذي حدث، وما جرّبته مع التاجر."
+    },
+    {
+      "key": "app.dispute.missing.charge",
+      "format": "text",
+      "description": "Dispute form: missing item (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "the charge",
+      "ar": "العملية"
+    },
+    {
+      "key": "app.dispute.missing.details",
+      "format": "text",
+      "description": "Dispute form: missing item (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "details",
+      "ar": "التفاصيل"
+    },
+    {
+      "key": "app.dispute.missing.intro",
+      "format": "text",
+      "description": "Dispute form: Send pressed with something missing (FA-039)",
+      "placeholders": [
+        "items"
+      ],
+      "meta": {},
+      "en": "Add {items} to send the dispute.",
+      "ar": "أضف {items} لإرسال الاعتراض."
+    },
+    {
+      "key": "app.dispute.missing.reason",
+      "format": "text",
+      "description": "Dispute form: missing item (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "a reason",
+      "ar": "السبب"
+    },
+    {
+      "key": "app.dispute.next",
+      "format": "text",
+      "description": "Dispute form: what happens next (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "We pass your dispute to the bank and answer in this request at each step. The bank decides the outcome.",
+      "ar": "نرسل اعتراضك إلى البنك ونرد في هذا الطلب عند كل خطوة. البنك هو من يقرر النتيجة."
+    },
+    {
+      "key": "app.dispute.no_charges",
+      "format": "text",
+      "description": "Dispute form: no card charges (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "There are no card charges to dispute yet.",
+      "ar": "لا توجد عمليات بطاقة للاعتراض عليها بعد."
+    },
+    {
+      "key": "app.dispute.pick",
+      "format": "text",
+      "description": "Dispute form: pick the charge (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Which charge?",
+      "ar": "أي عملية؟"
+    },
+    {
+      "key": "app.dispute.pick_hint",
+      "format": "text",
+      "description": "Dispute form: where the charges come from (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card charges on this card's account, newest first.",
+      "ar": "عمليات البطاقة على حساب هذه البطاقة، الأحدث أولا."
+    },
+    {
+      "key": "app.dispute.reason.not_mine",
+      "format": "text",
+      "description": "Dispute reason (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "I did not make this charge",
+      "ar": "لم أُجرِ هذه العملية"
+    },
+    {
+      "key": "app.dispute.reason.not_received",
+      "format": "text",
+      "description": "Dispute reason (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "I did not get what I paid for",
+      "ar": "لم أستلم ما دفعت ثمنه"
+    },
+    {
+      "key": "app.dispute.reason.other",
+      "format": "text",
+      "description": "Dispute reason (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Something else",
+      "ar": "سبب آخر"
+    },
+    {
+      "key": "app.dispute.reason.twice",
+      "format": "text",
+      "description": "Dispute reason (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "I was charged twice",
+      "ar": "خُصم المبلغ مرتين"
+    },
+    {
+      "key": "app.dispute.reason.wrong_amount",
+      "format": "text",
+      "description": "Dispute reason (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The amount is wrong",
+      "ar": "المبلغ غير صحيح"
+    },
+    {
+      "key": "app.dispute.reason_choose",
+      "format": "text",
+      "description": "Dispute form: reason placeholder option (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a reason",
+      "ar": "اختر سببا"
+    },
+    {
+      "key": "app.dispute.reason_label",
+      "format": "text",
+      "description": "Dispute form: reason field (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Why are you disputing it?",
+      "ar": "لماذا تعترض عليها؟"
+    },
+    {
+      "key": "app.dispute.receipt",
+      "format": "text",
+      "description": "Dispute form: receipt upload (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Receipt or proof (optional)",
+      "ar": "إيصال أو إثبات (اختياري)"
+    },
+    {
+      "key": "app.dispute.receipt_hint",
+      "format": "text",
+      "description": "Dispute form: receipt hint (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "A photo or a PDF.",
+      "ar": "صورة أو ملف PDF."
+    },
+    {
+      "key": "app.dispute.send",
+      "format": "text",
+      "description": "Dispute form: send button (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send dispute",
+      "ar": "إرسال الاعتراض"
+    },
+    {
+      "key": "app.dispute.subject",
+      "format": "text",
+      "description": "Dispute request subject sent to support (FA-039)",
+      "placeholders": [
+        "charge",
+        "last4"
+      ],
+      "meta": {},
+      "en": "Dispute: card ending {last4}, {charge}",
+      "ar": "اعتراض: البطاقة المنتهية بـ {last4}، {charge}"
+    },
+    {
+      "key": "app.dispute.title",
+      "format": "text",
+      "description": "Dispute form title (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dispute a card charge",
+      "ar": "الاعتراض على عملية بطاقة"
+    },
+    {
+      "key": "app.home.needs.activate",
+      "format": "text",
+      "description": "Needs you action on a card not yet active (FA-026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Activate",
+      "ar": "تفعيل"
+    },
+    {
+      "key": "app.home.needs.unfreeze",
+      "format": "text",
+      "description": "Needs you action on a frozen card (FA-026)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unfreeze",
+      "ar": "إلغاء التجميد"
+    },
+    {
+      "key": "app.home.sample_data",
+      "format": "text",
+      "description": "Home balance card in demo mode (FA-057)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sample data",
+      "ar": "بيانات تجريبية"
     },
     {
       "key": "app.payments.form.available",
@@ -10844,6 +11118,280 @@
       "meta": {},
       "en": "Dispute: {amount} on {date}, card ending {last4}",
       "ar": "اعتراض: {amount} بتاريخ {date}، البطاقة المنتهية بـ {last4}"
+    },
+    {
+      "key": "app.payments.approvals.from_on",
+      "format": "text",
+      "description": "Approval card: from which account and when it was asked (FA-037)",
+      "placeholders": [
+        "account",
+        "date"
+      ],
+      "meta": {},
+      "en": "From {account}, asked {date}",
+      "ar": "من {account}، طُلبت في {date}"
+    },
+    {
+      "key": "app.payments.decline_confirm.text",
+      "format": "text",
+      "description": "Decline confirmation dialog text (FA-037)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Nothing is sent. The person who made the payment sees that it was declined.",
+      "ar": "لن يُرسَل شيء. يرى من أنشأ الدفعة أنها رُفضت."
+    },
+    {
+      "key": "app.payments.decline_confirm.title",
+      "format": "text",
+      "description": "Decline confirmation dialog title (FA-037)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Decline this payment?",
+      "ar": "رفض هذه الدفعة؟"
+    },
+    {
+      "key": "app.payments.detail.method",
+      "format": "text",
+      "description": "Payment detail label: how it travels and when it arrives, in words (FA-035)",
+      "placeholders": [],
+      "meta": {},
+      "en": "How it is sent",
+      "ar": "طريقة الإرسال"
+    },
+    {
+      "key": "app.payments.detail.title_payment",
+      "format": "text",
+      "description": "Payment detail title (FA-035)",
+      "placeholders": [
+        "payee"
+      ],
+      "meta": {},
+      "en": "Payment to {payee}",
+      "ar": "دفعة إلى {payee}"
+    },
+    {
+      "key": "app.payments.detail.title_topup",
+      "format": "text",
+      "description": "Payment detail title for a top-up into an account (FA-035)",
+      "placeholders": [
+        "payee"
+      ],
+      "meta": {},
+      "en": "Top-up to {payee}",
+      "ar": "إيداع إلى {payee}"
+    },
+    {
+      "key": "app.payments.detail.title_transfer",
+      "format": "text",
+      "description": "Payment detail title for a transfer between own accounts (FA-035)",
+      "placeholders": [
+        "payee"
+      ],
+      "meta": {},
+      "en": "Transfer to {payee}",
+      "ar": "تحويل إلى {payee}"
+    },
+    {
+      "key": "app.payments.form.missing.amount",
+      "format": "text",
+      "description": "Send form: what is missing, the amount (FA-036)",
+      "placeholders": [],
+      "meta": {},
+      "en": "an amount",
+      "ar": "المبلغ"
+    },
+    {
+      "key": "app.payments.form.missing.intro",
+      "format": "text",
+      "description": "Send form: Review pressed with something missing (FA-036)",
+      "placeholders": [
+        "items"
+      ],
+      "meta": {},
+      "en": "Add {items} to review the payment.",
+      "ar": "أضف {items} لمراجعة الدفعة."
+    },
+    {
+      "key": "app.payments.form.missing.to",
+      "format": "text",
+      "description": "Send form: what is missing, the payee (FA-036)",
+      "placeholders": [],
+      "meta": {},
+      "en": "who to pay",
+      "ar": "المستفيد"
+    },
+    {
+      "key": "app.payments.sent.another",
+      "format": "text",
+      "description": "Confirmation button: start another payment (FA-034)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send another",
+      "ar": "إرسال دفعة أخرى"
+    },
+    {
+      "key": "app.payments.sent.print",
+      "format": "text",
+      "description": "Confirmation button: print or save the confirmation (FA-034)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Print or save confirmation",
+      "ar": "طباعة التأكيد أو حفظه"
+    },
+    {
+      "key": "app.payments.sent.title",
+      "format": "text",
+      "description": "Confirmation after sending a payment (FA-034)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment sent",
+      "ar": "تم إرسال الدفعة"
+    },
+    {
+      "key": "app.payments.sent.to",
+      "format": "text",
+      "description": "Confirmation: who it went to (FA-034)",
+      "placeholders": [
+        "payee"
+      ],
+      "meta": {},
+      "en": "To {payee}",
+      "ar": "إلى {payee}"
+    },
+    {
+      "key": "app.payments.sent.waiting_title",
+      "format": "text",
+      "description": "Confirmation after sending when a second person must approve (FA-034)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment waiting for approval",
+      "ar": "الدفعة بانتظار الموافقة"
+    },
+    {
+      "key": "app.payments.summary.not_chosen",
+      "format": "text",
+      "description": "Send summary: a value not chosen yet (FA-019)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not chosen yet",
+      "ar": "لم يُحدَّد بعد"
+    },
+    {
+      "key": "app.payments.summary.title",
+      "format": "text",
+      "description": "Send form: the live summary beside the form (FA-019)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Summary",
+      "ar": "الملخص"
+    },
+    {
+      "key": "app.search.group.cards",
+      "format": "text",
+      "description": "Command search group heading (FA-027)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cards",
+      "ar": "البطاقات"
+    },
+    {
+      "key": "app.search.group.payments",
+      "format": "text",
+      "description": "Command search group heading (FA-027)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments",
+      "ar": "المدفوعات"
+    },
+    {
+      "key": "app.search.keys.close",
+      "format": "text",
+      "description": "Command search key hint: Esc closes (FA-027)",
+      "placeholders": [],
+      "meta": {},
+      "en": "to close",
+      "ar": "للإغلاق"
+    },
+    {
+      "key": "app.search.keys.move",
+      "format": "text",
+      "description": "Command search key hint: arrows move (FA-027)",
+      "placeholders": [],
+      "meta": {},
+      "en": "to move",
+      "ar": "للتنقل"
+    },
+    {
+      "key": "app.search.keys.open",
+      "format": "text",
+      "description": "Command search key hint: Enter opens (FA-027)",
+      "placeholders": [],
+      "meta": {},
+      "en": "to open",
+      "ar": "للفتح"
+    },
+    {
+      "key": "app.search.section.agreements",
+      "format": "text",
+      "description": "Command search: a section of Documents (FA-027)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Agreements and disclosures",
+      "ar": "الاتفاقيات والإفصاحات"
+    },
+    {
+      "key": "app.search.section.appearance",
+      "format": "text",
+      "description": "Command search: a section of Settings (FA-027)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Appearance, light or dark",
+      "ar": "المظهر، فاتح أو داكن"
+    },
+    {
+      "key": "app.search.section.exports",
+      "format": "text",
+      "description": "Command search: a section of Documents (FA-027)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accounting exports",
+      "ar": "تصدير البيانات المحاسبية"
+    },
+    {
+      "key": "app.search.section.language",
+      "format": "text",
+      "description": "Command search: a section of Settings (FA-027)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Language",
+      "ar": "اللغة"
+    },
+    {
+      "key": "app.search.section.notifications",
+      "format": "text",
+      "description": "Command search: a section of Settings (FA-027)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Notification choices",
+      "ar": "خيارات الإشعارات"
+    },
+    {
+      "key": "app.search.section.security",
+      "format": "text",
+      "description": "Command search: a section of Settings (FA-027)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Security and devices",
+      "ar": "الأمان والأجهزة"
+    },
+    {
+      "key": "app.search.section.statements",
+      "format": "text",
+      "description": "Command search: a section of Documents (FA-027)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Statements",
+      "ar": "كشوف الحساب"
     }
   ]
 }

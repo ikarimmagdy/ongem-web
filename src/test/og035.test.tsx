@@ -98,7 +98,7 @@ describe('OG-035 R2: a compact balance card', () => {
       within(actions)
         .getAllByRole('link')
         .map((a) => a.textContent),
-    ).toEqual(['New payment', 'Add money', 'Ask for help']);
+    ).toEqual(['Send', 'Add money', 'Ask for help']); // FA-023: one verb for paying
   });
 
   it('AC_R2_2 a Viewer sees Ask for help only; a frozen company has no New payment or Add money', async () => {
@@ -138,7 +138,7 @@ describe('OG-035 R3: Needs you', () => {
     renderApp('/');
     const item = await screen.findByTestId('need-approval-pay_demo_approval');
     expect(item).toHaveTextContent('Approve US$4,200.00 to Harbor Rent Co');
-    await userEvent.click(within(item).getByRole('link', { name: 'Review' }));
+    await userEvent.click(within(item).getByRole('link', { name: 'Approve' })); // FA-026: the outcome
     const detail = await screen.findByTestId('payment-detail');
     expect(within(detail).getByTestId('payment-approve')).toBeInTheDocument();
     expect(within(detail).getByTestId('payment-reject')).toBeInTheDocument();
@@ -150,23 +150,25 @@ describe('OG-035 R3: Needs you', () => {
     expect(screen.queryByTestId('need-approval-pay_demo_approval')).not.toBeInTheDocument();
   });
 
-  it('AC_R3_3 the application, a frozen card and unread notices each have one action to their screen', async () => {
+  it('AC_R3_3 FA_025 FA_026 the application, a frozen card and unread notices each have one action to their screen', async () => {
     renderApp('/');
     const app = await screen.findByTestId('need-application-app_demo_northwind');
     expect(app).toHaveTextContent('Your application: About your company');
-    expect(within(app).getByRole('link', { name: 'Continue' })).toHaveAttribute('href', '/onboarding');
+    expect(within(app).getByRole('link', { name: 'Continue application' })).toHaveAttribute(
+      'href',
+      '/onboarding',
+    );
     const frozen = await screen.findByTestId('need-card-crd_demo_ops');
     expect(frozen).toHaveTextContent('Card ending 8830 is frozen');
-    expect(within(frozen).getByRole('link', { name: 'Open card' })).toHaveAttribute(
+    expect(within(frozen).getByRole('link', { name: 'Unfreeze' })).toHaveAttribute(
       'href',
       '/cards/crd_demo_ops',
     );
     const notices = (await screen.findAllByTestId(/^need-notice-/)).map((n) => within(n).getByRole('link'));
-    expect(notices.length).toBe(2);
-    for (const l of notices) {
-      expect(l).toHaveTextContent('Read');
-      expect(l).toHaveAttribute('href', '/notifications');
-    }
+    // The approval notice is not repeated beside the approval itself; the other opens its request.
+    expect(notices.length).toBe(1);
+    expect(notices[0]).toHaveTextContent('Open');
+    expect(notices[0]).toHaveAttribute('href', '/support/tkt_demo_1');
   });
 
   it('AC_R3_3 a card waiting for activation is listed', async () => {
@@ -271,17 +273,13 @@ describe('OG-035 R6: Payments tabs', () => {
       .getAllByRole('link')
       .map((a) => a.textContent);
 
-  it('AC_R6_1 an owner sees six tabs, the current one marked', async () => {
+  it('AC_R6_1 FA_023 an owner sees the four list tabs, the current one marked; Send and Add money are header actions', async () => {
     renderApp('/payments/schedules');
     await screen.findByTestId('payments-tabs');
-    expect(tabs()).toEqual([
-      'All payments',
-      'Send',
-      'Scheduled',
-      'Recipients',
-      'Add money',
-      'Waiting for approval',
-    ]);
+    await screen.findByTestId('approvals-count');
+    expect(tabs()).toEqual(['All payments', 'Scheduled', 'Approvals1', 'Recipients']);
+    expect(screen.getByTestId('payments-tab-send')).toHaveTextContent('Send');
+    expect(screen.getByTestId('payments-tab-add_money')).toHaveTextContent('Add money');
     expect(screen.getByTestId('payments-tab-scheduled')).toHaveAttribute('aria-current', 'page');
     expect(screen.getByTestId('payments-tab-all')).not.toHaveAttribute('aria-current');
   });
@@ -291,7 +289,7 @@ describe('OG-035 R6: Payments tabs', () => {
     expect(await screen.findByTestId('approvals-denied')).toHaveTextContent(
       'Your role does not approve payments.',
     );
-    expect(tabs()).not.toContain('Waiting for approval');
+    expect(tabs()).not.toContain('Approvals');
   });
 
   it('AC_R6_3 the old routes open their tabs; /recipients keeps its query', async () => {
@@ -358,7 +356,7 @@ describe('OG-035 R7: Team and Documents', () => {
 });
 
 describe('OG-035 R8: phone tabs and More', () => {
-  it('AC_R8_1 a phone tab bar is Home, Accounts, Pay, Cards, More, and Pay opens Send', async () => {
+  it('AC_R8_1 FA_023 a phone tab bar is Home, Accounts, Send, Cards, More, and Send opens the send form', async () => {
     const undo = asPhone();
     try {
       renderApp('/');
@@ -367,7 +365,7 @@ describe('OG-035 R8: phone tabs and More', () => {
         within(bar)
           .getAllByRole('link')
           .map((a) => a.textContent),
-      ).toEqual(['Home', 'Accounts', 'Pay', 'Cards', 'More']);
+      ).toEqual(['Home', 'Accounts', 'Send', 'Cards', 'More']);
       await userEvent.click(within(bar).getByTestId('tab-pay'));
       expect(await screen.findByTestId('payment-review-button')).toBeInTheDocument();
       expect(screen.getByTestId('payments-tab-send')).toHaveAttribute('aria-current', 'page');
@@ -425,7 +423,8 @@ describe('OG-035 R9: assistant and command search', () => {
     const input = await screen.findByTestId('command-search-input');
     expect(input).toHaveAttribute('role', 'combobox');
     await userEvent.type(input, 'tax');
-    expect(await screen.findByRole('option', { name: /Tax reserve/ })).toBeInTheDocument();
+    // FA-027: the account and the transfers to it are both found.
+    expect((await screen.findAllByRole('option', { name: /Tax reserve/ })).length).toBeGreaterThan(0);
     const firstAccount = (await screen.findAllByTestId(/^search-option-account-/))[0]!;
     expect(firstAccount).toHaveAttribute('aria-selected', 'true');
     expect(input.getAttribute('aria-activedescendant')).toBe(firstAccount.id);

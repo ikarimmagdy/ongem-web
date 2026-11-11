@@ -151,7 +151,10 @@ describe('review fixes: payments and drafts', () => {
     expect(await screen.findByTestId('payment-recipient')).toHaveValue('');
     expect(screen.getByTestId('payment-from')).toHaveValue('acc_demo_ops');
     expect(screen.getByTestId('payment-amount')).toHaveValue('');
-    expect(screen.getByTestId('payment-review-button')).toBeDisabled();
+    // FA-036: Review stays offered and says what is missing instead of reviewing.
+    await userEvent.click(screen.getByTestId('payment-review-button'));
+    expect(screen.getByTestId('payment-missing')).toBeInTheDocument();
+    expect(screen.queryByTestId('payment-review')).not.toBeInTheDocument();
   });
 
   it('WEB-SEC-03 assistant output renders as text: no markup, no link, no script', async () => {

@@ -161,9 +161,7 @@ function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void 
               variant="secondary"
               data-testid="card-dispute"
               onClick={() =>
-                navigate(
-                  `/support/new?category=DISPUTE&subject=${encodeURIComponent(t('app.cards.dispute_subject', { last4: c.last4 ?? '' }))}`,
-                )
+                navigate(`/support/new?category=DISPUTE&card=${encodeURIComponent(c.id)}`)
               }
             >
               {t('app.cards.dispute')}
@@ -218,7 +216,7 @@ export function CardsScreen() {
         <div>
           {id && (
             <>
-              <Button variant="ghost" onClick={() => navigate('/cards')}>
+              <Button variant="ghost" className="fw-split__back" onClick={() => navigate('/cards')}>
                 {t('app.cards.back')}
               </Button>
               <CardDetail id={id} onListChanged={() => setVersion((x) => x + 1)} />

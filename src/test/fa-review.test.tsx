@@ -1,4 +1,5 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { vi } from 'vitest';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DemoOnGemApi } from '../api/demo';
 import { stateStatus } from '../screens/common';
@@ -266,5 +267,206 @@ describe('founder web review 2026-11-12, settings and lists', () => {
     renderApp('/documents');
     const box = await screen.findByTestId('export-activity');
     expect(box).toContainElement(screen.getByTestId('documents-export-account'));
+  });
+});
+
+describe('founder web review 2026-11-12, payments', () => {
+  const send = async (amount: string) => {
+    await userEvent.selectOptions(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
+    await userEvent.type(screen.getByTestId('payment-amount'), amount);
+    await userEvent.click(screen.getByTestId('payment-review-button'));
+    await userEvent.click(await screen.findByTestId('payment-send'));
+  };
+
+  it('FA_034 sending ends on a confirmation: amount, payee, Send another', async () => {
+    const api = new DemoOnGemApi({ stepUp: () => Promise.resolve(true) });
+    renderApp('/payments/new', { api });
+    await send('1250');
+    const done = await screen.findByTestId('payment-sent');
+    expect(done).toHaveTextContent('Payment sent');
+    expect(done).toHaveTextContent('US$1,250.00');
+    expect(done).toHaveTextContent('To Acme Supplies LLC');
+    await userEvent.click(screen.getByTestId('payment-send-another'));
+    expect(await screen.findByTestId('payment-form')).toBeInTheDocument();
+  });
+
+  it('FA_035 a payment names payee, account and method in words; no rail code or bank id; no repeated steps', async () => {
+    renderApp('/payments/pay_demo_1');
+    const detail = await screen.findByTestId('payment-detail');
+    expect(screen.getByTestId('payment-kind')).toHaveTextContent('Payment to Acme Supplies LLC');
+    expect(await screen.findByTestId('payment-from-account')).toHaveTextContent('Operating');
+    expect(screen.getByTestId('payment-method')).toHaveTextContent('Standard ACH, 1 to 2 business days');
+    expect(detail).not.toHaveTextContent(/Rail|ach_demo|Bank reference/);
+    const labels = Array.from(screen.getByTestId('payment-timeline').querySelectorAll('.fw-timeline__label')).map(
+      (x) => x.textContent,
+    );
+    expect(labels.length).toBe(new Set(labels).size);
+    await waitFor(() => expect(document.title).toMatch(/^Payment to Acme Supplies LLC/));
+  });
+
+  it('FA_023 Payments tabs are lists; Send and Add money are actions; Home, phone tab and header say Send', async () => {
+    renderApp('/payments');
+    const tabs = await screen.findByTestId('payments-tabs');
+    expect(within(tabs).queryByText('Send')).toBeNull();
+    expect(within(tabs).queryByText('Add money')).toBeNull();
+    expect(screen.getByTestId('payments-tab-send')).toHaveClass('og-btn--primary');
+  });
+
+  it('FA_036 Review is always offered and says what is missing; the amount shows its currency', async () => {
+    renderApp('/payments/new');
+    const review = await screen.findByTestId('payment-review-button');
+    expect(review).toBeEnabled();
+    expect(document.querySelector('.fw-prefixed__prefix')).toHaveTextContent('US$');
+    await userEvent.click(review);
+    expect(screen.getByTestId('payment-missing')).toHaveTextContent('Add who to pay, an amount to review the payment.');
+  });
+
+  it('FA_019 the send form has a live summary of amount, payee and account', async () => {
+    renderApp('/payments/new');
+    await userEvent.selectOptions(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
+    await userEvent.type(screen.getByTestId('payment-amount'), '10');
+    const summary = screen.getByTestId('payment-summary');
+    expect(summary).toHaveTextContent('US$10.00');
+    expect(summary).toHaveTextContent('Acme Supplies LLC');
+    expect(summary).toHaveTextContent('Operating');
+  });
+
+  it('FA_037 an approval names its account and date, and Decline asks first', async () => {
+    const api = new DemoOnGemApi({ stepUp: () => Promise.resolve(true) });
+    renderApp('/payments/approvals', { api });
+    expect(await screen.findByTestId('approval-from-pay_demo_approval')).toHaveTextContent(/^From Operating, asked/);
+    await userEvent.click(screen.getAllByTestId('payment-reject')[0]!);
+    expect(await screen.findByRole('dialog')).toHaveTextContent('Decline this payment?');
+    expect(api.calls).not.toContain('rejectPayment');
+  });
+
+  it('FA_018 a wide Payments opens the newest payment; Back links hide from 901px', async () => {
+    const original = window.matchMedia;
+    window.matchMedia = ((q: string) => ({
+      matches: q.includes('min-width'),
+      media: q,
+      addEventListener: () => undefined,
+      removeEventListener: () => undefined,
+    })) as unknown as typeof window.matchMedia;
+    try {
+      renderApp('/payments');
+      expect(await screen.findByTestId('payment-detail')).toBeInTheDocument();
+    } finally {
+      window.matchMedia = original;
+    }
+    expect(css('app-shell.css')).toMatch(/@media \(min-width: 901px\) \{\s*\.fw-split__back \{\s*display: none;/);
+  });
+
+  it('FA_025 FA_026 notices open their payment, match its amount, and are not listed twice beside an approval', async () => {
+    renderApp('/');
+    const needs = await screen.findByTestId('needs-list');
+    await waitFor(() => expect(within(needs).getAllByRole('link').length).toBeGreaterThan(1));
+    const links = within(needs)
+      .getAllByRole('link')
+      .map((a) => a.getAttribute('href'));
+    expect(links.filter((h) => h === '/payments/pay_demo_approval')).toHaveLength(1);
+    expect(links).toContain('/support/tkt_demo_1');
+    expect(within(needs).getByTestId('need-action-approval-pay_demo_approval')).toHaveTextContent('Approve');
+    const box = await new DemoOnGemApi().notifications();
+    expect(box.items.find((n) => n.kind === 'APPROVAL_WAITING')!.body).toContain('US$4,200.00');
+  });
+
+  it('FA_039 a dispute starts from the card charge, with a reason, and opens a DISPUTE request with the facts', async () => {
+    const api = new DemoOnGemApi({ stepUp: () => Promise.resolve(true) });
+    renderApp('/support/new?category=DISPUTE&card=crd_demo_dana', { api });
+    await screen.findByTestId('dispute-form');
+    await userEvent.click(screen.getByTestId('dispute-send'));
+    expect(screen.getByTestId('dispute-missing')).toHaveTextContent('Add the charge, a reason to send the dispute.');
+    const charges = await screen.findByTestId('dispute-charges');
+    await userEvent.click(within(charges).getAllByRole('radio')[0]!);
+    await userEvent.selectOptions(screen.getByTestId('dispute-reason'), 'twice');
+    expect(screen.getByTestId('dispute-amount')).toHaveTextContent(/^Amount disputed: US\$/);
+    await userEvent.click(screen.getByTestId('dispute-send'));
+    expect(await screen.findByTestId('ticket-detail')).toHaveTextContent('Dispute: card ending 5521');
+    const [ticket] = await api.tickets();
+    expect(ticket).toMatchObject({ category: 'DISPUTE' });
+  });
+
+  it('FA_058 a finished application step shows a check, not its number', async () => {
+    renderApp('/');
+    const steps = await screen.findByTestId('application-steps');
+    const done = steps.querySelector('.is-done .fw-appsteps__marker')!;
+    expect(done.querySelector('svg')).not.toBeNull();
+    expect(done.textContent).toBe('');
+  });
+});
+
+describe('founder web review 2026-11-12, search, assistant and demo', () => {
+  it('FA_027 command search finds payments by payee or amount, cards and settings sections, with key hints', async () => {
+    renderApp('/');
+    await userEvent.click(await screen.findByTestId('command-search-open'));
+    expect(screen.getByTestId('command-search-keys')).toHaveTextContent('to move');
+    const input = screen.getByTestId('command-search-input');
+    await userEvent.type(input, 'statement');
+    expect(screen.getByTestId('search-option-screen-documents-statements')).toBeInTheDocument();
+    await userEvent.clear(input);
+    await userEvent.type(input, '1,250');
+    expect(await screen.findByTestId('search-option-payment-pay_demo_1')).toHaveTextContent('Acme Supplies LLC');
+    await userEvent.clear(input);
+    await userEvent.type(input, '5521');
+    expect(await screen.findByTestId('search-option-card-crd_demo_dana')).toBeInTheDocument();
+    await userEvent.clear(input);
+    await userEvent.type(input, 'devices');
+    expect(screen.getByTestId('search-option-screen-settings-security')).toBeInTheDocument();
+  });
+
+  it('FA_053 demo mode lasts for the tab: entering it sets a flag a reload reads', async () => {
+    const { unmount } = renderApp('/sign-in', { mode: 'none' });
+    await userEvent.click(await screen.findByTestId('explore-demo'));
+    expect(sessionStorage.getItem('ongem.demo')).toBe('1');
+    unmount();
+    renderApp('/', { mode: 'none' });
+    expect(await screen.findByTestId('shell')).toBeInTheDocument();
+  });
+
+  it('FA_054 the assistant answers what was paid to a payee and shows lists as lists', async () => {
+    const api = new DemoOnGemApi();
+    const turn = await api.assistant.answer('How much did we pay Acme this month?');
+    expect(turn.reply).toMatch(/^This month you paid Acme Supplies LLC US\$/);
+    const undo = asPhone();
+    try {
+      renderApp('/');
+      await userEvent.click(await screen.findByTestId('assistant-open'));
+      await userEvent.type(screen.getByTestId('assistant-input'), 'What is my balance?');
+      await userEvent.click(screen.getByTestId('assistant-send'));
+      const reply = await screen.findByTestId('assistant-reply');
+      expect(reply.querySelectorAll('li').length).toBeGreaterThan(1);
+      expect(reply.textContent).not.toMatch(/(^|\n)- /);
+    } finally {
+      undo();
+    }
+  });
+
+  it('FA_056 demo review switches reach the read-only, slow and error states', async () => {
+    const ro = new DemoOnGemApi({ scenario: 'readonly' });
+    expect((await ro.me()).memberships.every((m) => m.companyState === 'FROZEN')).toBe(true);
+    const down = new DemoOnGemApi({ scenario: 'error' });
+    await expect(down.accounts()).rejects.toMatchObject({ status: 503 });
+    expect(await down.me()).toBeTruthy();
+  });
+
+  it('FA_059 a channel checked in this tab is not asked again; a 429 holds for its Retry-After', async () => {
+    const { refreshChannel, held } = await import('../i18n/store');
+    const fetchImpl = vi.fn(async () => new Response(null, { status: 429, headers: { 'Retry-After': '30' } }));
+    await refreshChannel('web_app', { fetchImpl: fetchImpl as unknown as typeof fetch, locale: 'en' });
+    expect(held('en', 'web_app')).toBe(true);
+    expect(held('en', 'web_app', Date.now() + 31_000)).toBe(false);
+  });
+
+  it('FA_008 the side bar items carry outline icons in category containers', async () => {
+    renderApp('/');
+    const cards = await screen.findByTestId('nav-cards');
+    expect(cards.querySelector('.fw-nav__icon--cards svg')).not.toBeNull();
+    expect(cards).toHaveTextContent('Cards');
+  });
+
+  it('FA_057 the demo balance card says Sample data, as the app does', async () => {
+    renderApp('/');
+    expect(await screen.findByTestId('home-sample')).toHaveTextContent('Sample data');
   });
 });

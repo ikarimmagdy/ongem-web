@@ -179,6 +179,22 @@ function DemoReverify({ ask, onDone }: { ask: Ask | null; onDone(ok: boolean): v
   );
 }
 
+/** FA-056: `?state=readonly|slow|error` puts the demo in a state its data never reaches, for reviews and e2e. */
+function demoScenario(): 'readonly' | 'slow' | 'error' | null {
+  if (typeof window === 'undefined') return null;
+  const s = new URLSearchParams(window.location.search).get('state');
+  return s === 'readonly' || s === 'slow' || s === 'error' ? s : null;
+}
+
+const DEMO_FLAG = 'ongem.demo';
+function demoFlag(): boolean {
+  try {
+    return typeof window !== 'undefined' && window.sessionStorage.getItem(DEMO_FLAG) === '1';
+  } catch {
+    return false;
+  }
+}
+
 export function SessionProvider({
   children,
   initialMode = 'none',
@@ -189,7 +205,19 @@ export function SessionProvider({
   api?: OnGemApi;
 }) {
   const auth = useAuthSession();
-  const [demoMode, setDemoMode] = useState(initialMode === 'demo');
+  // FA-053: demo mode lasts for the tab, so a reload stays in the demo (a flag only; no data is kept).
+  const [demoMode, setDemoModeState] = useState(
+    () => initialMode === 'demo' || (initialMode === 'none' && demoFlag()),
+  );
+  const setDemoMode = useCallback((on: boolean) => {
+    setDemoModeState(on);
+    try {
+      if (on) sessionStorage.setItem(DEMO_FLAG, '1');
+      else sessionStorage.removeItem(DEMO_FLAG);
+    } catch {
+      /* storage unavailable: demo lasts for this page */
+    }
+  }, []);
   const [role, setRole] = useState<string | null>(null);
   const [ask, setAsk] = useState<Ask | null>(null);
   const askRef = useRef<(purpose: string, detail?: StepUpDetail) => Promise<boolean>>(() =>
@@ -209,6 +237,7 @@ export function SessionProvider({
           typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('demo') === 'solo'
             ? 'ONGEM'
             : 'COMPANY',
+        scenario: demoScenario(),
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [injected, demoMode],
@@ -297,7 +326,7 @@ export function SessionProvider({
     setPick(null);
     setCompanyState('ACTIVE');
     if (auth.signedIn) void auth.signOut();
-  }, [auth]);
+  }, [auth, setDemoMode]);
 
   const value = useMemo<Session>(
     () => ({
@@ -326,6 +355,7 @@ export function SessionProvider({
       role,
       permissions,
       leave,
+      setDemoMode,
       picked,
       switchCompany,
       base,

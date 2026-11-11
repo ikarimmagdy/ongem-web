@@ -8,6 +8,32 @@ import { useDrafts } from './drafts';
 import { readLabel } from './readLabel';
 import { useAssistantControl } from './control';
 
+/** FA-054: a reply's "- " lines are a list, the other lines paragraphs; never raw markers. */
+function Reply({ text }: { text: string }) {
+  const blocks: Array<{ list: boolean; lines: string[] }> = [];
+  for (const line of text.split('\n')) {
+    const item = /^\s*[-*]\s+/.test(line);
+    const last = blocks[blocks.length - 1];
+    if (last && last.list === item && item) last.lines.push(line.replace(/^\s*[-*]\s+/, ''));
+    else if (line.trim()) blocks.push({ list: item, lines: [item ? line.replace(/^\s*[-*]\s+/, '') : line] });
+  }
+  return (
+    <div className="og-message__body fw-reply" data-mask="">
+      {blocks.map((b, i) =>
+        b.list ? (
+          <ul key={i}>
+            {b.lines.map((l, j) => (
+              <li key={j}>{l}</li>
+            ))}
+          </ul>
+        ) : (
+          <p key={i}>{b.lines[0]}</p>
+        ),
+      )}
+    </div>
+  );
+}
+
 /**
  * The assistant (OG-031 R4): reads and drafts only; a draft opens the normal screen for the founder to confirm. A
  * floating button opens it on a phone; on a desktop the command search opens it (OG-035 R9).
@@ -121,9 +147,7 @@ export function AssistantWidget({
                     {turn.text}
                   </div>
                   <div className="fw-msg" data-testid="assistant-reply">
-                    <p className="og-message__body" data-mask="">
-                      {turn.reply}
-                    </p>
+                    <Reply text={turn.reply} />
                     {readLabel(turn.reads.map((r) => r.tool)) && (
                       <div className="fw-msg__who" data-testid="assistant-read">
                         {readLabel(turn.reads.map((r) => r.tool))}
