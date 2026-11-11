@@ -543,3 +543,16 @@ export interface ExportRequest {
   to?: string;
   format: string;
 }
+
+/** A device bound to the person (GET /v1/devices, OG-006 R8): newest first, revoked ones with revokedAt. FA-029. */
+export interface DeviceView {
+  id: string;
+  platform: 'ios' | 'android' | 'web' | string;
+  name: string | null;
+  model: string | null;
+  createdAt: string;
+  lastSeenAt: string | null;
+  revokedAt: string | null;
+  /** The device this request came from. */
+  current: boolean;
+}

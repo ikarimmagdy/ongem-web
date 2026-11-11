@@ -156,7 +156,7 @@ export function CommandSearch() {
           <path d="m20 20-3.5-3.5" />
         </svg>
         <span>{t('app.search.open')}</span>
-        <kbd className="fw-search__kbd">{isMac() ? KEYCAP_MAC : KEYCAP_OTHER}</kbd>
+        <kbd className="fw-search__kbd" dir="ltr">{isMac() ? KEYCAP_MAC : KEYCAP_OTHER}</kbd>
       </button>
       <Modal open={open} title={t('app.search.title')} onClose={() => setOpen(false)}>
         <div className="fw-palette" data-testid="command-search">

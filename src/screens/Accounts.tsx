@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import type { Account, Statement, Transaction } from '../api/types';
 import { errorText } from '../api/errors';
 import {
@@ -13,10 +13,10 @@ import {
   StatusChip,
   Table,
 } from '../design-system';
-import { formatBankDate, formatDate } from '../lib/format';
+import { formatBankDate, formatDate, formatMinor, formatPeriod } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
 import { useSession } from '../session';
-import { t } from '../i18n';
+import { T, t } from '../i18n';
 import { REGION_CONFIG } from '../region';
 import { AcctLast4, Amt, Load, human, stateStatus } from './common';
 import { ExportActivity } from './ExportActivity';
@@ -34,6 +34,16 @@ export function describeTransaction(tx: Pick<Transaction, 'rail' | 'direction'>)
   return t(tx.direction === 'CREDIT' ? 'app.accounts.txn_in' : 'app.accounts.txn_out', { rail });
 }
 
+/** An amount with its sign, tight and isolated left to right, so Arabic never moves the minus after it (FA-048). */
+function SignedAmt({ credit, value }: { credit: boolean; value: Transaction['amount'] }) {
+  return (
+    <bdi dir="ltr" className="og-money" data-mask="">
+      {credit ? '+' : '\u2212'}
+      {formatMinor(value)}
+    </bdi>
+  );
+}
+
 function Balance({ a }: { a: Account }) {
   if (!a.balance) return <span className="fw-row__sub">{t('app.accounts.no_balance')}</span>;
   return (
@@ -41,7 +51,10 @@ function Balance({ a }: { a: Account }) {
       <Amt value={a.balance.available} />
       {a.balance.stale && (
         <span className="fw-stale" data-testid={`stale-${a.id}`}>
-          {t('app.accounts.stale_last_known', { time: formatDate(a.balance.asOf, { time: true }) })}
+          <T
+            k="app.accounts.stale_last_known"
+            vars={{ time: <bdi dir="ltr">{formatDate(a.balance.asOf, { time: true })}</bdi> }}
+          />
         </span>
       )}
     </span>
@@ -53,7 +66,7 @@ export function StatementModal({ statement, onClose }: { statement: Statement | 
   return (
     <Modal
       open={Boolean(statement)}
-      title={t('app.accounts.statement_period', { period: statement?.period ?? '' })}
+      title={t('app.accounts.statement_period', { period: formatPeriod(statement?.period ?? '') })}
       onClose={onClose}
     >
       {statement && (
@@ -139,6 +152,7 @@ function AccountDetail({ id }: { id: string }) {
               {(rows) => (
                 <>
                   <Table
+                    hideCaption
                     caption={t('app.accounts.transactions_caption')}
                     rows={rows}
                     rowKey={(tx) => tx.id}
@@ -154,17 +168,21 @@ function AccountDetail({ id }: { id: string }) {
                         header: t('app.accounts.col_description'),
                         render: (tx) => describeTransaction(tx),
                       },
-                      { key: 'stage', header: t('app.accounts.status'), render: (tx) => human(tx.stage) },
+                      {
+                        key: 'stage',
+                        header: t('app.accounts.status'),
+                        // FA-011: only a transaction not yet posted carries a chip; a posted one needs no word.
+                        render: (tx) =>
+                          tx.stage === 'POSTED' ? null : (
+                            <StatusChip status={stateStatus(tx.stage)}>{human(tx.stage)}</StatusChip>
+                          ),
+                      },
                       {
                         key: 'amount',
                         header: t('app.accounts.col_amount'),
                         align: 'end',
-                        render: (tx) => (
-                          <span>
-                            {tx.direction === 'CREDIT' ? '+' : '-'}
-                            <Amt value={tx.amount} />
-                          </span>
-                        ),
+                        // FA-011, FA-048: the sign sits against the amount (U+2212 minus) and the pair reads left to right.
+                        render: (tx) => <SignedAmt credit={tx.direction === 'CREDIT'} value={tx.amount} />,
                       },
                     ]}
                   />
@@ -193,7 +211,7 @@ function AccountDetail({ id }: { id: string }) {
                           data-testid={`statement-${s.period}`}
                           onClick={() => openStatement(s.period)}
                         >
-                          {t('app.accounts.statement_period', { period: s.period })}
+                          {t('app.accounts.statement_period', { period: formatPeriod(s.period) })}
                         </button>
                       </li>
                     ))}
@@ -220,11 +238,7 @@ export function AccountsScreen() {
   const list = useAsync(() => api.accounts(), [api]);
   return (
     <>
-      <PageHeader
-        title={t('app.accounts.title')}
-        subtitle={t('app.accounts.subtitle')}
-        actions={<Link to="/recipients">{t('app.accounts.recipients_link')}</Link>}
-      />
+      <PageHeader title={t('app.accounts.title')} />
       <div className={`fw-split${id ? ' has-detail' : ''}`}>
         <div className="fw-split__list">
           <Load state={list} label="accounts">

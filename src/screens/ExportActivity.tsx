@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Permission } from '../api/client';
 import { ApiError, errorText } from '../api/errors';
 import type { ExportRun } from '../api/types';
@@ -95,7 +95,7 @@ function RunState({ run, onLink }: { run: ExportRun; onLink: () => void }) {
  * month by default, or dates) and a format and confirms; the run is prepared in the background and read again until it
  * is Ready, Refused or Failed. A member without the permission sees why instead of the form.
  */
-export function ExportActivity({ accountId }: { accountId: string }) {
+export function ExportActivity({ accountId, picker }: { accountId: string; picker?: ReactNode }) {
   const { api, can } = useSession();
   const allowed = can(Permission.EXPORT_CREATE);
   const [open, setOpen] = useState(false);
@@ -136,6 +136,7 @@ export function ExportActivity({ accountId }: { accountId: string }) {
   if (!allowed) {
     return (
       <Card title={t('app.exports.title')}>
+        {picker}
         <p data-testid="export-no-permission">{t('app.exports.no_permission')}</p>
       </Card>
     );
@@ -175,10 +176,14 @@ export function ExportActivity({ accountId }: { accountId: string }) {
     <Card title={t('app.exports.title')}>
       <div className="fw-thread" data-testid="export-activity">
         <p>{t('app.exports.intro')}</p>
+        {/* FA-040: the account this export is for sits inside its card; the button keeps its natural width. */}
+        {picker}
         {!open && (
-          <Button data-testid="export-start" onClick={() => setOpen(true)}>
-            {t('app.exports.start')}
-          </Button>
+          <div className="fw-actions">
+            <Button data-testid="export-start" onClick={() => setOpen(true)}>
+              {t('app.exports.start')}
+            </Button>
+          </div>
         )}
         {open && (
           <form

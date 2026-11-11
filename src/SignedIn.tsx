@@ -20,6 +20,7 @@ import { DraftProvider } from './assistant/drafts';
 import { AssistantProvider } from './assistant/control';
 import { CommandSearch } from './CommandSearch';
 import { useWide } from './lib/useWide';
+import { useAppearance } from './lib/appearance';
 import { TeamScreen } from './screens/Team';
 import { DocumentsScreen } from './screens/Documents';
 import { MoreScreen } from './screens/More';
@@ -83,6 +84,9 @@ function ProfileMenu({ onLeave }: { onLeave(): void }) {
   );
 }
 
+/** Screens that end in a form's primary action: no floating button over them on a phone (FA-016). */
+const FORM_ROUTES = [/^\/payments\/(new|top-up|schedules)/, /^\/support\/new/, /^\/onboarding/];
+
 /** One glyph per phone tab; Pay is the centre tab, drawn larger (OG-035 R8). */
 const TAB_ICON: Record<string, string> = {
   home: 'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z', // content-check: ignore (SVG path)
@@ -111,6 +115,8 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
   // More stays marked while one of its screens is open on a phone.
   const inMore = MORE.some((m) => pathname.startsWith(m.to));
   usePageTitle();
+  // FA-030: a System appearance follows the device on every screen.
+  useAppearance();
   const me = useAsync(() => api.me(), [api]);
   // OG-023 R12: the switcher lists the person's companies in every region, each asked with the same sign-in.
   const all = useAsync(() => loadCompanies(homeApi), [homeApi]);
@@ -153,13 +159,24 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
     <CompanySwitcher companies={companies} current={membership} onPick={pick} partial={partial} />
   );
   const ready = me.status === 'success';
+  const demoBadge = (
+    <span className={`og-env og-env--${mode === 'demo' ? 'mock' : 'live'}`} data-testid="env-badge">
+      {mode === 'demo' ? t('app.shell.env_demo') : t('app.shell.env_live')}
+    </span>
+  );
+  // FA-016: on a phone the floating assistant stays off screens whose primary action sits at the bottom of a form.
+  const formRoute = FORM_ROUTES.some((re) => re.test(pathname));
   return (
     <div className="fw-shell" data-testid="shell">
       <a href="#main" className="og-skip">
         {t('app.common.skip')}
       </a>
       <aside className="fw-side">
-        <Logo />
+        {/* FA-005, FA-010: the wordmark lines up with the nav text on both sides; Demo sits next to it. */}
+        <div className="fw-side__brand">
+          <Logo />
+          {wide && demoBadge}
+        </div>
         {wide && (
           <div className="fw-side__company" data-testid="side-company">
             {switcher}
@@ -181,17 +198,32 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
             ))}
           </ul>
         </nav>
+        {/* FA-055: which bank holds the money, in every signed-in screen (no bank name in the AE build). */}
+        <p className="fw-side__disclosure" data-testid="side-disclosure">
+          {t('app.shell.disclosure')}
+        </p>
       </aside>
       <div className="fw-main">
         <header className="og-topbar fw-topbar">
+          {wide ? (
+            // FA-010: the page's name starts the desktop bar.
+            <span className="fw-topbar__title" data-testid="top-title">
+              {pageTitle(pathname)}
+            </span>
+          ) : (
+            // FA-004 (UX-12, Karim 2026-11-07): the wordmark on every size; the company switcher is the bar's second line.
+            <span className="fw-topbar__brand" data-testid="top-brand">
+              <span className="fw-topbar__logo">
+                <Logo />
+              </span>
+              {demoBadge}
+            </span>
+          )}
           {!wide && (
             <span className="fw-topbar__company" data-testid="top-company">
               {switcher}
             </span>
           )}
-          <span className={`og-env og-env--${mode === 'demo' ? 'mock' : 'live'}`} data-testid="env-badge">
-            {mode === 'demo' ? t('app.shell.env_demo') : t('app.shell.env_live')}
-          </span>
           <span className="og-topbar__right">
             {ready && wide && <CommandSearch />}
             {ready && <NoticeBell />}
@@ -267,7 +299,7 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
           ))}
         </ul>
       </nav>
-      {ready && <AssistantWidget fab={!wide} recordingSessionId={recording} />}
+      {ready && <AssistantWidget fab={!wide && !formRoute} recordingSessionId={recording} />}
     </div>
   );
 }

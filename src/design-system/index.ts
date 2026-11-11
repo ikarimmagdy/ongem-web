@@ -4,6 +4,7 @@ export * from './theme';
 export { AppShell, type AppShellProps, type NavItem } from './components/AppShell';
 export { Button, type ButtonProps, type ButtonVariant } from './components/Button';
 export { Card } from './components/Card';
+export { CardFace, type CardFaceProps } from './components/CardFace';
 export { CategoryIcon, type Category } from './components/CategoryIcon';
 export { CheckGroup, type CheckOption } from './components/CheckGroup';
 export { CopyText } from './components/CopyText';

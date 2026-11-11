@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from 'react';
+import { useId, useMemo, useState, type ReactNode } from 'react';
 import { t } from '../../i18n/store';
 
 export interface Column<T> {
@@ -17,9 +17,21 @@ export interface TableProps<T> {
   empty?: ReactNode;
   initialSort?: { key: string; dir: 'asc' | 'desc' };
   onRowClick?(row: T): void;
+  /** The caption is read by screen readers but not shown, where the card's title already names the table (FA-011). */
+  hideCaption?: boolean;
 }
 
-export function Table<T>({ caption, columns, rows, rowKey, empty, initialSort, onRowClick }: TableProps<T>) {
+export function Table<T>({
+  caption,
+  columns,
+  rows,
+  rowKey,
+  empty,
+  initialSort,
+  onRowClick,
+  hideCaption = false,
+}: TableProps<T>) {
+  const captionId = useId();
   const [sort, setSort] = useState(initialSort);
   const sorted = useMemo(() => {
     const col = sort && columns.find((c) => c.key === sort.key);
@@ -37,9 +49,12 @@ export function Table<T>({ caption, columns, rows, rowKey, empty, initialSort, o
     setSort((s) => (s?.key === key ? { key, dir: s.dir === 'asc' ? 'desc' : 'asc' } : { key, dir: 'asc' }));
 
   return (
-    <div className="og-table-wrap">
+    // FA-045: the scroller is a named region a keyboard can reach, so a wide table scrolls without a mouse.
+    <div className="og-table-wrap" role="region" aria-labelledby={captionId} tabIndex={0}>
       <table className="og-table">
-        <caption className="og-table__caption">{caption}</caption>
+        <caption id={captionId} className={hideCaption ? 'og-visually-hidden' : 'og-table__caption'}>
+          {caption}
+        </caption>
         <thead>
           <tr>
             {columns.map((c) => {

@@ -3,6 +3,7 @@ import { errorText } from '../api/errors';
 import type { Account, RequiredDisclosure, Statement } from '../api/types';
 import { Button, Card, EmptyState, Modal, Notice, PageHeader, Select } from '../design-system';
 import { useAsync } from '../lib/useAsync';
+import { formatPeriod } from '../lib/format';
 import { t } from '../i18n';
 import { useSession } from '../session';
 import { StatementModal } from './Accounts';
@@ -28,7 +29,7 @@ function AccountStatements({ account, onOpen }: { account: Account; onOpen(perio
                     data-testid={`documents-statement-${account.id}-${s.period}`}
                     onClick={() => onOpen(s.period)}
                   >
-                    {t('app.accounts.statement_period', { period: s.period })}
+                    {t('app.accounts.statement_period', { period: formatPeriod(s.period) })}
                   </button>
                 </li>
               ))}
@@ -127,19 +128,26 @@ export function DocumentsScreen() {
                 data-testid="documents-exports"
                 aria-label={t('app.documents.exports')}
               >
-                {list.length > 1 && (
-                  <label className="fw-docs__pick">
-                    <span>{t('app.documents.account')}</span>
-                    <Select
-                      aria-label={t('app.documents.account')}
-                      data-testid="documents-export-account"
-                      value={account?.id ?? ''}
-                      onChange={(e) => setPicked(e.target.value)}
-                      options={list.map((a) => ({ value: a.id, label: a.name }))}
-                    />
-                  </label>
+                {account && (
+                  <ExportActivity
+                    key={account.id}
+                    accountId={account.id}
+                    picker={
+                      list.length > 1 && (
+                        <label className="fw-docs__pick">
+                          <span>{t('app.documents.account')}</span>
+                          <Select
+                            aria-label={t('app.documents.account')}
+                            data-testid="documents-export-account"
+                            value={account.id}
+                            onChange={(e) => setPicked(e.target.value)}
+                            options={list.map((a) => ({ value: a.id, label: a.name }))}
+                          />
+                        </label>
+                      )
+                    }
+                  />
                 )}
-                {account && <ExportActivity key={account.id} accountId={account.id} />}
               </section>
             </>
           ) : (

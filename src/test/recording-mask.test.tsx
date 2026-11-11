@@ -88,7 +88,7 @@ describe('recording masks every sensitive screen (OG-031 R6)', () => {
       ...(await recordWhile('/accounts/acc_demo_ops', async () => {
         await screen.findByTestId('accounts-list');
         await screen.findByTestId('account-detail');
-        await screen.findAllByText(/Statement 2026-09/);
+        await screen.findAllByText(/September 2026 statement/); // FA-041: the month by name
         await userEvent.click(screen.getByTestId('statement-2026-09'));
         await screen.findByTestId('statement-view');
       })),

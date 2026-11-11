@@ -1,6 +1,7 @@
 // content-check: data (sample company names and amounts; sentences shown as UI copy are content keys)
 import type {
   Account,
+  DeviceView,
   Amount,
   Application,
   Card,
@@ -503,3 +504,27 @@ export const demoNotices = IS_AE
         readAt: '2026-10-28T16:30:00Z',
       },
     ];
+
+/** FA-029: the person's devices, as GET /v1/devices answers: this browser (current) and a phone. */
+export const demoDevices = (): DeviceView[] => [
+  {
+    id: 'dev_demo_web',
+    platform: 'web',
+    name: 'Chrome on macOS',
+    model: null,
+    createdAt: '2026-10-03T09:00:00Z',
+    lastSeenAt: '2026-10-29T15:00:00Z',
+    revokedAt: null,
+    current: true,
+  },
+  {
+    id: 'dev_demo_phone',
+    platform: 'ios',
+    name: 'iPhone',
+    model: 'iPhone 15',
+    createdAt: '2026-10-05T18:20:00Z',
+    lastSeenAt: '2026-10-28T08:12:00Z',
+    revokedAt: null,
+    current: false,
+  },
+];

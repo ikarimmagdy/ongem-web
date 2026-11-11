@@ -131,3 +131,11 @@ export function localZone(): string {
     return ET;
   }
 }
+
+/** A statement period (YYYY-MM) as its month and year, "September 2026" (Arabic month names in Arabic), FA-041. */
+export function formatPeriod(period: string): string {
+  const m = /^(\d{4})-(\d{2})$/.exec(period);
+  if (!m) return period;
+  const d = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, 15));
+  return new Intl.DateTimeFormat(dateLocale(), { timeZone: 'UTC', month: 'long', year: 'numeric' }).format(d);
+}

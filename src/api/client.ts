@@ -37,6 +37,7 @@ import type {
   TicketDetail,
   TicketSummary,
   Transaction,
+  DeviceView,
   Inbox,
   InviteAccepted,
   InviteCreated,
@@ -73,6 +74,10 @@ export interface OnGemApi {
   /** OG-023 R7: 410 invite_not_valid, 403 invite_email_mismatch, 409 membership_limit. */
   acceptInvite(token: string): Promise<InviteAccepted>;
   me(): Promise<Me>;
+  /** FA-029: the person's bound devices (GET /v1/devices), newest first. */
+  devices(): Promise<DeviceView[]>;
+  /** FA-029: signs a device out for good (DELETE /v1/devices/{id}); its next call is refused. */
+  revokeDevice(id: string): Promise<void>;
   accounts(): Promise<Account[]>;
   account(id: string): Promise<Account>;
   /** Newest first; the API pages by limit (1 to 100), so the next page asks for a longer list. */

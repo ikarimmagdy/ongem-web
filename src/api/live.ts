@@ -273,6 +273,8 @@ export class LiveOnGemApi implements OnGemApi {
   }
 
   me: OnGemApi['me'] = () => this.call('GET', paths.me);
+  devices: OnGemApi['devices'] = () => this.call('GET', paths.devices);
+  revokeDevice: OnGemApi['revokeDevice'] = (id) => this.call('DELETE', paths.device(id));
   accounts: OnGemApi['accounts'] = () => this.call('GET', paths.accounts);
   account: OnGemApi['account'] = (id: string) => this.call('GET', paths.account(id));
   transactions: OnGemApi['transactions'] = (id: string, limit: number) =>

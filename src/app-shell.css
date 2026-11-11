@@ -454,3 +454,243 @@
   min-width: calc(var(--space-2xl) - var(--space-xs));
   min-height: calc(var(--space-2xl) - var(--space-xs));
 }
+
+/* FA-001: the card list is the brand's card face; the button around it only adds the focus ring. */
+.fw-card-tile {
+  display: block;
+  aspect-ratio: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  box-shadow: none;
+  filter: none;
+}
+.fw-card-tile.is-frozen {
+  filter: none;
+}
+.fw-card-detail__face {
+  max-width: calc(var(--space-3xl) * 6);
+  margin-block-end: var(--space-md);
+}
+
+/* FA-009: product UI type is Inter (body face); the condensed face stays for headlines. Top bar 64px with 16px gaps. */
+.fw-shell .og-nav__link {
+  font-family: var(--font-body-strong);
+  font-weight: var(--font-body-strong-weight);
+  font-size: calc((var(--font-size-sm) + var(--font-size-md)) / 2);
+  letter-spacing: normal;
+}
+.fw-shell .og-env {
+  font-family: var(--font-body-strong);
+  font-weight: var(--font-money-weight);
+  font-size: var(--font-size-xs);
+  text-transform: none;
+  letter-spacing: normal;
+  white-space: nowrap;
+}
+.fw-topbar.og-topbar {
+  min-height: var(--space-3xl);
+  gap: var(--space-md);
+}
+.fw-topbar__title {
+  font-family: var(--font-body-strong);
+  font-weight: var(--font-body-strong-weight);
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fw-search__kbd {
+  font-family: var(--font-body);
+}
+
+/* FA-005, FA-010: the wordmark lines up with the nav text, Demo beside it. */
+.fw-side__brand {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  padding-inline: var(--space-md);
+}
+.fw-side .og-nav {
+  flex: 1 1 auto;
+}
+/* FA-055: the bank disclosure at the foot of the side bar. */
+.fw-side__disclosure {
+  margin: 0;
+  padding-inline: var(--space-md);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 900px) {
+  /* FA-009: tab labels in Inter. */
+  .fw-bottom .og-nav__link.fw-tab {
+    font-family: var(--font-body-strong);
+    font-weight: var(--font-body-strong-weight);
+    font-size: var(--font-size-xs);
+  }
+  /* FA-004: wordmark and Demo start the phone bar; the company switcher is its second line. */
+  .fw-topbar.og-topbar {
+    flex-wrap: wrap;
+    row-gap: 0;
+    padding-block: var(--space-sm) var(--space-xs);
+  }
+  .fw-topbar__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-width: 0;
+  }
+  .fw-topbar .fw-topbar__logo {
+    display: inline-flex;
+    height: auto;
+  }
+  .fw-topbar .fw-topbar__logo .og-logo--image img {
+    height: var(--space-lg);
+  }
+  .fw-topbar .fw-topbar__company {
+    display: flex;
+    order: 3;
+    flex: 1 0 100%;
+    min-width: 0;
+  }
+  .fw-topbar .fw-topbar__company .fw-switcher {
+    min-height: calc(var(--space-2xl) - var(--space-xs));
+    padding-inline: 0;
+    border: 0;
+    background: transparent;
+  }
+  .fw-topbar .fw-topbar__company .fw-company,
+  .fw-topbar .fw-topbar__company .fw-switcher__name {
+    max-width: 100%;
+    padding: 0;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: calc(var(--space-xl) - var(--space-xs));
+  }
+  .fw-topbar .og-topbar__right {
+    order: 2;
+  }
+  /* FA-016: the content ends above the floating assistant, so the last row or button is never under it. */
+  .fw-content {
+    padding-bottom: calc(var(--space-3xl) + var(--space-xl));
+  }
+}
+
+/* FA-030: Light, Dark, System as one segmented control. */
+.fw-segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  padding: calc(var(--space-xs) / 2);
+  gap: calc(var(--space-xs) / 2);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-sunken);
+  width: fit-content;
+}
+.fw-segmented__item {
+  min-height: calc(var(--space-2xl) - var(--space-xs));
+  padding: 0 var(--space-md);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-weight: var(--font-body-strong-weight);
+  cursor: pointer;
+}
+.fw-segmented__item.is-active {
+  background: var(--color-surface-card);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-raised);
+}
+.fw-segmented__item:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* FA-012: a list is one card with thin dividers between rows, not a box per row. */
+.fw-divided {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.fw-divided__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding-block: var(--space-sm);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.fw-divided__row:last-child {
+  border-bottom: 0;
+}
+
+/* FA-014: paragraphs are 14px; 12px is for chips and captions only. */
+.fw-privacy {
+  font-size: var(--font-size-sm);
+}
+.fw-list {
+  gap: 0;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-card);
+  overflow: hidden;
+}
+.fw-list > li + li {
+  border-top: 1px solid var(--color-border-subtle);
+}
+.fw-list > li > .fw-row {
+  border: 0;
+  border-radius: initial;
+}
+.fw-list > li > .fw-row.is-active {
+  box-shadow: inset 3px 0 0 var(--color-action-primary-bg);
+}
+[dir='rtl'] .fw-list > li > .fw-row.is-active {
+  box-shadow: inset -3px 0 0 var(--color-action-primary-bg);
+}
+.fw-list > li.fw-approval {
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+  border-bottom: 0;
+}
+.fw-list > li.fw-approval > .fw-row {
+  padding-inline: 0;
+}
+.fw-list > li > .fw-row.is-unread {
+  border-inline-start: 3px solid var(--color-action-primary-bg);
+}
+
+/* FA-013: 16px form text on a phone, so iOS Safari does not zoom into a field on focus. */
+@media (max-width: 600px) {
+  .og-input,
+  .og-modal .og-input {
+    font-size: var(--font-size-md);
+  }
+}
+
+/* FA-046: a link standing on its own is a 24px target at least (WCAG 2.5.8); a link inside a sentence is exempt but
+   gets a 24px line. */
+.og-page-header__actions a:not(.og-btn) {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--space-lg);
+}
+.fw-content p {
+  line-height: var(--space-lg);
+}
+.fw-list > li.fw-row {
+  border: 0;
+  border-radius: initial;
+}
+.fw-docs__exports {
+  margin-block-start: var(--space-lg);
+}

@@ -5,6 +5,8 @@ const q = encodeURIComponent;
 
 export const paths = {
   me: '/v1/me',
+  devices: '/v1/devices',
+  device: (id: string) => `/v1/devices/${q(id)}`,
   preferences: '/v1/me/preferences',
   whereami: '/v1/whereami',
   accounts: '/v1/accounts',

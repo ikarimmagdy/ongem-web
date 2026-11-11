@@ -1,7 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { errorText } from '../api/errors';
-import { Button, Card, EmptyState, KeyValue, Notice, PageHeader, StatusChip } from '../design-system';
+import {
+  Button,
+  Card,
+  CardFace,
+  EmptyState,
+  KeyValue,
+  Notice,
+  PageHeader,
+  StatusChip,
+  type CardFaceProps,
+} from '../design-system';
+import type { Card as CardModel } from '../api/types';
 import { t } from '../i18n';
 import { useAsync } from '../lib/useAsync';
 import { useDrafts } from '../assistant/drafts';
@@ -17,6 +28,22 @@ const WIDGET_LABELS: Record<CardWidgetKind, string> = {
   SET_PIN: 'app.cards.widget_set_pin',
   ACTIVATE: 'app.cards.widget_activate',
 };
+
+/** One card face for a card (FA-001): navy for virtual cards, white for physical ones, frost when frozen. */
+function faceOf(c: CardModel): CardFaceProps {
+  return {
+    last4: c.last4,
+    holder: c.holderName,
+    kind: human(c.form),
+    base: c.form === 'PHYSICAL' ? 'white' : 'navy',
+    frozen: c.state === 'FROZEN',
+    frozenLabel: human('FROZEN'),
+    status: c.state === 'ACTIVE' || c.state === 'FROZEN' ? undefined : human(c.state),
+  };
+}
+
+/** The bank's card details close on their own after a minute (FA-003). */
+const WIDGET_OPEN_MS = 60_000;
 
 function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void }) {
   const { api } = useSession();
@@ -42,6 +69,11 @@ function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void 
       setOpening(null);
     }
   };
+  useEffect(() => {
+    if (!widget) return;
+    const timer = window.setTimeout(() => setWidget(null), WIDGET_OPEN_MS);
+    return () => window.clearTimeout(timer);
+  }, [widget]);
   const toggle = async (frozen: boolean) => {
     if (inFlight.current) return;
     inFlight.current = true;
@@ -70,6 +102,9 @@ function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void 
           }
           data-testid="card-detail"
         >
+          <div className="fw-card-detail__face">
+            <CardFace {...faceOf(c)} size="lg" />
+          </div>
           <KeyValue
             items={[
               { label: t('app.cards.cardholder'), value: c.holderName },
@@ -93,7 +128,7 @@ function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void 
               onClose={() => setWidget(null)}
             />
           )}
-          <div className="fw-actions" data-testid="card-widget-actions">
+          <div className="fw-actions" data-testid="card-widget-actions" hidden={Boolean(widget)}>
             {(c.state === 'ACTIVE' || c.state === 'FROZEN'
               ? (['REVEAL', 'GET_PIN', 'SET_PIN'] as const)
               : c.state === 'PENDING'
@@ -164,19 +199,12 @@ export function CardsScreen() {
                   {page.items.map((c) => (
                     <li key={c.id}>
                       <button
-                        className={`fw-card-tile${c.id === id ? ' is-active' : ''}${c.state === 'FROZEN' ? ' is-frozen' : ''}`}
+                        className="fw-card-tile"
                         data-testid={`card-${c.id}`}
                         aria-current={c.id === id ? 'true' : undefined}
                         onClick={() => navigate(`/cards/${c.id}`)}
                       >
-                        <span className="fw-card-tile__top">
-                          <span className="fw-card-tile__form">{human(c.form)}</span>
-                          <StatusChip status={stateStatus(c.state)}>{human(c.state)}</StatusChip>
-                        </span>
-                        <span className="fw-card-tile__number">
-                          <Last4 value={c.last4} />
-                        </span>
-                        <span className="fw-card-tile__holder">{c.holderName}</span>
+                        <CardFace {...faceOf(c)} selected={c.id === id} />
                       </button>
                     </li>
                   ))}

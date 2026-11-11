@@ -227,8 +227,8 @@
         "period"
       ],
       "meta": {},
-      "en": "Statement {period}",
-      "ar": "كشف {period}"
+      "en": "{period} statement",
+      "ar": "كشف حساب {period}"
     },
     {
       "key": "app.accounts.statements",
@@ -1052,8 +1052,8 @@
       "description": "Cards page subtitle",
       "placeholders": [],
       "meta": {},
-      "en": "Last four digits only.",
-      "ar": "آخر أربعة أرقام فقط."
+      "en": "Full card numbers show only in the bank's secure view.",
+      "ar": "تظهر أرقام البطاقة الكاملة فقط في العرض الآمن للبنك."
     },
     {
       "key": "app.cards.title",
@@ -2258,7 +2258,7 @@
       "placeholders": [],
       "meta": {},
       "en": "This payment is no longer waiting for approval.",
-      "ar": "لم تعد هذه الدفعة بانتظار الاعتماد."
+      "ar": "لم تعد هذه الدفعة بانتظار الموافقة."
     },
     {
       "key": "app.errors.permission_denied",
@@ -5374,7 +5374,7 @@
       "placeholders": [],
       "meta": {},
       "en": "Waiting for approval",
-      "ar": "بانتظار الاعتماد"
+      "ar": "بانتظار الموافقة"
     },
     {
       "key": "app.state.payment.prechecked",
@@ -10037,6 +10037,15 @@
       "ar": "فتح المساعد"
     },
     {
+      "key": "app.common.loading.devices",
+      "format": "text",
+      "description": "Loading label for the device list (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading devices",
+      "ar": "جارٍ تحميل الأجهزة"
+    },
+    {
       "key": "app.more.title",
       "format": "text",
       "description": "More screen title",
@@ -10365,6 +10374,147 @@
       "meta": {},
       "en": "the recipient",
       "ar": "المستفيد"
+    },
+    {
+      "key": "app.settings.appearance_choice.dark",
+      "format": "text",
+      "description": "Settings appearance choice (FA-030)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dark",
+      "ar": "داكن"
+    },
+    {
+      "key": "app.settings.appearance_choice.light",
+      "format": "text",
+      "description": "Settings appearance choice (FA-030)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Light",
+      "ar": "فاتح"
+    },
+    {
+      "key": "app.settings.appearance_choice.system",
+      "format": "text",
+      "description": "Settings appearance choice: follow the device (FA-030)",
+      "placeholders": [],
+      "meta": {},
+      "en": "System",
+      "ar": "حسب الجهاز"
+    },
+    {
+      "key": "app.settings.bank.title",
+      "format": "text",
+      "description": "Settings card title: the bank behind the account (FA-055)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your bank",
+      "ar": "بنكك"
+    },
+    {
+      "key": "app.settings.security.added_on",
+      "format": "text",
+      "description": "Device row: when it was added (FA-029)",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Added {date}",
+      "ar": "أُضيف في {date}"
+    },
+    {
+      "key": "app.settings.security.cannot_revoke_current",
+      "format": "text",
+      "description": "Error: this device cannot sign itself out here (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Use Sign out to leave on this device.",
+      "ar": "استخدم تسجيل الخروج لمغادرة هذا الجهاز."
+    },
+    {
+      "key": "app.settings.security.empty",
+      "format": "text",
+      "description": "Settings security: no devices listed (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "No devices yet.",
+      "ar": "لا توجد أجهزة بعد."
+    },
+    {
+      "key": "app.settings.security.intro",
+      "format": "text",
+      "description": "Settings security card intro (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The devices signed in to your OnGem account. Sign out any device you do not recognise.",
+      "ar": "الأجهزة التي سجّلت الدخول إلى حسابك في OnGem. سجّل الخروج من أي جهاز لا تعرفه."
+    },
+    {
+      "key": "app.settings.security.last_used",
+      "format": "text",
+      "description": "Device row: when it was last used (FA-029)",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Last used {date}",
+      "ar": "آخر استخدام {date}"
+    },
+    {
+      "key": "app.settings.security.revoked_on",
+      "format": "text",
+      "description": "Device row: signed out for good on a date (FA-029)",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Signed out {date}",
+      "ar": "تم تسجيل الخروج في {date}"
+    },
+    {
+      "key": "app.settings.security.sign_out_device",
+      "format": "text",
+      "description": "Device row button: sign that device out (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sign out",
+      "ar": "تسجيل الخروج"
+    },
+    {
+      "key": "app.settings.security.this_device",
+      "format": "text",
+      "description": "Device row: the device in use (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This device",
+      "ar": "هذا الجهاز"
+    },
+    {
+      "key": "app.settings.security.title",
+      "format": "text",
+      "description": "Settings card title: devices and sign-in (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Security and devices",
+      "ar": "الأمان والأجهزة"
+    },
+    {
+      "key": "app.shell.disclosure",
+      "format": "text",
+      "description": "Signed-in side bar foot and Settings: who holds the money (FA-055); AE never names the bank",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank, Member FDIC.",
+      "ar": "OnGem شركة تقنية مالية وليست بنكا. يقدّم الخدمات المصرفية Piermont Bank، عضو FDIC."
+    },
+    {
+      "key": "app.state.payment.sent",
+      "format": "text",
+      "description": "Payment state chip: the bank has the payment (FA-007)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sent",
+      "ar": "أُرسلت"
     }
   ]
 }

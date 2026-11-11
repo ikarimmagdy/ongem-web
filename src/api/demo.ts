@@ -16,6 +16,7 @@ import {
   disclosureBody,
   money,
   demoNotices,
+  demoDevices,
   demoPreferences,
   demoInviteCompany,
 } from './demoData';
@@ -48,6 +49,7 @@ import type {
   OwnerIdentity,
   Payment,
   TicketDetail,
+  DeviceView,
   NoticeView,
   NotificationPreferences,
   PreferenceChange,
@@ -284,6 +286,18 @@ export class DemoOnGemApi implements OnGemApi {
   };
 
   me = async () => this.log('me', this.me_);
+
+  /** FA-029: this browser and one phone; revoking marks the device, as ongem-core does (revoking twice is accepted). */
+  private devicesState: DeviceView[] = demoDevices();
+  devices = async () => this.log('devices', this.devicesState);
+  revokeDevice = async (id: string) => {
+    const d = this.devicesState.find((x) => x.id === id) ?? this.notFound('device');
+    if (d.current) throw new ApiError(409, 'device_current', t('app.settings.security.cannot_revoke_current'));
+    this.devicesState = this.devicesState.map((x) =>
+      x.id === id ? { ...x, revokedAt: x.revokedAt ?? this.now() } : x,
+    );
+    this.calls.push('revokeDevice');
+  };
   accounts = async () => this.log('accounts', this.accountsState);
 
   account = async (id: string) =>
