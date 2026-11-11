@@ -55,7 +55,10 @@ describe('UX review 2026-11-07', () => {
   });
 
   it('UX_08 product screens come as a desktop screen and a phone screen, one shown per width', () => {
-    renderApp('/product', { mode: 'none' });
+    // OG-034: the screens are on the capability pages and the home page now.
+    renderApp('/', { mode: 'none' });
+    renderApp('/product/accounts', { mode: 'none' });
+    renderApp('/product/cards', { mode: 'none' });
     for (const name of ['payments', 'schedules', 'cards', 'notifications', 'support']) {
       const narrow = document.querySelector(`[data-testid="shot-narrow-${name}"]`);
       if (!narrow) continue;

@@ -3,15 +3,16 @@ import userEvent from '@testing-library/user-event';
 import axe from 'axe-core';
 import { t, tList } from '../i18n';
 import {
-  capabilities,
+  capability,
   facts as factList,
   faq as faqList,
-  feature,
-  FEATURE_ROWS,
   pageMeta,
   securityFacts,
   trustParties,
 } from '../public/content';
+
+/** The two capabilities shown large on the home page (OG-034 replaced the three feature rows). */
+const HIGHLIGHTS = ['payments', 'approvals'] as const;
 import { renderApp } from './render';
 
 /** OG-032: the signed-out public site and the way into sign-up. */
@@ -28,7 +29,9 @@ describe('public site (OG-032)', () => {
     expect(screen.getByTestId('pub-bank-statement')).toHaveTextContent('not a bank');
     expect(screen.getByTestId('pub-bank-statement')).toHaveTextContent('Piermont Bank');
     expect(screen.getByRole('heading', { name: /Security that stays out of your way/ })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /Formed your company with GenZone/ })).toBeInTheDocument();
+    expect(
+      within(screen.getByTestId('home-who')).getByRole('link', { name: /Formation partners/ }),
+    ).toHaveAttribute('href', '/partners');
     expect(screen.getByTestId('pub-disclosures')).toBeInTheDocument();
   });
 
@@ -39,16 +42,15 @@ describe('public site (OG-032)', () => {
   });
 
   it('product_sections_AC_R2_1', () => {
-    renderApp('/product', { mode: 'none' });
-    for (const c of capabilities()) {
-      expect(
-        within(screen.getByTestId(`cap-${c.id}`)).getByRole('heading', { name: c.title }),
-      ).toBeInTheDocument();
-    }
-    const payments = screen.getByTestId('cap-payments');
-    expect(within(payments).getByText('Domestic wires')).toBeInTheDocument();
-    expect(within(payments).getByText('International payments')).toBeInTheDocument();
-    expect(within(payments).getAllByText('Coming soon')).toHaveLength(2);
+    // OG-034 R2: one page per capability; what is coming is marked on its page.
+    renderApp('/product/payments', { mode: 'none' });
+    const page = screen.getByTestId('public-cap-payments');
+    expect(
+      within(page).getByRole('heading', { level: 1, name: capability('payments').title }),
+    ).toBeInTheDocument();
+    expect(within(page).getByText('Domestic wires')).toBeInTheDocument();
+    expect(within(page).getByText('International payments')).toBeInTheDocument();
+    expect(within(page).getAllByText('Coming soon')).toHaveLength(capability('payments').soon.length);
   });
 
   it('security_controls_AC_R3_1', () => {
@@ -123,9 +125,9 @@ describe('public site (OG-032)', () => {
     const hero = screen.getByTestId('public-home');
     expect(within(hero).getByAltText(/home screen on the web/)).toBeInTheDocument();
     expect(within(hero).getByAltText(/app home screen on a phone/)).toBeInTheDocument();
-    for (const f of FEATURE_ROWS) {
-      const row = screen.getByTestId(`feature-row-${f.id}`);
-      expect(within(row).getByRole('heading', { level: 2, name: feature(f.id).title })).toBeInTheDocument();
+    for (const id of HIGHLIGHTS) {
+      const row = screen.getByTestId(`feature-row-${id}`);
+      expect(within(row).getByRole('heading', { level: 2, name: capability(id).title })).toBeInTheDocument();
       // The desktop screen and its phone version (UX-08); CSS shows one per width.
       expect(within(row).getAllByRole('img', { name: /sample data/ }).length).toBeGreaterThan(0);
     }
@@ -177,27 +179,25 @@ describe('public site (OG-032)', () => {
   });
 
   it('no_blank_frames_first_screens_load_at_once_AC_R17_1', () => {
+    // OG-034 R1: every product screen loads at once, so no frame is ever empty in a capture or a print.
     renderApp('/', { mode: 'none' });
     const hero = screen.getByTestId('public-home');
-    for (const img of within(hero).getAllByRole('img')) {
-      expect(img.getAttribute('loading')).not.toBe('lazy');
-    }
-    const first = screen.getByTestId(`feature-row-${FEATURE_ROWS[0]!.id}`);
-    for (const img of within(first).getAllByRole('img', { name: /sample data/ })) {
-      expect(img).toHaveAttribute('loading', 'eager');
-    }
-    const later = screen.getByTestId(`feature-row-${FEATURE_ROWS[1]!.id}`);
-    expect(within(later).getAllByRole('img', { name: /sample data/ })[0]).toHaveAttribute('loading', 'lazy');
+    for (const img of within(hero).getAllByRole('img')) expect(img.getAttribute('loading')).not.toBe('lazy');
+    for (const id of HIGHLIGHTS)
+      for (const img of within(screen.getByTestId(`feature-row-${id}`)).getAllByRole('img', {
+        name: /sample data/,
+      }))
+        expect(img).toHaveAttribute('loading', 'eager');
   });
 
   it('hero_copy_beside_the_product_with_proof_AC_R18_1_AC_R19_1', () => {
     renderApp('/', { mode: 'none' });
     const proof = screen.getByTestId('hero-proof');
-    for (const p of tList('web.hero.proof')) expect(within(proof).getByText(p)).toBeInTheDocument();
+    for (const p of tList('web.hero.points')) expect(within(proof).getByText(p)).toBeInTheDocument();
     // Copy and stage are the two columns of one grid.
     const grid = screen.getByTestId('hero-stage').parentElement!;
     expect(grid).toHaveClass('pub-hero__grid');
-    expect(screen.getByText(t('web.hero.lede_short'))).toHaveClass('pub-lede--short');
+    expect(screen.getByText(t('web.hero.intro_short'))).toHaveClass('pub-lede--short');
   });
 
   it('facts_lead_with_founder_value_and_tests_only_on_security_AC_R19_2', () => {
@@ -214,17 +214,10 @@ describe('public site (OG-032)', () => {
   });
 
   it('faq_ends_with_a_next_step_and_pricing_has_no_numbers_AC_R21_1_AC_R22_1', () => {
+    // OG-034: the next step after the FAQ is the final call to action with the demo; pricing has its own page.
     renderApp('/', { mode: 'none' });
-    const next = screen.getByTestId('faq-next');
-    expect(within(next).getByRole('heading', { name: t('web.faq_next.title') })).toBeInTheDocument();
-    expect(within(next).getByRole('link', { name: t('web.hero.primary') })).toHaveAttribute(
-      'href',
-      '/sign-in?mode=sign-up',
-    );
-    expect(within(next).getByRole('link', { name: t('web.faq_next.security') })).toHaveAttribute(
-      'href',
-      '/security',
-    );
+    expect(screen.getByTestId('final-get-started')).toHaveAttribute('href', '/sign-in?mode=sign-up');
+    renderApp('/pricing', { mode: 'none' });
     const pricing = screen.getByTestId('pub-pricing');
     expect(pricing).toHaveTextContent(t('web.pricing.label'));
     expect(pricing.textContent).not.toMatch(/\$|US\$|[0-9]/);

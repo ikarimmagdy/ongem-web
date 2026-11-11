@@ -5,7 +5,7 @@ import { ApiError } from '../api/errors';
 import { DemoAssistant } from '../assistant/demoAssistant';
 import { formatDate, formatMinor } from '../lib/format';
 import { t, tList } from '../i18n';
-import { navLinks } from '../public/content';
+import { navGroups, navLinks } from '../public/content';
 import { posts } from '../public/media/blog';
 import { IS_AE, REGION } from '../region';
 import { renderApp } from './render';
@@ -21,7 +21,7 @@ describe('US build unchanged (OG-022 R18)', () => {
     expect(t('web.bank_statement')).toBe(
       'OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank through Synctera.¹',
     );
-    expect(t('web.hero.lede')).toBe(
+    expect(t('web.hero.intro')).toBe(
       'A US business account held at Piermont Bank, ACH and scheduled payments, virtual cards and approvals that keep two sets of eyes on every payment. On the web and on your phone.',
     );
     expect(tList('web.disclosures')).toEqual([
@@ -30,7 +30,9 @@ describe('US build unchanged (OG-022 R18)', () => {
       'Deposit insurance covers the failure of an insured bank, up to the applicable limits, once funds are on deposit at Piermont Bank. Conditions apply.',
       'Features marked Coming soon are in development and not yet available.',
     ]);
-    expect(navLinks().map((l) => l.label)).toEqual(['Product', 'Security', 'Partners', 'Videos', 'Blog']);
+    expect(navGroups().map((g) => g.label)).toEqual(['Product', 'Who it’s for', 'Resources']);
+    expect(navLinks().map((l) => l.label)).toEqual(['Pricing', 'Security']);
+    expect(navGroups()[2]!.links.map((l) => l.label)).toEqual(['Guides', 'Blog', 'Videos', 'FAQ', 'Status']);
     expect(posts().map((p) => p.slug)).toEqual(
       expect.arrayContaining([
         'from-genzone-to-ongem',
@@ -42,6 +44,7 @@ describe('US build unchanged (OG-022 R18)', () => {
     renderApp('/', { mode: 'none' });
     expect(screen.getByTestId('hero-stage').querySelector('img')).not.toBeNull();
     expect(screen.getByTestId('video-strip')).toBeInTheDocument();
+    renderApp('/partners', { mode: 'none' });
     expect(screen.getByRole('heading', { name: /Formed your company with GenZone/ })).toBeInTheDocument();
   });
 

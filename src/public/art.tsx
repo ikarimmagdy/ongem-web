@@ -2,6 +2,7 @@ import { t } from '../i18n';
 import { useId, type ReactNode } from 'react';
 import { formatMinor } from '../lib/format';
 import { REGION_CONFIG } from '../region';
+import { SITE } from './site';
 import type { ArtName } from './content';
 
 /** Sample amounts in the build's currency (US$48,250.00, or AED in the AE build). */
@@ -95,9 +96,14 @@ export function HeroArt() {
         <rect className="f-card" x="8" y="12" width="114" height="226" rx="16" />
         <rect fill={`url(#${g})`} x="18" y="30" width="94" height="58" rx="10" />
         <Gem x={26} y={38} s={0.4} />
-        <text className="t-on-primary" x="26" y="80" fontSize="10">
-          •••• 2412
-        </text>
+        {/* A card where the bank issues cards; a plain tile where it has none (the UAE in v0, OG-034 R7). */}
+        {SITE.cards ? (
+          <text className="t-on-primary" x="26" y="80" fontSize="10">
+            •••• 2412
+          </text>
+        ) : (
+          <Bar x={26} y={72} w={60} cls="f-card" />
+        )}
         <Bar x={18} y={104} w={80} />
         <Bar x={18} y={122} w={60} />
         <rect className="f-primary" x="18" y="196" width="94" height="26" rx="13" />
@@ -285,6 +291,26 @@ const ART: Record<ArtName, () => ReactNode> = {
       <text className="t-on-tint" x="70" y="140" fontSize="12">
         {t('web.art.draft_ready')}
       </text>
+    </Svg>
+  ),
+  companies: () => (
+    <Svg label={t('web.art.label.companies')}>
+      <Panel x={30} y={50} w={120} h={130} />
+      <Panel x={170} y={50} w={120} h={130} />
+      <Gem x={66} y={70} s={1} />
+      <Gem x={206} y={70} s={1} />
+      <Bar x={50} y={134} w={80} />
+      <Bar x={190} y={134} w={80} />
+      <Bar x={50} y={152} w={56} cls="f-accent" />
+      <Bar x={190} y={152} w={56} cls="f-accent" />
+      <circle className="f-primary" cx="160" cy="30" r="16" />
+      <circle className="f-card" cx="160" cy="25" r="5" />
+      <path
+        className="s-border-strong"
+        d="M150 40 L100 50 M170 40 L220 50"
+        strokeWidth="2"
+        strokeDasharray="4 5"
+      />
     </Svg>
   ),
 };

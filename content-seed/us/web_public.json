@@ -74,6 +74,15 @@
       "ar": "بطاقتان افتراضيتان، إحداهما مجمّدة"
     },
     {
+      "key": "web.art.label.companies",
+      "format": "text",
+      "description": "Description of an illustration for screen readers",
+      "placeholders": [],
+      "meta": {},
+      "en": "Two companies under one sign-in",
+      "ar": "شركتان بتسجيل دخول واحد"
+    },
+    {
       "key": "web.art.label.hero",
       "format": "text",
       "description": "Description of an illustration for screen readers",
@@ -236,36 +245,36 @@
       "ar": "**تسجيل الدخول غير مُفعّل في هذا الإصدار**. لا يحتوي هذا الإصدار على مفتاح تسجيل الدخول. يمكنك استكشاف التطبيق باستخدام بيانات نموذجية."
     },
     {
-      "key": "web.auth.points.1",
+      "key": "web.auth.promises.1",
       "format": "text",
-      "description": "Sign-in page: reminder of what is inside",
+      "description": "Sign-in screen: a reminder of what is inside",
       "placeholders": [],
       "meta": {},
       "en": "A second sign-in step before money moves",
-      "ar": "خطوة تحقق ثانية قبل أن تتحرك الأموال"
+      "ar": "خطوة تسجيل دخول ثانية قبل تحريك الأموال"
     },
     {
-      "key": "web.auth.points.2",
+      "key": "web.auth.promises.2",
       "format": "text",
-      "description": "Sign-in page: reminder of what is inside",
+      "description": "Sign-in screen: a reminder of what is inside",
       "placeholders": [],
       "meta": {},
       "en": "A second person approves larger payments",
-      "ar": "شخص ثانٍ يوافق على الدفعات الأكبر"
+      "ar": "شخص ثانٍ يوافق على الدفعات الكبيرة"
     },
     {
-      "key": "web.auth.points.3",
+      "key": "web.auth.promises.3",
       "format": "text",
-      "description": "Sign-in page: reminder of what is inside",
+      "description": "Sign-in screen: a reminder of what is inside",
       "placeholders": [],
       "meta": {},
       "en": "Card numbers stay in the bank’s secure window",
       "ar": "تبقى أرقام البطاقات في نافذة البنك الآمنة"
     },
     {
-      "key": "web.auth.sign_in_lede",
+      "key": "web.auth.sign_in_intro",
       "format": "text",
-      "description": "Sign-in page: sign in lede",
+      "description": "Sign-in screen: sentence under the heading",
       "placeholders": [],
       "meta": {},
       "en": "Your accounts at Piermont Bank, your payments and your cards, with the same approvals on the web and on your phone.",
@@ -308,400 +317,114 @@
       "ar": "OnGem شركة تقنية مالية وليست بنكًا. تُقدَّم الخدمات المصرفية من Piermont Bank عبر Synctera.¹"
     },
     {
-      "key": "web.cap.accounts.points.1",
+      "key": "web.close.text",
       "format": "text",
-      "description": "Product page: point under accounts",
+      "description": "Final call to action: sentence",
       "placeholders": [],
       "meta": {},
-      "en": "Balances read from the bank, checked against OnGem every night",
-      "ar": "أرصدة تُقرأ من البنك وتُطابَق مع OnGem كل ليلة"
+      "en": "It takes a few minutes to start. The bank tells you its decision.",
+      "ar": "البدء يستغرق دقائق قليلة. ويبلغك البنك بقراره."
     },
     {
-      "key": "web.cap.accounts.points.2",
+      "key": "web.close.title",
       "format": "text",
-      "description": "Product page: point under accounts",
+      "description": "Final call to action: heading",
       "placeholders": [],
       "meta": {},
-      "en": "Monthly statements to download",
-      "ar": "كشوف حساب شهرية قابلة للتنزيل"
+      "en": "Open your business account",
+      "ar": "افتح حساب أعمالك"
     },
     {
-      "key": "web.cap.accounts.points.3",
+      "key": "web.contact.customers_text",
       "format": "text",
-      "description": "Product page: point under accounts",
+      "description": "Contact page: customers text",
       "placeholders": [],
       "meta": {},
-      "en": "Move money between your own accounts",
-      "ar": "تحويل الأموال بين حساباتك"
+      "en": "Sign in and open Support. Your ticket reaches a person who can see your account and, when needed, the bank’s own case.",
+      "ar": "سجّل الدخول وافتح الدعم. تصل تذكرتك إلى شخص يرى حسابك، وعند الحاجة، ملف البنك نفسه."
     },
     {
-      "key": "web.cap.accounts.summary",
+      "key": "web.contact.customers_title",
       "format": "text",
-      "description": "Product page: one-line summary of the accounts capability",
+      "description": "Contact page: customers heading",
       "placeholders": [],
       "meta": {},
-      "en": "See the balance the bank holds, every transaction and a monthly statement for each account.",
-      "ar": "اطّلع على الرصيد الذي يحتفظ به البنك، وعلى كل معاملة، وعلى كشف حساب شهري لكل حساب."
+      "en": "Already banking with OnGem",
+      "ar": "تتعامل مع OnGem بالفعل"
     },
     {
-      "key": "web.cap.accounts.title",
+      "key": "web.contact.lede",
       "format": "text",
-      "description": "Product page: heading of the accounts capability",
+      "description": "Contact page: sentence",
       "placeholders": [],
       "meta": {},
-      "en": "Business accounts and statements",
-      "ar": "حسابات الأعمال وكشوف الحساب"
+      "en": "The right way to reach us depends on where you are with OnGem.",
+      "ar": "الطريقة المناسبة للتواصل معنا تعتمد على علاقتك بـ OnGem."
     },
     {
-      "key": "web.cap.approvals.points.1",
+      "key": "web.contact.new_text",
       "format": "text",
-      "description": "Product page: point under approvals",
+      "description": "Contact page: new founders text",
       "placeholders": [],
       "meta": {},
-      "en": "The person who creates a payment can never approve it",
-      "ar": "من ينشئ الدفعة لا يمكنه الموافقة عليها أبدًا"
+      "en": "Start your application in a few minutes, or try the demo first on sample data.",
+      "ar": "ابدأ طلبك في دقائق، أو جرّب العرض التجريبي أولًا على بيانات تجريبية."
     },
     {
-      "key": "web.cap.approvals.points.2",
+      "key": "web.contact.new_title",
       "format": "text",
-      "description": "Product page: point under approvals",
+      "description": "Contact page: new founders heading",
       "placeholders": [],
       "meta": {},
-      "en": "Limits that follow your company’s risk level at the bank",
-      "ar": "حدود تتبع مستوى المخاطر الخاص بشركتك لدى البنك"
+      "en": "Starting out",
+      "ar": "في البداية"
     },
     {
-      "key": "web.cap.approvals.points.3",
+      "key": "web.contact.partners_text",
       "format": "text",
-      "description": "Product page: point under approvals",
+      "description": "Contact page: partners text",
       "placeholders": [],
       "meta": {},
-      "en": "One-person company? OnGem approves instead, so you are never stuck",
-      "ar": "شركة من شخص واحد؟ توافق OnGem بدلًا من ذلك، فلا تتعطل أبدًا"
+      "en": "Connect through OnGem’s Partner API so the companies you form apply with their details prefilled.",
+      "ar": "اتصل عبر واجهة برمجة الشركاء في OnGem لتتقدم الشركات التي تؤسسها ببياناتها معبأة مسبقًا."
     },
     {
-      "key": "web.cap.approvals.summary",
+      "key": "web.contact.partners_title",
       "format": "text",
-      "description": "Product page: one-line summary of the approvals capability",
+      "description": "Contact page: partners heading",
       "placeholders": [],
       "meta": {},
-      "en": "Every payment above your threshold waits for a second person before it moves.",
-      "ar": "كل دفعة تتجاوز الحد الذي تضعه تنتظر موافقة شخص ثانٍ قبل أن تُرسل."
+      "en": "Formation and licensing firms",
+      "ar": "شركات التأسيس والترخيص"
     },
     {
-      "key": "web.cap.approvals.title",
+      "key": "web.contact.title",
       "format": "text",
-      "description": "Product page: heading of the approvals capability",
+      "description": "Contact page: headline",
       "placeholders": [],
       "meta": {},
-      "en": "Approvals and limits",
-      "ar": "الموافقات والحدود"
+      "en": "Talk to us",
+      "ar": "تحدث إلينا"
     },
     {
-      "key": "web.cap.assistant.points.1",
+      "key": "web.contact.write",
       "format": "text",
-      "description": "Product page: point under assistant",
-      "placeholders": [],
+      "description": "Contact page: email link text",
+      "placeholders": [
+        "email"
+      ],
       "meta": {},
-      "en": "Reads your data, never moves money on its own",
-      "ar": "يقرأ بياناتك، ولا يحرك الأموال من تلقاء نفسه أبدًا"
+      "en": "Write to us at {email}",
+      "ar": "راسلنا على {email}"
     },
     {
-      "key": "web.cap.assistant.soon.1",
+      "key": "web.demo.opening",
       "format": "text",
-      "description": "Product page: planned feature under assistant, shown with Coming soon",
+      "description": "Loading label while the demo opens",
       "placeholders": [],
       "meta": {},
-      "en": "Available to every founder",
-      "ar": "متاح لكل المؤسسين"
-    },
-    {
-      "key": "web.cap.assistant.summary",
-      "format": "text",
-      "description": "Product page: one-line summary of the assistant capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "Ask about your money in plain words. It can draft a payment or a ticket, and only you can send it.",
-      "ar": "اسأل عن أموالك بكلمات بسيطة. يمكنه إعداد مسودة دفعة أو طلب دعم، وأنت وحدك من يرسلها."
-    },
-    {
-      "key": "web.cap.assistant.title",
-      "format": "text",
-      "description": "Product page: heading of the assistant capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "An assistant that drafts, you decide",
-      "ar": "مساعد يُعدّ المسودات، والقرار لك"
-    },
-    {
-      "key": "web.cap.cards.points.1",
-      "format": "text",
-      "description": "Product page: point under cards",
-      "placeholders": [],
-      "meta": {},
-      "en": "Card number and PIN shown in the bank’s own secure window, never stored by OnGem",
-      "ar": "رقم البطاقة والرقم السري يظهران في نافذة البنك الآمنة، ولا تخزنهما OnGem أبدًا"
-    },
-    {
-      "key": "web.cap.cards.points.2",
-      "format": "text",
-      "description": "Product page: point under cards",
-      "placeholders": [],
-      "meta": {},
-      "en": "Freeze and unfreeze any time",
-      "ar": "تجميد وإلغاء تجميد في أي وقت"
-    },
-    {
-      "key": "web.cap.cards.points.3",
-      "format": "text",
-      "description": "Product page: point under cards",
-      "placeholders": [],
-      "meta": {},
-      "en": "Ask about a card payment from the card itself",
-      "ar": "استفسر عن عملية شراء بالبطاقة من البطاقة نفسها"
-    },
-    {
-      "key": "web.cap.cards.summary",
-      "format": "text",
-      "description": "Product page: one-line summary of the cards capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "Issue virtual cards for your team and freeze one in a tap.",
-      "ar": "أصدر بطاقات افتراضية لفريقك، وجمّد أيًّا منها بلمسة واحدة."
-    },
-    {
-      "key": "web.cap.cards.title",
-      "format": "text",
-      "description": "Product page: heading of the cards capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "Virtual cards",
-      "ar": "البطاقات الافتراضية"
-    },
-    {
-      "key": "web.cap.notifications.points.1",
-      "format": "text",
-      "description": "Product page: point under notifications",
-      "placeholders": [],
-      "meta": {},
-      "en": "Payment sent, settled or returned",
-      "ar": "دفعة أُرسلت أو تمت تسويتها أو أُعيدت"
-    },
-    {
-      "key": "web.cap.notifications.points.2",
-      "format": "text",
-      "description": "Product page: point under notifications",
-      "placeholders": [],
-      "meta": {},
-      "en": "Approvals waiting for you",
-      "ar": "موافقات بانتظارك"
-    },
-    {
-      "key": "web.cap.notifications.soon.1",
-      "format": "text",
-      "description": "Product page: planned feature under notifications, shown with Coming soon",
-      "placeholders": [],
-      "meta": {},
-      "en": "Email and text message alerts",
-      "ar": "تنبيهات بالبريد الإلكتروني والرسائل النصية"
-    },
-    {
-      "key": "web.cap.notifications.summary",
-      "format": "text",
-      "description": "Product page: one-line summary of the notifications capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "An inbox for payments, approvals, cards and your application, with your own choices.",
-      "ar": "صندوق وارد للدفعات والموافقات والبطاقات وطلبك، وفق اختياراتك."
-    },
-    {
-      "key": "web.cap.notifications.title",
-      "format": "text",
-      "description": "Product page: heading of the notifications capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "Notices that matter",
-      "ar": "إشعارات تهمّك"
-    },
-    {
-      "key": "web.cap.payments.points.1",
-      "format": "text",
-      "description": "Product page: point under payments",
-      "placeholders": [],
-      "meta": {},
-      "en": "One-off and repeating payments you can pause, resume or cancel",
-      "ar": "دفعات لمرة واحدة ودفعات متكررة يمكنك إيقافها مؤقتًا أو استئنافها أو إلغاؤها"
-    },
-    {
-      "key": "web.cap.payments.points.2",
-      "format": "text",
-      "description": "Product page: point under payments",
-      "placeholders": [],
-      "meta": {},
-      "en": "The next payment date always in view",
-      "ar": "موعد الدفعة التالية ظاهر دائمًا"
-    },
-    {
-      "key": "web.cap.payments.points.3",
-      "format": "text",
-      "description": "Product page: point under payments",
-      "placeholders": [],
-      "meta": {},
-      "en": "Returns explained in plain words",
-      "ar": "أسباب إعادة الدفعات موضحة بكلمات بسيطة"
-    },
-    {
-      "key": "web.cap.payments.soon.1",
-      "format": "text",
-      "description": "Product page: planned feature under payments, shown with Coming soon",
-      "placeholders": [],
-      "meta": {},
-      "en": "Domestic wires",
-      "ar": "التحويلات البرقية المحلية"
-    },
-    {
-      "key": "web.cap.payments.soon.2",
-      "format": "text",
-      "description": "Product page: planned feature under payments, shown with Coming soon",
-      "placeholders": [],
-      "meta": {},
-      "en": "International payments",
-      "ar": "المدفوعات الدولية"
-    },
-    {
-      "key": "web.cap.payments.summary",
-      "format": "text",
-      "description": "Product page: one-line summary of the payments capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "Pay suppliers by ACH and follow each payment from sent to settled or returned.",
-      "ar": "ادفع للموردين عبر ACH وتابع كل دفعة من الإرسال حتى التسوية أو الإعادة."
-    },
-    {
-      "key": "web.cap.payments.title",
-      "format": "text",
-      "description": "Product page: heading of the payments capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "ACH and scheduled payments",
-      "ar": "دفعات ACH والدفعات المجدولة"
-    },
-    {
-      "key": "web.cap.recipients.points.1",
-      "format": "text",
-      "description": "Product page: point under recipients",
-      "placeholders": [],
-      "meta": {},
-      "en": "Screened before use",
-      "ar": "يُفحص قبل الاستخدام"
-    },
-    {
-      "key": "web.cap.recipients.points.2",
-      "format": "text",
-      "description": "Product page: point under recipients",
-      "placeholders": [],
-      "meta": {},
-      "en": "Changes to bank details reviewed before money moves",
-      "ar": "مراجعة أي تغيير في البيانات المصرفية قبل تحريك الأموال"
-    },
-    {
-      "key": "web.cap.recipients.summary",
-      "format": "text",
-      "description": "Product page: one-line summary of the recipients capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "Save the people and companies you pay, checked before the first payment goes out.",
-      "ar": "احفظ الأشخاص والشركات الذين تدفع لهم، مع التحقق منهم قبل إرسال أول دفعة."
-    },
-    {
-      "key": "web.cap.recipients.title",
-      "format": "text",
-      "description": "Product page: heading of the recipients capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "Recipients you can trust",
-      "ar": "مستفيدون يمكنك الوثوق بهم"
-    },
-    {
-      "key": "web.cap.support.points.1",
-      "format": "text",
-      "description": "Product page: point under support",
-      "placeholders": [],
-      "meta": {},
-      "en": "Linked to the bank’s case when the bank needs to act",
-      "ar": "مرتبط بملف البنك عندما يحتاج البنك إلى اتخاذ إجراء"
-    },
-    {
-      "key": "web.cap.support.points.2",
-      "format": "text",
-      "description": "Product page: point under support",
-      "placeholders": [],
-      "meta": {},
-      "en": "Every update in one thread",
-      "ar": "كل التحديثات في محادثة واحدة"
-    },
-    {
-      "key": "web.cap.support.summary",
-      "format": "text",
-      "description": "Product page: one-line summary of the support capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "Raise a ticket with files and follow the reply in the app, including card disputes.",
-      "ar": "افتح طلب دعم مع ملفات، وتابع الرد داخل التطبيق، بما في ذلك الاعتراض على عمليات البطاقة."
-    },
-    {
-      "key": "web.cap.support.title",
-      "format": "text",
-      "description": "Product page: heading of the support capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "Support that knows your account",
-      "ar": "دعم يعرف حسابك"
-    },
-    {
-      "key": "web.cap.topup.points.1",
-      "format": "text",
-      "description": "Product page: point under topup",
-      "placeholders": [],
-      "meta": {},
-      "en": "A second person approves each top-up before the bank pulls it",
-      "ar": "شخص ثانٍ يوافق على كل عملية تعبئة قبل أن يسحبها البنك"
-    },
-    {
-      "key": "web.cap.topup.points.2",
-      "format": "text",
-      "description": "Product page: point under topup",
-      "placeholders": [],
-      "meta": {},
-      "en": "Limits per top-up, per day and per month",
-      "ar": "حدود لكل عملية تعبئة ولكل يوم ولكل شهر"
-    },
-    {
-      "key": "web.cap.topup.soon.1",
-      "format": "text",
-      "description": "Product page: planned feature under topup, shown with Coming soon",
-      "placeholders": [],
-      "meta": {},
-      "en": "Instant verification of your other bank account",
-      "ar": "التحقق الفوري من حسابك لدى البنك الآخر"
-    },
-    {
-      "key": "web.cap.topup.summary",
-      "format": "text",
-      "description": "Product page: one-line summary of the topup capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "Link your account at another bank and pull money in by ACH debit.",
-      "ar": "اربط حسابك لدى بنك آخر واسحب الأموال عبر خصم ACH."
-    },
-    {
-      "key": "web.cap.topup.title",
-      "format": "text",
-      "description": "Product page: heading of the topup capability",
-      "placeholders": [],
-      "meta": {},
-      "en": "Top up from your other bank",
-      "ar": "التعبئة من بنكك الآخر"
+      "en": "Opening the demo",
+      "ar": "جارٍ فتح العرض التجريبي"
     },
     {
       "key": "web.disclosures.1",
@@ -749,86 +472,6 @@
       "ar": "مسودة قيد المراجعة القانونية. غير معتمدة للنشر."
     },
     {
-      "key": "web.facts.1.label",
-      "format": "text",
-      "description": "Fact 1: what the figure means",
-      "placeholders": [],
-      "meta": {},
-      "en": "People on every payment above your threshold",
-      "ar": "شخصان على كل دفعة تتجاوز الحد الذي تضعه"
-    },
-    {
-      "key": "web.facts.1.value",
-      "format": "text",
-      "description": "Fact 1: the figure (source: OG-011 maker-checker, ongem-core)",
-      "placeholders": [],
-      "meta": {
-        "source": "OG-011 maker-checker, ongem-core"
-      },
-      "en": "2",
-      "ar": "2"
-    },
-    {
-      "key": "web.facts.2.label",
-      "format": "text",
-      "description": "Fact 2: what the figure means",
-      "placeholders": [],
-      "meta": {},
-      "en": "Card details close by themselves",
-      "ar": "تُغلق تفاصيل البطاقة تلقائيًا"
-    },
-    {
-      "key": "web.facts.2.value",
-      "format": "text",
-      "description": "Fact 2: the figure (source: ongem-web CardWidget)",
-      "placeholders": [],
-      "meta": {
-        "source": "ongem-web CardWidget"
-      },
-      "en": "5 min",
-      "ar": "5 دقائق"
-    },
-    {
-      "key": "web.facts.3.label",
-      "format": "text",
-      "description": "Fact 3: what the figure means",
-      "placeholders": [],
-      "meta": {},
-      "en": "Kinds of notices you control",
-      "ar": "أنواع من الإشعارات تتحكم فيها"
-    },
-    {
-      "key": "web.facts.3.value",
-      "format": "text",
-      "description": "Fact 3: the figure (source: OG-014, ongem-core 72e7d83)",
-      "placeholders": [],
-      "meta": {
-        "source": "OG-014, ongem-core 72e7d83"
-      },
-      "en": "16",
-      "ar": "16"
-    },
-    {
-      "key": "web.facts.4.label",
-      "format": "text",
-      "description": "Fact 4: what the figure means",
-      "placeholders": [],
-      "meta": {},
-      "en": "Records kept after an account closes",
-      "ar": "مدة حفظ السجلات بعد إغلاق الحساب"
-    },
-    {
-      "key": "web.facts.4.value",
-      "format": "text",
-      "description": "Fact 4: the figure (source: Data protection v3)",
-      "placeholders": [],
-      "meta": {
-        "source": "Data protection v3"
-      },
-      "en": "7 years",
-      "ar": "7 سنوات"
-    },
-    {
       "key": "web.facts.security.label",
       "format": "text",
       "description": "Security page extra fact: what it means",
@@ -849,184 +492,31 @@
       "ar": "1,189"
     },
     {
-      "key": "web.faq_next.security",
+      "key": "web.faq_page.general",
       "format": "text",
-      "description": "After the FAQ: security",
+      "description": "FAQ page: heading of the general questions",
       "placeholders": [],
       "meta": {},
-      "en": "How we protect your money",
-      "ar": "كيف نحمي أموالك"
+      "en": "About OnGem",
+      "ar": "عن OnGem"
     },
     {
-      "key": "web.faq_next.text",
+      "key": "web.faq_page.lede",
       "format": "text",
-      "description": "After the FAQ: text",
+      "description": "FAQ page: sentence",
       "placeholders": [],
       "meta": {},
-      "en": "Open your account in a few minutes, or read how we protect your money first.",
-      "ar": "افتح حسابك في دقائق، أو اطّلع أولًا على كيفية حمايتنا لأموالك."
+      "en": "Answers about accounts, payments, approvals and how OnGem works with the bank.",
+      "ar": "إجابات عن الحسابات والمدفوعات والموافقات وكيف يعمل OnGem مع البنك."
     },
     {
-      "key": "web.faq_next.title",
+      "key": "web.footer.company",
       "format": "text",
-      "description": "After the FAQ: title",
+      "description": "Footer column: company links",
       "placeholders": [],
       "meta": {},
-      "en": "Still deciding?",
-      "ar": "ما زلت تفكر؟"
-    },
-    {
-      "key": "web.feature.cards.eyebrow",
-      "format": "text",
-      "description": "Home: cards feature row eyebrow",
-      "placeholders": [],
-      "meta": {},
-      "en": "Cards",
-      "ar": "البطاقات"
-    },
-    {
-      "key": "web.feature.cards.points.1",
-      "format": "text",
-      "description": "Home: cards feature row point",
-      "placeholders": [],
-      "meta": {},
-      "en": "Card details close by themselves after a few minutes",
-      "ar": "تُغلق تفاصيل البطاقة تلقائيًا بعد دقائق قليلة"
-    },
-    {
-      "key": "web.feature.cards.points.2",
-      "format": "text",
-      "description": "Home: cards feature row point",
-      "placeholders": [],
-      "meta": {},
-      "en": "Ask about a card payment from the card",
-      "ar": "استفسر عن عملية شراء من البطاقة نفسها"
-    },
-    {
-      "key": "web.feature.cards.text",
-      "format": "text",
-      "description": "Home: cards feature row text",
-      "placeholders": [],
-      "meta": {},
-      "en": "Issue a virtual card, freeze it the moment something looks wrong and unfreeze it when you are sure. Card numbers open in the bank’s own secure window.",
-      "ar": "أصدر بطاقة افتراضية، وجمّدها فور أن يبدو شيء غير طبيعي، وألغِ التجميد عندما تتأكد. تُفتح أرقام البطاقات في نافذة البنك الآمنة."
-    },
-    {
-      "key": "web.feature.cards.title",
-      "format": "text",
-      "description": "Home: cards feature row title",
-      "placeholders": [],
-      "meta": {},
-      "en": "Virtual cards you control in a tap",
-      "ar": "بطاقات افتراضية تتحكم فيها بلمسة واحدة"
-    },
-    {
-      "key": "web.feature.notifications.eyebrow",
-      "format": "text",
-      "description": "Home: notifications feature row eyebrow",
-      "placeholders": [],
-      "meta": {},
-      "en": "Notices",
-      "ar": "الإشعارات"
-    },
-    {
-      "key": "web.feature.notifications.points.1",
-      "format": "text",
-      "description": "Home: notifications feature row point",
-      "placeholders": [],
-      "meta": {},
-      "en": "The important ones can never be switched off",
-      "ar": "لا يمكن إيقاف الإشعارات المهمة أبدًا"
-    },
-    {
-      "key": "web.feature.notifications.points.2",
-      "format": "text",
-      "description": "Home: notifications feature row point",
-      "placeholders": [],
-      "meta": {},
-      "en": "Email and text message alerts are coming soon",
-      "ar": "التنبيهات بالبريد الإلكتروني والرسائل النصية قريبًا"
-    },
-    {
-      "key": "web.feature.notifications.text",
-      "format": "text",
-      "description": "Home: notifications feature row text",
-      "placeholders": [],
-      "meta": {},
-      "en": "Payments sent and settled, approvals waiting for you, card changes and your application, in one inbox with your own choices.",
-      "ar": "الدفعات المرسلة والمسوّاة، والموافقات التي تنتظرك، وتغييرات البطاقات، وطلبك، في صندوق وارد واحد وفق اختياراتك."
-    },
-    {
-      "key": "web.feature.notifications.title",
-      "format": "text",
-      "description": "Home: notifications feature row title",
-      "placeholders": [],
-      "meta": {},
-      "en": "Know what needs you, and nothing else",
-      "ar": "اعرف ما يحتاج إليك، ولا شيء غيره"
-    },
-    {
-      "key": "web.feature.payments.eyebrow",
-      "format": "text",
-      "description": "Home: payments feature row eyebrow",
-      "placeholders": [],
-      "meta": {},
-      "en": "Payments",
-      "ar": "الدفعات"
-    },
-    {
-      "key": "web.feature.payments.points.1",
-      "format": "text",
-      "description": "Home: payments feature row point",
-      "placeholders": [],
-      "meta": {},
-      "en": "Repeating payments you can pause, resume or cancel",
-      "ar": "دفعات متكررة يمكنك إيقافها مؤقتًا أو استئنافها أو إلغاؤها"
-    },
-    {
-      "key": "web.feature.payments.points.2",
-      "format": "text",
-      "description": "Home: payments feature row point",
-      "placeholders": [],
-      "meta": {},
-      "en": "Larger payments wait for a second person",
-      "ar": "الدفعات الأكبر تنتظر موافقة شخص ثانٍ"
-    },
-    {
-      "key": "web.feature.payments.text",
-      "format": "text",
-      "description": "Home: payments feature row text",
-      "placeholders": [],
-      "meta": {},
-      "en": "Pay by ACH or move money between your accounts, and watch each payment go from sent to settled. A return is explained in plain words, never a code.",
-      "ar": "ادفع عبر ACH أو حوّل الأموال بين حساباتك، وتابع كل دفعة من الإرسال حتى التسوية. سبب الإعادة موضح بكلمات بسيطة، لا برموز."
-    },
-    {
-      "key": "web.feature.payments.title",
-      "format": "text",
-      "description": "Home: payments feature row title",
-      "placeholders": [],
-      "meta": {},
-      "en": "Every payment, followed to the end",
-      "ar": "كل دفعة، متابَعة حتى النهاية"
-    },
-    {
-      "key": "web.final_cta.text",
-      "format": "text",
-      "description": "Closing call to action text",
-      "placeholders": [],
-      "meta": {},
-      "en": "It takes a few minutes to start. The bank tells you its decision.",
-      "ar": "البدء يستغرق دقائق قليلة. ويبلغك البنك بقراره."
-    },
-    {
-      "key": "web.final_cta.title",
-      "format": "text",
-      "description": "Closing call to action heading",
-      "placeholders": [],
-      "meta": {},
-      "en": "Open your business account",
-      "ar": "افتح حساب أعمالك"
+      "en": "Company",
+      "ar": "الشركة"
     },
     {
       "key": "web.footer.copyright",
@@ -1037,6 +527,15 @@
       ],
       "meta": {},
       "en": "© {year} OnGem"
+    },
+    {
+      "key": "web.footer.region_language",
+      "format": "text",
+      "description": "Footer: region and language chooser heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "Region and language",
+      "ar": "المنطقة واللغة"
     },
     {
       "key": "web.gallery.app_android_payment_returned.alt",
@@ -1255,6 +754,60 @@
       "ar": "OnGem توافق عن شركة الشخص الواحد"
     },
     {
+      "key": "web.guides.lede",
+      "format": "text",
+      "description": "Guides page: sentence",
+      "placeholders": [],
+      "meta": {},
+      "en": "How each part of OnGem works, step by step, with a walkthrough where there is one.",
+      "ar": "كيف يعمل كل جزء من OnGem، خطوة بخطوة، مع جولة مصورة حيثما وُجدت."
+    },
+    {
+      "key": "web.guides.read",
+      "format": "text",
+      "description": "Guides page: link to a guide",
+      "placeholders": [],
+      "meta": {},
+      "en": "Read the guide",
+      "ar": "اقرأ الدليل"
+    },
+    {
+      "key": "web.guides.soon.1",
+      "format": "text",
+      "description": "Guides page: a guide being written",
+      "placeholders": [],
+      "meta": {},
+      "en": "From a new US LLC and its EIN to your first payment",
+      "ar": "من شركة ذات مسؤولية محدودة جديدة في أمريكا ورقمها الضريبي إلى دفعتك الأولى"
+    },
+    {
+      "key": "web.guides.soon.2",
+      "format": "text",
+      "description": "Guides page: a guide being written",
+      "placeholders": [],
+      "meta": {},
+      "en": "ACH explained: timing, returns and limits",
+      "ar": "شرح ACH: التوقيت والمرتجعات والحدود"
+    },
+    {
+      "key": "web.guides.soon_title",
+      "format": "text",
+      "description": "Guides page: heading of the guides not written yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "Guides being written",
+      "ar": "أدلة قيد الكتابة"
+    },
+    {
+      "key": "web.guides.title",
+      "format": "text",
+      "description": "Guides page: headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Guides",
+      "ar": "الأدلة"
+    },
+    {
       "key": "web.hero.eyebrow",
       "format": "text",
       "description": "Small line above the home heading",
@@ -1264,22 +817,49 @@
       "ar": "خدمات مصرفية للأعمال، مصممة للمؤسسين"
     },
     {
-      "key": "web.hero.lede",
+      "key": "web.hero.intro",
       "format": "text",
-      "description": "Home intro under the heading (wide screens)",
+      "description": "Home hero: the sentence under the headline",
       "placeholders": [],
       "meta": {},
       "en": "A US business account held at Piermont Bank, ACH and scheduled payments, virtual cards and approvals that keep two sets of eyes on every payment. On the web and on your phone.",
       "ar": "حساب أعمال أمريكي لدى Piermont Bank، ودفعات ACH ودفعات مجدولة، وبطاقات افتراضية، وموافقات تضمن مراجعة ثانية لكل دفعة. على الويب وعلى هاتفك."
     },
     {
-      "key": "web.hero.lede_short",
+      "key": "web.hero.intro_short",
       "format": "text",
-      "description": "Home intro on a phone, two lines at most",
+      "description": "Home hero on a phone: the short sentence under the headline",
       "placeholders": [],
       "meta": {},
       "en": "Business accounts at Piermont Bank, with cards and two-person approvals.",
       "ar": "حسابات أعمال لدى Piermont Bank، مع بطاقات وموافقات من شخصين."
+    },
+    {
+      "key": "web.hero.points.1",
+      "format": "text",
+      "description": "Home hero: a short proof point",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your money is held at Piermont Bank",
+      "ar": "أموالك محفوظة لدى Piermont Bank"
+    },
+    {
+      "key": "web.hero.points.2",
+      "format": "text",
+      "description": "Home hero: a short proof point",
+      "placeholders": [],
+      "meta": {},
+      "en": "A second person approves larger payments",
+      "ar": "شخص ثانٍ يوافق على الدفعات الأكبر"
+    },
+    {
+      "key": "web.hero.points.3",
+      "format": "text",
+      "description": "Home hero: a short proof point",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card numbers never reach OnGem",
+      "ar": "أرقام البطاقات لا تصل إلى OnGem أبدًا"
     },
     {
       "key": "web.hero.primary",
@@ -1289,33 +869,6 @@
       "meta": {},
       "en": "Get started",
       "ar": "ابدأ الآن"
-    },
-    {
-      "key": "web.hero.proof.1",
-      "format": "text",
-      "description": "Point beside the home call to action",
-      "placeholders": [],
-      "meta": {},
-      "en": "Your money is held at Piermont Bank",
-      "ar": "أموالك محفوظة لدى Piermont Bank"
-    },
-    {
-      "key": "web.hero.proof.2",
-      "format": "text",
-      "description": "Point beside the home call to action",
-      "placeholders": [],
-      "meta": {},
-      "en": "A second person approves larger payments",
-      "ar": "شخص ثانٍ يوافق على الدفعات الأكبر"
-    },
-    {
-      "key": "web.hero.proof.3",
-      "format": "text",
-      "description": "Point beside the home call to action",
-      "placeholders": [],
-      "meta": {},
-      "en": "Card numbers never reach OnGem",
-      "ar": "أرقام البطاقات لا تصل إلى OnGem أبدًا"
     },
     {
       "key": "web.hero.secondary",
@@ -1334,6 +887,105 @@
       "meta": {},
       "en": "Run your company’s money in one calm place",
       "ar": "أدِر أموال شركتك من مكان واحد هادئ"
+    },
+    {
+      "key": "web.home.demo_text",
+      "format": "text",
+      "description": "Demo band: sentence",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open the demo and click through accounts, payments and approvals on sample data. Nothing you do reaches a bank.",
+      "ar": "افتح العرض التجريبي وتنقّل بين الحسابات والمدفوعات والموافقات على بيانات تجريبية. لا يصل شيء مما تفعله إلى أي بنك."
+    },
+    {
+      "key": "web.home.demo_title",
+      "format": "text",
+      "description": "Demo band: heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "See it before you sign up",
+      "ar": "شاهده قبل أن تسجل"
+    },
+    {
+      "key": "web.home.who_title",
+      "format": "text",
+      "description": "Home: heading of the who it's for cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Who OnGem is for",
+      "ar": "لمن OnGem"
+    },
+    {
+      "key": "web.how.1.text",
+      "format": "text",
+      "description": "From sign-up to an open account: step text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Use your email and a second sign-in step.",
+      "ar": "استخدم بريدك الإلكتروني وخطوة تحقق ثانية."
+    },
+    {
+      "key": "web.how.1.title",
+      "format": "text",
+      "description": "From sign-up to an open account: step title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Create your sign-in",
+      "ar": "أنشئ بيانات الدخول"
+    },
+    {
+      "key": "web.how.2.text",
+      "format": "text",
+      "description": "From sign-up to an open account: step text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Owners, documents and the bank’s disclosures, step by step.",
+      "ar": "الملاك والمستندات وإفصاحات البنك، خطوة بخطوة."
+    },
+    {
+      "key": "web.how.2.title",
+      "format": "text",
+      "description": "From sign-up to an open account: step title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Tell us about your company",
+      "ar": "أخبرنا عن شركتك"
+    },
+    {
+      "key": "web.how.3.text",
+      "format": "text",
+      "description": "From sign-up to an open account: step text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Piermont Bank verifies your business and its owners.",
+      "ar": "يتحقق Piermont Bank من نشاطك التجاري وملاكه."
+    },
+    {
+      "key": "web.how.3.title",
+      "format": "text",
+      "description": "From sign-up to an open account: step title",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank decides",
+      "ar": "البنك يقرر"
+    },
+    {
+      "key": "web.how.4.text",
+      "format": "text",
+      "description": "From sign-up to an open account: step text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Fund it, add recipients and issue cards.",
+      "ar": "موّله، وأضف المستفيدين، وأصدر البطاقات."
+    },
+    {
+      "key": "web.how.4.title",
+      "format": "text",
+      "description": "From sign-up to an open account: step title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your account opens",
+      "ar": "يُفتح حسابك"
     },
     {
       "key": "web.labels.close_menu",
@@ -1390,15 +1042,6 @@
       "ar": "أسئلة يطرحها المؤسسون"
     },
     {
-      "key": "web.labels.footer_nav",
-      "format": "text",
-      "description": "Screen reader name of the footer links",
-      "placeholders": [],
-      "meta": {},
-      "en": "Footer",
-      "ar": "تذييل الصفحة"
-    },
-    {
       "key": "web.labels.home_link",
       "format": "text",
       "description": "Public site label: home link",
@@ -1415,24 +1058,6 @@
       "meta": {},
       "en": "Security that stays out of your way",
       "ar": "أمان لا يعترض طريقك"
-    },
-    {
-      "key": "web.labels.home_shot_text",
-      "format": "text",
-      "description": "Public site label: home shot text",
-      "placeholders": [],
-      "meta": {},
-      "en": "The same accounts, payments and cards on the web and in the iPhone and Android app, with the same approvals and the same second sign-in step.",
-      "ar": "الحسابات والدفعات والبطاقات نفسها على الويب وفي تطبيق iPhone وAndroid، بالموافقات نفسها وخطوة التحقق الثانية نفسها."
-    },
-    {
-      "key": "web.labels.home_shot_title",
-      "format": "text",
-      "description": "Public site label: home shot title",
-      "placeholders": [],
-      "meta": {},
-      "en": "Built for the founder at a desk and on the move",
-      "ar": "مصمم للمؤسس على مكتبه وأثناء تنقله"
     },
     {
       "key": "web.labels.home_steps",
@@ -1462,6 +1087,15 @@
       "ar": "استخدام المظهر الفاتح"
     },
     {
+      "key": "web.labels.more_product",
+      "format": "text",
+      "description": "Capability page: heading of links to the other capability pages",
+      "placeholders": [],
+      "meta": {},
+      "en": "More of OnGem",
+      "ar": "المزيد من OnGem"
+    },
+    {
       "key": "web.labels.open_menu",
       "format": "text",
       "description": "Public site label: open menu",
@@ -1480,15 +1114,6 @@
       "ar": "كيف يعمل التسجيل عبر الشركاء"
     },
     {
-      "key": "web.labels.product_screens",
-      "format": "text",
-      "description": "Public site heading: product screens",
-      "placeholders": [],
-      "meta": {},
-      "en": "See it in the app",
-      "ar": "شاهده في التطبيق"
-    },
-    {
       "key": "web.labels.product_title",
       "format": "text",
       "description": "Public site label: product title",
@@ -1496,6 +1121,15 @@
       "meta": {},
       "en": "What OnGem does today",
       "ar": "ما تقدمه OnGem اليوم"
+    },
+    {
+      "key": "web.labels.read_more",
+      "format": "text",
+      "description": "Link to a capability or audience page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Read more",
+      "ar": "اقرأ المزيد"
     },
     {
       "key": "web.labels.security_link",
@@ -1560,6 +1194,15 @@
       "meta": {},
       "en": "Banking you can trace",
       "ar": "خدمات مصرفية يمكنك تتبعها"
+    },
+    {
+      "key": "web.labels.what_it_does",
+      "format": "text",
+      "description": "Capability page: heading of the list of what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "What it does",
+      "ar": "ماذا يفعل"
     },
     {
       "key": "web.lang.ar",
@@ -1961,78 +1604,6 @@
       "ar": "شاهد الجولة"
     },
     {
-      "key": "web.meta.home.description",
-      "format": "text",
-      "description": "Search description of the home page",
-      "placeholders": [],
-      "meta": {},
-      "en": "Open a US business account held at Piermont Bank, pay by ACH, issue virtual cards and approve every payment, from the web or your phone.",
-      "ar": "افتح حساب أعمال أمريكيًا لدى Piermont Bank، وادفع عبر ACH، وأصدر بطاقات افتراضية، ووافق على كل دفعة، من الويب أو من هاتفك."
-    },
-    {
-      "key": "web.meta.home.title",
-      "format": "text",
-      "description": "Browser tab title of the home page",
-      "placeholders": [],
-      "meta": {},
-      "en": "OnGem: business banking for founders",
-      "ar": "OnGem: خدمات مصرفية للأعمال، مصممة للمؤسسين"
-    },
-    {
-      "key": "web.meta.partners.description",
-      "format": "text",
-      "description": "Search description of the partners page",
-      "placeholders": [],
-      "meta": {},
-      "en": "Founders who form their company with GenZone apply to OnGem with their company details already filled in.",
-      "ar": "المؤسسون الذين يؤسسون شركاتهم مع GenZone يتقدمون إلى OnGem وبيانات شركاتهم معبأة مسبقًا."
-    },
-    {
-      "key": "web.meta.partners.title",
-      "format": "text",
-      "description": "Browser tab title of the partners page",
-      "placeholders": [],
-      "meta": {},
-      "en": "Partners: open an account from the company you just formed | OnGem",
-      "ar": "الشركاء: افتح حسابًا للشركة التي أسستها للتو | OnGem"
-    },
-    {
-      "key": "web.meta.product.description",
-      "format": "text",
-      "description": "Search description of the product page",
-      "placeholders": [],
-      "meta": {},
-      "en": "What OnGem does today: business accounts and statements, ACH and scheduled payments, top-ups, virtual cards, approvals, recipients and support.",
-      "ar": "ما تقدمه OnGem اليوم: حسابات أعمال وكشوف حساب، ودفعات ACH ودفعات مجدولة، وعمليات تعبئة، وبطاقات افتراضية، وموافقات، ومستفيدون، ودعم."
-    },
-    {
-      "key": "web.meta.product.title",
-      "format": "text",
-      "description": "Browser tab title of the product page",
-      "placeholders": [],
-      "meta": {},
-      "en": "Product: accounts, payments, cards and approvals | OnGem",
-      "ar": "المنتج: الحسابات والدفعات والبطاقات والموافقات | OnGem"
-    },
-    {
-      "key": "web.meta.security.description",
-      "format": "text",
-      "description": "Search description of the security page",
-      "placeholders": [],
-      "meta": {},
-      "en": "Money held at the bank, a second sign-in step before money moves, second-person approvals, a tamper-evident audit trail and card numbers OnGem never sees.",
-      "ar": "أموال محفوظة لدى البنك، وخطوة تحقق ثانية قبل تحريك الأموال، وموافقات من شخص ثانٍ، وسجل تدقيق مقاوم للتلاعب، وأرقام بطاقات لا تراها OnGem أبدًا."
-    },
-    {
-      "key": "web.meta.security.title",
-      "format": "text",
-      "description": "Browser tab title of the security page",
-      "placeholders": [],
-      "meta": {},
-      "en": "Security: how OnGem protects your money and data | OnGem",
-      "ar": "الأمان: كيف تحمي OnGem أموالك وبياناتك | OnGem"
-    },
-    {
       "key": "web.nav.blog",
       "format": "text",
       "description": "Site menu link",
@@ -2042,13 +1613,67 @@
       "ar": "المدونة"
     },
     {
-      "key": "web.nav.partners",
+      "key": "web.nav.contact",
       "format": "text",
-      "description": "Site menu link",
+      "description": "Footer link: contact page",
       "placeholders": [],
       "meta": {},
-      "en": "Partners",
-      "ar": "الشركاء"
+      "en": "Contact",
+      "ar": "تواصل معنا"
+    },
+    {
+      "key": "web.nav.demo",
+      "format": "text",
+      "description": "Button: opens the demo on sample data",
+      "placeholders": [],
+      "meta": {},
+      "en": "Try the demo",
+      "ar": "جرّب العرض التجريبي"
+    },
+    {
+      "key": "web.nav.faq",
+      "format": "text",
+      "description": "Resources link: the FAQ page",
+      "placeholders": [],
+      "meta": {},
+      "en": "FAQ",
+      "ar": "الأسئلة الشائعة"
+    },
+    {
+      "key": "web.nav.formation_partners",
+      "format": "text",
+      "description": "Who it's for menu: the page for company formation firms and the founders they send",
+      "placeholders": [],
+      "meta": {},
+      "en": "Formation partners",
+      "ar": "شركاء تأسيس الشركات"
+    },
+    {
+      "key": "web.nav.guides",
+      "format": "text",
+      "description": "Resources link: guides page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Guides",
+      "ar": "الأدلة"
+    },
+    {
+      "key": "web.nav.overview",
+      "format": "text",
+      "description": "Product menu: the product overview page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Everything OnGem does",
+      "ar": "كل ما يقدمه OnGem"
+    },
+    {
+      "key": "web.nav.pricing",
+      "format": "text",
+      "description": "Header and footer link: pricing page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pricing",
+      "ar": "الأسعار"
     },
     {
       "key": "web.nav.product",
@@ -2060,6 +1685,71 @@
       "ar": "المنتج"
     },
     {
+      "key": "web.nav.region.ae",
+      "format": "text",
+      "description": "Region chooser: the UAE site",
+      "placeholders": [],
+      "meta": {},
+      "en": "United Arab Emirates",
+      "ar": "الإمارات العربية المتحدة"
+    },
+    {
+      "key": "web.nav.region.us",
+      "format": "text",
+      "description": "Region chooser: the US site",
+      "placeholders": [],
+      "meta": {},
+      "en": "United States",
+      "ar": "الولايات المتحدة"
+    },
+    {
+      "key": "web.nav.region_label",
+      "format": "text",
+      "description": "Region chooser button, for screen readers",
+      "placeholders": [
+        "region"
+      ],
+      "meta": {},
+      "en": "Region: {region}. Choose a region",
+      "ar": "المنطقة: {region}. اختر منطقة"
+    },
+    {
+      "key": "web.nav.region_short.ae",
+      "format": "text",
+      "description": "Region chooser button text when the UAE site is open",
+      "placeholders": [],
+      "meta": {},
+      "en": "UAE",
+      "ar": "الإمارات"
+    },
+    {
+      "key": "web.nav.region_short.us",
+      "format": "text",
+      "description": "Region chooser button text when the US site is open",
+      "placeholders": [],
+      "meta": {},
+      "en": "US",
+      "ar": "أمريكا"
+    },
+    {
+      "key": "web.nav.region_title",
+      "format": "text",
+      "description": "Region chooser heading",
+      "placeholders": [],
+      "meta": {},
+      "en": "Region",
+      "ar": "المنطقة"
+    },
+    {
+      "key": "web.nav.resources",
+      "format": "text",
+      "description": "Header menu and footer column: guides, blog, videos, FAQ, status",
+      "placeholders": [],
+      "meta": {},
+      "en": "Resources",
+      "ar": "المصادر"
+    },
+    {
       "key": "web.nav.security",
       "format": "text",
       "description": "Site menu link",
@@ -2069,6 +1759,15 @@
       "ar": "الأمان"
     },
     {
+      "key": "web.nav.status",
+      "format": "text",
+      "description": "Resources link: the service status page",
+      "placeholders": [],
+      "meta": {},
+      "en": "Status",
+      "ar": "حالة الخدمة"
+    },
+    {
       "key": "web.nav.videos",
       "format": "text",
       "description": "Site menu link",
@@ -2076,6 +1775,419 @@
       "meta": {},
       "en": "Videos",
       "ar": "الفيديوهات"
+    },
+    {
+      "key": "web.nav.who",
+      "format": "text",
+      "description": "Header menu: who OnGem is for",
+      "placeholders": [],
+      "meta": {},
+      "en": "Who it’s for",
+      "ar": "لمن OnGem"
+    },
+    {
+      "key": "web.numbers.1.label",
+      "format": "text",
+      "description": "Numbers band: what the number means",
+      "placeholders": [],
+      "meta": {},
+      "en": "People on every payment above your threshold",
+      "ar": "شخصان على كل دفعة تتجاوز الحد الذي تضعه"
+    },
+    {
+      "key": "web.numbers.1.value",
+      "format": "text",
+      "description": "Numbers band: the number (true today, with its source in meta)",
+      "placeholders": [],
+      "meta": {
+        "source": "OG-011 maker-checker, ongem-core"
+      },
+      "en": "2",
+      "ar": "2"
+    },
+    {
+      "key": "web.numbers.2.label",
+      "format": "text",
+      "description": "Numbers band: what the number means",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sign-in for every company you run",
+      "ar": "تسجيل دخول واحد لكل شركة تديرها"
+    },
+    {
+      "key": "web.numbers.2.value",
+      "format": "text",
+      "description": "Numbers band: the number (true today, with its source in meta)",
+      "placeholders": [],
+      "meta": {
+        "source": "OG-023 multi-company, ongem-web CompanySwitcher"
+      },
+      "en": "1",
+      "ar": "1"
+    },
+    {
+      "key": "web.numbers.3.label",
+      "format": "text",
+      "description": "Numbers band: what the number means",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card details close by themselves",
+      "ar": "تُغلق تفاصيل البطاقة تلقائيًا"
+    },
+    {
+      "key": "web.numbers.3.value",
+      "format": "text",
+      "description": "Numbers band: the number (true today, with its source in meta)",
+      "placeholders": [],
+      "meta": {
+        "source": "ongem-web CardWidget"
+      },
+      "en": "5 min",
+      "ar": "5 دقائق"
+    },
+    {
+      "key": "web.numbers.4.label",
+      "format": "text",
+      "description": "Numbers band: what the number means",
+      "placeholders": [],
+      "meta": {},
+      "en": "Records kept after an account closes",
+      "ar": "مدة حفظ السجلات بعد إغلاق الحساب"
+    },
+    {
+      "key": "web.numbers.4.value",
+      "format": "text",
+      "description": "Numbers band: the number (true today, with its source in meta)",
+      "placeholders": [],
+      "meta": {
+        "source": "Data protection v3"
+      },
+      "en": "7 years",
+      "ar": "7 سنوات"
+    },
+    {
+      "key": "web.page.accounts.description",
+      "format": "text",
+      "description": "Page description for search results: accounts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your balance as the bank holds it, every transaction and a monthly statement for each account.",
+      "ar": "رصيدك كما يحتفظ به البنك، وكل معاملة، وكشف شهري لكل حساب."
+    },
+    {
+      "key": "web.page.accounts.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: accounts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Business accounts and statements | OnGem",
+      "ar": "حسابات الأعمال وكشوفها | OnGem"
+    },
+    {
+      "key": "web.page.approvals.description",
+      "format": "text",
+      "description": "Page description for search results: approvals",
+      "placeholders": [],
+      "meta": {},
+      "en": "Every payment above your threshold waits for a second person, and the person who made it can never approve it.",
+      "ar": "كل دفعة تتجاوز الحد الذي تضعه تنتظر شخصًا ثانيًا، ولا يمكن لمن أنشأها أن يوافق عليها أبدًا."
+    },
+    {
+      "key": "web.page.approvals.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: approvals",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approvals and team: two people on every larger payment | OnGem",
+      "ar": "الموافقات والفريق: شخصان على كل دفعة كبيرة | OnGem"
+    },
+    {
+      "key": "web.page.assistant.description",
+      "format": "text",
+      "description": "Page description for search results: assistant",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ask about your money in plain words. The assistant can draft a payment or a ticket, and only you can send it.",
+      "ar": "اسأل عن أموالك بكلمات بسيطة. يستطيع المساعد إعداد مسودة دفعة أو تذكرة، وأنت وحدك من يرسلها."
+    },
+    {
+      "key": "web.page.assistant.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: assistant",
+      "placeholders": [],
+      "meta": {},
+      "en": "Assistant: it drafts, you decide | OnGem",
+      "ar": "المساعد: يُعد المسودة وأنت تقرر | OnGem"
+    },
+    {
+      "key": "web.page.cards.description",
+      "format": "text",
+      "description": "Page description: cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Issue virtual cards, freeze one the moment something looks wrong and see the details in the bank’s own secure window.",
+      "ar": "أصدر بطاقات افتراضية، وجمّد أي بطاقة لحظة يبدو شيء غير صحيح، واطلع على تفاصيلها في نافذة البنك الآمنة."
+    },
+    {
+      "key": "web.page.cards.title",
+      "format": "text",
+      "description": "Page title: cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Virtual cards you control in a tap | OnGem",
+      "ar": "بطاقات افتراضية تتحكم بها بلمسة | OnGem"
+    },
+    {
+      "key": "web.page.companies.description",
+      "format": "text",
+      "description": "Page description for search results: companies",
+      "placeholders": [],
+      "meta": {},
+      "en": "Switch between your companies, each with its own accounts, team and approvals, without signing in again.",
+      "ar": "تنقّل بين شركاتك، ولكل منها حساباتها وفريقها وموافقاتها، دون تسجيل الدخول مرة أخرى."
+    },
+    {
+      "key": "web.page.companies.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: companies",
+      "placeholders": [],
+      "meta": {},
+      "en": "Several companies: one sign-in for every company you run | OnGem",
+      "ar": "عدة شركات: تسجيل دخول واحد لكل شركاتك | OnGem"
+    },
+    {
+      "key": "web.page.contact.description",
+      "format": "text",
+      "description": "Page description for search results: contact",
+      "placeholders": [],
+      "meta": {},
+      "en": "Customers reach a person through Support in the app; founders can start or try the demo; formation firms connect through the Partner API.",
+      "ar": "يصل العملاء إلى شخص عبر الدعم في التطبيق؛ ويمكن للمؤسسين البدء أو تجربة العرض التجريبي؛ وتتصل شركات التأسيس عبر واجهة برمجة الشركاء."
+    },
+    {
+      "key": "web.page.contact.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: contact",
+      "placeholders": [],
+      "meta": {},
+      "en": "Contact OnGem | OnGem",
+      "ar": "تواصل مع OnGem | OnGem"
+    },
+    {
+      "key": "web.page.demo.description",
+      "format": "text",
+      "description": "Page description for search results: demo",
+      "placeholders": [],
+      "meta": {},
+      "en": "The OnGem demo on sample data: nothing you do reaches a bank.",
+      "ar": "العرض التجريبي لـ OnGem على بيانات تجريبية: لا يصل شيء مما تفعله إلى أي بنك."
+    },
+    {
+      "key": "web.page.demo.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: demo",
+      "placeholders": [],
+      "meta": {},
+      "en": "Opening the demo | OnGem",
+      "ar": "فتح العرض التجريبي | OnGem"
+    },
+    {
+      "key": "web.page.faq.description",
+      "format": "text",
+      "description": "Page description for search results: faq",
+      "placeholders": [],
+      "meta": {},
+      "en": "Answers about accounts, payments, approvals, several companies, the assistant and how OnGem works with the bank.",
+      "ar": "إجابات عن الحسابات والمدفوعات والموافقات وعدة شركات والمساعد وكيف يعمل OnGem مع البنك."
+    },
+    {
+      "key": "web.page.faq.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: faq",
+      "placeholders": [],
+      "meta": {},
+      "en": "FAQ: questions founders ask about OnGem | OnGem",
+      "ar": "الأسئلة الشائعة: ما يسأله المؤسسون عن OnGem | OnGem"
+    },
+    {
+      "key": "web.page.guides.description",
+      "format": "text",
+      "description": "Page description for search results: guides",
+      "placeholders": [],
+      "meta": {},
+      "en": "Step-by-step guides to accounts, payments, approvals and more, with walkthroughs on sample data.",
+      "ar": "أدلة خطوة بخطوة للحسابات والمدفوعات والموافقات وغيرها، مع جولات على بيانات تجريبية."
+    },
+    {
+      "key": "web.page.guides.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: guides",
+      "placeholders": [],
+      "meta": {},
+      "en": "Guides: how OnGem works, step by step | OnGem",
+      "ar": "الأدلة: كيف يعمل OnGem خطوة بخطوة | OnGem"
+    },
+    {
+      "key": "web.page.home.description",
+      "format": "text",
+      "description": "Page description for search results: home",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open a US business account held at Piermont Bank, pay by ACH, issue virtual cards and approve every larger payment with a second person, on the web and on your phone.",
+      "ar": "افتح حساب أعمال أمريكيًا لدى Piermont Bank، وادفع عبر ACH، وأصدر بطاقات افتراضية، ووافق على كل دفعة كبيرة بشخص ثانٍ، على الويب وعلى هاتفك."
+    },
+    {
+      "key": "web.page.home.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: home",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem: business banking for founders",
+      "ar": "OnGem: خدمات مصرفية للأعمال للمؤسسين"
+    },
+    {
+      "key": "web.page.new_companies.description",
+      "format": "text",
+      "description": "Page description for search results: new_companies",
+      "placeholders": [],
+      "meta": {},
+      "en": "Just formed your company? Tell us about it once, accept the bank’s disclosures and follow the bank’s decision step by step.",
+      "ar": "أسست شركتك للتو؟ أخبرنا عنها مرة واحدة، واقبل إفصاحات البنك، وتابع قرار البنك خطوة بخطوة."
+    },
+    {
+      "key": "web.page.new_companies.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: new_companies",
+      "placeholders": [],
+      "meta": {},
+      "en": "For newly formed companies | OnGem",
+      "ar": "للشركات المؤسسة حديثًا | OnGem"
+    },
+    {
+      "key": "web.page.partners.description",
+      "format": "text",
+      "description": "Page description for search results: partners",
+      "placeholders": [],
+      "meta": {},
+      "en": "Founders who form their company with GenZone apply to OnGem with their company details already filled in. Formation firms connect through the Partner API.",
+      "ar": "المؤسسون الذين يؤسسون شركتهم مع GenZone يتقدمون إلى OnGem وبيانات شركتهم معبأة مسبقًا. وتتصل شركات التأسيس عبر واجهة برمجة الشركاء."
+    },
+    {
+      "key": "web.page.partners.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: partners",
+      "placeholders": [],
+      "meta": {},
+      "en": "Formation partners: open an account from the company you just formed | OnGem",
+      "ar": "شركاء التأسيس: افتح حسابًا للشركة التي أسستها للتو | OnGem"
+    },
+    {
+      "key": "web.page.payments.description",
+      "format": "text",
+      "description": "Page description: payments",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pay suppliers by ACH, schedule repeating payments and add money from your other bank, with every payment followed from sent to settled.",
+      "ar": "ادفع للموردين عبر ACH، وجدول الدفعات المتكررة، وأضف الأموال من بنكك الآخر، مع متابعة كل دفعة من الإرسال حتى التسوية."
+    },
+    {
+      "key": "web.page.payments.title",
+      "format": "text",
+      "description": "Page title: payments",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments: ACH, schedules and adding money | OnGem",
+      "ar": "المدفوعات: ACH والجدولة وإضافة الأموال | OnGem"
+    },
+    {
+      "key": "web.page.pricing.description",
+      "format": "text",
+      "description": "Page description for search results: pricing",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pricing is agreed with each company when its account is set up. There is no public price list yet.",
+      "ar": "يُتفق على السعر مع كل شركة عند إعداد حسابها. لا توجد قائمة أسعار منشورة بعد."
+    },
+    {
+      "key": "web.page.pricing.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: pricing",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pricing: talk to us | OnGem",
+      "ar": "الأسعار: تحدث إلينا | OnGem"
+    },
+    {
+      "key": "web.page.product.description",
+      "format": "text",
+      "description": "Page description for search results: product",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accounts and statements, payments, cards, approvals, several companies and an assistant: what OnGem does today for US founders.",
+      "ar": "الحسابات وكشوفها، والمدفوعات، والبطاقات، والموافقات، وعدة شركات، ومساعد: ما يقدمه OnGem اليوم للمؤسسين في الولايات المتحدة."
+    },
+    {
+      "key": "web.page.product.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: product",
+      "placeholders": [],
+      "meta": {},
+      "en": "Product: everything OnGem does today | OnGem",
+      "ar": "المنتج: كل ما يقدمه OnGem اليوم | OnGem"
+    },
+    {
+      "key": "web.page.security.description",
+      "format": "text",
+      "description": "Page description for search results: security",
+      "placeholders": [],
+      "meta": {},
+      "en": "Money held at the bank, a second sign-in step before money moves, second-person approvals, a tamper-evident audit trail and card numbers OnGem never sees.",
+      "ar": "أموال محفوظة لدى البنك، وخطوة تسجيل دخول ثانية قبل تحريك الأموال، وموافقة شخص ثانٍ، وسجل تدقيق لا يمكن العبث به، وأرقام بطاقات لا يراها OnGem أبدًا."
+    },
+    {
+      "key": "web.page.security.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: security",
+      "placeholders": [],
+      "meta": {},
+      "en": "Security: how OnGem protects your money and data | OnGem",
+      "ar": "الأمان: كيف يحمي OnGem أموالك وبياناتك | OnGem"
+    },
+    {
+      "key": "web.page.several_companies.description",
+      "format": "text",
+      "description": "Page description for search results: several_companies",
+      "placeholders": [],
+      "meta": {},
+      "en": "Run every company you own from one sign-in, each with its own accounts, team and approvals.",
+      "ar": "أدر كل شركة تملكها بتسجيل دخول واحد، ولكل منها حساباتها وفريقها وموافقاتها."
+    },
+    {
+      "key": "web.page.several_companies.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: several_companies",
+      "placeholders": [],
+      "meta": {},
+      "en": "For founders with several companies | OnGem",
+      "ar": "للمؤسسين الذين يملكون عدة شركات | OnGem"
+    },
+    {
+      "key": "web.page.status.description",
+      "format": "text",
+      "description": "Page description for search results: status",
+      "placeholders": [],
+      "meta": {},
+      "en": "A public status page for each part of OnGem is being built. Until then, Support in the app is the place to tell us.",
+      "ar": "يجري إنشاء صفحة حالة عامة لكل جزء من OnGem. وحتى ذلك الحين، الدعم في التطبيق هو المكان لإبلاغنا."
+    },
+    {
+      "key": "web.page.status.title",
+      "format": "text",
+      "description": "Page title in the browser tab and search results: status",
+      "placeholders": [],
+      "meta": {},
+      "en": "Service status | OnGem",
+      "ar": "حالة الخدمة | OnGem"
     },
     {
       "key": "web.partner.api_text",
@@ -2150,6 +2262,24 @@
       "ar": "الأسعار: تواصل معنا"
     },
     {
+      "key": "web.pricing.points.1",
+      "format": "text",
+      "description": "Pricing page: a point",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ask us when you sign up, or talk to us first",
+      "ar": "اسألنا عند التسجيل، أو تحدث إلينا أولًا"
+    },
+    {
+      "key": "web.pricing.points.2",
+      "format": "text",
+      "description": "Pricing page: a point",
+      "placeholders": [],
+      "meta": {},
+      "en": "The demo needs no sign-up and costs nothing",
+      "ar": "العرض التجريبي لا يحتاج إلى تسجيل ولا يكلف شيئًا"
+    },
+    {
       "key": "web.pricing.text",
       "format": "text",
       "description": "Pricing note: text",
@@ -2168,121 +2298,598 @@
       "ar": "التكلفة"
     },
     {
-      "key": "web.product.lede",
+      "key": "web.product.accounts.lede",
       "format": "text",
-      "description": "Product page intro",
+      "description": "Capability accounts: one sentence under the headline",
       "placeholders": [],
       "meta": {},
-      "en": "Business accounts and statements, ACH and scheduled payments, top-ups, virtual cards, approvals, recipients, support and notices, as they work today. Planned features are marked Coming soon.",
-      "ar": "حسابات الأعمال وكشوف الحساب، ودفعات ACH والدفعات المجدولة، وعمليات التعبئة، والبطاقات الافتراضية، والموافقات، والمستفيدون، والدعم، والإشعارات، كما تعمل اليوم. الميزات المخطط لها تحمل علامة \"قريبًا\"."
+      "en": "A US business account at Piermont Bank, every transaction in one list and a monthly statement for each account.",
+      "ar": "حساب أعمال أمريكي لدى Piermont Bank، وكل معاملة في قائمة واحدة، وكشف شهري لكل حساب."
     },
     {
-      "key": "web.security.1.text",
+      "key": "web.product.accounts.nav",
       "format": "text",
-      "description": "Security control 1: explanation",
+      "description": "Capability accounts: name in menus and cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accounts and statements",
+      "ar": "الحسابات وكشوفها"
+    },
+    {
+      "key": "web.product.accounts.points.1",
+      "format": "text",
+      "description": "Capability accounts: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Balances read from the bank and checked against OnGem every night",
+      "ar": "أرصدة تُقرأ من البنك وتُطابق مع OnGem كل ليلة"
+    },
+    {
+      "key": "web.product.accounts.points.2",
+      "format": "text",
+      "description": "Capability accounts: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Monthly statements to download, and your activity exported for your accountant",
+      "ar": "كشوف شهرية للتنزيل، ونشاطك مُصدَّر لمحاسبك"
+    },
+    {
+      "key": "web.product.accounts.points.3",
+      "format": "text",
+      "description": "Capability accounts: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Move money between your own accounts",
+      "ar": "انقل الأموال بين حساباتك"
+    },
+    {
+      "key": "web.product.accounts.points.4",
+      "format": "text",
+      "description": "Capability accounts: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Notices for payments sent, settled or returned, and approvals waiting for you",
+      "ar": "إشعارات للدفعات المرسلة أو المسوّاة أو المرتجعة، وللموافقات التي تنتظرك"
+    },
+    {
+      "key": "web.product.accounts.soon.1",
+      "format": "text",
+      "description": "Capability accounts: coming soon",
+      "placeholders": [],
+      "meta": {},
+      "en": "Email and text message alerts",
+      "ar": "تنبيهات عبر البريد الإلكتروني والرسائل النصية"
+    },
+    {
+      "key": "web.product.accounts.title",
+      "format": "text",
+      "description": "Capability accounts: page headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your balance, as the bank holds it",
+      "ar": "رصيدك كما يحتفظ به البنك"
+    },
+    {
+      "key": "web.product.approvals.lede",
+      "format": "text",
+      "description": "Capability approvals: one sentence under the headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Every payment above your threshold waits for a second person, and the person who made it can never approve it.",
+      "ar": "كل دفعة تتجاوز الحد الذي تضعه تنتظر شخصًا ثانيًا، ولا يمكن لمن أنشأها أن يوافق عليها أبدًا."
+    },
+    {
+      "key": "web.product.approvals.nav",
+      "format": "text",
+      "description": "Capability approvals: name in menus and cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approvals and team",
+      "ar": "الموافقات والفريق"
+    },
+    {
+      "key": "web.product.approvals.points.1",
+      "format": "text",
+      "description": "Capability approvals: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "The person who makes a payment can never approve it",
+      "ar": "من ينشئ الدفعة لا يمكنه أبدًا الموافقة عليها"
+    },
+    {
+      "key": "web.product.approvals.points.2",
+      "format": "text",
+      "description": "Capability approvals: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Limits that follow your company’s risk level at the bank",
+      "ar": "حدود تتبع مستوى مخاطر شركتك لدى البنك"
+    },
+    {
+      "key": "web.product.approvals.points.3",
+      "format": "text",
+      "description": "Capability approvals: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "One-person company? OnGem approves instead, so you are never stuck",
+      "ar": "شركة من شخص واحد؟ يوافق OnGem بدلًا من ذلك، فلا تتوقف أبدًا"
+    },
+    {
+      "key": "web.product.approvals.points.4",
+      "format": "text",
+      "description": "Capability approvals: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Invite your team and give each person a role",
+      "ar": "ادعُ فريقك وامنح كل شخص دورًا"
+    },
+    {
+      "key": "web.product.approvals.points.5",
+      "format": "text",
+      "description": "Capability approvals: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "A second sign-in step before money moves",
+      "ar": "خطوة تسجيل دخول ثانية قبل تحريك الأموال"
+    },
+    {
+      "key": "web.product.approvals.title",
+      "format": "text",
+      "description": "Capability approvals: page headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Two people on every larger payment",
+      "ar": "شخصان على كل دفعة كبيرة"
+    },
+    {
+      "key": "web.product.assistant.lede",
+      "format": "text",
+      "description": "Capability assistant: one sentence under the headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ask about your money in plain words; it can draft a payment or a support ticket, and only you can send it.",
+      "ar": "اسأل عن أموالك بكلمات بسيطة؛ يستطيع إعداد مسودة دفعة أو تذكرة دعم، وأنت وحدك من يرسلها."
+    },
+    {
+      "key": "web.product.assistant.nav",
+      "format": "text",
+      "description": "Capability assistant: name in menus and cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Assistant",
+      "ar": "المساعد"
+    },
+    {
+      "key": "web.product.assistant.points.1",
+      "format": "text",
+      "description": "Capability assistant: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reads your accounts, payments and cards, and never moves money on its own",
+      "ar": "يقرأ حساباتك ومدفوعاتك وبطاقاتك، ولا يحرك الأموال من تلقاء نفسه"
+    },
+    {
+      "key": "web.product.assistant.points.2",
+      "format": "text",
+      "description": "Capability assistant: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Review opens the normal screen, filled in, with the same second sign-in step",
+      "ar": "المراجعة تفتح الشاشة المعتادة معبأة، مع خطوة تسجيل الدخول الثانية نفسها"
+    },
+    {
+      "key": "web.product.assistant.points.3",
+      "format": "text",
+      "description": "Capability assistant: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "On the web and in the app",
+      "ar": "على الويب وفي التطبيق"
+    },
+    {
+      "key": "web.product.assistant.soon.1",
+      "format": "text",
+      "description": "Capability assistant: coming soon",
+      "placeholders": [],
+      "meta": {},
+      "en": "Available to every founder",
+      "ar": "متاح لكل المؤسسين"
+    },
+    {
+      "key": "web.product.assistant.title",
+      "format": "text",
+      "description": "Capability assistant: page headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "An assistant that drafts, you decide",
+      "ar": "مساعد يُعد المسودة، وأنت تقرر"
+    },
+    {
+      "key": "web.product.cards.lede",
+      "format": "text",
+      "description": "Capability cards: one sentence under the headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Issue virtual cards for the owners of your company, freeze one the moment something looks wrong and see its details in the bank’s own secure window.",
+      "ar": "أصدر بطاقات افتراضية لمالكي شركتك، وجمّد أي بطاقة لحظة يبدو شيء غير صحيح، واطلع على تفاصيلها في نافذة البنك الآمنة."
+    },
+    {
+      "key": "web.product.cards.nav",
+      "format": "text",
+      "description": "Capability cards: name in menus and cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cards",
+      "ar": "البطاقات"
+    },
+    {
+      "key": "web.product.cards.points.1",
+      "format": "text",
+      "description": "Capability cards: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card number and PIN shown in the bank’s secure window, never stored by OnGem",
+      "ar": "رقم البطاقة والرقم السري يظهران في نافذة البنك الآمنة، ولا يحتفظ بهما OnGem أبدًا"
+    },
+    {
+      "key": "web.product.cards.points.2",
+      "format": "text",
+      "description": "Capability cards: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card details close by themselves after 5 minutes",
+      "ar": "تُغلق تفاصيل البطاقة تلقائيًا بعد 5 دقائق"
+    },
+    {
+      "key": "web.product.cards.points.3",
+      "format": "text",
+      "description": "Capability cards: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Freeze and unfreeze any time",
+      "ar": "جمّد البطاقة وألغِ التجميد في أي وقت"
+    },
+    {
+      "key": "web.product.cards.points.4",
+      "format": "text",
+      "description": "Capability cards: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dispute a card payment from the card itself",
+      "ar": "اعترض على دفعة بطاقة من البطاقة نفسها"
+    },
+    {
+      "key": "web.product.cards.soon.1",
+      "format": "text",
+      "description": "Capability cards: coming soon",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cards for other team members",
+      "ar": "بطاقات لبقية أعضاء الفريق"
+    },
+    {
+      "key": "web.product.cards.soon.2",
+      "format": "text",
+      "description": "Capability cards: coming soon",
+      "placeholders": [],
+      "meta": {},
+      "en": "Physical cards",
+      "ar": "البطاقات البلاستيكية"
+    },
+    {
+      "key": "web.product.cards.title",
+      "format": "text",
+      "description": "Capability cards: page headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Virtual cards you control in a tap",
+      "ar": "بطاقات افتراضية تتحكم بها بلمسة"
+    },
+    {
+      "key": "web.product.companies.lede",
+      "format": "text",
+      "description": "Capability companies: one sentence under the headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Switch between your companies, each with its own accounts, team and approvals, without signing in again.",
+      "ar": "تنقّل بين شركاتك، ولكل منها حساباتها وفريقها وموافقاتها، دون تسجيل الدخول مرة أخرى."
+    },
+    {
+      "key": "web.product.companies.nav",
+      "format": "text",
+      "description": "Capability companies: name in menus and cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Several companies",
+      "ar": "عدة شركات"
+    },
+    {
+      "key": "web.product.companies.points.1",
+      "format": "text",
+      "description": "Capability companies: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Each company keeps its own accounts, team, approvals and limits",
+      "ar": "تحتفظ كل شركة بحساباتها وفريقها وموافقاتها وحدودها"
+    },
+    {
+      "key": "web.product.companies.points.2",
+      "format": "text",
+      "description": "Capability companies: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "The switcher shows what is waiting in each company",
+      "ar": "يُظهر المبدّل ما ينتظرك في كل شركة"
+    },
+    {
+      "key": "web.product.companies.points.3",
+      "format": "text",
+      "description": "Capability companies: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Transfers between your companies at the same bank",
+      "ar": "تحويلات بين شركاتك لدى البنك نفسه"
+    },
+    {
+      "key": "web.product.companies.points.4",
+      "format": "text",
+      "description": "Capability companies: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "A company that is frozen or closing opens read-only",
+      "ar": "الشركة المجمّدة أو قيد الإغلاق تُفتح للقراءة فقط"
+    },
+    {
+      "key": "web.product.companies.title",
+      "format": "text",
+      "description": "Capability companies: page headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "One sign-in for every company you run",
+      "ar": "تسجيل دخول واحد لكل شركة تديرها"
+    },
+    {
+      "key": "web.product.intro",
+      "format": "text",
+      "description": "Product overview: the sentence under the headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accounts and statements, payments, cards, approvals, several companies and an assistant. Features still in development are marked Coming soon.",
+      "ar": "الحسابات وكشوفها، والمدفوعات، والبطاقات، والموافقات، وعدة شركات، ومساعد. الميزات التي لا تزال قيد التطوير معلّمة بعبارة قريبًا."
+    },
+    {
+      "key": "web.product.payments.lede",
+      "format": "text",
+      "description": "Capability payments: one sentence under the headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pay suppliers by ACH, schedule repeating payments and add money from your other bank, each payment followed from sent to settled.",
+      "ar": "ادفع للموردين عبر ACH، وجدول الدفعات المتكررة، وأضف الأموال من بنكك الآخر، مع متابعة كل دفعة من الإرسال حتى التسوية."
+    },
+    {
+      "key": "web.product.payments.nav",
+      "format": "text",
+      "description": "Capability payments: name in menus and cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments",
+      "ar": "المدفوعات"
+    },
+    {
+      "key": "web.product.payments.points.1",
+      "format": "text",
+      "description": "Capability payments: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "One-off and repeating payments you can pause, resume or cancel",
+      "ar": "دفعات لمرة واحدة ومتكررة يمكنك إيقافها مؤقتًا أو استئنافها أو إلغاؤها"
+    },
+    {
+      "key": "web.product.payments.points.2",
+      "format": "text",
+      "description": "Capability payments: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "The next payment date always in view",
+      "ar": "تاريخ الدفعة التالية ظاهر دائمًا"
+    },
+    {
+      "key": "web.product.payments.points.3",
+      "format": "text",
+      "description": "Capability payments: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Returns explained in plain words",
+      "ar": "المرتجعات مشروحة بكلمات بسيطة"
+    },
+    {
+      "key": "web.product.payments.points.4",
+      "format": "text",
+      "description": "Capability payments: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recipients screened before the first payment, and changes to their bank details reviewed",
+      "ar": "المستفيدون يُفحصون قبل الدفعة الأولى، وتُراجع أي تغييرات في بياناتهم المصرفية"
+    },
+    {
+      "key": "web.product.payments.points.5",
+      "format": "text",
+      "description": "Capability payments: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add money from your account at another bank by ACH debit, approved by a second person",
+      "ar": "أضف الأموال من حسابك في بنك آخر بخصم ACH، بموافقة شخص ثانٍ"
+    },
+    {
+      "key": "web.product.payments.points.6",
+      "format": "text",
+      "description": "Capability payments: what it does",
+      "placeholders": [],
+      "meta": {},
+      "en": "Limits per payment, per day and per month",
+      "ar": "حدود لكل دفعة ولكل يوم ولكل شهر"
+    },
+    {
+      "key": "web.product.payments.soon.1",
+      "format": "text",
+      "description": "Capability payments: coming soon",
+      "placeholders": [],
+      "meta": {},
+      "en": "Domestic wires",
+      "ar": "التحويلات البرقية المحلية"
+    },
+    {
+      "key": "web.product.payments.soon.2",
+      "format": "text",
+      "description": "Capability payments: coming soon",
+      "placeholders": [],
+      "meta": {},
+      "en": "International payments",
+      "ar": "المدفوعات الدولية"
+    },
+    {
+      "key": "web.product.payments.soon.3",
+      "format": "text",
+      "description": "Capability payments: coming soon",
+      "placeholders": [],
+      "meta": {},
+      "en": "Instant verification of your other bank account",
+      "ar": "التحقق الفوري من حسابك في البنك الآخر"
+    },
+    {
+      "key": "web.product.payments.title",
+      "format": "text",
+      "description": "Capability payments: page headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Every payment, followed to the end",
+      "ar": "كل دفعة، متابَعة حتى النهاية"
+    },
+    {
+      "key": "web.protect.1.text",
+      "format": "text",
+      "description": "Security: control text",
       "placeholders": [],
       "meta": {},
       "en": "Deposits are held at Piermont Bank. OnGem shows the bank’s balance and never holds your funds.¹",
       "ar": "تُحفظ الودائع لدى Piermont Bank. تعرض OnGem رصيد البنك ولا تحتفظ بأموالك أبدًا.¹"
     },
     {
-      "key": "web.security.1.title",
+      "key": "web.protect.1.title",
       "format": "text",
-      "description": "Security control 1: heading",
+      "description": "Security: control title",
       "placeholders": [],
       "meta": {},
       "en": "Your money stays at the bank",
       "ar": "أموالك تبقى لدى البنك"
     },
     {
-      "key": "web.security.2.text",
+      "key": "web.protect.2.text",
       "format": "text",
-      "description": "Security control 2: explanation",
+      "description": "Security: control text",
       "placeholders": [],
       "meta": {},
       "en": "Payments, card details and changes to your team ask you to confirm it is you, again.",
       "ar": "تطلب منك الدفعات وتفاصيل البطاقات والتغييرات على فريقك تأكيد هويتك مرة أخرى."
     },
     {
-      "key": "web.security.2.title",
+      "key": "web.protect.2.title",
       "format": "text",
-      "description": "Security control 2: heading",
+      "description": "Security: control title",
       "placeholders": [],
       "meta": {},
       "en": "A second step before money moves",
       "ar": "خطوة ثانية قبل أن تتحرك الأموال"
     },
     {
-      "key": "web.security.3.text",
+      "key": "web.protect.3.text",
       "format": "text",
-      "description": "Security control 3: explanation",
+      "description": "Security: control text",
       "placeholders": [],
       "meta": {},
       "en": "The maker and the approver are always different people, and the rules are kept per company.",
       "ar": "منشئ الدفعة ومن يوافق عليها شخصان مختلفان دائمًا، والقواعد محفوظة لكل شركة على حدة."
     },
     {
-      "key": "web.security.3.title",
+      "key": "web.protect.3.title",
       "format": "text",
-      "description": "Security control 3: heading",
+      "description": "Security: control title",
       "placeholders": [],
       "meta": {},
       "en": "Two people for every larger payment",
       "ar": "شخصان لكل دفعة كبيرة"
     },
     {
-      "key": "web.security.4.text",
+      "key": "web.protect.4.text",
       "format": "text",
-      "description": "Security control 4: explanation",
+      "description": "Security: control text",
       "placeholders": [],
       "meta": {},
       "en": "Every change is written to an audit log where each entry seals the one before it.",
       "ar": "يُسجَّل كل تغيير في سجل تدقيق يختم فيه كل قيد القيدَ الذي قبله."
     },
     {
-      "key": "web.security.4.title",
+      "key": "web.protect.4.title",
       "format": "text",
-      "description": "Security control 4: heading",
+      "description": "Security: control title",
       "placeholders": [],
       "meta": {},
       "en": "A trail that cannot be rewritten",
       "ar": "سجل لا يمكن إعادة كتابته"
     },
     {
-      "key": "web.security.5.text",
+      "key": "web.protect.5.text",
       "format": "text",
-      "description": "Security control 5: explanation",
+      "description": "Security: control text",
       "placeholders": [],
       "meta": {},
       "en": "Card details open in the bank’s secure window, so they never pass through OnGem.",
       "ar": "تُفتح تفاصيل البطاقة في نافذة البنك الآمنة، فلا تمر عبر OnGem أبدًا."
     },
     {
-      "key": "web.security.5.title",
+      "key": "web.protect.5.title",
       "format": "text",
-      "description": "Security control 5: heading",
+      "description": "Security: control title",
       "placeholders": [],
       "meta": {},
       "en": "Card numbers OnGem never sees",
       "ar": "أرقام بطاقات لا تراها OnGem أبدًا"
     },
     {
-      "key": "web.security.6.text",
+      "key": "web.protect.6.text",
       "format": "text",
-      "description": "Security control 6: explanation",
+      "description": "Security: control text",
       "placeholders": [],
       "meta": {},
       "en": "Encrypted connections, encrypted storage, a web application firewall and data kept per company.",
       "ar": "اتصالات مشفرة، وتخزين مشفر، وجدار حماية لتطبيقات الويب، وبيانات منفصلة لكل شركة."
     },
     {
-      "key": "web.security.6.title",
+      "key": "web.protect.6.title",
       "format": "text",
-      "description": "Security control 6: heading",
+      "description": "Security: control title",
       "placeholders": [],
       "meta": {},
       "en": "Protected in transit and at rest",
       "ar": "حماية أثناء النقل وأثناء التخزين"
+    },
+    {
+      "key": "web.shots.approvals.alt",
+      "format": "text",
+      "description": "Screen description for screen readers",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem approving a payment for a one-person company, on sample data",
+      "ar": "OnGem يوافق على دفعة لشركة من شخص واحد، على بيانات تجريبية"
+    },
+    {
+      "key": "web.shots.assistant.alt",
+      "format": "text",
+      "description": "Screen description for screen readers",
+      "placeholders": [],
+      "meta": {},
+      "en": "The assistant answering and drafting on the web, on sample data",
+      "ar": "المساعد يجيب ويُعد مسودة على الويب، على بيانات تجريبية"
     },
     {
       "key": "web.shots.cards.alt",
@@ -2292,6 +2899,15 @@
       "meta": {},
       "en": "Virtual cards with their state and the controls to freeze, unfreeze and show details, on sample data",
       "ar": "بطاقات افتراضية مع حالتها وأدوات التجميد وإلغاء التجميد وعرض التفاصيل، ببيانات نموذجية"
+    },
+    {
+      "key": "web.shots.companies.alt",
+      "format": "text",
+      "description": "Screen description for screen readers",
+      "placeholders": [],
+      "meta": {},
+      "en": "The company switcher on the web, on sample data",
+      "ar": "مبدّل الشركات على الويب، على بيانات تجريبية"
     },
     {
       "key": "web.shots.home.alt",
@@ -2357,76 +2973,31 @@
       "ar": "طلبات الدعم مع حالتها والردود عليها، ببيانات نموذجية"
     },
     {
-      "key": "web.steps.1.text",
+      "key": "web.status.lede",
       "format": "text",
-      "description": "Step 1: explanation",
+      "description": "Status page: sentence",
       "placeholders": [],
       "meta": {},
-      "en": "Use your email and a second sign-in step.",
-      "ar": "استخدم بريدك الإلكتروني وخطوة تحقق ثانية."
+      "en": "A public status page for each part of OnGem, in each region, is being built on our monitoring.",
+      "ar": "يجري إنشاء صفحة حالة عامة لكل جزء من OnGem في كل منطقة، اعتمادًا على أنظمة المراقبة لدينا."
     },
     {
-      "key": "web.steps.1.title",
+      "key": "web.status.text",
       "format": "text",
-      "description": "Step 1 from sign-up to an open account: heading",
+      "description": "Status page: what to do meanwhile",
       "placeholders": [],
       "meta": {},
-      "en": "Create your sign-in",
-      "ar": "أنشئ بيانات الدخول"
+      "en": "Until it is live, if something is not working, tell us through Support in the app and a person will answer.",
+      "ar": "حتى تصبح متاحة، إذا لم يعمل شيء كما ينبغي، أخبرنا عبر الدعم في التطبيق وسيرد عليك شخص."
     },
     {
-      "key": "web.steps.2.text",
+      "key": "web.status.title",
       "format": "text",
-      "description": "Step 2: explanation",
+      "description": "Status page: headline",
       "placeholders": [],
       "meta": {},
-      "en": "Owners, documents and the bank’s disclosures, step by step.",
-      "ar": "الملاك والمستندات وإفصاحات البنك، خطوة بخطوة."
-    },
-    {
-      "key": "web.steps.2.title",
-      "format": "text",
-      "description": "Step 2 from sign-up to an open account: heading",
-      "placeholders": [],
-      "meta": {},
-      "en": "Tell us about your company",
-      "ar": "أخبرنا عن شركتك"
-    },
-    {
-      "key": "web.steps.3.text",
-      "format": "text",
-      "description": "Step 3: explanation",
-      "placeholders": [],
-      "meta": {},
-      "en": "Piermont Bank verifies your business and its owners.",
-      "ar": "يتحقق Piermont Bank من نشاطك التجاري وملاكه."
-    },
-    {
-      "key": "web.steps.3.title",
-      "format": "text",
-      "description": "Step 3 from sign-up to an open account: heading",
-      "placeholders": [],
-      "meta": {},
-      "en": "The bank decides",
-      "ar": "البنك يقرر"
-    },
-    {
-      "key": "web.steps.4.text",
-      "format": "text",
-      "description": "Step 4: explanation",
-      "placeholders": [],
-      "meta": {},
-      "en": "Fund it, add recipients and issue cards.",
-      "ar": "موّله، وأضف المستفيدين، وأصدر البطاقات."
-    },
-    {
-      "key": "web.steps.4.title",
-      "format": "text",
-      "description": "Step 4 from sign-up to an open account: heading",
-      "placeholders": [],
-      "meta": {},
-      "en": "Your account opens",
-      "ar": "يُفتح حسابك"
+      "en": "Service status",
+      "ar": "حالة الخدمة"
     },
     {
       "key": "web.trust.1.name",
@@ -2631,6 +3202,132 @@
       "meta": {},
       "en": "Get help and dispute a card payment",
       "ar": "احصل على المساعدة واعترض على عملية بالبطاقة"
+    },
+    {
+      "key": "web.who.new_companies.lede",
+      "format": "text",
+      "description": "Who it's for: newly formed companies, sentence",
+      "placeholders": [],
+      "meta": {},
+      "en": "Tell us about your company and its owners once, accept the bank’s disclosures and follow the bank’s decision step by step.",
+      "ar": "أخبرنا عن شركتك ومالكيها مرة واحدة، واقبل إفصاحات البنك، وتابع قرار البنك خطوة بخطوة."
+    },
+    {
+      "key": "web.who.new_companies.nav",
+      "format": "text",
+      "description": "Who it's for: newly formed companies, name in menus",
+      "placeholders": [],
+      "meta": {},
+      "en": "Newly formed companies",
+      "ar": "الشركات المؤسسة حديثًا"
+    },
+    {
+      "key": "web.who.new_companies.points.1",
+      "format": "text",
+      "description": "Who it's for: newly formed companies, a point",
+      "placeholders": [],
+      "meta": {},
+      "en": "Formed with GenZone? Your company details arrive prefilled",
+      "ar": "أسست شركتك مع GenZone؟ تصل بيانات شركتك معبأة مسبقًا"
+    },
+    {
+      "key": "web.who.new_companies.points.2",
+      "format": "text",
+      "description": "Who it's for: newly formed companies, a point",
+      "placeholders": [],
+      "meta": {},
+      "en": "Two people on every larger payment from the first day",
+      "ar": "شخصان على كل دفعة كبيرة منذ اليوم الأول"
+    },
+    {
+      "key": "web.who.new_companies.points.3",
+      "format": "text",
+      "description": "Who it's for: newly formed companies, a point",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem approves for a one-person company, so you are never stuck",
+      "ar": "يوافق OnGem عن الشركة المكونة من شخص واحد، فلا تتوقف أبدًا"
+    },
+    {
+      "key": "web.who.new_companies.points.4",
+      "format": "text",
+      "description": "Who it's for: newly formed companies, a point",
+      "placeholders": [],
+      "meta": {},
+      "en": "Monthly statements ready for your accountant",
+      "ar": "كشوف شهرية جاهزة لمحاسبك"
+    },
+    {
+      "key": "web.who.new_companies.title",
+      "format": "text",
+      "description": "Who it's for: newly formed companies, headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Just formed your company? Open its account next",
+      "ar": "أسست شركتك للتو؟ افتح حسابها بعد ذلك"
+    },
+    {
+      "key": "web.who.several_companies.lede",
+      "format": "text",
+      "description": "Who it's for: founders with several companies, sentence",
+      "placeholders": [],
+      "meta": {},
+      "en": "Each company keeps its own accounts, team and approvals; you switch between them in one tap.",
+      "ar": "تحتفظ كل شركة بحساباتها وفريقها وموافقاتها؛ وتتنقل بينها بلمسة واحدة."
+    },
+    {
+      "key": "web.who.several_companies.nav",
+      "format": "text",
+      "description": "Who it's for: founders with several companies, name in menus",
+      "placeholders": [],
+      "meta": {},
+      "en": "Founders with several companies",
+      "ar": "المؤسسون الذين يملكون عدة شركات"
+    },
+    {
+      "key": "web.who.several_companies.points.1",
+      "format": "text",
+      "description": "Who it's for: founders with several companies, a point",
+      "placeholders": [],
+      "meta": {},
+      "en": "One sign-in, one switcher, every company",
+      "ar": "تسجيل دخول واحد، ومبدّل واحد، لكل الشركات"
+    },
+    {
+      "key": "web.who.several_companies.points.2",
+      "format": "text",
+      "description": "Who it's for: founders with several companies, a point",
+      "placeholders": [],
+      "meta": {},
+      "en": "Transfers between your companies at the same bank",
+      "ar": "تحويلات بين شركاتك لدى البنك نفسه"
+    },
+    {
+      "key": "web.who.several_companies.points.3",
+      "format": "text",
+      "description": "Who it's for: founders with several companies, a point",
+      "placeholders": [],
+      "meta": {},
+      "en": "What is waiting in each company, at a glance",
+      "ar": "ما ينتظرك في كل شركة، بنظرة واحدة"
+    },
+    {
+      "key": "web.who.several_companies.points.4",
+      "format": "text",
+      "description": "Who it's for: founders with several companies, a point",
+      "placeholders": [],
+      "meta": {},
+      "en": "Each company’s team sees only that company",
+      "ar": "فريق كل شركة يرى تلك الشركة فقط"
+    },
+    {
+      "key": "web.who.several_companies.title",
+      "format": "text",
+      "description": "Who it's for: founders with several companies, headline",
+      "placeholders": [],
+      "meta": {},
+      "en": "Run all your companies from one sign-in",
+      "ar": "أدر كل شركاتك بتسجيل دخول واحد"
     }
   ]
 }

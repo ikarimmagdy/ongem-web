@@ -53,9 +53,9 @@ export function SignInScreen() {
             <h1 id="auth-title" className="pub-display fw-auth__title">
               {signUp ? t('web.auth.sign_up_title') : t('web.auth.sign_in_title')}
             </h1>
-            <p className="pub-lede">{signUp ? t('web.auth.sign_up_lede') : t('web.auth.sign_in_lede')}</p>
+            <p className="pub-lede">{signUp ? t('web.auth.sign_up_lede') : t('web.auth.sign_in_intro')}</p>
             <ul className="pub-list fw-auth__points">
-              {tList('web.auth.points').map((p) => (
+              {tList('web.auth.promises').map((p) => (
                 <li key={p}>{p}</li>
               ))}
             </ul>

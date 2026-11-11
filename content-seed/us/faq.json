@@ -2,130 +2,346 @@
   "channel": "faq",
   "entries": [
     {
-      "key": "faq.1.a",
+      "key": "faq.accounts.1.a",
       "format": "text",
-      "description": "FAQ answer 1",
+      "description": "FAQ accounts: answer",
       "placeholders": [],
       "meta": {},
-      "en": "No. OnGem is a financial technology company. Your deposits are held at Piermont Bank, which provides the accounts through Synctera. OnGem shows you the bank’s balance and never holds your funds.¹",
-      "ar": "لا. OnGem شركة تقنية مالية. تُحفظ ودائعك لدى Piermont Bank، الذي يقدّم الحسابات عبر Synctera. تعرض لك OnGem رصيد البنك ولا تحتفظ بأموالك أبدًا.¹"
+      "en": "Piermont Bank holds your deposits and provides the account. OnGem shows you the bank’s balance and never holds your funds.¹",
+      "ar": "يحتفظ Piermont Bank بودائعك ويقدم الحساب. يعرض لك OnGem رصيد البنك ولا يحتفظ بأموالك أبدًا.¹"
     },
     {
-      "key": "faq.1.q",
+      "key": "faq.accounts.1.q",
       "format": "text",
-      "description": "FAQ question 1",
+      "description": "FAQ accounts: question",
       "placeholders": [],
       "meta": {},
-      "en": "Is OnGem a bank? Who holds my money?",
-      "ar": "هل OnGem بنك؟ ومن يحتفظ بأموالي؟"
+      "en": "Who holds the money in my account?",
+      "ar": "من يحتفظ بالأموال في حسابي؟"
     },
     {
-      "key": "faq.2.a",
+      "key": "faq.accounts.2.a",
       "format": "text",
-      "description": "FAQ answer 2",
+      "description": "FAQ accounts: answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Yes. Each account has a monthly statement to download, and an owner can export the account’s activity for an accountant.",
+      "ar": "نعم. لكل حساب كشف شهري للتنزيل، ويمكن للمالك تصدير نشاط الحساب لمحاسب."
+    },
+    {
+      "key": "faq.accounts.2.q",
+      "format": "text",
+      "description": "FAQ accounts: question",
+      "placeholders": [],
+      "meta": {},
+      "en": "Can I download statements?",
+      "ar": "هل يمكنني تنزيل الكشوف؟"
+    },
+    {
+      "key": "faq.accounts.3.a",
+      "format": "text",
+      "description": "FAQ accounts: answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "You choose how you hear about most things. Notices that protect your account, such as a payment waiting for your approval, cannot be switched off.",
+      "ar": "تختار كيف تُبلَّغ بمعظم الأمور. أما الإشعارات التي تحمي حسابك، مثل دفعة تنتظر موافقتك، فلا يمكن إيقافها."
+    },
+    {
+      "key": "faq.accounts.3.q",
+      "format": "text",
+      "description": "FAQ accounts: question",
+      "placeholders": [],
+      "meta": {},
+      "en": "Which notices can I turn off?",
+      "ar": "ما الإشعارات التي يمكنني إيقافها؟"
+    },
+    {
+      "key": "faq.approvals.1.a",
+      "format": "text",
+      "description": "FAQ approvals: answer",
       "placeholders": [],
       "meta": {},
       "en": "You set who can create and who can approve payments. Above your threshold a payment waits for a second person, and the person who created it can never approve it. If no one else in your company can approve, OnGem approves it, so a one-person company is never stuck.",
       "ar": "أنت تحدد من يمكنه إنشاء الدفعات ومن يمكنه الموافقة عليها. فوق الحد الذي تضعه تنتظر الدفعة موافقة شخص ثانٍ، ولا يمكن لمن أنشأها أن يوافق عليها أبدًا. وإذا لم يكن في شركتك من يملك صلاحية الموافقة، توافق OnGem عليها، فلا تتعطل شركة الشخص الواحد أبدًا."
     },
     {
-      "key": "faq.2.q",
+      "key": "faq.approvals.1.q",
       "format": "text",
-      "description": "FAQ question 2",
+      "description": "FAQ approvals: question",
       "placeholders": [],
       "meta": {},
       "en": "How do approvals work?",
       "ar": "كيف تعمل الموافقات؟"
     },
     {
-      "key": "faq.3.a",
+      "key": "faq.approvals.2.a",
       "format": "text",
-      "description": "FAQ answer 3",
+      "description": "FAQ approvals: answer",
       "placeholders": [],
       "meta": {},
-      "en": "Send money in to your account and routing numbers, or link your account at another bank and pull a top-up by ACH. The bank verifies the linked account first, and a second person approves each top-up before the bank pulls it.",
-      "ar": "حوّل الأموال إلى رقم حسابك ورقم التوجيه (routing number)، أو اربط حسابك لدى بنك آخر واسحب مبلغ التعبئة عبر ACH. يتحقق البنك من الحساب المرتبط أولًا، ويوافق شخص ثانٍ على كل عملية تعبئة قبل أن يسحبها البنك."
+      "en": "OnGem approves your payment or top-up instead, so you are never stuck, and your limits still apply.",
+      "ar": "يوافق OnGem على دفعتك أو عملية التعبئة بدلًا من ذلك، فلا تتوقف أبدًا، وتبقى حدودك سارية."
     },
     {
-      "key": "faq.3.q",
+      "key": "faq.approvals.2.q",
       "format": "text",
-      "description": "FAQ question 3",
+      "description": "FAQ approvals: question",
       "placeholders": [],
       "meta": {},
-      "en": "How do I add money to my account?",
-      "ar": "كيف أضيف أموالًا إلى حسابي؟"
+      "en": "What if I am the only person in my company?",
+      "ar": "ماذا لو كنت الشخص الوحيد في شركتي؟"
     },
     {
-      "key": "faq.4.a",
+      "key": "faq.assistant.1.a",
       "format": "text",
-      "description": "FAQ answer 4",
+      "description": "FAQ assistant: answer",
       "placeholders": [],
       "meta": {},
-      "en": "Yes. Limits apply per payment, per day and per month, and they follow your company’s risk level at the bank. If a payment would go over a limit, it does not move and the app tells you why.",
-      "ar": "نعم. تُطبَّق الحدود على كل دفعة وعلى كل يوم وكل شهر، وتتبع مستوى المخاطر الخاص بشركتك لدى البنك. وإذا كانت الدفعة ستتجاوز أحد الحدود، فلن تُرسل، وسيوضح لك التطبيق السبب."
+      "en": "No. It reads your data and can draft a payment or a ticket. You review the draft on the normal screen and confirm it yourself, with the same second sign-in step.",
+      "ar": "لا. يقرأ بياناتك ويستطيع إعداد مسودة دفعة أو تذكرة. تراجع المسودة في الشاشة المعتادة وتؤكدها بنفسك، مع خطوة تسجيل الدخول الثانية نفسها."
     },
     {
-      "key": "faq.4.q",
+      "key": "faq.assistant.1.q",
       "format": "text",
-      "description": "FAQ question 4",
+      "description": "FAQ assistant: question",
       "placeholders": [],
       "meta": {},
-      "en": "Are there limits on payments and top-ups?",
-      "ar": "هل توجد حدود على الدفعات وعمليات التعبئة؟"
+      "en": "Can the assistant move money?",
+      "ar": "هل يستطيع المساعد تحريك الأموال؟"
     },
     {
-      "key": "faq.5.a",
+      "key": "faq.assistant.2.a",
       "format": "text",
-      "description": "FAQ answer 5",
+      "description": "FAQ assistant: answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your balance, recent payments, recipients and cards, in plain words.",
+      "ar": "رصيدك، ودفعاتك الأخيرة، والمستفيدين، والبطاقات، بكلمات بسيطة."
+    },
+    {
+      "key": "faq.assistant.2.q",
+      "format": "text",
+      "description": "FAQ assistant: question",
+      "placeholders": [],
+      "meta": {},
+      "en": "What can I ask it?",
+      "ar": "ماذا يمكنني أن أسأله؟"
+    },
+    {
+      "key": "faq.cards.1.a",
+      "format": "text",
+      "description": "FAQ cards: answer",
       "placeholders": [],
       "meta": {},
       "en": "Today you can issue virtual cards for the owners of your company, freeze and unfreeze them, and raise a dispute from a card. Cards for other team members are coming soon.",
       "ar": "يمكنك اليوم إصدار بطاقات افتراضية لملاك شركتك، وتجميدها وإلغاء تجميدها، وفتح اعتراض من البطاقة نفسها. البطاقات لأعضاء الفريق الآخرين قريبًا."
     },
     {
-      "key": "faq.5.q",
+      "key": "faq.cards.1.q",
       "format": "text",
-      "description": "FAQ question 5",
+      "description": "FAQ cards: question",
       "placeholders": [],
       "meta": {},
       "en": "Can I issue cards to my team?",
       "ar": "هل يمكنني إصدار بطاقات لفريقي؟"
     },
     {
-      "key": "faq.6.a",
+      "key": "faq.cards.2.a",
       "format": "text",
-      "description": "FAQ answer 6",
+      "description": "FAQ cards: answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "No. Card numbers and PINs open in the bank’s secure window, so they never pass through OnGem, and the details close by themselves after 5 minutes.",
+      "ar": "لا. تُفتح أرقام البطاقات والأرقام السرية في نافذة البنك الآمنة، فلا تمر عبر OnGem أبدًا، وتُغلق التفاصيل تلقائيًا بعد 5 دقائق."
+    },
+    {
+      "key": "faq.cards.2.q",
+      "format": "text",
+      "description": "FAQ cards: question",
+      "placeholders": [],
+      "meta": {},
+      "en": "Does OnGem see my card number?",
+      "ar": "هل يرى OnGem رقم بطاقتي؟"
+    },
+    {
+      "key": "faq.companies.1.a",
+      "format": "text",
+      "description": "FAQ companies: answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Yes. Sign in once and switch between the companies you belong to. Each keeps its own accounts, team and approvals.",
+      "ar": "نعم. سجّل الدخول مرة واحدة وتنقّل بين الشركات التي تنتمي إليها. تحتفظ كل منها بحساباتها وفريقها وموافقاتها."
+    },
+    {
+      "key": "faq.companies.1.q",
+      "format": "text",
+      "description": "FAQ companies: question",
+      "placeholders": [],
+      "meta": {},
+      "en": "Can I use one sign-in for several companies?",
+      "ar": "هل يمكنني استخدام تسجيل دخول واحد لعدة شركات؟"
+    },
+    {
+      "key": "faq.companies.2.a",
+      "format": "text",
+      "description": "FAQ companies: answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Yes, when both companies hold their accounts at the same bank. Choose Between my companies on a new payment.",
+      "ar": "نعم، عندما تحتفظ الشركتان بحساباتهما لدى البنك نفسه. اختر «بين شركاتي» في دفعة جديدة."
+    },
+    {
+      "key": "faq.companies.2.q",
+      "format": "text",
+      "description": "FAQ companies: question",
+      "placeholders": [],
+      "meta": {},
+      "en": "Can I move money between my companies?",
+      "ar": "هل يمكنني نقل الأموال بين شركاتي؟"
+    },
+    {
+      "key": "faq.general.1.a",
+      "format": "text",
+      "description": "FAQ general: answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "No. OnGem is a financial technology company. Your deposits are held at Piermont Bank, which provides the accounts through Synctera. OnGem shows you the bank’s balance and never holds your funds.¹",
+      "ar": "لا. OnGem شركة تقنية مالية. تُحفظ ودائعك لدى Piermont Bank، الذي يقدّم الحسابات عبر Synctera. تعرض لك OnGem رصيد البنك ولا تحتفظ بأموالك أبدًا.¹"
+    },
+    {
+      "key": "faq.general.1.q",
+      "format": "text",
+      "description": "FAQ general: question",
+      "placeholders": [],
+      "meta": {},
+      "en": "Is OnGem a bank? Who holds my money?",
+      "ar": "هل OnGem بنك؟ ومن يحتفظ بأموالي؟"
+    },
+    {
+      "key": "faq.general.2.a",
+      "format": "text",
+      "description": "FAQ general: answer",
       "placeholders": [],
       "meta": {},
       "en": "Money moves only after a second sign-in step, larger payments need two people, every change is written to an audit trail that cannot be rewritten, and card numbers open in the bank’s window so they never pass through OnGem.",
       "ar": "لا تتحرك الأموال إلا بعد خطوة تحقق ثانية عند تسجيل الدخول، وتحتاج الدفعات الأكبر إلى شخصين، ويُسجَّل كل تغيير في سجل تدقيق لا يمكن تعديله، وتُفتح أرقام البطاقات في نافذة البنك فلا تمر عبر OnGem أبدًا."
     },
     {
-      "key": "faq.6.q",
+      "key": "faq.general.2.q",
       "format": "text",
-      "description": "FAQ question 6",
+      "description": "FAQ general: question",
       "placeholders": [],
       "meta": {},
       "en": "How do you protect my account?",
       "ar": "كيف تحمون حسابي؟"
     },
     {
-      "key": "faq.7.a",
+      "key": "faq.general.3.a",
       "format": "text",
-      "description": "FAQ answer 7",
+      "description": "FAQ general: answer",
       "placeholders": [],
       "meta": {},
       "en": "When you ask it to, GenZone sends your company’s details to OnGem. You review them, add what is missing, accept the bank’s disclosures and submit. The bank makes its decision as it does for every founder.",
       "ar": "عندما تطلب منها ذلك، ترسل GenZone بيانات شركتك إلى OnGem. تراجعها، وتضيف ما ينقص، وتقبل إفصاحات البنك، ثم تقدّم الطلب. ويتخذ البنك قراره كما يفعل مع كل مؤسس."
     },
     {
-      "key": "faq.7.q",
+      "key": "faq.general.3.q",
       "format": "text",
-      "description": "FAQ question 7",
+      "description": "FAQ general: question",
       "placeholders": [],
       "meta": {},
       "en": "I formed my company with GenZone. What changes?",
       "ar": "أسّست شركتي مع GenZone. ما الذي يتغير؟"
+    },
+    {
+      "key": "faq.general.4.a",
+      "format": "text",
+      "description": "FAQ general: answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Yes. Try the demo: it runs on sample data, needs no sign-up, and nothing you do reaches a bank.",
+      "ar": "نعم. جرّب العرض التجريبي: يعمل على بيانات تجريبية، ولا يحتاج إلى تسجيل، ولا يصل شيء مما تفعله إلى أي بنك."
+    },
+    {
+      "key": "faq.general.4.q",
+      "format": "text",
+      "description": "FAQ general: question",
+      "placeholders": [],
+      "meta": {},
+      "en": "Can I try OnGem before I sign up?",
+      "ar": "هل يمكنني تجربة OnGem قبل التسجيل؟"
+    },
+    {
+      "key": "faq.general.5.a",
+      "format": "text",
+      "description": "FAQ general: answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pricing is agreed with each company when its account is set up. There is no public price list yet, so ask us when you sign up.",
+      "ar": "يُتفق على السعر مع كل شركة عند إعداد حسابها. لا توجد قائمة أسعار منشورة بعد، لذا اسألنا عند التسجيل."
+    },
+    {
+      "key": "faq.general.5.q",
+      "format": "text",
+      "description": "FAQ general: question",
+      "placeholders": [],
+      "meta": {},
+      "en": "What does OnGem cost?",
+      "ar": "كم تكلفة OnGem؟"
+    },
+    {
+      "key": "faq.payments.1.a",
+      "format": "text",
+      "description": "FAQ payments: answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "The payment shows as returned with the reason in plain words, and the money comes back to your account.",
+      "ar": "تظهر الدفعة على أنها مرتجعة مع السبب بكلمات بسيطة، وتعود الأموال إلى حسابك."
+    },
+    {
+      "key": "faq.payments.1.q",
+      "format": "text",
+      "description": "FAQ payments: question",
+      "placeholders": [],
+      "meta": {},
+      "en": "What happens if a payment is returned?",
+      "ar": "ماذا يحدث إذا ارتُجعت دفعة؟"
+    },
+    {
+      "key": "faq.payments.2.a",
+      "format": "text",
+      "description": "FAQ payments: answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send money in to your account and routing numbers, or link your account at another bank and pull a top-up by ACH. The bank verifies the linked account first, and a second person approves each top-up before the bank pulls it.",
+      "ar": "حوّل الأموال إلى رقم حسابك ورقم التوجيه (routing number)، أو اربط حسابك لدى بنك آخر واسحب مبلغ التعبئة عبر ACH. يتحقق البنك من الحساب المرتبط أولًا، ويوافق شخص ثانٍ على كل عملية تعبئة قبل أن يسحبها البنك."
+    },
+    {
+      "key": "faq.payments.2.q",
+      "format": "text",
+      "description": "FAQ payments: question",
+      "placeholders": [],
+      "meta": {},
+      "en": "How do I add money to my account?",
+      "ar": "كيف أضيف أموالًا إلى حسابي؟"
+    },
+    {
+      "key": "faq.payments.3.a",
+      "format": "text",
+      "description": "FAQ payments: answer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Yes. Limits apply per payment, per day and per month, and they follow your company’s risk level at the bank. If a payment would go over a limit, it does not move and the app tells you why.",
+      "ar": "نعم. تُطبَّق الحدود على كل دفعة وعلى كل يوم وكل شهر، وتتبع مستوى المخاطر الخاص بشركتك لدى البنك. وإذا كانت الدفعة ستتجاوز أحد الحدود، فلن تُرسل، وسيوضح لك التطبيق السبب."
+    },
+    {
+      "key": "faq.payments.3.q",
+      "format": "text",
+      "description": "FAQ payments: question",
+      "placeholders": [],
+      "meta": {},
+      "en": "Are there limits on payments and top-ups?",
+      "ar": "هل توجد حدود على الدفعات وعمليات التعبئة؟"
     }
   ]
 }

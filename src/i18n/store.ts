@@ -26,6 +26,16 @@ const listeners = new Set<() => void>();
 function rebuild() {
   merged = { en: {}, ar: {} };
   mergedMeta = {};
+  // The build's snapshot first, so a key the API does not serve yet (a web release ahead of the core's seed, OG-034)
+  // keeps its built text instead of showing the key; the API's texts then replace it key by key.
+  for (const l of ['en', 'ar'] as Locale[])
+    for (const c of Object.values<ChannelContent | undefined>(
+      (l === 'en' ? BUILT[REGION_KEY] : builtAr) ?? {},
+    )) {
+      if (!c) continue;
+      Object.assign(merged[l], c.entries);
+      if (l === locale) Object.assign(mergedMeta, c.meta);
+    }
   for (const l of ['en', 'ar'] as Locale[])
     for (const c of Object.values(channels[l])) {
       if (!c) continue;

@@ -33,8 +33,17 @@ html = html
     `<html lang="en" dir="ltr" data-theme="${attr(shell.themeId)}" data-theme-mode="${attr(shell.themeMode)}" style="${attr(shell.style)}">`,
   )
   .replace(/<title>.*<\/title>/, `<title>${text(shell.title)}</title>`)
+  .replace(
+    /<meta name="description" content="[^"]*" \/>/,
+    () => `<meta name="description" content="${attr(shell.description)}" />`,
+  )
+  .replace(
+    '</head>',
+    () =>
+      `  <script type="application/ld+json" id="${attr(shell.ld.id)}">${shell.ld.json.replace(/</g, '\\u003c')}</script>\n  </head>`,
+  )
   .replace('<div id="root"></div>', `<div id="root">${shell.html}</div>`);
-if (html === before || !html.includes('data-testid="public-home"'))
+if (html === before || !html.includes('data-testid="public-home"') || !html.includes('application/ld+json'))
   throw new Error('prerender: index.html not updated');
 writeFileSync(`${dist}/index.html`, html);
 console.log(`prerender: public home in ${dist}/index.html`);

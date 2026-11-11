@@ -1,5 +1,6 @@
 import { has, keysUnder, metaOf, t } from '../../i18n';
 import { formatDay } from '../../lib/schedule';
+import { SITE } from '../site';
 
 /**
  * The founder blog (OG-032 R15): each post is entries of the `blog` channel (`blog.<slug>.title`, `.summary`,
@@ -22,16 +23,19 @@ export interface Post {
 export function postBySlug(slug: string): Post | undefined {
   if (!has(`blog.${slug}.title`) || !has(`blog.${slug}.body`)) return undefined;
   const meta = metaOf(`blog.${slug}.title`);
+  const tags = (meta.tags ?? '')
+    .split(',')
+    .map((x) => x.trim())
+    .filter(Boolean);
+  // A post about cards is left out where the bank has no cards (the UAE in v0, OG-034 R7).
+  if (!SITE.cards && tags.includes('cards')) return undefined;
   return {
     slug,
     title: t(`blog.${slug}.title`),
     date: meta.date ?? '',
     summary: t(`blog.${slug}.summary`),
     author: t(`blog.${slug}.author`),
-    tags: (meta.tags ?? '')
-      .split(',')
-      .map((x) => x.trim())
-      .filter(Boolean),
+    tags,
     video: meta.video || undefined,
     product: meta.product || undefined,
     body: t(`blog.${slug}.body`),

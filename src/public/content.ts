@@ -1,12 +1,13 @@
 import { has, keysUnder, metaOf, t, tList } from '../i18n';
 import { US_MEDIA } from '../region';
 import { isMediaPath } from './media/paths';
+import { SITE } from './site';
 
 /**
- * The public site's structure (OG-032): which pages, sections and items exist. Every word is a content entry in the
- * `web_public` and `faq` channels (OG-033 R1), read when a page renders, so a newer text or another language shows
- * without a release. Region differences are in each region's content (the AE seed names a licensed UAE bank); lists
- * are as long as the content has numbered items (`web.hero.proof.1`, `.2`, ...).
+ * The public site's structure (OG-032, OG-034): which pages exist, what the menus hold and the readers of their texts.
+ * Every word is a content entry in the `web_public` and `faq` channels (OG-033 R1), read when a page renders. Region
+ * differences are each region's content plus `SITE` (no card page where the bank has no cards); lists are as long as
+ * the content has numbered items (`web.hero.points.1`, `.2`, ...).
  */
 
 export type ArtName =
@@ -18,21 +19,43 @@ export type ArtName =
   | 'recipients'
   | 'support'
   | 'assistant'
-  | 'notifications';
+  | 'notifications'
+  | 'companies';
 
-export interface Capability {
-  id: ArtName;
-  title: string;
-  summary: string;
-  points: string[];
-  soon: string[];
+/** One page per capability (OG-034 R2). */
+export type CapId = 'accounts' | 'payments' | 'cards' | 'approvals' | 'companies' | 'assistant';
+const CAP_ORDER: CapId[] = ['accounts', 'payments', 'cards', 'approvals', 'companies', 'assistant'];
+export const capIds = (): CapId[] => CAP_ORDER.filter((id) => id !== 'cards' || SITE.cards);
+export const capPath = (id: CapId) => `/product/${id}`;
+
+/** Who it's for (OG-034 R11); formation partners is the partners page. */
+export type WhoId = 'new_companies' | 'several_companies';
+export const WHO_IDS: WhoId[] = ['new_companies', 'several_companies'];
+export const whoPath = (id: WhoId) => `/for/${id.replace('_', '-')}`;
+
+/** Page id per path: its meta is `web.page.<id>.title` and `.description`. */
+const STATIC: Record<string, string> = {
+  '/': 'home',
+  '/product': 'product',
+  '/security': 'security',
+  '/partners': 'partners',
+  '/pricing': 'pricing',
+  '/guides': 'guides',
+  '/faq': 'faq',
+  '/status': 'status',
+  '/contact': 'contact',
+  '/demo': 'demo',
+};
+
+function pageIds(): Record<string, string> {
+  const ids: Record<string, string> = { ...STATIC };
+  for (const id of capIds()) ids[capPath(id)] = id;
+  for (const id of WHO_IDS) ids[whoPath(id)] = id;
+  return ids;
 }
 
-export const PUBLIC_PATHS = ['/', '/product', '/security', '/partners'] as const;
-/** The site's pages, plus the blog, its posts, the videos (OG-032 R15, R16) and the legal pages (OG-033 R14). */
-export type PublicPath =
-  (typeof PUBLIC_PATHS)[number] | '/blog' | '/videos' | `/blog/${string}` | `/legal/${string}`;
-export type PagePath = (typeof PUBLIC_PATHS)[number];
+export type PublicPath = string;
+export type PagePath = string;
 
 /** The legal pages in the footer, in this order first; any other `legal.<slug>.title` follows. */
 const LEGAL_ORDER = ['terms', 'privacy', 'cookies', 'disclosures'];
@@ -49,36 +72,79 @@ export function legalSlugs(): string[] {
 export const isLegalPath = (path: string) =>
   path.startsWith('/legal/') && legalSlugs().includes(path.slice(7));
 
-export function isPublicPath(path: string): path is PublicPath {
-  return (PUBLIC_PATHS as readonly string[]).includes(path) || isMediaPath(path) || isLegalPath(path);
+export const isPagePath = (path: string): boolean => path in pageIds();
+export const pageId = (path: string): string | undefined => pageIds()[path];
+export const capOfPath = (path: string): CapId | undefined => capIds().find((id) => capPath(id) === path);
+export const whoOfPath = (path: string): WhoId | undefined => WHO_IDS.find((id) => whoPath(id) === path);
+
+export function isPublicPath(path: string): boolean {
+  return isPagePath(path) || isMediaPath(path) || isLegalPath(path);
 }
 
-export const isPagePath = (path: string): path is PagePath =>
-  (PUBLIC_PATHS as readonly string[]).includes(path);
-
-const PAGE_KEY: Record<PagePath, string> = {
-  '/': 'home',
-  '/product': 'product',
-  '/security': 'security',
-  '/partners': 'partners',
+export const pageMeta = (path: string) => {
+  const id = pageId(path) ?? 'home';
+  return { title: t(`web.page.${id}.title`), description: t(`web.page.${id}.description`) };
 };
 
-export const pageMeta = (path: PagePath) => ({
-  title: t(`web.meta.${PAGE_KEY[path]}.title`),
-  description: t(`web.meta.${PAGE_KEY[path]}.description`),
-});
+/** The paths of every page the build has, for the sitemap of tests and captures. */
+export const pagePaths = (): string[] => Object.keys(pageIds());
 
-/** The site menu; the videos were recorded on the US demo, so the AE build has none (OG-022 R18). */
-export function navLinks(): Array<{ to: PublicPath; label: string }> {
-  const links: Array<{ to: PublicPath; key: string }> = [
-    { to: '/product', key: 'web.nav.product' },
-    { to: '/security', key: 'web.nav.security' },
-    { to: '/partners', key: 'web.nav.partners' },
-    ...(US_MEDIA ? [{ to: '/videos' as const, key: 'web.nav.videos' }] : []),
-    { to: '/blog', key: 'web.nav.blog' },
-  ];
-  return links.map((l) => ({ to: l.to, label: t(l.key) }));
+export interface NavLink {
+  to: string;
+  label: string;
 }
+export interface NavGroup {
+  id: 'product' | 'who' | 'resources';
+  label: string;
+  links: NavLink[];
+}
+
+/** The header and footer menus (OG-034 R3, R5). Videos were recorded on the US demo, so the AE build has none. */
+export function navGroups(): NavGroup[] {
+  return [
+    {
+      id: 'product',
+      label: t('web.nav.product'),
+      links: [
+        { to: '/product', label: t('web.nav.overview') },
+        ...capIds().map((id) => ({ to: capPath(id), label: t(`web.product.${id}.nav`) })),
+      ],
+    },
+    {
+      id: 'who',
+      label: t('web.nav.who'),
+      links: [
+        ...WHO_IDS.map((id) => ({ to: whoPath(id), label: t(`web.who.${id}.nav`) })),
+        { to: '/partners', label: t('web.nav.formation_partners') },
+      ],
+    },
+    {
+      id: 'resources',
+      label: t('web.nav.resources'),
+      links: [
+        { to: '/guides', label: t('web.nav.guides') },
+        { to: '/blog', label: t('web.nav.blog') },
+        ...(US_MEDIA ? [{ to: '/videos', label: t('web.nav.videos') }] : []),
+        { to: '/faq', label: t('web.nav.faq') },
+        { to: '/status', label: t('web.nav.status') },
+      ],
+    },
+  ];
+}
+
+/** Top-level links between the menus: Pricing and Security. */
+export const navLinks = (): NavLink[] => [
+  { to: '/pricing', label: t('web.nav.pricing') },
+  { to: '/security', label: t('web.nav.security') },
+];
+
+/** The group that holds [path], so its menu button is marked as holding the current page. */
+export const groupOf = (path: string | undefined) =>
+  path
+    ? navGroups().find((g) =>
+        g.links.some((l) => l.to === path || (l.to === '/blog' && path.startsWith('/blog/'))),
+      )?.id
+    : undefined;
 
 /** Numbered items with fields: `<prefix>.1.<field>`, `<prefix>.2.<field>`, ... as many as the content has. */
 export function items<F extends string>(prefix: string, fields: readonly F[]): Array<Record<F, string>> {
@@ -88,47 +154,49 @@ export function items<F extends string>(prefix: string, fields: readonly F[]): A
   return out;
 }
 
-const CAPABILITY_IDS: ArtName[] = [
-  'accounts',
-  'payments',
-  'topup',
-  'cards',
-  'approvals',
-  'recipients',
-  'support',
-  'notifications',
-  'assistant',
-];
+export interface Capability {
+  id: CapId;
+  path: string;
+  nav: string;
+  title: string;
+  lede: string;
+  points: string[];
+  soon: string[];
+}
 
-export const capabilities = (): Capability[] =>
-  CAPABILITY_IDS.filter((id) => has(`web.cap.${id}.title`)).map((id) => ({
-    id,
-    title: t(`web.cap.${id}.title`),
-    summary: t(`web.cap.${id}.summary`),
-    points: tList(`web.cap.${id}.points`),
-    soon: tList(`web.cap.${id}.soon`),
-  }));
-
-export const HOME_CARDS: ArtName[] = ['accounts', 'payments', 'cards', 'approvals'];
-
-export const steps = () => items('web.steps', ['title', 'text'] as const);
-export const securityControls = () => items('web.security', ['title', 'text'] as const);
-export const trustParties = () => items('web.trust', ['name', 'role'] as const);
-export const faq = () => items('faq', ['q', 'a'] as const);
-
-/** Large product rows on the home page, each with a real screen from demo mode (OG-032 R10). */
-export const FEATURE_ROWS = [
-  { id: 'payments', screen: 'payments' },
-  { id: 'cards', screen: 'cards' },
-  { id: 'notifications', screen: 'notifications' },
-] as const;
-
-export const feature = (id: string) => ({
-  eyebrow: t(`web.feature.${id}.eyebrow`),
-  title: t(`web.feature.${id}.title`),
-  text: t(`web.feature.${id}.text`),
-  points: tList(`web.feature.${id}.points`),
+export const capability = (id: CapId): Capability => ({
+  id,
+  path: capPath(id),
+  nav: t(`web.product.${id}.nav`),
+  title: t(`web.product.${id}.title`),
+  lede: t(`web.product.${id}.lede`),
+  points: tList(`web.product.${id}.points`),
+  soon: tList(`web.product.${id}.soon`),
 });
+export const capabilities = (): Capability[] => capIds().map(capability);
+
+export const who = (id: WhoId) => ({
+  id,
+  path: whoPath(id),
+  nav: t(`web.who.${id}.nav`),
+  title: t(`web.who.${id}.title`),
+  lede: t(`web.who.${id}.lede`),
+  points: tList(`web.who.${id}.points`),
+});
+
+export const steps = () => items('web.how', ['title', 'text'] as const);
+export const securityControls = () => items('web.protect', ['title', 'text'] as const);
+export const trustParties = () => items('web.trust', ['name', 'role'] as const);
+/** The general questions, and each capability's (`faq.general`, `faq.<capability>`). */
+export const faq = (group: 'general' | CapId = 'general') => items(`faq.${group}`, ['q', 'a'] as const);
+
+/** The questions a page shows, and so its FAQPage data (OG-034 R2, R9). */
+export function faqFor(path: string): Array<{ q: string; a: string }> {
+  if (path === '/faq') return [...faq(), ...capIds().flatMap((id) => faq(id))];
+  const cap = capOfPath(path);
+  if (cap) return faq(cap);
+  return ['/', '/security', '/partners', '/pricing', ...WHO_IDS.map(whoPath)].includes(path) ? faq() : [];
+}
 
 export interface Fact {
   value: string;
@@ -136,11 +204,11 @@ export interface Fact {
   source: string;
 }
 
-/** Facts with a source each (OG-032 R11, R19); the source is the value entry's meta. */
+/** The numbers band (OG-034 R8): facts true today, each with its source in the value entry's meta. */
 export const facts = (): Fact[] =>
-  items('web.facts', ['value', 'label'] as const).map((f, i) => ({
+  items('web.numbers', ['value', 'label'] as const).map((f, i) => ({
     ...f,
-    source: metaOf(`web.facts.${i + 1}.value`).source ?? '',
+    source: metaOf(`web.numbers.${i + 1}.value`).source ?? '',
   }));
 
 /** The security page leads with the facts after the first, plus the engineering fact (OG-032 R19). */
@@ -152,3 +220,22 @@ export const securityFacts = (): Fact[] => [
     source: metaOf('web.facts.security.value').source ?? '',
   },
 ];
+
+/** Old product anchors (`/product#topup`, kept in blog posts' meta) to the page that now holds them (AC-R2.3). */
+const ANCHOR: Record<string, string> = {
+  accounts: 'accounts',
+  notifications: 'accounts',
+  payments: 'payments',
+  topup: 'payments',
+  recipients: 'payments',
+  cards: 'cards',
+  approvals: 'approvals',
+  assistant: 'assistant',
+};
+
+export function productLink(to: string): string {
+  const m = /^\/product#([a-z]+)$/.exec(to);
+  if (!m) return to;
+  const id = ANCHOR[m[1]!] as CapId | undefined;
+  return id && capIds().includes(id) ? capPath(id) : '/product';
+}

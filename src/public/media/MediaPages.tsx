@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { US_MEDIA } from '../../region';
 import { BrowserFrame, PhoneFrame } from '../art';
 import { formatPostDate, posts, postBySlug, type Post } from './blog';
+import { productLink } from '../content';
 import { media } from './content';
 import { has, t } from '../../i18n';
 import { APP_SHOTS, WEB_SHOTS, type GalleryShot } from './gallery';
@@ -127,7 +128,8 @@ function Shot({ shot }: { shot: GalleryShot }) {
       alt={t(`web.gallery.${shot.id}.alt`)}
       width={shot.width}
       height={shot.height}
-      loading="lazy"
+      loading="eager"
+      fetchPriority="low"
       decoding="async"
     />
   );
@@ -145,7 +147,7 @@ function Shot({ shot }: { shot: GalleryShot }) {
   );
 }
 
-/** Web and app screens for the product page. */
+/** Web and app screens for the product page; loaded eagerly at low priority, so no frame is ever empty (OG-034 R1). */
 export function Gallery() {
   if (!US_MEDIA) return null;
   return (
@@ -252,7 +254,7 @@ function BlogPost({ post }: { post: Post }) {
               <VideoPlayer video={video} />
               {post.product && (
                 <p className="pub-more">
-                  <Link to={post.product}>{media('see_product')}</Link>
+                  <Link to={productLink(post.product)}>{media('see_product')}</Link>
                 </p>
               )}
             </aside>

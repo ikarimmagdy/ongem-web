@@ -54,7 +54,7 @@ describe('public media (OG-032)', () => {
     expect(within(post).getByTestId('video-ongem-approves-one-person-company')).toBeInTheDocument();
     expect(within(post).getByRole('link', { name: 'See it in the product' })).toHaveAttribute(
       'href',
-      '/product#approvals',
+      '/product/approvals',
     );
     expect(document.title).toMatch(/one-person company \| OnGem/);
   });
@@ -150,11 +150,14 @@ describe('public media (OG-032)', () => {
     }
   });
 
-  it('nav_has_videos_and_blog_and_marks_a_post_as_blog_AC_R15_6', () => {
+  it('nav_has_videos_and_blog_and_marks_a_post_as_blog_AC_R15_6', async () => {
+    // OG-034 R3: videos and the blog are in the Resources menu.
     renderApp('/blog/virtual-cards-and-card-safety', { mode: 'none' });
-    const nav = screen.getByRole('navigation', { name: 'Site' });
-    expect(within(nav).getByRole('link', { name: 'Videos' })).toHaveAttribute('href', '/videos');
-    expect(within(nav).getByRole('link', { name: 'Blog' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByTestId('menu-resources')).toHaveAttribute('data-current', 'true');
+    await userEvent.click(screen.getByTestId('menu-resources'));
+    const list = screen.getByTestId('menu-list-resources');
+    expect(within(list).getByRole('link', { name: 'Videos' })).toHaveAttribute('href', '/videos');
+    expect(within(list).getByRole('link', { name: 'Blog' })).toHaveAttribute('aria-current', 'page');
   });
 
   it('one_person_demo_shows_ongem_approval_AC_R16_4', async () => {

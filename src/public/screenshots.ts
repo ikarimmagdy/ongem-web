@@ -1,7 +1,10 @@
 import { t } from '../i18n';
 import type { ArtName } from './content';
+import approvals from '../assets/public/gallery/web-ongem-approves.jpg';
+import assistant from '../assets/public/screen-assistant.jpg';
 import cardsPhone from '../assets/public/screen-cards-phone.jpg';
 import cards from '../assets/public/screen-cards.jpg';
+import companies from '../assets/public/screen-companies.jpg';
 import homePhone from '../assets/public/screen-home-phone.jpg';
 import home from '../assets/public/screen-home.jpg';
 import notificationsPhone from '../assets/public/screen-notifications-phone.jpg';
@@ -15,7 +18,7 @@ import support from '../assets/public/screen-support.jpg';
 
 /**
  * Product screens captured from demo mode (sample data only) by `scripts/public-screenshots.mjs` at twice the pixel
- * density (OG-032 R7, R10). Their descriptions are content entries. Width and height are the displayed size in CSS pixels, so the browser reserves the space.
+ * density (OG-032 R7, R10); the approvals screen is the gallery's, the companies and assistant screens were captured for OG-034. Their descriptions are content entries. Width and height are the displayed size in CSS pixels, so the browser reserves the space.
  */
 export const SCREENSHOTS = {
   home: {
@@ -48,6 +51,21 @@ export const SCREENSHOTS = {
     width: 1080,
     height: 720,
   },
+  approvals: {
+    src: approvals,
+    width: 1040,
+    height: 760,
+  },
+  companies: {
+    src: companies,
+    width: 1440,
+    height: 900,
+  },
+  assistant: {
+    src: assistant,
+    width: 1080,
+    height: 720,
+  },
   homePhone: {
     src: homePhone,
     width: 390,
@@ -74,6 +92,9 @@ export const SCREEN_ART: Record<ScreenName, ArtName> = {
   cards: 'cards',
   notifications: 'notifications',
   support: 'support',
+  approvals: 'approvals',
+  companies: 'companies',
+  assistant: 'assistant',
   homePhone: 'accounts',
   paymentsPhone: 'payments',
 };

@@ -122,3 +122,13 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   (`export:create`) picks last full month or dates and a format, the run is read again until Ready (download link naming
   the file, fresh link), Refused or Failed; others see the no-permission text. Texts `app.exports.*` in both seeds.
   Test `src/test/exports.test.tsx` (AC-R16.1, R16.2, R16.4).
+- 2026-11-11: OG-034 public site structure (spec `ongem-engineering/specs/OG-034-website-structure/`). `src/public/`:
+  `site.ts` (region facts `live` and `cards`, `VITE_SITE_URL`, `VITE_OTHER_SITE_URL`, `VITE_CONTACT_EMAIL`, hreflang),
+  `content.ts` (page map, menus, capability and audience readers, `faqFor`, old `/product#x` anchors to pages), `Nav.tsx`
+  (header with disclosure menus, phone panel, region chooser, five-column footer), `seo.ts` (title, description,
+  canonical, hreflang, Organization and FAQPage JSON-LD, `?lang=`), `pages/` (home, product overview, one page per
+  capability at `/product/<id>`, `/for/<audience>`, pricing, security, partners, guides, FAQ, status, contact, `/demo`
+  which opens the demo). The reveal never hides content (motion only, off with reduced motion and in print); screens
+  load eagerly. The AE build says coming soon (Talk to us) and has no card page, post or claim. The build's snapshot
+  backs keys the API does not serve yet (`src/i18n/store.ts`), so deploy ongem-core first, then the web. Tests
+  `og034-site.test.tsx`, `og034-site-ae.test.tsx`.
