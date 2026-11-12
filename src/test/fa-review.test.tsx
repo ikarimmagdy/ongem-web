@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import { fireEvent, screen, waitFor, within } from '@testing-library/react';
+import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DemoOnGemApi } from '../api/demo';
 import { stateStatus } from '../screens/common';
@@ -277,6 +277,37 @@ describe('founder web review 2026-11-12, payments', () => {
     await userEvent.click(screen.getByTestId('payment-review-button'));
     await userEvent.click(await screen.findByTestId('payment-send'));
   };
+
+  it('FA_amount_never_truncates money in a row or a table is never cut, from 320 to 1920 px, in either direction', async () => {
+    // A row's amount column keeps the amount's width (the list clips its overflow); nothing cuts or ellipsizes money.
+    expect(prop(SIGNED_IN_SHEETS, '.fw-row__main:has(> .og-money)', 'min-width')).toBe('auto');
+    for (const sheet of [...SIGNED_IN_SHEETS, 'design-system/styles.css'])
+      for (const m of css(sheet).matchAll(/([^{}]+)\{([^{}]*)\}/g))
+        if (/og-money/.test(m[1]!))
+          expect(m[2]).not.toMatch(/text-overflow|overflow(-x)?:\s*(hidden|clip)|max-width/);
+    // A narrow table wraps the amount after its currency, tightens its cells, and stacks its rows below 300 px.
+    expect(prop(SIGNED_IN_SHEETS, '.og-table .og-money', 'white-space')).toBe('normal');
+    expect(prop(SIGNED_IN_SHEETS, '.og-table-wrap', 'container-type')).toBe('inline-size');
+    expect(css('web.css')).toMatch(
+      /@container \(max-width: 300px\) \{[\s\S]*?\.og-table tbody td\.og-num \{\s*grid-column: 2;/,
+    );
+
+    renderApp('/payments');
+    const list = await screen.findByTestId('payments-list');
+    const amounts = list.querySelectorAll('.fw-row .og-money');
+    expect(amounts.length).toBeGreaterThan(0);
+    for (const a of Array.from(amounts)) expect(a.parentElement).toHaveClass('fw-row__main');
+
+    cleanup();
+    renderApp('/accounts/acc_demo_ops');
+    const table = await screen.findByRole('table');
+    const signed = Array.from(table.querySelectorAll('.og-money'));
+    expect(signed.length).toBeGreaterThan(0);
+    for (const s of signed) {
+      expect(s.querySelector('wbr')).not.toBeNull();
+      expect(s.textContent).toMatch(/^[+\u2212]US\$[\d,]+\.\d{2}$/);
+    }
+  });
 
   it('FA_034 sending ends on a confirmation: amount, payee, Send another', async () => {
     const api = new DemoOnGemApi({ stepUp: () => Promise.resolve(true) });

@@ -78,6 +78,51 @@
   gap: var(--space-xs);
   min-width: 0;
 }
+/* A column holding an amount never shrinks below the amount, so the list's overflow never cuts money off. */
+.fw-row__main:has(> .og-money) {
+  min-width: auto;
+}
+/* In a narrow table an amount wraps after its currency, and the cells tighten, instead of money running past the
+   visible edge. */
+.og-table .og-money {
+  white-space: normal;
+}
+.og-table-wrap {
+  container-type: inline-size;
+}
+@container (max-width: 420px) {
+  .og-table th,
+  .og-table td {
+    padding-inline: var(--space-xs);
+  }
+}
+/* Narrower still, each row stacks its cells and keeps the amount whole beside them. */
+@container (max-width: 300px) {
+  .og-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .og-table tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--space-sm);
+    padding-block: var(--space-sm);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+  .og-table tbody td {
+    grid-column: 1;
+    padding-block: 0;
+    border-bottom: 0;
+  }
+  .og-table tbody td.og-num {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+}
 .fw-row__sub {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { Account, Statement, Transaction } from '../api/types';
 import { errorText } from '../api/errors';
@@ -34,12 +34,26 @@ export function describeTransaction(tx: Pick<Transaction, 'rail' | 'direction'>)
   return t(tx.direction === 'CREDIT' ? 'app.accounts.txn_in' : 'app.accounts.txn_out', { rail });
 }
 
+/** Formatted money with a break point between the currency and the number, for a table cell where money may wrap. */
+function moneyText(text: string): ReactNode {
+  const i = text.search(/\d/);
+  return i > 0 ? (
+    <>
+      {text.slice(0, i)}
+      <wbr />
+      {text.slice(i)}
+    </>
+  ) : (
+    text
+  );
+}
+
 /** An amount with its sign, tight and isolated left to right, so Arabic never moves the minus after it (FA-048). */
 function SignedAmt({ credit, value }: { credit: boolean; value: Transaction['amount'] }) {
   return (
     <bdi dir="ltr" className="og-money" data-mask="">
       {credit ? '+' : '\u2212'}
-      {formatMinor(value)}
+      {moneyText(formatMinor(value))}
     </bdi>
   );
 }
