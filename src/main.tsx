@@ -8,6 +8,7 @@ import { clerkFirst } from './auth/defer';
 import { AuthProvider, NO_AUTH } from './auth/session';
 import { initContent } from './i18n';
 import { isAppPath } from './public/content';
+import { startTelemetry, telemetryConfig } from './telemetry';
 
 const el = document.getElementById('root');
 if (!el) throw new Error('Missing #root');
@@ -45,6 +46,22 @@ function mount(Auth: ComponentType<{ children: ReactNode }>, onAppPath?: () => v
     </StrictMode>,
   );
 }
+
+// OG-037: uncaught errors from now on; the exporter loads after load and idle (blank VITE_OTEL_ENDPOINT: off).
+startTelemetry(
+  telemetryConfig(import.meta.env, {
+    service: 'ongem-web',
+    version: __APP_VERSION__,
+    secretAfter: ['invite'],
+    demo: () => {
+      try {
+        return sessionStorage.getItem('ongem.demo') === '1';
+      } catch {
+        return false;
+      }
+    },
+  }),
+);
 
 // The remembered language (Arabic loads its texts first) and newer texts kept from the API, before the first render
 // (OG-033). A build without a sign-in key never downloads Clerk; a signed-out visitor on the public site downloads it

@@ -17,4 +17,13 @@ interface ImportMetaEnv {
   readonly VITE_CONTACT_EMAIL?: string;
   /** `production` for a production build (PS-002, PS-014); anything else is a dev or preview build. */
   readonly VITE_ENVIRONMENT?: string;
+  /** OG-037: the OpenTelemetry collector (blank: off; unset: the dev collector, none for production). */
+  readonly VITE_OTEL_ENDPOINT?: string;
+  /** OG-037: share of page loads, route changes and API calls traced, 0 to 1 (default 1). */
+  readonly VITE_OTEL_SAMPLING?: string;
+  /** OG-037: deployment.environment (default dev, or prod for a production build). */
+  readonly VITE_OTEL_ENVIRONMENT?: string;
 }
+
+/** The package version and commit of the build (vite.config.ts). */
+declare const __APP_VERSION__: string;

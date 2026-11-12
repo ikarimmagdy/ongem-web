@@ -165,3 +165,13 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   segments, `siteRoutes()`), which ongem-infra's routing function and the Azure Front Door rules read for a 404 status.
   PS-005: `record-videos.mjs` follows the OG-035 shell (Send in the Payments header, named step-up, confirmation after
   sending, dispute form), hides the demo bar and takes posters without the caption.
+- 2026-11-12: OG-037 telemetry to SigNoz (spec `ongem-engineering/specs/OG-037-otel-signoz/`, ADR-0054). `src/telemetry/`:
+  `index.ts` (in the first-load bundle: config from `VITE_OTEL_ENDPOINT`, unset is the dev collector, blank is off,
+  none for a production build or `VITE_REGION=AE`; uncaught errors and rejections queued; loads `start.ts` after load
+  and idle), `start.ts` (lazy chunk: errors as OTLP logs with type, scrubbed message, stack and route template; document
+  load and route change spans; API call spans with the path template and `traceparent` to the same-origin `/api-dev`,
+  api-dev.ongem.com and api.ongem.com; a call to a UAE API pauses everything until the next US call; web vitals LCP, INP,
+  CLS as histograms `web.vitals.*`; batches, backoff, 200 item cap, no credentials), `otlp.ts` (OTLP JSON by hand, path
+  templates, scrubbing). Demo mode sends errors only, under `service.namespace` demo. `security-headers.json` allows the
+  collector in connect-src. `__APP_VERSION__` (vite.config.ts) is `service.version`. Tests `src/telemetry/telemetry.test.ts`,
+  e2e `src/test/telemetry.e2e.ts`; `ONGEM_OTEL_LIVE=1 npx vitest run src/telemetry/live.test.ts` posts to the real collector.

@@ -2,6 +2,7 @@
 import { configDefaults } from 'vitest/config';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
+import { execSync } from 'node:child_process';
 import { readdirSync, readFileSync, rmSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { seedSnapshot, type Snapshot } from './scripts/content.mjs';
@@ -98,6 +99,18 @@ function contentSnapshot(): Plugin {
   };
 }
 
+/** OG-037: service.version for telemetry: the package version and the commit the build was made from. */
+function appVersion(): string {
+  const { version } = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
+  try {
+    return `${version}+${execSync('git rev-parse --short HEAD', { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString()
+      .trim()}`;
+  } catch {
+    return version;
+  }
+}
+
 const devApi = {
   '/api-dev': {
     target: 'https://api-dev.ongem.com',
@@ -109,6 +122,7 @@ const devApi = {
 
 export default defineConfig({
   plugins: [react(), regionPublic(), contentSnapshot()],
+  define: { __APP_VERSION__: JSON.stringify(appVersion()) },
   server: { port: 5190, strictPort: true, proxy: devApi },
   preview: { port: 5190, strictPort: true, proxy: devApi, headers: securityHeaders() },
   test: {
