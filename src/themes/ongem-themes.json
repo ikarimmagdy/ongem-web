@@ -229,15 +229,15 @@
         },
         "category": {
           "banking": "#314BE8",
-          "bankingBg": "#EAF4FF",
+          "bankingBg": "#16245E",
           "global": "#38D6B0",
-          "globalBg": "#EAF9F5",
+          "globalBg": "#0D2E3A",
           "cards": "#4C2DD1",
-          "cardsBg": "#F0ECFF",
+          "cardsBg": "#1F1A5C",
           "compliance": "#58A8F3",
-          "complianceBg": "#EAF4FF",
+          "complianceBg": "#102C52",
           "treasury": "#D8A63C",
-          "treasuryBg": "#FBF4E4"
+          "treasuryBg": "#2E2614"
         }
       },
       "gradient": {
