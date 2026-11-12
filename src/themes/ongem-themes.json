@@ -5,108 +5,109 @@
       "$schema": "ongem-theme/v1",
       "id": "ongem",
       "name": "OnGem",
-      "version": 3,
-      "source": "OnGem Brand Guidelines V2 (inputs/OnGem Brand Guidelines V2.docx)",
+      "version": 4,
+      "source": "OnGem design system v5 (OG-040 redesign, ongem-engineering/outputs/review/redesign-2026-11-13); logo from Brand Guidelines V2",
       "color": {
         "brand": {
-          "primary": "#314BE8",
-          "primaryHover": "#2539C4",
-          "secondary": "#0B306E",
-          "signature": "#4C2DD1",
-          "signatureSoft": "#8D78F0",
-          "accent": "#38D6B0",
-          "info": "#58A8F3",
-          "gold": "#D8A63C",
-          "deep": "#081549"
+          "primary": "#2F4BE8",
+          "primaryHover": "#2139C7",
+          "secondary": "#0B1033",
+          "signature": "#5B3FD9",
+          "signatureSoft": "#9B8AF2",
+          "accent": "#1FB892",
+          "info": "#3E8EE6",
+          "gold": "#C8952E",
+          "deep": "#0B1033"
         },
         "surface": {
-          "canvas": "#F6F7F9",
+          "canvas": "#FAFAFA",
           "card": "#FFFFFF",
           "raised": "#FFFFFF",
-          "sunken": "#F1F3F6",
-          "inverse": "#081549",
-          "tintBlue": "#EAF4FF",
-          "tintViolet": "#F0ECFF",
-          "tintMint": "#EAF9F5"
+          "sunken": "#F4F4F5",
+          "inverse": "#0B1033",
+          "tintBlue": "#EEF1FE",
+          "tintViolet": "#F3F0FE",
+          "tintMint": "#E9F8F3"
         },
         "text": {
-          "primary": "#081549",
-          "secondary": "#5F6E86",
-          "muted": "#7D8AA0",
+          "primary": "#0F1115",
+          "secondary": "#4A4F59",
+          "muted": "#6B7079",
           "inverse": "#FFFFFF",
-          "link": "#314BE8",
-          "money": "#081549"
+          "link": "#2F4BE8",
+          "money": "#0F1115"
         },
         "border": {
-          "default": "#E3E7EE",
-          "subtle": "#EDF0F4",
-          "strong": "#7F8CA1",
-          "focus": "#314BE8"
+          "default": "#E6E6E9",
+          "subtle": "#EFEFF1",
+          "strong": "#7E828B",
+          "focus": "#2F4BE8"
         },
         "action": {
-          "primaryBg": "#314BE8",
+          "primaryBg": "#2F4BE8",
           "primaryText": "#FFFFFF",
-          "primaryHoverBg": "#2539C4",
+          "primaryHoverBg": "#2139C7",
           "secondaryBg": "#FFFFFF",
-          "secondaryText": "#081549",
-          "secondaryBorder": "#DCE3EE",
+          "secondaryText": "#0F1115",
+          "secondaryBorder": "#DADBDF",
           "dangerBg": "#D92D20",
           "dangerText": "#FFFFFF"
         },
         "status": {
-          "success": "#079455",
+          "success": "#067647",
           "successBg": "#ECFDF3",
-          "pending": "#DC6803",
+          "pending": "#B54708",
           "pendingBg": "#FFFAEB",
-          "failure": "#D92D20",
+          "failure": "#C4271B",
           "failureBg": "#FEF3F2",
-          "info": "#314BE8",
-          "infoBg": "#EAF4FF",
-          "neutral": "#65748B",
-          "neutralBg": "#F1F3F6"
+          "info": "#2F4BE8",
+          "infoBg": "#EEF1FE",
+          "neutral": "#5D616B",
+          "neutralBg": "#F4F4F5"
         },
         "category": {
-          "banking": "#314BE8",
-          "bankingBg": "#EAF4FF",
-          "global": "#38D6B0",
-          "globalBg": "#EAF9F5",
-          "cards": "#4C2DD1",
-          "cardsBg": "#F0ECFF",
-          "compliance": "#58A8F3",
-          "complianceBg": "#EAF4FF",
-          "treasury": "#D8A63C",
-          "treasuryBg": "#FBF4E4"
+          "banking": "#2F4BE8",
+          "bankingBg": "#EEF1FE",
+          "global": "#12936F",
+          "globalBg": "#E9F8F3",
+          "cards": "#5B3FD9",
+          "cardsBg": "#F3F0FE",
+          "compliance": "#2F7BD6",
+          "complianceBg": "#EAF3FD",
+          "treasury": "#B07C17",
+          "treasuryBg": "#FBF5E6"
         }
       },
       "gradient": {
         "brand": [
-          "#081549",
-          "#1E227D",
-          "#4C2DD1",
-          "#7B70C1"
+          "#0B1033",
+          "#1B2470",
+          "#2F4BE8",
+          "#6E7BF2"
         ]
       },
       "typography": {
         "display": {
-          "family": "'Roboto Condensed', 'Arial Narrow', sans-serif",
-          "weight": 700
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
+          "weight": 600,
+          "tracking": "-0.025em"
         },
         "label": {
-          "family": "'Inter', system-ui, sans-serif",
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
           "weight": 500,
           "transform": "none",
           "tracking": "0em"
         },
         "body": {
-          "family": "'Inter', system-ui, sans-serif",
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
           "weight": 400
         },
         "bodyStrong": {
-          "family": "'Inter', system-ui, sans-serif",
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
           "weight": 500
         },
         "money": {
-          "family": "'Inter', system-ui, sans-serif",
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
           "weight": 600,
           "numeric": "tabular-nums"
         },
@@ -115,11 +116,11 @@
           "sm": 14,
           "md": 16,
           "lg": 18,
-          "xl": 22,
-          "2xl": 28,
-          "3xl": 36,
-          "4xl": 48,
-          "5xl": 64
+          "xl": 20,
+          "2xl": 24,
+          "3xl": 32,
+          "4xl": 44,
+          "5xl": 56
         }
       },
       "space": {
@@ -141,8 +142,8 @@
         "pill": 999
       },
       "shadow": {
-        "card": "0 1px 2px rgba(8,21,73,0.04)",
-        "raised": "0 12px 32px rgba(8,21,73,0.08)"
+        "card": "0 1px 2px rgba(15,17,21,0.04)",
+        "raised": "0 8px 24px rgba(15,17,21,0.08)"
       },
       "logo": {
         "wordmark": "ongem-wordmark.png",
@@ -150,125 +151,126 @@
         "alt": "OnGem"
       },
       "rules": [
-        "Primary CTA royal blue; secondary CTA white with cool border",
-        "Navy for financial values and primary text; never violet body text",
-        "Status colors stay conventional and separate from category colors",
-        "Hairline borders over shadows; radii 12-20 for cards, pill buttons on the public site",
-        "Headlines sentence case, bold condensed, deep navy; numbers tabular",
-        "Logo: full-colour wordmark on white, Ice or an Ice plate on navy; clear space at least half the logo height; never below 24 px tall",
-        "Treasury gold only for treasury or stable value; workflows and compliance use blue-violet",
-        "Form controls use the strong border (3:1); cards keep the light cool border",
-        "Labels, eyebrows and navigation in the body face, sentence case; the condensed face is for headlines only",
-        "Colour restraint: neutral surfaces, one filled button per view, brand blue for actions and links; one navy band per page besides the footer",
-        "Space before decoration: sections 96 px apart on wide screens, 64 px on a phone"
+        "One family: Inter for everything (headings at tight tracking, weights 400, 500 and 600 only); IBM Plex Sans Arabic for Arabic; no condensed face",
+        "Real neutrals: white page, #FAFAFA app canvas, one grey (#F4F4F5) for sunken areas; never grey text on a grey fill",
+        "OnGem blue is the accent: the one filled button per view, links, focus and the active nav item; never a background band",
+        "Deep navy (#0B1033) appears once per page at most, for the footer or one statement band; never both on one screen",
+        "Primary text near-black, secondary #4A4F59 (8:1); muted only for meta text of 13 px and up",
+        "Status colours stay conventional and separate from category colours; category tints only in Needs you and file icons",
+        "Hairline borders before shadows; cards 16 to 20 px radius, controls 12, pill buttons on the public site",
+        "Headings sentence case, weight 600, tracking -0.025em at 32 px and up, -0.01em below; numbers tabular",
+        "Logo: full-colour wordmark on white, Ice on navy; at least 24 px tall",
+        "Form controls use the strong border (3:1); cards keep the light border",
+        "Sections 96 px apart on wide screens, 64 px on a phone; content measure 640 px for prose"
       ]
     },
     {
       "$schema": "ongem-theme/v1",
       "id": "ongem-dark",
       "name": "OnGem dark",
-      "version": 3,
-      "source": "OnGem Brand Guidelines V2 (inputs/OnGem Brand Guidelines V2.docx)",
+      "version": 4,
+      "source": "OnGem design system v5 (OG-040 redesign, ongem-engineering/outputs/review/redesign-2026-11-13); logo from Brand Guidelines V2",
       "color": {
         "brand": {
-          "primary": "#314BE8",
-          "primaryHover": "#2539C4",
-          "secondary": "#0B306E",
-          "signature": "#4C2DD1",
-          "signatureSoft": "#8D78F0",
-          "accent": "#38D6B0",
-          "info": "#58A8F3",
-          "gold": "#D8A63C",
-          "deep": "#081549"
+          "primary": "#2F4BE8",
+          "primaryHover": "#2139C7",
+          "secondary": "#0B1033",
+          "signature": "#5B3FD9",
+          "signatureSoft": "#9B8AF2",
+          "accent": "#1FB892",
+          "info": "#3E8EE6",
+          "gold": "#C8952E",
+          "deep": "#0B1033"
         },
         "surface": {
-          "canvas": "#060E33",
-          "card": "#0B1748",
-          "raised": "#102060",
-          "sunken": "#050B29",
-          "inverse": "#F8FAFD",
-          "tintBlue": "#EAF4FF",
-          "tintViolet": "#F0ECFF",
-          "tintMint": "#EAF9F5"
+          "canvas": "#0E0F12",
+          "card": "#16181C",
+          "raised": "#1D2025",
+          "sunken": "#0A0B0D",
+          "inverse": "#F4F5F7",
+          "tintBlue": "#EEF1FE",
+          "tintViolet": "#F3F0FE",
+          "tintMint": "#E9F8F3"
         },
         "text": {
-          "primary": "#F8FAFD",
-          "secondary": "#A9B4C8",
-          "muted": "#8692AA",
-          "inverse": "#081549",
-          "link": "#8EA2FF",
-          "money": "#F8FAFD"
+          "primary": "#F4F5F7",
+          "secondary": "#B4B8C1",
+          "muted": "#8C919C",
+          "inverse": "#0F1115",
+          "link": "#93A3FF",
+          "money": "#F4F5F7"
         },
         "border": {
-          "default": "#22306A",
-          "subtle": "#18245A",
-          "strong": "#5D6DAA",
-          "focus": "#8EA2FF"
+          "default": "#2A2D33",
+          "subtle": "#212328",
+          "strong": "#6E737E",
+          "focus": "#93A3FF"
         },
         "action": {
-          "primaryBg": "#314BE8",
+          "primaryBg": "#2F4BE8",
           "primaryText": "#FFFFFF",
-          "primaryHoverBg": "#2539C4",
-          "secondaryBg": "#0B1748",
-          "secondaryText": "#F8FAFD",
-          "secondaryBorder": "#22306A",
+          "primaryHoverBg": "#2139C7",
+          "secondaryBg": "#16181C",
+          "secondaryText": "#F4F5F7",
+          "secondaryBorder": "#33363D",
           "dangerBg": "#D92D20",
           "dangerText": "#FFFFFF"
         },
         "status": {
-          "success": "#32D583",
-          "successBg": "#053321",
-          "pending": "#FDB022",
-          "pendingBg": "#3D2606",
+          "success": "#47CD89",
+          "successBg": "#0E2A1E",
+          "pending": "#F5B041",
+          "pendingBg": "#33240C",
           "failure": "#F97066",
-          "failureBg": "#3E1214",
-          "info": "#8EA2FF",
-          "infoBg": "#142467",
-          "neutral": "#A9B4C8",
-          "neutralBg": "#18245A"
+          "failureBg": "#3A1517",
+          "info": "#93A3FF",
+          "infoBg": "#1A2150",
+          "neutral": "#B4B8C1",
+          "neutralBg": "#24262B"
         },
         "category": {
-          "banking": "#314BE8",
-          "bankingBg": "#16245E",
-          "global": "#38D6B0",
-          "globalBg": "#0D2E3A",
-          "cards": "#4C2DD1",
-          "cardsBg": "#1F1A5C",
-          "compliance": "#58A8F3",
-          "complianceBg": "#102C52",
-          "treasury": "#D8A63C",
+          "banking": "#7B8CFF",
+          "bankingBg": "#1A2150",
+          "global": "#3CCB9F",
+          "globalBg": "#0F2E26",
+          "cards": "#A592FF",
+          "cardsBg": "#251C4D",
+          "compliance": "#6AAEF0",
+          "complianceBg": "#122B45",
+          "treasury": "#E0B154",
           "treasuryBg": "#2E2614"
         }
       },
       "gradient": {
         "brand": [
-          "#081549",
-          "#1E227D",
-          "#4C2DD1",
-          "#7B70C1"
+          "#0B1033",
+          "#1B2470",
+          "#2F4BE8",
+          "#6E7BF2"
         ]
       },
       "typography": {
         "display": {
-          "family": "'Roboto Condensed', 'Arial Narrow', sans-serif",
-          "weight": 700
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
+          "weight": 600,
+          "tracking": "-0.025em"
         },
         "label": {
-          "family": "'Inter', system-ui, sans-serif",
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
           "weight": 500,
           "transform": "none",
           "tracking": "0em"
         },
         "body": {
-          "family": "'Inter', system-ui, sans-serif",
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
           "weight": 400
         },
         "bodyStrong": {
-          "family": "'Inter', system-ui, sans-serif",
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
           "weight": 500
         },
         "money": {
-          "family": "'Inter', system-ui, sans-serif",
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
           "weight": 600,
           "numeric": "tabular-nums"
         },
@@ -277,11 +279,11 @@
           "sm": 14,
           "md": 16,
           "lg": 18,
-          "xl": 22,
-          "2xl": 28,
-          "3xl": 36,
-          "4xl": 48,
-          "5xl": 64
+          "xl": 20,
+          "2xl": 24,
+          "3xl": 32,
+          "4xl": 44,
+          "5xl": 56
         }
       },
       "space": {
@@ -303,8 +305,8 @@
         "pill": 999
       },
       "shadow": {
-        "card": "0 1px 2px rgba(8,21,73,0.04)",
-        "raised": "0 12px 32px rgba(8,21,73,0.08)"
+        "card": "0 1px 2px rgba(0,0,0,0.30)",
+        "raised": "0 12px 32px rgba(0,0,0,0.45)"
       },
       "logo": {
         "wordmark": "ongem-wordmark.png",
@@ -312,14 +314,17 @@
         "alt": "OnGem"
       },
       "rules": [
-        "Primary CTA royal blue; secondary CTA white with cool border",
-        "Navy for financial values and primary text; never violet body text",
-        "Status colors stay conventional and separate from category colors",
-        "Light cool borders over heavy shadows; radii 10-14 for cards",
-        "Headlines sentence case, bold condensed, deep navy; numbers tabular",
-        "Logo: full-colour wordmark on white, Ice or an Ice plate on navy; clear space at least half the logo height; never below 24 px tall",
-        "Treasury gold only for treasury or stable value; workflows and compliance use blue-violet",
-        "Form controls use the strong border (3:1); cards keep the light cool border"
+        "One family: Inter for everything (headings at tight tracking, weights 400, 500 and 600 only); IBM Plex Sans Arabic for Arabic; no condensed face",
+        "Real neutrals: white page, #FAFAFA app canvas, one grey (#F4F4F5) for sunken areas; never grey text on a grey fill",
+        "OnGem blue is the accent: the one filled button per view, links, focus and the active nav item; never a background band",
+        "Deep navy (#0B1033) appears once per page at most, for the footer or one statement band; never both on one screen",
+        "Primary text near-black, secondary #4A4F59 (8:1); muted only for meta text of 13 px and up",
+        "Status colours stay conventional and separate from category colours; category tints only in Needs you and file icons",
+        "Hairline borders before shadows; cards 16 to 20 px radius, controls 12, pill buttons on the public site",
+        "Headings sentence case, weight 600, tracking -0.025em at 32 px and up, -0.01em below; numbers tabular",
+        "Logo: full-colour wordmark on white, Ice on navy; at least 24 px tall",
+        "Form controls use the strong border (3:1); cards keep the light border",
+        "Sections 96 px apart on wide screens, 64 px on a phone; content measure 640 px for prose"
       ],
       "mode": "dark"
     },
@@ -414,21 +419,21 @@
           "weight": 700
         },
         "label": {
-          "family": "'Roboto Condensed', 'Arial Narrow', sans-serif",
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
           "weight": 500,
-          "transform": "uppercase",
-          "tracking": "0.06em"
+          "transform": "none",
+          "tracking": "0em"
         },
         "body": {
-          "family": "'Inter', system-ui, sans-serif",
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
           "weight": 400
         },
         "bodyStrong": {
-          "family": "'Inter', system-ui, sans-serif",
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
           "weight": 500
         },
         "money": {
-          "family": "'Inter', system-ui, sans-serif",
+          "family": "'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif",
           "weight": 600,
           "numeric": "tabular-nums"
         },
@@ -437,11 +442,11 @@
           "sm": 14,
           "md": 16,
           "lg": 18,
-          "xl": 22,
-          "2xl": 28,
-          "3xl": 36,
-          "4xl": 48,
-          "5xl": 64
+          "xl": 20,
+          "2xl": 24,
+          "3xl": 32,
+          "4xl": 44,
+          "5xl": 56
         }
       },
       "space": {

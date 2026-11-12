@@ -9,11 +9,9 @@ const theme = JSON.parse(readFileSync('src/themes/ongem-themes.json', 'utf8')).t
 );
 const c = theme.color;
 const font = (path) => `data:font/woff2;base64,${readFileSync(path).toString('base64')}`;
-const display = font(
-  'node_modules/@fontsource/roboto-condensed/files/roboto-condensed-latin-700-normal.woff2',
-);
+const display = font('node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2');
 const arabic = font(
-  'node_modules/@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-700-normal.woff2',
+  'node_modules/@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-600-normal.woff2',
 );
 const body = font('node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2');
 const wordmark = `data:image/png;base64,${readFileSync('src/assets/ongem-wordmark-light.png').toString('base64')}`;
@@ -43,7 +41,7 @@ background:radial-gradient(circle,${g[2]} 0%,${g[1]} 40%,transparent 70%);opacit
 .mark{position:absolute;inset-inline-end:96px;bottom:84px;width:120px;height:120px;border-radius:24px}
 img.wm{height:64px;width:auto;position:relative}
 .eyebrow{font-size:28px;color:${c.brand.accent};margin-bottom:20px;font-family:B,A,sans-serif}
-h1{font-family:D,A,sans-serif;font-size:${rtl ? 64 : 76}px;line-height:${rtl ? 1.3 : 1.05};max-width:820px}
+h1{font-family:D,A,sans-serif;font-weight:600;letter-spacing:${rtl ? 0 : '-0.025em'};font-size:${rtl ? 60 : 68}px;line-height:${rtl ? 1.3 : 1.08};max-width:820px}
 .badge{display:inline-block;margin-top:28px;padding:8px 18px;border-radius:999px;background:${c.surface.tintBlue};color:${c.brand.deep};font-size:24px}
 </style></head><body><div class="glow"></div><img class="mark" src="${mark}" alt="">
 <img class="wm" src="${wordmark}" alt="OnGem"><div style="position:relative"><p class="eyebrow">${eyebrow}</p><h1>${title}</h1>

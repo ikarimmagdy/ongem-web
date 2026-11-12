@@ -48,9 +48,9 @@ describe('theme runtime', () => {
 
   it('maps tokens to CSS custom properties', () => {
     const vars = themeToCssVars(byId('ongem'));
-    expect(vars['--color-brand-primary']).toBe('#314BE8');
-    expect(vars['--color-action-primary-bg']).toBe('#314BE8');
-    expect(vars['--font-display']).toContain('Roboto Condensed');
+    expect(vars['--color-brand-primary']).toBe('#2F4BE8');
+    expect(vars['--color-action-primary-bg']).toBe('#2F4BE8');
+    expect(vars['--font-display']).toContain('Inter');
     expect(vars['--radius-lg']).toBe('16px');
     expect(vars['--space-4xl']).toBe('96px');
     expect(vars['--font-label-transform']).toBe('none');
@@ -64,8 +64,8 @@ describe('theme runtime', () => {
         <Probe />
       </ThemeProvider>,
     );
-    expect(css('--color-brand-primary')).toBe('#314BE8');
-    expect(css('--color-surface-canvas')).toBe('#F6F7F9');
+    expect(css('--color-brand-primary')).toBe('#2F4BE8');
+    expect(css('--color-surface-canvas')).toBe('#FAFAFA');
     expect(document.documentElement.dataset.theme).toBe('ongem');
   });
 
@@ -82,7 +82,7 @@ describe('theme runtime', () => {
     expect(new LocalThemeStorage().getSelected()).toBe('demo-harbor');
 
     await userEvent.click(screen.getByRole('button', { name: 'OnGem dark' }));
-    expect(css('--color-surface-canvas')).toBe('#060E33');
+    expect(css('--color-surface-canvas')).toBe('#0E0F12');
     expect(document.documentElement.dataset.themeMode).toBe('dark');
   });
 
@@ -130,7 +130,7 @@ describe('theme runtime', () => {
       </ThemeProvider>,
     );
     expect(screen.getByTestId('override')).toHaveTextContent('false');
-    expect(css('--color-brand-primary')).toBe('#314BE8');
+    expect(css('--color-brand-primary')).toBe('#2F4BE8');
   });
 
   it('ignores an invalid theme from the API and keeps the bundled one', async () => {
@@ -175,7 +175,7 @@ describe('theme runtime', () => {
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'reset' }));
     });
-    expect(css('--color-brand-primary')).toBe('#314BE8');
+    expect(css('--color-brand-primary')).toBe('#2F4BE8');
     expect(new LocalThemeStorage().getOverrides()).toEqual({});
   });
 
