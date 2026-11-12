@@ -5,7 +5,7 @@
       "$schema": "ongem-theme/v1",
       "id": "ongem",
       "name": "OnGem",
-      "version": 2,
+      "version": 3,
       "source": "OnGem Brand Guidelines V2 (inputs/OnGem Brand Guidelines V2.docx)",
       "color": {
         "brand": {
@@ -20,10 +20,10 @@
           "deep": "#081549"
         },
         "surface": {
-          "canvas": "#F8FAFD",
+          "canvas": "#F6F7F9",
           "card": "#FFFFFF",
           "raised": "#FFFFFF",
-          "sunken": "#F1F4F9",
+          "sunken": "#F1F3F6",
           "inverse": "#081549",
           "tintBlue": "#EAF4FF",
           "tintViolet": "#F0ECFF",
@@ -38,8 +38,8 @@
           "money": "#081549"
         },
         "border": {
-          "default": "#DCE3EE",
-          "subtle": "#E9EEF5",
+          "default": "#E3E7EE",
+          "subtle": "#EDF0F4",
           "strong": "#7F8CA1",
           "focus": "#314BE8"
         },
@@ -63,7 +63,7 @@
           "info": "#314BE8",
           "infoBg": "#EAF4FF",
           "neutral": "#65748B",
-          "neutralBg": "#F1F4F9"
+          "neutralBg": "#F1F3F6"
         },
         "category": {
           "banking": "#314BE8",
@@ -92,10 +92,10 @@
           "weight": 700
         },
         "label": {
-          "family": "'Roboto Condensed', 'Arial Narrow', sans-serif",
+          "family": "'Inter', system-ui, sans-serif",
           "weight": 500,
-          "transform": "uppercase",
-          "tracking": "0.06em"
+          "transform": "none",
+          "tracking": "0em"
         },
         "body": {
           "family": "'Inter', system-ui, sans-serif",
@@ -117,7 +117,9 @@
           "lg": 18,
           "xl": 22,
           "2xl": 28,
-          "3xl": 36
+          "3xl": 36,
+          "4xl": 48,
+          "5xl": 64
         }
       },
       "space": {
@@ -127,18 +129,20 @@
         "lg": 24,
         "xl": 32,
         "2xl": 48,
-        "3xl": 64
+        "3xl": 64,
+        "4xl": 96,
+        "5xl": 128
       },
       "radius": {
-        "sm": 6,
-        "md": 10,
-        "lg": 14,
-        "xl": 16,
+        "sm": 8,
+        "md": 12,
+        "lg": 16,
+        "xl": 20,
         "pill": 999
       },
       "shadow": {
-        "card": "0 1px 2px rgba(8,21,73,0.06)",
-        "raised": "0 6px 20px rgba(8,21,73,0.10)"
+        "card": "0 1px 2px rgba(8,21,73,0.04)",
+        "raised": "0 12px 32px rgba(8,21,73,0.08)"
       },
       "logo": {
         "wordmark": "ongem-wordmark.png",
@@ -149,18 +153,21 @@
         "Primary CTA royal blue; secondary CTA white with cool border",
         "Navy for financial values and primary text; never violet body text",
         "Status colors stay conventional and separate from category colors",
-        "Light cool borders over heavy shadows; radii 10-14 for cards",
+        "Hairline borders over shadows; radii 12-20 for cards, pill buttons on the public site",
         "Headlines sentence case, bold condensed, deep navy; numbers tabular",
         "Logo: full-colour wordmark on white, Ice or an Ice plate on navy; clear space at least half the logo height; never below 24 px tall",
         "Treasury gold only for treasury or stable value; workflows and compliance use blue-violet",
-        "Form controls use the strong border (3:1); cards keep the light cool border"
+        "Form controls use the strong border (3:1); cards keep the light cool border",
+        "Labels, eyebrows and navigation in the body face, sentence case; the condensed face is for headlines only",
+        "Colour restraint: neutral surfaces, one filled button per view, brand blue for actions and links; one navy band per page besides the footer",
+        "Space before decoration: sections 96 px apart on wide screens, 64 px on a phone"
       ]
     },
     {
       "$schema": "ongem-theme/v1",
       "id": "ongem-dark",
       "name": "OnGem dark",
-      "version": 2,
+      "version": 3,
       "source": "OnGem Brand Guidelines V2 (inputs/OnGem Brand Guidelines V2.docx)",
       "color": {
         "brand": {
@@ -247,10 +254,10 @@
           "weight": 700
         },
         "label": {
-          "family": "'Roboto Condensed', 'Arial Narrow', sans-serif",
+          "family": "'Inter', system-ui, sans-serif",
           "weight": 500,
-          "transform": "uppercase",
-          "tracking": "0.06em"
+          "transform": "none",
+          "tracking": "0em"
         },
         "body": {
           "family": "'Inter', system-ui, sans-serif",
@@ -272,7 +279,9 @@
           "lg": 18,
           "xl": 22,
           "2xl": 28,
-          "3xl": 36
+          "3xl": 36,
+          "4xl": 48,
+          "5xl": 64
         }
       },
       "space": {
@@ -282,18 +291,20 @@
         "lg": 24,
         "xl": 32,
         "2xl": 48,
-        "3xl": 64
+        "3xl": 64,
+        "4xl": 96,
+        "5xl": 128
       },
       "radius": {
-        "sm": 6,
-        "md": 10,
-        "lg": 14,
-        "xl": 16,
+        "sm": 8,
+        "md": 12,
+        "lg": 16,
+        "xl": 20,
         "pill": 999
       },
       "shadow": {
-        "card": "0 1px 2px rgba(8,21,73,0.06)",
-        "raised": "0 6px 20px rgba(8,21,73,0.10)"
+        "card": "0 1px 2px rgba(8,21,73,0.04)",
+        "raised": "0 12px 32px rgba(8,21,73,0.08)"
       },
       "logo": {
         "wordmark": "ongem-wordmark.png",
@@ -428,7 +439,9 @@
           "lg": 18,
           "xl": 22,
           "2xl": 28,
-          "3xl": 36
+          "3xl": 36,
+          "4xl": 48,
+          "5xl": 64
         }
       },
       "space": {
@@ -438,7 +451,9 @@
         "lg": 24,
         "xl": 32,
         "2xl": 48,
-        "3xl": 64
+        "3xl": 64,
+        "4xl": 96,
+        "5xl": 128
       },
       "radius": {
         "sm": 6,

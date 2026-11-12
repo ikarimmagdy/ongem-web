@@ -51,7 +51,9 @@ describe('theme runtime', () => {
     expect(vars['--color-brand-primary']).toBe('#314BE8');
     expect(vars['--color-action-primary-bg']).toBe('#314BE8');
     expect(vars['--font-display']).toContain('Roboto Condensed');
-    expect(vars['--radius-lg']).toBe('14px');
+    expect(vars['--radius-lg']).toBe('16px');
+    expect(vars['--space-4xl']).toBe('96px');
+    expect(vars['--font-label-transform']).toBe('none');
     expect(vars['--space-md']).toBe('16px');
     expect(vars['--font-money-numeric']).toBe('tabular-nums');
   });
@@ -63,7 +65,7 @@ describe('theme runtime', () => {
       </ThemeProvider>,
     );
     expect(css('--color-brand-primary')).toBe('#314BE8');
-    expect(css('--color-surface-canvas')).toBe('#F8FAFD');
+    expect(css('--color-surface-canvas')).toBe('#F6F7F9');
     expect(document.documentElement.dataset.theme).toBe('ongem');
   });
 
@@ -202,7 +204,7 @@ describe('theme runtime', () => {
   it('scales radii with the radius scale edit', () => {
     const base = byId('ongem');
     const t = applyEdits(base, { ...editsFrom(base, base), radiusScale: 0.5 });
-    expect(t.radius.lg).toBe(7);
+    expect(t.radius.lg).toBe(8);
     expect(t.radius.pill).toBe(999);
     expect(editsFrom(t, base).radiusScale).toBe(0.5);
   });

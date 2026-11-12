@@ -175,3 +175,10 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   templates, scrubbing). Demo mode sends errors only, under `service.namespace` demo. `security-headers.json` allows the
   collector in connect-src. `__APP_VERSION__` (vite.config.ts) is `service.version`. Tests `src/telemetry/telemetry.test.ts`,
   e2e `src/test/telemetry.e2e.ts`; `ONGEM_OTEL_LIVE=1 npx vitest run src/telemetry/live.test.ts` posts to the real collector.
+- 2026-11-12: OG-038 clean design (WS `ongem-engineering/outputs/review/clean-design-2026-11-12/`). Theme v3 in
+  `src/themes/ongem-themes.json` (WS `streams/ongem/output/docs/ongem-theme-tokens-v4-2026-11-12.json`): label face Inter
+  in sentence case, radii 8 to 20, neutral canvas and borders, softer shadows, `--font-size-4xl/5xl`, `--space-4xl/5xl`.
+  Public site (`public.css` OG-038 block): white page, 96 px sections, white hero without the glow, one navy band per
+  page besides the footer (security on home), hairline cards without lift, pill buttons, quiet header tools, Sign in and
+  the demo as words beside one filled Get started. App shell (`app-shell.css` OG-038 block): one-ink side bar icons,
+  application steps on a white card with a blue start edge, `og-card` hairline without shadow.

@@ -945,3 +945,19 @@
   background: var(--color-category-treasury-bg);
   color: var(--color-brand-deep);
 }
+
+/* OG-038 clean design: the side bar's icons in one ink (the colour of their entry), the application's steps on a plain
+   card with a blue edge only where the next step is, and cards as hairlines on the neutral canvas. */
+.fw-side .fw-nav__icon {
+  background: transparent;
+  color: inherit;
+}
+.fw-appsteps {
+  border-color: var(--color-border-subtle);
+  border-inline-start: 3px solid var(--color-action-primary-bg);
+  background: var(--color-surface-card);
+}
+.og-card {
+  border-color: var(--color-border-subtle);
+  box-shadow: none;
+}

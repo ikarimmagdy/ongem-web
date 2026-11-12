@@ -1626,6 +1626,256 @@
   zoom: 0.55;
 }
 
+/* OG-038 clean design. Space before decoration: a white page, sections 96 px apart (64 px on a phone), one filled button
+   per view, pill buttons, hairline cards with no lift, labels and navigation in the body face in sentence case (theme
+   v3), one navy band per page besides the footer. Theme tokens and logical properties only. */
+.pub {
+  background: var(--color-surface-card);
+}
+.pub-section {
+  padding-block: var(--space-4xl);
+}
+.pub-section--tint {
+  background: var(--color-surface-canvas);
+}
+@media (max-width: 640px) {
+  .pub-section {
+    padding-block: var(--space-3xl);
+  }
+}
+.pub .og-btn {
+  border-radius: var(--radius-pill);
+  padding-inline: calc(var(--space-md) + var(--space-xs));
+}
+
+/* Header: the brand, the menus, quiet tools, Sign in and the demo as words, one filled button. */
+.pub-header {
+  background: color-mix(in srgb, var(--color-surface-card) 92%, transparent);
+  backdrop-filter: saturate(1.4) blur(12px);
+}
+.pub-header__row {
+  min-height: 72px;
+}
+.pub-nav__link,
+.pub-menu__button {
+  font-family: var(--font-body);
+  font-weight: var(--font-body-strong-weight);
+  letter-spacing: 0;
+  color: var(--color-text-primary);
+}
+.pub-nav__link[aria-current='page'],
+.pub-menu__button.is-current {
+  box-shadow: none;
+  color: var(--color-text-link);
+}
+.pub-header__tools .pub-icon-btn {
+  border-color: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+.pub-header__tools .pub-icon-btn:hover {
+  background: var(--color-surface-sunken);
+  color: var(--color-text-primary);
+}
+.pub-header__actions .pub-nav__signin,
+.pub-header__actions .pub-header__demo:not(.pub-header__main) {
+  border-color: transparent;
+  background: transparent;
+  color: var(--color-text-primary);
+}
+.pub-menu__list {
+  border-radius: var(--radius-xl);
+  padding: var(--space-sm);
+}
+.pub-menu__title,
+.pub-trust__title,
+.pub-eyebrow {
+  text-transform: var(--font-label-transform, none);
+  letter-spacing: var(--font-label-tracking, normal);
+}
+
+/* Type: one large headline, a short lede, sentence-case eyebrows. */
+.pub-eyebrow {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-body-strong-weight);
+  color: var(--color-text-link);
+}
+.pub-h2 {
+  font-size: clamp(var(--font-size-2xl), 3.6vw, var(--font-size-4xl));
+  line-height: 1.08;
+  margin-block-end: var(--space-lg);
+}
+.pub-section > .pub-wrap > .pub-h2 {
+  max-width: 22ch;
+  margin-block-end: var(--space-2xl);
+}
+.pub-lede {
+  color: var(--color-text-secondary);
+}
+
+/* Hero: white, the headline large, the product beside it on a quiet panel. */
+.pub-hero {
+  background: var(--color-surface-card);
+  color: var(--color-text-primary);
+  padding-block: var(--space-4xl) var(--space-3xl);
+}
+.pub-hero .pub-display {
+  color: var(--color-text-primary);
+  font-size: clamp(var(--font-size-3xl), 4.6vw, var(--font-size-5xl));
+  line-height: 1;
+}
+.pub-hero .pub-lede {
+  color: var(--color-text-secondary);
+}
+.pub-hero .pub-badge {
+  background: var(--color-status-neutral-bg);
+  color: var(--color-text-secondary);
+}
+.pub-hero .pub-cta-row {
+  margin-block-start: var(--space-lg);
+}
+.pub-proof {
+  color: var(--color-text-secondary);
+  margin-block-start: var(--space-lg);
+}
+.pub-proof li::before {
+  width: 6px;
+  height: 6px;
+  background: var(--color-status-success);
+  box-shadow: none;
+}
+@media (min-width: 861px) {
+  .pub-hero {
+    padding-block: var(--space-4xl);
+  }
+}
+.pub-hero + .pub-trust {
+  padding-top: var(--space-2xl);
+}
+.pub-browser,
+.pub-shot {
+  border-color: var(--color-border-subtle);
+  box-shadow: var(--shadow-raised);
+}
+.pub-phone {
+  border-color: transparent;
+}
+
+/* Trust strip: names and roles on a hairline, no colour bar. */
+.pub-trust {
+  border-bottom: 0;
+}
+.pub-trust__list li {
+  border-inline-start: 1px solid var(--color-border-default);
+}
+.pub-trust__name {
+  font-size: var(--font-size-lg);
+}
+
+/* Cards: a hairline, more room inside, no lift. */
+.pub-cards {
+  gap: var(--space-md);
+}
+.pub-card {
+  border-color: var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  box-shadow: none;
+}
+.pub-card:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--color-border-default);
+  background: var(--color-surface-canvas);
+}
+.pub-card .pub-art {
+  margin-block-end: var(--space-md);
+}
+.pub-card h3,
+.pub-h3,
+.pub-steps h3 {
+  font-size: var(--font-size-lg);
+  margin-block: var(--space-sm) var(--space-xs);
+}
+.pub-card--demo {
+  background: var(--color-surface-canvas);
+  border-color: var(--color-border-subtle);
+}
+.pub-tile,
+.pub-faq__item,
+.pub-faq__next,
+.pub-pricing {
+  border-color: var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+}
+
+/* Ticks: a small dot, not a disc. */
+.pub-ticks li::before {
+  width: 6px;
+  height: 6px;
+  top: 0.65em;
+  background: var(--color-brand-primary);
+}
+.pub-band .pub-ticks li::before {
+  background: var(--color-brand-accent);
+}
+
+/* Demo band: one quiet panel inside the page width. */
+.pub-demo-band {
+  background: transparent;
+  border-block: 0;
+  padding-block: 0;
+}
+.pub-demo-band .pub-demo-band__row {
+  padding: var(--space-2xl);
+  border-radius: calc(var(--radius-xl) * 1.5);
+  background: var(--color-surface-canvas);
+}
+
+/* Facts on white: the numbers do the work. */
+.pub-fact {
+  border-top: 1px solid var(--color-border-default);
+}
+.pub-fact dd {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-4xl);
+}
+.pub-fact dt {
+  color: var(--color-text-secondary);
+}
+
+/* FAQ: flat rows. */
+.pub-faq__item summary {
+  font-family: var(--font-body);
+  font-weight: var(--font-body-strong-weight);
+  font-size: var(--font-size-md);
+}
+.pub-faq__mark {
+  background: transparent;
+}
+
+/* Closing call to action: white, centred, both actions. */
+.pub-final {
+  background: var(--color-surface-card);
+  color: var(--color-text-primary);
+  padding-block: var(--space-4xl);
+  border-top: 1px solid var(--color-border-subtle);
+}
+.pub-final h2 {
+  color: var(--color-text-primary);
+  max-width: 22ch;
+  margin-inline: auto;
+}
+.pub-final p {
+  color: var(--color-text-secondary);
+}
+
+/* Footer: the navy band that ends the page, more room. */
+.pub-footer {
+  padding-block: var(--space-3xl) var(--space-2xl);
+  border-top: 0;
+}
+
 @media print {
   .pub *,
   .pub *::before,

@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { t } from '../../i18n';
 import { US_MEDIA } from '../../region';
-import { BrowserFrame, CapabilityArt, GemGlow, PhoneFrame } from '../art';
+import { BrowserFrame, CapabilityArt, PhoneFrame } from '../art';
 import { facts as allFacts, type ArtName, type Fact } from '../content';
 import { DEMO, DemoLink, PrimaryCta } from '../Nav';
 import {
@@ -186,7 +186,7 @@ export function Art({ name }: { name: ArtName }) {
 
 export function Facts({ items = allFacts() }: { items?: Fact[] }) {
   return (
-    <section className="pub-section pub-band" aria-labelledby="home-facts" data-testid="pub-facts">
+    <section className="pub-section" aria-labelledby="home-facts" data-testid="pub-facts">
       <div className="pub-wrap">
         <h2 id="home-facts" className="pub-h2" data-reveal>
           {t('web.labels.facts_title')}
@@ -281,7 +281,6 @@ export function DemoBand() {
 export function FinalCta() {
   return (
     <section className="pub-final" aria-labelledby="final-cta">
-      <GemGlow className="pub-final__glow" />
       <div className="pub-wrap">
         <h2 id="final-cta" className="pub-h2">
           {t('web.close.title')}

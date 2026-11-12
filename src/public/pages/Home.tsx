@@ -18,11 +18,10 @@ export function Home() {
   return (
     <>
       <section className="pub-hero" data-testid="public-home">
-        <GemGlow className="pub-hero__glow" />
         <div className="pub-wrap pub-hero__grid">
           <div className="pub-hero__copy">
             {/* One eyebrow line; where accounts are not open the coming-soon badge sits in it (PS-023). */}
-            <p className="pub-eyebrow pub-eyebrow--on-dark pub-hero__eyebrow">
+            <p className="pub-eyebrow pub-hero__eyebrow">
               {!SITE.live && (
                 <span className="pub-badge pub-badge--hero" data-testid="hero-soon">
                   {t('web.soon.badge')}
@@ -115,13 +114,13 @@ export function Home() {
         return (
           <section
             key={id}
-            className={i % 2 ? 'pub-section pub-band pub-phone-hide' : 'pub-section pub-section--tint'}
+            className={i % 2 ? 'pub-section pub-phone-hide' : 'pub-section pub-section--tint'}
             aria-labelledby={`row-${id}`}
             data-testid={`feature-row-${id}`}
           >
             <div className={i % 2 ? 'pub-wrap pub-feature pub-feature--flip' : 'pub-wrap pub-feature'}>
               <div data-reveal>
-                <p className={i % 2 ? 'pub-eyebrow pub-eyebrow--on-dark' : 'pub-eyebrow'}>{c.nav}</p>
+                <p className="pub-eyebrow">{c.nav}</p>
                 <h2 id={`row-${id}`} className="pub-h2">
                   {c.title}
                 </h2>
@@ -131,7 +130,7 @@ export function Home() {
                     <li key={p}>{p}</li>
                   ))}
                 </ul>
-                <Link to={c.path} className={i % 2 ? 'pub-link-light' : 'pub-more'}>
+                <Link to={c.path} className="pub-more">
                   {t('web.labels.read_more_about', { topic: c.nav })}
                 </Link>
               </div>
