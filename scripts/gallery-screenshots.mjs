@@ -9,11 +9,11 @@ const base = process.argv[2] ?? 'http://localhost:5190';
 const out = 'src/assets/public/gallery';
 const browser = await chromium.launch();
 const errors = [];
-const clip = { x: 240, y: 0, width: 1040, height: 760 };
+const clip = { x: 248, y: 0, width: 1040, height: 760 };
 
 async function start(query = '') {
   const ctx = await browser.newContext({
-    viewport: { width: 1280, height: 800 },
+    viewport: { width: 1288, height: 800 },
     deviceScaleFactor: 2,
     reducedMotion: 'reduce',
   });

@@ -1,15 +1,16 @@
-// OG-032 R7 and R10, PS-005, PS-013, PS-017: captures the public site's product screens from demo mode (sample data
-// only) with headless Chromium. Desktop screens are cropped to the content column of a 1180 x 780 window (the side bar
-// and top bar left out) so they read at the size the site shows them, at twice the pixel density and at 1x for
-// `srcset`; phone screens are the whole 390 x 844 screen at twice the density. The demo bar is hidden in captures.
+// OG-032 R7 and R10, PS-005, PS-013, PS-017, OG-040 RD-14: captures the public site's product screens from demo mode
+// (sample data only) with headless Chromium. Desktop screens are cropped to the content column of a 1188 x 780 window
+// (the founder web v2 side bar of 248 px and the top bar left out) so they read at the size the site shows them, at
+// twice the pixel density and at 1x for `srcset`; phone screens are the whole 390 x 844 screen at twice the density.
+// The demo bar is hidden in captures.
 // Run with the dev server up (`npm run dev`), then `node scripts/public-screenshots.mjs [base]`
 // (default http://localhost:5190).
 import { chromium } from '@playwright/test';
 
 const base = process.argv[2] ?? 'http://localhost:5190';
 const out = 'src/assets/public';
-/** The content column of the 1180 x 780 window: right of the side bar, under the top bar. */
-const CLIP = { x: 240, y: 64, width: 940, height: 640 };
+/** The content column of the 1188 x 780 window: right of the side bar, under the top bar. */
+const CLIP = { x: 248, y: 64, width: 940, height: 640 };
 const DESKTOP = ['/', '/payments', '/payments/schedules', '/cards', '/notifications', '/support'];
 const PHONE = ['/', '/payments', '/payments/schedules', '/cards', '/notifications', '/support'];
 const name = (p) => (p === '/' ? 'home' : p.slice(1).replace('/', '-'));
@@ -40,7 +41,7 @@ async function go(page, to) {
 const file = (screen, scale) => `${out}/screen-${screen}${scale === 1 ? '-1x' : ''}.jpg`;
 
 for (const scale of [2, 1]) {
-  const { ctx, page } = await open({ width: 1180, height: 780 }, scale);
+  const { ctx, page } = await open({ width: 1188, height: 780 }, scale);
   for (const p of DESKTOP) {
     await go(page, p);
     await page.screenshot({ path: file(name(p), scale), type: 'jpeg', quality: 84, clip: CLIP });
