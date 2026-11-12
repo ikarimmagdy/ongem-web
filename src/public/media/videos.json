@@ -2,56 +2,56 @@
   {
     "id": "sign-up-and-onboarding",
     "seconds": 33,
-    "bytes": 3723854,
+    "bytes": 3316350,
     "width": 1280,
     "height": 800
   },
   {
     "id": "send-a-payment",
     "seconds": 22,
-    "bytes": 3234072,
+    "bytes": 2801613,
     "width": 1280,
     "height": 800
   },
   {
     "id": "add-money-and-approve",
     "seconds": 22,
-    "bytes": 3433243,
+    "bytes": 3182331,
     "width": 1280,
     "height": 800
   },
   {
     "id": "ongem-approves-one-person-company",
     "seconds": 17,
-    "bytes": 2500123,
+    "bytes": 2216971,
     "width": 1280,
     "height": 800
   },
   {
     "id": "cards-freeze-and-details",
     "seconds": 23,
-    "bytes": 3083743,
+    "bytes": 2794459,
     "width": 1280,
     "height": 800
   },
   {
     "id": "notifications-and-settings",
     "seconds": 19,
-    "bytes": 1882455,
+    "bytes": 1756972,
     "width": 1280,
     "height": 800
   },
   {
     "id": "support-and-disputes",
     "seconds": 15,
-    "bytes": 1866459,
+    "bytes": 1551962,
     "width": 1280,
     "height": 800
   },
   {
     "id": "phone-send-a-payment",
     "seconds": 17,
-    "bytes": 1214764,
+    "bytes": 1003831,
     "width": 390,
     "height": 844
   }
