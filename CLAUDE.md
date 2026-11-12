@@ -202,3 +202,17 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   with one hairline, the statement band on the soft blue tint, the navy footer the only dark block; sign-in form as one card.
   App shell (`app-shell.css` OG-040 block): cards on the default hairline at 16 px radius, side bar text secondary with
   the active entry in brand blue. Share images re-rendered in Inter.
+- 2026-11-13: OG-040 founder web v2 (WS `ongem-engineering/outputs/review/redesign-2026-11-13/`, RD-24 to RD-26 and the
+  app-v2 captures). Shell (`SignedIn.tsx`, `app-shell.css` "founder web v2" block): side menu in groups (`NAV_GROUPS` in
+  `nav.ts`, headings `app.nav.group.*`), 14 px rows with one-ink icons, a count on Payments (approvals waiting for this
+  person) and Support (open requests), an icon rail remembered in localStorage `ongem.side-rail` (test id `side-rail`),
+  the company switcher at the top and the person (initials, name, role; Settings and Sign out, test id `profile-menu`)
+  at the foot. Top bar: section and page as a trail (`top-title`), search, bell. RD-24: the phone top bar is one row
+  (company switcher, Demo, bell; no wordmark). Home: the balance as the hero (accounts in a row), Needs you with a
+  priority mark per item and a count, recent payments as a table (RD-25). Filters (`FilterChips` in `screens/common.tsx`)
+  on the payments list (status) and an account's transactions (in or out). One white surface with hairline panels, 48 px
+  list rows, tables with tabular figures, settings at a form's width. RD-26: the demo bar is one slim line with Get
+  started and Back to the site as text links. New keys `app.shell.breadcrumb`, `app.shell.collapse_menu`,
+  `app.shell.expand_menu`, `app.nav.group.money`, `app.nav.group.company`, `app.nav.count_waiting`,
+  `app.payments.filter.all`, `app.payments.filter.label`, `app.accounts.filter_label` (both seeds; ongem-core's seed
+  still needs them for a build that pulls content from the API).

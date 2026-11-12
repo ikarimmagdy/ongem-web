@@ -7,7 +7,8 @@ import './demo-bar.css';
 
 /**
  * The way out of the demo (PS-019): a thin bar over the signed-in shell in demo mode that says the data is sample data
- * and offers Get started (where accounts are open) and Back to the site. Nothing in demo mode reaches a bank.
+ * and offers Get started (where accounts are open) and Back to the site, both as text links so the screen's own primary
+ * action stays the one filled button (RD-26). Nothing in demo mode reaches a bank.
  */
 export function DemoBar() {
   const { mode, leave } = useSession();
@@ -24,7 +25,7 @@ export function DemoBar() {
         {SITE.live && (
           <button
             type="button"
-            className="og-btn og-btn--primary og-btn--sm"
+            className="pub-demobar__link pub-demobar__link--strong"
             onClick={() => go(SIGN_UP)}
             data-testid="demo-get-started"
           >
@@ -33,7 +34,7 @@ export function DemoBar() {
         )}
         <button
           type="button"
-          className="og-btn og-btn--secondary og-btn--sm"
+          className="pub-demobar__link"
           onClick={() => go('/')}
           data-testid="demo-back-to-site"
         >

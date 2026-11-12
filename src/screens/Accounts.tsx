@@ -18,7 +18,7 @@ import { useAsync } from '../lib/useAsync';
 import { useSession } from '../session';
 import { T, t } from '../i18n';
 import { REGION_CONFIG } from '../region';
-import { AcctLast4, Amt, Load, human, stateStatus } from './common';
+import { AcctLast4, Amt, FilterChips, Load, human, stateStatus } from './common';
 import { ExportActivity } from './ExportActivity';
 import { SplitHint } from './SplitHint';
 
@@ -127,6 +127,7 @@ function AccountDetail({ id }: { id: string }) {
   const txns = useAsync(() => api.transactions(id, limit), [api, id, limit]);
   const statements = useAsync(() => api.statements(id).catch(() => []), [api, id]);
   const [statement, setStatement] = useState<Statement | null>(null);
+  const [direction, setDirection] = useState('all');
   const [statementError, setStatementError] = useState<string | null>(null);
   const openStatement = (period: string) => {
     setStatementError(null);
@@ -161,14 +162,29 @@ function AccountDetail({ id }: { id: string }) {
             />
             {a.balance?.stale && <p className="fw-stale">{t('app.accounts.stale_balance')}</p>}
           </Card>
-          <Card title={t('app.accounts.transactions')}>
+          <Card
+            title={t('app.accounts.transactions')}
+            actions={
+              <FilterChips
+                label={t('app.accounts.filter_label')}
+                testId="txn-filter"
+                value={direction}
+                onChange={setDirection}
+                options={[
+                  { id: 'all', label: t('app.payments.filter.all') },
+                  { id: 'CREDIT', label: t('app.mobile.filter.in') },
+                  { id: 'DEBIT', label: t('app.mobile.filter.out') },
+                ]}
+              />
+            }
+          >
             <Load state={txns} label="transactions">
               {(rows) => (
                 <>
                   <Table
                     hideCaption
                     caption={t('app.accounts.transactions_caption')}
-                    rows={rows}
+                    rows={direction === 'all' ? rows : rows.filter((tx) => tx.direction === direction)}
                     rowKey={(tx) => tx.id}
                     empty={t('app.accounts.no_transactions')}
                     columns={[

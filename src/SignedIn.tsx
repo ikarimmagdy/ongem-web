@@ -1,9 +1,11 @@
 import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
-import { NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { InviteScreen } from './screens/Invite';
 import { Button, Logo, Notice, Skeleton } from './design-system';
 import { useAsync } from './lib/useAsync';
 import { ApiError, errorText } from './api/errors';
+import { Permission } from './api/client';
+import { human } from './screens/common';
 import { CompanySwitcher } from './CompanySwitcher';
 import { companyState, currentMembership, loadCompanies, switchable } from './lib/company';
 import { AccountsScreen } from './screens/Accounts';
@@ -25,7 +27,7 @@ import { TeamScreen } from './screens/Team';
 import { DocumentsScreen } from './screens/Documents';
 import { MoreScreen } from './screens/More';
 import { RECORDING_ENABLED, Recorder } from './recording/Recorder';
-import { MORE, NAV, PHONE_TABS, pageTitle } from './nav';
+import { MORE, NAV, NAV_GROUPS, PHONE_TABS, pageTitle } from './nav';
 import { ACCEPTANCE_ENABLED } from './acceptance/api';
 import { t, useContent } from './i18n';
 import { DemoBar } from './public/DemoBar';
@@ -40,8 +42,21 @@ function usePageTitle() {
   }, [pathname, locale]);
 }
 
-/** Settings and sign out behind one button in the desktop top bar (a phone has More for both, OG-035 R8). */
-function ProfileMenu({ onLeave }: { onLeave(): void }) {
+/**
+ * OG-040: the person at the foot of the side menu (initials, name, role); it opens Settings and Sign out above it. A phone
+ * has More for both (OG-035 R8).
+ */
+function UserMenu({
+  name,
+  role,
+  rail,
+  onLeave,
+}: {
+  name: string;
+  role: string;
+  rail: boolean;
+  onLeave(): void;
+}) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
@@ -59,18 +74,31 @@ function ProfileMenu({ onLeave }: { onLeave(): void }) {
       document.removeEventListener('keydown', close);
     };
   }, [open]);
+  const initials = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0]!.toLocaleUpperCase())
+    .join('');
   return (
-    <div className="fw-profile" ref={root}>
+    <div className="fw-profile fw-user" ref={root}>
       <button
         type="button"
-        className="fw-icon-button"
+        className="fw-user__toggle"
         data-testid="profile-menu"
-        aria-label={t('app.shell.profile_menu')}
+        aria-label={`${t('app.shell.profile_menu')}, ${name}`}
+        title={rail ? name : undefined}
         aria-expanded={open}
         aria-controls="profile-menu-list"
         onClick={() => setOpen((x) => !x)}
       >
-        <span aria-hidden="true" className="fw-profile__glyph" />
+        <span className="fw-user__avatar" aria-hidden="true">
+          {initials}
+        </span>
+        <span className="fw-user__text">
+          <span className="fw-user__name">{name}</span>
+          {role && <span className="fw-user__role">{role}</span>}
+        </span>
       </button>
       {open && (
         <div className="fw-profile__menu" id="profile-menu-list" data-testid="profile-menu-list">
@@ -83,6 +111,52 @@ function ProfileMenu({ onLeave }: { onLeave(): void }) {
         </div>
       )}
     </div>
+  );
+}
+
+/** OG-040: the collapsed side menu (an icon rail) is remembered on this browser; blocked storage only forgets it. */
+const RAIL_KEY = 'ongem.side-rail';
+function useRail(): [boolean, () => void] {
+  const [rail, setRail] = useState(() => {
+    try {
+      return localStorage.getItem(RAIL_KEY) === '1';
+    } catch {
+      return false;
+    }
+  });
+  const toggle = () =>
+    setRail((r) => {
+      try {
+        if (r) localStorage.removeItem(RAIL_KEY);
+        else localStorage.setItem(RAIL_KEY, '1');
+      } catch {
+        /* storage blocked: the choice lasts for this page */
+      }
+      return !r;
+    });
+  return [rail, toggle];
+}
+
+/** OG-040: where the page sits: its section (a link back) and the page itself, the top bar's start on a wide screen. */
+function Crumbs({ pathname }: { pathname: string }) {
+  const here = pageTitle(pathname);
+  const section = NAV.find((n) => n.to !== '/' && pathname.startsWith(`${n.to}/`));
+  const parent = section ? pageTitle(section.to) : null;
+  return (
+    <nav className="fw-crumbs" aria-label={t('app.shell.breadcrumb')}>
+      <ol>
+        {section && parent && parent !== here && (
+          <li>
+            <Link to={section.to}>{parent}</Link>
+          </li>
+        )}
+        <li>
+          <span className="fw-topbar__title" data-testid="top-title" aria-current="page">
+            {here}
+          </span>
+        </li>
+      </ol>
+    </nav>
   );
 }
 
@@ -111,6 +185,9 @@ const NAV_ICON: Record<string, { d: string; cat: string }> = {
   },
 };
 
+/** The side menu's collapse control: a panel with its start column. */
+const RAIL_ICON = 'M4 5h16v14H4zM9 5v14'; // content-check: ignore (SVG path)
+
 /** One glyph per phone tab; Pay is the centre tab, drawn larger (OG-035 R8). */
 const TAB_ICON: Record<string, string> = {
   home: 'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z', // content-check: ignore (SVG path)
@@ -132,6 +209,7 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
     setCompanies,
     setCompanyState,
     setCurrentCompanyId,
+    can,
   } = useSession();
   const navigate = useNavigate();
   const wide = useWide();
@@ -190,86 +268,171 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
   );
   // FA-016: on a phone the floating assistant stays off screens whose primary action sits at the bottom of a form.
   const formRoute = FORM_ROUTES.some((re) => re.test(pathname));
+  const [rail, toggleRail] = useRail();
+  const side = wide && rail;
+  // OG-040: a count on the entries that hold a queue: payments waiting for this person's approval, open support requests.
+  const section = pathname.split('/')[1] ?? '';
+  const approver = can(Permission.PAYMENT_APPROVE);
+  const approvals = useAsync(
+    () => (approver ? api.payments(null, 100).catch(() => null) : Promise.resolve(null)),
+    [api, approver, section],
+  );
+  const tickets = useAsync(() => api.tickets().catch(() => []), [api, section]);
+  const counts: Record<string, number> = {
+    payments:
+      approvals.status === 'success' && approvals.data
+        ? approvals.data.items.filter((p) => p.state === 'PENDING_APPROVAL' && p.approvalBy !== 'ONGEM')
+            .length
+        : 0,
+    support:
+      tickets.status === 'success'
+        ? tickets.data.filter((x) => !['RESOLVED', 'CLOSED'].includes(x.status.toUpperCase())).length
+        : 0,
+  };
+  const personName =
+    [person?.legalFirstName, person?.legalLastName].filter(Boolean).join(' ') || person?.email || '';
+  const byId = new Map(NAV.map((n) => [n.id, n]));
   return (
-    <div className="fw-shell" data-testid="shell">
+    <div className={`fw-shell${side ? ' fw-shell--rail' : ''}`} data-testid="shell">
       <a href="#main" className="og-skip">
         {t('app.common.skip')}
       </a>
       <aside className="fw-side">
         {/* FA-005, FA-010: the wordmark lines up with the nav text on both sides; Demo sits next to it. */}
         <div className="fw-side__brand">
-          <Logo />
-          {wide && demoBadge}
+          <span className="fw-side__logo">
+            <Logo />
+          </span>
+          {wide && !side && demoBadge}
+          {wide && (
+            <button
+              type="button"
+              className="fw-icon-button fw-side__railbtn"
+              data-testid="side-rail"
+              aria-label={side ? t('app.shell.expand_menu') : t('app.shell.collapse_menu')}
+              title={side ? t('app.shell.expand_menu') : t('app.shell.collapse_menu')}
+              aria-expanded={!side}
+              onClick={toggleRail}
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinejoin="round"
+              >
+                <path d={RAIL_ICON} />
+              </svg>
+            </button>
+          )}
         </div>
-        {wide && (
+        {wide && !side && (
           <div className="fw-side__company" data-testid="side-company">
             {switcher}
           </div>
         )}
-        <nav aria-label={t('app.shell.main_nav')}>
-          <ul className="og-nav">
-            {NAV.map((n) => (
-              <li key={n.to}>
-                <NavLink
-                  to={n.to}
-                  end={n.end}
-                  data-testid={`nav-${n.id}`}
-                  className={({ isActive }) => (isActive ? 'og-nav__link is-active' : 'og-nav__link')}
-                >
-                  {NAV_ICON[n.id] && (
-                    <span className={`fw-nav__icon fw-nav__icon--${NAV_ICON[n.id]!.cat}`} aria-hidden="true">
-                      <svg
-                        viewBox="0 0 24 24"
-                        width="18"
-                        height="18"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d={NAV_ICON[n.id]!.d} />
-                      </svg>
-                    </span>
-                  )}
-                  <span>{n.label}</span>
-                </NavLink>
-              </li>
-            ))}
-          </ul>
+        <nav aria-label={t('app.shell.main_nav')} className="fw-side__nav">
+          {NAV_GROUPS.map((g, gi) => {
+            const entries = g.ids.map((id) => byId.get(id)).filter((n): n is (typeof NAV)[number] => !!n);
+            if (!entries.length) return null;
+            return (
+              <div className="fw-nav__group" key={g.id ?? `g${gi}`}>
+                {g.id && !side && <p className="fw-nav__heading">{t(`app.nav.group.${g.id}`)}</p>}
+                <ul className="og-nav">
+                  {entries.map((n) => {
+                    const count = counts[n.id] ?? 0;
+                    return (
+                      <li key={n.to}>
+                        <NavLink
+                          to={n.to}
+                          end={n.end}
+                          data-testid={`nav-${n.id}`}
+                          title={side ? n.label : undefined}
+                          aria-describedby={count ? `nav-count-${n.id}` : undefined}
+                          className={({ isActive }) => (isActive ? 'og-nav__link is-active' : 'og-nav__link')}
+                        >
+                          {NAV_ICON[n.id] && (
+                            <span
+                              className={`fw-nav__icon fw-nav__icon--${NAV_ICON[n.id]!.cat}`}
+                              aria-hidden="true"
+                            >
+                              <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.8"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d={NAV_ICON[n.id]!.d} />
+                              </svg>
+                            </span>
+                          )}
+                          <span className="fw-nav__label">{n.label}</span>
+                          {count > 0 && (
+                            <>
+                              <span
+                                className="fw-nav__count"
+                                data-testid={`nav-count-${n.id}`}
+                                aria-hidden="true"
+                              >
+                                {count > 99 ? '99+' : count}
+                              </span>
+                              <span id={`nav-count-${n.id}`} hidden>
+                                {t('app.nav.count_waiting', { count })}
+                              </span>
+                            </>
+                          )}
+                        </NavLink>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })}
         </nav>
-        {/* FA-055: which bank holds the money, in every signed-in screen (no bank name in the AE build). */}
-        <p className="fw-side__disclosure" data-testid="side-disclosure">
-          {t('app.shell.disclosure')}
-        </p>
-        <LastSignIn testId="side-last-sign-in" className="fw-side__disclosure" />
+        <div className="fw-side__foot">
+          {/* FA-055: which bank holds the money, in every signed-in screen (no bank name in the AE build). */}
+          {!side && (
+            <>
+              <p className="fw-side__disclosure" data-testid="side-disclosure">
+                {t('app.shell.disclosure')}
+              </p>
+              <LastSignIn testId="side-last-sign-in" className="fw-side__disclosure" />
+            </>
+          )}
+          {wide && ready && (
+            <UserMenu
+              name={personName}
+              role={membership ? human(membership.role) : ''}
+              rail={side}
+              onLeave={leave}
+            />
+          )}
+        </div>
       </aside>
       <div className="fw-main">
         <DemoBar />
         <header className="og-topbar fw-topbar">
           {wide ? (
-            // FA-010: the page's name starts the desktop bar.
-            <span className="fw-topbar__title" data-testid="top-title">
-              {pageTitle(pathname)}
-            </span>
+            // FA-010, OG-040: the section and the page's name start the desktop bar.
+            <Crumbs pathname={pathname} />
           ) : (
-            // FA-004 (UX-12, Karim 2026-11-07): the wordmark on every size; the company switcher is the bar's second line.
-            <span className="fw-topbar__brand" data-testid="top-brand">
-              <span className="fw-topbar__logo">
-                <Logo />
-              </span>
-              {demoBadge}
-            </span>
-          )}
-          {!wide && (
+            // OG-035 R1, RD-24: one row on a phone: the company switcher where the logo was, Demo beside it, the bell.
             <span className="fw-topbar__company" data-testid="top-company">
               {switcher}
             </span>
           )}
           <span className="og-topbar__right">
+            {!wide && demoBadge}
             {ready && wide && <CommandSearch />}
             {ready && <NoticeBell />}
-            {wide && <ProfileMenu onLeave={leave} />}
           </span>
         </header>
         <main className="fw-content" id="main">

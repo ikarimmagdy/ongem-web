@@ -185,51 +185,54 @@ export function SettingsScreen() {
   return (
     <>
       <PageHeader title={t('app.settings.title')} />
-      <Card title={t('app.settings.language.title')} data-testid="settings-language">
-        <LanguageSwitch variant="choice" onChange={(l) => void api.setLocale(l).catch(() => undefined)} />
-      </Card>
-      <Card title={t('app.settings.appearance')}>
-        <AppearanceChoice />
-      </Card>
-      <NotificationChoices />
-      <SecuritySection />
-      <Card title={t('app.settings.privacy')}>
-        <p className="fw-privacy" data-testid="privacy-line">
-          {privacyLine()}
-        </p>
-      </Card>
-      <Card title={t('app.settings.session')}>
-        <KeyValue
-          items={[
-            {
-              label: t('app.settings.mode'),
-              value: mode === 'demo' ? t('app.settings.mode_demo') : t('app.settings.mode_live'),
-            },
-            { label: t('app.settings.role'), value: role ? human(role) : t('app.settings.role_none') },
-            ...(bankState
-              ? [
-                  {
-                    label: t('app.home.identity_at_bank'),
-                    value: (
-                      <StatusChip status={stateStatus(bankState)}>
-                        <span data-testid="home-verification">{human(bankState)}</span>
-                      </StatusChip>
-                    ),
-                  },
-                ]
-              : []),
-          ]}
-        />
-        <div className="fw-actions">
-          <Button variant="secondary" data-testid="sign-out" onClick={leave}>
-            {mode === 'demo' ? t('app.settings.leave_demo') : t('app.common.sign_out')}
-          </Button>
-        </div>
-      </Card>
-      <Card title={t('app.settings.bank.title')}>
-        <p data-testid="settings-disclosure">{t('app.shell.disclosure')}</p>
-        <LastSignIn testId="settings-last-sign-in" />
-      </Card>
+      {/* OG-040: settings read as one column at a form's width, not stretched across a wide screen. */}
+      <div className="fw-settings">
+        <Card title={t('app.settings.language.title')} data-testid="settings-language">
+          <LanguageSwitch variant="choice" onChange={(l) => void api.setLocale(l).catch(() => undefined)} />
+        </Card>
+        <Card title={t('app.settings.appearance')}>
+          <AppearanceChoice />
+        </Card>
+        <NotificationChoices />
+        <SecuritySection />
+        <Card title={t('app.settings.privacy')}>
+          <p className="fw-privacy" data-testid="privacy-line">
+            {privacyLine()}
+          </p>
+        </Card>
+        <Card title={t('app.settings.session')}>
+          <KeyValue
+            items={[
+              {
+                label: t('app.settings.mode'),
+                value: mode === 'demo' ? t('app.settings.mode_demo') : t('app.settings.mode_live'),
+              },
+              { label: t('app.settings.role'), value: role ? human(role) : t('app.settings.role_none') },
+              ...(bankState
+                ? [
+                    {
+                      label: t('app.home.identity_at_bank'),
+                      value: (
+                        <StatusChip status={stateStatus(bankState)}>
+                          <span data-testid="home-verification">{human(bankState)}</span>
+                        </StatusChip>
+                      ),
+                    },
+                  ]
+                : []),
+            ]}
+          />
+          <div className="fw-actions">
+            <Button variant="secondary" data-testid="sign-out" onClick={leave}>
+              {mode === 'demo' ? t('app.settings.leave_demo') : t('app.common.sign_out')}
+            </Button>
+          </div>
+        </Card>
+        <Card title={t('app.settings.bank.title')}>
+          <p data-testid="settings-disclosure">{t('app.shell.disclosure')}</p>
+          <LastSignIn testId="settings-last-sign-in" />
+        </Card>
+      </div>
     </>
   );
 }

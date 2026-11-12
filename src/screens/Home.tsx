@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Permission } from '../api/client';
 import { ApiError } from '../api/errors';
-import { Card, PageHeader, StatusChip } from '../design-system';
+import { Card, EmptyState, PageHeader, StatusChip } from '../design-system';
 import { formatDate, formatMinor } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
 import { needsItems } from '../lib/needs';
@@ -71,7 +71,7 @@ export function HomeScreen() {
       <div className="fw-home" data-testid="home-grid">
         <Card
           title={t('app.home.available')}
-          className="fw-home__balance"
+          className="fw-home__balance fw-hero"
           data-testid="home-balance"
           actions={
             mode === 'demo' ? (
@@ -146,38 +146,55 @@ export function HomeScreen() {
             onRetry={() => reads.filter((r) => r.status === 'error').forEach((r) => r.reload())}
           />
         </div>
-        <Card title={t('app.home.recent_payments')} className="fw-home__recent" data-testid="home-recent">
+        {/* OG-040: recent payments as one table (RD-25: no frame inside the card), tabular figures at the end. */}
+        <Card
+          title={t('app.home.recent_payments')}
+          className="fw-home__recent"
+          data-testid="home-recent"
+          actions={
+            <Link className="fw-card-link" to="/payments">
+              {t('app.home.all_payments')}
+            </Link>
+          }
+        >
           <Load state={payments} label="payments">
             {(page) =>
               page.items.length ? (
-                <ul className="fw-list" data-testid="recent-list">
-                  {page.items.slice(0, RECENT).map((p) => (
-                    <li key={p.id}>
-                      <Link
-                        className="fw-row fw-row--payment"
-                        to={`/payments/${p.id}`}
-                        data-testid={`recent-${p.id}`}
-                      >
-                        <span className="fw-row__line">
-                          <strong className="fw-row__payee">{payeeName(p, accs, recs)}</strong>
-                          <Amt value={p.amount} />
-                        </span>
-                        <span className="fw-row__line">
+                <table className="og-table fw-recent" data-testid="recent-list">
+                  <thead>
+                    <tr>
+                      <th scope="col">{t('app.accounts.col_counterparty')}</th>
+                      <th scope="col">{t('app.payments.detail.status')}</th>
+                      <th scope="col">{t('app.accounts.col_date')}</th>
+                      <th scope="col" className="og-num">
+                        {t('app.accounts.col_amount')}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {page.items.slice(0, RECENT).map((p) => (
+                      <tr key={p.id} className="fw-recent__row" data-testid={`recent-${p.id}`}>
+                        <td className="fw-recent__payee">
+                          <Link className="fw-recent__link fw-row__payee" to={`/payments/${p.id}`}>
+                            {payeeName(p, accs, recs)}
+                          </Link>
+                        </td>
+                        <td className="fw-recent__status">
                           <StatusChip status={stateStatus(p.state)}>{paymentLabel(p.state)}</StatusChip>
-                          <span className="fw-row__sub">{p.createdAt ? formatDate(p.createdAt) : ''}</span>
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                        </td>
+                        <td className="fw-recent__date">{p.createdAt ? formatDate(p.createdAt) : ''}</td>
+                        <td className="og-num fw-recent__amount">
+                          <Amt value={p.amount} />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               ) : (
-                <p className="fw-row__sub">{t('app.home.no_payments')}</p>
+                <EmptyState title={t('app.home.no_payments')} />
               )
             }
           </Load>
-          <Link className="og-btn og-btn--ghost og-btn--md" to="/payments">
-            {t('app.home.all_payments')}
-          </Link>
         </Card>
       </div>
     </>

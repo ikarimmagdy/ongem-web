@@ -11508,6 +11508,89 @@
       "meta": {},
       "en": "Copied",
       "ar": "تم النسخ"
+    },
+    {
+      "key": "app.shell.breadcrumb",
+      "format": "text",
+      "description": "Name of the top bar's trail (section, then page), read by screen readers",
+      "placeholders": [],
+      "meta": {},
+      "en": "Where you are",
+      "ar": "موقعك"
+    },
+    {
+      "key": "app.shell.collapse_menu",
+      "format": "text",
+      "description": "Button that narrows the side menu to icons",
+      "placeholders": [],
+      "meta": {},
+      "en": "Collapse side menu",
+      "ar": "طي القائمة الجانبية"
+    },
+    {
+      "key": "app.shell.expand_menu",
+      "format": "text",
+      "description": "Button that widens the side menu from icons to names",
+      "placeholders": [],
+      "meta": {},
+      "en": "Expand side menu",
+      "ar": "توسيع القائمة الجانبية"
+    },
+    {
+      "key": "app.nav.group.money",
+      "format": "text",
+      "description": "Side menu heading over Accounts, Payments and Cards",
+      "placeholders": [],
+      "meta": {},
+      "en": "Money",
+      "ar": "المال"
+    },
+    {
+      "key": "app.nav.group.company",
+      "format": "text",
+      "description": "Side menu heading over Team and Documents",
+      "placeholders": [],
+      "meta": {},
+      "en": "Company",
+      "ar": "الشركة"
+    },
+    {
+      "key": "app.nav.count_waiting",
+      "format": "text",
+      "description": "Read after a side menu entry that has work waiting, such as payments to approve",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "{count} waiting",
+      "ar": "{count} بالانتظار"
+    },
+    {
+      "key": "app.payments.filter.all",
+      "format": "text",
+      "description": "Filter choice that shows every item in the list",
+      "placeholders": [],
+      "meta": {},
+      "en": "All",
+      "ar": "الكل"
+    },
+    {
+      "key": "app.payments.filter.label",
+      "format": "text",
+      "description": "Name of the status filter above the payments list, read by screen readers",
+      "placeholders": [],
+      "meta": {},
+      "en": "Show payments by status",
+      "ar": "عرض المدفوعات حسب الحالة"
+    },
+    {
+      "key": "app.accounts.filter_label",
+      "format": "text",
+      "description": "Name of the money in or out filter above an account's transactions, read by screen readers",
+      "placeholders": [],
+      "meta": {},
+      "en": "Show transactions",
+      "ar": "عرض المعاملات"
     }
   ]
 }

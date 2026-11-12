@@ -33,6 +33,14 @@ function action(item: NeedItem): string {
   }
 }
 
+/** OG-040: the order is the priority (lib/needs.ts); the mark says how urgent: money waiting, then a step, then news. */
+const TONE: Record<NeedItem['kind'], string> = {
+  approval: 'urgent',
+  application: 'step',
+  card: 'step',
+  notice: 'news',
+};
+
 /**
  * What waits on this person (OG-035 R3), each with one action. Shows what loaded; a read that failed leaves an error line
  * with Try again, and nothing waiting says so.
@@ -49,15 +57,27 @@ export function NeedsYou({
   onRetry(): void;
 }) {
   return (
-    <Card title={t('app.home.needs.title')} className="fw-needs" data-testid="home-needs">
+    <Card
+      title={t('app.home.needs.title')}
+      className="fw-needs"
+      data-testid="home-needs"
+      actions={
+        items.length > 0 ? (
+          <span className="fw-needs__count" aria-hidden="true">
+            {items.length}
+          </span>
+        ) : undefined
+      }
+    >
       {items.length > 0 && (
         <ul className="fw-needs__list" data-testid="needs-list">
           {items.map((item) => (
             <li
               key={`${item.kind}-${item.id}`}
-              className="fw-needs__item"
+              className={`fw-needs__item fw-needs__item--${TONE[item.kind]}`}
               data-testid={`need-${item.kind}-${item.id}`}
             >
+              <span className="fw-needs__mark" aria-hidden="true" />
               <span
                 className="fw-needs__text"
                 data-mask={item.kind === 'approval' || item.kind === 'card' ? '' : undefined}

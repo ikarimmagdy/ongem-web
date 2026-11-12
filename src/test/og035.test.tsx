@@ -221,11 +221,12 @@ describe('OG-035 R4: recent payments by payee', () => {
     renderApp('/');
     const row = await screen.findByTestId('recent-pay_demo_approval');
     await waitFor(() => expect(row).toHaveTextContent('Harbor Rent Co'));
-    const [first, second] = row.querySelectorAll('.fw-row__line');
-    expect(first).toHaveTextContent('Harbor Rent Co');
-    expect(first).toHaveTextContent('US$4,200.00');
-    expect(second!.querySelector('.og-chip')).toHaveTextContent('Waiting for approval');
-    expect(second).toHaveTextContent('29 Oct 2026');
+    // OG-040: one table row: payee, status badge, date, amount (a phone lays it out as payee and amount, then the rest).
+    const [payee, status, date, amount] = row.querySelectorAll('td');
+    expect(payee).toHaveTextContent('Harbor Rent Co');
+    expect(amount).toHaveTextContent('US$4,200.00');
+    expect(status!.querySelector('.og-chip')).toHaveTextContent('Waiting for approval');
+    expect(date).toHaveTextContent('29 Oct 2026');
     const transfer = await screen.findByTestId('recent-pay_demo_2');
     await waitFor(() => expect(transfer.querySelector('.fw-row__payee')).toHaveTextContent('Tax reserve'));
   });
@@ -394,7 +395,7 @@ describe('OG-035 R8: phone tabs and More', () => {
     expect(
       within(side)
         .getAllByRole('link')
-        .map((a) => a.textContent),
+        .map((a) => a.querySelector('.fw-nav__label')?.textContent),
     ).toEqual(['Home', 'Accounts', 'Payments', 'Cards', 'Team', 'Documents', 'Support', 'Settings']);
   });
 });

@@ -29,6 +29,14 @@ export const NAV: NavEntry[] = [
   { to: '/settings', id: 'settings' },
 ].map(withLabel);
 
+/** OG-040: the side menu in groups (a heading where it helps, `app.nav.group.<id>`; null is a group without one). */
+export const NAV_GROUPS: { id: string | null; ids: string[] }[] = [
+  { id: null, ids: ['home'] },
+  { id: 'money', ids: ['accounts', 'payments', 'get_paid', 'cards'] },
+  { id: 'company', ids: ['team', 'documents'] },
+  { id: null, ids: ['support', 'settings'] },
+];
+
 /** The phone tab bar (OG-035 R8): Pay sits in the centre and opens Send. */
 export const PHONE_TABS: NavEntry[] = [
   { to: '/', id: 'home', end: true },

@@ -128,14 +128,15 @@ describe('founder web review 2026-11-12, shell and brand', () => {
     expect(px(ongem, prop(SIGNED_IN_SHEETS, '.fw-topbar.og-topbar', 'min-height')!)).toBe(64);
   });
 
-  it('FA_004 a phone shows the wordmark in the top bar, with Demo; the company is the second line', async () => {
+  it('FA_004 RD_24 a phone top bar is one row: the company switcher at the start, Demo and the bell at the end', async () => {
     const undo = asPhone();
     try {
       renderApp('/');
-      const brand = await screen.findByTestId('top-brand');
-      expect(brand.querySelector('.og-logo')).not.toBeNull();
-      expect(brand).toContainElement(screen.getByTestId('env-badge'));
-      expect(await screen.findByTestId('top-company')).toBeInTheDocument();
+      const company = await screen.findByTestId('top-company');
+      const bar = company.closest('.fw-topbar') as HTMLElement;
+      expect(bar.querySelector('.og-logo')).toBeNull();
+      expect(within(bar).getByTestId('env-badge')).toHaveTextContent('Demo');
+      expect(prop(SIGNED_IN_SHEETS, '.fw-topbar.og-topbar', 'flex-wrap')).toBe('nowrap');
     } finally {
       undo();
     }
@@ -148,7 +149,7 @@ describe('founder web review 2026-11-12, shell and brand', () => {
   });
 
   it('FA_005 the side bar brand row uses logical padding, so Arabic mirrors it', () => {
-    expect(prop(SIGNED_IN_SHEETS, '.fw-side__brand', 'padding-inline')).toBe('var(--space-md)');
+    expect(prop(SIGNED_IN_SHEETS, '.fw-side__brand', 'padding-inline')).toMatch(/^var\(--space-/);
   });
 
   it('FA_016 a phone form screen has no floating assistant; other screens leave room for it', async () => {

@@ -94,3 +94,35 @@ export const human = (s: string) => {
   const k = `app.state.word.${s.toLowerCase()}`;
   return has(k) ? t(k) : s.charAt(0) + s.slice(1).toLowerCase().replace(/_/g, ' ');
 };
+
+/** OG-040: a compact filter above a list or table, one choice at a time (pressed buttons, so a screen reader hears it). */
+export function FilterChips({
+  label,
+  options,
+  value,
+  onChange,
+  testId,
+}: {
+  label: string;
+  options: { id: string; label: string }[];
+  value: string;
+  onChange(id: string): void;
+  testId: string;
+}) {
+  return (
+    <div className="fw-filters" role="group" aria-label={label} data-testid={testId}>
+      {options.map((o) => (
+        <button
+          key={o.id}
+          type="button"
+          className={`fw-filter${o.id === value ? ' is-active' : ''}`}
+          aria-pressed={o.id === value}
+          data-testid={`${testId}-${o.id}`}
+          onClick={() => onChange(o.id)}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
+}

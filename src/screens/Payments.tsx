@@ -25,7 +25,7 @@ import { useDrafts } from '../assistant/drafts';
 import { t } from '../i18n';
 import { REGION_CONFIG } from '../region';
 import { useSession } from '../session';
-import { AcctLast4, Amt, Load, stateStatus } from './common';
+import { AcctLast4, Amt, FilterChips, Load, stateStatus } from './common';
 import { Schedules } from './Schedules';
 import { TopUp } from './TopUp';
 import { SplitHint } from './SplitHint';
@@ -1072,6 +1072,9 @@ function PaymentsList({
   const { api } = useSession();
   const navigate = useNavigate();
   const list = useAsync(() => api.payments(cursor, PAYMENTS_PAGE), [api, cursor]);
+  // OG-040: a status filter over the page shown; a new page starts unfiltered.
+  const [status, setStatus] = useState('all');
+  useEffect(() => setStatus('all'), [cursor]);
   // FA-018: on a wide screen the newest payment opens at once instead of an empty detail column.
   const first = list.status === 'success' ? list.data.items[0]?.id : undefined;
   useEffect(() => {
@@ -1085,34 +1088,49 @@ function PaymentsList({
           {(page) =>
             page.items.length ? (
               <>
+                <FilterChips
+                  label={t('app.payments.filter.label')}
+                  testId="payments-filter"
+                  value={status}
+                  onChange={setStatus}
+                  options={[
+                    { id: 'all', label: t('app.payments.filter.all') },
+                    ...[...new Set(page.items.map((p) => p.state))].map((st) => ({
+                      id: st,
+                      label: paymentLabel(st),
+                    })),
+                  ]}
+                />
                 <ul className="fw-list" data-testid="payments-list">
-                  {page.items.map((p) => (
-                    <li key={p.id}>
-                      <button
-                        className={`fw-row${p.id === id ? ' is-active' : ''}`}
-                        data-testid={`payment-${p.id}`}
-                        onClick={() => onOpen(p.id)}
-                      >
-                        <span className="fw-row__main">
-                          <strong>{payeeName(p, accs, recs)}</strong>
-                          <span className="fw-row__sub">
-                            {p.fundingSourceId
-                              ? t('app.payments.kind.topup')
-                              : p.toCompanyId
-                                ? t('app.payments.detail.company_transfer')
-                                : p.toAccountId
-                                  ? t('app.payments.detail.internal_transfer')
-                                  : REGION_CONFIG.paymentRail(p.rail)}{' '}
-                            {p.createdAt ? `· ${formatDate(p.createdAt)}` : ''}
+                  {page.items
+                    .filter((p) => status === 'all' || p.state === status)
+                    .map((p) => (
+                      <li key={p.id}>
+                        <button
+                          className={`fw-row${p.id === id ? ' is-active' : ''}`}
+                          data-testid={`payment-${p.id}`}
+                          onClick={() => onOpen(p.id)}
+                        >
+                          <span className="fw-row__main">
+                            <strong>{payeeName(p, accs, recs)}</strong>
+                            <span className="fw-row__sub">
+                              {p.fundingSourceId
+                                ? t('app.payments.kind.topup')
+                                : p.toCompanyId
+                                  ? t('app.payments.detail.company_transfer')
+                                  : p.toAccountId
+                                    ? t('app.payments.detail.internal_transfer')
+                                    : REGION_CONFIG.paymentRail(p.rail)}{' '}
+                              {p.createdAt ? `· ${formatDate(p.createdAt)}` : ''}
+                            </span>
                           </span>
-                        </span>
-                        <span className="fw-row__main">
-                          <Amt value={p.amount} />
-                          <StatusChip status={stateStatus(p.state)}>{paymentLabel(p.state)}</StatusChip>
-                        </span>
-                      </button>
-                    </li>
-                  ))}
+                          <span className="fw-row__main">
+                            <Amt value={p.amount} />
+                            <StatusChip status={stateStatus(p.state)}>{paymentLabel(p.state)}</StatusChip>
+                          </span>
+                        </button>
+                      </li>
+                    ))}
                 </ul>
                 {(page.next || cursors.length > 1) && (
                   <nav
