@@ -174,6 +174,32 @@ export function RegionLinks({ testid }: { testid?: string }) {
   );
 }
 
+/** A globe, drawn, for the one region and language control (OG-040). */
+function GlobeIcon() {
+  return (
+    <svg className="pub-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9s1.3-6.4 3.8-9z" />
+    </svg>
+  );
+}
+
+/** Region and language in one place (OG-040): the region's links and the language choice. */
+function LocaleOptions() {
+  return (
+    <>
+      <p className="pub-menu__title">{t('web.nav.region_title')}</p>
+      <RegionLinks />
+      <p className="pub-menu__title">{t('web.lang.label')}</p>
+      <LanguageSwitch variant="choice" />
+    </>
+  );
+}
+
+/**
+ * The one region and language control (OG-040, replaces the header's region and language buttons and the footer
+ * chooser): a globe with the region's short name, opening both choices.
+ */
 function RegionChooser() {
   const [open, setOpen] = useState(false);
   const id = useId();
@@ -183,22 +209,22 @@ function RegionChooser() {
   useDismiss(open, close, root, button);
   const here = t(`web.nav.region.${SITE.region.toLowerCase()}`);
   return (
-    <div className="pub-menu pub-region" ref={root}>
+    <div className="pub-menu pub-region" ref={root} onBlur={closeOnFocusOut(open, close, root)}>
       <button
         ref={button}
         type="button"
         className="pub-icon-btn pub-region__button"
         aria-expanded={open}
         aria-controls={id}
-        aria-label={t('web.nav.region_label', { region: here })}
+        aria-label={`${t('web.footer.region_language')}: ${here}, ${t(`web.lang.${getLocale()}`)}`}
         onClick={() => setOpen((o) => !o)}
         data-testid="region-chooser"
       >
-        {t(`web.nav.region_short.${SITE.region.toLowerCase()}`)}
+        <GlobeIcon />
+        <span>{t(`web.nav.region_short.${SITE.region.toLowerCase()}`)}</span>
       </button>
       <div id={id} className="pub-menu__list pub-region__panel" hidden={!open}>
-        <p className="pub-menu__title">{t('web.nav.region_title')}</p>
-        <RegionLinks />
+        <LocaleOptions />
       </div>
     </div>
   );
@@ -313,7 +339,6 @@ export function Header({ path }: { path?: string }) {
         </nav>
         <div className="pub-header__tools">
           <RegionChooser />
-          <LanguageSwitch className="pub-icon-btn pub-lang" />
           <ThemeToggle />
         </div>
         <div className="pub-header__actions">
@@ -376,11 +401,9 @@ export function Header({ path }: { path?: string }) {
             ))}
           </ul>
           {phone && (
-            <div className="pub-phone-nav__chooser">
-              <p className="pub-menu__title">{t('web.footer.region_language')}</p>
-              <RegionLinks />
+            <div className="pub-phone-nav__chooser" data-testid="phone-chooser">
+              <LocaleOptions />
               <div className="pub-phone-nav__lang">
-                <LanguageSwitch className="og-btn og-btn--secondary og-btn--md pub-lang" />
                 <ThemeToggle labelled />
               </div>
             </div>
@@ -420,8 +443,8 @@ function FooterLogo() {
 }
 
 /**
- * The site footer (OG-034 R5): five columns, the regulatory text and the region and language chooser. The page you are
- * on is marked (PS-007). A production build leaves out the draft disclosures and their draft note (PS-002).
+ * The site footer (OG-034 R5): five columns and the regulatory text; region and language live in the header (OG-040).
+ * The page you are on is marked (PS-007). A production build leaves out the draft disclosures and their draft note (PS-002).
  */
 export function Footer({ path }: { path?: string }) {
   const legal = legalSlugs();
@@ -448,11 +471,6 @@ export function Footer({ path }: { path?: string }) {
       <div className="pub-wrap">
         <div className="pub-footer__top">
           <FooterLogo />
-          <div className="pub-footer__chooser" data-testid="footer-chooser">
-            <p className="pub-menu__title">{t('web.footer.region_language')}</p>
-            <RegionLinks testid="footer-regions" />
-            <LanguageSwitch variant="choice" />
-          </div>
         </div>
         <div className="pub-footer__cols">
           {columns.map((c) => (

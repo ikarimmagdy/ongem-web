@@ -23,8 +23,8 @@ h3 {
   font-weight: var(--font-display-weight);
   color: var(--color-text-primary);
   margin: 0;
-  line-height: 1.15;
-  letter-spacing: -0.005em;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   /* A long unbroken name (a generated account or company name) wraps instead of widening the page. */
   overflow-wrap: anywhere;
 }
@@ -1287,4 +1287,14 @@ input[type='color'].og-input {
   /* The frost keeps the face readable: the last four and the holder still show through. */
   background: color-mix(in srgb, var(--color-surface-canvas) 35%, transparent);
   color: var(--color-text-primary);
+}
+
+/* OG-040: large headings take the theme's display tracking (Inter tightened); Arabic is never tracked. */
+h1 {
+  letter-spacing: var(--font-display-tracking, -0.01em);
+}
+:lang(ar) h1,
+:lang(ar) h2,
+:lang(ar) h3 {
+  letter-spacing: 0;
 }

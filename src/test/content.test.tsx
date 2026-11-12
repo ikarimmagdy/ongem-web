@@ -127,13 +127,15 @@ describe('content (OG-033)', () => {
   it('arabic_lays_the_page_out_right_to_left_and_back_AC_R10_1', async () => {
     renderApp('/', { mode: 'none' });
     expect(document.documentElement).toHaveAttribute('dir', 'ltr');
-    await userEvent.click(screen.getByTestId('language-switch'));
+    // OG-040: the language is chosen in the header's region and language panel.
+    await userEvent.click(screen.getByTestId('region-chooser'));
+    await userEvent.click(screen.getByTestId('language-ar'));
     await waitFor(() => expect(document.documentElement).toHaveAttribute('lang', 'ar'));
     expect(document.documentElement).toHaveAttribute('dir', 'rtl');
     expect(screen.getByRole('heading', { level: 1 }).textContent).toMatch(/[؀-ۿ]/);
-    expect(screen.getByTestId('language-switch')).toHaveTextContent('English');
+    expect(screen.getByTestId('language-ar')).toHaveAttribute('aria-checked', 'true');
     expect(localStorage.getItem('ongem.locale')).toBe('ar');
-    await userEvent.click(screen.getByTestId('language-switch'));
+    await userEvent.click(screen.getByTestId('language-en'));
     await waitFor(() => expect(document.documentElement).toHaveAttribute('dir', 'ltr'));
     expect(document.documentElement).toHaveAttribute('lang', 'en');
     expect(screen.getByRole('heading', { level: 1 }).textContent).not.toMatch(/[؀-ۿ]/);

@@ -961,3 +961,30 @@
   border-color: var(--color-border-subtle);
   box-shadow: none;
 }
+
+/* OG-040 redesign (theme v4): one family (Inter), real neutrals. Cards are white on the near-white canvas with the default
+   hairline so they read without a shadow; the side bar and top bar end on the same hairline; numbers keep their weight. */
+.og-card {
+  border-color: var(--color-border-default);
+  border-radius: var(--radius-lg);
+}
+.fw-side,
+.fw-topbar.og-topbar {
+  border-color: var(--color-border-default);
+}
+.fw-shell .og-nav__link {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+.fw-shell .og-nav__link.is-active {
+  color: var(--color-brand-primary);
+}
+[data-theme-mode='dark'] .fw-shell .og-nav__link.is-active {
+  color: var(--color-text-link);
+}
+.fw-shell .og-nav__link:hover:not(.is-active) {
+  color: var(--color-text-primary);
+}
+.fw-shell .og-page-header__title {
+  letter-spacing: var(--font-display-tracking, -0.025em);
+}

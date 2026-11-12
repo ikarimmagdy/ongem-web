@@ -404,15 +404,21 @@ describe('public site review fixes (US)', () => {
   });
 
   it('PS_028_region_link_keeps_the_page_and_the_language', () => {
+    // OG-040: the region links live in the header's region and language panel.
+    const panelOf = (button: HTMLElement) => document.getElementById(button.getAttribute('aria-controls')!)!;
     renderApp('/security', { mode: 'none' });
-    const footer = screen.getByTestId('footer-regions');
-    expect(within(footer).getByRole('link', { name: 'United Arab Emirates' })).toHaveAttribute(
-      'href',
-      `${SITE.otherUrl}/security?lang=en`,
-    );
+    expect(
+      within(panelOf(screen.getByTestId('region-chooser'))).getByRole('link', {
+        name: 'United Arab Emirates',
+        hidden: true,
+      }),
+    ).toHaveAttribute('href', `${SITE.otherUrl}/security?lang=en`);
     const card = renderApp('/product/cards', { mode: 'none' });
     expect(
-      within(card.getAllByTestId('footer-regions')[1]!).getByRole('link', { name: 'United Arab Emirates' }),
+      within(panelOf(card.getAllByTestId('region-chooser')[1]!)).getByRole('link', {
+        name: 'United Arab Emirates',
+        hidden: true,
+      }),
     ).toHaveAttribute('href', `${SITE.otherUrl}/?lang=en`);
   });
 

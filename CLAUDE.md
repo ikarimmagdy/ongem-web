@@ -192,3 +192,13 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   (elements styled from the theme: mode, nearest accent to the primary colour, radius, body font). A build with it on is
   deployed with `npm run acceptance:headers` (dist/security-headers.acceptance.json adds the element frames and API).
   Texts `app.get_paid.*`, `app.nav.get_paid` in the US seed. Test `src/test/acceptance.test.tsx`.
+- 2026-11-13: OG-040 redesign (WS `ongem-engineering/outputs/review/redesign-2026-11-13/`). Theme v4 tokens (WS
+  `streams/ongem/output/docs/ongem-theme-tokens-v5-2026-11-13.json`): Inter only (headings 600 at -0.025em), IBM Plex
+  Sans Arabic, weights 400, 500, 600, no condensed face; real neutrals and a neutral dark theme; OnGem blue `#2F4BE8` as
+  the accent. Header (`Nav.tsx`, `public.css` OG-040 block): one 64 px row from 1024 px (measured 1024 to 1440 px, English
+  and Arabic), nav in Inter 500 at 15 px for both menus and links, one region and language control (globe, test id
+  `region-chooser`, panel with the region links and `language-choice`) beside the theme icon; the footer no longer repeats
+  it. Below 1024 px: brand, theme, Get started and the menu panel (region and language inside it). White sections, cards
+  with one hairline, the statement band on the soft blue tint, the navy footer the only dark block; sign-in form as one card.
+  App shell (`app-shell.css` OG-040 block): cards on the default hairline at 16 px radius, side bar text secondary with
+  the active entry in brand blue. Share images re-rendered in Inter.

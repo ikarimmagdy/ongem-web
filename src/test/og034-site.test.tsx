@@ -152,8 +152,13 @@ describe('OG-034 public site structure (US build)', () => {
     expect(screen.getByTestId('pub-sign-in')).toHaveAttribute('href', '/sign-in');
     expect(screen.getByTestId('pub-demo')).toHaveTextContent('Try the demo');
     expect(screen.getByTestId('pub-get-started')).toHaveAttribute('href', '/sign-in?mode=sign-up');
-    expect(screen.getByTestId('region-chooser')).toBeInTheDocument();
-    expect(screen.getByTestId('language-switch')).toBeInTheDocument();
+    // OG-040: region and language are one control in the header; its panel holds both choices.
+    const chooser = screen.getByTestId('region-chooser');
+    const panel = document.getElementById(chooser.getAttribute('aria-controls')!)!;
+    expect(within(panel).getByTestId('language-choice')).toBeInTheDocument();
+    expect(
+      within(panel).getByRole('link', { name: 'United Arab Emirates', hidden: true }),
+    ).toBeInTheDocument();
   });
 
   it('product_menu_opens_lists_and_closes_on_escape_AC_R3_2', async () => {
@@ -246,9 +251,9 @@ describe('OG-034 public site structure (US build)', () => {
       within(screen.getByTestId('pub-legal-links')).getByRole('link', { name: 'Disclosures' }),
     ).toBeInTheDocument();
     expect(screen.getByTestId('pub-draft-note')).toHaveTextContent('Draft for legal review');
-    const chooser = screen.getByTestId('footer-chooser');
-    expect(within(chooser).getByTestId('footer-regions')).toBeInTheDocument();
-    expect(within(chooser).getByTestId('language-choice')).toBeInTheDocument();
+    // OG-040: the footer no longer repeats the region and language control; the header holds it.
+    expect(screen.queryByTestId('footer-chooser')).not.toBeInTheDocument();
+    expect(within(document.querySelector('footer')!).queryByTestId('language-choice')).toBeNull();
   });
 
   it('status_placeholder_AC_R5_2', () => {
@@ -262,7 +267,7 @@ describe('OG-034 public site structure (US build)', () => {
     renderApp('/', { mode: 'none' });
     const button = screen.getByTestId('region-chooser');
     expect(button).toHaveTextContent('US');
-    expect(button).toHaveAccessibleName('Region: United States. Choose a region');
+    expect(button).toHaveAccessibleName('Region and language: United States, English');
     await userEvent.click(button);
     expect(button).toHaveAttribute('aria-expanded', 'true');
     const panel = document.getElementById(button.getAttribute('aria-controls')!)!;

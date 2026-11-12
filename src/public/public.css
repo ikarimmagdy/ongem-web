@@ -1158,7 +1158,7 @@
 .pub-phone-nav {
   display: none;
 }
-@media (max-width: 1120px) {
+@media (max-width: 1023px) {
   /* PS-018: the primary action stays in the header at every width; sign-in and the demo move to the panel. */
   .pub-nav,
   .pub-header__actions .pub-nav__signin,
@@ -1180,7 +1180,7 @@
     border-bottom: 1px solid var(--color-border-subtle);
     background: var(--color-surface-card);
     box-shadow: var(--shadow-raised);
-    max-height: calc(100dvh - 68px);
+    max-height: calc(100dvh - 64px);
     overflow-y: auto;
     overscroll-behavior: contain;
     padding-block: var(--space-md) var(--space-lg);
@@ -1874,6 +1874,445 @@
 .pub-footer {
   padding-block: var(--space-3xl) var(--space-2xl);
   border-top: 0;
+}
+
+/* OG-040 redesign (theme v4: Inter only, real neutrals, OnGem blue as the accent). One header row from 1024 px with
+   one region and language control, a menu panel below that; white sections separated by space, not grey bands; one
+   statement band per page on a soft tint, the navy footer the only dark block. Tokens and logical properties only. */
+.pub {
+  background: var(--color-surface-card);
+  font-size: var(--font-size-md);
+  line-height: 1.5;
+}
+.pub-wrap {
+  max-width: 1200px;
+  padding-inline: var(--space-lg);
+}
+@media (max-width: 640px) {
+  .pub-wrap {
+    padding-inline: var(--space-md);
+  }
+}
+
+/* Header: 64 px, one row, never wraps. */
+.pub-header {
+  background: var(--color-surface-card);
+  backdrop-filter: none;
+  border-bottom: 1px solid var(--color-border-default);
+}
+.pub-header__row {
+  min-height: 64px;
+  gap: var(--space-xs);
+  flex-wrap: nowrap;
+}
+.pub-brand {
+  flex: none;
+  margin-inline-end: var(--space-lg);
+}
+.pub-brand .og-logo img {
+  height: 26px;
+}
+.pub-nav {
+  margin-inline-start: 0;
+  gap: 2px;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+.pub-nav__link,
+.pub-menu__button {
+  font-family: var(--font-body);
+  font-size: calc(var(--font-size-sm) + 1px);
+  font-weight: var(--font-body-strong-weight);
+  line-height: 20px;
+  letter-spacing: 0;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+  min-height: 40px;
+  padding: var(--space-sm) calc(var(--space-sm) + var(--space-xs));
+  border-radius: var(--radius-pill);
+}
+.pub-nav__link:hover,
+.pub-menu__button:hover,
+.pub-menu__button[aria-expanded='true'] {
+  color: var(--color-text-primary);
+  background: var(--color-surface-sunken);
+}
+.pub-nav__link[aria-current='page'],
+.pub-menu__button.is-current {
+  color: var(--color-text-primary);
+  box-shadow: inset 0 -2px 0 var(--color-brand-primary);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+.pub-menu__chevron {
+  width: 6px;
+  height: 6px;
+  border-inline-end-width: 1.5px;
+  border-block-end-width: 1.5px;
+  margin-inline-start: 2px;
+  opacity: 0.7;
+}
+.pub-header__tools {
+  margin-inline-start: auto;
+  gap: 2px;
+  flex: none;
+}
+.pub-header__tools .pub-icon-btn {
+  border-color: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-body-strong-weight);
+}
+.pub-header__tools .pub-icon-btn:hover,
+.pub-region__button[aria-expanded='true'] {
+  background: var(--color-surface-sunken);
+  color: var(--color-text-primary);
+}
+.pub-region__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-inline: calc(var(--space-sm) + 2px);
+  font-family: var(--font-body);
+}
+.pub-region__panel {
+  min-width: 280px;
+  display: grid;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+}
+.pub-region__panel .pub-menu__title:not(:first-child),
+.pub-phone-nav__chooser .pub-menu__title:not(:first-child) {
+  margin-block-start: var(--space-sm);
+}
+.pub-region__panel .fw-lang,
+.pub-phone-nav__chooser .fw-lang {
+  display: flex;
+  gap: var(--space-xs);
+}
+.pub-region__panel .fw-lang .og-btn,
+.pub-phone-nav__chooser .fw-lang .og-btn {
+  flex: 1 1 0;
+  justify-content: center;
+}
+/* The chosen language is marked by an ink edge, not a second filled blue button. */
+.pub-region__panel .fw-lang .og-btn--primary,
+.pub-phone-nav__chooser .fw-lang .og-btn--primary {
+  background: var(--color-surface-card);
+  color: var(--color-text-primary);
+  border-color: var(--color-text-primary);
+}
+.pub-header__actions {
+  flex: none;
+  gap: var(--space-xs);
+  margin-inline-start: var(--space-xs);
+}
+.pub .pub-header__actions .og-btn {
+  min-height: 40px;
+  font-size: calc(var(--font-size-sm) + 1px);
+  padding-inline: var(--space-md);
+}
+.pub-header__actions .pub-nav__signin,
+.pub-header__actions .pub-header__demo:not(.pub-header__main) {
+  color: var(--color-text-primary);
+  background: transparent;
+  border-color: transparent;
+}
+.pub-header__actions .pub-nav__signin:hover,
+.pub-header__actions .pub-header__demo:not(.pub-header__main):hover {
+  background: var(--color-surface-sunken);
+}
+/* The demo is in every hero; between 1024 and 1199 px the header leaves it out so the row keeps its room. */
+@media (max-width: 1199px) {
+  .pub-header__actions .pub-header__demo:not(.pub-header__main) {
+    display: none;
+  }
+}
+/* Below 1024 px: the brand, the theme, the one filled button and the menu; everything else is in the panel. */
+@media (max-width: 1023px) {
+  .pub-header__tools .pub-region {
+    display: none;
+  }
+  .pub-header__tools {
+    display: flex;
+  }
+  .pub-phone-nav {
+    border-top: 1px solid var(--color-border-default);
+    box-shadow: var(--shadow-raised);
+    padding-block: var(--space-sm) var(--space-xl);
+  }
+  .pub-phone-nav .pub-menu__title {
+    margin-block: var(--space-md) var(--space-xs);
+  }
+  .pub-phone-nav li a {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-body-strong-weight);
+    border-bottom-color: var(--color-border-subtle);
+  }
+  .pub-phone-nav__chooser {
+    padding-block: var(--space-sm) var(--space-md);
+  }
+}
+@media (max-width: 640px) {
+  .pub-header__tools {
+    display: flex;
+  }
+  .pub-header__actions .og-btn {
+    padding-inline: var(--space-md);
+  }
+}
+.pub-menu__list {
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xs);
+}
+.pub-menu__list a {
+  border-radius: var(--radius-sm);
+  font-size: calc(var(--font-size-sm) + 1px);
+}
+.pub-menu__title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-body-strong-weight);
+  color: var(--color-text-muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Type: Inter, weight 600 for headings, tight tracking at display sizes; Arabic untracked (PS-040). */
+.pub-display {
+  font-weight: var(--font-display-weight);
+  font-size: clamp(calc(var(--font-size-3xl) + var(--space-sm)), 4.4vw, var(--font-size-5xl));
+  line-height: 1.07;
+  letter-spacing: var(--font-display-tracking, -0.025em);
+}
+.pub-hero .pub-display {
+  font-size: clamp(
+    calc(var(--font-size-3xl) + var(--space-sm)),
+    3.6vw,
+    calc(var(--font-size-4xl) + var(--space-sm))
+  );
+  line-height: 1.07;
+  text-wrap: balance;
+}
+/* The headline needs the room to stay on two lines beside the product (OG-032 AC-R18.2). */
+@media (min-width: 861px) {
+  .pub-hero__grid {
+    grid-template-columns: 1.25fr 1fr;
+    gap: var(--space-xl);
+  }
+}
+.pub-h2,
+.pub-section > .pub-wrap > .pub-h2 {
+  font-size: clamp(var(--font-size-2xl), 3.2vw, var(--font-size-4xl));
+  line-height: 1.12;
+  letter-spacing: var(--font-display-tracking, -0.025em);
+}
+.pub-card h3,
+.pub-h3,
+.pub-steps h3 {
+  font-size: var(--font-size-lg);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+.pub-eyebrow {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-body-strong-weight);
+  color: var(--color-text-link);
+  letter-spacing: 0;
+}
+.pub-lede {
+  font-size: var(--font-size-lg);
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+  max-width: 56ch;
+}
+.pub-card p,
+.pub-feature p,
+.pub-ticks li,
+.pub-proof li {
+  color: var(--color-text-secondary);
+}
+:lang(ar) .pub-display,
+:lang(ar) .pub-hero .pub-display,
+:lang(ar) .pub-h2,
+:lang(ar) .pub-section > .pub-wrap > .pub-h2 {
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+/* Sections: white, separated by space; a hairline between neighbours that would otherwise run together. */
+.pub-section--tint {
+  background: var(--color-surface-card);
+  border-block-start: 1px solid var(--color-border-subtle);
+  padding-block: var(--space-3xl);
+}
+[data-theme-mode='dark'] .pub .pub-header__actions .pub-nav__signin {
+  border-color: transparent;
+}
+.pub-hero {
+  padding-block: var(--space-3xl) var(--space-3xl);
+}
+@media (min-width: 861px) {
+  .pub-hero {
+    padding-block: var(--space-4xl) var(--space-3xl);
+  }
+}
+.pub-browser,
+.pub-shot {
+  border: 1px solid var(--color-border-default);
+  box-shadow: var(--shadow-raised);
+}
+
+/* Buttons on the site: pill, 44 px, Inter 500. */
+.pub .og-btn {
+  border-radius: var(--radius-pill);
+  font-weight: var(--font-body-strong-weight);
+}
+.pub .og-btn--md {
+  min-height: 44px;
+  padding-inline: calc(var(--space-md) + var(--space-xs));
+}
+.pub .og-btn--secondary {
+  border-color: var(--color-border-default);
+}
+.pub .og-btn--secondary:hover:not(:disabled) {
+  border-color: var(--color-text-primary);
+}
+
+/* Cards: white, one hairline, 16 px radius, no fill on hover. */
+.pub-card,
+.pub-tile,
+.pub-faq__item,
+.pub-faq__next,
+.pub-pricing {
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+}
+.pub-card {
+  padding: calc(var(--space-lg) + var(--space-xs));
+}
+.pub-card:hover {
+  background: var(--color-surface-card);
+  border-color: var(--color-border-strong);
+}
+.pub-card--demo {
+  background: var(--color-surface-tint-blue);
+  border-color: transparent;
+}
+.pub-card--demo h3,
+.pub-card--demo p {
+  color: var(--color-brand-deep);
+}
+
+/* Demo band and statement band: one soft blue panel, ink text, in both themes. */
+.pub-demo-band .pub-demo-band__row {
+  background: var(--color-surface-tint-blue);
+  border-radius: var(--radius-xl);
+}
+.pub-demo-band .pub-demo-band__row h2,
+.pub-demo-band .pub-demo-band__row p {
+  color: var(--color-brand-deep);
+}
+.pub-band {
+  background: var(--color-surface-tint-blue);
+  color: var(--color-brand-deep);
+}
+.pub-band .pub-h2,
+.pub-band .pub-h3,
+.pub-band h2,
+.pub-band h3,
+.pub-band strong,
+.pub-band .pub-lede,
+.pub-band p,
+.pub-band li,
+.pub-band .pub-eyebrow,
+.pub-band a {
+  color: var(--color-brand-deep);
+}
+.pub-band .pub-ticks li::before {
+  background: var(--color-brand-primary);
+}
+.pub-band__glow {
+  display: none;
+}
+.pub-band .pub-card,
+.pub-band .pub-tile {
+  background: var(--color-surface-card);
+  border-color: transparent;
+}
+.pub-band .pub-card h3,
+.pub-band .pub-card p,
+.pub-band .pub-tile h3,
+.pub-band .pub-tile p {
+  color: var(--color-text-primary);
+}
+[data-theme-mode='dark'] .pub-band {
+  background: var(--color-surface-raised);
+}
+[data-theme-mode='dark'] .pub-band .pub-h2,
+[data-theme-mode='dark'] .pub-band .pub-h3,
+[data-theme-mode='dark'] .pub-band h2,
+[data-theme-mode='dark'] .pub-band h3,
+[data-theme-mode='dark'] .pub-band strong,
+[data-theme-mode='dark'] .pub-band .pub-lede,
+[data-theme-mode='dark'] .pub-band p,
+[data-theme-mode='dark'] .pub-band li,
+[data-theme-mode='dark'] .pub-band a {
+  color: var(--color-text-primary);
+}
+[data-theme-mode='dark'] .pub-band .pub-eyebrow {
+  color: var(--color-text-link);
+}
+
+/* Facts and the closing call to action. */
+.pub-fact {
+  border-top-color: var(--color-border-default);
+}
+.pub-fact dd {
+  font-weight: var(--font-display-weight);
+  letter-spacing: var(--font-display-tracking, -0.025em);
+}
+.pub-final {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+/* Footer: the one dark block, columns only; region and language are in the header. */
+.pub-footer {
+  padding-block: var(--space-3xl) var(--space-xl);
+  font-size: var(--font-size-sm);
+}
+.pub-footer__top {
+  margin-block-end: var(--space-lg);
+}
+.pub-footer .pub-menu__title {
+  color: var(--color-surface-tint-blue);
+  opacity: 0.8;
+}
+.pub-footer__col a {
+  min-height: 28px;
+}
+
+/* Sign-in: the form side is one card. */
+.fw-auth__title {
+  font-size: clamp(var(--font-size-2xl), 3vw, calc(var(--font-size-3xl) + var(--space-sm)));
+  letter-spacing: var(--font-display-tracking, -0.025em);
+  line-height: 1.12;
+}
+.fw-auth__form {
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+}
+:lang(ar) .fw-auth__title {
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+@media (max-width: 640px) {
+  .fw-auth__form {
+    padding: var(--space-lg);
+  }
 }
 
 @media print {
