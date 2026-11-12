@@ -312,7 +312,8 @@ export class DemoOnGemApi implements OnGemApi {
   devices = async () => this.log('devices', this.devicesState);
   revokeDevice = async (id: string) => {
     const d = this.devicesState.find((x) => x.id === id) ?? this.notFound('device');
-    if (d.current) throw new ApiError(409, 'device_current', t('app.settings.security.cannot_revoke_current'));
+    if (d.current)
+      throw new ApiError(409, 'device_current', t('app.settings.security.cannot_revoke_current'));
     this.devicesState = this.devicesState.map((x) =>
       x.id === id ? { ...x, revokedAt: x.revokedAt ?? this.now() } : x,
     );
@@ -698,7 +699,11 @@ export class DemoOnGemApi implements OnGemApi {
     if (r.amountMinor <= 0) throw new ApiError(422, 'validation_failed', t('app.demo.error.amount_positive'));
     if (f.state !== 'VERIFIED') throw new ApiError(409, 'funding_source_not_verified');
     if (r.amountMinor > REGION_CONFIG.topUpLimit) throw new ApiError(409, 'limit_exceeded');
-    await this.stepUp('payment', { action: 'topup', amount: money(r.amountMinor), last4: f.last4 ?? undefined });
+    await this.stepUp('payment', {
+      action: 'topup',
+      amount: money(r.amountMinor),
+      last4: f.last4 ?? undefined,
+    });
     const p: Payment = {
       id: this.next('pay'),
       state: 'PENDING_APPROVAL',

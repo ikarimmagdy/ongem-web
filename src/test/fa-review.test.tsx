@@ -4,15 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { DemoOnGemApi } from '../api/demo';
 import { stateStatus } from '../screens/common';
 import { asPhone, renderApp } from './render';
-import {
-  BUNDLED_THEMES,
-  SIGNED_IN_SHEETS,
-  colorVar,
-  contrast,
-  css,
-  prop,
-  px,
-} from './fa-review.helpers';
+import { BUNDLED_THEMES, SIGNED_IN_SHEETS, colorVar, contrast, css, prop, px } from './fa-review.helpers';
 
 const ongem = BUNDLED_THEMES.find((x) => x.id === 'ongem')!;
 
@@ -86,9 +78,7 @@ describe('founder web review 2026-11-12, P1', () => {
   it('FA_031 the From account shows its balance and an amount over it is refused before Review', async () => {
     const api = new DemoOnGemApi({ stepUp: () => Promise.resolve(true) });
     renderApp('/payments/new', { api });
-    expect(await screen.findByTestId('payment-from-available')).toHaveTextContent(
-      'Available: US$126,100.16',
-    );
+    expect(await screen.findByTestId('payment-from-available')).toHaveTextContent('Available: US$126,100.16');
     await userEvent.selectOptions(screen.getByTestId('payment-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('payment-amount'), '999999999');
     expect(screen.getByRole('alert')).toHaveTextContent(
@@ -328,9 +318,9 @@ describe('founder web review 2026-11-12, payments', () => {
     expect(await screen.findByTestId('payment-from-account')).toHaveTextContent('Operating');
     expect(screen.getByTestId('payment-method')).toHaveTextContent('Standard ACH, 1 to 2 business days');
     expect(detail).not.toHaveTextContent(/Rail|ach_demo|Bank reference/);
-    const labels = Array.from(screen.getByTestId('payment-timeline').querySelectorAll('.fw-timeline__label')).map(
-      (x) => x.textContent,
-    );
+    const labels = Array.from(
+      screen.getByTestId('payment-timeline').querySelectorAll('.fw-timeline__label'),
+    ).map((x) => x.textContent);
     expect(labels.length).toBe(new Set(labels).size);
     await waitFor(() => expect(document.title).toMatch(/^Payment to Acme Supplies LLC/));
   });
@@ -349,7 +339,9 @@ describe('founder web review 2026-11-12, payments', () => {
     expect(review).toBeEnabled();
     expect(document.querySelector('.fw-prefixed__prefix')).toHaveTextContent('US$');
     await userEvent.click(review);
-    expect(screen.getByTestId('payment-missing')).toHaveTextContent('Add who to pay, an amount to review the payment.');
+    expect(screen.getByTestId('payment-missing')).toHaveTextContent(
+      'Add who to pay, an amount to review the payment.',
+    );
   });
 
   it('FA_019 the send form has a live summary of amount, payee and account', async () => {
@@ -365,7 +357,9 @@ describe('founder web review 2026-11-12, payments', () => {
   it('FA_037 an approval names its account and date, and Decline asks first', async () => {
     const api = new DemoOnGemApi({ stepUp: () => Promise.resolve(true) });
     renderApp('/payments/approvals', { api });
-    expect(await screen.findByTestId('approval-from-pay_demo_approval')).toHaveTextContent(/^From Operating, asked/);
+    expect(await screen.findByTestId('approval-from-pay_demo_approval')).toHaveTextContent(
+      /^From Operating, asked/,
+    );
     await userEvent.click(screen.getAllByTestId('payment-reject')[0]!);
     expect(await screen.findByRole('dialog')).toHaveTextContent('Decline this payment?');
     expect(api.calls).not.toContain('rejectPayment');
@@ -385,7 +379,9 @@ describe('founder web review 2026-11-12, payments', () => {
     } finally {
       window.matchMedia = original;
     }
-    expect(css('app-shell.css')).toMatch(/@media \(min-width: 901px\) \{\s*\.fw-split__back \{\s*display: none;/);
+    expect(css('app-shell.css')).toMatch(
+      /@media \(min-width: 901px\) \{\s*\.fw-split__back \{\s*display: none;/,
+    );
   });
 
   it('FA_025 FA_026 notices open their payment, match its amount, and are not listed twice beside an approval', async () => {
@@ -407,7 +403,9 @@ describe('founder web review 2026-11-12, payments', () => {
     renderApp('/support/new?category=DISPUTE&card=crd_demo_dana', { api });
     await screen.findByTestId('dispute-form');
     await userEvent.click(screen.getByTestId('dispute-send'));
-    expect(screen.getByTestId('dispute-missing')).toHaveTextContent('Add the charge, a reason to send the dispute.');
+    expect(screen.getByTestId('dispute-missing')).toHaveTextContent(
+      'Add the charge, a reason to send the dispute.',
+    );
     const charges = await screen.findByTestId('dispute-charges');
     await userEvent.click(within(charges).getAllByRole('radio')[0]!);
     await userEvent.selectOptions(screen.getByTestId('dispute-reason'), 'twice');
@@ -437,7 +435,9 @@ describe('founder web review 2026-11-12, search, assistant and demo', () => {
     expect(screen.getByTestId('search-option-screen-documents-statements')).toBeInTheDocument();
     await userEvent.clear(input);
     await userEvent.type(input, '1,250');
-    expect(await screen.findByTestId('search-option-payment-pay_demo_1')).toHaveTextContent('Acme Supplies LLC');
+    expect(await screen.findByTestId('search-option-payment-pay_demo_1')).toHaveTextContent(
+      'Acme Supplies LLC',
+    );
     await userEvent.clear(input);
     await userEvent.type(input, '5521');
     expect(await screen.findByTestId('search-option-card-crd_demo_dana')).toBeInTheDocument();
@@ -483,7 +483,9 @@ describe('founder web review 2026-11-12, search, assistant and demo', () => {
 
   it('FA_059 a channel checked in this tab is not asked again; a 429 holds for its Retry-After', async () => {
     const { refreshChannel, held } = await import('../i18n/store');
-    const fetchImpl = vi.fn(async () => new Response(null, { status: 429, headers: { 'Retry-After': '30' } }));
+    const fetchImpl = vi.fn(
+      async () => new Response(null, { status: 429, headers: { 'Retry-After': '30' } }),
+    );
     await refreshChannel('web_app', { fetchImpl: fetchImpl as unknown as typeof fetch, locale: 'en' });
     expect(held('en', 'web_app')).toBe(true);
     expect(held('en', 'web_app', Date.now() + 31_000)).toBe(false);

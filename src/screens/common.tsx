@@ -63,13 +63,24 @@ export function AcctLast4({ value }: { value?: string | null }) {
  * reviewing), green when it is done (settled, active), amber when it waits for someone (approval, a step to finish), red
  * when it failed or came back, slate when it is paused (frozen).
  */
-const PROCESSING = ['SUBMITTED', 'SENT', 'SENDING', 'PRECHECKED', 'BANK_REVIEW', 'PROCESSING', 'QUEUED', 'RUNNING'];
+const PROCESSING = [
+  'SUBMITTED',
+  'SENT',
+  'SENDING',
+  'PRECHECKED',
+  'BANK_REVIEW',
+  'PROCESSING',
+  'QUEUED',
+  'RUNNING',
+];
 
 export function stateStatus(state: string): Status {
   const s = state.toUpperCase();
   if (PROCESSING.includes(s)) return 'info';
   if (
-    ['SETTLED', 'ACTIVE', 'OPEN', 'CLEAR', 'RESOLVED', 'APPROVED', 'CONFIRMED', 'ACCEPTED', 'DONE'].includes(s)
+    ['SETTLED', 'ACTIVE', 'OPEN', 'CLEAR', 'RESOLVED', 'APPROVED', 'CONFIRMED', 'ACCEPTED', 'DONE'].includes(
+      s,
+    )
   )
     return 'success';
   if (['RETURNED', 'FAILED', 'REFUSED', 'BLOCKED', 'CLOSED', 'REJECTED', 'CANCELLED'].includes(s))

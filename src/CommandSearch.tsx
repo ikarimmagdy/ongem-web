@@ -70,14 +70,20 @@ export function CommandSearch() {
   const payments = useAsync(
     () =>
       open && can(Permission.PAYMENT_VIEW)
-        ? api.payments(null, 50).then((p) => p.items, () => [])
+        ? api.payments(null, 50).then(
+            (p) => p.items,
+            () => [],
+          )
         : Promise.resolve([]),
     [api, open],
   );
   const cards = useAsync(
     () =>
       open && can(Permission.CARD_MANAGE)
-        ? api.cards().then((c) => c.items, () => [])
+        ? api.cards().then(
+            (c) => c.items,
+            () => [],
+          )
         : Promise.resolve([]),
     [api, open],
   );
@@ -156,7 +162,9 @@ export function CommandSearch() {
       ...(q ? recs.filter((o) => match(o.label)) : []),
       ...(q
         ? pays
-            .filter((o) => match(o.label) || (digits.length > 0 && o.hint!.replace(/[^\d]/g, '').includes(digits)))
+            .filter(
+              (o) => match(o.label) || (digits.length > 0 && o.hint!.replace(/[^\d]/g, '').includes(digits)),
+            )
             .slice(0, 5)
         : []),
       ...(q
@@ -215,7 +223,9 @@ export function CommandSearch() {
           <path d="m20 20-3.5-3.5" />
         </svg>
         <span>{t('app.search.open')}</span>
-        <kbd className="fw-search__kbd" dir="ltr">{isMac() ? KEYCAP_MAC : KEYCAP_OTHER}</kbd>
+        <kbd className="fw-search__kbd" dir="ltr">
+          {isMac() ? KEYCAP_MAC : KEYCAP_OTHER}
+        </kbd>
       </button>
       <Modal open={open} title={t('app.search.title')} onClose={() => setOpen(false)} hideTitle>
         <div className="fw-palette" data-testid="command-search">

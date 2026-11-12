@@ -160,9 +160,7 @@ function CardDetail({ id, onListChanged }: { id: string; onListChanged?(): void 
             <Button
               variant="secondary"
               data-testid="card-dispute"
-              onClick={() =>
-                navigate(`/support/new?category=DISPUTE&card=${encodeURIComponent(c.id)}`)
-              }
+              onClick={() => navigate(`/support/new?category=DISPUTE&card=${encodeURIComponent(c.id)}`)}
             >
               {t('app.cards.dispute')}
             </Button>

@@ -109,8 +109,8 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
 - 2026-11-10: OG-023 T6 multi-company. The switcher (`CompanySwitcher`, `lib/company.ts` `loadCompanies`) lists the
   person's ACTIVE companies from GET /v1/me on every region this build has an API for (`VITE_API_BASE_URL_US`,
   `VITE_API_BASE_URL_AE`; `OnGemApi.forRegion`), marked with region, lifecycle and unread count; a region that does not
-  answer leaves a notice. A pick in another region moves every call to that region's API (`session.switchCompany(id,
-  region)`). A FROZEN, CLOSING or CLOSED company opens read-only (`READ_ONLY` permissions and a banner). `?company=<id>`
+  answer leaves a notice. A pick in another region moves every call to that region's API
+  (`session.switchCompany(id, region)`). A FROZEN, CLOSING or CLOSED company opens read-only (`READ_ONLY` permissions and a banner). `?company=<id>`
   on any link switches first (`LinkCompany`). Team invitations in Settings (`TeamInvites`, member:invite), accept at
   `/invite/:token` (`screens/Invite.tsx`), and "Between my companies" transfers (rail INTERNAL) on the payment form.
 - 2026-11-10: OG-022 T15 (R24, R25, ADR-0052): after sign-in `findRegionBase` (`session.tsx`) asks whereami on the

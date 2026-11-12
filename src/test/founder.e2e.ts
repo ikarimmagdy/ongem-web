@@ -186,7 +186,9 @@ test('WEB-SEC-05 security headers are served and the journey runs under the CSP'
   await expect(page.getByTestId('assistant-reply').last()).toContainText('Operating');
   await toggleAssistant(page);
   await nav(page, 'settings');
-  await page.getByRole('combobox', { name: 'Theme' }).selectOption({ index: 1 });
+  // FA-030: appearance is a Light, Dark or System choice, not a select of theme names.
+  await page.getByTestId('appearance-dark').click();
+  await expect(page.getByTestId('appearance-dark')).toHaveAttribute('aria-checked', 'true');
   await page.waitForTimeout(500);
   expect(violations).toEqual([]);
 });
@@ -396,7 +398,13 @@ test('UX_17 wide screens: content keeps a readable width and list screens fill t
   const hint = page.getByTestId('split-hint');
   if (info.project.name === 'desktop') {
     expect(width).toBeLessThanOrEqual(1280);
+    // FA-018: a wide screen fills the detail column with the newest payment instead of the hint.
+    await expect(page.getByTestId('payment-detail')).toBeVisible();
+    await expect(hint).toBeHidden();
+    // Support opens nothing on its own, so its detail column still carries the hint (UX-17).
+    await nav(page, 'support');
     await expect(hint).toBeVisible();
+    await nav(page, 'payments');
   } else {
     await expect(hint).toBeHidden();
   }
@@ -429,7 +437,15 @@ test('AC_R18_2 the assistant never covers content, titles name the page, contras
   };
   await check('home');
   await nav(page, 'payments');
-  await expect(page).toHaveTitle('Payments | OnGem');
+  await expect(page.getByTestId('payments-list')).toBeVisible();
+  if (page.viewportSize()!.width >= 901) {
+    // FA-018 and FA-035: a wide screen opens the newest payment and the tab names it.
+    await expect(page).toHaveURL(/\/payments\/[^/]+$/);
+    await expect(page.getByTestId('payment-detail')).toBeVisible();
+    await expect(page).toHaveTitle(/^Payment to .+ \| OnGem$/);
+  } else {
+    await expect(page).toHaveTitle('Payments | OnGem');
+  }
   await check('payments');
   await nav(page, 'cards');
   await check('cards');
@@ -482,8 +498,10 @@ test('OG-035 AC_R10_4 axe on Home, Payments, Team, Documents and More, English a
   await demo(page);
   for (const lang of ['en', 'ar']) {
     if (lang === 'ar') {
+      // FA-053: demo mode lasts for the tab, so loading the app again stays in the demo instead of showing sign-in.
       await page.evaluate(() => localStorage.setItem('ongem.locale', 'ar'));
-      await demo(page);
+      await page.goto('/');
+      await expect(page.getByTestId('home-total')).toBeVisible();
       await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
     }
     for (const route of ['/', '/payments', '/payments/approvals', '/team', '/documents', '/more']) {

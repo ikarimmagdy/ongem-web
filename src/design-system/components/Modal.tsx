@@ -67,7 +67,11 @@ export function Modal({ open, title, onClose, children, footer, hideTitle = fals
 
   if (!open) return null;
   return createPortal(
-    <div ref={backdrop} className="og-modal__backdrop" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+    <div
+      ref={backdrop}
+      className="og-modal__backdrop"
+      onMouseDown={(e) => e.target === e.currentTarget && onClose()}
+    >
       <div
         ref={ref}
         className="og-modal"

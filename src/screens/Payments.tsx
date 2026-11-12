@@ -362,7 +362,10 @@ export function PaymentDetail({ id, justSent = false }: { id: string; justSent?:
                     label: t('app.payments.detail.status'),
                     value: <StatusChip status={stateStatus(p.state)}>{paymentLabel(p.state)}</StatusChip>,
                   },
-                  { label: t('app.payments.review.to'), value: <span data-testid="payment-to">{payee}</span> },
+                  {
+                    label: t('app.payments.review.to'),
+                    value: <span data-testid="payment-to">{payee}</span>,
+                  },
                   ...(from
                     ? [
                         {
@@ -647,120 +650,120 @@ export function NewPayment() {
             if (valid) setReview(true);
           }}
         >
-        <Field label={t('app.payments.form.type')}>
-          <Select
-            data-testid="payment-kind"
-            value={kind}
-            onChange={(e) => setKind(e.target.value)}
-            options={[
-              ...rails.map((r) => ({ value: railValue(r), label: r.option })),
-              { value: 'internal', label: t('app.payments.form.internal') },
-              ...(others.length
-                ? [{ value: 'company', label: t('app.payments.form.between_companies') }]
-                : []),
-            ]}
-          />
-        </Field>
-        {kind === 'company' ? (
-          companyAccounts.status === 'loading' ? (
-            <Skeleton label={t('app.payments.form.companies_loading')} />
-          ) : companyAccounts.status === 'error' ? (
-            <Notice status="failure">{errorText(companyAccounts.error)}</Notice>
-          ) : (
+          <Field label={t('app.payments.form.type')}>
+            <Select
+              data-testid="payment-kind"
+              value={kind}
+              onChange={(e) => setKind(e.target.value)}
+              options={[
+                ...rails.map((r) => ({ value: railValue(r), label: r.option })),
+                { value: 'internal', label: t('app.payments.form.internal') },
+                ...(others.length
+                  ? [{ value: 'company', label: t('app.payments.form.between_companies') }]
+                  : []),
+              ]}
+            />
+          </Field>
+          {kind === 'company' ? (
+            companyAccounts.status === 'loading' ? (
+              <Skeleton label={t('app.payments.form.companies_loading')} />
+            ) : companyAccounts.status === 'error' ? (
+              <Notice status="failure">{errorText(companyAccounts.error)}</Notice>
+            ) : (
+              <Field label={t('app.payments.form.to_account')}>
+                <Select
+                  data-testid="payment-to-company-account"
+                  value={companyToId}
+                  onChange={(e) => setToCompanyAccount(e.target.value)}
+                  options={[
+                    { value: '', label: t('app.payments.form.choose_account') },
+                    ...destinations.map((d) => ({ value: d.account.id, label: destinationLabel(d) })),
+                  ]}
+                />
+              </Field>
+            )
+          ) : kind === 'internal' ? (
             <Field label={t('app.payments.form.to_account')}>
               <Select
-                data-testid="payment-to-company-account"
-                value={companyToId}
-                onChange={(e) => setToCompanyAccount(e.target.value)}
+                data-testid="payment-to-account"
+                value={toId}
+                onChange={(e) => setToAccount(e.target.value)}
                 options={[
                   { value: '', label: t('app.payments.form.choose_account') },
-                  ...destinations.map((d) => ({ value: d.account.id, label: destinationLabel(d) })),
+                  ...accs.filter((a) => a.id !== fromId).map((a) => ({ value: a.id, label: a.name })),
                 ]}
               />
             </Field>
-          )
-        ) : kind === 'internal' ? (
-          <Field label={t('app.payments.form.to_account')}>
-            <Select
-              data-testid="payment-to-account"
-              value={toId}
-              onChange={(e) => setToAccount(e.target.value)}
-              options={[
-                { value: '', label: t('app.payments.form.choose_account') },
-                ...accs.filter((a) => a.id !== fromId).map((a) => ({ value: a.id, label: a.name })),
-              ]}
-            />
-          </Field>
-        ) : (
+          ) : (
+            <Field
+              label={t('app.payments.form.recipient')}
+              hint={
+                !payable.length
+                  ? t('app.payments.form.recipient_first')
+                  : payable.some((r) => r.id === recipientId && r.screening === 'PENDING')
+                    ? t('app.payments.form.recipient_pending')
+                    : rail.how
+              }
+            >
+              <Select
+                data-testid="payment-recipient"
+                value={recipientId}
+                onChange={(e) => setRecipient(e.target.value)}
+                options={[
+                  { value: '', label: t('app.payments.form.choose_recipient') },
+                  ...payable.map((r) => ({ value: r.id, label: r.name })),
+                ]}
+              />
+            </Field>
+          )}
           <Field
-            label={t('app.payments.form.recipient')}
+            label={t('app.payments.review.from')}
             hint={
-              !payable.length
-                ? t('app.payments.form.recipient_first')
-                : payable.some((r) => r.id === recipientId && r.screening === 'PENDING')
-                  ? t('app.payments.form.recipient_pending')
-                  : rail.how
+              fromAvailable ? (
+                <span data-testid="payment-from-available" data-mask="">
+                  {t('app.payments.form.available', { amount: formatMinor(fromAvailable) })}
+                </span>
+              ) : undefined
             }
           >
             <Select
-              data-testid="payment-recipient"
-              value={recipientId}
-              onChange={(e) => setRecipient(e.target.value)}
-              options={[
-                { value: '', label: t('app.payments.form.choose_recipient') },
-                ...payable.map((r) => ({ value: r.id, label: r.name })),
-              ]}
+              data-testid="payment-from"
+              data-mask=""
+              value={fromId}
+              onChange={(e) => setFrom(e.target.value)}
+              options={accs.map((a) => ({
+                value: a.id,
+                label: t('app.payments.form.account_ending', { name: a.name, last4: a.last4 ?? '' }),
+              }))}
             />
           </Field>
-        )}
-        <Field
-          label={t('app.payments.review.from')}
-          hint={
-            fromAvailable ? (
-              <span data-testid="payment-from-available" data-mask="">
-                {t('app.payments.form.available', { amount: formatMinor(fromAvailable) })}
-              </span>
-            ) : undefined
-          }
-        >
-          <Select
-            data-testid="payment-from"
-            data-mask=""
-            value={fromId}
-            onChange={(e) => setFrom(e.target.value)}
-            options={accs.map((a) => ({
-              value: a.id,
-              label: t('app.payments.form.account_ending', { name: a.name, last4: a.last4 ?? '' }),
-            }))}
-          />
-        </Field>
-        <Field
-          label={REGION_CONFIG.amountLabel}
-          error={
-            amount && !minor
-              ? t('app.payments.form.amount_error')
-              : overBalance && fromAvailable
-                ? t('app.payments.form.over_balance', { amount: formatMinor(fromAvailable) })
-                : undefined
-          }
-        >
-          <PrefixedInput
-            prefix={currencyPrefix()}
-            data-testid="payment-amount"
-            data-mask=""
-            inputMode="decimal"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-          />
-        </Field>
-        <Field label={t('app.payments.form.reference')}>
-          <Input
-            data-testid="payment-reference"
-            maxLength={80}
-            value={reference}
-            onChange={(e) => setReference(e.target.value)}
-          />
-        </Field>
+          <Field
+            label={REGION_CONFIG.amountLabel}
+            error={
+              amount && !minor
+                ? t('app.payments.form.amount_error')
+                : overBalance && fromAvailable
+                  ? t('app.payments.form.over_balance', { amount: formatMinor(fromAvailable) })
+                  : undefined
+            }
+          >
+            <PrefixedInput
+              prefix={currencyPrefix()}
+              data-testid="payment-amount"
+              data-mask=""
+              inputMode="decimal"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            />
+          </Field>
+          <Field label={t('app.payments.form.reference')}>
+            <Input
+              data-testid="payment-reference"
+              maxLength={80}
+              value={reference}
+              onChange={(e) => setReference(e.target.value)}
+            />
+          </Field>
           {tried && missing.length > 0 && !overBalance && (
             <p className="og-field__error" role="alert" data-testid="payment-missing">
               {t('app.payments.form.missing.intro', { items: missing.join(', ') })}
@@ -774,7 +777,11 @@ export function NewPayment() {
         </form>
       </Card>
       {/* FA-019: a live summary beside the form on a wide screen. */}
-      <aside className="fw-send__summary" aria-label={t('app.payments.summary.title')} data-testid="payment-summary">
+      <aside
+        className="fw-send__summary"
+        aria-label={t('app.payments.summary.title')}
+        data-testid="payment-summary"
+      >
         <h2 className="og-card__title">{t('app.payments.summary.title')}</h2>
         <KeyValue
           items={[
@@ -782,7 +789,9 @@ export function NewPayment() {
               label: t('app.payments.review.amount'),
               value: (
                 <span data-mask="">
-                  {minor ? formatMinor({ amountMinor: minor, currency: REGION_CONFIG.currency }) : t('app.payments.summary.not_chosen')}
+                  {minor
+                    ? formatMinor({ amountMinor: minor, currency: REGION_CONFIG.currency })
+                    : t('app.payments.summary.not_chosen')}
                 </span>
               ),
             },
@@ -793,7 +802,8 @@ export function NewPayment() {
             },
             {
               label: t('app.payments.review.how'),
-              value: kind === 'internal' || kind === 'company' ? t('app.payments.review.internal_now') : rail.how,
+              value:
+                kind === 'internal' || kind === 'company' ? t('app.payments.review.internal_now') : rail.how,
             },
           ]}
         />
@@ -946,7 +956,8 @@ export function Approvals() {
                     <span className="fw-row__sub" data-testid={`approval-from-${p.id}`}>
                       {t('app.payments.approvals.from_on', {
                         account:
-                          accs.find((a) => a.id === p.fromAccountId)?.name ?? t('app.payments.to.your_account'),
+                          accs.find((a) => a.id === p.fromAccountId)?.name ??
+                          t('app.payments.to.your_account'),
                         date: p.createdAt ? formatDate(p.createdAt) : '',
                       })}
                     </span>

@@ -28,8 +28,7 @@ function store(a: Appearance) {
   window.dispatchEvent(new Event(EVENT));
 }
 
-const systemDark = () =>
-  typeof window.matchMedia === 'function' && window.matchMedia(DARK_QUERY).matches;
+const systemDark = () => typeof window.matchMedia === 'function' && window.matchMedia(DARK_QUERY).matches;
 
 /**
  * The founder's appearance and a setter. Light and Dark are the OnGem themes (the theme provider keeps them); System
