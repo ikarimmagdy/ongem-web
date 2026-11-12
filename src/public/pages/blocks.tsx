@@ -17,6 +17,7 @@ import {
   WIDE,
   type ScreenName,
 } from '../screenshots';
+import { useFirstPaint } from '../first-paint';
 import { SITE } from '../site';
 
 /** Get started (Talk to us where accounts are not open) and Try the demo (OG-034 R4, R7). */
@@ -107,19 +108,24 @@ export function Shot({
   frame = 'browser',
   lazy = false,
   priority,
+  phoneHidden = false,
 }: {
   name: ScreenName;
   frame?: 'browser' | 'phone';
   lazy?: boolean;
   priority?: 'high' | 'low';
+  /** The screen sits in a band phones hide (PS-038), so a phone never downloads it (PS-013). */
+  phoneHidden?: boolean;
 }) {
+  // The prerendered first screen carries only the hero's screens; the app puts the others in (PS-013).
+  const deferred = useFirstPaint() && priority !== 'high';
   if (!US_MEDIA) return <CapabilityArt name={SCREEN_ART[name]} />;
   const s = SCREENSHOTS[name];
   const loading = lazy ? 'lazy' : 'eager';
   const desktop = (
     <img
-      src={s.src}
-      srcSet={screenSrcSet(name)}
+      src={deferred ? BLANK_IMAGE : s.src}
+      srcSet={deferred ? undefined : screenSrcSet(name)}
       sizes={SHOT_SIZES}
       alt={shotAlt(name)}
       width={s.width}
@@ -131,7 +137,19 @@ export function Shot({
   );
   if (frame === 'phone') return <PhoneFrame>{desktop}</PhoneFrame>;
   const phone = PHONE_SCREENS[name];
-  if (!phone) return <BrowserFrame address="app.ongem.com">{desktop}</BrowserFrame>;
+  if (!phone)
+    return (
+      <BrowserFrame address="app.ongem.com">
+        {phoneHidden ? (
+          <picture>
+            <source media={NARROW} srcSet={BLANK_IMAGE} />
+            {desktop}
+          </picture>
+        ) : (
+          desktop
+        )}
+      </BrowserFrame>
+    );
   return (
     <>
       <div className="pub-shot--wide" data-testid={`shot-wide-${name}`}>
@@ -147,7 +165,7 @@ export function Shot({
           <picture>
             <source media={WIDE} srcSet={BLANK_IMAGE} />
             <img
-              src={phone}
+              src={deferred ? BLANK_IMAGE : phone}
               alt={shotAlt(name)}
               width={390}
               height={844}

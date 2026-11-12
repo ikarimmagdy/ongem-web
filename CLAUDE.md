@@ -157,3 +157,11 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   binary answers) on the confirmation and on a sent payment's detail; demo mode answers with `api/samplePdf.ts`. The card
   widget's own copy buttons announce Copied. "Transfer between your accounts" is the one term, the same key as the app.
   Tests `src/test/fa-followup.test.tsx` (`FA_011` to `FA_055`).
+- 2026-11-12: public site review follow-up. PS-013: the entry is `src/boot.ts` (the first screen's stylesheets only); on
+  the prerendered home it imports the app (`main.tsx`) once the hero screens have loaded (`boot-gate.ts`), and the
+  prerender leaves every other image, poster and caption track out (`public/first-paint.ts`, `FirstPaint`). Clerk loads
+  before the first render only on an app path or with a Clerk session cookie (`auth/defer.ts`); otherwise when the
+  visitor opens an app path. PS-008: the prerender also writes `404.html` and `routes.json` (public pages and app path
+  segments, `siteRoutes()`), which ongem-infra's routing function and the Azure Front Door rules read for a 404 status.
+  PS-005: `record-videos.mjs` follows the OG-035 shell (Send in the Payments header, named step-up, confirmation after
+  sending, dispute form), hides the demo bar and takes posters without the caption.

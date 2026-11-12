@@ -20,6 +20,7 @@ import {
   videoTrack,
   type Video,
 } from './videos';
+import { useFirstPaint } from '../first-paint';
 import './media.css';
 
 /**
@@ -28,6 +29,8 @@ import './media.css';
  */
 export function VideoPlayer({ video }: { video: Video }) {
   const ref = useRef<HTMLVideoElement>(null);
+  // Poster and captions come with the app, not the prerendered first screen (PS-013).
+  const firstPaint = useFirstPaint();
   const [started, setStarted] = useState(false);
   const start = () => {
     setStarted(true);
@@ -45,20 +48,22 @@ export function VideoPlayer({ video }: { video: Video }) {
           controls={started}
           preload="none"
           playsInline
-          poster={videoPoster(video.id)}
+          poster={firstPaint ? undefined : videoPoster(video.id)}
           width={video.width}
           height={video.height}
           aria-label={videoTitle(video)}
           onPlay={() => setStarted(true)}
         >
           <source src={videoSrc(video.id)} type="video/webm" />
-          <track
-            kind="captions"
-            src={videoTrack(video.id)}
-            srcLang="en"
-            label={media('captions_label')}
-            default
-          />
+          {!firstPaint && (
+            <track
+              kind="captions"
+              src={videoTrack(video.id)}
+              srcLang="en"
+              label={media('captions_label')}
+              default
+            />
+          )}
         </video>
         {!started && (
           <button

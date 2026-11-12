@@ -4,6 +4,7 @@ import { BRAND_ASSET_ON_DARK, BRAND_ASSET_SIZES, BRAND_ASSETS } from '../assets'
 import { Logo, useTheme } from '../design-system';
 import { getLocale, LanguageSwitch, t, tList, useContent } from '../i18n';
 import { groupOf, legalSlugs, legalTitle, navGroups, navLinks, type NavGroup } from './content';
+import { BLANK_IMAGE, useFirstPaint } from './first-paint';
 import { inBothBuilds } from './seo';
 import { isProduction, OTHER_REGION, SITE, siteOf } from './site';
 
@@ -400,6 +401,7 @@ export function Header({ path }: { path?: string }) {
 /** The wordmark in light ink for the navy footer in every theme (PS-025); the theme's name where it has no file. */
 function FooterLogo() {
   const { theme } = useTheme();
+  const firstPaint = useFirstPaint();
   const named = theme.logo.wordmark;
   const file = named ? BRAND_ASSET_ON_DARK[named] : undefined;
   const src = file ? BRAND_ASSETS[file] : undefined;
@@ -407,7 +409,12 @@ function FooterLogo() {
   const size = BRAND_ASSET_SIZES[file];
   return (
     <span className="og-logo og-logo--image og-logo--ink pub-footer__logo">
-      <img src={src} alt={theme.logo.alt} width={size?.width} height={size?.height} />
+      <img
+        src={firstPaint ? BLANK_IMAGE : src}
+        alt={theme.logo.alt}
+        width={size?.width}
+        height={size?.height}
+      />
     </span>
   );
 }

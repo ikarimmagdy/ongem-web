@@ -148,5 +148,4 @@ export const SHOT_SIZES = '(max-width: 860px) 100vw, 640px'; // content-check: i
 export const HERO_SIZES = '(max-width: 860px) 100vw, 420px'; // content-check: ignore
 export const NARROW = '(max-width: 640px)'; // content-check: ignore
 export const WIDE = '(min-width: 641px)'; // content-check: ignore
-/** A transparent pixel for the frame a width hides, so the browser requests no image for it. */
-export const BLANK_IMAGE = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+export { BLANK_IMAGE } from './first-paint';

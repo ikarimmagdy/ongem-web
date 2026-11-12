@@ -136,7 +136,7 @@ export function Home() {
                 </Link>
               </div>
               <div className="pub-feature__shot" data-reveal>
-                <Shot name={screen} />
+                <Shot name={screen} phoneHidden={i % 2 === 1} />
               </div>
             </div>
           </section>

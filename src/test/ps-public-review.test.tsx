@@ -3,7 +3,20 @@ import userEvent from '@testing-library/user-event';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { resetContent, setChannel, t } from '../i18n';
-import { isAppPath, isPublicPath, LEGAL_PAGES, legalSlugs, navGroups } from '../public/content';
+import {
+  APP_SEGMENTS,
+  isAppPath,
+  isPublicPath,
+  LEGAL_PAGES,
+  legalSlugs,
+  navGroups,
+  pagePaths,
+  siteRoutes,
+} from '../public/content';
+import { posts } from '../public/media/blog';
+import { afterHero } from '../boot-gate';
+import { clerkFirst } from '../auth/defer';
+import { prerender } from '../prerender';
 import { SITE } from '../public/site';
 import { siteConfigErrors } from '../../scripts/site-check.mjs';
 import { renderApp } from './render';
@@ -130,6 +143,119 @@ describe('public site review fixes (US)', () => {
       expect(meta('meta[name="robots"]')).toBe('noindex');
       unmount();
     }
+  });
+
+  it('PS_008_edge_routes_hold_every_public_page_and_no_unknown_path', () => {
+    const { pages, app } = siteRoutes();
+    expect(pages).toEqual(expect.arrayContaining(pagePaths()));
+    expect(pages).toEqual(
+      expect.arrayContaining(['/', '/product/payments', '/legal/terms', '/blog', '/videos', '/demo']),
+    );
+    expect(posts().length).toBeGreaterThan(0);
+    for (const p of posts()) expect(pages).toContain(`/blog/${p.slug}`);
+    for (const page of pages) {
+      expect(isPublicPath(page), page).toBe(true);
+      expect(isAppPath(page), page).toBe(false);
+    }
+    for (const path of ['/about', '/careers', '/prodcut', '/404']) expect(pages).not.toContain(path);
+    expect(app).toEqual(APP_SEGMENTS);
+  });
+
+  it('PS_008_edge_app_segments_cover_every_signed_in_route', () => {
+    const source = readFileSync(join(root, 'src/SignedIn.tsx'), 'utf8');
+    const firsts = [...source.matchAll(/<Route path="\/([a-z0-9-]+)/g)].map((m) => m[1]);
+    expect(firsts.length).toBeGreaterThan(10);
+    for (const segment of firsts) expect(APP_SEGMENTS, segment).toContain(segment);
+  });
+
+  it('PS_008_prerender_writes_the_not_found_page_and_the_routes', () => {
+    const script = readFileSync(join(root, 'scripts/prerender.mjs'), 'utf8');
+    expect(script).toContain('`${dist}/404.html`');
+    expect(script).toContain('`${dist}/routes.json`');
+    expect(script).toContain('<meta name="robots" content="noindex" />');
+  });
+
+  it('PS_013_prerendered_home_holds_only_the_hero_screens', () => {
+    const { html } = prerender();
+    expect(html).toMatch(/screen-home-phone[^"]*\.jpg/);
+    expect(html).not.toMatch(/screen-payments[^"]*\.jpg/);
+    expect(html).not.toMatch(/web-ongem-approves[^"]*\.jpg/);
+    expect(html).not.toMatch(/poster=/);
+    expect(html).not.toMatch(/<track/);
+    expect(html).not.toMatch(/ongem-wordmark-light[^"]*\.png"[^>]*class="?pub-footer/);
+  });
+
+  it('PS_013_the_app_puts_every_screen_back_eagerly', () => {
+    renderApp('/', { mode: 'none' });
+    const srcs = Array.from(document.querySelectorAll('main img')).map((i) => i.getAttribute('src') ?? '');
+    expect(srcs.some((s) => /screen-payments/.test(s))).toBe(true);
+    expect(document.querySelector('video[poster]')).not.toBeNull();
+    for (const img of Array.from(document.querySelectorAll('main img')))
+      expect(img.getAttribute('loading')).not.toBe('lazy');
+  });
+
+  it('PS_013_a_phone_never_downloads_the_screen_of_a_band_it_hides', () => {
+    renderApp('/', { mode: 'none' });
+    const row = screen.getByTestId('feature-row-approvals');
+    const source = row.querySelector('picture source');
+    expect(source).toHaveAttribute('media', '(max-width: 640px)');
+    expect(source?.getAttribute('srcset')).toMatch(/^data:image\/gif/);
+  });
+
+  it('PS_013_the_app_script_waits_for_the_hero_on_the_home_only', () => {
+    vi.useFakeTimers();
+    try {
+      document.body.innerHTML =
+        '<section data-testid="public-home"><img fetchpriority="high" src="a.jpg"><img fetchpriority="high" src="b.jpg"></section>';
+      const imgs = Array.from(document.querySelectorAll('img'));
+      for (const img of imgs) Object.defineProperty(img, 'complete', { value: false });
+      const start = vi.fn();
+      afterHero(document, '/', start);
+      expect(start).not.toHaveBeenCalled();
+      imgs[0]?.dispatchEvent(new Event('load'));
+      expect(start).not.toHaveBeenCalled();
+      imgs[1]?.dispatchEvent(new Event('error'));
+      expect(start).toHaveBeenCalledTimes(1);
+      vi.advanceTimersByTime(5000);
+      expect(start).toHaveBeenCalledTimes(1);
+
+      const other = vi.fn();
+      afterHero(document, '/product', other);
+      expect(other).toHaveBeenCalledTimes(1);
+
+      const slow = vi.fn();
+      afterHero(document, '/', slow, 4000);
+      expect(slow).not.toHaveBeenCalled();
+      vi.advanceTimersByTime(4000);
+      expect(slow).toHaveBeenCalledTimes(1);
+
+      const tap = vi.fn();
+      afterHero(document, '/', tap);
+      document.dispatchEvent(new Event('keydown'));
+      expect(tap).toHaveBeenCalledTimes(1);
+    } finally {
+      vi.useRealTimers();
+      document.body.innerHTML = '';
+    }
+  });
+
+  it('PS_013_clerk_waits_on_the_public_site_unless_a_session_or_an_app_path_needs_it', () => {
+    expect(clerkFirst('/', '')).toBe(false);
+    expect(clerkFirst('/product/payments', '__client_uat=0')).toBe(false);
+    expect(clerkFirst('/', 'a=1; __client_uat=1731400000')).toBe(true);
+    expect(clerkFirst('/', '__client_uat_x1Y=1731400000; b=2')).toBe(true);
+    for (const path of ['/sign-in', '/payments', '/invite/abc'])
+      expect(clerkFirst(path, ''), path).toBe(true);
+  });
+
+  it('PS_013_the_entry_is_a_small_boot_that_loads_the_app_as_its_own_chunk', () => {
+    const html = readFileSync(join(root, 'index.html'), 'utf8');
+    expect(html).toContain('src="/src/boot.ts"');
+    const boot = readFileSync(join(root, 'src/boot.ts'), 'utf8');
+    expect(boot).toContain("import('./main')");
+    expect(boot).not.toMatch(/from '\.\/(App|main|session)'/);
+    const main = readFileSync(join(root, 'src/main.tsx'), 'utf8');
+    expect(main).toContain('clerkFirst(window.location.pathname, document.cookie)');
   });
 
   it('PS_008_app_paths_still_show_sign_in_when_signed_out', () => {

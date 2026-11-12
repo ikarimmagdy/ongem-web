@@ -1,4 +1,7 @@
-// OG-032 R16: records the founder walkthrough videos from demo mode (sample data only) with headless Chromium.
+// OG-032 R16: records the founder walkthrough videos from demo mode (sample data only) with headless Chromium. The
+// journeys follow the OG-035 shell and the 12 Nov 2026 review (PS-005): Payments tabs with Send and Add money in the
+// page header, a second step that names what it confirms, the confirmation after sending, branded card faces and the
+// dispute form from a card charge.
 // Each video is a scripted, paced journey with on-screen captions; the same captions are written as a WebVTT track
 // and a poster frame is captured. Run with the dev server up (`npm run dev`), then
 // `node scripts/record-videos.mjs [base]` (default http://localhost:5190). Writes public/videos/<id>.webm,
@@ -55,9 +58,12 @@ async function go(page, path) {
   await page.waitForTimeout(600);
 }
 
+/** The second step, held long enough to read what it confirms (the action, amount and payee), then answered. */
 async function stepUp(page) {
   const code = page.getByTestId('reverify-code');
+  await code.waitFor({ timeout: 4000 }).catch(() => {});
   if (await code.isVisible().catch(() => false)) {
+    await page.waitForTimeout(1400);
     await code.pressSequentially('123456', { delay: 60 });
     await page.getByTestId('reverify-confirm').click();
   }
@@ -75,6 +81,28 @@ async function nav(page, label) {
 }
 
 const type = (loc, text) => loc.pressSequentially(text, { delay: 55 });
+
+/** Picks [preferred] when the list has it, else its first real choice, so new sample data does not stop a recording. */
+async function choose(select, preferred) {
+  const values = await select.locator('option').evaluateAll((os) => os.map((o) => o.value).filter(Boolean));
+  await select.selectOption(values.includes(preferred) ? preferred : values[0]);
+}
+
+/** Payments, then one of the page header actions: Send or Add money (FA-023). */
+async function paymentsAction(page, action) {
+  await nav(page, 'payments');
+  await page.getByTestId('payments-tabs').waitFor();
+  await page.waitForTimeout(700);
+  await page.getByTestId(`payments-tab-${action}`).click();
+}
+
+/** Opens the first card in the list, or the one named, and waits for its face. */
+async function openCard(page, id) {
+  const named = page.getByTestId(`card-${id}`);
+  const card = (await named.count()) ? named : page.locator('[data-testid^="card-crd_"]').first();
+  await card.click();
+  await page.getByTestId('card-face').first().waitFor();
+}
 
 /** The videos: id, title, summary, viewport, steps. Each step is [caption, action]. */
 const VIDEOS = [
@@ -155,30 +183,50 @@ const VIDEOS = [
     viewport: DESKTOP,
     steps: [
       [
-        'Payments: everything sent, settled or returned',
+        'Payments: all payments, scheduled, approvals and recipients',
         async (p) => {
           await demo(p);
           await nav(p, 'payments');
+          await p.getByTestId('payments-tabs').waitFor();
         },
       ],
-      ['New payment', async (p) => p.getByTestId('new-payment').click()],
+      [
+        'Send is at the top of Payments',
+        async (p) => {
+          await p.getByTestId('payments-tab-send').click();
+          await p.getByTestId('payment-form').waitFor();
+        },
+      ],
       [
         'Choose a recipient you have already added',
-        async (p) => p.getByTestId('payment-recipient').selectOption('rcp_demo_acme'),
+        async (p) => choose(p.getByTestId('payment-recipient'), 'rcp_demo_acme'),
       ],
-      ['Enter the amount', async (p) => type(p.getByTestId('payment-amount'), '250.00')],
-      ['Review the payment before it goes', async (p) => p.getByTestId('payment-review-button').click()],
       [
-        'Send, then confirm it is you with a second step',
+        'Enter the amount: your available balance shows under From',
+        async (p) => type(p.getByTestId('payment-amount'), '250.00'),
+      ],
+      [
+        'Review the payment before it goes',
+        async (p) => {
+          await p.getByTestId('payment-review-button').click();
+          await p.getByTestId('payment-review').waitFor();
+        },
+      ],
+      [
+        'Send. The second step names the payment you are confirming',
         async (p) => {
           await p.getByTestId('payment-send').click();
-          await p.waitForTimeout(700);
           await stepUp(p);
         },
       ],
+      ['Sent: how much, to whom, and when it arrives', async (p) => p.getByTestId('payment-sent').waitFor()],
       [
-        'Follow it from sent to settled, with the bank reference',
-        async (p) => p.getByTestId('payment-detail').waitFor(),
+        'Follow it from sent to settled',
+        async (p) =>
+          p
+            .getByTestId('payment-timeline')
+            .scrollIntoViewIfNeeded()
+            .catch(() => {}),
       ],
     ],
   },
@@ -190,19 +238,19 @@ const VIDEOS = [
     viewport: DESKTOP,
     steps: [
       [
-        'Add money: your verified account at another bank',
+        'Add money: from your verified account at another bank',
         async (p) => {
           await demo(p);
-          await go(p, '/payments/top-up');
+          await paymentsAction(p, 'add_money');
+          await p.getByTestId('topup-form').waitFor();
         },
       ],
       ['Enter how much to pull in', async (p) => type(p.getByTestId('topup-amount'), '1500.00')],
       ['Review it', async (p) => p.getByTestId('topup-review-button').click()],
       [
-        'Confirm it is you',
+        'Confirm it is you: the second step names the top-up',
         async (p) => {
           await p.getByTestId('topup-send').click();
-          await p.waitForTimeout(700);
           await stepUp(p);
         },
       ],
@@ -216,7 +264,6 @@ const VIDEOS = [
           const b = p.getByTestId('payment-approve');
           if (await b.isVisible().catch(() => false)) {
             await b.click();
-            await p.waitForTimeout(700);
             await stepUp(p);
           }
         },
@@ -234,7 +281,8 @@ const VIDEOS = [
         'A company with one person who can approve',
         async (p) => {
           await demo(p, '?demo=solo');
-          await go(p, '/payments/top-up');
+          await paymentsAction(p, 'add_money');
+          await p.getByTestId('topup-form').waitFor();
         },
       ],
       [
@@ -247,7 +295,6 @@ const VIDEOS = [
           await p.getByTestId('topup-review-button').click();
           await p.waitForTimeout(500);
           await p.getByTestId('topup-send').click();
-          await p.waitForTimeout(700);
           await stepUp(p);
         },
       ],
@@ -266,13 +313,13 @@ const VIDEOS = [
     viewport: DESKTOP,
     steps: [
       [
-        'Your virtual cards',
+        'Your virtual cards, each on the OnGem card face',
         async (p) => {
           await demo(p);
           await nav(p, 'cards');
         },
       ],
-      ['Open a card', async (p) => p.getByTestId('card-crd_demo_dana').click()],
+      ['Open a card', async (p) => openCard(p, 'crd_demo_dana')],
       [
         'Freeze it in one tap',
         async (p) => {
@@ -360,27 +407,29 @@ const VIDEOS = [
         async (p) => {
           await demo(p);
           await nav(p, 'cards');
-          await p.getByTestId('card-crd_demo_dana').click();
+          await openCard(p, 'crd_demo_dana');
         },
       ],
       [
         'Dispute a charge straight from the card',
         async (p) => {
-          const b = p.getByTestId('card-dispute');
-          if (await b.isVisible().catch(() => false)) await b.click();
-          await p.getByTestId('ticket-form').waitFor();
+          await p.getByTestId('card-dispute').click();
+          await p.getByTestId('dispute-form').waitFor();
         },
       ],
       [
-        'Tell us what happened',
+        'Pick the charge and say what went wrong',
         async (p) => {
-          const subject = p.getByTestId('ticket-subject');
-          await subject.fill('');
-          await type(subject, 'Charge I do not recognise');
-          await type(p.getByTestId('ticket-body'), 'A US$42.00 charge on 28 Oct I did not make.');
+          await p.locator('[data-testid^="dispute-charge-"]').first().check();
+          await p.waitForTimeout(500);
+          await p.getByTestId('dispute-reason').selectOption('not_mine');
+          await type(p.getByTestId('dispute-details'), 'I did not make this purchase.');
         },
       ],
-      ['Send it to OnGem support', async (p) => p.getByTestId('ticket-send').click()],
+      [
+        'Send it to OnGem support with every fact the bank needs',
+        async (p) => p.getByTestId('dispute-send').click(),
+      ],
       [
         'Follow the replies and the status in one thread',
         async (p) => p.getByTestId('ticket-thread').waitFor(),
@@ -395,30 +444,35 @@ const VIDEOS = [
     phone: true,
     steps: [
       ['OnGem on your phone', async (p) => demo(p)],
-      ['Payments', async (p) => nav(p, 'payments')],
       [
-        'New payment to a recipient',
+        'Pay, from the tab bar',
         async (p) => {
-          await p.getByTestId('new-payment').click();
-          await p.getByTestId('payment-recipient').selectOption('rcp_demo_acme');
+          await p.getByTestId('tab-pay').click();
+          await p.getByTestId('payment-form').waitFor();
         },
       ],
       [
-        'Amount, then review',
+        'A recipient and the amount',
         async (p) => {
+          await choose(p.getByTestId('payment-recipient'), 'rcp_demo_acme');
           await type(p.getByTestId('payment-amount'), '120.00');
+        },
+      ],
+      [
+        'Review it',
+        async (p) => {
           await p.getByTestId('payment-review-button').click();
+          await p.getByTestId('payment-review').waitFor();
         },
       ],
       [
         'Send and confirm it is you',
         async (p) => {
           await p.getByTestId('payment-send').click();
-          await p.waitForTimeout(700);
           await stepUp(p);
         },
       ],
-      ['Sent. Follow it to settled', async (p) => p.getByTestId('payment-detail').waitFor()],
+      ['Sent: the confirmation says when it arrives', async (p) => p.getByTestId('payment-sent').waitFor()],
     ],
   },
 ];
@@ -443,6 +497,14 @@ for (const v of VIDEOS) {
     hasTouch: Boolean(v.phone),
     recordVideo: { dir: tmp, size: v.viewport },
   });
+  // The demo bar (PS-019) is not part of the product being shown, as in the screenshots.
+  await ctx.addInitScript(() => {
+    document.addEventListener('DOMContentLoaded', () => {
+      const style = document.createElement('style');
+      style.textContent = '.pub-demobar { display: none !important; }';
+      document.head.appendChild(style);
+    });
+  });
   const page = await ctx.newPage();
   page.on('pageerror', (e) => errors.push(`${v.id}: ${e}`));
   const t0 = Date.now();
@@ -463,7 +525,12 @@ for (const v of VIDEOS) {
     await page.waitForTimeout(PACE);
     cues.push({ start, end: Date.now() - t0, text });
     if (!posterTaken && i === Math.floor(v.steps.length / 2)) {
+      // A clean poster: the screen without the caption, whose title the site shows under the video (PS-020).
+      await page.evaluate(() =>
+        document.getElementById('og-video-caption')?.style.setProperty('display', 'none'),
+      );
       await page.screenshot({ path: join(out, `${v.id}.jpg`), type: 'jpeg', quality: 80 });
+      await page.evaluate(() => document.getElementById('og-video-caption')?.style.removeProperty('display'));
       posterTaken = true;
     }
   }

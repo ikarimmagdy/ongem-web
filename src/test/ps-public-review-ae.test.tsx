@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react';
 import { t, tList } from '../i18n';
-import { capIds, isPublicPath } from '../public/content';
+import { capIds, isPublicPath, siteRoutes } from '../public/content';
 import { SITE } from '../public/site';
 import { renderApp } from './render';
 
@@ -30,6 +30,12 @@ describe('public site review fixes (AE)', () => {
     cards.unmount();
     renderApp('/videos', { mode: 'none' });
     expect(screen.getByTestId('public-blog')).toBeInTheDocument();
+  });
+
+  it('PS_008_edge_routes_of_the_uae_build_keep_the_old_paths_that_move', () => {
+    const { pages } = siteRoutes();
+    expect(pages).toEqual(expect.arrayContaining(['/', '/product', '/product/cards', '/videos', '/blog']));
+    expect(pages.filter((p) => p.startsWith('/blog/')).every((p) => isPublicPath(p))).toBe(true);
   });
 
   it('PS_010_no_talk_to_us_without_an_address_and_the_demo_leads', () => {

@@ -1,5 +1,6 @@
 import { has, keysUnder, metaOf, t, tList } from '../i18n';
 import { US_MEDIA } from '../region';
+import { posts } from './media/blog';
 import { isMediaPath } from './media/paths';
 import { SITE } from './site';
 
@@ -100,8 +101,24 @@ export function movedPath(path: string): string | undefined {
  * The signed-in app's paths and sign-in's own (`src/SignedIn.tsx` routes): signed out, they show sign-in so the
  * founder lands there after it. Any other unknown path is the public not-found page (PS-008).
  */
-const APP_PATHS =
-  /^\/(sign-in|sign-up|sso-callback|accounts|payments|recipients|cards|team|documents|more|onboarding|support|settings|notifications|invite)(\/|$)/;
+export const APP_SEGMENTS = [
+  'sign-in',
+  'sign-up',
+  'sso-callback',
+  'accounts',
+  'payments',
+  'recipients',
+  'cards',
+  'team',
+  'documents',
+  'more',
+  'onboarding',
+  'support',
+  'settings',
+  'notifications',
+  'invite',
+];
+const APP_PATHS = new RegExp(`^/(${APP_SEGMENTS.join('|')})(/|$)`);
 export const isAppPath = (path: string) => APP_PATHS.test(path);
 
 export const pageMeta = (path: string) => {
@@ -111,6 +128,22 @@ export const pageMeta = (path: string) => {
 
 /** The paths of every page the build has, for the sitemap of tests and captures. */
 export const pagePaths = (): string[] => Object.keys(pageIds());
+
+/**
+ * Every path this build answers with a page, and the app's first path segments (PS-008): the build writes them to
+ * `routes.json`, from which the edge (ongem-infra FounderWebStack) answers 200 for these and 404 for anything else. A
+ * post or legal page published after the build is a 404 at the edge until the next build.
+ */
+export function siteRoutes(): { pages: string[]; app: string[] } {
+  const pages = new Set([
+    ...pagePaths(),
+    ...legalSlugs().map((s) => `/legal/${s}`),
+    '/blog',
+    ...posts().map((p) => `/blog/${p.slug}`),
+    ...['/videos', '/product/cards'].filter((p) => isMediaPath(p) || movedPath(p)),
+  ]);
+  return { pages: [...pages].sort(), app: [...APP_SEGMENTS] };
+}
 
 export interface NavLink {
   to: string;
