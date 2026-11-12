@@ -11528,6 +11528,386 @@
       "meta": {},
       "en": "Copied",
       "ar": "تم النسخ"
+    },
+    {
+      "key": "app.nav.get_paid",
+      "format": "text",
+      "description": "Navigation: payment acceptance screen (OG-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Get paid",
+      "ar": "استلام المدفوعات"
+    },
+    {
+      "key": "app.nav.title.get_paid",
+      "format": "text",
+      "description": "Browser tab title: payment acceptance (OG-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Get paid",
+      "ar": "استلام المدفوعات"
+    },
+    {
+      "key": "app.get_paid.title",
+      "format": "text",
+      "description": "Get paid screen title (OG-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Get paid",
+      "ar": "استلام المدفوعات"
+    },
+    {
+      "key": "app.get_paid.subtitle",
+      "format": "text",
+      "description": "Get paid screen subtitle",
+      "placeholders": [],
+      "meta": {},
+      "en": "Take card payments from your customers and withdraw them to your bank account.",
+      "ar": "استلم مدفوعات البطاقات من عملائك واسحبها إلى حسابك المصرفي."
+    },
+    {
+      "key": "app.get_paid.retry",
+      "format": "text",
+      "description": "Button: load the Get paid screen again",
+      "placeholders": [],
+      "meta": {},
+      "en": "Try again",
+      "ar": "حاول مرة أخرى"
+    },
+    {
+      "key": "app.get_paid.loading",
+      "format": "text",
+      "description": "Status while payment acceptance loads",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading",
+      "ar": "جارٍ التحميل"
+    },
+    {
+      "key": "app.get_paid.unavailable",
+      "format": "text",
+      "description": "Notice: payment acceptance is not available here",
+      "placeholders": [],
+      "meta": {},
+      "en": "Taking card payments is not available for your company yet.",
+      "ar": "استلام مدفوعات البطاقات غير متاح لشركتك بعد."
+    },
+    {
+      "key": "app.get_paid.start_title",
+      "format": "text",
+      "description": "Card title: start taking payments",
+      "placeholders": [],
+      "meta": {},
+      "en": "Start taking card payments",
+      "ar": "ابدأ باستلام مدفوعات البطاقات"
+    },
+    {
+      "key": "app.get_paid.start_text",
+      "format": "text",
+      "description": "Explains what opening payment acceptance does",
+      "placeholders": [],
+      "meta": {},
+      "en": "We open a payments account for your company with our payment processor. Your customers pay by card, the money collects in that account, and you withdraw it to your bank account. We fill in what we already know about you and your company; you add anything missing.",
+      "ar": "نفتح حساب مدفوعات لشركتك لدى معالج المدفوعات. يدفع عملاؤك بالبطاقة، وتتجمع الأموال في ذلك الحساب، ثم تسحبها إلى حسابك المصرفي. نملأ ما نعرفه عنك وعن شركتك، وتضيف أنت ما ينقص."
+    },
+    {
+      "key": "app.get_paid.start",
+      "format": "text",
+      "description": "Button: open payment acceptance",
+      "placeholders": [],
+      "meta": {},
+      "en": "Set up payments",
+      "ar": "إعداد المدفوعات"
+    },
+    {
+      "key": "app.get_paid.owner_only",
+      "format": "text",
+      "description": "Notice: only an owner can set up payments",
+      "placeholders": [],
+      "meta": {},
+      "en": "Only an owner of the company can set this up.",
+      "ar": "يستطيع مالك الشركة فقط إعداد ذلك."
+    },
+    {
+      "key": "app.get_paid.sandbox",
+      "format": "text",
+      "description": "Notice: test environment, no real money",
+      "placeholders": [],
+      "meta": {},
+      "en": "Test mode: payments here use test cards and no real money moves.",
+      "ar": "وضع الاختبار: تستخدم المدفوعات هنا بطاقات اختبار ولا تتحرك أموال حقيقية."
+    },
+    {
+      "key": "app.get_paid.verification",
+      "format": "text",
+      "description": "Card title: verification states",
+      "placeholders": [],
+      "meta": {},
+      "en": "Verification",
+      "ar": "التحقق"
+    },
+    {
+      "key": "app.get_paid.identity",
+      "format": "text",
+      "description": "Label: identity verification",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your identity",
+      "ar": "هويتك"
+    },
+    {
+      "key": "app.get_paid.business",
+      "format": "text",
+      "description": "Label: business verification",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your business",
+      "ar": "نشاطك التجاري"
+    },
+    {
+      "key": "app.get_paid.verify_identity",
+      "format": "text",
+      "description": "Button: verify identity",
+      "placeholders": [],
+      "meta": {},
+      "en": "Verify your identity",
+      "ar": "تحقق من هويتك"
+    },
+    {
+      "key": "app.get_paid.verify_business",
+      "format": "text",
+      "description": "Button: verify the business",
+      "placeholders": [],
+      "meta": {},
+      "en": "Verify your business",
+      "ar": "تحقق من نشاطك التجاري"
+    },
+    {
+      "key": "app.get_paid.balance",
+      "format": "text",
+      "description": "Card title: payments balance",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments balance",
+      "ar": "رصيد المدفوعات"
+    },
+    {
+      "key": "app.get_paid.balance_empty",
+      "format": "text",
+      "description": "No balance yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "No payments yet.",
+      "ar": "لا توجد مدفوعات بعد."
+    },
+    {
+      "key": "app.get_paid.available",
+      "format": "text",
+      "description": "Label: amount available to withdraw",
+      "placeholders": [],
+      "meta": {},
+      "en": "Available",
+      "ar": "المتاح"
+    },
+    {
+      "key": "app.get_paid.pending",
+      "format": "text",
+      "description": "Label: amount still settling",
+      "placeholders": [],
+      "meta": {},
+      "en": "Settling",
+      "ar": "قيد التسوية"
+    },
+    {
+      "key": "app.get_paid.reserve",
+      "format": "text",
+      "description": "Label: amount held in reserve",
+      "placeholders": [],
+      "meta": {},
+      "en": "Held",
+      "ar": "محجوز"
+    },
+    {
+      "key": "app.get_paid.balance_note",
+      "format": "text",
+      "description": "Explains where the payments balance is held",
+      "placeholders": [],
+      "meta": {},
+      "en": "This balance is held by our payment processor until you withdraw it, and is separate from your bank account balance.",
+      "ar": "يحتفظ معالج المدفوعات بهذا الرصيد حتى تسحبه، وهو منفصل عن رصيد حسابك المصرفي."
+    },
+    {
+      "key": "app.get_paid.tab.overview",
+      "format": "text",
+      "description": "Tab: overview",
+      "placeholders": [],
+      "meta": {},
+      "en": "Overview",
+      "ar": "نظرة عامة"
+    },
+    {
+      "key": "app.get_paid.tab.request",
+      "format": "text",
+      "description": "Tab: request a payment",
+      "placeholders": [],
+      "meta": {},
+      "en": "Request a payment",
+      "ar": "طلب دفعة"
+    },
+    {
+      "key": "app.get_paid.tab.activity",
+      "format": "text",
+      "description": "Tab: payments activity",
+      "placeholders": [],
+      "meta": {},
+      "en": "Activity",
+      "ar": "النشاط"
+    },
+    {
+      "key": "app.get_paid.tab.withdraw",
+      "format": "text",
+      "description": "Tab: withdraw to the bank",
+      "placeholders": [],
+      "meta": {},
+      "en": "Withdraw",
+      "ar": "سحب"
+    },
+    {
+      "key": "app.get_paid.request_title",
+      "format": "text",
+      "description": "Card title: new payment request",
+      "placeholders": [],
+      "meta": {},
+      "en": "New payment request",
+      "ar": "طلب دفعة جديد"
+    },
+    {
+      "key": "app.get_paid.amount",
+      "format": "text",
+      "description": "Field label: amount in US dollars",
+      "placeholders": [],
+      "meta": {},
+      "en": "Amount (US$)",
+      "ar": "المبلغ (دولار أمريكي)"
+    },
+    {
+      "key": "app.get_paid.amount_hint",
+      "format": "text",
+      "description": "Field hint: amount format",
+      "placeholders": [],
+      "meta": {},
+      "en": "For example 125.50",
+      "ar": "مثال: 125.50"
+    },
+    {
+      "key": "app.get_paid.description",
+      "format": "text",
+      "description": "Field label: what the payment is for",
+      "placeholders": [],
+      "meta": {},
+      "en": "What is it for",
+      "ar": "مقابل ماذا"
+    },
+    {
+      "key": "app.get_paid.create",
+      "format": "text",
+      "description": "Button: create the payment request",
+      "placeholders": [],
+      "meta": {},
+      "en": "Create request",
+      "ar": "إنشاء الطلب"
+    },
+    {
+      "key": "app.get_paid.take_payment",
+      "format": "text",
+      "description": "Card title: take the payment of an amount",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "Take {amount}",
+      "ar": "استلام {amount}"
+    },
+    {
+      "key": "app.get_paid.share_link",
+      "format": "text",
+      "description": "Label before the shareable payment link",
+      "placeholders": [],
+      "meta": {},
+      "en": "Or share this link:",
+      "ar": "أو شارك هذا الرابط:"
+    },
+    {
+      "key": "app.get_paid.paid",
+      "format": "text",
+      "description": "Success: the customer paid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Paid. It shows in Activity once the processor confirms it.",
+      "ar": "تم الدفع. يظهر في النشاط بعد تأكيد معالج المدفوعات."
+    },
+    {
+      "key": "app.get_paid.withdraw_refused",
+      "format": "text",
+      "description": "Error: the withdrawal was refused",
+      "placeholders": [],
+      "meta": {},
+      "en": "The withdrawal was refused. Check the amount and try again.",
+      "ar": "رُفض السحب. تحقق من المبلغ وحاول مرة أخرى."
+    },
+    {
+      "key": "app.get_paid.state.not_started",
+      "format": "text",
+      "description": "Verification state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not started",
+      "ar": "لم يبدأ"
+    },
+    {
+      "key": "app.get_paid.state.pending",
+      "format": "text",
+      "description": "Verification state",
+      "placeholders": [],
+      "meta": {},
+      "en": "In progress",
+      "ar": "قيد التنفيذ"
+    },
+    {
+      "key": "app.get_paid.state.in_review",
+      "format": "text",
+      "description": "Verification state",
+      "placeholders": [],
+      "meta": {},
+      "en": "In review",
+      "ar": "قيد المراجعة"
+    },
+    {
+      "key": "app.get_paid.state.action_required",
+      "format": "text",
+      "description": "Verification state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Needs you",
+      "ar": "يحتاج إليك"
+    },
+    {
+      "key": "app.get_paid.state.approved",
+      "format": "text",
+      "description": "Verification state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Verified",
+      "ar": "تم التحقق"
+    },
+    {
+      "key": "app.get_paid.state.rejected",
+      "format": "text",
+      "description": "Verification state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not approved",
+      "ar": "غير موافق عليه"
     }
   ]
 }

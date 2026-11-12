@@ -1,3 +1,4 @@
+import { ACCEPTANCE_ENABLED } from './acceptance/api';
 import { t } from './i18n/store';
 
 export interface NavEntry {
@@ -19,6 +20,8 @@ export const NAV: NavEntry[] = [
   { to: '/', id: 'home', end: true },
   { to: '/accounts', id: 'accounts' },
   { to: '/payments', id: 'payments' },
+  // OG-039 Get paid: only in a build with payment acceptance on (VITE_ACCEPTANCE_ENABLED, never AE).
+  ...(ACCEPTANCE_ENABLED ? [{ to: '/get-paid', id: 'get_paid' }] : []),
   { to: '/cards', id: 'cards' },
   { to: '/team', id: 'team' },
   { to: '/documents', id: 'documents' },
@@ -37,6 +40,7 @@ export const PHONE_TABS: NavEntry[] = [
 
 /** What More lists on a phone (OG-035 R8), before Sign out. */
 export const MORE: NavEntry[] = [
+  ...(ACCEPTANCE_ENABLED ? [{ to: '/get-paid', id: 'get_paid' }] : []),
   { to: '/support', id: 'support' },
   { to: '/team', id: 'team' },
   { to: '/documents', id: 'documents' },
@@ -55,6 +59,7 @@ const TITLES: [RegExp, string][] = [
   [/^\/payments\/approvals/, 'approvals'],
   [/^\/payments/, 'payments'],
   [/^\/recipients/, 'recipients'],
+  [/^\/get-paid/, 'get_paid'],
   [/^\/cards/, 'cards'],
   [/^\/team/, 'team'],
   [/^\/documents/, 'documents'],

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
 import { NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { InviteScreen } from './screens/Invite';
 import { Button, Logo, Notice, Skeleton } from './design-system';
@@ -26,6 +26,7 @@ import { DocumentsScreen } from './screens/Documents';
 import { MoreScreen } from './screens/More';
 import { RECORDING_ENABLED, Recorder } from './recording/Recorder';
 import { MORE, NAV, PHONE_TABS, pageTitle } from './nav';
+import { ACCEPTANCE_ENABLED } from './acceptance/api';
 import { t, useContent } from './i18n';
 import { DemoBar } from './public/DemoBar';
 import './app-shell.css';
@@ -88,11 +89,15 @@ function ProfileMenu({ onLeave }: { onLeave(): void }) {
 /** Screens that end in a form's primary action: no floating button over them on a phone (FA-016). */
 const FORM_ROUTES = [/^\/payments\/(new|top-up|schedules)/, /^\/support\/new/, /^\/onboarding/];
 
+/** OG-039: the Get paid screen and the processor's elements load only when the build turns acceptance on. */
+const GetPaidScreen = lazy(() => import('./acceptance/GetPaid').then((m) => ({ default: m.GetPaidScreen })));
+
 /** FA-008: the side bar's outline icons, each in a pale container of its brand category. */
 const NAV_ICON: Record<string, { d: string; cat: string }> = {
   home: { d: 'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z', cat: 'banking' }, // content-check: ignore (SVG path)
   accounts: { d: 'M3 10h18M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18M12 3l9 5H3z', cat: 'banking' }, // content-check: ignore (SVG path)
   payments: { d: 'M4 8h13l-3-3M20 16H7l3 3', cat: 'global' }, // content-check: ignore (SVG path)
+  get_paid: { d: 'M12 3v18M16 7H10a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H8', cat: 'global' }, // content-check: ignore (SVG path)
   cards: { d: 'M3 6h18v12H3zM3 10h18M7 15h4', cat: 'cards' }, // content-check: ignore (SVG path)
   team: { d: 'M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 6.5M18 14a6 6 0 0 1 3.5 6', cat: 'compliance' }, // content-check: ignore (SVG path)
   documents: { d: 'M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6', cat: 'treasury' }, // content-check: ignore (SVG path)
@@ -406,6 +411,16 @@ function CompanyScope() {
             <Route path="/support/:id" element={<SupportScreen />} />
             <Route path="/settings" element={<SettingsScreen />} />
             <Route path="/notifications" element={<NotificationsScreen />} />
+            {ACCEPTANCE_ENABLED && (
+              <Route
+                path="/get-paid"
+                element={
+                  <Suspense fallback={<Skeleton />}>
+                    <GetPaidScreen />
+                  </Suspense>
+                }
+              />
+            )}
             <Route path="/invite/:token" element={<InviteScreen />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

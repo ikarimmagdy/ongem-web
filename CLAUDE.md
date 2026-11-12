@@ -182,3 +182,13 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   page besides the footer (security on home), hairline cards without lift, pill buttons, quiet header tools, Sign in and
   the demo as words beside one filled Get started. App shell (`app-shell.css` OG-038 block): one-ink side bar icons,
   application steps on a white card with a blue start edge, `og-card` hairline without shadow.
+- 2026-11-12: OG-039 payment acceptance through Whop (ADR-0055 proposed), off unless `VITE_ACCEPTANCE_ENABLED=true`
+  and never in an AE build. `src/acceptance/`: `api.ts` (the core's `/v1/acceptance` endpoints through the live client;
+  demo mode reads it as off), `GetPaid.tsx` (/get-paid, side bar and More: open the merchant account, verify identity and
+  business with the KYC element after the core starts a prefilled verification, balances read live, payment request with
+  the checkout element on the core's checkout configuration, activity, withdraw), `WhopSurfaces.tsx` (lazy chunk with
+  `@whop/elements` and `@whop/elements-react` 1.10.0: tokens minted by the core per surface, never a payout scope; the
+  ads pixel and element analytics off; Withdraw host-driven so the core makes every payout with step-up), `appearance.ts`
+  (elements styled from the theme: mode, nearest accent to the primary colour, radius, body font). A build with it on is
+  deployed with `npm run acceptance:headers` (dist/security-headers.acceptance.json adds the element frames and API).
+  Texts `app.get_paid.*`, `app.nav.get_paid` in the US seed. Test `src/test/acceptance.test.tsx`.

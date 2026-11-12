@@ -23,6 +23,8 @@ interface ImportMetaEnv {
   readonly VITE_OTEL_SAMPLING?: string;
   /** OG-037: deployment.environment (default dev, or prod for a production build). */
   readonly VITE_OTEL_ENVIRONMENT?: string;
+  /** OG-039: `true` turns on payment acceptance (Get paid); ignored in an AE build. */
+  readonly VITE_ACCEPTANCE_ENABLED?: string;
 }
 
 /** The package version and commit of the build (vite.config.ts). */
