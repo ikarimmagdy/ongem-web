@@ -1,29 +1,33 @@
 WEBVTT
 
 1
-00:00:00.002 --> 00:00:02.992
-Payments: everything sent, settled or returned
+00:00:00.002 --> 00:00:03.008
+Payments: all payments, scheduled, approvals and recipients
 
 2
-00:00:02.993 --> 00:00:05.223
-New payment
+00:00:03.009 --> 00:00:05.261
+Send is at the top of Payments
 
 3
-00:00:05.225 --> 00:00:07.444
+00:00:05.263 --> 00:00:07.494
 Choose a recipient you have already added
 
 4
-00:00:07.450 --> 00:00:10.017
-Enter the amount
+00:00:07.495 --> 00:00:10.058
+Enter the amount: your available balance shows under From
 
 5
-00:00:10.041 --> 00:00:12.253
+00:00:10.059 --> 00:00:12.292
 Review the payment before it goes
 
 6
-00:00:12.254 --> 00:00:15.570
-Send, then confirm it is you with a second step
+00:00:12.340 --> 00:00:16.387
+Send. The second step names the payment you are confirming
 
 7
-00:00:15.573 --> 00:00:17.780
-Follow it from sent to settled, with the bank reference
+00:00:16.389 --> 00:00:18.599
+Sent: how much, to whom, and when it arrives
+
+8
+00:00:18.600 --> 00:00:20.817
+Follow it from sent to settled

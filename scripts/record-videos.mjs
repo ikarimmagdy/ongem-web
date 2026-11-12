@@ -61,7 +61,7 @@ async function go(page, path) {
 /** The second step, held long enough to read what it confirms (the action, amount and payee), then answered. */
 async function stepUp(page) {
   const code = page.getByTestId('reverify-code');
-  await code.waitFor({ timeout: 4000 }).catch(() => {});
+  await code.waitFor({ timeout: 1500 }).catch(() => {});
   if (await code.isVisible().catch(() => false)) {
     await page.waitForTimeout(1400);
     await code.pressSequentially('123456', { delay: 60 });
