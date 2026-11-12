@@ -16,6 +16,7 @@ import {
   Select,
   Skeleton,
   StatusChip,
+  TextArea,
 } from '../design-system';
 import { decimalToMinor, formatDate, formatMinor, minorToDecimal } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
@@ -83,7 +84,9 @@ function Approval({ id, onDone }: { id: string; onDone(): void }) {
   const { api } = useSession();
   const [busy, setBusy] = useState(false);
   const [declining, setDeclining] = useState(false);
+  const [reason, setReason] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const reasonTooLong = reason.trim().length > DECLINE_REASON_MAX;
   const inFlight = useRef(false);
   const act = async (f: () => Promise<unknown>) => {
     if (inFlight.current) return;
@@ -116,9 +119,11 @@ function Approval({ id, onDone }: { id: string; onDone(): void }) {
             <Button
               variant="danger"
               data-testid="payment-reject-confirm"
+              disabled={reasonTooLong}
               onClick={() => {
                 setDeclining(false);
-                void act(() => api.rejectPayment(id));
+                const why = reason.trim().replace(/\s+/g, ' ');
+                void act(() => (why ? api.rejectPayment(id, why) : api.rejectPayment(id)));
               }}
             >
               {t('app.payments.decline')}
@@ -127,6 +132,19 @@ function Approval({ id, onDone }: { id: string; onDone(): void }) {
         }
       >
         <p>{t('app.payments.decline_confirm.text')}</p>
+        {/* FA-037: an optional reason the person who asked for the payment sees. */}
+        <Field
+          label={t('app.payments.decline_reason.label')}
+          hint={t('app.payments.decline_reason.hint')}
+          error={reasonTooLong ? t('app.payments.decline_reason.too_long') : undefined}
+        >
+          <TextArea
+            data-testid="payment-reject-reason"
+            rows={3}
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+          />
+        </Field>
       </Modal>
       <div className="fw-actions fw-approval__actions">
         <Button
@@ -145,6 +163,63 @@ function Approval({ id, onDone }: { id: string; onDone(): void }) {
           {t('app.payments.approve')}
         </Button>
       </div>
+    </>
+  );
+}
+
+/** FA-037: ongem-core keeps a decline reason of up to 280 characters. */
+export const DECLINE_REASON_MAX = 280;
+
+/** FA-034: the states a payment has a receipt in (it has left or is leaving), as ongem-core answers. */
+export const RECEIPT_STATES = new Set([
+  'PRECHECKED',
+  'SUBMITTED',
+  'SENT',
+  'BANK_REVIEW',
+  'SETTLED',
+  'RETURNED',
+]);
+
+/** FA-034: downloads the payment's PDF receipt and saves it under its own name; the bytes are never kept. */
+function ReceiptButton({ id }: { id: string }) {
+  const { api } = useSession();
+  const [phase, setPhase] = useState<'idle' | 'busy' | 'ready' | 'failed'>('idle');
+  const download = async () => {
+    setPhase('busy');
+    try {
+      const blob = await api.paymentReceipt(id);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `payment-receipt-${id}.pdf`;
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setPhase('ready');
+    } catch {
+      setPhase('failed');
+    }
+  };
+  return (
+    <>
+      <Button
+        variant="secondary"
+        data-testid="payment-receipt"
+        disabled={phase === 'busy'}
+        onClick={() => void download()}
+      >
+        {phase === 'busy' ? t('app.payments.receipt.preparing') : t('app.payments.receipt.download')}
+      </Button>
+      <span role="status" className="og-visually-hidden" data-testid="payment-receipt-status">
+        {phase === 'ready' ? t('app.payments.receipt.ready') : ''}
+      </span>
+      {phase === 'failed' && (
+        <Notice status="failure">
+          <span data-testid="payment-receipt-error">{t('app.payments.receipt.error')}</span>
+        </Notice>
+      )}
     </>
   );
 }
@@ -258,6 +333,7 @@ export function PaymentDetail({ id, justSent = false }: { id: string; justSent?:
                   >
                     {t('app.payments.sent.print')}
                   </Button>
+                  {RECEIPT_STATES.has(p.state) && <ReceiptButton id={p.id} />}
                 </div>
               </section>
             )}
@@ -275,6 +351,11 @@ export function PaymentDetail({ id, justSent = false }: { id: string; justSent?:
               <p role="status" data-testid="payment-status-line">
                 {paymentStatusLine(p.state, p.providerReference, p.approvalBy)}
               </p>
+              {p.state === 'REJECTED' && p.declinedBy && (
+                <p data-testid="payment-declined-by">
+                  {t('app.payments.detail.declined_by', { name: p.declinedBy })}
+                </p>
+              )}
               <KeyValue
                 items={[
                   {
@@ -302,6 +383,22 @@ export function PaymentDetail({ id, justSent = false }: { id: string; justSent?:
                     label: t('app.payments.detail.reference'),
                     value: p.reference ?? t('app.payments.detail.none'),
                   },
+                  ...(p.requestedBy
+                    ? [
+                        {
+                          label: t('app.payments.detail.requested_by'),
+                          value: <span data-testid="payment-requested-by">{p.requestedBy}</span>,
+                        },
+                      ]
+                    : []),
+                  ...(p.state === 'REJECTED' && p.declineReason
+                    ? [
+                        {
+                          label: t('app.payments.detail.decline_reason'),
+                          value: <span data-testid="payment-decline-reason">{p.declineReason}</span>,
+                        },
+                      ]
+                    : []),
                   ...(p.state === 'RETURNED'
                     ? [
                         {
@@ -319,6 +416,11 @@ export function PaymentDetail({ id, justSent = false }: { id: string; justSent?:
               {p.state === 'PENDING_APPROVAL' &&
                 p.approvalBy !== 'ONGEM' &&
                 can(Permission.PAYMENT_APPROVE) && <Approval id={p.id} onDone={() => setN((x) => x + 1)} />}
+              {!justSent && RECEIPT_STATES.has(p.state) && (
+                <div className="fw-actions">
+                  <ReceiptButton id={p.id} />
+                </div>
+              )}
               <ol
                 className="fw-timeline"
                 aria-label={t('app.payments.detail.timeline')}
@@ -836,6 +938,11 @@ export function Approvals() {
                     <strong>{payeeName(p, accs, recs)}</strong>
                     <span className="fw-row__sub">{p.reference ?? paymentKind(p)}</span>
                     {/* FA-037: from which account and when it was asked for. */}
+                    {p.requestedBy && (
+                      <span className="fw-row__sub" data-testid={`approval-requested-by-${p.id}`}>
+                        {t('app.payments.requested_by', { name: p.requestedBy })}
+                      </span>
+                    )}
                     <span className="fw-row__sub" data-testid={`approval-from-${p.id}`}>
                       {t('app.payments.approvals.from_on', {
                         account:

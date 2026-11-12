@@ -117,7 +117,7 @@ describe('AE build shows UAE content only (OG-022 R18)', () => {
     expect(options).toEqual([
       'Aani to a recipient, instant',
       'UAEFTS to a recipient',
-      'Transfer between my accounts',
+      'Transfer between your accounts',
     ]);
     expect(screen.getByText('Amount in AED')).toBeInTheDocument();
     await userEvent.selectOptions(screen.getByTestId('payment-recipient'), 'rcp_demo_acme');

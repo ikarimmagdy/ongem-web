@@ -755,3 +755,22 @@ a.og-btn:hover {
   flex-wrap: wrap;
   gap: var(--space-sm);
 }
+
+/* FA-011: a transaction names the other party first, the method under it. */
+.fw-txn {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-inline-size: 0;
+}
+.fw-txn__who {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* FA-029: a heading inside a settings card (sign-ins, devices). */
+.fw-subhead {
+  margin-block: var(--space-md) var(--space-xs);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+}

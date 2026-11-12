@@ -17,6 +17,7 @@ import {
   money,
   demoNotices,
   demoDevices,
+  demoSecurity,
   demoPreferences,
   demoInviteCompany,
 } from './demoData';
@@ -25,6 +26,8 @@ import { ApiError } from './errors';
 import { t } from '../i18n/store';
 import { normaliseIban, uaeIbanValid } from '../lib/iban';
 import { nthRun } from '../lib/schedule';
+import { formatMinor } from '../lib/format';
+import { samplePdf } from './samplePdf';
 import { IS_AE, REGION, REGION_CONFIG } from '../region';
 import { REVERIFICATION_CANCELLED } from './reverify';
 import type {
@@ -315,6 +318,7 @@ export class DemoOnGemApi implements OnGemApi {
     );
     this.calls.push('revokeDevice');
   };
+  securitySummary = async () => this.log('securitySummary', demoSecurity());
   accounts = async () => this.log('accounts', this.accountsState);
 
   account = async (id: string) =>
@@ -596,8 +600,12 @@ export class DemoOnGemApi implements OnGemApi {
     return this.log('approvePayment', sent);
   };
 
-  rejectPayment = async (id: string) => {
+  /** FA-037: the reason is checked as ongem-core checks it (one line, 280 characters at most) and kept for the requester. */
+  rejectPayment = async (id: string, reason?: string) => {
     this.require(Permission.PAYMENT_APPROVE);
+    const why = reason?.trim() || null;
+    if (why && (why.length > 280 || [...why].some((c) => c < ' ' || c === '\u007f')))
+      throw new ApiError(422, 'validation_failed', t('app.payments.decline_reason.too_long'));
     const p = this.paymentsState.find((x) => x.id === id) ?? this.notFound('payment');
     if (p.state !== 'PENDING_APPROVAL')
       throw new ApiError(409, 'payment_not_pending_approval', t('app.demo.error.not_pending_approval'));
@@ -605,10 +613,22 @@ export class DemoOnGemApi implements OnGemApi {
       ...p,
       state: 'REJECTED',
       approvalBy: null,
+      declinedBy: [this.me_.legalFirstName, this.me_.legalLastName].filter(Boolean).join(' ') || null,
+      declineReason: why,
       timeline: [...p.timeline, { from: 'PENDING_APPROVAL', to: 'REJECTED', at: this.now() }],
     };
     this.paymentsState = this.paymentsState.map((x) => (x.id === id ? rejected : x));
     return this.log('rejectPayment', rejected);
+  };
+
+  /** FA-034: a one-page sample PDF for a payment that has left; before that, receipt_unavailable as ongem-core answers. */
+  paymentReceipt = async (id: string) => {
+    this.require(Permission.PAYMENT_VIEW);
+    const p = this.paymentsState.find((x) => x.id === id) ?? this.notFound('payment');
+    if (!['PRECHECKED', 'SUBMITTED', 'SENT', 'BANK_REVIEW', 'SETTLED', 'RETURNED'].includes(p.state))
+      throw new ApiError(409, 'receipt_unavailable', t('app.payments.receipt.error'));
+    this.calls.push('paymentReceipt');
+    return new Blob([samplePdf(`${formatMinor(p.amount)} ${p.id}`)], { type: 'application/pdf' });
   };
 
   fundingSources = async () => {

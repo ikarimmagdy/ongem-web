@@ -52,6 +52,7 @@ type Phase = 'loading' | 'ready' | 'done' | 'failed' | 'expired';
 export function CardWidget({ session, onClose }: { session: CardWidgetSession; onClose(): void }) {
   const host = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<Phase>('loading');
+  const [copied, setCopied] = useState(0);
   const simulator = !session.scriptUrl || !session.element;
 
   useEffect(() => {
@@ -90,6 +91,10 @@ export function CardWidget({ session, onClose }: { session: CardWidgetSession; o
         }
         if (session.kind === 'GET_PIN') el.setAttribute('show-toggle', '');
         el.addEventListener('load', on('ready'));
+        // FA-003: the bank's widget has its own copy buttons (the copy stays in its frame); say that it was copied.
+        el.addEventListener('copy', () => {
+          if (!cancelled) setCopied((x) => x + 1);
+        });
         el.addEventListener('error', on('failed'));
         el.addEventListener('failure', on('failed'));
         el.addEventListener(
@@ -133,6 +138,9 @@ export function CardWidget({ session, onClose }: { session: CardWidgetSession; o
           <div ref={host} className="fw-widget__frame" data-block="" data-testid="card-widget-host" />
         </>
       )}
+      <span role="status" className="og-visually-hidden" data-testid="card-widget-copied">
+        {copied ? t('app.cards.widget_copied') : ''}
+      </span>
       {phase === 'failed' && (
         <Notice status="failure">
           <span data-testid="card-widget-failed">{t('app.cards.widget_failed')}</span>

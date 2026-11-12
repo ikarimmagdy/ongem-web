@@ -9,6 +9,19 @@ import { LanguageSwitch, t } from '../i18n';
 import { privacyLine } from '../recording/Recorder';
 import { useSession } from '../session';
 import { Load, human, stateStatus } from './common';
+import { lastSignInText, signInDevice, signInLine } from '../lib/signins';
+
+/** FA-055: the sign-in before this session, beside the bank disclosure; nothing while it loads or when it fails. */
+export function LastSignIn({ testId, className }: { testId: string; className?: string }) {
+  const { api } = useSession();
+  const summary = useAsync(() => api.securitySummary(), [api]);
+  if (summary.status !== 'success') return null;
+  return (
+    <p className={className ?? 'fw-row__sub'} data-testid={testId}>
+      {lastSignInText(summary.data.lastSignIn)}
+    </p>
+  );
+}
 
 /** FA-030: Light, Dark or System as one choice; another brand's white-label theme is never offered to a founder. */
 function AppearanceChoice() {
@@ -41,6 +54,63 @@ function AppearanceChoice() {
   );
 }
 
+/** FA-029: the authenticator and the recent sign-ins (GET /v1/me/security), with what to do about one not recognised. */
+function SignInsSummary() {
+  const { api } = useSession();
+  const summary = useAsync(() => api.securitySummary(), [api]);
+  if (summary.status === 'error')
+    return (
+      <Notice status="failure">
+        <span data-testid="security-error">{t('app.settings.security.sign_ins_error')}</span>
+      </Notice>
+    );
+  return (
+    <Load state={summary} label="sign-ins">
+      {(s) => (
+        <>
+          <KeyValue
+            items={[
+              {
+                label: t('app.settings.security.authenticator'),
+                value: (
+                  <span data-testid="security-authenticator">
+                    {s.authenticator.status === 'ON'
+                      ? t('app.settings.security.authenticator_on')
+                      : s.authenticator.status === 'OFF'
+                        ? t('app.settings.security.authenticator_off')
+                        : t('app.settings.security.authenticator_unknown')}
+                  </span>
+                ),
+              },
+            ]}
+          />
+          <h3 className="fw-subhead">{t('app.settings.security.sign_ins')}</h3>
+          {s.recentSignIns.length ? (
+            <ul className="fw-divided" data-testid="sign-in-list">
+              {s.recentSignIns.map((x, i) => (
+                <li key={`${x.at}-${i}`} className="fw-divided__row" data-testid={`sign-in-${i}`}>
+                  <span className="fw-row__main">
+                    <strong>{signInDevice(x)}</strong>
+                    <span className="fw-row__sub">{signInLine(x)}</span>
+                  </span>
+                  {x.current && (
+                    <StatusChip status="info">{t('app.settings.security.sign_in_current')}</StatusChip>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="fw-row__sub">{t('app.settings.security.sign_ins_empty')}</p>
+          )}
+          <p className="fw-row__sub" data-testid="security-not-you">
+            {t('app.settings.security.not_you')}
+          </p>
+        </>
+      )}
+    </Load>
+  );
+}
+
 /** FA-029: Security: the devices bound to this person (GET /v1/devices), when each was last used, and Sign out. */
 function SecuritySection() {
   const { api } = useSession();
@@ -62,6 +132,8 @@ function SecuritySection() {
   };
   return (
     <Card title={t('app.settings.security.title')} data-testid="settings-security">
+      <SignInsSummary />
+      <h3 className="fw-subhead">{t('app.settings.security.devices')}</h3>
       <p className="fw-row__sub">{t('app.settings.security.intro')}</p>
       {error && <Notice status="failure">{error}</Notice>}
       <Load state={devices} label="devices">
@@ -156,6 +228,7 @@ export function SettingsScreen() {
       </Card>
       <Card title={t('app.settings.bank.title')}>
         <p data-testid="settings-disclosure">{t('app.shell.disclosure')}</p>
+        <LastSignIn testId="settings-last-sign-in" />
       </Card>
     </>
   );

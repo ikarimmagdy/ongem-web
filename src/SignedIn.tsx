@@ -11,7 +11,7 @@ import { CardsScreen } from './screens/Cards';
 import { HomeScreen } from './screens/Home';
 import { OnboardingScreen } from './screens/Onboarding';
 import { PaymentsScreen } from './screens/Payments';
-import { SettingsScreen } from './screens/Settings';
+import { LastSignIn, SettingsScreen } from './screens/Settings';
 import { SupportScreen } from './screens/Support';
 import { NoticeBell, NotificationsScreen } from './screens/Notifications';
 import { useSession } from './session';
@@ -231,6 +231,7 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
         <p className="fw-side__disclosure" data-testid="side-disclosure">
           {t('app.shell.disclosure')}
         </p>
+        <LastSignIn testId="side-last-sign-in" className="fw-side__disclosure" />
       </aside>
       <div className="fw-main">
         <DemoBar />

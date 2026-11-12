@@ -147,3 +147,13 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   state moved from Home to Settings. Demo data has `pay_demo_approval` (US and AE). Tests: `og035.test.tsx`,
   `og035-ae.test.tsx`, `lib/needs.test.ts`, e2e `OG-035 ...` in `founder.e2e.ts`; `asPhone()` in `test/render.tsx` lays
   the shell out at phone width in jsdom.
+- 2026-11-12: UI and UX review follow-up (WS `ongem-engineering/outputs/review/ui-ux-2026-11-12/founder-app/fixes-followup.md`),
+  on ongem-core's new fields. Approvals and the payment detail say who asked (`requestedBy`); Decline takes an optional
+  reason (280 characters, `rejectPayment(id, reason)`) and a declined payment shows who declined and why. Account
+  transactions lead with the other party (`counterparty`) and the method under it. Settings > Security and devices shows
+  the authenticator and recent sign-ins (`securitySummary`, GET /v1/me/security; words in `lib/signins.ts`) above the
+  devices; the last sign-in (`LastSignIn`) sits under the bank disclosure in the side bar and in Settings. Download receipt
+  (`paymentReceipt`, GET /v1/payments/{id}/receipt, a PDF blob saved by a temporary link; `call` takes an Accept for
+  binary answers) on the confirmation and on a sent payment's detail; demo mode answers with `api/samplePdf.ts`. The card
+  widget's own copy buttons announce Copied. "Transfer between your accounts" is the one term, the same key as the app.
+  Tests `src/test/fa-followup.test.tsx` (`FA_011` to `FA_055`).

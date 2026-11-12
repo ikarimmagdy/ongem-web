@@ -166,7 +166,18 @@ function AccountDetail({ id }: { id: string }) {
                       {
                         key: 'what',
                         header: t('app.accounts.col_description'),
-                        render: (tx) => describeTransaction(tx),
+                        // FA-011: who first (as the bank names them), how as secondary text; how alone without a name.
+                        render: (tx) =>
+                          tx.counterparty ? (
+                            <span className="fw-txn" data-testid={`txn-counterparty-${tx.id}`}>
+                              <span className="fw-txn__who" data-mask="">
+                                {tx.counterparty}
+                              </span>
+                              <span className="fw-row__sub">{describeTransaction(tx)}</span>
+                            </span>
+                          ) : (
+                            describeTransaction(tx)
+                          ),
                       },
                       {
                         key: 'stage',

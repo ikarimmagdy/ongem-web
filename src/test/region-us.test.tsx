@@ -67,7 +67,7 @@ describe('US build unchanged (OG-022 R18)', () => {
       within(kind)
         .getAllByRole('option')
         .map((o) => o.textContent),
-    ).toEqual(['ACH to a recipient', 'Transfer between my accounts']);
+    ).toEqual(['ACH to a recipient', 'Transfer between your accounts']);
     expect(screen.getByText('Amount in US$')).toBeInTheDocument();
   });
 

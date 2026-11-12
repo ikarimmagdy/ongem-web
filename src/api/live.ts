@@ -152,10 +152,11 @@ export class LiveOnGemApi implements OnGemApi {
     key: string | null,
     body: Body,
     device: string | null,
+    accept?: string,
   ) {
     const headers: Record<string, string> = {
       Authorization: `Bearer ${token}`,
-      Accept: 'application/json, application/problem+json', // content-check: ignore (media types)
+      Accept: accept ?? 'application/json, application/problem+json', // content-check: ignore (media types)
     };
     if (key) headers['Idempotency-Key'] = key;
     if (device) {
@@ -199,7 +200,7 @@ export class LiveOnGemApi implements OnGemApi {
     }
   }
 
-  async call<T>(method: string, path: string, body?: Body): Promise<T> {
+  async call<T>(method: string, path: string, body?: Body, accept?: string): Promise<T> {
     const key = method === 'GET' ? null : this.newKey();
     // Binding the device itself never needs one, nor does whereami, which is asked before the person's region is known
     // and must leave nothing in a region that does not hold them (OG-022 R25); every other customer call carries it.
@@ -210,12 +211,12 @@ export class LiveOnGemApi implements OnGemApi {
     let token = await this.opts.getToken();
     if (!token) throw new ApiError(401, 'not_signed_in');
     const send = async (t: string) => {
-      let r = await this.send(method, path, t, key, body, device);
+      let r = await this.send(method, path, t, key, body, device, accept);
       // The same request is still running on the server: wait and ask again with the same key, so it runs once.
       for (const ms of IN_PROGRESS_BACKOFF_MS) {
         if (r.status !== 409 || (await LiveOnGemApi.problem(r)).code !== IDEMPOTENCY_IN_PROGRESS) break;
         await this.sleep(ms);
-        r = await this.send(method, path, t, key, body, device);
+        r = await this.send(method, path, t, key, body, device, accept);
       }
       return r;
     };
@@ -269,6 +270,7 @@ export class LiveOnGemApi implements OnGemApi {
       throw new ApiError(res.status, p.code ?? null, p.detail, where);
     }
     if (res.status === 204) return undefined as T;
+    if (accept) return (await res.blob()) as T;
     return (await res.json()) as T;
   }
 
@@ -307,7 +309,20 @@ export class LiveOnGemApi implements OnGemApi {
     this.call('POST', paths.createPayment, { json: p });
   sendPayment: OnGemApi['sendPayment'] = (id: string) => this.call('POST', paths.sendPayment(id));
   approvePayment: OnGemApi['approvePayment'] = (id) => this.call('POST', paths.approvePayment(id));
-  rejectPayment: OnGemApi['rejectPayment'] = (id) => this.call('POST', paths.rejectPayment(id));
+  rejectPayment: OnGemApi['rejectPayment'] = (id, reason) =>
+    this.call(
+      'POST',
+      paths.rejectPayment(id),
+      reason?.trim() ? { json: { reason: reason.trim() } } : undefined,
+    );
+  paymentReceipt: OnGemApi['paymentReceipt'] = (id) =>
+    this.call<Blob>(
+      'GET',
+      paths.paymentReceipt(id),
+      undefined,
+      'application/pdf, application/problem+json', // content-check: ignore (media types)
+    );
+  securitySummary: OnGemApi['securitySummary'] = () => this.call('GET', paths.security);
   fundingSources: OnGemApi['fundingSources'] = () => this.call('GET', paths.fundingSources);
   fundingSource: OnGemApi['fundingSource'] = (id) => this.call('GET', paths.fundingSource(id));
   linkFundingSource: OnGemApi['linkFundingSource'] = (r) =>

@@ -38,6 +38,7 @@ import type {
   TicketSummary,
   Transaction,
   DeviceView,
+  SecuritySummary,
   Inbox,
   InviteAccepted,
   InviteCreated,
@@ -78,6 +79,8 @@ export interface OnGemApi {
   devices(): Promise<DeviceView[]>;
   /** FA-029: signs a device out for good (DELETE /v1/devices/{id}); its next call is refused. */
   revokeDevice(id: string): Promise<void>;
+  /** FA-029, FA-055: the authenticator, the last sign-in and recent sign-ins of the person. */
+  securitySummary(): Promise<SecuritySummary>;
   accounts(): Promise<Account[]>;
   account(id: string): Promise<Account>;
   /** Newest first; the API pages by limit (1 to 100), so the next page asks for a longer list. */
@@ -103,8 +106,10 @@ export interface OnGemApi {
   sendPayment(id: string): Promise<Payment>;
   /** A second person approves a payment waiting in PENDING_APPROVAL (not its maker); step-up. */
   approvePayment(id: string): Promise<Payment>;
-  /** A second person declines it; it ends REJECTED and nothing moves. */
-  rejectPayment(id: string): Promise<Payment>;
+  /** A second person declines it; it ends REJECTED and nothing moves. FA-037: an optional reason the requester sees. */
+  rejectPayment(id: string, reason?: string): Promise<Payment>;
+  /** FA-034: the PDF receipt of a payment that has left (409 receipt_unavailable before). */
+  paymentReceipt(id: string): Promise<Blob>;
   /** G-40: the company's own accounts at other banks, not removed, newest first. */
   fundingSources(): Promise<FundingSource[]>;
   /** One, read again at the bank: an UNVERIFIED one becomes VERIFIED once the bank holds it so. */

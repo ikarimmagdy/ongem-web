@@ -92,6 +92,15 @@ export const demoTransactions: Record<string, Transaction[]> = {
       rail: n % 5 === 0 ? 'CARD' : n % 2 ? 'AANI' : 'UAEFTS',
       origin: 'PROVIDER',
       effectiveDate: `2026-10-${String(day).padStart(2, '0')}`,
+      // FA-011: the other party, as the bank names it; one line in seven has no name.
+      counterparty:
+        n % 7 === 0
+          ? null
+          : credit
+            ? ['Gulf Trading Partners LLC', 'Al Noor Hospitality', 'Marina Retail FZE'][n % 3]
+            : n % 5 === 0
+              ? ['Emirates Office Supplies', 'Metro Tolls', 'City Power'][n % 3]
+              : ['Emirates Supplies FZE', 'Dune Logistics LLC', 'Al Waha Properties'][n % 3],
     };
   }),
   [TAX]: [
@@ -180,6 +189,7 @@ export const demoPayments = (): Payment[] => [
     recipientId: 'rcp_demo_harbor',
     reference: 'November rent',
     approvalBy: 'COMPANY',
+    requestedBy: 'Omar Saeed',
     createdAt: '2026-10-29T10:00:00Z',
     timeline: [
       { from: null, to: 'DRAFT', at: '2026-10-29T10:00:00Z' },

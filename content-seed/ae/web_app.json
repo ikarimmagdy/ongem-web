@@ -3386,11 +3386,11 @@
     {
       "key": "app.payments.detail.internal_transfer",
       "format": "text",
-      "description": "How a transfer between own accounts moves; detail and list",
+      "description": "How a transfer between own accounts moves; detail and list Glossary term shared by web and app (FA-052).",
       "placeholders": [],
       "meta": {},
-      "en": "Internal transfer",
-      "ar": "تحويل داخلي"
+      "en": "Transfer between your accounts",
+      "ar": "تحويل بين حساباتك"
     },
     {
       "key": "app.payments.detail.none",
@@ -3500,8 +3500,8 @@
       "description": "New payment type option",
       "placeholders": [],
       "meta": {},
-      "en": "Transfer between my accounts",
-      "ar": "تحويل بين حساباتي"
+      "en": "Transfer between your accounts",
+      "ar": "تحويل بين حساباتك"
     },
     {
       "key": "app.payments.form.recipient",
@@ -3736,8 +3736,8 @@
       "description": "Review: how a transfer between own accounts moves",
       "placeholders": [],
       "meta": {},
-      "en": "Internal transfer, right away",
-      "ar": "تحويل داخلي فوري"
+      "en": "Transfer between your accounts, right away",
+      "ar": "تحويل بين حساباتك، فورًا"
     },
     {
       "key": "app.payments.review.note",
@@ -5315,7 +5315,7 @@
     {
       "key": "app.state.payment.bank_review",
       "format": "text",
-      "description": "Payment state BANK_REVIEW on chips and lists",
+      "description": "Payment state BANK_REVIEW on chips and lists Glossary term shared by web and app (FA-052).",
       "placeholders": [],
       "meta": {},
       "en": "With the bank",
@@ -5351,7 +5351,7 @@
     {
       "key": "app.state.payment.pending_approval",
       "format": "text",
-      "description": "Payment state PENDING_APPROVAL on chips and lists",
+      "description": "Payment state PENDING_APPROVAL on chips and lists Glossary term shared by web and app (FA-052).",
       "placeholders": [],
       "meta": {},
       "en": "Waiting for approval",
@@ -5396,7 +5396,7 @@
     {
       "key": "app.state.payment.submitted",
       "format": "text",
-      "description": "Payment state SUBMITTED on chips and lists",
+      "description": "Payment state SUBMITTED on chips and lists Glossary term shared by web and app (FA-052).",
       "placeholders": [],
       "meta": {},
       "en": "Sent",
@@ -6673,7 +6673,7 @@
     {
       "key": "app.payments.detail.company_transfer",
       "format": "text",
-      "description": "Payment kind: a transfer to an account of another of the person's companies",
+      "description": "Payment kind: a transfer to an account of another of the person's companies Glossary term shared by web and app (FA-052).",
       "placeholders": [],
       "meta": {},
       "en": "Transfer between your companies",
@@ -7356,24 +7356,6 @@
       "ar": "استخدام إعداد الجهاز"
     },
     {
-      "key": "app.mobile.appearance.light",
-      "format": "text",
-      "description": "Founder app: light appearance",
-      "placeholders": [],
-      "meta": {},
-      "en": "Light",
-      "ar": "فاتح"
-    },
-    {
-      "key": "app.mobile.appearance.dark",
-      "format": "text",
-      "description": "Founder app: dark appearance",
-      "placeholders": [],
-      "meta": {},
-      "en": "Dark",
-      "ar": "داكن"
-    },
-    {
       "key": "app.mobile.settings.security",
       "format": "text",
       "description": "Founder app: settings section for the app lock",
@@ -7520,15 +7502,6 @@
       "ar": "مفتاح الجهاز"
     },
     {
-      "key": "app.mobile.devices.this",
-      "format": "text",
-      "description": "Founder app: marks the device in use",
-      "placeholders": [],
-      "meta": {},
-      "en": "This device",
-      "ar": "هذا الجهاز"
-    },
-    {
       "key": "app.mobile.devices.last_seen",
       "format": "text",
       "description": "Founder app: when a device was last seen",
@@ -7592,15 +7565,6 @@
       "meta": {},
       "en": "We could not load your devices. Retry.",
       "ar": "تعذّر تحميل أجهزتك. أعد المحاولة."
-    },
-    {
-      "key": "app.mobile.sample.data",
-      "format": "text",
-      "description": "Founder app: marks sample data",
-      "placeholders": [],
-      "meta": {},
-      "en": "Sample data",
-      "ar": "بيانات نموذجية"
     },
     {
       "key": "app.mobile.assistant.closed",
@@ -7711,15 +7675,6 @@
       "meta": {},
       "en": "closed",
       "ar": "مغلقة"
-    },
-    {
-      "key": "app.mobile.settings.team",
-      "format": "text",
-      "description": "Founder app: settings section for the team",
-      "placeholders": [],
-      "meta": {},
-      "en": "Team",
-      "ar": "الفريق"
     },
     {
       "key": "app.mobile.settings.team_summary",
@@ -8264,15 +8219,6 @@
       "ar": "تحويل بنكي"
     },
     {
-      "key": "app.mobile.payments.internal",
-      "format": "text",
-      "description": "Founder app: payment type, between own accounts",
-      "placeholders": [],
-      "meta": {},
-      "en": "Transfer between your accounts",
-      "ar": "تحويل بين حساباتك"
-    },
-    {
       "key": "app.mobile.payments.amount_error",
       "format": "text",
       "description": "Founder app: amount error",
@@ -8760,15 +8706,6 @@
       "ar": "دورك"
     },
     {
-      "key": "app.mobile.state.needs_you",
-      "format": "text",
-      "description": "Founder app: onboarding step state",
-      "placeholders": [],
-      "meta": {},
-      "en": "Needs you",
-      "ar": "بحاجة إليك"
-    },
-    {
       "key": "app.mobile.state.failed",
       "format": "text",
       "description": "Founder app: onboarding step state",
@@ -8882,15 +8819,6 @@
       "meta": {},
       "en": "Version {version}",
       "ar": "الإصدار {version}"
-    },
-    {
-      "key": "app.mobile.disclosure.read",
-      "format": "text",
-      "description": "Founder app: open a disclosure",
-      "placeholders": [],
-      "meta": {},
-      "en": "Read",
-      "ar": "قراءة"
     },
     {
       "key": "app.mobile.disclosure.accept",
@@ -9418,33 +9346,6 @@
       "ar": "قيد التنفيذ"
     },
     {
-      "key": "app.mobile.status.submitted",
-      "format": "text",
-      "description": "Founder app: plain words for an API state",
-      "placeholders": [],
-      "meta": {},
-      "en": "Sent",
-      "ar": "أُرسل"
-    },
-    {
-      "key": "app.mobile.status.bank_review",
-      "format": "text",
-      "description": "Founder app: plain words for an API state",
-      "placeholders": [],
-      "meta": {},
-      "en": "With the bank",
-      "ar": "لدى البنك"
-    },
-    {
-      "key": "app.mobile.status.pending_bank",
-      "format": "text",
-      "description": "Founder app: plain words for an API state",
-      "placeholders": [],
-      "meta": {},
-      "en": "With the bank",
-      "ar": "لدى البنك"
-    },
-    {
       "key": "app.mobile.status.prechecked",
       "format": "text",
       "description": "Founder app: plain words for an API state",
@@ -9461,15 +9362,6 @@
       "meta": {},
       "en": "Not sent yet",
       "ar": "لم تُرسل بعد"
-    },
-    {
-      "key": "app.mobile.status.pending_approval",
-      "format": "text",
-      "description": "Founder app: plain words for an API state",
-      "placeholders": [],
-      "meta": {},
-      "en": "Waiting for approval",
-      "ar": "بانتظار الموافقة"
     },
     {
       "key": "app.mobile.status.more_info",
@@ -10755,7 +10647,7 @@
     {
       "key": "app.shell.disclosure",
       "format": "text",
-      "description": "Signed-in side bar foot and Settings: who holds the money (FA-055); AE never names the bank",
+      "description": "Signed-in side bar foot and Settings: who holds the money (FA-055); AE never names the bank Glossary term shared by web and app (FA-052).",
       "placeholders": [],
       "meta": {},
       "en": "OnGem is a financial technology company, not a bank. Banking services are provided by a licensed UAE bank.",
@@ -10782,17 +10674,6 @@
       "meta": {},
       "en": "{type} card ending {last4}, {name}",
       "ar": "بطاقة {type} تنتهي بـ {last4}، {name}"
-    },
-    {
-      "key": "app.mobile.payments.detail_title",
-      "format": "text",
-      "description": "Payment detail title naming the payee (FA-035)",
-      "placeholders": [
-        "payee"
-      ],
-      "meta": {},
-      "en": "Payment to {payee}",
-      "ar": "دفعة إلى {payee}"
     },
     {
       "key": "app.mobile.payments.arrives_label",
@@ -10860,27 +10741,6 @@
       "meta": {},
       "en": "Send another payment",
       "ar": "إرسال دفعة أخرى"
-    },
-    {
-      "key": "app.mobile.payments.done_waiting_title",
-      "format": "text",
-      "description": "Title after sending when a second person must approve (FA-034)",
-      "placeholders": [],
-      "meta": {},
-      "en": "Payment waiting for approval",
-      "ar": "الدفعة بانتظار الموافقة"
-    },
-    {
-      "key": "app.mobile.stepup.send",
-      "format": "text",
-      "description": "Step-up dialog: what is being confirmed when sending (FA-032)",
-      "placeholders": [
-        "amount",
-        "payee"
-      ],
-      "meta": {},
-      "en": "Send {amount} to {payee}",
-      "ar": "إرسال {amount} إلى {payee}"
     },
     {
       "key": "app.mobile.stepup.decline",
@@ -10952,33 +10812,6 @@
       "ar": "حفظ {name} كمستفيد"
     },
     {
-      "key": "app.mobile.needs.open",
-      "format": "text",
-      "description": "Needs you: open a notice (FA-026)",
-      "placeholders": [],
-      "meta": {},
-      "en": "Open",
-      "ar": "فتح"
-    },
-    {
-      "key": "app.mobile.shell.bank_disclosure",
-      "format": "text",
-      "description": "Who holds the money, in Settings and More (FA-055); the AE text names no bank",
-      "placeholders": [],
-      "meta": {},
-      "en": "OnGem is a financial technology company, not a bank. Banking services are provided by a licensed UAE bank.",
-      "ar": "OnGem شركة تقنية مالية وليست بنكًا. تقدّم الخدمات المصرفية بنك مرخّص في الإمارات العربية المتحدة."
-    },
-    {
-      "key": "app.mobile.dispute.pick",
-      "format": "text",
-      "description": "Dispute form: pick the card charge (FA-039)",
-      "placeholders": [],
-      "meta": {},
-      "en": "Which charge?",
-      "ar": "أي عملية خصم؟"
-    },
-    {
       "key": "app.mobile.dispute.no_charges",
       "format": "text",
       "description": "Dispute form: no card charges on the account (FA-039)",
@@ -10995,51 +10828,6 @@
       "meta": {},
       "en": "What is wrong?",
       "ar": "ما المشكلة؟"
-    },
-    {
-      "key": "app.mobile.dispute.reason_not_mine",
-      "format": "text",
-      "description": "Dispute reason",
-      "placeholders": [],
-      "meta": {},
-      "en": "I did not make this charge",
-      "ar": "لم أقم بهذه العملية"
-    },
-    {
-      "key": "app.mobile.dispute.reason_twice",
-      "format": "text",
-      "description": "Dispute reason",
-      "placeholders": [],
-      "meta": {},
-      "en": "I was charged more than once",
-      "ar": "خُصم المبلغ أكثر من مرة"
-    },
-    {
-      "key": "app.mobile.dispute.reason_wrong_amount",
-      "format": "text",
-      "description": "Dispute reason",
-      "placeholders": [],
-      "meta": {},
-      "en": "The amount is wrong",
-      "ar": "المبلغ غير صحيح"
-    },
-    {
-      "key": "app.mobile.dispute.reason_not_received",
-      "format": "text",
-      "description": "Dispute reason",
-      "placeholders": [],
-      "meta": {},
-      "en": "I did not get what I paid for",
-      "ar": "لم أستلم ما دفعت مقابله"
-    },
-    {
-      "key": "app.mobile.dispute.reason_other",
-      "format": "text",
-      "description": "Dispute reason",
-      "placeholders": [],
-      "meta": {},
-      "en": "Something else",
-      "ar": "سبب آخر"
     },
     {
       "key": "app.mobile.dispute.details",
@@ -11067,15 +10855,6 @@
       "meta": {},
       "en": "OnGem support checks the charge with the bank and replies in Support, usually within 2 business days. Keep any receipt; we may ask for it.",
       "ar": "يتحقق فريق دعم OnGem من العملية مع البنك ويرد في قسم الدعم، عادةً خلال يومي عمل. احتفظ بأي إيصال، فقد نطلبه منك."
-    },
-    {
-      "key": "app.mobile.dispute.send",
-      "format": "text",
-      "description": "Dispute form: send button (FA-039)",
-      "placeholders": [],
-      "meta": {},
-      "en": "Send dispute",
-      "ar": "إرسال الاعتراض"
     },
     {
       "key": "app.mobile.dispute.sent_title",
@@ -11372,6 +11151,363 @@
       "meta": {},
       "en": "Statements",
       "ar": "كشوف الحساب"
+    },
+    {
+      "key": "app.payments.requested_by",
+      "format": "text",
+      "description": "Approval card and payment row: who asked for the payment (FA-037)",
+      "placeholders": [
+        "name"
+      ],
+      "meta": {},
+      "en": "Requested by {name}",
+      "ar": "طلبها {name}"
+    },
+    {
+      "key": "app.payments.detail.requested_by",
+      "format": "text",
+      "description": "Payment detail label: who asked for the payment (FA-037)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Requested by",
+      "ar": "مقدّم الطلب"
+    },
+    {
+      "key": "app.payments.detail.declined_by",
+      "format": "text",
+      "description": "Payment detail: who declined a payment waiting for approval (FA-037)",
+      "placeholders": [
+        "name"
+      ],
+      "meta": {},
+      "en": "Declined by {name}",
+      "ar": "رفضها {name}"
+    },
+    {
+      "key": "app.payments.detail.decline_reason",
+      "format": "text",
+      "description": "Payment detail label: the reason given when it was declined (FA-037)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reason for declining",
+      "ar": "سبب الرفض"
+    },
+    {
+      "key": "app.payments.decline_reason.label",
+      "format": "text",
+      "description": "Decline dialog field label (FA-037)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reason (optional)",
+      "ar": "السبب (اختياري)"
+    },
+    {
+      "key": "app.payments.decline_reason.hint",
+      "format": "text",
+      "description": "Decline dialog field hint (FA-037)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The person who asked for this payment sees it. Up to 280 characters.",
+      "ar": "يراه من طلب هذه الدفعة. حتى 280 حرفًا."
+    },
+    {
+      "key": "app.payments.decline_reason.too_long",
+      "format": "text",
+      "description": "Decline dialog error: reason too long (FA-037)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Keep the reason to 280 characters or fewer.",
+      "ar": "اجعل السبب 280 حرفًا أو أقل."
+    },
+    {
+      "key": "app.accounts.col_counterparty",
+      "format": "text",
+      "description": "Account transactions column: the other party (FA-011)",
+      "placeholders": [],
+      "meta": {},
+      "en": "From or to",
+      "ar": "من أو إلى"
+    },
+    {
+      "key": "app.settings.security.authenticator",
+      "format": "text",
+      "description": "Security section: the authenticator (second factor) row title (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Authenticator",
+      "ar": "المصادقة الثنائية"
+    },
+    {
+      "key": "app.settings.security.authenticator_on",
+      "format": "text",
+      "description": "Security section: authenticator status on (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "On. Each sign-in asks for a code from your authenticator.",
+      "ar": "مفعّلة. يُطلب رمز من تطبيق المصادقة عند كل تسجيل دخول."
+    },
+    {
+      "key": "app.settings.security.authenticator_off",
+      "format": "text",
+      "description": "Security section: authenticator status off (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Off. Turn it on in your sign-in settings.",
+      "ar": "غير مفعّلة. فعّلها من إعدادات تسجيل الدخول."
+    },
+    {
+      "key": "app.settings.security.authenticator_unknown",
+      "format": "text",
+      "description": "Security section: authenticator status not known (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not known for this session.",
+      "ar": "غير معروفة لهذه الجلسة."
+    },
+    {
+      "key": "app.settings.security.sign_ins",
+      "format": "text",
+      "description": "Security section: recent sign-ins heading (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recent sign-ins",
+      "ar": "آخر عمليات تسجيل الدخول"
+    },
+    {
+      "key": "app.settings.security.sign_ins_empty",
+      "format": "text",
+      "description": "Security section: no sign-ins recorded (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "No sign-ins recorded yet.",
+      "ar": "لا توجد عمليات تسجيل دخول مسجّلة بعد."
+    },
+    {
+      "key": "app.settings.security.sign_ins_error",
+      "format": "text",
+      "description": "Security section: sign-ins failed to load (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your sign-ins could not be loaded. Try again.",
+      "ar": "تعذّر تحميل عمليات تسجيل الدخول. حاول مرة أخرى."
+    },
+    {
+      "key": "app.settings.security.sign_in_current",
+      "format": "text",
+      "description": "Security section: the sign-in of this session (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This session",
+      "ar": "هذه الجلسة"
+    },
+    {
+      "key": "app.settings.security.device_web",
+      "format": "text",
+      "description": "Security section: a browser sign-in (FA-029)",
+      "placeholders": [
+        "browser",
+        "os"
+      ],
+      "meta": {},
+      "en": "{browser} on {os}",
+      "ar": "{browser} على {os}"
+    },
+    {
+      "key": "app.settings.security.device_browser",
+      "format": "text",
+      "description": "Security section: a browser sign-in with no browser or system known (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Web browser",
+      "ar": "متصفح ويب"
+    },
+    {
+      "key": "app.settings.security.device_ios",
+      "format": "text",
+      "description": "Security section: a sign-in from the iPhone or iPad app (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem app on iPhone or iPad",
+      "ar": "تطبيق OnGem على iPhone أو iPad"
+    },
+    {
+      "key": "app.settings.security.device_android",
+      "format": "text",
+      "description": "Security section: a sign-in from the Android app (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem app on Android",
+      "ar": "تطبيق OnGem على Android"
+    },
+    {
+      "key": "app.settings.security.device_unbound",
+      "format": "text",
+      "description": "Security section: a sign-in from the app before the device was registered (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem app",
+      "ar": "تطبيق OnGem"
+    },
+    {
+      "key": "app.settings.security.place",
+      "format": "text",
+      "description": "Security section: approximate place of a sign-in (FA-029)",
+      "placeholders": [
+        "city",
+        "country"
+      ],
+      "meta": {},
+      "en": "{city}, {country}",
+      "ar": "{city}، {country}"
+    },
+    {
+      "key": "app.settings.security.place_unknown",
+      "format": "text",
+      "description": "Security section: place of a sign-in not known (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Place not known",
+      "ar": "المكان غير معروف"
+    },
+    {
+      "key": "app.settings.security.sign_in_line",
+      "format": "text",
+      "description": "Security section: one sign-in, when and where (FA-029)",
+      "placeholders": [
+        "date",
+        "place"
+      ],
+      "meta": {},
+      "en": "{date}, {place}",
+      "ar": "{date}، {place}"
+    },
+    {
+      "key": "app.settings.security.last_sign_in",
+      "format": "text",
+      "description": "Shell disclosure and Settings: the previous sign-in (FA-055)",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Last sign-in {date}",
+      "ar": "آخر تسجيل دخول {date}"
+    },
+    {
+      "key": "app.settings.security.first_sign_in",
+      "format": "text",
+      "description": "Settings: no earlier sign-in recorded (FA-055)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This is the first sign-in we have recorded.",
+      "ar": "هذا أول تسجيل دخول نسجّله."
+    },
+    {
+      "key": "app.settings.security.not_you",
+      "format": "text",
+      "description": "Security section: what to do about a sign-in you do not recognise (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Do not recognise a sign-in? Sign out that device and contact support.",
+      "ar": "لا تتعرّف على تسجيل دخول؟ سجّل الخروج من ذلك الجهاز وتواصل مع الدعم."
+    },
+    {
+      "key": "app.settings.security.devices",
+      "format": "text",
+      "description": "Security section: devices heading (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Devices",
+      "ar": "الأجهزة"
+    },
+    {
+      "key": "app.payments.receipt.download",
+      "format": "text",
+      "description": "Payment confirmation and detail: download the PDF receipt (FA-034)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Download receipt",
+      "ar": "تنزيل الإيصال"
+    },
+    {
+      "key": "app.payments.receipt.preparing",
+      "format": "text",
+      "description": "Payment receipt: download in progress (FA-034)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Preparing the receipt",
+      "ar": "جارٍ تجهيز الإيصال"
+    },
+    {
+      "key": "app.payments.receipt.error",
+      "format": "text",
+      "description": "Payment receipt: download failed (FA-034)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The receipt could not be downloaded. Try again.",
+      "ar": "تعذّر تنزيل الإيصال. حاول مرة أخرى."
+    },
+    {
+      "key": "app.payments.receipt.ready",
+      "format": "text",
+      "description": "Payment receipt: saved, for screen readers and the app (FA-034)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Receipt ready",
+      "ar": "الإيصال جاهز"
+    },
+    {
+      "key": "app.dispute.receipt_choose",
+      "format": "text",
+      "description": "Dispute form: choose a receipt file (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a file",
+      "ar": "اختر ملفًا"
+    },
+    {
+      "key": "app.dispute.receipt_remove",
+      "format": "text",
+      "description": "Dispute form: remove the chosen receipt (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Remove",
+      "ar": "إزالة"
+    },
+    {
+      "key": "app.dispute.receipt_too_large",
+      "format": "text",
+      "description": "Dispute form: receipt over 10 MB (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a file of 10 MB or less.",
+      "ar": "اختر ملفًا بحجم 10 ميغابايت أو أقل."
+    },
+    {
+      "key": "app.dispute.receipt_wrong_type",
+      "format": "text",
+      "description": "Dispute form: receipt not a PNG, JPEG or PDF (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a photo (PNG or JPEG) or a PDF.",
+      "ar": "اختر صورة (PNG أو JPEG) أو ملف PDF."
+    },
+    {
+      "key": "app.dispute.receipt_failed",
+      "format": "text",
+      "description": "Dispute form: the dispute was sent but the receipt was not attached (FA-039)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your dispute was sent, but the receipt was not attached. Add it in the request.",
+      "ar": "أُرسل اعتراضك، لكن لم يُرفق الإيصال. أضفه في الطلب."
+    },
+    {
+      "key": "app.cards.widget_copied",
+      "format": "text",
+      "description": "Card details widget: a field was copied with the bank widget's own copy button, for screen readers (FA-003)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Copied",
+      "ar": "تم النسخ"
     }
   ]
 }

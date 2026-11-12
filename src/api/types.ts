@@ -85,6 +85,8 @@ export interface Transaction {
   origin: string;
   effectiveDate?: string | null;
   postedAt?: string | null;
+  /** FA-011: who the money came from or went to, as the bank names them; null when the bank gives no name. */
+  counterparty?: string | null;
 }
 
 export interface StatementRef {
@@ -160,6 +162,11 @@ export interface Payment {
    * because nobody but its maker can approve. Absent in any other state.
    */
   approvalBy?: 'COMPANY' | 'ONGEM' | null;
+  /** FA-037: the name of the person who asked for it; null when no name is known (never an email). */
+  requestedBy?: string | null;
+  /** FA-037: on a REJECTED payment, who declined it and the reason they gave, if any. */
+  declinedBy?: string | null;
+  declineReason?: string | null;
 }
 
 /**
@@ -555,4 +562,25 @@ export interface DeviceView {
   revokedAt: string | null;
   /** The device this request came from. */
   current: boolean;
+}
+
+/** FA-029: one sign-in as GET /v1/me/security lists it. */
+export interface SignInView {
+  at: string;
+  /** ios, android (an app device), web (a browser) or unbound (the app before its device was bound). */
+  kind: 'ios' | 'android' | 'web' | 'unbound' | string;
+  deviceName?: string | null;
+  browser?: string | null;
+  os?: string | null;
+  place?: { country?: string | null; city?: string | null } | null;
+  secondFactor: boolean;
+  /** The session this request is made in. */
+  current: boolean;
+}
+
+/** FA-029, FA-055: the signed-in person's security summary (GET /v1/me/security). */
+export interface SecuritySummary {
+  authenticator: { status: 'ON' | 'OFF' | 'UNKNOWN' | string; required: boolean };
+  lastSignIn?: SignInView | null;
+  recentSignIns: SignInView[];
 }

@@ -2,6 +2,8 @@
 import type {
   Account,
   DeviceView,
+  SecuritySummary,
+  SignInView,
   Amount,
   Application,
   Card,
@@ -108,6 +110,15 @@ export const demoTransactions: Record<string, Transaction[]> = IS_AE
           rail: n % 5 === 0 ? 'CARD' : 'ACH',
           origin: 'PROVIDER',
           effectiveDate: `2026-10-${String(day).padStart(2, '0')}`,
+          // FA-011: the other party, as the bank names it; one line in seven has no name, as with real bank data.
+          counterparty:
+            n % 7 === 0
+              ? null
+              : credit
+                ? ['Blue Ridge Retail Inc', 'Harper and Cole LLP', 'Summit Health Group'][n % 3]
+                : n % 5 === 0
+                  ? ['Corner Bean Coffee', 'Skyline Air', 'Paper Corner'][n % 3]
+                  : ['Acme Supplies LLC', 'Harbor Property Management', 'Brightline Payroll'][n % 3],
         };
       }),
       [TAX]: [
@@ -119,6 +130,7 @@ export const demoTransactions: Record<string, Transaction[]> = IS_AE
           rail: 'BOOK',
           origin: 'ONGEM',
           effectiveDate: '2026-10-25',
+          counterparty: 'Northwind Trading Co',
         },
       ],
       [PAYROLL]: [],
@@ -220,6 +232,7 @@ export const demoPayments = IS_AE
         recipientId: 'rcp_demo_harbor',
         reference: 'November rent',
         approvalBy: 'COMPANY',
+        requestedBy: 'Dana Lee',
         createdAt: '2026-10-29T10:00:00Z',
         timeline: [
           { from: null, to: 'DRAFT', at: '2026-10-29T10:00:00Z' },
@@ -504,6 +517,43 @@ export const demoNotices = IS_AE
         readAt: '2026-10-28T16:30:00Z',
       },
     ];
+
+/** FA-029, FA-055: the security summary, as GET /v1/me/security answers: this session and two before it. */
+export const demoSecurity = (): SecuritySummary => {
+  const earlier: SignInView = {
+    at: '2026-10-28T08:12:00Z',
+    kind: 'ios',
+    deviceName: 'iPhone',
+    place: IS_AE ? { country: 'AE', city: 'Dubai' } : { country: 'US', city: 'Austin' },
+    secondFactor: true,
+    current: false,
+  };
+  return {
+    authenticator: { status: 'ON', required: true },
+    lastSignIn: earlier,
+    recentSignIns: [
+      {
+        at: '2026-10-29T14:58:00Z',
+        kind: 'web',
+        browser: 'Chrome',
+        os: 'macOS',
+        place: IS_AE ? { country: 'AE', city: 'Dubai' } : { country: 'US', city: 'Austin' },
+        secondFactor: true,
+        current: true,
+      },
+      earlier,
+      {
+        at: '2026-10-25T17:40:00Z',
+        kind: 'web',
+        browser: 'Safari',
+        os: 'macOS',
+        place: null,
+        secondFactor: true,
+        current: false,
+      },
+    ],
+  };
+};
 
 /** FA-029: the person's devices, as GET /v1/devices answers: this browser (current) and a phone. */
 export const demoDevices = (): DeviceView[] => [
