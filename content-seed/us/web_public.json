@@ -337,11 +337,19 @@
     {
       "key": "web.bank_statement",
       "format": "text",
-      "description": "Who provides the banking services; the ¹ points to disclosure 1",
+      "description": "Who provides the banking services: the required disclosure, approved wording (Volume 8 Table 8.15)",
       "placeholders": [],
       "meta": {},
-      "en": "OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank through Synctera.¹",
-      "ar": "OnGem شركة تقنية مالية وليست بنكًا. تُقدَّم الخدمات المصرفية من Piermont Bank عبر Synctera.¹"
+      "en": "OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank, Member FDIC.",
+      "ar": "OnGem شركة تقنية مالية وليست بنكًا. تُقدَّم الخدمات المصرفية من Piermont Bank، عضو FDIC.",
+      "replaces": {
+        "en": [
+          "OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank through Synctera.¹"
+        ],
+        "ar": [
+          "OnGem شركة تقنية مالية وليست بنكًا. تُقدَّم الخدمات المصرفية من Piermont Bank عبر Synctera.¹"
+        ]
+      }
     },
     {
       "key": "web.close.text",

@@ -19,7 +19,7 @@ describe('US build unchanged (OG-022 R18)', () => {
 
   it('public_copy_as_before_AC_R18_2', () => {
     expect(t('web.bank_statement')).toBe(
-      'OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank through Synctera.¹',
+      'OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank, Member FDIC.',
     );
     expect(t('web.hero.intro')).toBe(
       'A US business account held at Piermont Bank, ACH and scheduled payments, virtual cards and approvals that keep two sets of eyes on every payment. On the web and on your phone.',
