@@ -216,3 +216,9 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   `app.shell.expand_menu`, `app.nav.group.money`, `app.nav.group.company`, `app.nav.count_waiting`,
   `app.payments.filter.all`, `app.payments.filter.label`, `app.accounts.filter_label` (both seeds; ongem-core's seed
   still needs them for a build that pulls content from the API).
+- 2026-11-14: OG-042 bank-tested quick fixes. Idle logout (`src/lib/idle.ts`, `src/auth/IdleLogout.tsx`, mounted in the
+  signed-in shell, live mode only): `leave()` (Clerk `signOut`) after 30 minutes with no pointer, key or window focus
+  activity, a warning 60 seconds before (`app.idle.*` in both seeds; ongem-core's seed needs them too), the last activity
+  time shared by every tab through localStorage `ongem.idle.last`. The build writes `/.well-known/security.txt`
+  (RFC 9116, `scripts/security-txt.mjs`): contact security@ongem.com, Expires one year from the build, Canonical
+  `VITE_SITE_URL`, else app.platform.ongem.com for a production build, else the region's dev site.

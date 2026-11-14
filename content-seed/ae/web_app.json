@@ -11591,6 +11591,46 @@
       "meta": {},
       "en": "Show transactions",
       "ar": "عرض المعاملات"
+    },
+    {
+      "key": "app.idle.stay",
+      "format": "text",
+      "description": "Idle logout warning: button that keeps the session",
+      "placeholders": [],
+      "meta": {},
+      "en": "Stay signed in",
+      "ar": "البقاء مسجلا الدخول"
+    },
+    {
+      "key": "app.idle.text.one",
+      "format": "text",
+      "description": "Idle logout warning: seconds left before sign-out (one)",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "For your security you will be signed out in {count} second because there has been no activity.",
+      "ar": "حفاظا على أمانك سيتم تسجيل خروجك خلال {count} ثانية لعدم وجود أي نشاط."
+    },
+    {
+      "key": "app.idle.text.other",
+      "format": "text",
+      "description": "Idle logout warning: seconds left before sign-out",
+      "placeholders": [
+        "count"
+      ],
+      "meta": {},
+      "en": "For your security you will be signed out in {count} seconds because there has been no activity.",
+      "ar": "حفاظا على أمانك سيتم تسجيل خروجك خلال {count} ثانية لعدم وجود أي نشاط."
+    },
+    {
+      "key": "app.idle.title",
+      "format": "text",
+      "description": "Idle logout warning: dialog title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Still there?",
+      "ar": "هل ما زلت هنا؟"
     }
   ]
 }

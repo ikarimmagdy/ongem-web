@@ -6,6 +6,7 @@ import { execSync } from 'node:child_process';
 import { readdirSync, readFileSync, rmSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { seedSnapshot, type Snapshot } from './scripts/content.mjs';
+import { SECURITY_TXT_PATH, securityTxt, securityTxtOrigin } from './scripts/security-txt.mjs';
 
 /**
  * The CloudFront response headers policy (security-headers.json, WEB-SEC-05) as plain headers, so the local preview and
@@ -50,6 +51,21 @@ function regionPublic(): Plugin {
     },
     closeBundle() {
       if (drop) rmSync(drop, { recursive: true, force: true });
+    },
+  };
+}
+
+/** OG-042: /.well-known/security.txt for the origin this build is served from (scripts/security-txt.mjs). */
+function securityTxtFile(): Plugin {
+  let origin = '';
+  return {
+    name: 'ongem-security-txt',
+    apply: 'build',
+    configResolved(config) {
+      origin = securityTxtOrigin(config.env);
+    },
+    generateBundle() {
+      this.emitFile({ type: 'asset', fileName: SECURITY_TXT_PATH, source: securityTxt(origin) });
     },
   };
 }
@@ -121,7 +137,7 @@ const devApi = {
 };
 
 export default defineConfig({
-  plugins: [react(), regionPublic(), contentSnapshot()],
+  plugins: [react(), regionPublic(), contentSnapshot(), securityTxtFile()],
   define: { __APP_VERSION__: JSON.stringify(appVersion()) },
   server: { port: 5190, strictPort: true, proxy: devApi },
   preview: { port: 5190, strictPort: true, proxy: devApi, headers: securityHeaders() },

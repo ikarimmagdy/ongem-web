@@ -31,6 +31,7 @@ import { MORE, NAV, NAV_GROUPS, PHONE_TABS, pageTitle } from './nav';
 import { ACCEPTANCE_ENABLED } from './acceptance/api';
 import { t, useContent } from './i18n';
 import { DemoBar } from './public/DemoBar';
+import { IdleLogout } from './auth/IdleLogout';
 import './app-shell.css';
 
 /** Every route names its page in the browser tab (WCAG 2.4.2, UI review 2026-11-07). */
@@ -294,6 +295,7 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
   const byId = new Map(NAV.map((n) => [n.id, n]));
   return (
     <div className={`fw-shell${side ? ' fw-shell--rail' : ''}`} data-testid="shell">
+      <IdleLogout />
       <a href="#main" className="og-skip">
         {t('app.common.skip')}
       </a>
