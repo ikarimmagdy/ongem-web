@@ -136,32 +136,8 @@ const devApi = {
   },
 };
 
-/**
- * OG-050: preloads the two Latin faces the first screen paints with (Inter 400 for text, 600 for headings), so the
- * prerendered page does not wait for its stylesheet to discover them. The other faces load on use (unicode-range).
- */
-function fontPreload(): Plugin {
-  return {
-    name: 'ongem-font-preload',
-    apply: 'build',
-    transformIndexHtml: {
-      order: 'post',
-      handler(_html, ctx) {
-        const files = Object.keys(ctx.bundle ?? {}).filter((f) =>
-          /\/inter-latin-(400|600)-normal-[\w-]+\.woff2$/.test(f),
-        );
-        return files.map((f) => ({
-          tag: 'link',
-          attrs: { rel: 'preload', href: `/${f}`, as: 'font', type: 'font/woff2', crossorigin: '' },
-          injectTo: 'head' as const,
-        }));
-      },
-    },
-  };
-}
-
 export default defineConfig({
-  plugins: [react(), regionPublic(), contentSnapshot(), securityTxtFile(), fontPreload()],
+  plugins: [react(), regionPublic(), contentSnapshot(), securityTxtFile()],
   define: { __APP_VERSION__: JSON.stringify(appVersion()) },
   server: { port: 5190, strictPort: true, proxy: devApi },
   preview: { port: 5190, strictPort: true, proxy: devApi, headers: securityHeaders() },
