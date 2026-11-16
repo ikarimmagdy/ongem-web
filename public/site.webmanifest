@@ -3,8 +3,8 @@
   "short_name": "OnGem",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F8FAFD",
-  "theme_color": "#081549",
+  "background_color": "#FAFAFA",
+  "theme_color": "#FAFAFA",
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
