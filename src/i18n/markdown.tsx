@@ -18,17 +18,20 @@ export function inline(text: string): ReactNode[] {
     else if ((m[2] ?? m[3]) !== undefined) out.push(<em key={key}>{m[2] ?? m[3]}</em>);
     else {
       const [label, to] = [m[4]!, m[5]!];
-      out.push(
-        to.startsWith('/') ? (
-          <Link key={key} to={to}>
-            {label}
-          </Link>
-        ) : (
-          <a key={key} href={to} target="_blank" rel="noreferrer noopener">
-            {label}
-          </a>
-        ),
-      );
+      // OG-050: content comes from the API, so a link that is not a path, https or mailto stays plain text.
+      if (!to.startsWith('/') && !/^(https:|mailto:)/i.test(to)) out.push(label);
+      else
+        out.push(
+          to.startsWith('/') ? (
+            <Link key={key} to={to}>
+              {label}
+            </Link>
+          ) : (
+            <a key={key} href={to} target="_blank" rel="noreferrer noopener">
+              {label}
+            </a>
+          ),
+        );
     }
     last = m.index + m[0].length;
   }
