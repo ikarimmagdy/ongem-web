@@ -129,7 +129,11 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
   };
 
   const monthName = new Intl.DateTimeFormat(locale, { timeZone: 'UTC', month: 'long', year: 'numeric' });
-  const dayName = new Intl.DateTimeFormat(locale, { timeZone: 'UTC', weekday: 'short' });
+  // Arabic short weekday names are whole words that do not fit a day's column; the narrow form is one letter.
+  const dayName = new Intl.DateTimeFormat(locale, {
+    timeZone: 'UTC',
+    weekday: locale.startsWith('ar') ? 'narrow' : 'short',
+  });
   const dayFull = new Intl.DateTimeFormat(locale, { timeZone: 'UTC', weekday: 'long' });
   const dayLong = new Intl.DateTimeFormat(locale, {
     timeZone: 'UTC',
