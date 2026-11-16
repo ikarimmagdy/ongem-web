@@ -84,7 +84,12 @@ function Disclosures() {
         }
       </Load>
       {error && <Notice status="failure">{error}</Notice>}
-      <Modal open={Boolean(open)} title={open?.d.title ?? ''} onClose={() => setOpen(null)}>
+      <Modal
+        open={Boolean(open)}
+        title={open?.d.title ?? ''}
+        onClose={() => setOpen(null)}
+        closeLabel={t('app.common.close')}
+      >
         <p className="fw-doc-text" data-testid="documents-disclosure-text">
           {open?.text}
         </p>
@@ -140,7 +145,7 @@ export function DocumentsScreen() {
                             aria-label={t('app.documents.account')}
                             data-testid="documents-export-account"
                             value={account.id}
-                            onChange={(e) => setPicked(e.target.value)}
+                            onChange={setPicked}
                             options={list.map((a) => ({ value: a.id, label: a.name }))}
                           />
                         </label>

@@ -1187,9 +1187,6 @@
   width: 100%;
   min-width: calc(var(--space-3xl) * 3.5);
 }
-.fw-user .fw-profile__item:hover {
-  background: var(--color-surface-sunken);
-}
 
 /* The icon rail: names leave the screen but stay the links' names; a count becomes a dot on the icon. */
 .fw-shell--rail .fw-side {

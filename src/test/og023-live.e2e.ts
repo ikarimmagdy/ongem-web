@@ -1,5 +1,6 @@
 /// <reference types="node" />
 import { expect, test, type Page } from '@playwright/test';
+import { choose, optionValues } from './select.e2e-helpers';
 import {
   Blocked,
   consolePage,
@@ -98,7 +99,7 @@ test.describe('@live OG-023 multi-company on dev', () => {
       await a.locator('[data-testid="nav-settings"]:visible').first().click();
       await expect(a.getByTestId('settings-team')).toBeVisible();
       await a.getByTestId('invite-email').fill(founderB.email);
-      await a.getByTestId('invite-role').selectOption(ROLE);
+      await choose(a.getByTestId('invite-role'), ROLE);
       await a.getByTestId('invite-send').click();
       await expect(a.getByTestId('invite-sent').or(a.getByTestId('invite-form-error')).first()).toBeVisible({
         timeout: 30_000,
@@ -175,25 +176,20 @@ test.describe('@live OG-023 multi-company on dev', () => {
           .or(b.getByText(/no accounts|could not/i))
           .first(),
       ).toBeVisible({ timeout: 30_000 });
-      const kinds = await b
-        .getByTestId('payment-kind')
-        .locator('option')
-        .evaluateAll((o) => o.map((x) => (x as HTMLOptionElement).value));
+      const kinds = await optionValues(b.getByTestId('payment-kind'));
       if (!kinds.includes('company'))
         throw new Blocked(
           `precondition missing: no "Between my companies" option (kinds ${kinds.join(',')})`,
         );
-      const from = await b.getByTestId('payment-from').locator('option').count();
+      const from = (await optionValues(b.getByTestId('payment-from'))).length;
       if (!from) throw new Blocked("precondition missing: B's own company has no ACTIVE account");
-      await b.getByTestId('payment-kind').selectOption('company');
+      await choose(b.getByTestId('payment-kind'), 'company');
       const dest = b.getByTestId('payment-to-company-account');
       await expect(dest).toBeVisible({ timeout: 30_000 });
-      const values = (
-        await dest.locator('option').evaluateAll((o) => o.map((x) => (x as HTMLOptionElement).value))
-      ).filter(Boolean);
+      const values = (await optionValues(dest)).filter(Boolean);
       if (!values.length)
         throw new Blocked("precondition missing: A's company has no ACTIVE account in the same currency");
-      await dest.selectOption(values[0]!);
+      await choose(dest, values[0]!);
       await b.getByTestId('payment-amount').fill('0.01');
       await b.getByTestId('payment-reference').fill('OG-023 T9 e2e');
       await ev.shot(b, 'og023-08-b-transfer-form');

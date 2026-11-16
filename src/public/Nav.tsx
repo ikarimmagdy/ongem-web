@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState, type FocusEvent, type RefObject } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BRAND_ASSET_ON_DARK, BRAND_ASSET_SIZES, BRAND_ASSETS } from '../assets';
-import { Logo, useTheme } from '../design-system';
+import { Logo, useDismiss, useTheme } from '../design-system';
 import { getLocale, LanguageSwitch, t, tList, useContent } from '../i18n';
 import { groupOf, legalSlugs, legalTitle, navGroups, navLinks, type NavGroup } from './content';
 import { BLANK_IMAGE, useFirstPaint } from './first-paint';
@@ -14,32 +14,6 @@ export const DEMO = '/demo';
 
 const current = (to: string, path?: string) =>
   to === path || (to === '/blog' && !!path?.startsWith('/blog/')) ? ('page' as const) : undefined;
-
-/** Closes [onClose] on Escape (focus back to [button]) and on a click outside [root]. */
-function useDismiss(
-  open: boolean,
-  onClose: () => void,
-  root: RefObject<HTMLElement | null>,
-  button: RefObject<HTMLButtonElement | null>,
-) {
-  useEffect(() => {
-    if (!open) return;
-    const key = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape') return;
-      onClose();
-      button.current?.focus();
-    };
-    const click = (e: MouseEvent) => {
-      if (root.current && !root.current.contains(e.target as Node)) onClose();
-    };
-    document.addEventListener('keydown', key);
-    document.addEventListener('mousedown', click);
-    return () => {
-      document.removeEventListener('keydown', key);
-      document.removeEventListener('mousedown', click);
-    };
-  }, [open, onClose, root, button]);
-}
 
 /** Closes an open menu when focus moves out of it, by Tab or a click elsewhere (PS-026). */
 const closeOnFocusOut =
@@ -82,10 +56,10 @@ function Menu({
         {group.label}
         <span className="pub-menu__chevron" aria-hidden="true" />
       </button>
-      <ul id={id} className="pub-menu__list" hidden={!open} data-testid={`menu-list-${group.id}`}>
+      <ul id={id} className="pub-menu__list og-menu" hidden={!open} data-testid={`menu-list-${group.id}`}>
         {group.links.map((l) => (
           <li key={l.to}>
-            <Link to={l.to} aria-current={current(l.to, path)} onClick={onClose}>
+            <Link to={l.to} className="og-menu__item" aria-current={current(l.to, path)} onClick={onClose}>
               {l.label}
             </Link>
           </li>
@@ -142,7 +116,7 @@ function MenuIcon({ open }: { open: boolean }) {
 }
 
 /** The two regions: this one marked current, the other a link to its build (OG-034 R6). */
-export function RegionLinks({ testid }: { testid?: string }) {
+export function RegionLinks({ testid, itemClass }: { testid?: string; itemClass?: string }) {
   const regions = (['US', 'AE'] as const).filter((r) => r === SITE.region || r === OTHER_REGION);
   useContent();
   const { pathname } = useLocation();
@@ -155,12 +129,13 @@ export function RegionLinks({ testid }: { testid?: string }) {
         return (
           <li key={r}>
             {r === SITE.region ? (
-              <span aria-current="true" className="pub-region__current">
+              <span aria-current="true" className={itemClass ?? 'pub-region__current'}>
                 {t(`web.nav.region.${key}`)}
               </span>
             ) : (
               <a
                 href={`${siteOf(r)}${there}`}
+                className={itemClass}
                 hrefLang={key === 'ae' ? 'en-AE' : 'en-US'}
                 data-testid={`region-${key}`}
               >
@@ -185,12 +160,13 @@ function GlobeIcon() {
 }
 
 /** Region and language in one place (OG-040): the region's links and the language choice. */
-function LocaleOptions() {
+function LocaleOptions({ menu = false }: { menu?: boolean }) {
+  const title = menu ? 'pub-menu__title og-menu__title' : 'pub-menu__title';
   return (
     <>
-      <p className="pub-menu__title">{t('web.nav.region_title')}</p>
-      <RegionLinks />
-      <p className="pub-menu__title">{t('web.lang.label')}</p>
+      <p className={title}>{t('web.nav.region_title')}</p>
+      <RegionLinks itemClass={menu ? 'og-menu__item' : undefined} />
+      <p className={title}>{t('web.lang.label')}</p>
       <LanguageSwitch variant="choice" />
     </>
   );
@@ -223,8 +199,8 @@ function RegionChooser() {
         <GlobeIcon />
         <span>{t(`web.nav.region_short.${SITE.region.toLowerCase()}`)}</span>
       </button>
-      <div id={id} className="pub-menu__list pub-region__panel" hidden={!open}>
-        <LocaleOptions />
+      <div id={id} className="pub-menu__list pub-region__panel og-menu" hidden={!open}>
+        <LocaleOptions menu />
       </div>
     </div>
   );

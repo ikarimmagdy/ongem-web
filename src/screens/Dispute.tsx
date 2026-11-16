@@ -98,8 +98,8 @@ export function DisputeForm() {
                 <Select
                   data-testid="dispute-card"
                   value={card?.id ?? ''}
-                  onChange={(e) => {
-                    setCardId(e.target.value);
+                  onChange={(v) => {
+                    setCardId(v);
                     setTxId('');
                   }}
                   options={list.map((c) => ({
@@ -146,7 +146,7 @@ export function DisputeForm() {
               <Select
                 data-testid="dispute-reason"
                 value={reason}
-                onChange={(e) => setReason(e.target.value as Reason | '')}
+                onChange={(v) => setReason(v as Reason | '')}
                 options={[
                   { value: '', label: t('app.dispute.reason_choose') },
                   ...REASONS.map((r) => ({ value: r, label: t(`app.dispute.reason.${r}`) })),

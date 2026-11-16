@@ -19,7 +19,7 @@ import { formatDay, frequencyText, today } from '../lib/schedule';
 import { useAsync } from '../lib/useAsync';
 import { REGION_CONFIG } from '../region';
 import { useSession } from '../session';
-import { Amt, Load } from './common';
+import { Amt, DateInput, Load } from './common';
 
 /** A schedule's state in words, the same as the app's (G-120). */
 export function scheduleState(state: string): { status: Status; text: string } {
@@ -260,7 +260,7 @@ function NewSchedule({
           <Select
             data-testid="schedule-from"
             value={fromId}
-            onChange={(e) => setFrom(e.target.value)}
+            onChange={setFrom}
             options={accounts.map((a) => ({
               value: a.id,
               label: t('app.payments.form.account_ending', { name: a.name, last4: a.last4 ?? '' }),
@@ -274,7 +274,7 @@ function NewSchedule({
           <Select
             data-testid="schedule-recipient"
             value={recipientId}
-            onChange={(e) => setRecipient(e.target.value)}
+            onChange={setRecipient}
             options={[
               { value: '', label: t('app.schedules.form.choose_recipient') },
               ...payable.map((r) => ({ value: r.id, label: r.name })),
@@ -297,7 +297,7 @@ function NewSchedule({
           <Select
             data-testid="schedule-frequency"
             value={frequency}
-            onChange={(e) => setFrequency(e.target.value as 'DAILY' | 'WEEKLY' | 'MONTHLY')}
+            onChange={(v) => setFrequency(v as 'DAILY' | 'WEEKLY' | 'MONTHLY')}
             options={[
               { value: 'DAILY', label: t('app.schedules.form.days') },
               { value: 'WEEKLY', label: t('app.schedules.form.weeks') },
@@ -324,18 +324,13 @@ function NewSchedule({
           label={t('app.schedules.form.first_on')}
           error={start && !dateOk ? t('app.schedules.form.start_error') : undefined}
         >
-          <Input
-            data-testid="schedule-start"
-            type="date"
-            value={start}
-            onChange={(e) => setStart(e.target.value)}
-          />
+          <DateInput data-testid="schedule-start" value={start} onChange={setStart} />
         </Field>
         <Field label={t('app.schedules.form.ends')}>
           <Select
             data-testid="schedule-ends"
             value={ends}
-            onChange={(e) => setEnds(e.target.value as Ends)}
+            onChange={(v) => setEnds(v as Ends)}
             options={[
               { value: 'never', label: t('app.schedules.form.ends_never') },
               { value: 'count', label: t('app.schedules.form.ends_count') },
@@ -358,12 +353,7 @@ function NewSchedule({
             label={t('app.schedules.form.end')}
             error={end && !endOk ? t('app.schedules.form.end_error') : undefined}
           >
-            <Input
-              data-testid="schedule-end"
-              type="date"
-              value={end}
-              onChange={(e) => setEnd(e.target.value)}
-            />
+            <DateInput data-testid="schedule-end" value={end} onChange={setEnd} />
           </Field>
         )}
         <Field label={t('app.schedules.form.reference')}>

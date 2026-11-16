@@ -3,7 +3,7 @@ import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/re
 import userEvent from '@testing-library/user-event';
 import { DemoOnGemApi } from '../api/demo';
 import { stateStatus } from '../screens/common';
-import { asPhone, renderApp } from './render';
+import { asPhone, renderApp, chooseOption } from './render';
 import { BUNDLED_THEMES, SIGNED_IN_SHEETS, colorVar, contrast, css, prop, px } from './fa-review.helpers';
 
 const ongem = BUNDLED_THEMES.find((x) => x.id === 'ongem')!;
@@ -45,7 +45,7 @@ describe('founder web review 2026-11-12, P1', () => {
 
   it('FA_032 the step-up dialog names the amount and the payee it confirms', async () => {
     renderApp('/payments/new');
-    await userEvent.selectOptions(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
+    await chooseOption(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('payment-amount'), '1250');
     await userEvent.click(screen.getByTestId('payment-review-button'));
     await userEvent.click(await screen.findByTestId('payment-send'));
@@ -62,7 +62,7 @@ describe('founder web review 2026-11-12, P1', () => {
 
   it('FA_033 while the step-up dialog is open the page behind is inert and Ctrl K opens nothing', async () => {
     renderApp('/payments/new');
-    await userEvent.selectOptions(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
+    await chooseOption(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('payment-amount'), '10');
     await userEvent.click(screen.getByTestId('payment-review-button'));
     await userEvent.click(await screen.findByTestId('payment-send'));
@@ -79,7 +79,7 @@ describe('founder web review 2026-11-12, P1', () => {
     const api = new DemoOnGemApi({ stepUp: () => Promise.resolve(true) });
     renderApp('/payments/new', { api });
     expect(await screen.findByTestId('payment-from-available')).toHaveTextContent('Available: US$126,100.16');
-    await userEvent.selectOptions(screen.getByTestId('payment-recipient'), 'rcp_demo_acme');
+    await chooseOption(screen.getByTestId('payment-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('payment-amount'), '999999999');
     expect(screen.getByRole('alert')).toHaveTextContent(
       'This is more than the US$126,100.16 available in this account.',
@@ -263,7 +263,7 @@ describe('founder web review 2026-11-12, settings and lists', () => {
 
 describe('founder web review 2026-11-12, payments', () => {
   const send = async (amount: string) => {
-    await userEvent.selectOptions(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
+    await chooseOption(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('payment-amount'), amount);
     await userEvent.click(screen.getByTestId('payment-review-button'));
     await userEvent.click(await screen.findByTestId('payment-send'));
@@ -347,7 +347,7 @@ describe('founder web review 2026-11-12, payments', () => {
 
   it('FA_019 the send form has a live summary of amount, payee and account', async () => {
     renderApp('/payments/new');
-    await userEvent.selectOptions(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
+    await chooseOption(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('payment-amount'), '10');
     const summary = screen.getByTestId('payment-summary');
     expect(summary).toHaveTextContent('US$10.00');
@@ -409,7 +409,7 @@ describe('founder web review 2026-11-12, payments', () => {
     );
     const charges = await screen.findByTestId('dispute-charges');
     await userEvent.click(within(charges).getAllByRole('radio')[0]!);
-    await userEvent.selectOptions(screen.getByTestId('dispute-reason'), 'twice');
+    await chooseOption(screen.getByTestId('dispute-reason'), 'twice');
     expect(screen.getByTestId('dispute-amount')).toHaveTextContent(/^Amount disputed: US\$/);
     await userEvent.click(screen.getByTestId('dispute-send'));
     expect(await screen.findByTestId('ticket-detail')).toHaveTextContent('Dispute: card ending 5521');

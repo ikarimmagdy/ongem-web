@@ -77,36 +77,6 @@ a {
   text-align: end;
 }
 
-/* Shell */
-.og-shell {
-  display: grid;
-  grid-template-columns: calc(var(--space-3xl) * 3.75) 1fr;
-  min-height: 100vh;
-}
-.og-shell__side {
-  background: var(--color-surface-card);
-  border-inline-end: 1px solid var(--color-border-default);
-  padding: var(--space-lg) var(--space-md);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-}
-.og-shell__brand {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  /* Clear space around the wordmark: at least half its height. */
-  gap: var(--space-md);
-  padding: var(--space-xs) var(--space-md) 0;
-}
-.og-shell__product {
-  font-family: var(--font-label);
-  font-weight: var(--font-label-weight);
-  text-transform: var(--font-label-transform, none);
-  letter-spacing: var(--font-label-tracking, normal);
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
-}
 .og-logo--image {
   display: inline-flex;
   background: var(--logo-plate-bg);
@@ -171,11 +141,7 @@ a {
   background: var(--color-surface-raised);
   color: var(--color-text-link);
 }
-.og-shell__main {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
+
 .og-topbar {
   display: flex;
   align-items: center;
@@ -190,9 +156,7 @@ a {
   align-items: center;
   gap: var(--space-md);
 }
-.og-topbar__theme .og-select {
-  min-width: calc(var(--space-3xl) * 3);
-}
+
 .og-env {
   font-family: var(--font-label);
   font-weight: var(--font-label-weight);
@@ -212,37 +176,7 @@ a {
   color: var(--color-text-primary);
   border: 1px solid var(--color-status-success);
 }
-.og-user {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  font-weight: var(--font-body-strong-weight);
-}
-.og-user__text {
-  min-width: 0;
-}
-.og-user__name {
-  display: block;
-  overflow-wrap: anywhere;
-}
-.og-user__role {
-  display: block;
-  overflow-wrap: anywhere;
-  font-weight: var(--font-body-weight);
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
-}
-.og-user__avatar {
-  display: inline-grid;
-  place-items: center;
-  width: var(--space-xl);
-  height: var(--space-xl);
-  border-radius: var(--radius-pill);
-  background: var(--color-surface-tint-blue);
-  color: var(--color-brand-deep);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-money-weight);
-}
+
 .og-signin {
   min-height: 100vh;
   display: grid;
@@ -271,14 +205,6 @@ a {
   width: 100%;
   display: flex;
   justify-content: center;
-}
-.og-shell__content {
-  padding: var(--space-xl);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-  max-width: calc(var(--space-3xl) * 22);
-  width: 100%;
 }
 
 /* Page header */
@@ -540,6 +466,257 @@ a {
   min-height: calc(var(--space-3xl) * 2);
   font-family: var(--font-body);
 }
+/* OG-050: the one select (Select.tsx). The button looks like an input; the list is a raised panel from the theme. */
+.og-select {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.og-select__button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  width: 100%;
+  text-align: start;
+  cursor: pointer;
+}
+.og-select__button:disabled {
+  cursor: not-allowed;
+  color: var(--color-text-muted);
+  background: var(--color-surface-sunken);
+}
+.og-select__button[aria-expanded='true'] {
+  border-color: var(--color-border-focus);
+}
+.og-select__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.og-select__chevron,
+.og-select__check {
+  flex: none;
+  width: var(--space-md);
+  height: var(--space-md);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.og-select__chevron {
+  color: var(--color-text-secondary);
+  transition: transform 120ms ease;
+}
+.og-select__button[aria-expanded='true'] .og-select__chevron {
+  transform: rotate(180deg);
+}
+.og-select__check {
+  color: var(--color-text-link);
+}
+/* OG-050: one panel for every menu, list and calendar (selects, the profile menu, the site's header menus). */
+.og-menu,
+.og-select__list {
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--space-xs);
+  list-style: none;
+  color: var(--color-text-primary);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-raised);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+}
+.og-menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  box-sizing: border-box;
+  min-height: calc(var(--space-xl) + var(--space-xs));
+  padding: var(--space-xs) var(--space-sm);
+  font: inherit;
+  color: var(--color-text-primary);
+  text-align: start;
+  text-decoration: none;
+  background: none;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.og-menu__item:hover {
+  background: var(--color-surface-sunken);
+}
+.og-menu__item[aria-current='page'],
+.og-menu__item[aria-current='true'] {
+  background: var(--color-surface-sunken);
+  font-weight: var(--font-body-strong-weight);
+}
+.og-menu__title {
+  margin: 0;
+  padding: var(--space-sm) var(--space-sm) var(--space-xs);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-body-strong-weight);
+  color: var(--color-text-muted);
+}
+.og-select__list {
+  position: absolute;
+  inset: auto;
+  top: 100%;
+  inset-inline-start: 0;
+  z-index: 60;
+  width: 100%;
+  max-height: calc(var(--space-3xl) * 5);
+  margin-block-start: var(--space-xs);
+  overflow-y: auto;
+}
+.og-select__list:popover-open {
+  margin: 0;
+}
+.og-select__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  min-height: calc(var(--space-xl) + var(--space-xs));
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.og-select__option.is-active {
+  background: var(--color-surface-sunken);
+}
+.og-select__option[aria-selected='true'] {
+  font-weight: var(--font-body-strong-weight);
+}
+@media (pointer: coarse) {
+  .og-select__option {
+    min-height: calc(var(--space-2xl) - var(--space-xs));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .og-select__chevron {
+    transition: none;
+  }
+}
+
+/* OG-050: the one date picker (DatePicker.tsx), on the select's panel. */
+.og-date__placeholder {
+  color: var(--color-text-muted);
+}
+.og-date__panel {
+  width: auto;
+  min-width: calc(var(--space-3xl) * 4 + var(--space-lg));
+  max-height: none;
+  padding: var(--space-sm);
+}
+.og-date__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+.og-date__title {
+  margin: 0;
+  font-weight: var(--font-body-strong-weight);
+}
+.og-date__nav,
+.og-date__day {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--space-xl) + var(--space-xs));
+  height: calc(var(--space-xl) + var(--space-xs));
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.og-date__nav svg {
+  width: var(--space-md);
+  height: var(--space-md);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+[dir='rtl'] .og-date__nav svg {
+  transform: scaleX(-1);
+}
+.og-date__nav:hover,
+.og-date__day:hover {
+  background: var(--color-surface-sunken);
+}
+.og-date__grid {
+  border-collapse: collapse;
+  font-variant-numeric: var(--font-money-numeric, tabular-nums);
+}
+.og-date__grid th {
+  padding: var(--space-xs) 0;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-body-strong-weight);
+  color: var(--color-text-secondary);
+}
+.og-date__grid td {
+  padding: 1px;
+  text-align: center;
+}
+.og-date__day.is-outside {
+  color: var(--color-text-muted);
+}
+.og-date__day.is-today {
+  box-shadow: inset 0 0 0 1px var(--color-border-strong);
+}
+td[aria-selected='true'] .og-date__day {
+  color: var(--color-action-primary-text);
+  background: var(--color-action-primary-bg);
+  font-weight: var(--font-body-strong-weight);
+}
+
+.og-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+.og-modal__close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--space-xl) + var(--space-sm));
+  height: calc(var(--space-xl) + var(--space-sm));
+  margin-block-start: calc(var(--space-xs) * -1);
+  margin-inline-end: calc(var(--space-sm) * -1);
+  padding: 0;
+  color: var(--color-text-secondary);
+  background: none;
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+.og-modal__close:hover {
+  color: var(--color-text-primary);
+  background: var(--color-surface-sunken);
+}
+.og-modal__close svg {
+  width: var(--space-md);
+  height: var(--space-md);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+}
+
 input[type='color'].og-input {
   padding: var(--space-xs);
   height: calc(var(--space-xl) + var(--space-sm));
@@ -590,7 +767,7 @@ input[type='color'].og-input {
   letter-spacing: var(--font-label-tracking, normal);
   font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
-  padding-bottom: var(--space-sm);
+  padding-block: var(--space-md) var(--space-sm);
 }
 .og-table th,
 .og-table td {
@@ -623,10 +800,7 @@ input[type='color'].og-input {
 .og-table__sort-mark {
   color: var(--color-text-secondary);
 }
-.og-table .og-mono {
-  overflow-wrap: normal;
-  white-space: nowrap;
-}
+
 .og-table__empty {
   text-align: center;
   color: var(--color-text-secondary);
@@ -820,10 +994,7 @@ input[type='color'].og-input {
 .og-money--xl {
   font-size: var(--font-size-3xl);
 }
-.og-date {
-  white-space: nowrap;
-  font-variant-numeric: var(--font-money-numeric, tabular-nums);
-}
+
 .og-kv {
   margin: 0;
   display: grid;
@@ -967,21 +1138,7 @@ input[type='color'].og-input {
 .og-muted {
   color: var(--color-text-secondary);
 }
-.og-mono {
-  font-variant-numeric: var(--font-money-numeric, tabular-nums);
-  font-size: var(--font-size-xs);
-  overflow-wrap: anywhere;
-}
-.og-copy {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-  min-width: 0;
-}
-.og-copy__value {
-  font-size: var(--font-size-sm);
-}
+
 .og-list {
   list-style: none;
   margin: 0;
@@ -1008,9 +1165,7 @@ input[type='color'].og-input {
 .og-list > li > * {
   min-width: 0;
 }
-.og-kv dd .og-date {
-  white-space: normal;
-}
+
 .og-preview {
   background: var(--color-surface-canvas);
   border: 1px dashed var(--color-border-strong);
@@ -1024,35 +1179,6 @@ input[type='color'].og-input {
   display: grid;
   gap: var(--space-md);
   grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-3xl) * 3), 1fr));
-}
-
-/* Checkbox groups: a fieldset with a legend, one labelled box per line. */
-.og-fieldset {
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-md);
-  padding: var(--space-sm) var(--space-md) var(--space-md);
-  margin: 0;
-  min-width: 0;
-  display: grid;
-  gap: var(--space-xs) var(--space-md);
-  grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-3xl) * 3), 1fr));
-}
-.og-fieldset > .og-field__hint {
-  grid-column: 1 / -1;
-}
-.og-fieldset > legend {
-  font-weight: var(--font-body-strong-weight);
-  padding: 0 var(--space-xs);
-}
-.og-check {
-  display: flex;
-  gap: var(--space-sm);
-  align-items: flex-start;
-  min-width: 0;
-}
-.og-check > input {
-  margin-top: var(--space-xs);
-  accent-color: var(--color-brand-primary);
 }
 
 /* Ticket thread: replies on the card, internal notes on the pending tint with a dashed edge and an Internal label. */
@@ -1084,13 +1210,6 @@ input[type='color'].og-input {
 }
 
 @media (max-width: 900px) {
-  .og-shell {
-    grid-template-columns: 1fr;
-  }
-  .og-shell__side {
-    border-inline-end: none;
-    border-bottom: 1px solid var(--color-border-default);
-  }
   .og-nav {
     flex-direction: row;
     flex-wrap: wrap;
@@ -1098,9 +1217,7 @@ input[type='color'].og-input {
   .og-grid--2 {
     grid-template-columns: 1fr;
   }
-  .og-shell__content {
-    padding: var(--space-md);
-  }
+
   .og-topbar {
     flex-wrap: wrap;
     padding: var(--space-sm) var(--space-md);
@@ -1109,13 +1226,6 @@ input[type='color'].og-input {
     flex-wrap: wrap;
     gap: var(--space-sm);
     width: 100%;
-  }
-  .og-topbar__theme .og-select {
-    min-width: 0;
-  }
-  .og-user {
-    flex: 1 1 100%;
-    min-width: 0;
   }
 }
 

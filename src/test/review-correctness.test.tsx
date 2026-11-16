@@ -8,7 +8,7 @@ import type { AssistantDraft } from '../api/types';
 import { matches, routeFor } from '../assistant/drafts';
 import { AuthProvider, type AuthSession } from '../auth';
 import { SessionProvider, useSession } from '../session';
-import { asPhone, renderApp } from './render';
+import { asPhone, renderApp, chooseOption } from './render';
 
 const slow = <T,>(f: () => Promise<T>) => new Promise<T>((r) => setTimeout(() => r(f()), 20));
 
@@ -44,7 +44,7 @@ describe('review fixes: payments and drafts', () => {
     const create = vi.spyOn(api, 'createPayment');
     const send = vi.spyOn(api, 'sendPayment');
     renderApp('/payments/new', { api });
-    await userEvent.selectOptions(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
+    await chooseOption(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('payment-amount'), '40.00');
     await userEvent.click(screen.getByTestId('payment-review-button'));
     await userEvent.click(await screen.findByTestId('payment-send'));
@@ -60,7 +60,7 @@ describe('review fixes: payments and drafts', () => {
     answers = [true];
     create.mockClear();
     await userEvent.click(screen.getByTestId('payments-tab-send'));
-    await userEvent.selectOptions(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
+    await chooseOption(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('payment-amount'), '41.00');
     await userEvent.click(screen.getByTestId('payment-review-button'));
     const button = await screen.findByTestId('payment-send');
@@ -75,7 +75,7 @@ describe('review fixes: payments and drafts', () => {
   it('WEB-COR-02 the payments list and the cards list show the change right after it', async () => {
     const api = new DemoOnGemApi({ stepUp: () => Promise.resolve(true) });
     renderApp('/payments/new', { api });
-    await userEvent.selectOptions(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
+    await chooseOption(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('payment-amount'), '42.00');
     await userEvent.click(screen.getByTestId('payment-review-button'));
     await userEvent.click(await screen.findByTestId('payment-send'));
@@ -148,8 +148,8 @@ describe('review fixes: payments and drafts', () => {
     renderApp(`/payments/new?kind=ach&from=acc_other_company&recipient=rcp_other_company&amount=abc`, {
       api,
     });
-    expect(await screen.findByTestId('payment-recipient')).toHaveValue('');
-    expect(screen.getByTestId('payment-from')).toHaveValue('acc_demo_ops');
+    expect(await screen.findByTestId('payment-recipient')).toHaveAttribute('data-value', '');
+    expect(screen.getByTestId('payment-from')).toHaveAttribute('data-value', 'acc_demo_ops');
     expect(screen.getByTestId('payment-amount')).toHaveValue('');
     // FA-036: Review stays offered and says what is missing instead of reviewing.
     await userEvent.click(screen.getByTestId('payment-review-button'));

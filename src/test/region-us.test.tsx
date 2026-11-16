@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { DemoOnGemApi } from '../api/demo';
 import { errorText } from '../api/errors';
 import { ApiError } from '../api/errors';
@@ -8,7 +8,7 @@ import { t, tList } from '../i18n';
 import { navGroups, navLinks } from '../public/content';
 import { posts } from '../public/media/blog';
 import { IS_AE, REGION } from '../region';
-import { renderApp } from './render';
+import { optionLabels, renderApp } from './render';
 
 /** With no VITE_REGION (as the test run has), the build is the US one and its copy is as before OG-022 R18. */
 describe('US build unchanged (OG-022 R18)', () => {
@@ -63,11 +63,7 @@ describe('US build unchanged (OG-022 R18)', () => {
     );
     renderApp('/payments/new');
     const kind = await screen.findByTestId('payment-kind');
-    expect(
-      within(kind)
-        .getAllByRole('option')
-        .map((o) => o.textContent),
-    ).toEqual(['ACH to a recipient', 'Transfer between your accounts']);
+    expect(await optionLabels(kind)).toEqual(['ACH to a recipient', 'Transfer between your accounts']);
     expect(screen.getByText('Amount in US$')).toBeInTheDocument();
   });
 

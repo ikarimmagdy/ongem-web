@@ -22,6 +22,6 @@ describe('M3 flows reachable (M-3-R35)', () => {
     await userEvent.click(await screen.findByTestId('card-dispute'));
     // FA-039: the dispute form for this card, starting from its charges.
     expect(await screen.findByTestId('dispute-form')).toBeInTheDocument();
-    expect(screen.getByTestId('dispute-card')).toHaveValue('crd_demo_ops');
+    expect(screen.getByTestId('dispute-card')).toHaveAttribute('data-value', 'crd_demo_ops');
   });
 });

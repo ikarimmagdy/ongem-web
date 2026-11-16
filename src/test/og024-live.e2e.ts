@@ -80,8 +80,8 @@ test.describe('@live OG-024 accounting exports on dev', () => {
     await ev.step('request a CSV export of last month', async () => {
       await a.getByTestId('export-start').click();
       await expect(a.getByTestId('export-form')).toBeVisible();
-      await expect(a.getByTestId('export-period')).toHaveValue('month');
-      await expect(a.getByTestId('export-format')).toHaveValue('CSV');
+      await expect(a.getByTestId('export-period')).toHaveAttribute('data-value', 'month');
+      await expect(a.getByTestId('export-format')).toHaveAttribute('data-value', 'CSV');
       await ev.shot(a, 'og024-02-export-form');
       await a.getByTestId('export-confirm').click();
       await expect(a.getByTestId('export-state')).toBeVisible({ timeout: 30_000 });

@@ -67,7 +67,7 @@ function NewTicket() {
         <Field label={t('app.support.about')}>
           <Select
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={setCategory}
             options={CATEGORIES.map((c) => ({ value: c, label: human(c) }))}
           />
         </Field>

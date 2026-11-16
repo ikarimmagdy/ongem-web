@@ -5,13 +5,13 @@ import { demoMe } from '../api/demoData';
 import { ApiError, errorText } from '../api/errors';
 import { paymentStatusLine } from '../screens/Payments';
 import { formatDay, frequencyText, nthRun } from '../lib/schedule';
-import { renderApp } from './render';
+import { chooseDate, chooseOption, optionLabels, renderApp } from './render';
 
 describe('payments (OG-030 R4)', () => {
   it('ach_review_send_with_step_up_AC_R4_1', async () => {
     renderApp('/payments');
     await userEvent.click(await screen.findByTestId('payments-tab-send'));
-    await userEvent.selectOptions(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
+    await chooseOption(await screen.findByTestId('payment-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('payment-amount'), '1,250.00');
     await userEvent.click(screen.getByTestId('payment-review-button'));
     expect(await screen.findByTestId('payment-review')).toHaveTextContent('US$1,250.00');
@@ -83,8 +83,8 @@ describe('payments to a new recipient (live check 2026-11-02)', () => {
     const pending = (await api.recipients()).find((r) => r.screening === 'PENDING')!;
     renderApp('/payments/new', { api });
     const select = await screen.findByTestId('payment-recipient');
-    expect(within(select).queryByText('Blocked Payee')).toBeNull();
-    await userEvent.selectOptions(select, pending.id);
+    expect((await optionLabels(select)).join()).not.toContain('Blocked Payee');
+    await chooseOption(select, pending.id);
     expect(screen.getByText('Checked by the bank with the first payment.')).toBeInTheDocument();
     await userEvent.type(screen.getByTestId('payment-amount'), '25.00');
     await userEvent.click(screen.getByTestId('payment-review-button'));
@@ -222,12 +222,10 @@ describe('scheduled payments (G-120)', () => {
     const api = new DemoOnGemApi();
     renderApp('/payments', { api });
     await userEvent.click(await screen.findByTestId('payments-tab-scheduled'));
-    await userEvent.selectOptions(await screen.findByTestId('schedule-recipient'), 'rcp_demo_acme');
+    await chooseOption(await screen.findByTestId('schedule-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('schedule-amount'), '2,000.00');
-    const start = screen.getByTestId('schedule-start');
-    await userEvent.clear(start);
-    await userEvent.type(start, '2026-12-01');
-    await userEvent.selectOptions(screen.getByTestId('schedule-ends'), 'count');
+    await chooseDate(screen.getByTestId('schedule-start'), '2026-12-01');
+    await chooseOption(screen.getByTestId('schedule-ends'), 'count');
     await userEvent.clear(screen.getByTestId('schedule-count'));
     await userEvent.type(screen.getByTestId('schedule-count'), '3');
     expect(screen.getByTestId('schedule-summary')).toHaveTextContent(

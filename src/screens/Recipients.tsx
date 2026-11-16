@@ -142,7 +142,7 @@ export function AddRecipient({
           <Field label={t('app.recipients.account_type_label')}>
             <Select
               value={type}
-              onChange={(e) => setType(e.target.value)}
+              onChange={setType}
               options={[
                 { value: 'CHECKING', label: t('app.recipients.checking') },
                 { value: 'SAVINGS', label: t('app.recipients.savings') },

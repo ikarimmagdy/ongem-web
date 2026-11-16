@@ -1,7 +1,7 @@
-import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { InviteScreen } from './screens/Invite';
-import { Button, Logo, Notice, Skeleton } from './design-system';
+import { Button, Logo, Notice, Skeleton, useDismiss } from './design-system';
 import { useAsync } from './lib/useAsync';
 import { ApiError, errorText } from './api/errors';
 import { Permission } from './api/client';
@@ -60,21 +60,11 @@ function UserMenu({
 }) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
   const { pathname } = useLocation();
   useEffect(() => setOpen(false), [pathname]);
-  useEffect(() => {
-    if (!open) return;
-    const close = (e: MouseEvent | KeyboardEvent) => {
-      if (e instanceof KeyboardEvent ? e.key === 'Escape' : !root.current?.contains(e.target as Node))
-        setOpen(false);
-    };
-    document.addEventListener('mousedown', close);
-    document.addEventListener('keydown', close);
-    return () => {
-      document.removeEventListener('mousedown', close);
-      document.removeEventListener('keydown', close);
-    };
-  }, [open]);
+  const close = useCallback(() => setOpen(false), []);
+  useDismiss(open, close, root, toggle);
   const initials = name
     .split(/\s+/)
     .filter(Boolean)
@@ -84,6 +74,7 @@ function UserMenu({
   return (
     <div className="fw-profile fw-user" ref={root}>
       <button
+        ref={toggle}
         type="button"
         className="fw-user__toggle"
         data-testid="profile-menu"
@@ -102,11 +93,11 @@ function UserMenu({
         </span>
       </button>
       {open && (
-        <div className="fw-profile__menu" id="profile-menu-list" data-testid="profile-menu-list">
-          <NavLink to="/settings" className="fw-profile__item" data-testid="profile-settings">
+        <div className="fw-profile__menu og-menu" id="profile-menu-list" data-testid="profile-menu-list">
+          <NavLink to="/settings" className="og-menu__item" data-testid="profile-settings">
             {t('app.nav.settings')}
           </NavLink>
-          <button type="button" className="fw-profile__item" onClick={onLeave}>
+          <button type="button" className="og-menu__item" onClick={onLeave}>
             {t('app.common.sign_out')}
           </button>
         </div>

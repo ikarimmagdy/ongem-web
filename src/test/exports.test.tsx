@@ -4,7 +4,7 @@ import { DemoOnGemApi } from '../api/demo';
 import { demoMe } from '../api/demoData';
 import { getLocale, setLocale } from '../i18n';
 import { exportTiming, lastFullMonth, periodValid } from '../screens/ExportActivity';
-import { renderApp } from './render';
+import { chooseDate, chooseOption, renderApp } from './render';
 
 const account = '/accounts/acc_demo_ops';
 
@@ -23,7 +23,7 @@ describe('accounting exports (OG-024 R16)', () => {
     const card = await screen.findByTestId('export-activity');
     await userEvent.click(within(card).getByTestId('export-start'));
     const period = within(card).getByTestId('export-period');
-    expect(period).toHaveDisplayValue(`Last full month (${lastFullMonth()})`);
+    expect(period).toHaveTextContent(`Last full month (${lastFullMonth()})`);
     await userEvent.click(within(card).getByTestId('export-confirm'));
     expect(await within(card).findByText('Preparing your file')).toBeInTheDocument();
     expect(within(card).getByTestId('export-state')).toHaveAttribute('aria-live', 'polite');
@@ -66,13 +66,9 @@ describe('accounting exports (OG-024 R16)', () => {
     renderApp(account, { api });
     const card = await screen.findByTestId('export-activity');
     await userEvent.click(within(card).getByTestId('export-start'));
-    await userEvent.selectOptions(within(card).getByTestId('export-period'), 'range');
-    const from = within(card).getByTestId('export-from');
-    await userEvent.clear(from);
-    await userEvent.type(from, '2026-10-20');
-    const to = within(card).getByTestId('export-to');
-    await userEvent.clear(to);
-    await userEvent.type(to, '2026-10-01');
+    await chooseOption(within(card).getByTestId('export-period'), 'range');
+    await chooseDate(within(card).getByTestId('export-from'), '2026-10-20');
+    await chooseDate(within(card).getByTestId('export-to'), '2026-10-01');
     await userEvent.click(within(card).getByTestId('export-confirm'));
     expect(
       await within(card).findByText(/Choose an end date that is not before the start date/),
@@ -91,7 +87,7 @@ describe('accounting exports (OG-024 R16)', () => {
     const card = await screen.findByTestId('export-activity');
     expect(within(card).getByText('ملف بالحركات المرحّلة في هذا الحساب لمحاسبك.')).toBeInTheDocument();
     await userEvent.click(within(card).getByTestId('export-start'));
-    expect(within(card).getByTestId('export-period')).toHaveDisplayValue(`آخر شهر كامل (${lastFullMonth()})`);
+    expect(within(card).getByTestId('export-period')).toHaveTextContent(`آخر شهر كامل (${lastFullMonth()})`);
     await userEvent.click(within(card).getByTestId('export-confirm'));
     await within(card).findByTestId('export-run-done');
     expect(within(card).getByText('ملفك جاهز')).toBeInTheDocument();

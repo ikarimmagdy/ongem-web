@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { DemoOnGemApi } from '../api/demo';
 import { demoApplication } from '../api/demoData';
 import { captureStatus, safeCaptureUrl } from '../screens/Onboarding';
-import { renderApp } from './render';
+import { renderApp, chooseOption } from './render';
 
 describe('onboarding (OG-030 R6)', () => {
   it('steps_to_submitted_AC_R6_1', async () => {
@@ -37,7 +37,7 @@ describe('ID document capture (G-111)', () => {
       return { ...(await start(...args)), captureUrl: 'https://capture.bank.example/s/abc' };
     };
     renderApp('/onboarding', { api });
-    await userEvent.selectOptions(await screen.findByTestId('id-capture-document'), 'PASSPORT');
+    await chooseOption(await screen.findByTestId('id-capture-document'), 'PASSPORT');
     await userEvent.click(screen.getByTestId('id-capture-browser'));
     const link = await screen.findByTestId('id-capture-open');
     expect(link).toHaveAttribute('href', 'https://capture.bank.example/s/abc');

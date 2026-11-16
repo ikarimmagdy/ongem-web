@@ -56,8 +56,8 @@ function OwnerId({ app, ownerId, onDone }: { app: Application; ownerId: string; 
           <Select
             data-testid={`owner-id-type-${ownerId}`}
             value={idType}
-            onChange={(e) => {
-              setIdType(e.target.value);
+            onChange={(v) => {
+              setIdType(v);
               setNumber('');
             }}
             options={types.map((x) => ({ value: x.idType, label: x.label }))}
@@ -310,7 +310,7 @@ function IdCaptureCard({ app }: { app: Application }) {
               data-testid="id-capture-document"
               value={document}
               options={DOCUMENTS.map((d) => ({ value: d.value, label: t(d.key) }))}
-              onChange={(e) => setDocument(e.target.value as IdDocument)}
+              onChange={(v) => setDocument(v as IdDocument)}
             />
           </Field>
           <Button data-testid="id-capture-browser" disabled={busy} onClick={() => void start(false)}>

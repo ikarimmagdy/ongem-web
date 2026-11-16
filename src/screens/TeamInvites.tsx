@@ -91,7 +91,7 @@ export function TeamInvites() {
           <Select
             data-testid="invite-role"
             value={pickedRole}
-            onChange={(e) => setInviteRole(e.target.value)}
+            onChange={setInviteRole}
             options={roles.map((r) => ({ value: r, label: human(r) }))}
           />
         </Field>

@@ -9,11 +9,13 @@ export interface ModalProps {
   footer?: ReactNode;
   /** The title names the dialog for screen readers only (a search box that speaks for itself, FA-027). */
   hideTitle?: boolean;
+  /** OG-050: a close button in the dialog's corner, named by this label; for dialogs with no footer action. */
+  closeLabel?: string;
 }
 
 const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'; // content-check: ignore (CSS selector)
 
-export function Modal({ open, title, onClose, children, footer, hideTitle = false }: ModalProps) {
+export function Modal({ open, title, onClose, children, footer, hideTitle = false, closeLabel }: ModalProps) {
   const titleId = useId();
   const ref = useRef<HTMLDivElement>(null);
   const backdrop = useRef<HTMLDivElement>(null);
@@ -80,9 +82,18 @@ export function Modal({ open, title, onClose, children, footer, hideTitle = fals
         aria-labelledby={titleId}
         tabIndex={-1}
       >
-        <h2 id={titleId} className={hideTitle ? 'og-visually-hidden' : 'og-modal__title'}>
-          {title}
-        </h2>
+        <div className={closeLabel ? 'og-modal__head' : undefined}>
+          <h2 id={titleId} className={hideTitle ? 'og-visually-hidden' : 'og-modal__title'}>
+            {title}
+          </h2>
+          {closeLabel && (
+            <button type="button" className="og-modal__close" aria-label={closeLabel} onClick={onClose}>
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path d="M4 4l8 8M12 4l-8 8" />
+              </svg>
+            </button>
+          )}
+        </div>
         <div className="og-modal__body">{children}</div>
         {footer && <div className="og-modal__footer">{footer}</div>}
       </div>

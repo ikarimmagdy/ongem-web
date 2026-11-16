@@ -84,7 +84,12 @@ export function CompanySwitcher({
         <span aria-hidden="true" className="fw-switcher__chevron" />
       </button>
       {partialNote}
-      <Modal open={open} title={t('app.shell.switch_company')} onClose={() => setOpen(false)}>
+      <Modal
+        open={open}
+        title={t('app.shell.switch_company')}
+        onClose={() => setOpen(false)}
+        closeLabel={t('app.common.close')}
+      >
         {partialNote}
         <ul className="fw-list" data-testid="company-options">
           {companies.map((m) => {

@@ -4,7 +4,7 @@ import { invitableRoles } from '../api/client';
 import { DemoOnGemApi } from '../api/demo';
 import { demoMe } from '../api/demoData';
 import { ApiError, errorText } from '../api/errors';
-import { renderApp } from './render';
+import { chooseOption, optionLabels, renderApp } from './render';
 
 const asRole = (role: string) =>
   new DemoOnGemApi({ me: { ...demoMe, memberships: demoMe.memberships.map((m) => ({ ...m, role })) } });
@@ -16,7 +16,7 @@ describe('team invitations (OG-023 R6, client)', () => {
     expect(await screen.findByTestId('settings-team')).toBeInTheDocument();
     expect(await screen.findByText('No invitations yet.')).toBeInTheDocument();
     await userEvent.type(screen.getByTestId('invite-email'), 'sam@example.com');
-    await userEvent.selectOptions(screen.getByTestId('invite-role'), 'VIEWER');
+    await chooseOption(screen.getByTestId('invite-role'), 'VIEWER');
     await userEvent.click(screen.getByTestId('invite-send'));
     const sent = await screen.findByTestId('invite-sent');
     expect(sent).toHaveTextContent('Invitation sent to sam@example.com.');
@@ -35,7 +35,7 @@ describe('team invitations (OG-023 R6, client)', () => {
     expect(invitableRoles('OWNER')).toEqual(['OWNER', 'ADMIN', 'APPROVER', 'MEMBER', 'VIEWER']);
     renderApp('/team', { api: asRole('ADMIN') });
     const role = await screen.findByTestId('invite-role');
-    expect(within(role).queryByRole('option', { name: 'Owner' })).not.toBeInTheDocument();
+    expect(await optionLabels(role)).not.toContain('Owner');
   });
 
   it('a second invite for the same email is invite_exists AC-R6.3', async () => {

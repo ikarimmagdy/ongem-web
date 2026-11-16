@@ -6,7 +6,7 @@ import { LiveOnGemApi } from '../api/live';
 import { MemoryDeviceKeys } from '../api/device';
 import type { Me } from '../api/types';
 import { ApiError, errorText } from '../api/errors';
-import { renderApp } from './render';
+import { chooseOption, optionLabels, renderApp } from './render';
 
 const twoCompanies: Me = {
   ...demoMe,
@@ -279,15 +279,10 @@ describe('transfer between my companies (OG-023 R11, client)', () => {
     };
     renderApp('/payments/new', { api });
     const kind = await screen.findByTestId('payment-kind');
-    await waitFor(() =>
-      expect(within(kind).getByRole('option', { name: 'Between my companies' })).toBeInTheDocument(),
-    );
-    await userEvent.selectOptions(kind, 'company');
+    await waitFor(async () => expect(await optionLabels(kind)).toContain('Between my companies'));
+    await chooseOption(kind, 'company');
     const to = await screen.findByTestId('payment-to-company-account');
-    const option = within(to)
-      .getAllByRole('option')
-      .find((o) => o.textContent?.startsWith('Gulf Trading FZE, '))!;
-    await userEvent.selectOptions(to, option);
+    await chooseOption(to, /^Gulf Trading FZE, /);
     await userEvent.type(screen.getByTestId('payment-amount'), '25');
     await userEvent.click(screen.getByTestId('payment-review-button'));
     expect(await screen.findByTestId('payment-review')).toHaveTextContent('Gulf Trading FZE');

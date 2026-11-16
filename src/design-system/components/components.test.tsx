@@ -1,12 +1,9 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
-import { MemoryRouter } from 'react-router-dom';
 import {
-  AppShell,
   Button,
   CategoryIcon,
-  DateText,
   EmptyState,
   Field,
   Input,
@@ -14,12 +11,10 @@ import {
   Modal,
   Money,
   PageHeader,
-  Select,
   Skeleton,
   StatusChip,
   Table,
   Tabs,
-  ThemeProvider,
   ToastProvider,
   useToast,
 } from '../index';
@@ -44,15 +39,9 @@ describe('components', () => {
     expect(screen.getByText('Pending approval')).toHaveAttribute('data-status', 'pending');
   });
 
-  it('formats money and dates in house style', () => {
-    render(
-      <>
-        <Money value={{ amount: '1250.00', currency: 'USD' }} />
-        <DateText value="2026-10-20T14:42:00Z" time />
-      </>,
-    );
+  it('formats money in house style', () => {
+    render(<Money value={{ amount: '1250.00', currency: 'USD' }} />);
     expect(screen.getByText('US$1,250.00')).toHaveClass('og-money');
-    expect(screen.getByText('20 Oct 2026 10:42 ET')).toHaveAttribute('dateTime', '2026-10-20T14:42:00Z');
   });
 
   it('table sorts by column and shows the empty state', async () => {
@@ -100,19 +89,6 @@ describe('components', () => {
     const input = screen.getByLabelText('Reason');
     expect(input).toHaveAttribute('aria-invalid', 'true');
     expect(input.getAttribute('aria-describedby')).toMatch(/hint.*err/);
-  });
-
-  it('select renders its options', () => {
-    render(
-      <Select
-        aria-label="Mode"
-        options={[
-          { value: 'mock', label: 'Mock' },
-          { value: 'live', label: 'Live' },
-        ]}
-      />,
-    );
-    expect(screen.getAllByRole('option')).toHaveLength(2);
   });
 
   it('tabs switch with arrow keys', async () => {
@@ -192,22 +168,5 @@ describe('components', () => {
     expect(screen.getByText('gz_77810')).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 1, name: 'Workflows' })).toBeInTheDocument();
     expect(screen.getByRole('img', { name: 'Banking' })).toHaveClass('og-cat--banking');
-  });
-
-  it('app shell shows the logo from the theme, the environment badge and switches theme', async () => {
-    render(
-      <ThemeProvider>
-        <MemoryRouter>
-          <AppShell nav={[{ to: '/', label: 'Overview' }]} environment={{ label: 'Mock data', tone: 'mock' }}>
-            <p>content</p>
-          </AppShell>
-        </MemoryRouter>
-      </ThemeProvider>,
-    );
-    expect(screen.getByRole('img', { name: 'OnGem' })).toBeInTheDocument();
-    expect(screen.getByTestId('env-badge')).toHaveTextContent('Mock data');
-    await userEvent.selectOptions(screen.getByLabelText('Theme'), 'demo-harbor');
-    expect(screen.getByText('Harbor', { selector: '.og-logo--text' })).toBeInTheDocument();
-    expect(document.documentElement.style.getPropertyValue('--color-brand-primary')).toBe('#0F766E');
   });
 });

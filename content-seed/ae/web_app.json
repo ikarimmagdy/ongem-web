@@ -2,6 +2,42 @@
   "channel": "web_app",
   "entries": [
     {
+      "key": "app.common.close",
+      "format": "text",
+      "description": "Close button of a dialog",
+      "placeholders": [],
+      "meta": {},
+      "en": "Close",
+      "ar": "إغلاق"
+    },
+    {
+      "key": "app.common.date.choose",
+      "format": "text",
+      "description": "Date field before a day is chosen",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a date",
+      "ar": "اختر تاريخًا"
+    },
+    {
+      "key": "app.common.date.next_month",
+      "format": "text",
+      "description": "Calendar button: show the month after",
+      "placeholders": [],
+      "meta": {},
+      "en": "Next month",
+      "ar": "الشهر التالي"
+    },
+    {
+      "key": "app.common.date.previous_month",
+      "format": "text",
+      "description": "Calendar button: show the month before",
+      "placeholders": [],
+      "meta": {},
+      "en": "Previous month",
+      "ar": "الشهر السابق"
+    },
+    {
       "key": "app.accounts.available",
       "format": "text",
       "description": "Label: available balance",

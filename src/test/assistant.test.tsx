@@ -37,7 +37,7 @@ describe('assistant widget on the web (OG-031 R4)', () => {
     expect(api.calls).not.toContain('createPayment');
     await userEvent.click(within(turn).getByTestId('assistant-review'));
     expect(await screen.findByTestId('payment-amount')).toHaveValue('25.00');
-    expect(screen.getByTestId('payment-recipient')).toHaveValue('rcp_demo_acme');
+    expect(screen.getByTestId('payment-recipient')).toHaveAttribute('data-value', 'rcp_demo_acme');
     await userEvent.click(screen.getByTestId('payment-review-button'));
     await userEvent.click(await screen.findByTestId('payment-send'));
     await screen.findByTestId('payment-detail');

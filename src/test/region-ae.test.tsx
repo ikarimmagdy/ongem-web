@@ -1,4 +1,4 @@
-import { screen, waitFor, within } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DemoOnGemApi } from '../api/demo';
 import { DemoAssistant } from '../assistant/demoAssistant';
@@ -7,7 +7,7 @@ import { formatDate, formatMinor } from '../lib/format';
 import { t, tList } from '../i18n';
 import { posts } from '../public/media/blog';
 import { IS_AE, REGION } from '../region';
-import { renderApp } from './render';
+import { chooseOption, optionLabels, renderApp } from './render';
 
 // The AE build (VITE_REGION=AE) for this file only; the region is read when region.ts loads, so it is set before imports.
 vi.hoisted(() => {
@@ -111,16 +111,14 @@ describe('AE build shows UAE content only (OG-022 R18)', () => {
   it('payments_offer_aani_and_uaefts_in_aed_AC_R18_1', async () => {
     renderApp('/payments/new');
     const kind = await screen.findByTestId('payment-kind');
-    const options = within(kind)
-      .getAllByRole('option')
-      .map((o) => o.textContent);
+    const options = await optionLabels(kind);
     expect(options).toEqual([
       'Aani to a recipient, instant',
       'UAEFTS to a recipient',
       'Transfer between your accounts',
     ]);
     expect(screen.getByText('Amount in AED')).toBeInTheDocument();
-    await userEvent.selectOptions(screen.getByTestId('payment-recipient'), 'rcp_demo_acme');
+    await chooseOption(screen.getByTestId('payment-recipient'), 'rcp_demo_acme');
     await userEvent.type(screen.getByTestId('payment-amount'), '1250');
     await userEvent.click(screen.getByTestId('payment-review-button'));
     const review = screen.getByTestId('payment-review');
@@ -134,11 +132,7 @@ describe('AE build shows UAE content only (OG-022 R18)', () => {
     await screen.findByTestId('shell');
     await settled();
     const type = screen.getByTestId('owner-id-type-own_demo_dana');
-    expect(
-      within(type)
-        .getAllByRole('option')
-        .map((o) => o.textContent),
-    ).toEqual(['Emirates ID number', 'Passport number']);
+    expect(await optionLabels(type)).toEqual(['Emirates ID number', 'Passport number']);
   });
 
   it('recipients_are_added_by_uae_iban_AC_R18_1', async () => {

@@ -14,7 +14,7 @@ import {
 import { formatMinor, minorToDecimal } from '../lib/format';
 import { EventQueue, RRWEB_OPTIONS } from '../recording/Recorder';
 import { maskHref } from '../recording/mask';
-import { asPhone, renderApp } from './render';
+import { asPhone, renderApp, chooseOption } from './render';
 
 /** Every string value in the recorded events, so ids and timestamps cannot match a secret by accident. */
 function strings(value: unknown, out: string[] = []): string[] {
@@ -94,7 +94,7 @@ describe('recording masks every sensitive screen (OG-031 R6)', () => {
       })),
       ...(await recordWhile('/payments/new', async () => {
         await screen.findByTestId('payment-form');
-        await userEvent.selectOptions(screen.getByTestId('payment-recipient'), 'rcp_demo_acme');
+        await chooseOption(screen.getByTestId('payment-recipient'), 'rcp_demo_acme');
         await userEvent.type(screen.getByTestId('payment-amount'), TYPED.amount);
         await userEvent.click(screen.getByTestId('payment-review-button'));
         await screen.findByTestId('payment-review');

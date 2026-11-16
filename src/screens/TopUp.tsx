@@ -117,7 +117,7 @@ function LinkAccount({ accounts, onLinked }: { accounts: Account[]; onLinked(): 
           <Select
             data-testid="funding-link-account"
             value={to}
-            onChange={(e) => setAccountId(e.target.value)}
+            onChange={setAccountId}
             options={accounts.map(accountOption)}
           />
         </Field>
@@ -166,7 +166,7 @@ function LinkAccount({ accounts, onLinked }: { accounts: Account[]; onLinked(): 
               <Select
                 data-testid="funding-link-type"
                 value={type}
-                onChange={(e) => setType(e.target.value as 'CHECKING' | 'SAVINGS')}
+                onChange={(v) => setType(v as 'CHECKING' | 'SAVINGS')}
                 options={[
                   { value: 'CHECKING', label: t('app.topup.link.checking') },
                   { value: 'SAVINGS', label: t('app.topup.link.savings') },
@@ -288,7 +288,7 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
           <Select
             data-testid="topup-from"
             value={fromId}
-            onChange={(e) => setSource(e.target.value)}
+            onChange={setSource}
             options={verified.map((f) => ({
               value: f.id,
               label: t('app.topup.account_ending', { name: fundingName(f), last4: f.last4 ?? '' }),
@@ -299,7 +299,7 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
           <Select
             data-testid="topup-to"
             value={toId}
-            onChange={(e) => setTo(e.target.value)}
+            onChange={setTo}
             options={accounts.map(accountOption)}
           />
         </Field>

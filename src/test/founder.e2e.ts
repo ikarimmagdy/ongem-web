@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { choose } from './select.e2e-helpers';
 
 /** OG-030 journeys in demo mode at desktop 1440x900 and mobile 390x844 (projects in playwright.config.ts). */
 async function demo(page: Page) {
@@ -82,7 +83,7 @@ test('journeys_desktop_and_mobile_AC_R1_2', async ({ page }, info) => {
 
   await nav(page, 'payments');
   await page.getByTestId('payments-tab-send').click();
-  await page.getByTestId('payment-recipient').selectOption('rcp_demo_acme');
+  await choose(page.getByTestId('payment-recipient'), 'rcp_demo_acme');
   await page.getByTestId('payment-amount').fill('250.00');
   await page.getByTestId('payment-review-button').click();
   await page.getByTestId('payment-send').click();
@@ -113,7 +114,7 @@ test('storage_holds_no_secrets_AC_R10_2', async ({ page }) => {
   await page.getByTestId('account-acc_demo_ops').click();
   await nav(page, 'payments');
   await page.getByTestId('payments-tab-send').click();
-  await page.getByTestId('payment-recipient').selectOption('rcp_demo_acme');
+  await choose(page.getByTestId('payment-recipient'), 'rcp_demo_acme');
   await page.getByTestId('payment-amount').fill('99.00');
   await page.getByTestId('payment-review-button').click();
   await page.getByTestId('payment-send').click();

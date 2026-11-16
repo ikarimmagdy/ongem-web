@@ -84,8 +84,13 @@ const type = (loc, text) => loc.pressSequentially(text, { delay: 55 });
 
 /** Picks [preferred] when the list has it, else its first real choice, so new sample data does not stop a recording. */
 async function choose(select, preferred) {
-  const values = await select.locator('option').evaluateAll((os) => os.map((o) => o.value).filter(Boolean));
-  await select.selectOption(values.includes(preferred) ? preferred : values[0]);
+  await select.click();
+  const list = select.page().locator(`[id="${await select.getAttribute('aria-controls')}"]`);
+  const values = await list
+    .locator('[role="option"]')
+    .evaluateAll((os) => os.map((o) => o.dataset.value).filter(Boolean));
+  const value = values.includes(preferred) ? preferred : values[0];
+  await list.locator(`[role="option"][data-value="${value}"]`).click();
 }
 
 /** Payments, then one of the page header actions: Send or Add money (FA-023). */
@@ -422,7 +427,7 @@ const VIDEOS = [
         async (p) => {
           await p.locator('[data-testid^="dispute-charge-"]').first().check();
           await p.waitForTimeout(500);
-          await p.getByTestId('dispute-reason').selectOption('not_mine');
+          await choose(p.getByTestId('dispute-reason'), 'not_mine');
           await type(p.getByTestId('dispute-details'), 'I did not make this purchase.');
         },
       ],

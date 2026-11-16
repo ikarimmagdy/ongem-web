@@ -3,6 +3,7 @@ import { createHash, createHmac } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, rmdirSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { expect, test, type Locator, type Page } from '@playwright/test';
+import { choose } from './select.e2e-helpers';
 
 /**
  * The live founder journey against dev (api-dev.ongem.com on the Synctera sandbox) as a real Clerk test founder of the
@@ -544,11 +545,11 @@ test.describe('live founder journey on dev', () => {
     await step('ACH payment with step-up', async () => {
       await nav(page, 'payments');
       await page.getByTestId('new-payment').click();
-      await page.getByTestId('payment-kind').selectOption('ach');
+      await choose(page.getByTestId('payment-kind'), 'ach');
       const option = page.getByTestId('payment-recipient').locator(`option[value="${recipientId}"]`);
       if (!(await option.count()))
         throw new Blocked(`recipient ${recipientId} is not offered in the payment form`);
-      await page.getByTestId('payment-recipient').selectOption(recipientId);
+      await choose(page.getByTestId('payment-recipient'), recipientId);
       await page.getByTestId('payment-amount').fill('25.00');
       await page.getByTestId('payment-reference').fill('Live e2e');
       await page.getByTestId('payment-review-button').click();

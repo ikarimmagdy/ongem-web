@@ -82,6 +82,7 @@ export function StatementModal({ statement, onClose }: { statement: Statement | 
       open={Boolean(statement)}
       title={t('app.accounts.statement_period', { period: formatPeriod(statement?.period ?? '') })}
       onClose={onClose}
+      closeLabel={t('app.common.close')}
     >
       {statement && (
         <div data-testid="statement-view">

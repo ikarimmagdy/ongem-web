@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react';
 import { errorText } from '../api/errors';
 import type { Amount } from '../api/types';
-import { Button, Notice, Skeleton, type Status } from '../design-system';
+import { Button, DatePicker, Notice, Skeleton, type DatePickerProps, type Status } from '../design-system';
 import { formatMinor } from '../lib/format';
-import { has, t } from '../i18n';
-import { REGION_CONFIG } from '../region';
+import { dateLocale, has, t } from '../i18n';
+import { IS_AE, REGION_CONFIG } from '../region';
+import { formatDay, today } from '../lib/schedule';
 import type { AsyncState } from '../lib/useAsync';
 
 /** Loading, error and success states for one read (every screen has them, the console's rule). */
@@ -124,5 +125,25 @@ export function FilterChips({
         </button>
       ))}
     </div>
+  );
+}
+
+/** OG-050: a calendar day field (YYYY-MM-DD) on the design-system date picker, in the app's words and date style. */
+export function DateInput(
+  props: Omit<DatePickerProps, 'format' | 'labels' | 'locale' | 'weekStart' | 'today'>,
+) {
+  return (
+    <DatePicker
+      {...props}
+      format={formatDay}
+      labels={{
+        choose: t('app.common.date.choose'),
+        previousMonth: t('app.common.date.previous_month'),
+        nextMonth: t('app.common.date.next_month'),
+      }}
+      locale={dateLocale()}
+      weekStart={IS_AE ? 1 : 0}
+      today={today()}
+    />
   );
 }

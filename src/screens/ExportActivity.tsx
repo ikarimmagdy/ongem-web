@@ -2,11 +2,11 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Permission } from '../api/client';
 import { ApiError, errorText } from '../api/errors';
 import type { ExportRun } from '../api/types';
-import { Button, Card, Field, Input, Notice, Select, StatusChip } from '../design-system';
+import { Button, Card, Field, Notice, Select, StatusChip } from '../design-system';
 import { t } from '../i18n';
 import { formatBankDate, formatDate } from '../lib/format';
 import { useSession } from '../session';
-import { stateStatus } from './common';
+import { DateInput, stateStatus } from './common';
 
 /** How often a run being prepared is read again; tests shorten it. */
 export const exportTiming = { pollMs: 2000 };
@@ -198,7 +198,7 @@ export function ExportActivity({ accountId, picker }: { accountId: string; picke
               <Select
                 data-testid="export-period"
                 value={mode}
-                onChange={(e) => setMode(e.target.value as 'month' | 'range')}
+                onChange={(v) => setMode(v as 'month' | 'range')}
                 options={[
                   { value: 'month', label: t('app.exports.period_last_month', { month }) },
                   { value: 'range', label: t('app.exports.period_custom') },
@@ -211,20 +211,10 @@ export function ExportActivity({ accountId, picker }: { accountId: string; picke
                   label={t('app.exports.from')}
                   error={dateError ? t('app.exports.error.period_invalid') : undefined}
                 >
-                  <Input
-                    type="date"
-                    data-testid="export-from"
-                    value={from}
-                    onChange={(e) => setFrom(e.target.value)}
-                  />
+                  <DateInput data-testid="export-from" value={from} onChange={setFrom} />
                 </Field>
                 <Field label={t('app.exports.to')}>
-                  <Input
-                    type="date"
-                    data-testid="export-to"
-                    value={to}
-                    onChange={(e) => setTo(e.target.value)}
-                  />
+                  <DateInput data-testid="export-to" value={to} onChange={setTo} />
                 </Field>
               </>
             )}
@@ -235,7 +225,7 @@ export function ExportActivity({ accountId, picker }: { accountId: string; picke
               <Select
                 data-testid="export-format"
                 value={format}
-                onChange={(e) => setFormat(e.target.value)}
+                onChange={setFormat}
                 options={[{ value: 'CSV', label: t('app.exports.format_csv') }]}
               />
             </Field>

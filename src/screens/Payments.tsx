@@ -654,7 +654,7 @@ export function NewPayment() {
             <Select
               data-testid="payment-kind"
               value={kind}
-              onChange={(e) => setKind(e.target.value)}
+              onChange={setKind}
               options={[
                 ...rails.map((r) => ({ value: railValue(r), label: r.option })),
                 { value: 'internal', label: t('app.payments.form.internal') },
@@ -674,7 +674,7 @@ export function NewPayment() {
                 <Select
                   data-testid="payment-to-company-account"
                   value={companyToId}
-                  onChange={(e) => setToCompanyAccount(e.target.value)}
+                  onChange={setToCompanyAccount}
                   options={[
                     { value: '', label: t('app.payments.form.choose_account') },
                     ...destinations.map((d) => ({ value: d.account.id, label: destinationLabel(d) })),
@@ -687,7 +687,7 @@ export function NewPayment() {
               <Select
                 data-testid="payment-to-account"
                 value={toId}
-                onChange={(e) => setToAccount(e.target.value)}
+                onChange={setToAccount}
                 options={[
                   { value: '', label: t('app.payments.form.choose_account') },
                   ...accs.filter((a) => a.id !== fromId).map((a) => ({ value: a.id, label: a.name })),
@@ -708,7 +708,7 @@ export function NewPayment() {
               <Select
                 data-testid="payment-recipient"
                 value={recipientId}
-                onChange={(e) => setRecipient(e.target.value)}
+                onChange={setRecipient}
                 options={[
                   { value: '', label: t('app.payments.form.choose_recipient') },
                   ...payable.map((r) => ({ value: r.id, label: r.name })),
@@ -730,7 +730,7 @@ export function NewPayment() {
               data-testid="payment-from"
               data-mask=""
               value={fromId}
-              onChange={(e) => setFrom(e.target.value)}
+              onChange={setFrom}
               options={accs.map((a) => ({
                 value: a.id,
                 label: t('app.payments.form.account_ending', { name: a.name, last4: a.last4 ?? '' }),
