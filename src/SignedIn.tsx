@@ -152,8 +152,16 @@ function Crumbs({ pathname }: { pathname: string }) {
   );
 }
 
-/** Screens that end in a form's primary action: no floating button over them on a phone (FA-016). */
-const FORM_ROUTES = [/^\/payments\/(new|top-up|schedules)/, /^\/support\/new/, /^\/onboarding/];
+/**
+ * Screens that end in a form's primary action, or (OG-050) in a payment's or a card's own actions such as Approve,
+ * Decline or Freeze card: no floating button over them on a phone (FA-016).
+ */
+const FORM_ROUTES = [
+  /^\/payments\/(?!recipients$|approvals$)[^/]+$/,
+  /^\/cards\/[^/]+$/,
+  /^\/support\/new/,
+  /^\/onboarding/,
+];
 
 /** OG-039: the Get paid screen and the processor's elements load only when the build turns acceptance on. */
 const GetPaidScreen = lazy(() => import('./acceptance/GetPaid').then((m) => ({ default: m.GetPaidScreen })));
