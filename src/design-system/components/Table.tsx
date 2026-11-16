@@ -19,6 +19,8 @@ export interface TableProps<T> {
   onRowClick?(row: T): void;
   /** The caption is read by screen readers but not shown, where the card's title already names the table (FA-011). */
   hideCaption?: boolean;
+  /** OG-050: on a phone each row becomes two columns (the cells stacked, the amount at the end) instead of four. */
+  stack?: boolean;
 }
 
 export function Table<T>({
@@ -30,6 +32,7 @@ export function Table<T>({
   initialSort,
   onRowClick,
   hideCaption = false,
+  stack = false,
 }: TableProps<T>) {
   const captionId = useId();
   const [sort, setSort] = useState(initialSort);
@@ -51,7 +54,7 @@ export function Table<T>({
   return (
     // FA-045: the scroller is a named region a keyboard can reach, so a wide table scrolls without a mouse.
     <div className="og-table-wrap" role="region" aria-labelledby={captionId} tabIndex={0}>
-      <table className="og-table">
+      <table className={stack ? 'og-table og-table--stack' : 'og-table'}>
         <caption id={captionId} className={hideCaption ? 'og-visually-hidden' : 'og-table__caption'}>
           {caption}
         </caption>

@@ -184,6 +184,7 @@ function AccountDetail({ id }: { id: string }) {
                 <>
                   <Table
                     hideCaption
+                    stack
                     caption={t('app.accounts.transactions_caption')}
                     rows={direction === 'all' ? rows : rows.filter((tx) => tx.direction === direction)}
                     rowKey={(tx) => tx.id}

@@ -787,6 +787,36 @@ input[type='color'].og-input {
 .og-table td.og-num {
   text-align: end;
 }
+@media (max-width: 600px) {
+  .og-table--stack thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .og-table--stack tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--space-md);
+    row-gap: var(--space-xs);
+    padding-block: var(--space-sm);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+  .og-table--stack td {
+    grid-column: 1;
+    padding: 0;
+    border: 0;
+  }
+  .og-table--stack td.og-num {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+  }
+  .og-table--stack td:empty {
+    display: none;
+  }
+}
 .og-table__sort {
   font: inherit;
   color: inherit;
