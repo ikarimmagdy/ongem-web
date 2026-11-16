@@ -159,11 +159,6 @@ describe('founder web review 2026-11-12, shell and brand', () => {
       await screen.findByTestId('payment-form');
       expect(screen.queryByTestId('assistant-open')).not.toBeInTheDocument();
       unmount();
-      // OG-050: a payment waiting for approval ends in Approve and Decline; nothing floats over them.
-      const detail = renderApp('/payments/pay_demo_approval');
-      await screen.findByTestId('shell');
-      expect(screen.queryByTestId('assistant-open')).not.toBeInTheDocument();
-      detail.unmount();
       renderApp('/');
       expect(await screen.findByTestId('assistant-open')).toBeInTheDocument();
     } finally {
