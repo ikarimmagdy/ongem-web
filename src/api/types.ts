@@ -74,6 +74,13 @@ export interface Account {
   status: string;
   currency: string;
   balance?: Balance | null;
+  /** OG-049: the content key naming the institution that holds the account; null when none is named. */
+  institution?: string | null;
+}
+
+/** OG-049: `GET /v1/accounts/total`. `indicative` is null unless the total across currencies is switched on. */
+export interface AccountsTotal {
+  indicative: { amount: Amount; asOf: string } | null;
 }
 
 export interface Transaction {

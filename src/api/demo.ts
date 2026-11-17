@@ -1,5 +1,7 @@
 import { invitableRoles, permissionsOf, Permission, type OnGemApi } from './client';
 import {
+  demoForeignAccounts,
+  demoIndicativeTotal,
   OPS,
   demoAccounts,
   demoApplication,
@@ -95,9 +97,10 @@ export interface DemoOptions {
   approvalBy?: 'COMPANY' | 'ONGEM';
   /**
    * FA-056: review switches for states demo data never reaches (`/demo?state=` in the address): `readonly` opens the
-   * company FROZEN, `slow` answers every read after 1.5 s, `error` fails every read but the person's own.
+   * company FROZEN, `slow` answers every read after 1.5 s, `error` fails every read but the person's own; OG-049:
+   * `currencies` adds balances in other currencies, `currencies_total` also the indicative total across them.
    */
-  scenario?: 'readonly' | 'slow' | 'error' | null;
+  scenario?: DemoScenario | null;
   /** OG-023 R12: the region this demo client stands for (the build's region by default). */
   region?: string;
   /** The person as another region's API answers them, or 'down' when that region does not answer (tests). */
@@ -105,6 +108,8 @@ export interface DemoOptions {
 }
 
 /** A demo account of a company other than the person's default carries the company in its id, so ids never clash. */
+export type DemoScenario = 'readonly' | 'slow' | 'error' | 'currencies' | 'currencies_total';
+
 const COMPANY_SUFFIX = /_(cmp_[A-Za-z0-9_]+)$/;
 const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
@@ -170,6 +175,8 @@ export class DemoOnGemApi implements OnGemApi {
     this.applicationState = opts.application ?? demoApplication();
     if (opts.approvalBy) this.approvalBy = opts.approvalBy;
     const company = opts.companyId;
+    if (opts.scenario === 'currencies' || opts.scenario === 'currencies_total')
+      this.accountsState = [...this.accountsState, ...demoForeignAccounts()];
     if (company && company !== this.home)
       this.accountsState = this.accountsState.map((a) => ({ ...a, id: `${a.id}_${company}` }));
   }
@@ -321,6 +328,10 @@ export class DemoOnGemApi implements OnGemApi {
   };
   securitySummary = async () => this.log('securitySummary', demoSecurity());
   accounts = async () => this.log('accounts', this.accountsState);
+  accountsTotal = async () => {
+    const amount = this.opts.scenario === 'currencies_total' ? demoIndicativeTotal(this.accountsState) : null;
+    return this.log('accountsTotal', { indicative: amount ? { amount, asOf: this.now() } : null });
+  };
 
   account = async (id: string) =>
     this.log('account', this.accountsState.find((a) => a.id === id) ?? this.notFound('account'));

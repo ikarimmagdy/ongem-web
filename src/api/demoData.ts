@@ -32,6 +32,8 @@ const usd = (amountMinor: number): Amount => ({ amountMinor, currency: 'USD' });
 /** An amount in this build's currency, for what the demo creates. */
 export const money = IS_AE ? AE.aed : usd;
 
+export const HOME_BANK = 'app.accounts.institution.home_bank';
+
 export const OPS = 'acc_demo_ops';
 export const TAX = 'acc_demo_tax';
 export const PAYROLL = 'acc_demo_payroll';
@@ -76,6 +78,7 @@ export const demoAccounts = IS_AE
         status: 'ACTIVE',
         currency: 'USD',
         balance: { posted: usd(12_845_016), available: usd(12_610_016), asOf },
+        institution: HOME_BANK,
       },
       {
         id: TAX,
@@ -84,6 +87,7 @@ export const demoAccounts = IS_AE
         status: 'ACTIVE',
         currency: 'USD',
         balance: { posted: usd(2_500_000), available: usd(2_500_000), asOf },
+        institution: HOME_BANK,
       },
       {
         id: PAYROLL,
@@ -92,6 +96,7 @@ export const demoAccounts = IS_AE
         status: 'ACTIVE',
         currency: 'USD',
         balance: { posted: usd(845_000), available: usd(845_000), asOf: '2026-10-28T23:10:00Z', stale: true },
+        institution: HOME_BANK,
       },
     ];
 
@@ -578,3 +583,59 @@ export const demoDevices = (): DeviceView[] => [
     current: false,
   },
 ];
+
+/**
+ * OG-049 review states (`?state=currencies`, `?state=currencies_total`): balances in EUR and GBP next to the home
+ * accounts. No partner holds them yet, so they name no institution: a foreign balance never borrows the home bank's.
+ */
+export const demoForeignAccounts = (): Account[] => [
+  {
+    id: 'acc_demo_eur',
+    name: 'Euro account',
+    last4: '3310',
+    status: 'ACTIVE',
+    currency: 'EUR',
+    balance: {
+      posted: { amountMinor: 1_150_000, currency: 'EUR' },
+      available: { amountMinor: 1_150_000, currency: 'EUR' },
+      asOf,
+    },
+    institution: null,
+  },
+  {
+    id: 'acc_demo_gbp',
+    name: 'Sterling account',
+    last4: '7702',
+    status: 'ACTIVE',
+    currency: 'GBP',
+    balance: {
+      posted: { amountMinor: 0, currency: 'GBP' },
+      available: { amountMinor: 0, currency: 'GBP' },
+      asOf,
+    },
+    institution: null,
+  },
+];
+
+/** Sample indicative prices into the home currency for the demo's total (the API asks the FX provider). */
+const DEMO_RATES: Record<string, Record<string, number>> = {
+  USD: { EUR: 1.087, GBP: 1.266 },
+  AED: { EUR: 3.99, GBP: 4.65 },
+};
+
+/** The demo's indicative total in the first account's currency; null when a currency has no sample price. */
+export function demoIndicativeTotal(accounts: Account[]): Amount | null {
+  const home = accounts[0]?.currency;
+  if (!home) return null;
+  let total = 0;
+  for (const a of accounts) {
+    const v = a.balance?.available.amountMinor ?? 0;
+    if (a.currency === home) total += v;
+    else {
+      const rate = DEMO_RATES[home]?.[a.currency];
+      if (rate === undefined) return null;
+      total += Math.floor(v * rate);
+    }
+  }
+  return { amountMinor: total, currency: home };
+}

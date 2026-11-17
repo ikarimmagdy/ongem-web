@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Permission } from '../api/client';
+import type { AccountsTotal } from '../api/types';
 import { ApiError } from '../api/errors';
 import { Card, EmptyState, PageHeader, StatusChip } from '../design-system';
 import { formatDate, formatMinor } from '../lib/format';
@@ -7,7 +8,7 @@ import { useAsync } from '../lib/useAsync';
 import { needsItems } from '../lib/needs';
 import { paymentLabel } from '../lib/states';
 import { useSession } from '../session';
-import { t } from '../i18n';
+import { has, t } from '../i18n';
 import { REGION_CONFIG } from '../region';
 import { ApplicationSteps } from './ApplicationSteps';
 import { NeedsYou } from './NeedsYou';
@@ -18,6 +19,8 @@ import { AcctLast4, Amt, Load, stateStatus } from './common';
 /** Payments read once for recent payments and the approvals in Needs you (OG-035 R3, R4). */
 export const HOME_PAYMENTS = 20;
 const RECENT = 5;
+
+const NO_TOTAL: AccountsTotal = { indicative: null };
 
 /** A read the role may not make counts as nothing waiting, not as a failure. */
 const orNone =
@@ -43,6 +46,13 @@ export function HomeScreen() {
   const notices = useAsync(() => api.notifications({ unread: true, limit: 3 }).catch(orNone(null)), [api]);
   const person = me.status === 'success' ? me.data : null;
   const accs = accounts.status === 'success' ? accounts.data : [];
+  // OG-049: one currency adds up here; across currencies only the API's indicative total is shown, when it gives one.
+  const mixed = new Set(accs.map((a) => a.currency)).size > 1;
+  const across = useAsync(
+    () => (mixed ? api.accountsTotal().catch(() => NO_TOTAL) : Promise.resolve(NO_TOTAL)),
+    [api, mixed],
+  );
+  const indicative = mixed && across.status === 'success' ? across.data.indicative : null;
   const recs = recipients.status === 'success' ? recipients.data : [];
   const app = apps.status === 'success' ? apps.data[0] : undefined;
   const reads = [payments, apps, cards, notices];
@@ -70,7 +80,7 @@ export function HomeScreen() {
       {app && app.state !== 'ACTIVE' && <ApplicationSteps state={app.state} />}
       <div className="fw-home" data-testid="home-grid">
         <Card
-          title={t('app.home.available')}
+          title={mixed && !indicative ? t('app.accounts.title') : t('app.home.available')}
           className="fw-home__balance fw-hero"
           data-testid="home-balance"
           actions={
@@ -87,14 +97,30 @@ export function HomeScreen() {
               const total = list.reduce((s, a) => s + (a.balance?.available.amountMinor ?? 0), 0);
               return (
                 <>
-                  <p className="og-money og-money--xl fw-total" data-mask="" data-testid="home-total">
-                    {formatMinor({
-                      amountMinor: total,
-                      currency: list[0]?.currency ?? REGION_CONFIG.currency,
-                    })}
-                  </p>
+                  {!mixed && (
+                    <p className="og-money og-money--xl fw-total" data-mask="" data-testid="home-total">
+                      {formatMinor({
+                        amountMinor: total,
+                        currency: list[0]?.currency ?? REGION_CONFIG.currency,
+                      })}
+                    </p>
+                  )}
+                  {indicative && (
+                    <div className="fw-indicative" data-testid="home-indicative">
+                      <p className="og-money og-money--xl fw-total" data-mask="" data-testid="home-total">
+                        {formatMinor(indicative.amount)}
+                      </p>
+                      <p className="fw-indicative__label">
+                        {t('app.home.indicative_total', { currency: indicative.amount.currency })}
+                      </p>
+                      <p className="fw-indicative__note">{t('app.home.indicative_note')}</p>
+                    </div>
+                  )}
                   {list.length > 0 && (
-                    <ul className="fw-breakdown" data-testid="home-breakdown">
+                    <ul
+                      className={`fw-breakdown${list.length > 3 ? ' fw-breakdown--list' : ''}`}
+                      data-testid="home-breakdown"
+                    >
                       {list.map((a) => (
                         <li key={a.id}>
                           <Link className="fw-breakdown__row" to={`/accounts/${a.id}`}>
@@ -103,6 +129,11 @@ export function HomeScreen() {
                               <span className="fw-row__sub">
                                 <AcctLast4 value={a.last4} />
                               </span>
+                              {a.institution && has(a.institution) && (
+                                <span className="fw-row__sub" data-testid={`home-institution-${a.id}`}>
+                                  {t(a.institution)}
+                                </span>
+                              )}
                             </span>
                             {a.balance && <Amt value={a.balance.available} />}
                           </Link>

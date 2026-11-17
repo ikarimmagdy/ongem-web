@@ -21,7 +21,39 @@
   "/partner/v1/webhooks/secret/rotate": [
     "post"
   ],
+  "/v1/acceptance": [
+    "get"
+  ],
+  "/v1/acceptance/account": [
+    "post"
+  ],
+  "/v1/acceptance/checkouts": [
+    "get",
+    "post"
+  ],
+  "/v1/acceptance/checkouts/{id}/charges": [
+    "post"
+  ],
+  "/v1/acceptance/element-tokens": [
+    "post"
+  ],
+  "/v1/acceptance/payments": [
+    "get"
+  ],
+  "/v1/acceptance/payout-destinations": [
+    "get"
+  ],
+  "/v1/acceptance/payouts": [
+    "get",
+    "post"
+  ],
+  "/v1/acceptance/verifications": [
+    "post"
+  ],
   "/v1/accounts": [
+    "get"
+  ],
+  "/v1/accounts/total": [
     "get"
   ],
   "/v1/accounts/{accountId}/exports": [
@@ -130,6 +162,15 @@
     "delete",
     "get"
   ],
+  "/v1/fx/quotes": [
+    "post"
+  ],
+  "/v1/fx/quotes/{id}": [
+    "get"
+  ],
+  "/v1/fx/quotes/{id}/accept": [
+    "post"
+  ],
   "/v1/invites/{token}/accept": [
     "post"
   ],
@@ -141,6 +182,31 @@
   ],
   "/v1/me/security": [
     "get"
+  ],
+  "/v1/movements": [
+    "get",
+    "post"
+  ],
+  "/v1/movements/{id}": [
+    "get"
+  ],
+  "/v1/movements/{id}/approve": [
+    "post"
+  ],
+  "/v1/movements/{id}/cancel": [
+    "post"
+  ],
+  "/v1/movements/{id}/quote": [
+    "post"
+  ],
+  "/v1/movements/{id}/reject": [
+    "post"
+  ],
+  "/v1/movements/{id}/resume": [
+    "post"
+  ],
+  "/v1/movements/{id}/submit": [
+    "post"
   ],
   "/v1/notifications": [
     "get"
@@ -273,8 +339,14 @@
   "/v1/ops/companies": [
     "get"
   ],
+  "/v1/ops/companies/{companyId}/acceptance": [
+    "get"
+  ],
   "/v1/ops/companies/{companyId}/accounts": [
     "post"
+  ],
+  "/v1/ops/companies/{companyId}/accounts/total": [
+    "get"
   ],
   "/v1/ops/companies/{companyId}/card-candidates": [
     "get"

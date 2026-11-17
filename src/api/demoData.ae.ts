@@ -20,6 +20,9 @@ import { formatMinor } from '../lib/format';
  * The AE build's demo data (OG-022 R18): UAE companies with AED amounts, UAE IBANs (only the last four kept), Aani,
  * UAEFTS and book transfers, owners with Emirates ID. Same ids and shapes as demoData.ts. Fictional only.
  */
+/** OG-049: the region's home bank, worded by each region's seed. */
+export const HOME_BANK = 'app.accounts.institution.home_bank';
+
 export const aed = (amountMinor: number): Amount => ({ amountMinor, currency: 'AED' });
 
 const OPS = 'acc_demo_ops';
@@ -60,6 +63,7 @@ export const demoAccounts = (): Account[] => [
     status: 'ACTIVE',
     currency: 'AED',
     balance: { posted: aed(47_150_000), available: aed(46_290_000), asOf },
+    institution: HOME_BANK,
   },
   {
     id: TAX,
@@ -68,6 +72,7 @@ export const demoAccounts = (): Account[] => [
     status: 'ACTIVE',
     currency: 'AED',
     balance: { posted: aed(9_175_000), available: aed(9_175_000), asOf },
+    institution: HOME_BANK,
   },
   {
     id: PAYROLL,
@@ -76,6 +81,7 @@ export const demoAccounts = (): Account[] => [
     status: 'ACTIVE',
     currency: 'AED',
     balance: { posted: aed(3_100_000), available: aed(3_100_000), asOf: '2026-10-28T23:10:00Z', stale: true },
+    institution: HOME_BANK,
   },
 ];
 

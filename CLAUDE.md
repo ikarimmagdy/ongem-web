@@ -222,3 +222,9 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   time shared by every tab through localStorage `ongem.idle.last`. The build writes `/.well-known/security.txt`
   (RFC 9116, `scripts/security-txt.mjs`): contact security@ongem.com, Expires one year from the build, Canonical
   `VITE_SITE_URL`, else app.platform.ongem.com for a production build, else the region's dev site.
+- 2026-11-17: OG-049 Home across accounts. Each account row names its institution from the content key the API sends
+  (`institution`, `app.accounts.institution.home_bank`: Piermont Bank, Member FDIC in the US seed, a licensed UAE bank
+  in the AE seed); a foreign balance with no institution names none. One currency keeps its exact total; across
+  currencies Home asks `GET /v1/accounts/total` and shows its `indicative` total with `app.home.indicative_total` and
+  `.indicative_note`, else no total and the card is titled Accounts. More than three accounts read as one list. Demo
+  review states `?state=currencies` and `?state=currencies_total`. Tests `og049.test.tsx`, `og049-ae.test.tsx`.

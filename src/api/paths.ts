@@ -11,6 +11,7 @@ export const paths = {
   security: '/v1/me/security',
   whereami: '/v1/whereami',
   accounts: '/v1/accounts',
+  accountsTotal: '/v1/accounts/total',
   account: (id: string) => `/v1/accounts/${q(id)}`,
   transactions: (id: string, limit: number) => `/v1/accounts/${q(id)}/transactions?limit=${limit}`,
   statements: (id: string) => `/v1/accounts/${q(id)}/statements`,

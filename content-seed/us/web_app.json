@@ -2398,6 +2398,35 @@
       "ar": "الرصيد المتاح في جميع حساباتك"
     },
     {
+      "key": "app.accounts.institution.home_bank",
+      "format": "text",
+      "description": "The institution that holds an account at the region's home bank, on each account row (OG-049); approved wording as web.bank_statement",
+      "placeholders": [],
+      "meta": {},
+      "en": "Piermont Bank, Member FDIC",
+      "ar": "Piermont Bank، عضو FDIC"
+    },
+    {
+      "key": "app.home.indicative_total",
+      "format": "text",
+      "description": "Home: label under the total across currencies (OG-049); the total is for display only",
+      "placeholders": [
+        "currency"
+      ],
+      "meta": {},
+      "en": "Total in {currency} at today's indicative rates",
+      "ar": "الإجمالي بعملة {currency} بأسعار اليوم الاسترشادية"
+    },
+    {
+      "key": "app.home.indicative_note",
+      "format": "text",
+      "description": "Home: why the total across currencies is only an indication (OG-049)",
+      "placeholders": [],
+      "meta": {},
+      "en": "An indication only. Money converts only at a rate you accept.",
+      "ar": "للاسترشاد فقط. لا تُحوَّل الأموال إلا بسعر توافق عليه."
+    },
+    {
       "key": "app.home.company",
       "format": "text",
       "description": "Home company card: company row label",

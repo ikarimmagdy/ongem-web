@@ -1,5 +1,6 @@
 import type {
   Account,
+  AccountsTotal,
   AssistantDraft,
   AssistantTurn,
   Conversation,
@@ -82,6 +83,8 @@ export interface OnGemApi {
   /** FA-029, FA-055: the authenticator, the last sign-in and recent sign-ins of the person. */
   securitySummary(): Promise<SecuritySummary>;
   accounts(): Promise<Account[]>;
+  /** OG-049: the indicative total across currencies, for display only; asked only when the accounts differ in currency. */
+  accountsTotal(): Promise<AccountsTotal>;
   account(id: string): Promise<Account>;
   /** Newest first; the API pages by limit (1 to 100), so the next page asks for a longer list. */
   transactions(accountId: string, limit: number): Promise<Transaction[]>;

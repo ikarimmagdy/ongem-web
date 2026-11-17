@@ -1670,3 +1670,37 @@
   width: 100%;
   max-width: calc(var(--space-3xl) * 14);
 }
+
+/* OG-049: the indicative total across currencies, its label and why it is only an indication. */
+.fw-indicative {
+  display: grid;
+  gap: var(--space-xs);
+  margin-block-end: var(--space-md);
+}
+.fw-indicative__label,
+.fw-indicative__note {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+.fw-indicative__note {
+  font-size: var(--font-size-xs);
+}
+/* OG-049: more than three accounts read as one list, the amount at the end of each row. */
+.fw-hero .fw-breakdown--list {
+  grid-template-columns: 1fr;
+}
+.fw-hero .fw-breakdown--list > li + li {
+  border-inline-start: 0;
+  border-block-start: 1px solid var(--color-border-subtle);
+}
+.fw-hero .fw-breakdown--list .fw-breakdown__row,
+[dir='rtl'] .fw-hero .fw-breakdown--list .fw-breakdown__row,
+.fw-hero .fw-breakdown--list > li + li .fw-breakdown__row,
+[dir='rtl'] .fw-hero .fw-breakdown--list > li + li .fw-breakdown__row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+}

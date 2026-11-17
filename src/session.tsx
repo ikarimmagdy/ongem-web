@@ -10,7 +10,7 @@ import {
 } from 'react';
 import { permissionsOf, READ_ONLY, type OnGemApi } from './api/client';
 import type { CompanyState, Membership } from './api/types';
-import { DemoOnGemApi, type StepUpDetail } from './api/demo';
+import { DemoOnGemApi, type DemoScenario, type StepUpDetail } from './api/demo';
 import { defaultDeviceKeys } from './api/device';
 import { LiveOnGemApi, type Whereami } from './api/live';
 import { useAuthSession } from './auth';
@@ -179,11 +179,16 @@ function DemoReverify({ ask, onDone }: { ask: Ask | null; onDone(ok: boolean): v
   );
 }
 
-/** FA-056: `?state=readonly|slow|error` puts the demo in a state its data never reaches, for reviews and e2e. */
-function demoScenario(): 'readonly' | 'slow' | 'error' | null {
+const SCENARIOS: DemoScenario[] = ['readonly', 'slow', 'error', 'currencies', 'currencies_total'];
+
+/**
+ * FA-056: `?state=readonly|slow|error` puts the demo in a state its data never reaches, for reviews and e2e; OG-049
+ * adds `currencies` and `currencies_total`.
+ */
+function demoScenario(): DemoScenario | null {
   if (typeof window === 'undefined') return null;
   const s = new URLSearchParams(window.location.search).get('state');
-  return s === 'readonly' || s === 'slow' || s === 'error' ? s : null;
+  return SCENARIOS.find((x) => x === s) ?? null;
 }
 
 const DEMO_FLAG = 'ongem.demo';
