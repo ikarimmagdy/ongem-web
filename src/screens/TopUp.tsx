@@ -21,7 +21,7 @@ import { useAsync } from '../lib/useAsync';
 import { normaliseIban, uaeIbanValid } from '../lib/iban';
 import { IS_AE, REGION_CONFIG } from '../region';
 import { useSession } from '../session';
-import { AcctLast4, Load } from './common';
+import { AcctLast4, currencyPrefix, Load, PrefixedInput } from './common';
 
 /** A funding source's state in words, the same as the app's (G-40). */
 export function fundingState(state: string): { status: Status; text: string } {
@@ -317,7 +317,8 @@ function TopUpForm({ sources, accounts }: { sources: FundingSource[]; accounts: 
           })}
           error={amount && !minor ? t('app.topup.form.amount_error') : undefined}
         >
-          <Input
+          <PrefixedInput
+            prefix={currencyPrefix()}
             data-testid="topup-amount"
             data-mask=""
             inputMode="decimal"

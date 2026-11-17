@@ -30,7 +30,8 @@ export interface SelectProps extends Omit<
  * OG-050: the one select, drawn from the theme in every mode and direction instead of the browser's own list. A
  * select-only combobox (WAI-ARIA APG): the button keeps focus and names the chosen option; Arrow keys, Home, End,
  * Enter, Space and typing a letter open and move through the list; Enter, Space or Tab chooses; Escape closes. A
- * `<label htmlFor>` (Field) names it like a native select.
+ * `<label htmlFor>` (Field) names it like a native select. An option with the value '' is the placeholder: muted while
+ * it is the choice (W-12).
  */
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select(
   { options, value, onChange, className, disabled, id: idProp, onKeyDown, onClick, ...rest },
@@ -158,7 +159,13 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
         }}
         {...rest}
       >
-        <span className="og-select__value">{current?.label ?? ''}</span>
+        <span
+          className={
+            current?.value === '' ? 'og-select__value og-select__value--placeholder' : 'og-select__value'
+          }
+        >
+          {current?.label ?? ''}
+        </span>
         <svg className="og-select__chevron" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
           <path d="M4 6l4 4 4-4" />
         </svg>

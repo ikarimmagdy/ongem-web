@@ -228,3 +228,10 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   currencies Home asks `GET /v1/accounts/total` and shows its `indicative` total with `app.home.indicative_total` and
   `.indicative_note`, else no total and the card is titled Accounts. More than three accounts read as one list. Demo
   review states `?state=currencies` and `?state=currencies_total`. Tests `og049.test.tsx`, `og049-ae.test.tsx`.
+- 2026-11-17: OG-051, the open and low items of the OG-050 register (WS `ongem-engineering/outputs/review/og051-2026-11-17/web/`).
+  Select: an option with the value '' is the placeholder, muted while chosen (W-12). Post and legal titles 32 to 44 px
+  (`--font-size-3xl` to `--font-size-4xl`, W-13). Demo badge in the info tint, not pending amber (W-15, `app-shell.css`).
+  Language choice is one segmented control (`fw-lang__option`, W-16). Paired links keep a gap (`p.pub-more`, W-17).
+  `PrefixedInput` and `currencyPrefix` moved to `screens/common.tsx`; schedule and top-up amounts carry US$ or AED (W-18).
+  public.css: 194 overridden declarations and 8 dead rules removed, 200 public captures pixel-identical (W-14). Home
+  section eyebrows that repeated the heading removed (RD-15). Tests `og051.test.tsx`.

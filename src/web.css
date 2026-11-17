@@ -774,10 +774,40 @@ a.og-btn:hover {
 [dir='rtl'] .fw-switcher__chevron {
   transform: translateY(-25%) rotate(-45deg);
 }
+/* W-16: the language choice is one segmented control: the chosen language raised on a strong edge, the other plain. */
 .fw-lang {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
+  display: inline-flex;
+  align-self: flex-start;
+  justify-self: start;
+  gap: 2px;
+  padding: 2px;
+  background: var(--color-surface-sunken);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+}
+.fw-lang__option {
+  min-height: 36px;
+  padding: 0 var(--space-md);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-body-strong-weight);
+  cursor: pointer;
+}
+.fw-lang__option:hover {
+  color: var(--color-text-primary);
+}
+.fw-lang__option[aria-checked='true'] {
+  background: var(--color-surface-card);
+  color: var(--color-text-primary);
+  box-shadow: 0 0 0 1px var(--color-border-strong);
+}
+.fw-lang__option:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 1px;
 }
 
 /* FA-011: a transaction names the other party first, the method under it. */

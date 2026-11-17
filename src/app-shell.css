@@ -489,6 +489,12 @@
   letter-spacing: normal;
   white-space: nowrap;
 }
+/* W-15: Demo is the info tint of the demo bar, never the amber of a payment waiting on someone. */
+.fw-shell .og-env--mock {
+  background: var(--color-status-info-bg);
+  color: var(--color-status-info);
+  border-color: color-mix(in srgb, var(--color-status-info) 40%, transparent);
+}
 .fw-topbar.og-topbar {
   min-height: var(--space-3xl);
   gap: var(--space-md);

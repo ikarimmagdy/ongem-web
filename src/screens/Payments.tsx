@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ComponentProps } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Permission } from '../api/client';
 import { errorText } from '../api/errors';
@@ -25,7 +25,7 @@ import { useDrafts } from '../assistant/drafts';
 import { t } from '../i18n';
 import { REGION_CONFIG } from '../region';
 import { useSession } from '../session';
-import { AcctLast4, Amt, FilterChips, Load, stateStatus } from './common';
+import { AcctLast4, Amt, currencyPrefix, FilterChips, Load, PrefixedInput, stateStatus } from './common';
 import { Schedules } from './Schedules';
 import { TopUp } from './TopUp';
 import { SplitHint } from './SplitHint';
@@ -811,24 +811,6 @@ export function NewPayment() {
     </div>
   );
 }
-
-/** The amount field with the currency in front of it (FA-036), forwarding the field's id and aria to the input. */
-function PrefixedInput({ prefix, ...rest }: { prefix: string } & ComponentProps<typeof Input>) {
-  return (
-    <span className="fw-prefixed">
-      <span className="fw-prefixed__prefix" aria-hidden="true">
-        {prefix}
-      </span>
-      <Input {...rest} />
-    </span>
-  );
-}
-
-/** US$ or AED, as the amounts are written (from the money format, never typed in). */
-const currencyPrefix = () =>
-  formatMinor({ amountMinor: 0, currency: REGION_CONFIG.currency })
-    .replace(/[\d.,\s\u00a0]/g, '')
-    .trim();
 
 /** The Payments tabs (OG-035 R6), each a route; the old routes are the tab routes. */
 export const PAYMENT_TABS = [

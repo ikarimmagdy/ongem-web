@@ -19,7 +19,7 @@ import { formatDay, frequencyText, today } from '../lib/schedule';
 import { useAsync } from '../lib/useAsync';
 import { REGION_CONFIG } from '../region';
 import { useSession } from '../session';
-import { Amt, DateInput, Load } from './common';
+import { Amt, currencyPrefix, DateInput, Load, PrefixedInput } from './common';
 
 /** A schedule's state in words, the same as the app's (G-120). */
 export function scheduleState(state: string): { status: Status; text: string } {
@@ -285,7 +285,8 @@ function NewSchedule({
           label={REGION_CONFIG.amountLabel}
           error={amount && !minor ? t('app.schedules.form.amount_error') : undefined}
         >
-          <Input
+          <PrefixedInput
+            prefix={currencyPrefix()}
             data-testid="schedule-amount"
             data-mask=""
             inputMode="decimal"

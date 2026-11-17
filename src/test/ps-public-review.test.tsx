@@ -104,14 +104,12 @@ describe('public site review fixes (US)', () => {
     expect(readFileSync(join(root, 'src/public/art.tsx'), 'utf8')).not.toMatch(/2412/);
   });
 
-  it('PS_006_menu_items_are_40px_tall_with_8px_gaps_and_16px_type', () => {
-    const nav = css.match(/\.pub-nav \{[^}]*\}/g) ?? [];
-    expect(nav.join('\n')).not.toMatch(/gap: var\(--space-xs\)/);
-    expect(nav.join('\n')).toMatch(/gap: var\(--space-sm\)/);
-    const link = css.match(/\.pub-nav__link \{[^}]*\}/)![0];
+  it('PS_006_menu_items_are_40px_tall_in_the_OG_040_header_type', () => {
+    // W-14 (OG-051): the earlier PS-006 values were overridden by the OG-040 header and are gone; this is the one rule.
+    const link = css.match(/\.pub-nav__link,\n\.pub-menu__button \{[^}]*\}/)![0];
     expect(link).toMatch(/min-height: 40px/);
-    expect(link).toMatch(/font-size: var\(--font-size-md\)/);
-    expect(link).toMatch(/font-family: var\(--font-label\)/);
+    expect(link).toMatch(/font-size: calc\(var\(--font-size-sm\) \+ 1px\)/);
+    expect(link).toMatch(/font-family: var\(--font-body\)/);
   });
 
   it('PS_007_a_link_to_the_current_page_scrolls_to_top_and_is_marked', async () => {
@@ -461,7 +459,9 @@ describe('public site review fixes (US)', () => {
   });
 
   it('PS_041_current_section_has_a_bar_not_only_colour', () => {
-    expect(css).toMatch(/\.pub-menu__button\.is-current \{\s*box-shadow: inset 0 -2px 0 currentColor;/);
+    expect(css).toMatch(
+      /\.pub-menu__button\.is-current \{[^}]*box-shadow: inset 0 -2px 0 var\(--color-brand-primary\);/,
+    );
   });
 
   it('PS_042_the_phone_menu_button_stays_hidden_on_wide_screens', () => {

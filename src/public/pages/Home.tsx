@@ -120,7 +120,6 @@ export function Home() {
           >
             <div className={i % 2 ? 'pub-wrap pub-feature pub-feature--flip' : 'pub-wrap pub-feature'}>
               <div data-reveal>
-                <p className="pub-eyebrow">{c.nav}</p>
                 <h2 id={`row-${id}`} className="pub-h2">
                   {c.title}
                 </h2>
@@ -175,7 +174,6 @@ export function Home() {
         <GemGlow className="pub-band__glow" />
         <div className="pub-wrap pub-split">
           <div data-reveal>
-            <p className="pub-eyebrow pub-eyebrow--on-dark">{t('web.labels.security_link')}</p>
             <h2 id="home-sec" className="pub-h2">
               {t('web.labels.home_security')}
             </h2>

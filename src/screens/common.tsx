@@ -1,7 +1,15 @@
-import type { ReactNode } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 import { errorText } from '../api/errors';
 import type { Amount } from '../api/types';
-import { Button, DatePicker, Notice, Skeleton, type DatePickerProps, type Status } from '../design-system';
+import {
+  Button,
+  DatePicker,
+  Input,
+  Notice,
+  Skeleton,
+  type DatePickerProps,
+  type Status,
+} from '../design-system';
 import { formatMinor } from '../lib/format';
 import { dateLocale, has, t } from '../i18n';
 import { IS_AE, REGION_CONFIG } from '../region';
@@ -147,3 +155,21 @@ export function DateInput(
     />
   );
 }
+
+/** The amount field with the currency in front of it (FA-036), forwarding the field's id and aria to the input. */
+export function PrefixedInput({ prefix, ...rest }: { prefix: string } & ComponentProps<typeof Input>) {
+  return (
+    <span className="fw-prefixed">
+      <span className="fw-prefixed__prefix" aria-hidden="true">
+        {prefix}
+      </span>
+      <Input {...rest} />
+    </span>
+  );
+}
+
+/** US$ or AED, as the amounts are written (from the money format, never typed in). */
+export const currencyPrefix = () =>
+  formatMinor({ amountMinor: 0, currency: REGION_CONFIG.currency })
+    .replace(/[\d.,\s\u00a0]/g, '')
+    .trim();
