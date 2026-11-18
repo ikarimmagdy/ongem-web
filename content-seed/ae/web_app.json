@@ -12654,7 +12654,7 @@
       ],
       "meta": {},
       "en": "OnGem margin ({bps} bps)",
-      "ar": "هامش OnGem ({bps} نقطة أساس)"
+      "ar": "هامش OnGem، {bps} نقطة أساس"
     },
     {
       "key": "app.fx.quote.total",

@@ -134,7 +134,18 @@ export function QuoteLines({ quote, left }: { quote: FxQuote; left: number }) {
 }
 
 /** A value with a copy button that says Copied when it has copied (receiving details). */
-export function CopyValue({ label, value, testId }: { label: string; value: string; testId: string }) {
+export function CopyValue({
+  label,
+  value,
+  testId,
+  display,
+}: {
+  label: string;
+  value: string;
+  testId: string;
+  /** How the value reads on screen (an IBAN in groups of four); the copy is always [value] as given. */
+  display?: string;
+}) {
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (!copied) return;
@@ -152,7 +163,7 @@ export function CopyValue({ label, value, testId }: { label: string; value: stri
   return (
     <span className="fw-copy">
       <bdi dir="ltr" className="fw-copy__value" data-mask="" data-testid={testId}>
-        {value}
+        {display ?? value}
       </bdi>
       <Button
         variant="ghost"

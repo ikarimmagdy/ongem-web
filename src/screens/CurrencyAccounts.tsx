@@ -214,7 +214,14 @@ export function ReceivingDetailsCard({
                 : []),
               ...receivingLines(details).map((l) => ({
                 label: l.label,
-                value: <CopyValue label={l.label} value={l.value} testId={`receiving-${l.key}`} />,
+                value: (
+                  <CopyValue
+                    label={l.label}
+                    value={l.value}
+                    display={l.key === 'iban' ? l.value.replace(/(.{4})(?=.)/g, '$1 ') : undefined}
+                    testId={`receiving-${l.key}`}
+                  />
+                ),
               })),
               ...(details.bankName
                 ? [

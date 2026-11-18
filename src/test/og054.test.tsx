@@ -27,7 +27,7 @@ describe('OG-054 currency accounts', () => {
     );
     await userEvent.click(screen.getByTestId('currency-account-submit'));
     const done = await screen.findByTestId('currency-account-opened');
-    expect(await within(done).findByTestId('receiving-iban')).toHaveTextContent('DE89370400440532013000');
+    expect(await within(done).findByTestId('receiving-iban')).toHaveTextContent('DE89 3704 0044 0532 0130 00');
     expect(within(done).getByTestId('receiving-bic')).toHaveTextContent('HGBKDEFFXXX');
     expect(within(done).getByTestId('receiving-iban-copy')).toBeInTheDocument();
     expect(done.textContent).not.toMatch(/FDIC/);
