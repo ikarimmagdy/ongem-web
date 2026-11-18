@@ -24,6 +24,7 @@ import {
   demoInviteCompany,
 } from './demoData';
 import { DemoAssistant } from '../assistant/demoAssistant';
+import { DemoFx } from './demoFx';
 import { ApiError } from './errors';
 import { t } from '../i18n/store';
 import { normaliseIban, uaeIbanValid } from '../lib/iban';
@@ -60,6 +61,9 @@ import type {
   PreferenceChange,
   ExportRequest,
   ExportRun,
+  CreateInternationalRecipient,
+  CreateQuote,
+  CreateMovement,
 } from './types';
 
 /**
@@ -78,7 +82,12 @@ export interface StepUpDetail {
     | 'funding_remove'
     | 'card_freeze'
     | 'card_unfreeze'
-    | 'card_details';
+    | 'card_details'
+    | 'account_open'
+    | 'fx_accept'
+    | 'movement_submit'
+    | 'movement_approve'
+    | 'movement_cancel';
   amount?: { amountMinor: number; currency: string };
   payee?: string;
   last4?: string;
@@ -180,6 +189,60 @@ export class DemoOnGemApi implements OnGemApi {
     if (company && company !== this.home)
       this.accountsState = this.accountsState.map((a) => ({ ...a, id: `${a.id}_${company}` }));
   }
+
+  /** OG-054: currencies, corridors, currency accounts, international recipients, quotes and movements. */
+  readonly fx = new DemoFx({
+    accounts: () => this.accountsState,
+    setAccounts: (a) => {
+      this.accountsState = a;
+    },
+    companyName: () =>
+      this.me_.memberships.find((m) => m.companyId === this.me_.companyId)?.companyName ?? '',
+    stepUp: (purpose, detail) => this.stepUp(purpose, detail as StepUpDetail),
+    require: (p) => this.require(p),
+    now: () => this.now(),
+    next: (p) => this.next(p),
+  });
+
+  /** The table of currencies is answered quietly: it is read by the shell, not by a screen the tests count calls of. */
+  currencies = async () => structuredClone(this.fx.currencies());
+  corridors = async () => {
+    this.require(Permission.PAYMENT_VIEW);
+    return this.log('corridors', this.fx.corridors());
+  };
+  corridor = async (id: string) => this.log('corridor', this.fx.corridor(id));
+  currencyAccountOptions = async () => this.log('currencyAccountOptions', this.fx.currencyAccountOptions());
+  openCurrencyAccount = async (r: { currency: string; nickname?: string | null }) =>
+    this.log('openCurrencyAccount', await this.fx.openCurrencyAccount(r));
+  receivingDetails = async (id: string) => this.log('receivingDetails', this.fx.receivingDetails(id));
+  internationalRecipients = async () => {
+    this.require(Permission.PAYMENT_VIEW);
+    return this.log('internationalRecipients', this.fx.internationalRecipients());
+  };
+  internationalRecipient = async (id: string) =>
+    this.log('internationalRecipient', this.fx.internationalRecipient(id));
+  createInternationalRecipient = async (r: CreateInternationalRecipient) =>
+    this.log('createInternationalRecipient', await this.fx.createInternationalRecipient(r));
+  archiveInternationalRecipient = async (id: string) =>
+    this.log('archiveInternationalRecipient', this.fx.archiveInternationalRecipient(id));
+  createQuote = async (r: CreateQuote) => {
+    this.require(Permission.PAYMENT_CREATE);
+    return this.log('createQuote', this.fx.createQuote(r));
+  };
+  acceptQuote = async (id: string) => this.log('acceptQuote', await this.fx.acceptQuote(id));
+  movements = async () => {
+    this.require(Permission.PAYMENT_VIEW);
+    return this.log('movements', this.fx.movements());
+  };
+  movement = async (id: string) => this.log('movement', this.fx.movement(id));
+  createMovement = async (r: CreateMovement) => this.log('createMovement', this.fx.createMovement(r));
+  submitMovement = async (id: string) => this.log('submitMovement', await this.fx.submitMovement(id));
+  approveMovement = async (id: string) => this.log('approveMovement', await this.fx.approveMovement(id));
+  rejectMovement = async (id: string) => this.log('rejectMovement', this.fx.rejectMovement(id));
+  cancelMovement = async (id: string) => this.log('cancelMovement', await this.fx.cancelMovement(id));
+  requoteMovement = async (id: string, quoteId: string) =>
+    this.log('requoteMovement', await this.fx.requoteMovement(id, quoteId));
+  movementReceipt = async (id: string) => this.log('movementReceipt', this.fx.receipt(id));
 
   private next(prefix: string) {
     this.seq += 1;
@@ -370,7 +433,10 @@ export class DemoOnGemApi implements OnGemApi {
       ]);
     return this.log(
       'transactions',
-      [...today, ...(demoTransactions[accountId] ?? [])].slice(0, Math.min(100, Math.max(1, limit))),
+      [...today, ...this.fx.transactions(accountId), ...(demoTransactions[accountId] ?? [])].slice(
+        0,
+        Math.min(100, Math.max(1, limit)),
+      ),
     );
   };
 
@@ -462,7 +528,28 @@ export class DemoOnGemApi implements OnGemApi {
 
   /** Demo files never leave the browser: the link is the sample file itself. */
   private demoLink(run: ExportRun) {
-    const csv = [run.from, run.to].join(',');
+    // OG-054: the lines block ends with the FX columns, empty on lines without a conversion.
+    const fxColumns = ['fx_pair', 'fx_rate', 'fx_provider_fee_minor', 'fx_margin_minor', 'fx_quote_id'];
+    const lines = this.fx
+      .transactions(run.accountId)
+      .map((x) =>
+        [
+          x.effectiveDate ?? '',
+          x.direction,
+          x.amount.amountMinor,
+          x.amount.currency,
+          x.fx?.pair ?? '',
+          x.fx?.rate ?? '',
+          x.fx?.providerFee?.amountMinor ?? '',
+          x.fx?.margin?.amountMinor ?? '',
+          x.fx?.quoteId ?? '',
+        ].join(','),
+      );
+    const csv = [
+      [run.from, run.to].join(','),
+      ['date', 'direction', 'amount_minor', 'currency', ...fxColumns].join(','),
+      ...lines,
+    ].join('\n');
     return { url: `data:text/csv;charset=utf-8,${encodeURIComponent(csv)}`, expiresAt: this.now() };
   }
 

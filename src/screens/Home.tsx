@@ -8,7 +8,8 @@ import { useAsync } from '../lib/useAsync';
 import { needsItems } from '../lib/needs';
 import { paymentLabel } from '../lib/states';
 import { useSession } from '../session';
-import { has, t } from '../i18n';
+import { institutionLabel } from '../lib/fx';
+import { t } from '../i18n';
 import { REGION_CONFIG } from '../region';
 import { ApplicationSteps } from './ApplicationSteps';
 import { NeedsYou } from './NeedsYou';
@@ -129,9 +130,9 @@ export function HomeScreen() {
                               <span className="fw-row__sub">
                                 <AcctLast4 value={a.last4} />
                               </span>
-                              {a.institution && has(a.institution) && (
+                              {institutionLabel(a) && (
                                 <span className="fw-row__sub" data-testid={`home-institution-${a.id}`}>
-                                  {t(a.institution)}
+                                  {institutionLabel(a)}
                                 </span>
                               )}
                             </span>

@@ -11696,6 +11696,2410 @@
       "meta": {},
       "en": "Still there?",
       "ar": "هل ما زلت هنا؟"
+    },
+    {
+      "key": "app.payments.tabs.international",
+      "format": "text",
+      "description": "Payments tab: conversions and payments abroad (OG-054) (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "International",
+      "ar": "دولية"
+    },
+    {
+      "key": "app.nav.title.convert",
+      "format": "text",
+      "description": "Browser tab title: convert between own accounts (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Convert",
+      "ar": "تحويل العملات"
+    },
+    {
+      "key": "app.nav.title.abroad",
+      "format": "text",
+      "description": "Browser tab title: send money abroad (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send abroad",
+      "ar": "إرسال إلى الخارج"
+    },
+    {
+      "key": "app.nav.title.international",
+      "format": "text",
+      "description": "Browser tab title: international movements (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "International",
+      "ar": "دولية"
+    },
+    {
+      "key": "app.common.loading.receipt",
+      "format": "text",
+      "description": "Skeleton while a movement receipt loads (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading the receipt",
+      "ar": "جارٍ تحميل الإيصال"
+    },
+    {
+      "key": "app.fx.next",
+      "format": "text",
+      "description": "Button: next step (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Next",
+      "ar": "التالي"
+    },
+    {
+      "key": "app.fx.back",
+      "format": "text",
+      "description": "Button: previous step (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Back",
+      "ar": "رجوع"
+    },
+    {
+      "key": "app.fx.back_to_list",
+      "format": "text",
+      "description": "Back from a movement to the international list (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Back to international",
+      "ar": "العودة إلى المعاملات الدولية"
+    },
+    {
+      "key": "app.fx.cancel",
+      "format": "text",
+      "description": "Button: close a form without saving (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cancel",
+      "ar": "إلغاء"
+    },
+    {
+      "key": "app.fx.copy",
+      "format": "text",
+      "description": "Button: copy a value (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Copy",
+      "ar": "نسخ"
+    },
+    {
+      "key": "app.fx.copy_named",
+      "format": "text",
+      "description": "Accessible name of a copy button (OG-054)",
+      "placeholders": [
+        "name"
+      ],
+      "meta": {},
+      "en": "Copy {name}",
+      "ar": "نسخ {name}"
+    },
+    {
+      "key": "app.fx.your_account",
+      "format": "text",
+      "description": "An own account whose name is not known (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "your account",
+      "ar": "حسابك"
+    },
+    {
+      "key": "app.fx.recipient_unknown",
+      "format": "text",
+      "description": "A recipient whose name is not known (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "the recipient",
+      "ar": "المستفيد"
+    },
+    {
+      "key": "app.fx.other_bank",
+      "format": "text",
+      "description": "An institution with no name from the API (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "another bank",
+      "ar": "بنك آخر"
+    },
+    {
+      "key": "app.fx.account_option",
+      "format": "text",
+      "description": "Account option with its currency (OG-054)",
+      "placeholders": [
+        "currency",
+        "name"
+      ],
+      "meta": {},
+      "en": "{name} ({currency})",
+      "ar": "{name} ({currency})"
+    },
+    {
+      "key": "app.fx.amount_error",
+      "format": "text",
+      "description": "Amount field error, decimals follow the currency (OG-054)",
+      "placeholders": [
+        "currency"
+      ],
+      "meta": {},
+      "en": "Enter an amount in {currency} with no more decimals than it has.",
+      "ar": "أدخل مبلغًا بعملة {currency} دون منازل عشرية أكثر مما تسمح به."
+    },
+    {
+      "key": "app.fx.rate_line",
+      "format": "text",
+      "description": "Exchange rate line (OG-054)",
+      "placeholders": [
+        "buy",
+        "rate",
+        "sell"
+      ],
+      "meta": {},
+      "en": "1 {sell} = {rate} {buy}",
+      "ar": "1 {sell} = {rate} {buy}"
+    },
+    {
+      "key": "app.fx.corridor_option",
+      "format": "text",
+      "description": "Corridor option: country, currency and rail (OG-054)",
+      "placeholders": [
+        "country",
+        "currency",
+        "rail"
+      ],
+      "meta": {},
+      "en": "{country}, {currency} by {rail}",
+      "ar": "{country}، {currency} عبر {rail}"
+    },
+    {
+      "key": "app.fx.settlement_hours",
+      "format": "text",
+      "description": "How long a corridor takes (OG-054)",
+      "placeholders": [
+        "max",
+        "min"
+      ],
+      "meta": {},
+      "en": "Usually arrives in {min} to {max} hours",
+      "ar": "يصل عادةً خلال {min} إلى {max} ساعة"
+    },
+    {
+      "key": "app.fx.export_note",
+      "format": "text",
+      "description": "Export form note on the FX columns (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Lines from a currency conversion also carry the pair, rate, provider fee, OnGem margin and quote.",
+      "ar": "تتضمن البنود الناتجة عن تحويل العملات أيضًا زوج العملات والسعر ورسوم المزوّد وهامش OnGem ورقم عرض السعر."
+    },
+    {
+      "key": "app.fx.rail.swift",
+      "format": "text",
+      "description": "Rail name (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "SWIFT",
+      "ar": "SWIFT"
+    },
+    {
+      "key": "app.fx.rail.sepa",
+      "format": "text",
+      "description": "Rail name (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "SEPA",
+      "ar": "SEPA"
+    },
+    {
+      "key": "app.fx.rail.fps",
+      "format": "text",
+      "description": "Rail name (UK) (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Faster Payments",
+      "ar": "المدفوعات السريعة"
+    },
+    {
+      "key": "app.fx.rail.local",
+      "format": "text",
+      "description": "Rail name: local scheme (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Local transfer",
+      "ar": "تحويل محلي"
+    },
+    {
+      "key": "app.fx.kind.abroad",
+      "format": "text",
+      "description": "Kind of movement (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment abroad",
+      "ar": "دفعة إلى الخارج"
+    },
+    {
+      "key": "app.fx.kind.convert",
+      "format": "text",
+      "description": "Kind of movement (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Currency conversion",
+      "ar": "تحويل عملة"
+    },
+    {
+      "key": "app.fx.account.held_at",
+      "format": "text",
+      "description": "Label: institution that holds the account (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Held at",
+      "ar": "لدى"
+    },
+    {
+      "key": "app.fx.account.currency",
+      "format": "text",
+      "description": "Label: account currency (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Currency",
+      "ar": "العملة"
+    },
+    {
+      "key": "app.fx.open.action",
+      "format": "text",
+      "description": "Accounts header button (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open a currency account",
+      "ar": "فتح حساب بعملة أخرى"
+    },
+    {
+      "key": "app.fx.open.title",
+      "format": "text",
+      "description": "Dialog title (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open a currency account",
+      "ar": "فتح حساب بعملة أخرى"
+    },
+    {
+      "key": "app.fx.open.intro",
+      "format": "text",
+      "description": "Dialog intro (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Hold money in another currency, with local details to get paid in it.",
+      "ar": "احتفظ بأموالك بعملة أخرى، مع بيانات محلية لاستلام المدفوعات بها."
+    },
+    {
+      "key": "app.fx.open.currency",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Currency",
+      "ar": "العملة"
+    },
+    {
+      "key": "app.fx.open.choose_currency",
+      "format": "text",
+      "description": "Select placeholder (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a currency",
+      "ar": "اختر عملة"
+    },
+    {
+      "key": "app.fx.open.currency_error",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose the currency of the new account.",
+      "ar": "اختر عملة الحساب الجديد."
+    },
+    {
+      "key": "app.fx.open.held_at",
+      "format": "text",
+      "description": "Hint naming the institution from the API (OG-054)",
+      "placeholders": [
+        "institution"
+      ],
+      "meta": {},
+      "en": "Held at {institution}",
+      "ar": "لدى {institution}"
+    },
+    {
+      "key": "app.fx.open.nickname",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Name (optional)",
+      "ar": "الاسم (اختياري)"
+    },
+    {
+      "key": "app.fx.open.nickname_hint",
+      "format": "text",
+      "description": "Field hint (OG-054)",
+      "placeholders": [
+        "max"
+      ],
+      "meta": {},
+      "en": "Up to {max} characters.",
+      "ar": "حتى {max} حرفًا."
+    },
+    {
+      "key": "app.fx.open.nickname_error",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [
+        "max"
+      ],
+      "meta": {},
+      "en": "Use {max} characters or fewer.",
+      "ar": "استخدم {max} حرفًا أو أقل."
+    },
+    {
+      "key": "app.fx.open.submit",
+      "format": "text",
+      "description": "Submit button (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open account",
+      "ar": "فتح الحساب"
+    },
+    {
+      "key": "app.fx.open.done_title",
+      "format": "text",
+      "description": "Dialog title after opening (OG-054)",
+      "placeholders": [
+        "currency"
+      ],
+      "meta": {},
+      "en": "Your {currency} account is open",
+      "ar": "تم فتح حسابك بعملة {currency}"
+    },
+    {
+      "key": "app.fx.open.done_text",
+      "format": "text",
+      "description": "Text after opening (OG-054)",
+      "placeholders": [
+        "name"
+      ],
+      "meta": {},
+      "en": "{name} is ready. Share these details with whoever pays you.",
+      "ar": "الحساب {name} جاهز. شارك هذه البيانات مع من يدفع لك."
+    },
+    {
+      "key": "app.fx.open.done",
+      "format": "text",
+      "description": "Button closing the dialog (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Done",
+      "ar": "تم"
+    },
+    {
+      "key": "app.fx.receiving.title",
+      "format": "text",
+      "description": "Card title: local receiving details (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Details for getting paid",
+      "ar": "بيانات استلام المدفوعات"
+    },
+    {
+      "key": "app.fx.receiving.intro",
+      "format": "text",
+      "description": "Card intro (OG-054)",
+      "placeholders": [
+        "currency"
+      ],
+      "meta": {},
+      "en": "Local details to receive {currency} into this account.",
+      "ar": "بيانات محلية لاستلام {currency} في هذا الحساب."
+    },
+    {
+      "key": "app.fx.receiving.show",
+      "format": "text",
+      "description": "Button: read the full details (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Show details",
+      "ar": "عرض البيانات"
+    },
+    {
+      "key": "app.fx.receiving.hide",
+      "format": "text",
+      "description": "Button: hide the details (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Hide details",
+      "ar": "إخفاء البيانات"
+    },
+    {
+      "key": "app.fx.receiving.none",
+      "format": "text",
+      "description": "Account without receiving details (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This account has no local details.",
+      "ar": "لا توجد بيانات محلية لهذا الحساب."
+    },
+    {
+      "key": "app.fx.receiving.note",
+      "format": "text",
+      "description": "Note under the details (OG-054)",
+      "placeholders": [
+        "currency"
+      ],
+      "meta": {},
+      "en": "Payers send {currency} to these details; it arrives in this account.",
+      "ar": "يرسل الدافعون {currency} إلى هذه البيانات فتصل إلى هذا الحساب."
+    },
+    {
+      "key": "app.fx.receiving.beneficiary",
+      "format": "text",
+      "description": "Label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account name",
+      "ar": "اسم الحساب"
+    },
+    {
+      "key": "app.fx.receiving.iban",
+      "format": "text",
+      "description": "Label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "IBAN",
+      "ar": "رقم الآيبان"
+    },
+    {
+      "key": "app.fx.receiving.bic",
+      "format": "text",
+      "description": "Label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "BIC",
+      "ar": "رمز BIC"
+    },
+    {
+      "key": "app.fx.receiving.sort_code",
+      "format": "text",
+      "description": "Label (UK) (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sort code",
+      "ar": "رمز الفرز"
+    },
+    {
+      "key": "app.fx.receiving.account_number",
+      "format": "text",
+      "description": "Label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account number",
+      "ar": "رقم الحساب"
+    },
+    {
+      "key": "app.fx.receiving.routing_number",
+      "format": "text",
+      "description": "Label (US) (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Routing number",
+      "ar": "رقم التوجيه"
+    },
+    {
+      "key": "app.fx.receiving.bank",
+      "format": "text",
+      "description": "Label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Bank",
+      "ar": "البنك"
+    },
+    {
+      "key": "app.fx.recipient.title",
+      "format": "text",
+      "description": "Card title (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "International recipients",
+      "ar": "المستفيدون الدوليون"
+    },
+    {
+      "key": "app.fx.recipient.subtitle",
+      "format": "text",
+      "description": "Card subtitle (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "People and companies abroad you pay in their currency.",
+      "ar": "أشخاص وشركات في الخارج تدفع لهم بعملتهم."
+    },
+    {
+      "key": "app.fx.recipient.add",
+      "format": "text",
+      "description": "Button (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add international recipient",
+      "ar": "إضافة مستفيد دولي"
+    },
+    {
+      "key": "app.fx.recipient.save",
+      "format": "text",
+      "description": "Submit button (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Save recipient",
+      "ar": "حفظ المستفيد"
+    },
+    {
+      "key": "app.fx.recipient.empty_title",
+      "format": "text",
+      "description": "Empty state title (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "No international recipients yet",
+      "ar": "لا يوجد مستفيدون دوليون بعد"
+    },
+    {
+      "key": "app.fx.recipient.empty_text",
+      "format": "text",
+      "description": "Empty state text (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add one to send money abroad.",
+      "ar": "أضف مستفيدًا لإرسال الأموال إلى الخارج."
+    },
+    {
+      "key": "app.fx.recipient.row",
+      "format": "text",
+      "description": "Recipient row: country and currency (OG-054)",
+      "placeholders": [
+        "country",
+        "currency"
+      ],
+      "meta": {},
+      "en": "{country}, {currency}",
+      "ar": "{country}، {currency}"
+    },
+    {
+      "key": "app.fx.recipient.corridor",
+      "format": "text",
+      "description": "Field label: corridor (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Where they are paid",
+      "ar": "مكان استلام الدفعة"
+    },
+    {
+      "key": "app.fx.recipient.corridor_hint",
+      "format": "text",
+      "description": "Field hint (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The country and currency decide which details we need.",
+      "ar": "تحدد الدولة والعملة البيانات المطلوبة."
+    },
+    {
+      "key": "app.fx.recipient.choose_corridor",
+      "format": "text",
+      "description": "Select placeholder (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a country and currency",
+      "ar": "اختر الدولة والعملة"
+    },
+    {
+      "key": "app.fx.recipient.kind",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recipient type",
+      "ar": "نوع المستفيد"
+    },
+    {
+      "key": "app.fx.recipient.kind_business",
+      "format": "text",
+      "description": "Option (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Business",
+      "ar": "شركة"
+    },
+    {
+      "key": "app.fx.recipient.kind_person",
+      "format": "text",
+      "description": "Option (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Person",
+      "ar": "فرد"
+    },
+    {
+      "key": "app.fx.recipient.iban",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "IBAN",
+      "ar": "رقم الآيبان"
+    },
+    {
+      "key": "app.fx.recipient.iban_hint",
+      "format": "text",
+      "description": "Field hint (OG-054)",
+      "placeholders": [
+        "country"
+      ],
+      "meta": {},
+      "en": "An IBAN from {country}.",
+      "ar": "رقم آيبان من {country}."
+    },
+    {
+      "key": "app.fx.recipient.bic",
+      "format": "text",
+      "description": "Field label, required (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "BIC",
+      "ar": "رمز BIC"
+    },
+    {
+      "key": "app.fx.recipient.bic_optional",
+      "format": "text",
+      "description": "Field label, optional (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "BIC (optional)",
+      "ar": "رمز BIC (اختياري)"
+    },
+    {
+      "key": "app.fx.recipient.bic_hint",
+      "format": "text",
+      "description": "Field hint (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "8 or 11 letters and digits.",
+      "ar": "8 أو 11 حرفًا ورقمًا."
+    },
+    {
+      "key": "app.fx.recipient.sort_code",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sort code",
+      "ar": "رمز الفرز"
+    },
+    {
+      "key": "app.fx.recipient.sort_code_hint",
+      "format": "text",
+      "description": "Field hint (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "6 digits, dashes allowed.",
+      "ar": "6 أرقام، ويمكن استخدام الشرطات."
+    },
+    {
+      "key": "app.fx.recipient.uk_account_hint",
+      "format": "text",
+      "description": "Field hint (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "8 digits.",
+      "ar": "8 أرقام."
+    },
+    {
+      "key": "app.fx.recipient.account_number",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Account number",
+      "ar": "رقم الحساب"
+    },
+    {
+      "key": "app.fx.recipient.routing_number",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "ABA routing number",
+      "ar": "رقم التوجيه ABA"
+    },
+    {
+      "key": "app.fx.recipient.local_scheme",
+      "format": "text",
+      "description": "Field label, such as IFSC (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Bank code type",
+      "ar": "نوع رمز البنك"
+    },
+    {
+      "key": "app.fx.recipient.local_scheme_hint",
+      "format": "text",
+      "description": "Field hint (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The local name of the code, such as IFSC.",
+      "ar": "الاسم المحلي للرمز، مثل IFSC."
+    },
+    {
+      "key": "app.fx.recipient.bank_code",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Bank code",
+      "ar": "رمز البنك"
+    },
+    {
+      "key": "app.fx.recipient.address",
+      "format": "text",
+      "description": "Fieldset legend (OG-054)",
+      "placeholders": [
+        "country"
+      ],
+      "meta": {},
+      "en": "Address in {country}",
+      "ar": "العنوان في {country}"
+    },
+    {
+      "key": "app.fx.recipient.address_line1",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Street and number",
+      "ar": "الشارع والرقم"
+    },
+    {
+      "key": "app.fx.recipient.address_city",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "City",
+      "ar": "المدينة"
+    },
+    {
+      "key": "app.fx.recipient.address_postalcode",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Postal code",
+      "ar": "الرمز البريدي"
+    },
+    {
+      "key": "app.fx.recipient.error.required",
+      "format": "text",
+      "description": "Field error: missing (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This is needed for this country.",
+      "ar": "هذا الحقل مطلوب لهذه الدولة."
+    },
+    {
+      "key": "app.fx.recipient.error.name",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter the recipient's name, up to 140 characters.",
+      "ar": "أدخل اسم المستفيد، حتى 140 حرفًا."
+    },
+    {
+      "key": "app.fx.recipient.error.iban",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the IBAN: its length, check digits and country must match.",
+      "ar": "تحقق من رقم الآيبان: يجب أن يتطابق طوله وأرقام التحقق والدولة."
+    },
+    {
+      "key": "app.fx.recipient.error.bic",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "A BIC is 8 or 11 letters and digits.",
+      "ar": "يتكون رمز BIC من 8 أو 11 حرفًا ورقمًا."
+    },
+    {
+      "key": "app.fx.recipient.error.sort_code",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "A sort code is 6 digits.",
+      "ar": "يتكون رمز الفرز من 6 أرقام."
+    },
+    {
+      "key": "app.fx.recipient.error.routing_number",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the routing number: 9 digits that pass the ABA check.",
+      "ar": "تحقق من رقم التوجيه: 9 أرقام تجتاز فحص ABA."
+    },
+    {
+      "key": "app.fx.recipient.error.account_number",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the account number for this country.",
+      "ar": "تحقق من رقم الحساب لهذه الدولة."
+    },
+    {
+      "key": "app.fx.recipient.error.local_scheme",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Use 2 to 20 characters.",
+      "ar": "استخدم من 2 إلى 20 حرفًا."
+    },
+    {
+      "key": "app.fx.recipient.error.bank_code",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Use up to 20 letters or digits.",
+      "ar": "استخدم حتى 20 حرفًا أو رقمًا."
+    },
+    {
+      "key": "app.fx.recipient.error.address",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter the street, city and postal code, up to 100 characters each.",
+      "ar": "أدخل الشارع والمدينة والرمز البريدي، حتى 100 حرف لكل منها."
+    },
+    {
+      "key": "app.fx.quote.get",
+      "format": "text",
+      "description": "Button (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Get a quote",
+      "ar": "احصل على عرض سعر"
+    },
+    {
+      "key": "app.fx.quote.again",
+      "format": "text",
+      "description": "Button after a quote expired (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Get a new quote",
+      "ar": "احصل على عرض سعر جديد"
+    },
+    {
+      "key": "app.fx.quote.accept",
+      "format": "text",
+      "description": "Button (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accept quote",
+      "ar": "قبول عرض السعر"
+    },
+    {
+      "key": "app.fx.quote.rate",
+      "format": "text",
+      "description": "Label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Rate",
+      "ar": "السعر"
+    },
+    {
+      "key": "app.fx.quote.converted",
+      "format": "text",
+      "description": "Label: amount sold (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Converted",
+      "ar": "المبلغ المحوّل"
+    },
+    {
+      "key": "app.fx.quote.provider_fee",
+      "format": "text",
+      "description": "Label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Provider fee",
+      "ar": "رسوم المزوّد"
+    },
+    {
+      "key": "app.fx.quote.margin",
+      "format": "text",
+      "description": "Label: OnGem margin, shown apart (OG-054)",
+      "placeholders": [
+        "bps"
+      ],
+      "meta": {},
+      "en": "OnGem margin ({bps} bps)",
+      "ar": "هامش OnGem ({bps} نقطة أساس)"
+    },
+    {
+      "key": "app.fx.quote.total",
+      "format": "text",
+      "description": "Label: total debit (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Total from your account",
+      "ar": "الإجمالي من حسابك"
+    },
+    {
+      "key": "app.fx.quote.receive",
+      "format": "text",
+      "description": "Label: amount bought (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "They receive",
+      "ar": "يستلم"
+    },
+    {
+      "key": "app.fx.quote.expires_in",
+      "format": "text",
+      "description": "Quote countdown (OG-054)",
+      "placeholders": [
+        "seconds"
+      ],
+      "meta": {},
+      "en": "This price is held for {seconds} s.",
+      "ar": "هذا السعر محجوز لمدة {seconds} ث."
+    },
+    {
+      "key": "app.fx.quote.expired",
+      "format": "text",
+      "description": "Quote expired (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This price has expired. Get a new quote.",
+      "ar": "انتهت صلاحية هذا السعر. احصل على عرض سعر جديد."
+    },
+    {
+      "key": "app.fx.convert.action",
+      "format": "text",
+      "description": "Button opening Convert (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Convert",
+      "ar": "تحويل العملات"
+    },
+    {
+      "key": "app.fx.convert.title",
+      "format": "text",
+      "description": "Card title (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Convert between your accounts",
+      "ar": "التحويل بين حساباتك"
+    },
+    {
+      "key": "app.fx.convert.from",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "From",
+      "ar": "من"
+    },
+    {
+      "key": "app.fx.convert.to",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Into",
+      "ar": "إلى"
+    },
+    {
+      "key": "app.fx.convert.to_error",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose the account to convert into.",
+      "ar": "اختر الحساب الذي تريد التحويل إليه."
+    },
+    {
+      "key": "app.fx.convert.amount",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [
+        "currency"
+      ],
+      "meta": {},
+      "en": "Amount to convert ({currency})",
+      "ar": "المبلغ المراد تحويله ({currency})"
+    },
+    {
+      "key": "app.fx.convert.where",
+      "format": "text",
+      "description": "Summary label: institution of the target account (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Held at",
+      "ar": "لدى"
+    },
+    {
+      "key": "app.fx.convert.none",
+      "format": "text",
+      "description": "No account to convert into (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "You need accounts in two currencies to convert.",
+      "ar": "تحتاج إلى حسابين بعملتين مختلفتين لإجراء التحويل."
+    },
+    {
+      "key": "app.fx.convert.via_missing",
+      "format": "text",
+      "description": "Cross-bank conversion needs an own account at the other bank (OG-054)",
+      "placeholders": [
+        "currency",
+        "institution"
+      ],
+      "meta": {},
+      "en": "To convert into this account, first open a {currency} account at {institution}.",
+      "ar": "للتحويل إلى هذا الحساب، افتح أولًا حسابًا بعملة {currency} لدى {institution}."
+    },
+    {
+      "key": "app.fx.convert.via_open",
+      "format": "text",
+      "description": "Link to open the needed account (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open it",
+      "ar": "افتحه"
+    },
+    {
+      "key": "app.fx.convert.via_note",
+      "format": "text",
+      "description": "Cross-bank conversion note (OG-054)",
+      "placeholders": [
+        "institution",
+        "via"
+      ],
+      "meta": {},
+      "en": "The money first moves to {via} at {institution}, then converts there.",
+      "ar": "تنتقل الأموال أولًا إلى {via} لدى {institution}، ثم يتم تحويلها هناك."
+    },
+    {
+      "key": "app.fx.convert.accept_note",
+      "format": "text",
+      "description": "Note before accepting (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accepting confirms it is you, then the conversion starts.",
+      "ar": "يؤكد القبول هويتك، ثم يبدأ التحويل."
+    },
+    {
+      "key": "app.fx.convert.accept",
+      "format": "text",
+      "description": "Button (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accept and convert",
+      "ar": "قبول وتحويل"
+    },
+    {
+      "key": "app.fx.abroad.action",
+      "format": "text",
+      "description": "Button opening Send abroad (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send abroad",
+      "ar": "إرسال إلى الخارج"
+    },
+    {
+      "key": "app.fx.abroad.title",
+      "format": "text",
+      "description": "Card title (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send money abroad",
+      "ar": "إرسال الأموال إلى الخارج"
+    },
+    {
+      "key": "app.fx.abroad.step",
+      "format": "text",
+      "description": "Step counter (OG-054)",
+      "placeholders": [
+        "step",
+        "total"
+      ],
+      "meta": {},
+      "en": "Step {step} of {total}",
+      "ar": "الخطوة {step} من {total}"
+    },
+    {
+      "key": "app.fx.abroad.off",
+      "format": "text",
+      "description": "No corridor offered (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sending abroad is not available for your company yet.",
+      "ar": "الإرسال إلى الخارج غير متاح لشركتك بعد."
+    },
+    {
+      "key": "app.fx.abroad.corridor",
+      "format": "text",
+      "description": "Field label: corridor (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Where to",
+      "ar": "إلى أين"
+    },
+    {
+      "key": "app.fx.abroad.corridor_hint",
+      "format": "text",
+      "description": "Field hint (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The countries and currencies you can send to today.",
+      "ar": "الدول والعملات التي يمكنك الإرسال إليها اليوم."
+    },
+    {
+      "key": "app.fx.abroad.choose_corridor",
+      "format": "text",
+      "description": "Select placeholder (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a country and currency",
+      "ar": "اختر الدولة والعملة"
+    },
+    {
+      "key": "app.fx.abroad.corridor_error",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose where the money goes.",
+      "ar": "اختر وجهة الأموال."
+    },
+    {
+      "key": "app.fx.abroad.limits",
+      "format": "text",
+      "description": "Corridor limits (OG-054)",
+      "placeholders": [
+        "max",
+        "min"
+      ],
+      "meta": {},
+      "en": "Per payment: {min} to {max}.",
+      "ar": "لكل دفعة: من {min} إلى {max}."
+    },
+    {
+      "key": "app.fx.abroad.recipient",
+      "format": "text",
+      "description": "Field label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recipient",
+      "ar": "المستفيد"
+    },
+    {
+      "key": "app.fx.abroad.recipient_hint",
+      "format": "text",
+      "description": "Field hint (OG-054)",
+      "placeholders": [
+        "country",
+        "currency"
+      ],
+      "meta": {},
+      "en": "Recipients in {country} paid in {currency}.",
+      "ar": "المستفيدون في {country} بعملة {currency}."
+    },
+    {
+      "key": "app.fx.abroad.recipient_none",
+      "format": "text",
+      "description": "No fitting recipient (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "No recipient here yet. Add one.",
+      "ar": "لا يوجد مستفيد هنا بعد. أضف مستفيدًا."
+    },
+    {
+      "key": "app.fx.abroad.recipient_error",
+      "format": "text",
+      "description": "Field error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose who receives the money.",
+      "ar": "اختر من سيستلم الأموال."
+    },
+    {
+      "key": "app.fx.abroad.recipient_option",
+      "format": "text",
+      "description": "Recipient option (OG-054)",
+      "placeholders": [
+        "last4",
+        "name"
+      ],
+      "meta": {},
+      "en": "{name}, ending {last4}",
+      "ar": "{name}، ينتهي بـ {last4}"
+    },
+    {
+      "key": "app.fx.abroad.amount",
+      "format": "text",
+      "description": "Field label: amount delivered (OG-054)",
+      "placeholders": [
+        "currency"
+      ],
+      "meta": {},
+      "en": "They receive ({currency})",
+      "ar": "يستلم ({currency})"
+    },
+    {
+      "key": "app.fx.abroad.under_min",
+      "format": "text",
+      "description": "Amount under the corridor minimum (OG-054)",
+      "placeholders": [
+        "min"
+      ],
+      "meta": {},
+      "en": "The smallest payment here is {min}.",
+      "ar": "أقل دفعة هنا هي {min}."
+    },
+    {
+      "key": "app.fx.abroad.over_max",
+      "format": "text",
+      "description": "Amount over the corridor maximum (OG-054)",
+      "placeholders": [
+        "max"
+      ],
+      "meta": {},
+      "en": "The largest payment here is {max}.",
+      "ar": "أكبر دفعة هنا هي {max}."
+    },
+    {
+      "key": "app.fx.abroad.no_source",
+      "format": "text",
+      "description": "No source account (OG-054)",
+      "placeholders": [
+        "currency"
+      ],
+      "meta": {},
+      "en": "You need an active {currency} account to send this.",
+      "ar": "تحتاج إلى حساب نشط بعملة {currency} لإرسال هذه الدفعة."
+    },
+    {
+      "key": "app.fx.abroad.they_get",
+      "format": "text",
+      "description": "Summary label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "They receive",
+      "ar": "يستلم"
+    },
+    {
+      "key": "app.fx.abroad.accept_note",
+      "format": "text",
+      "description": "Note before accepting (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accepting confirms it is you. A payment over your company's limit waits for a second person.",
+      "ar": "يؤكد القبول هويتك. وتنتظر الدفعة التي تتجاوز حد شركتك موافقة شخص آخر."
+    },
+    {
+      "key": "app.fx.abroad.accept",
+      "format": "text",
+      "description": "Button (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accept and send",
+      "ar": "قبول وإرسال"
+    },
+    {
+      "key": "app.fx.list.subtitle",
+      "format": "text",
+      "description": "International tab subtitle (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Conversions and payments abroad.",
+      "ar": "تحويلات العملات والمدفوعات إلى الخارج."
+    },
+    {
+      "key": "app.fx.list.empty_title",
+      "format": "text",
+      "description": "Empty state title (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Nothing international yet",
+      "ar": "لا توجد معاملات دولية بعد"
+    },
+    {
+      "key": "app.fx.list.empty_text",
+      "format": "text",
+      "description": "Empty state text (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Conversions and payments abroad will show here.",
+      "ar": "ستظهر هنا تحويلات العملات والمدفوعات إلى الخارج."
+    },
+    {
+      "key": "app.fx.sent.done",
+      "format": "text",
+      "description": "Notice after submitting (OG-054)",
+      "placeholders": [
+        "payee"
+      ],
+      "meta": {},
+      "en": "On its way to {payee}.",
+      "ar": "في طريقها إلى {payee}."
+    },
+    {
+      "key": "app.fx.sent.waiting",
+      "format": "text",
+      "description": "Notice after submitting, approval needed (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sent for approval. A second person needs to approve it.",
+      "ar": "أُرسلت للموافقة. يجب أن يوافق عليها شخص آخر."
+    },
+    {
+      "key": "app.fx.detail.to",
+      "format": "text",
+      "description": "Movement detail line (OG-054)",
+      "placeholders": [
+        "payee"
+      ],
+      "meta": {},
+      "en": "To {payee}",
+      "ar": "إلى {payee}"
+    },
+    {
+      "key": "app.fx.detail.debit",
+      "format": "text",
+      "description": "Label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Total from your account",
+      "ar": "الإجمالي من حسابك"
+    },
+    {
+      "key": "app.fx.detail.country",
+      "format": "text",
+      "description": "Label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Country",
+      "ar": "الدولة"
+    },
+    {
+      "key": "app.fx.detail.created",
+      "format": "text",
+      "description": "Label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Created",
+      "ar": "تاريخ الإنشاء"
+    },
+    {
+      "key": "app.fx.detail.fx_title",
+      "format": "text",
+      "description": "Section title: FX lines (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Exchange",
+      "ar": "الصرف"
+    },
+    {
+      "key": "app.fx.detail.legs_title",
+      "format": "text",
+      "description": "Section title: legs (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Steps",
+      "ar": "الخطوات"
+    },
+    {
+      "key": "app.fx.detail.submit",
+      "format": "text",
+      "description": "Button: submit a planned movement (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send it",
+      "ar": "إرساله"
+    },
+    {
+      "key": "app.fx.detail.cancel",
+      "format": "text",
+      "description": "Button: cancel a movement (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cancel it",
+      "ar": "إلغاؤه"
+    },
+    {
+      "key": "app.fx.requote.text",
+      "format": "text",
+      "description": "Movement waiting for a new quote (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The price expired before the conversion ran. Your money is safe; accept a new price to go on.",
+      "ar": "انتهت صلاحية السعر قبل تنفيذ التحويل. أموالك بأمان؛ اقبل سعرًا جديدًا للمتابعة."
+    },
+    {
+      "key": "app.fx.requote.ask",
+      "format": "text",
+      "description": "Button (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Get a new price",
+      "ar": "احصل على سعر جديد"
+    },
+    {
+      "key": "app.fx.receipt.open",
+      "format": "text",
+      "description": "Button (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "View receipt",
+      "ar": "عرض الإيصال"
+    },
+    {
+      "key": "app.fx.receipt.title",
+      "format": "text",
+      "description": "Dialog title (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Receipt",
+      "ar": "الإيصال"
+    },
+    {
+      "key": "app.fx.receipt.kind",
+      "format": "text",
+      "description": "Label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Type",
+      "ar": "النوع"
+    },
+    {
+      "key": "app.fx.receipt.state",
+      "format": "text",
+      "description": "Label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Status",
+      "ar": "الحالة"
+    },
+    {
+      "key": "app.fx.receipt.deliver",
+      "format": "text",
+      "description": "Label (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Delivered",
+      "ar": "المبلغ المسلَّم"
+    },
+    {
+      "key": "app.fx.receipt.corridor",
+      "format": "text",
+      "description": "Label: corridor (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sent by",
+      "ar": "أُرسلت عبر"
+    },
+    {
+      "key": "app.fx.receipt.corridor_value",
+      "format": "text",
+      "description": "Corridor on a receipt (OG-054)",
+      "placeholders": [
+        "country",
+        "rail"
+      ],
+      "meta": {},
+      "en": "{rail} to {country}",
+      "ar": "{rail} إلى {country}"
+    },
+    {
+      "key": "app.fx.receipt.quote",
+      "format": "text",
+      "description": "Label: quote id (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Quote",
+      "ar": "عرض السعر"
+    },
+    {
+      "key": "app.fx.receipt.settled",
+      "format": "text",
+      "description": "Label: settled at (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Completed",
+      "ar": "اكتمل في"
+    },
+    {
+      "key": "app.fx.receipt.not_settled",
+      "format": "text",
+      "description": "Not settled yet (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not yet",
+      "ar": "ليس بعد"
+    },
+    {
+      "key": "app.fx.txn.fee",
+      "format": "text",
+      "description": "Transaction FX line: provider fee (OG-054)",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "fee {amount}",
+      "ar": "رسوم {amount}"
+    },
+    {
+      "key": "app.fx.txn.margin",
+      "format": "text",
+      "description": "Transaction FX line: margin (OG-054)",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "OnGem margin {amount}",
+      "ar": "هامش OnGem {amount}"
+    },
+    {
+      "key": "app.fx.txn.open",
+      "format": "text",
+      "description": "Link from a transaction to its movement (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "View",
+      "ar": "عرض"
+    },
+    {
+      "key": "app.fx.movement.state.planned",
+      "format": "text",
+      "description": "Movement state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ready to send",
+      "ar": "جاهزة للإرسال"
+    },
+    {
+      "key": "app.fx.movement.state.pending_approval",
+      "format": "text",
+      "description": "Movement state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for approval",
+      "ar": "بانتظار الموافقة"
+    },
+    {
+      "key": "app.fx.movement.state.running",
+      "format": "text",
+      "description": "Movement state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "On its way",
+      "ar": "قيد التنفيذ"
+    },
+    {
+      "key": "app.fx.movement.state.in_transit",
+      "format": "text",
+      "description": "Movement state: money between own banks (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "In transit",
+      "ar": "قيد النقل"
+    },
+    {
+      "key": "app.fx.movement.state.parked",
+      "format": "text",
+      "description": "Movement state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Checking with the bank",
+      "ar": "جارٍ التحقق مع البنك"
+    },
+    {
+      "key": "app.fx.movement.state.awaiting_quote",
+      "format": "text",
+      "description": "Movement state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Needs a new price",
+      "ar": "تحتاج إلى سعر جديد"
+    },
+    {
+      "key": "app.fx.movement.state.settled",
+      "format": "text",
+      "description": "Movement state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Completed",
+      "ar": "مكتملة"
+    },
+    {
+      "key": "app.fx.movement.state.failed",
+      "format": "text",
+      "description": "Movement state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Failed",
+      "ar": "فشلت"
+    },
+    {
+      "key": "app.fx.movement.state.needs_ops",
+      "format": "text",
+      "description": "Movement state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem is looking into it",
+      "ar": "يتابعها فريق OnGem"
+    },
+    {
+      "key": "app.fx.movement.state.rejected",
+      "format": "text",
+      "description": "Movement state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Declined",
+      "ar": "مرفوضة"
+    },
+    {
+      "key": "app.fx.movement.state.refused",
+      "format": "text",
+      "description": "Movement state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Refused",
+      "ar": "مرفوضة من البنك"
+    },
+    {
+      "key": "app.fx.movement.state.cancelled",
+      "format": "text",
+      "description": "Movement state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cancelled",
+      "ar": "ملغاة"
+    },
+    {
+      "key": "app.fx.movement.sentence.planned",
+      "format": "text",
+      "description": "Movement sentence (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Nothing has moved yet.",
+      "ar": "لم تتحرك أي أموال بعد."
+    },
+    {
+      "key": "app.fx.movement.sentence.pending_approval",
+      "format": "text",
+      "description": "Movement sentence (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "A second person in your company needs to approve it.",
+      "ar": "يجب أن يوافق عليها شخص آخر في شركتك."
+    },
+    {
+      "key": "app.fx.movement.sentence.running",
+      "format": "text",
+      "description": "Movement sentence (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The steps below are running.",
+      "ar": "يجري تنفيذ الخطوات أدناه."
+    },
+    {
+      "key": "app.fx.movement.sentence.in_transit",
+      "format": "text",
+      "description": "Movement sentence (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The money is between your banks. It converts once it arrives.",
+      "ar": "الأموال في طريقها بين بنوكك، وسيتم تحويلها عند وصولها."
+    },
+    {
+      "key": "app.fx.movement.sentence.parked",
+      "format": "text",
+      "description": "Movement sentence (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "We are checking a step with the bank before anything else moves.",
+      "ar": "نتحقق من إحدى الخطوات مع البنك قبل أي حركة أخرى."
+    },
+    {
+      "key": "app.fx.movement.sentence.awaiting_quote",
+      "format": "text",
+      "description": "Movement sentence (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The price expired. Nothing converts until you accept a new one.",
+      "ar": "انتهت صلاحية السعر. لن يتم أي تحويل حتى تقبل سعرًا جديدًا."
+    },
+    {
+      "key": "app.fx.movement.sentence.settled",
+      "format": "text",
+      "description": "Movement sentence (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Done. The receipt has every line.",
+      "ar": "تمت. يتضمن الإيصال جميع البنود."
+    },
+    {
+      "key": "app.fx.movement.sentence.failed",
+      "format": "text",
+      "description": "Movement sentence (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "It did not go through. Contact support if money left your account.",
+      "ar": "لم تكتمل. تواصل مع الدعم إذا خرجت أموال من حسابك."
+    },
+    {
+      "key": "app.fx.movement.sentence.needs_ops",
+      "format": "text",
+      "description": "Movement sentence (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "A step needs a person at OnGem. We will contact you.",
+      "ar": "تحتاج إحدى الخطوات إلى تدخل فريق OnGem. سنتواصل معك."
+    },
+    {
+      "key": "app.fx.movement.sentence.rejected",
+      "format": "text",
+      "description": "Movement sentence (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "It was declined, so nothing moved.",
+      "ar": "تم رفضها، لذلك لم تتحرك أي أموال."
+    },
+    {
+      "key": "app.fx.movement.sentence.refused",
+      "format": "text",
+      "description": "Movement sentence (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank refused it, so nothing moved.",
+      "ar": "رفضها البنك، لذلك لم تتحرك أي أموال."
+    },
+    {
+      "key": "app.fx.movement.sentence.cancelled",
+      "format": "text",
+      "description": "Movement sentence (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "It was cancelled before money moved.",
+      "ar": "أُلغيت قبل تحرك الأموال."
+    },
+    {
+      "key": "app.fx.leg.internal",
+      "format": "text",
+      "description": "Leg (OG-054)",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "Move {amount} between your accounts",
+      "ar": "نقل {amount} بين حساباتك"
+    },
+    {
+      "key": "app.fx.leg.first_party",
+      "format": "text",
+      "description": "Leg: between own accounts at two banks (OG-054)",
+      "placeholders": [
+        "amount",
+        "from",
+        "via"
+      ],
+      "meta": {},
+      "en": "Move {amount} from {from} to {via}",
+      "ar": "نقل {amount} من {from} إلى {via}"
+    },
+    {
+      "key": "app.fx.leg.fx",
+      "format": "text",
+      "description": "Leg (OG-054)",
+      "placeholders": [
+        "buy",
+        "sell"
+      ],
+      "meta": {},
+      "en": "Convert {sell} to {buy}",
+      "ar": "تحويل {sell} إلى {buy}"
+    },
+    {
+      "key": "app.fx.leg.remittance",
+      "format": "text",
+      "description": "Leg: payout abroad (OG-054)",
+      "placeholders": [
+        "buy",
+        "payee"
+      ],
+      "meta": {},
+      "en": "Pay {buy} to {payee}",
+      "ar": "دفع {buy} إلى {payee}"
+    },
+    {
+      "key": "app.fx.leg.margin",
+      "format": "text",
+      "description": "Leg: OnGem margin (OG-054)",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "OnGem margin of {amount}",
+      "ar": "هامش OnGem بقيمة {amount}"
+    },
+    {
+      "key": "app.fx.leg.state.planned",
+      "format": "text",
+      "description": "Leg state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not started",
+      "ar": "لم تبدأ"
+    },
+    {
+      "key": "app.fx.leg.state.submitted",
+      "format": "text",
+      "description": "Leg state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "In progress",
+      "ar": "قيد التنفيذ"
+    },
+    {
+      "key": "app.fx.leg.state.in_transit",
+      "format": "text",
+      "description": "Leg state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "In transit between your banks",
+      "ar": "قيد النقل بين بنوكك"
+    },
+    {
+      "key": "app.fx.leg.state.settled",
+      "format": "text",
+      "description": "Leg state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Done",
+      "ar": "تمت"
+    },
+    {
+      "key": "app.fx.leg.state.unknown",
+      "format": "text",
+      "description": "Leg state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Checking with the bank",
+      "ar": "جارٍ التحقق مع البنك"
+    },
+    {
+      "key": "app.fx.leg.state.failed",
+      "format": "text",
+      "description": "Leg state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Failed",
+      "ar": "فشلت"
+    },
+    {
+      "key": "app.fx.leg.state.void",
+      "format": "text",
+      "description": "Leg state (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not needed",
+      "ar": "غير مطلوبة"
+    },
+    {
+      "key": "app.session.reverify.action.account_open",
+      "format": "text",
+      "description": "Step-up title: open a currency account; payee holds the currency (OG-054)",
+      "placeholders": [
+        "payee"
+      ],
+      "meta": {},
+      "en": "Open a {payee} account",
+      "ar": "فتح حساب بعملة {payee}"
+    },
+    {
+      "key": "app.session.reverify.action.fx_accept",
+      "format": "text",
+      "description": "Step-up title: accept a quote (OG-054)",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "Accept a price for {amount}",
+      "ar": "قبول سعر بقيمة {amount}"
+    },
+    {
+      "key": "app.session.reverify.action.movement_submit",
+      "format": "text",
+      "description": "Step-up title: submit a movement (OG-054)",
+      "placeholders": [
+        "amount",
+        "payee"
+      ],
+      "meta": {},
+      "en": "Send {amount} to {payee}",
+      "ar": "إرسال {amount} إلى {payee}"
+    },
+    {
+      "key": "app.session.reverify.action.movement_approve",
+      "format": "text",
+      "description": "Step-up title: approve a movement (OG-054)",
+      "placeholders": [
+        "amount",
+        "payee"
+      ],
+      "meta": {},
+      "en": "Approve {amount} to {payee}",
+      "ar": "الموافقة على {amount} إلى {payee}"
+    },
+    {
+      "key": "app.session.reverify.action.movement_cancel",
+      "format": "text",
+      "description": "Step-up title: cancel a movement (OG-054)",
+      "placeholders": [
+        "amount",
+        "payee"
+      ],
+      "meta": {},
+      "en": "Cancel {amount} to {payee}",
+      "ar": "إلغاء {amount} إلى {payee}"
+    },
+    {
+      "key": "app.errors.currency_unsupported",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "OnGem does not handle that currency.",
+      "ar": "لا يتعامل OnGem مع هذه العملة."
+    },
+    {
+      "key": "app.errors.corridor_not_found",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "You cannot send to that country and currency now.",
+      "ar": "لا يمكنك الإرسال إلى هذه الدولة بهذه العملة الآن."
+    },
+    {
+      "key": "app.errors.corridor_unavailable",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sending to that country is paused. Try again later.",
+      "ar": "الإرسال إلى هذه الدولة متوقف مؤقتًا. حاول لاحقًا."
+    },
+    {
+      "key": "app.errors.corridor_amount_out_of_range",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That amount is outside the limits for this country.",
+      "ar": "هذا المبلغ خارج الحدود المسموح بها لهذه الدولة."
+    },
+    {
+      "key": "app.errors.corridor_exists",
+      "format": "text",
+      "description": "Error (ops) (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This corridor already exists.",
+      "ar": "هذا المسار موجود بالفعل."
+    },
+    {
+      "key": "app.errors.corridor_change_pending",
+      "format": "text",
+      "description": "Error (ops) (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Another change to this corridor is waiting for approval.",
+      "ar": "هناك تغيير آخر على هذا المسار بانتظار الموافقة."
+    },
+    {
+      "key": "app.errors.corridor_change_not_found",
+      "format": "text",
+      "description": "Error (ops) (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That change was not found.",
+      "ar": "لم يتم العثور على هذا التغيير."
+    },
+    {
+      "key": "app.errors.corridor_change_not_pending",
+      "format": "text",
+      "description": "Error (ops) (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That change was already applied or rejected.",
+      "ar": "تم تطبيق هذا التغيير أو رفضه بالفعل."
+    },
+    {
+      "key": "app.errors.recipient_field_required",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This country needs more details for the recipient.",
+      "ar": "تتطلب هذه الدولة بيانات إضافية عن المستفيد."
+    },
+    {
+      "key": "app.errors.recipient_corridor_mismatch",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The recipient, account or currency does not fit where you are sending.",
+      "ar": "المستفيد أو الحساب أو العملة لا يتوافق مع الوجهة."
+    },
+    {
+      "key": "app.errors.iban_invalid",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The IBAN is not valid.",
+      "ar": "رقم الآيبان غير صالح."
+    },
+    {
+      "key": "app.errors.bic_invalid",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The BIC is not valid.",
+      "ar": "رمز BIC غير صالح."
+    },
+    {
+      "key": "app.errors.sort_code_invalid",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The sort code is not valid.",
+      "ar": "رمز الفرز غير صالح."
+    },
+    {
+      "key": "app.errors.routing_number_invalid",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The routing number is not valid.",
+      "ar": "رقم التوجيه غير صالح."
+    },
+    {
+      "key": "app.errors.account_number_invalid",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The account number is not valid.",
+      "ar": "رقم الحساب غير صالح."
+    },
+    {
+      "key": "app.errors.currency_accounts_disabled",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Currency accounts are not available yet.",
+      "ar": "الحسابات بعملات أخرى غير متاحة بعد."
+    },
+    {
+      "key": "app.errors.currency_account_unavailable",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "No bank offers an account in that currency now.",
+      "ar": "لا يقدم أي بنك حسابًا بهذه العملة حاليًا."
+    },
+    {
+      "key": "app.errors.currency_account_exists",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "You already have an account in that currency there.",
+      "ar": "لديك بالفعل حساب بهذه العملة هناك."
+    },
+    {
+      "key": "app.errors.primary_account_required",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your main account needs to be open first.",
+      "ar": "يجب فتح حسابك الرئيسي أولًا."
+    },
+    {
+      "key": "app.errors.account_open_pending",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank has not answered yet. Try again; it will never open twice.",
+      "ar": "لم يرد البنك بعد. حاول مرة أخرى؛ لن يُفتح الحساب مرتين."
+    },
+    {
+      "key": "app.errors.receiving_details_unavailable",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This account has no local details.",
+      "ar": "لا توجد بيانات محلية لهذا الحساب."
+    },
+    {
+      "key": "app.errors.first_party_unavailable",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Money cannot move between these two banks now.",
+      "ar": "لا يمكن نقل الأموال بين هذين البنكين حاليًا."
+    },
+    {
+      "key": "app.errors.drift_item_not_found",
+      "format": "text",
+      "description": "Error (ops) (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That finding was not found.",
+      "ar": "لم يتم العثور على هذه الملاحظة."
+    },
+    {
+      "key": "app.errors.drift_run_not_found",
+      "format": "text",
+      "description": "Error (ops) (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That check was not found.",
+      "ar": "لم يتم العثور على هذا الفحص."
+    },
+    {
+      "key": "app.errors.idempotency_key_required",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Something went wrong sending that. Try again.",
+      "ar": "حدث خطأ أثناء الإرسال. حاول مرة أخرى."
+    },
+    {
+      "key": "app.errors.idempotency_key_reused",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That request was already sent with other details. Start again.",
+      "ar": "أُرسل هذا الطلب بالفعل ببيانات أخرى. ابدأ من جديد."
+    },
+    {
+      "key": "app.errors.ops_issuer_required",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That needs an OnGem staff sign-in.",
+      "ar": "يتطلب ذلك تسجيل دخول موظف في OnGem."
+    },
+    {
+      "key": "app.errors.validation_failed",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Some details are not right. Check them and try again.",
+      "ar": "بعض البيانات غير صحيحة. تحقق منها وحاول مرة أخرى."
+    },
+    {
+      "key": "app.errors.account_not_found",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That account was not found.",
+      "ar": "لم يتم العثور على هذا الحساب."
+    },
+    {
+      "key": "app.errors.recipient_not_found",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That recipient was not found.",
+      "ar": "لم يتم العثور على هذا المستفيد."
+    },
+    {
+      "key": "app.errors.company_closing",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your company is closing, so nothing new can be added.",
+      "ar": "شركتك قيد الإغلاق، لذلك لا يمكن إضافة شيء جديد."
+    },
+    {
+      "key": "app.errors.company_frozen",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your company is frozen, so nothing new can be added.",
+      "ar": "شركتك مجمّدة، لذلك لا يمكن إضافة شيء جديد."
+    },
+    {
+      "key": "app.errors.company_closed",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your company is closed.",
+      "ar": "شركتك مغلقة."
+    },
+    {
+      "key": "app.errors.fx_pair_unavailable",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That bank cannot convert between these currencies.",
+      "ar": "لا يمكن لهذا البنك التحويل بين هاتين العملتين."
+    },
+    {
+      "key": "app.errors.fx_quote_mismatch",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That price does not fit this payment. Get a new quote.",
+      "ar": "هذا السعر لا يناسب هذه الدفعة. احصل على عرض سعر جديد."
+    },
+    {
+      "key": "app.errors.fx_quote_expired",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That price expired. Get a new quote.",
+      "ar": "انتهت صلاحية هذا السعر. احصل على عرض سعر جديد."
+    },
+    {
+      "key": "app.errors.fx_quote_not_accepted",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accept the price first.",
+      "ar": "اقبل السعر أولًا."
+    },
+    {
+      "key": "app.errors.fx_quote_in_use",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That price was already used. Get a new quote.",
+      "ar": "استُخدم هذا السعر بالفعل. احصل على عرض سعر جديد."
+    },
+    {
+      "key": "app.errors.fx_quote_not_found",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That price was not found. Get a new quote.",
+      "ar": "لم يتم العثور على هذا السعر. احصل على عرض سعر جديد."
+    },
+    {
+      "key": "app.errors.movement_beneficiary_unavailable",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not set up this recipient for the payment. Check their details.",
+      "ar": "تعذر إعداد هذا المستفيد للدفعة. تحقق من بياناته."
+    },
+    {
+      "key": "app.errors.movement_not_found",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That payment was not found.",
+      "ar": "لم يتم العثور على هذه الدفعة."
+    },
+    {
+      "key": "app.errors.movement_account_not_found",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That account was not found.",
+      "ar": "لم يتم العثور على هذا الحساب."
+    },
+    {
+      "key": "app.errors.movement_not_pending_approval",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This is no longer waiting for approval.",
+      "ar": "لم تعد هذه بانتظار الموافقة."
+    },
+    {
+      "key": "app.errors.movement_wrong_state",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "That cannot be done at this stage.",
+      "ar": "لا يمكن تنفيذ ذلك في هذه المرحلة."
+    },
+    {
+      "key": "app.errors.monthly_limit_exceeded",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This goes over your company's monthly limit.",
+      "ar": "يتجاوز هذا الحد الشهري لشركتك."
+    },
+    {
+      "key": "app.errors.reason_required",
+      "format": "text",
+      "description": "Error (OG-054)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Give a reason.",
+      "ar": "اذكر السبب."
     }
   ]
 }

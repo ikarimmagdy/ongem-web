@@ -1710,3 +1710,34 @@
   gap: var(--space-md);
   padding: var(--space-sm) 0;
 }
+
+/* OG-054: receiving details with copy buttons, the address group of a recipient abroad, FX under a transaction. */
+.fw-copy {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+.fw-copy__value {
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.fw-fieldset {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin: 0;
+  display: grid;
+  gap: var(--space-md);
+  min-inline-size: 0;
+}
+.fw-fieldset legend {
+  padding-inline: var(--space-xs);
+  font-weight: 500;
+}
+.fw-txn__fx {
+  display: block;
+}
+.fw-receipt .og-kv {
+  margin-block-end: var(--space-md);
+}

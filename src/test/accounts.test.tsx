@@ -15,7 +15,8 @@ describe('accounts and statements (OG-030 R2)', () => {
     const detail = await screen.findByTestId('account-detail');
     expect(within(detail).getAllByRole('row')).toHaveLength(21);
     await userEvent.click(screen.getByTestId('show-more'));
-    expect(await within(detail).findAllByRole('row')).toHaveLength(37);
+    // 36 sample lines, the header and the settled payment abroad of the OG-054 demo.
+    expect(await within(detail).findAllByRole('row')).toHaveLength(38);
   });
 
   it('statement_view_AC_R2_2', async () => {

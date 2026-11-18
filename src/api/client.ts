@@ -46,6 +46,17 @@ import type {
   InviteView,
   NotificationPreferences,
   PreferenceChange,
+  CurrencyInfo,
+  Corridor,
+  CurrencyAccountOptions,
+  ReceivingDetails,
+  InternationalRecipient,
+  CreateInternationalRecipient,
+  CreateQuote,
+  FxQuote,
+  CreateMovement,
+  Movement,
+  MovementReceipt,
 } from './types';
 import type { Whereami } from './live';
 
@@ -183,6 +194,39 @@ export interface OnGemApi {
   abandonAssistantDraft(draftId: string): Promise<AssistantDraft>;
   startRecording(platform: string, appVersion?: string): Promise<RecordingSession>;
   recordEvents(sessionId: string, events: RecordedEvent[]): Promise<{ stored: number }>;
+  // OG-054 multi-currency: every feature shows only when the API says it is on.
+  /** The currencies OnGem accepts with their minor units; amounts are formatted and parsed with these. */
+  currencies(): Promise<CurrencyInfo[]>;
+  /** The corridors the company can send abroad on now (payment:view); none means sending abroad is off. */
+  corridors(): Promise<Corridor[]>;
+  corridor(id: string): Promise<Corridor>;
+  /** Which currency accounts can be opened; `enabled` false hides opening one. */
+  currencyAccountOptions(): Promise<CurrencyAccountOptions>;
+  /** Owners (account:open), step-up (account_open). 409 currency_account_exists, 503 account_open_pending. */
+  openCurrencyAccount(request: { currency: string; nickname?: string | null }): Promise<Account>;
+  /** The full local details of an account, each read audited; 404 receiving_details_unavailable. */
+  receivingDetails(accountId: string): Promise<ReceivingDetails>;
+  internationalRecipients(): Promise<InternationalRecipient[]>;
+  internationalRecipient(id: string): Promise<InternationalRecipient>;
+  /** recipient:manage and step-up (recipient). */
+  createInternationalRecipient(request: CreateInternationalRecipient): Promise<InternationalRecipient>;
+  archiveInternationalRecipient(id: string): Promise<InternationalRecipient>;
+  createQuote(request: CreateQuote): Promise<FxQuote>;
+  /** Step-up (payment). */
+  acceptQuote(id: string): Promise<FxQuote>;
+  movements(): Promise<Movement[]>;
+  movement(id: string): Promise<Movement>;
+  createMovement(request: CreateMovement): Promise<Movement>;
+  /** Step-up: limits, then PENDING_APPROVAL or RUNNING. */
+  submitMovement(id: string): Promise<Movement>;
+  /** A second person (payment:approve), step-up. */
+  approveMovement(id: string): Promise<Movement>;
+  rejectMovement(id: string): Promise<Movement>;
+  /** Step-up. Before the legs run, or while it waits for a new quote. */
+  cancelMovement(id: string): Promise<Movement>;
+  /** AWAITING_QUOTE: a new accepted quote for the same conversion; step-up. */
+  requoteMovement(id: string, quoteId: string): Promise<Movement>;
+  movementReceipt(id: string): Promise<MovementReceipt>;
 }
 
 /** What a company role may do, mirroring ongem-core's Role (identity/access/Access.kt) and ongem-app's Permissions. */
@@ -197,6 +241,8 @@ export const Permission = {
   MEMBER_INVITE: 'member:invite',
   /** OG-024: export an account's activity; OWNER only (ongem-core seeds it for OWNER alone). */
   EXPORT_CREATE: 'export:create',
+  /** OG-054: open a currency account; OWNER only. */
+  ACCOUNT_OPEN: 'account:open',
 } as const;
 
 /** The permissions a FROZEN, CLOSING or CLOSED company keeps (OG-023 R13): reading only. */

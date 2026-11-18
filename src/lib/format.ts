@@ -1,6 +1,7 @@
 import { formatDay } from './schedule';
 import { dateLocale, t } from '../i18n/store';
 import { IS_AE, REGION_CONFIG } from '../region';
+import { apiMinorUnits } from './currencies';
 
 export interface MoneyValue {
   amount: string | number;
@@ -10,13 +11,14 @@ export interface MoneyValue {
 /** Money keeps Latin digits and the en-US grouping in every language (OG-033 R10). US$ in the US build; every currency by its code in the AE build (AED 1,250.00). */
 const currencyPrefix = (currency: string) => (!IS_AE && currency === 'USD' ? 'US$' : `${currency} `);
 
-const number2 = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
+/** A decimal amount with the currency's own number of decimals (OG-054: never a fixed 2). */
 export function formatMoney({ amount, currency }: MoneyValue): string {
   const n = typeof amount === 'number' ? amount : Number(amount);
   if (!Number.isFinite(n)) return '';
+  const exp = currencyExponent(currency);
+  const digits = new Intl.NumberFormat('en-US', { minimumFractionDigits: exp, maximumFractionDigits: exp });
   const prefix = currencyPrefix(currency);
-  return `${n < 0 ? '-' : ''}${prefix}${number2.format(Math.abs(n))}`;
+  return `${n < 0 ? '-' : ''}${prefix}${digits.format(Math.abs(n))}`;
 }
 
 /** Bank time for this build's region: New York (ET) or Dubai (GST). */
@@ -79,8 +81,10 @@ export interface MinorValue {
   currency: string;
 }
 
-/** The ISO 4217 minor-unit exponent: 2 for USD, 0 for JPY, 3 for BHD. */
+/** The minor-unit exponent: the API's table first (OG-054), else ISO 4217 as the browser has it: 2 for USD, 0 for JPY, 3 for BHD. */
 export function currencyExponent(currency: string): number {
+  const fromApi = apiMinorUnits(currency);
+  if (fromApi !== undefined) return fromApi;
   try {
     return (
       new Intl.NumberFormat('en-US', { style: 'currency', currency }).resolvedOptions()

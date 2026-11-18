@@ -30,6 +30,11 @@ import { Schedules } from './Schedules';
 import { TopUp } from './TopUp';
 import { SplitHint } from './SplitHint';
 import { RecipientsScreen } from './Recipients';
+import { useFxFeatures } from './fxCommon';
+import { InternationalRecipients } from './InternationalRecipients';
+import { MovementDetail, MovementsList, movementKind } from './Movements';
+import { ConvertScreen } from './Convert';
+import { SendAbroadScreen } from './SendAbroad';
 
 /** Payments per page on the list (UX-16): the list stays short and the form beside it stays in view. */
 export const PAYMENTS_PAGE = 10;
@@ -848,7 +853,18 @@ export function visiblePaymentTabs(can: (p: string) => boolean, companyState: st
 const LIST_TABS: PaymentTab[] = ['all', 'scheduled', 'approvals', 'recipients'];
 const ACTION_TABS: PaymentTab[] = ['send', 'add_money'];
 
-function PaymentsTabs({ current, waiting }: { current: PaymentTab; waiting: number }) {
+/** OG-054: the International tab (movements, Convert, Send abroad) and its routes; shown when the API offers either. */
+export const INTERNATIONAL_ROUTE = /^\/payments\/(international|convert|abroad|movements)(\/|$)/;
+
+function PaymentsTabs({
+  current,
+  waiting,
+  international,
+}: {
+  current: PaymentTab | 'international';
+  waiting: number;
+  international: boolean;
+}) {
   const { can, companyState } = useSession();
   const list = useRef<HTMLUListElement>(null);
   // FA-022: the selected tab is scrolled into view on a phone.
@@ -880,12 +896,24 @@ function PaymentsTabs({ current, waiting }: { current: PaymentTab; waiting: numb
               </Link>
             </li>
           ))}
+        {international && (
+          <li>
+            <Link
+              to="/payments/international"
+              className={`fw-tabs__tab${current === 'international' ? ' is-active' : ''}`}
+              aria-current={current === 'international' ? 'page' : undefined}
+              data-testid="payments-tab-international"
+            >
+              {t('app.payments.tabs.international')}
+            </Link>
+          </li>
+        )}
       </ul>
     </nav>
   );
 }
 
-function PaymentsActions({ current }: { current: PaymentTab }) {
+function PaymentsActions({ current }: { current: PaymentTab | 'international' }) {
   const { can, companyState } = useSession();
   const visible = visiblePaymentTabs(can, companyState);
   return (
@@ -917,46 +945,85 @@ export function Approvals() {
   const recipients = useAsync(() => api.recipients(), [api]);
   const accs = accounts.status === 'success' ? accounts.data : [];
   const recs = recipients.status === 'success' ? recipients.data : [];
+  // OG-054: international movements waiting for a second person, beside the payments; none when the API has none.
+  const movements = useAsync(
+    () =>
+      typeof api.movements === 'function'
+        ? api.movements().then(
+            (ms) => ms.filter((m) => m.state === 'PENDING_APPROVAL'),
+            () => [],
+          )
+        : Promise.resolve([]),
+    [api],
+  );
+  const waitingAbroad = movements.status === 'success' ? movements.data : [];
   return (
-    <Load state={list} label="payments">
-      {(page) => {
-        const waiting = page.items.filter((p) => p.state === 'PENDING_APPROVAL' && p.approvalBy !== 'ONGEM');
-        return waiting.length ? (
-          <ul className="fw-list" data-testid="approvals-list">
-            {waiting.map((p) => (
-              <li key={p.id} className="fw-approval" data-testid={`approval-${p.id}`}>
-                <button className="fw-row" onClick={() => navigate(`/payments/${p.id}`)}>
-                  <span className="fw-row__main">
-                    <strong>{payeeName(p, accs, recs)}</strong>
-                    <span className="fw-row__sub">{p.reference ?? paymentKind(p)}</span>
-                    {/* FA-037: from which account and when it was asked for. */}
-                    {p.requestedBy && (
-                      <span className="fw-row__sub" data-testid={`approval-requested-by-${p.id}`}>
-                        {t('app.payments.requested_by', { name: p.requestedBy })}
+    <>
+      {waitingAbroad.length > 0 && (
+        <ul className="fw-list" data-testid="approvals-movements">
+          {waitingAbroad.map((m) => (
+            <li key={m.id}>
+              <button
+                className="fw-row"
+                data-testid={`approval-movement-${m.id}`}
+                onClick={() => navigate(`/payments/movements/${m.id}`)}
+              >
+                <span className="fw-row__main">
+                  <strong>{movementKind(m)}</strong>
+                  <span className="fw-row__sub">{m.reference ?? formatDate(m.createdAt)}</span>
+                </span>
+                <span className="og-money" data-mask="">
+                  {formatMinor(m.deliver)}
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <Load state={list} label="payments">
+        {(page) => {
+          const waiting = page.items.filter(
+            (p) => p.state === 'PENDING_APPROVAL' && p.approvalBy !== 'ONGEM',
+          );
+          return waiting.length ? (
+            <ul className="fw-list" data-testid="approvals-list">
+              {waiting.map((p) => (
+                <li key={p.id} className="fw-approval" data-testid={`approval-${p.id}`}>
+                  <button className="fw-row" onClick={() => navigate(`/payments/${p.id}`)}>
+                    <span className="fw-row__main">
+                      <strong>{payeeName(p, accs, recs)}</strong>
+                      <span className="fw-row__sub">{p.reference ?? paymentKind(p)}</span>
+                      {/* FA-037: from which account and when it was asked for. */}
+                      {p.requestedBy && (
+                        <span className="fw-row__sub" data-testid={`approval-requested-by-${p.id}`}>
+                          {t('app.payments.requested_by', { name: p.requestedBy })}
+                        </span>
+                      )}
+                      <span className="fw-row__sub" data-testid={`approval-from-${p.id}`}>
+                        {t('app.payments.approvals.from_on', {
+                          account:
+                            accs.find((a) => a.id === p.fromAccountId)?.name ??
+                            t('app.payments.to.your_account'),
+                          date: p.createdAt ? formatDate(p.createdAt) : '',
+                        })}
                       </span>
-                    )}
-                    <span className="fw-row__sub" data-testid={`approval-from-${p.id}`}>
-                      {t('app.payments.approvals.from_on', {
-                        account:
-                          accs.find((a) => a.id === p.fromAccountId)?.name ??
-                          t('app.payments.to.your_account'),
-                        date: p.createdAt ? formatDate(p.createdAt) : '',
-                      })}
                     </span>
-                  </span>
-                  <Amt value={p.amount} />
-                </button>
-                <Approval id={p.id} onDone={() => setN((x) => x + 1)} />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <EmptyState title={t('app.payments.approvals.empty.title')}>
-            {t('app.payments.approvals.empty.text')}
-          </EmptyState>
-        );
-      }}
-    </Load>
+                    <Amt value={p.amount} />
+                  </button>
+                  <Approval id={p.id} onDone={() => setN((x) => x + 1)} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            waitingAbroad.length === 0 && (
+              <EmptyState title={t('app.payments.approvals.empty.title')}>
+                {t('app.payments.approvals.empty.text')}
+              </EmptyState>
+            )
+          );
+        }}
+      </Load>
+    </>
   );
 }
 
@@ -965,7 +1032,11 @@ export function PaymentsScreen() {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const intl = INTERNATIONAL_ROUTE.test(location.pathname);
   const tab = paymentTabOf(location.pathname);
+  const { movementId } = useParams();
+  const fx = useFxFeatures();
+  const fxOn = fx.status === 'success' && (fx.data.abroad || fx.data.convert);
   // Cursors of the pages before the current one; the last entry is the current page's cursor (null = first page).
   const [cursors, setCursors] = useState<(string | null)[]>([null]);
   const cursor = cursors[cursors.length - 1];
@@ -989,9 +1060,40 @@ export function PaymentsScreen() {
   const [search] = useSearchParams();
   return (
     <>
-      <PageHeader title={t('app.payments.title')} actions={<PaymentsActions current={tab} />} />
-      <PaymentsTabs current={tab} waiting={waiting} />
-      {tab === 'all' ? (
+      <PageHeader
+        title={t('app.payments.title')}
+        actions={<PaymentsActions current={intl ? 'international' : tab} />}
+      />
+      <PaymentsTabs current={intl ? 'international' : tab} waiting={waiting} international={fxOn || intl} />
+      {intl ? (
+        <div className="fw-tab-panel" data-testid="payments-panel-international">
+          {location.pathname.startsWith('/payments/movements/') && movementId ? (
+            <>
+              <Button variant="ghost" className="fw-back" onClick={() => navigate('/payments/international')}>
+                {t('app.fx.back_to_list')}
+              </Button>
+              <MovementDetail id={movementId} justSent={search.get('sent') === '1'} />
+            </>
+          ) : location.pathname.startsWith('/payments/convert') ? (
+            can(Permission.PAYMENT_CREATE) ? (
+              <ConvertScreen />
+            ) : (
+              <Notice status="info">{t('app.payments.role_denied')}</Notice>
+            )
+          ) : location.pathname.startsWith('/payments/abroad') ? (
+            can(Permission.PAYMENT_CREATE) ? (
+              <SendAbroadScreen />
+            ) : (
+              <Notice status="info">{t('app.payments.role_denied')}</Notice>
+            )
+          ) : (
+            <MovementsList
+              abroad={fx.status === 'success' && fx.data.abroad}
+              convert={fx.status === 'success' && fx.data.convert}
+            />
+          )}
+        </div>
+      ) : tab === 'all' ? (
         <PaymentsList
           id={id}
           cursors={cursors}
@@ -1010,7 +1112,12 @@ export function PaymentsScreen() {
           ) : tab === 'add_money' ? (
             <TopUp />
           ) : tab === 'recipients' ? (
-            <RecipientsScreen embedded />
+            <>
+              <RecipientsScreen embedded />
+              {fx.status === 'success' && fx.data.abroad && (
+                <InternationalRecipients corridors={fx.data.corridors} />
+              )}
+            </>
           ) : tab === 'approvals' ? (
             can(Permission.PAYMENT_APPROVE) ? (
               <Approvals />

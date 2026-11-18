@@ -229,6 +229,9 @@ export function ExportActivity({ accountId, picker }: { accountId: string; picke
                 options={[{ value: 'CSV', label: t('app.exports.format_csv') }]}
               />
             </Field>
+            <p className="fw-row__sub" data-testid="export-fx-note">
+              {t('app.fx.export_note')}
+            </p>
             <div className="fw-row">
               <Button type="submit" data-testid="export-confirm">
                 {t('app.exports.confirm')}

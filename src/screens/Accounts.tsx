@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import type { Account, Statement, Transaction } from '../api/types';
 import { errorText } from '../api/errors';
 import {
@@ -21,6 +21,10 @@ import { REGION_CONFIG } from '../region';
 import { AcctLast4, Amt, FilterChips, Load, human, stateStatus } from './common';
 import { ExportActivity } from './ExportActivity';
 import { SplitHint } from './SplitHint';
+import { institutionLabel, pairRate } from '../lib/fx';
+import { OpenCurrencyAccount, ReceivingDetailsCard } from './CurrencyAccounts';
+import { useFxFeatures } from './fxCommon';
+import { Last4 } from './common';
 
 const PAGE = 20;
 
@@ -56,6 +60,34 @@ function SignedAmt({ credit, value }: { credit: boolean; value: Transaction['amo
       {moneyText(formatMinor(value))}
     </bdi>
   );
+}
+
+/** OG-054: a transaction made by a conversion shows its rate, the provider's fee and OnGem's margin, and opens it. */
+function TxnFx({ tx }: { tx: Transaction }) {
+  const fx = tx.fx!;
+  const line = [
+    pairRate(fx.pair, fx.rate),
+    fx.providerFee ? t('app.fx.txn.fee', { amount: formatMinor(fx.providerFee) }) : null,
+    fx.margin ? t('app.fx.txn.margin', { amount: formatMinor(fx.margin) }) : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+  return (
+    <span className="fw-row__sub fw-txn__fx" data-testid={`txn-fx-${tx.id}`}>
+      <span dir="ltr">{line}</span>
+      {tx.movementId && (
+        <>
+          {' '}
+          <Link to={`/payments/movements/${tx.movementId}`}>{t('app.fx.txn.open')}</Link>
+        </>
+      )}
+    </span>
+  );
+}
+
+/** An account's number in short: a currency account's local last 4, else the region's account mask. */
+function AccountNumber({ a }: { a: Account }) {
+  return a.receiving ? <Last4 value={a.receiving.last4 ?? a.last4} /> : <AcctLast4 value={a.last4} />;
 }
 
 function Balance({ a }: { a: Account }) {
@@ -141,12 +173,21 @@ function AccountDetail({ id }: { id: string }) {
           <Card
             title={
               <>
-                {a.name} <AcctLast4 value={a.last4} />
+                {a.name} <AccountNumber a={a} />
               </>
             }
           >
             <KeyValue
               items={[
+                ...(institutionLabel(a)
+                  ? [
+                      {
+                        label: t('app.fx.account.held_at'),
+                        value: <span data-testid="account-institution">{institutionLabel(a)}</span>,
+                      },
+                    ]
+                  : []),
+                { label: t('app.fx.account.currency'), value: a.currency },
                 {
                   label: t('app.accounts.available'),
                   value: a.balance ? <Amt value={a.balance.available} /> : t('app.accounts.not_known'),
@@ -163,6 +204,7 @@ function AccountDetail({ id }: { id: string }) {
             />
             {a.balance?.stale && <p className="fw-stale">{t('app.accounts.stale_balance')}</p>}
           </Card>
+          {a.receiving && <ReceivingDetailsCard account={a} />}
           <Card
             title={t('app.accounts.transactions')}
             actions={
@@ -199,17 +241,21 @@ function AccountDetail({ id }: { id: string }) {
                         key: 'what',
                         header: t('app.accounts.col_description'),
                         // FA-011: who first (as the bank names them), how as secondary text; how alone without a name.
-                        render: (tx) =>
-                          tx.counterparty ? (
-                            <span className="fw-txn" data-testid={`txn-counterparty-${tx.id}`}>
-                              <span className="fw-txn__who" data-mask="">
-                                {tx.counterparty}
+                        render: (tx) => (
+                          <>
+                            {tx.counterparty ? (
+                              <span className="fw-txn" data-testid={`txn-counterparty-${tx.id}`}>
+                                <span className="fw-txn__who" data-mask="">
+                                  {tx.counterparty}
+                                </span>
+                                <span className="fw-row__sub">{describeTransaction(tx)}</span>
                               </span>
-                              <span className="fw-row__sub">{describeTransaction(tx)}</span>
-                            </span>
-                          ) : (
-                            describeTransaction(tx)
-                          ),
+                            ) : (
+                              describeTransaction(tx)
+                            )}
+                            {tx.fx && <TxnFx tx={tx} />}
+                          </>
+                        ),
                       },
                       {
                         key: 'stage',
@@ -278,7 +324,21 @@ export function AccountsScreen() {
   const { api } = useSession();
   const { id } = useParams();
   const navigate = useNavigate();
-  const list = useAsync(() => api.accounts(), [api]);
+  const [n, setN] = useState(0);
+  const list = useAsync(() => api.accounts(), [api, n]);
+  const fx = useFxFeatures(n);
+  const [q, setQ] = useSearchParams();
+  const asked = q.get('open');
+  const [opening, setOpening] = useState(Boolean(asked));
+  // The list is read again once the dialog that opened an account closes, so the dialog stays while it shows details.
+  const [opened, setOpened] = useState(false);
+  useEffect(() => {
+    if (!opening && opened) {
+      setOpened(false);
+      setN((x) => x + 1);
+    }
+  }, [opening, opened]);
+  const features = fx.status === 'success' ? fx.data : null;
   // FA-018: on a wide screen the first account opens at once instead of an empty detail column.
   const first = list.status === 'success' ? list.data[0]?.id : undefined;
   useEffect(() => {
@@ -287,7 +347,41 @@ export function AccountsScreen() {
   }, [id, first, navigate]);
   return (
     <>
-      <PageHeader title={t('app.accounts.title')} />
+      <PageHeader
+        title={t('app.accounts.title')}
+        actions={
+          features && (features.open || features.convert) ? (
+            <>
+              {features.convert && (
+                <Link
+                  className="og-btn og-btn--md og-btn--secondary"
+                  to="/payments/convert"
+                  data-testid="accounts-convert"
+                >
+                  {t('app.fx.convert.action')}
+                </Link>
+              )}
+              {features.open && (
+                <Button data-testid="accounts-open-currency" onClick={() => setOpening(true)}>
+                  {t('app.fx.open.action')}
+                </Button>
+              )}
+            </>
+          ) : undefined
+        }
+      />
+      {features?.open && (
+        <OpenCurrencyAccount
+          open={opening}
+          options={features.options}
+          initial={asked}
+          onClose={() => {
+            setOpening(false);
+            if (asked) setQ({}, { replace: true });
+          }}
+          onOpened={() => setOpened(true)}
+        />
+      )}
       <div className={`fw-split${id ? ' has-detail' : ''}`}>
         <div className="fw-split__list">
           <Load state={list} label="accounts">
@@ -304,8 +398,13 @@ export function AccountsScreen() {
                         <span className="fw-row__main">
                           <strong>{a.name}</strong>
                           <span className="fw-row__sub">
-                            <AcctLast4 value={a.last4} /> {human(a.status)}
+                            <AccountNumber a={a} /> {human(a.status)}
                           </span>
+                          {institutionLabel(a) && (
+                            <span className="fw-row__sub" data-testid={`account-institution-${a.id}`}>
+                              {institutionLabel(a)}
+                            </span>
+                          )}
                         </span>
                         <Balance a={a} />
                       </button>

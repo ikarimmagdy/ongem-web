@@ -2,6 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState, type ReactNod
 import { Link, NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { InviteScreen } from './screens/Invite';
 import { Button, Logo, Notice, Skeleton, useDismiss } from './design-system';
+import { setCurrencies } from './lib/currencies';
 import { useAsync } from './lib/useAsync';
 import { ApiError, errorText } from './api/errors';
 import { Permission } from './api/client';
@@ -153,7 +154,11 @@ function Crumbs({ pathname }: { pathname: string }) {
 }
 
 /** Screens that end in a form's primary action: no floating button over them on a phone (FA-016). */
-const FORM_ROUTES = [/^\/payments\/(new|top-up|schedules)/, /^\/support\/new/, /^\/onboarding/];
+const FORM_ROUTES = [
+  /^\/payments\/(new|top-up|schedules|convert|abroad)/,
+  /^\/support\/new/,
+  /^\/onboarding/,
+];
 
 /** OG-039: the Get paid screen and the processor's elements load only when the build turns acceptance on. */
 const GetPaidScreen = lazy(() => import('./acceptance/GetPaid').then((m) => ({ default: m.GetPaidScreen })));
@@ -212,6 +217,23 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
   // FA-030: a System appearance follows the device on every screen.
   useAppearance();
   const me = useAsync(() => api.me(), [api]);
+  // OG-054: amounts are formatted with the API's minor units; the screens render again once the table is in.
+  const [, setCurrenciesIn] = useState(0);
+  useEffect(() => {
+    let alive = true;
+    if (typeof api.currencies !== 'function') return;
+    api.currencies().then(
+      (items) => {
+        if (!alive) return;
+        setCurrencies(items);
+        setCurrenciesIn((x) => x + 1);
+      },
+      () => undefined,
+    );
+    return () => {
+      alive = false;
+    };
+  }, [api]);
   // OG-023 R12: the switcher lists the person's companies in every region, each asked with the same sign-in.
   const all = useAsync(() => loadCompanies(homeApi), [homeApi]);
   const person = me.status === 'success' ? me.data : null;
@@ -560,6 +582,10 @@ function CompanyScope() {
             <Route path="/payments/schedules" element={<PaymentsScreen />} />
             <Route path="/payments/recipients" element={<PaymentsScreen />} />
             <Route path="/payments/approvals" element={<PaymentsScreen />} />
+            <Route path="/payments/international" element={<PaymentsScreen />} />
+            <Route path="/payments/convert" element={<PaymentsScreen />} />
+            <Route path="/payments/abroad" element={<PaymentsScreen />} />
+            <Route path="/payments/movements/:movementId" element={<PaymentsScreen />} />
             <Route path="/payments/:id" element={<PaymentsScreen />} />
             <Route path="/recipients" element={<ToRecipients />} />
             <Route path="/cards" element={<CardsScreen />} />

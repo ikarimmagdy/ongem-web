@@ -26,6 +26,56 @@ export class ApiError extends Error {
   }
 }
 
+/** OG-054: every error code of the multi-currency contract has its own sentence (`app.errors.<code>`, both languages). */
+export const OG054_CODES = [
+  'currency_unsupported',
+  'corridor_not_found',
+  'corridor_unavailable',
+  'corridor_amount_out_of_range',
+  'corridor_exists',
+  'corridor_change_pending',
+  'corridor_change_not_found',
+  'corridor_change_not_pending',
+  'recipient_field_required',
+  'recipient_corridor_mismatch',
+  'iban_invalid',
+  'bic_invalid',
+  'sort_code_invalid',
+  'routing_number_invalid',
+  'account_number_invalid',
+  'currency_accounts_disabled',
+  'currency_account_unavailable',
+  'currency_account_exists',
+  'primary_account_required',
+  'account_open_pending',
+  'receiving_details_unavailable',
+  'first_party_unavailable',
+  'drift_item_not_found',
+  'drift_run_not_found',
+  'idempotency_key_required',
+  'idempotency_key_reused',
+  'ops_issuer_required',
+  'validation_failed',
+  'account_not_found',
+  'recipient_not_found',
+  'company_closing',
+  'company_frozen',
+  'company_closed',
+  'fx_pair_unavailable',
+  'fx_quote_mismatch',
+  'fx_quote_expired',
+  'fx_quote_not_accepted',
+  'fx_quote_in_use',
+  'fx_quote_not_found',
+  'movement_beneficiary_unavailable',
+  'movement_not_found',
+  'movement_account_not_found',
+  'movement_not_pending_approval',
+  'movement_wrong_state',
+  'monthly_limit_exceeded',
+  'reason_required',
+] as const;
+
 /** The problem codes a founder reads a sentence for: content entries `app.errors.<code>` (OG-033 R1). */
 const KNOWN = new Set([
   'reverification_cancelled',
@@ -60,6 +110,7 @@ const KNOWN = new Set([
   'device_proof_required',
   'device_proof_invalid',
   'rate_limited',
+  ...OG054_CODES,
 ]);
 
 /** The line a screen shows for a failure; anything unknown falls back to the API's own detail. */

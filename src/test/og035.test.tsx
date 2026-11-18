@@ -278,7 +278,9 @@ describe('OG-035 R6: Payments tabs', () => {
     renderApp('/payments/schedules');
     await screen.findByTestId('payments-tabs');
     await screen.findByTestId('approvals-count');
-    expect(tabs()).toEqual(['All payments', 'Scheduled', 'Approvals1', 'Recipients']);
+    await screen.findByTestId('payments-tab-international');
+    // OG-054: International joins the list tabs when the API offers corridors or conversions.
+    expect(tabs()).toEqual(['All payments', 'Scheduled', 'Approvals1', 'Recipients', 'International']);
     expect(screen.getByTestId('payments-tab-send')).toHaveTextContent('Send');
     expect(screen.getByTestId('payments-tab-add_money')).toHaveTextContent('Add money');
     expect(screen.getByTestId('payments-tab-scheduled')).toHaveAttribute('aria-current', 'page');
@@ -316,7 +318,10 @@ describe('OG-035 R6: Payments tabs', () => {
     const row = await screen.findByTestId('approval-pay_demo_approval');
     await waitFor(() => expect(row).toHaveTextContent('Harbor Rent Co'));
     await userEvent.click(within(row).getByTestId('payment-approve'));
-    expect(await screen.findByText('Nothing is waiting for your approval')).toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByTestId('approval-pay_demo_approval')).not.toBeInTheDocument());
+    // OG-054: the payment abroad waiting for a second person stays listed, so nothing says the list is empty.
+    expect(screen.getByTestId('approval-movement-mov_demo_abroad_approval')).toBeInTheDocument();
+    expect(screen.queryByText('Nothing is waiting for your approval')).not.toBeInTheDocument();
     expect((await api.payment('pay_demo_approval')).state).not.toBe('PENDING_APPROVAL');
   });
 });

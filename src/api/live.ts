@@ -13,6 +13,9 @@ import type {
   RecipientPage,
   CardWidgetKind,
   InviteView,
+  CurrencyInfo,
+  Corridor,
+  InternationalRecipient,
 } from './types';
 
 export interface LiveOptions {
@@ -422,4 +425,35 @@ export class LiveOnGemApi implements OnGemApi {
   acceptInvite: OnGemApi['acceptInvite'] = (token) => this.call('POST', paths.acceptInvite(token));
   recordEvents: OnGemApi['recordEvents'] = (id, events) =>
     this.call('POST', paths.recordingEvents(id), { json: { events } });
+  currencies: OnGemApi['currencies'] = async () =>
+    (await this.call<{ items: CurrencyInfo[] }>('GET', paths.currencies)).items;
+  corridors: OnGemApi['corridors'] = async () =>
+    (await this.call<{ items: Corridor[] }>('GET', paths.corridors)).items;
+  corridor: OnGemApi['corridor'] = (id) => this.call('GET', paths.corridor(id));
+  currencyAccountOptions: OnGemApi['currencyAccountOptions'] = () =>
+    this.call('GET', paths.currencyAccountOptions);
+  openCurrencyAccount: OnGemApi['openCurrencyAccount'] = (r) =>
+    this.call('POST', paths.currencyAccounts, { json: r });
+  receivingDetails: OnGemApi['receivingDetails'] = (id) => this.call('GET', paths.receivingDetails(id));
+  internationalRecipients: OnGemApi['internationalRecipients'] = async () =>
+    (await this.call<{ items: InternationalRecipient[] }>('GET', paths.internationalRecipients)).items;
+  internationalRecipient: OnGemApi['internationalRecipient'] = (id) =>
+    this.call('GET', paths.internationalRecipient(id));
+  createInternationalRecipient: OnGemApi['createInternationalRecipient'] = (r) =>
+    this.call('POST', paths.internationalRecipients, { json: r });
+  archiveInternationalRecipient: OnGemApi['archiveInternationalRecipient'] = (id) =>
+    this.call('DELETE', paths.internationalRecipient(id));
+  createQuote: OnGemApi['createQuote'] = (r) => this.call('POST', paths.quotes, { json: r });
+  acceptQuote: OnGemApi['acceptQuote'] = (id) => this.call('POST', paths.acceptQuote(id));
+  movements: OnGemApi['movements'] = () => this.call('GET', paths.movements);
+  movement: OnGemApi['movement'] = (id) => this.call('GET', paths.movement(id));
+  createMovement: OnGemApi['createMovement'] = (r) => this.call('POST', paths.movements, { json: r });
+  submitMovement: OnGemApi['submitMovement'] = (id) => this.call('POST', paths.movementAction(id, 'submit'));
+  approveMovement: OnGemApi['approveMovement'] = (id) =>
+    this.call('POST', paths.movementAction(id, 'approve'));
+  rejectMovement: OnGemApi['rejectMovement'] = (id) => this.call('POST', paths.movementAction(id, 'reject'));
+  cancelMovement: OnGemApi['cancelMovement'] = (id) => this.call('POST', paths.movementAction(id, 'cancel'));
+  requoteMovement: OnGemApi['requoteMovement'] = (id, quoteId) =>
+    this.call('POST', paths.movementAction(id, 'quote'), { json: { quoteId } });
+  movementReceipt: OnGemApi['movementReceipt'] = (id) => this.call('GET', paths.movementReceipt(id));
 }

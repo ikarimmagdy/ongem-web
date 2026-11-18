@@ -76,6 +76,10 @@ export interface Account {
   balance?: Balance | null;
   /** OG-049: the content key naming the institution that holds the account; null when none is named. */
   institution?: string | null;
+  /** OG-054: a literal institution name from the API, shown when `institution` is not set. Never FDIC wording. */
+  institutionName?: string | null;
+  /** OG-054: the account's local receiving details in short (scheme and last 4); null when it has none. */
+  receiving?: { scheme: ReceivingScheme; last4?: string | null } | null;
 }
 
 /** OG-049: `GET /v1/accounts/total`. `indicative` is null unless the total across currencies is switched on. */
@@ -94,6 +98,19 @@ export interface Transaction {
   postedAt?: string | null;
   /** FA-011: who the money came from or went to, as the bank names them; null when the bank gives no name. */
   counterparty?: string | null;
+  /** OG-054: the movement this transaction is a leg of, and its FX; both null without a quote. */
+  movementId?: string | null;
+  fx?: TransactionFx | null;
+}
+
+/** OG-054: the FX behind a transaction (`GET /v1/accounts/{id}/transactions`). */
+export interface TransactionFx {
+  quoteId: string;
+  pair: string;
+  rate: string;
+  providerFee?: Amount | null;
+  marginBps?: number | null;
+  margin?: Amount | null;
 }
 
 export interface StatementRef {
@@ -590,4 +607,207 @@ export interface SecuritySummary {
   authenticator: { status: 'ON' | 'OFF' | 'UNKNOWN' | string; required: boolean };
   lastSignIn?: SignInView | null;
   recentSignIns: SignInView[];
+}
+
+/* OG-054 multi-currency (contract ongem-engineering/outputs/review/og054-2026-11-19/multi-currency-api.md). */
+
+/** `GET /v1/currencies`: the ISO 4217 currencies OnGem accepts, with their minor units. */
+export interface CurrencyInfo {
+  code: string;
+  minorUnits: number;
+  name: string;
+}
+
+export type Rail = 'SWIFT' | 'SEPA' | 'FPS' | 'ACH' | 'LOCAL' | string;
+
+export type RecipientField =
+  'IBAN' | 'BIC' | 'SORT_CODE' | 'ACCOUNT_NUMBER' | 'ABA_ROUTING' | 'LOCAL_BANK_CODE' | 'ADDRESS' | string;
+
+/** A corridor a company can send abroad on (`GET /v1/corridors`); min and max are in the destination currency. */
+export interface Corridor {
+  id: string;
+  sourceCurrency: string;
+  destinationCurrency: string;
+  destinationCountry: string;
+  rail: Rail;
+  cutoff?: { time: string; zone: string } | null;
+  settlement?: { minHours: number; maxHours: number } | null;
+  minAmount: Amount;
+  maxAmount: Amount;
+  requiredFields: RecipientField[];
+}
+
+/** `GET /v1/accounts/currency-accounts/options`: `enabled` mirrors the server flag. */
+export interface CurrencyAccountOptions {
+  enabled: boolean;
+  items: { currency: string; institutionName?: string | null; open: boolean }[];
+}
+
+export type ReceivingScheme = 'IBAN' | 'UK_SORT_CODE' | 'US_ABA' | string;
+
+/** `GET /v1/accounts/{id}/receiving-details`: the full details to give a payer; shown, never stored. */
+export interface ReceivingDetails {
+  accountId: string;
+  currency: string;
+  scheme: ReceivingScheme;
+  beneficiaryName?: string | null;
+  iban?: string | null;
+  bic?: string | null;
+  accountNumber?: string | null;
+  sortCode?: string | null;
+  routingNumber?: string | null;
+  bankName?: string | null;
+}
+
+export type BankScheme = 'IBAN' | 'UK_SORT_CODE' | 'US_ABA' | 'LOCAL';
+
+export interface PostalAddress {
+  line1: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
+
+/** POST /v1/international-recipients. Built when the form is sent; never kept in screen state. */
+export interface CreateInternationalRecipient {
+  corridorId?: string | null;
+  kind: 'BUSINESS' | 'PERSON';
+  name: string;
+  country: string;
+  currency: string;
+  scheme: BankScheme;
+  iban?: string;
+  bic?: string;
+  sortCode?: string;
+  routingNumber?: string;
+  accountNumber?: string;
+  localScheme?: string;
+  bankCode?: string;
+  address?: PostalAddress | null;
+}
+
+/** A beneficiary abroad; the account number or IBAN comes back as its last 4 only. */
+export interface InternationalRecipient {
+  id: string;
+  kind: string;
+  name: string;
+  country: string;
+  currency: string;
+  scheme: BankScheme | string;
+  accountLast4?: string | null;
+  bic?: string | null;
+  sortCode?: string | null;
+  routingNumber?: string | null;
+  localScheme?: string | null;
+  bankCode?: string | null;
+  address?: PostalAddress | null;
+  screening: string;
+  status: string;
+  createdAt?: string | null;
+}
+
+/** POST /v1/fx/quotes: `corridorId` for sending abroad, `toAccountId` for a conversion into an own account. */
+export interface CreateQuote {
+  sellCurrency: string;
+  buyCurrency: string;
+  side: 'BUY' | 'SELL';
+  amountMinor: number;
+  corridorId?: string | null;
+  toAccountId?: string | null;
+}
+
+/** A price: `rate` is the provider's decimal text, shown and never computed with. */
+export interface FxQuote {
+  id: string;
+  state: string;
+  side: string;
+  sell: Amount;
+  buy: Amount;
+  rate: string;
+  providerFee: Amount;
+  marginBps: number;
+  margin: Amount;
+  totalDebit: Amount;
+  expiresAt: string;
+  expired: boolean;
+  acceptedAt?: string | null;
+  createdAt: string;
+}
+
+export type MovementIntent = 'PAY_ABROAD' | 'CONVERT' | 'SWEEP';
+
+/** POST /v1/movements. */
+export interface CreateMovement {
+  intent: MovementIntent;
+  fromAccountId: string;
+  toAccountId?: string | null;
+  viaAccountId?: string | null;
+  quoteId?: string | null;
+  recipientId?: string | null;
+  corridorId?: string | null;
+  reference?: string | null;
+}
+
+export interface MovementFx {
+  quoteId: string;
+  pair: string;
+  side: string;
+  rate: string;
+  sell: Amount;
+  buy: Amount;
+  providerFee: Amount;
+  marginBps: number;
+  margin: Amount;
+  totalDebit: Amount;
+}
+
+export interface MovementLeg {
+  id: string;
+  seq: number;
+  capability: 'INTERNAL' | 'FIRST_PARTY' | 'FX' | 'REMITTANCE' | 'MARGIN' | string;
+  state: 'PLANNED' | 'SUBMITTED' | 'SETTLED' | 'UNKNOWN' | 'FAILED' | 'VOID' | string;
+  amount: Amount;
+  quoteId?: string | null;
+  failureCode?: string | null;
+  /** True only on a FIRST_PARTY leg that left the sending bank and has not arrived yet. */
+  inTransit?: boolean;
+}
+
+/** A money movement (convert or send abroad) with its legs and FX. */
+export interface Movement {
+  id: string;
+  intent: MovementIntent | string;
+  state: string;
+  fromAccountId: string;
+  toAccountId?: string | null;
+  viaAccountId?: string | null;
+  recipientId?: string | null;
+  beneficiaryCountry?: string | null;
+  quoteId?: string | null;
+  debit: Amount;
+  deliver: Amount;
+  reference?: string | null;
+  failureCode?: string | null;
+  legs: MovementLeg[];
+  createdAt: string;
+  updatedAt: string;
+  corridorId?: string | null;
+  fx?: MovementFx | null;
+}
+
+/** `GET /v1/movements/{id}/receipt`: what the founder keeps, the recipient masked to its last 4. */
+export interface MovementReceipt {
+  movementId: string;
+  intent: string;
+  state: string;
+  reference?: string | null;
+  debit: Amount;
+  deliver: Amount;
+  fx?: MovementFx | null;
+  corridor?: { id: string; destinationCountry: string; rail: string } | null;
+  recipient?: { id: string; name: string; accountLast4?: string | null; country?: string | null } | null;
+  fromAccount?: { id: string; last4?: string | null; currency: string } | null;
+  toAccount?: { id: string; last4?: string | null; currency: string } | null;
+  createdAt: string;
+  settledAt?: string | null;
 }

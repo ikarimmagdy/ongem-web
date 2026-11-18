@@ -235,3 +235,19 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   `PrefixedInput` and `currencyPrefix` moved to `screens/common.tsx`; schedule and top-up amounts carry US$ or AED (W-18).
   public.css: 194 overridden declarations and 8 dead rules removed, 200 public captures pixel-identical (W-14). Home
   section eyebrows that repeated the heading removed (RD-15). Tests `og051.test.tsx`.
+- 2026-11-19: OG-054 multi-currency (contract WS `ongem-engineering/outputs/review/og054-2026-11-19/multi-currency-api.md`,
+  ongem-core ead17d3). Every part shows only when the API says it is on: `useFxFeatures` (`screens/fxCommon.tsx`) reads
+  corridors, currency account options and accounts. Money follows `GET /v1/currencies` (`lib/currencies.ts`, loaded by
+  the shell; `currencyExponent` asks it first, `formatMoney` no longer fixes 2 decimals). Accounts: Open a currency
+  account (owners, `account:open`, step-up `account_open`, `screens/CurrencyAccounts.tsx`), the institution the API names
+  (`lib/fx.ts` `institutionLabel`: content key, else `institutionName`, never FDIC wording), local details read on request
+  with copy buttons, FX under converted transactions. Payments > International (`/payments/international`, `convert`,
+  `abroad`, `movements/:id`): `Convert.tsx` (quote with `toAccountId`, cross-bank through an own account in the sold
+  currency at the other bank, `viaFor`), `SendAbroad.tsx` (corridor, recipient, amount within the corridor limits in its
+  currency, quote with `corridorId`), `Movements.tsx` (legs in plain words, in transit while a first-party leg is
+  SUBMITTED, approve, decline, cancel, new price on AWAITING_QUOTE, receipt). International recipients beside the
+  domestic ones (`InternationalRecipients.tsx`, checks in `lib/bankDetails.ts` mirror ongem-core: IBAN length and mod 97,
+  BIC, sort code, ABA, local). Movements waiting for a second person also list under Approvals. Every contract error code
+  is `app.errors.<code>` (`OG054_CODES`); texts `app.fx.*` in both seeds (ongem-core's seed needs them too). Demo:
+  `api/demoFx.ts` (sample bank, corridors to DE, GB, JP and KW, a settled and a waiting payment abroad). Tests
+  `og054.test.tsx`, `lib/bankDetails.test.ts`, `lib/fx.test.ts`.

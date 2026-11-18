@@ -7,7 +7,10 @@ async function record() {
   const fetchImpl = (async (url: string, init: RequestInit) => {
     calls.push({ method: init.method ?? 'GET', path: url.split('?')[0]! });
     const page =
-      (url.startsWith('/v1/recipients?') || url.endsWith('/invites')) && (init.method ?? 'GET') === 'GET';
+      (url.startsWith('/v1/recipients?') ||
+        url.endsWith('/invites') ||
+        /\/v1\/(currencies|corridors|international-recipients)$/.test(url)) &&
+      (init.method ?? 'GET') === 'GET';
     return new Response(page ? '{"items":[]}' : '{}', { status: 200 });
   }) as unknown as typeof fetch;
   const api = new LiveOnGemApi({
@@ -108,6 +111,35 @@ async function record() {
     api.createInvite('c', { email: 'x@example.com', role: 'VIEWER' }),
     api.revokeInvite('c', 'i'),
     api.acceptInvite('tok'),
+    // OG-054 multi-currency.
+    api.currencies(),
+    api.corridors(),
+    api.corridor('c'),
+    api.currencyAccountOptions(),
+    api.openCurrencyAccount({ currency: 'EUR' }),
+    api.receivingDetails('a'),
+    api.internationalRecipients(),
+    api.internationalRecipient('r'),
+    api.createInternationalRecipient({
+      kind: 'BUSINESS',
+      name: 'n',
+      country: 'DE',
+      currency: 'EUR',
+      scheme: 'IBAN',
+      iban: 'DE89370400440532013000',
+    }),
+    api.archiveInternationalRecipient('r'),
+    api.createQuote({ sellCurrency: 'USD', buyCurrency: 'EUR', side: 'BUY', amountMinor: 1 }),
+    api.acceptQuote('q'),
+    api.movements(),
+    api.movement('m'),
+    api.createMovement({ intent: 'CONVERT', fromAccountId: 'a', toAccountId: 'b', quoteId: 'q' }),
+    api.submitMovement('m'),
+    api.approveMovement('m'),
+    api.rejectMovement('m'),
+    api.cancelMovement('m'),
+    api.requoteMovement('m', 'q'),
+    api.movementReceipt('m'),
   ]);
   return calls;
 }
@@ -123,7 +155,7 @@ function served(call: { method: string; path: string }) {
 describe('every live call is an ongem-core endpoint (OG-030 R8)', () => {
   it('every_live_call_is_in_the_openapi_AC_R8_1', async () => {
     const calls = await record();
-    expect(calls).toHaveLength(68);
+    expect(calls).toHaveLength(89);
     expect(calls.filter((c) => !served(c))).toEqual([]);
   });
 });
