@@ -14563,6 +14563,35 @@
       "meta": {},
       "en": "Someone joined your team",
       "ar": "انضم شخص إلى فريقك"
+    },
+    {
+      "key": "app.exports.format_quickbooks",
+      "format": "text",
+      "description": "Export format (OG-024): QuickBooks Online bank upload",
+      "placeholders": [],
+      "meta": {},
+      "en": "QuickBooks Online (bank upload)",
+      "ar": "QuickBooks Online (رفع كشف بنكي)"
+    },
+    {
+      "key": "app.exports.format_xero",
+      "format": "text",
+      "description": "Export format (OG-024): Xero bank statement import",
+      "placeholders": [],
+      "meta": {},
+      "en": "Xero (bank statement import)",
+      "ar": "Xero (استيراد كشف بنكي)"
+    },
+    {
+      "key": "app.exports.format_note_accounting",
+      "format": "text",
+      "description": "Note under the format when an accounting format is picked (OG-024)",
+      "placeholders": [
+        "format"
+      ],
+      "meta": {},
+      "en": "The {format} file holds posted transactions only, for this account and its currency, ready to import.",
+      "ar": "يحتوي ملف {format} على المعاملات المرحّلة فقط، لهذا الحساب وبعملته، وهو جاهز للاستيراد."
     }
   ]
 }

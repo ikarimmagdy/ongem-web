@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Permission } from '../api/client';
 import { ApiError, errorText } from '../api/errors';
-import type { ExportRun } from '../api/types';
+import type { ExportFormat, ExportRun } from '../api/types';
 import { Button, Card, Field, Notice, Select, StatusChip } from '../design-system';
-import { t } from '../i18n';
+import { has, t } from '../i18n';
 import { formatBankDate, formatDate } from '../lib/format';
 import { useSession } from '../session';
 import { DateInput, stateStatus } from './common';
@@ -25,6 +25,16 @@ export function periodValid(from: string, to: string, today: Date = new Date()):
   if (to < from || to > isoDay(today)) return false;
   const days = (Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / 86_400_000 + 1;
   return days <= 366;
+}
+
+/** OG-024: CSV only when the API does not say which formats this region offers. */
+const CSV_ONLY: ExportFormat[] = [{ format: 'CSV', labelKey: 'app.exports.format_csv', extension: 'csv' }];
+
+/** A format's name from the content key the API names, else the format itself. */
+export function formatLabel(f: Pick<ExportFormat, 'format' | 'labelKey'> | string): string {
+  const key = typeof f === 'string' ? `app.exports.format_${f.toLowerCase()}` : f.labelKey;
+  const name = typeof f === 'string' ? f : f.format;
+  return has(key) ? t(key) : name;
 }
 
 function refusedText(reason: string | null) {
@@ -108,12 +118,25 @@ export function ExportActivity({ accountId, picker }: { accountId: string; picke
   const [error, setError] = useState<string | null>(null);
   const [run, setRun] = useState<ExportRun | null>(null);
   const [recent, setRecent] = useState<ExportRun[]>([]);
+  const [formats, setFormats] = useState<ExportFormat[]>(CSV_ONLY);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (!allowed) return;
     api.exports(accountId).then(setRecent, () => setRecent([]));
   }, [api, accountId, allowed]);
+  // OG-024: the formats this region offers (GET /v1/exports/formats); CSV alone if the API does not answer.
+  useEffect(() => {
+    if (!allowed) return;
+    let live = true;
+    api.exportFormats().then(
+      (f) => live && f.length > 0 && setFormats(f),
+      () => undefined,
+    );
+    return () => {
+      live = false;
+    };
+  }, [api, allowed]);
 
   useEffect(
     () => () => {
@@ -226,9 +249,14 @@ export function ExportActivity({ accountId, picker }: { accountId: string; picke
                 data-testid="export-format"
                 value={format}
                 onChange={setFormat}
-                options={[{ value: 'CSV', label: t('app.exports.format_csv') }]}
+                options={formats.map((f) => ({ value: f.format, label: formatLabel(f) }))}
               />
             </Field>
+            {format !== 'CSV' && (
+              <p className="fw-row__sub" data-testid="export-format-note">
+                {t('app.exports.format_note_accounting', { format: formatLabel(format) })}
+              </p>
+            )}
             <p className="fw-row__sub" data-testid="export-fx-note">
               {t('app.fx.export_note')}
             </p>
@@ -258,6 +286,9 @@ export function ExportActivity({ accountId, picker }: { accountId: string; picke
                 >
                   <span className="fw-row__main">
                     {t('app.exports.row', { from: formatBankDate(r.from), to: formatBankDate(r.to) })}
+                    <span className="fw-row__sub" data-testid={`export-format-${r.id}`}>
+                      {formatLabel(r.format)}
+                    </span>
                   </span>
                   <StatusChip status={stateStatus(r.state === 'DONE' ? 'SETTLED' : r.state)}>
                     {t(`app.exports.state.${r.state.toLowerCase()}`)}

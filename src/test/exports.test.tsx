@@ -4,7 +4,7 @@ import { DemoOnGemApi } from '../api/demo';
 import { demoMe } from '../api/demoData';
 import { getLocale, setLocale } from '../i18n';
 import { exportTiming, lastFullMonth, periodValid } from '../screens/ExportActivity';
-import { chooseDate, chooseOption, renderApp } from './render';
+import { chooseDate, chooseOption, optionLabels, renderApp } from './render';
 
 const account = '/accounts/acc_demo_ops';
 
@@ -94,5 +94,38 @@ describe('accounting exports (OG-024 R16)', () => {
     expect(within(card).getByTestId('export-download').textContent).toMatch(
       /^تنزيل ongem-activity-\d{4}-\d{2}-01-/,
     );
+  });
+});
+
+describe('OG-024 accounting formats (contract 2026-11-20 section 3)', () => {
+  it('OG024_formats_come_from_the_api_and_a_quickbooks_run_is_ready', async () => {
+    const api = new DemoOnGemApi();
+    renderApp(account, { api });
+    const card = await screen.findByTestId('export-activity');
+    await userEvent.click(within(card).getByTestId('export-start'));
+    await waitFor(() => expect(api.calls).toContain('exportFormats'));
+    expect(await optionLabels(within(card).getByTestId('export-format'))).toEqual([
+      'CSV (spreadsheet)',
+      'QuickBooks Online (bank upload)',
+      'Xero (bank statement import)',
+    ]);
+    await chooseOption(within(card).getByTestId('export-format'), 'QUICKBOOKS');
+    expect(within(card).getByTestId('export-format-note')).toHaveTextContent(
+      'The QuickBooks Online (bank upload) file holds posted transactions only',
+    );
+    await userEvent.click(within(card).getByTestId('export-confirm'));
+    await within(card).findByTestId('export-run-done');
+    expect(within(card).getByTestId('export-download')).toHaveTextContent('-quickbooks.csv');
+    const recent = await within(card).findByTestId('export-recent');
+    expect(recent).toHaveTextContent('QuickBooks Online (bank upload)');
+  });
+
+  it('OG024_csv_only_when_the_formats_call_fails', async () => {
+    const api = new DemoOnGemApi();
+    api.exportFormats = () => Promise.reject(new Error('down'));
+    renderApp(account, { api });
+    const card = await screen.findByTestId('export-activity');
+    await userEvent.click(within(card).getByTestId('export-start'));
+    expect(await optionLabels(within(card).getByTestId('export-format'))).toEqual(['CSV (spreadsheet)']);
   });
 });

@@ -286,3 +286,8 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   `accounts/<id>/...`, `movements/<id>`, `get-paid`, `team`. Texts `app.notifications.category.*`,
   `app.notifications.choices.*`, `app.demo.notice_kind.*` (both seeds; ongem-core's seed needs them too). Test
   `og014.test.tsx`.
+- 2026-11-20: OG-024 accounting formats (contract section 3). The format picker lists `GET /v1/exports/formats` (labels
+  from each `labelKey`; CSV alone when the call fails): CSV, QuickBooks Online (bank upload) and Xero (bank statement
+  import); an accounting format shows that it holds posted lines for the account's currency only. Recent exports name
+  their format. Texts `app.exports.format_quickbooks`, `.format_xero`, `.format_note_accounting` (both seeds). Tests in
+  `exports.test.tsx` (`OG024_*`).
