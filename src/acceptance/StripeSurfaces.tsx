@@ -149,7 +149,7 @@ function PayForm({
   };
 
   return (
-    <div className="fw-stack" data-testid="stripe-checkout" data-block>
+    <div className="fw-form" data-testid="stripe-checkout" data-block>
       <PaymentElement options={{ layout: 'tabs' }} />
       <Email value={email} onChange={setEmail} />
       {error && (
@@ -177,7 +177,7 @@ function DemoPay({
   const [email, setEmail] = useState('');
   const [error, setError] = useState<string | null>(null);
   return (
-    <div className="fw-stack" data-testid="stripe-checkout-demo">
+    <div className="fw-form" data-testid="stripe-checkout-demo">
       <Notice status="info">{t('app.get_paid.demo_card')}</Notice>
       <Email value={email} onChange={setEmail} />
       {error && <Notice status="failure">{error}</Notice>}
