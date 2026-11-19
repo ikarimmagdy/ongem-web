@@ -15295,6 +15295,453 @@
       "meta": {},
       "en": "Accept invite",
       "ar": "قبول الدعوة"
+    },
+    {
+      "key": "app.notifications.category.money",
+      "format": "text",
+      "description": "Notification category (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Money",
+      "ar": "الأموال"
+    },
+    {
+      "key": "app.notifications.category.approvals",
+      "format": "text",
+      "description": "Notification category (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approvals",
+      "ar": "الموافقات"
+    },
+    {
+      "key": "app.notifications.category.movements",
+      "format": "text",
+      "description": "Notification category (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "International",
+      "ar": "التحويلات الدولية"
+    },
+    {
+      "key": "app.notifications.category.get_paid",
+      "format": "text",
+      "description": "Notification category (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Get paid",
+      "ar": "استلام المدفوعات"
+    },
+    {
+      "key": "app.notifications.category.accounts",
+      "format": "text",
+      "description": "Notification category (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accounts",
+      "ar": "الحسابات"
+    },
+    {
+      "key": "app.notifications.category.onboarding",
+      "format": "text",
+      "description": "Notification category (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Application",
+      "ar": "الطلب"
+    },
+    {
+      "key": "app.notifications.category.cards",
+      "format": "text",
+      "description": "Notification category (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cards",
+      "ar": "البطاقات"
+    },
+    {
+      "key": "app.notifications.category.security",
+      "format": "text",
+      "description": "Notification category (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Security",
+      "ar": "الأمان"
+    },
+    {
+      "key": "app.notifications.category.support",
+      "format": "text",
+      "description": "Notification category (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Support",
+      "ar": "الدعم"
+    },
+    {
+      "key": "app.notifications.category.team",
+      "format": "text",
+      "description": "Notification category (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Team",
+      "ar": "الفريق"
+    },
+    {
+      "key": "app.notifications.category.other",
+      "format": "text",
+      "description": "Notification category (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Other",
+      "ar": "أخرى"
+    },
+    {
+      "key": "app.notifications.filter_label",
+      "format": "text",
+      "description": "Inbox filter label (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Show notices about",
+      "ar": "عرض الإشعارات المتعلقة بـ"
+    },
+    {
+      "key": "app.notifications.filter_all",
+      "format": "text",
+      "description": "Inbox filter: every category",
+      "placeholders": [],
+      "meta": {},
+      "en": "All",
+      "ar": "الكل"
+    },
+    {
+      "key": "app.notifications.mark_read",
+      "format": "text",
+      "description": "Button: mark one notice read",
+      "placeholders": [],
+      "meta": {},
+      "en": "Mark read",
+      "ar": "تحديد كمقروء"
+    },
+    {
+      "key": "app.notifications.mark_read_label",
+      "format": "text",
+      "description": "Accessible name of Mark read",
+      "placeholders": [
+        "title"
+      ],
+      "meta": {},
+      "en": "Mark {title} as read",
+      "ar": "تحديد {title} كمقروء"
+    },
+    {
+      "key": "app.notifications.choices.intro_channels",
+      "format": "text",
+      "description": "Notification choices intro (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose how each notice reaches you: in Notifications, by email, by SMS or as an alert on your phones. Notices about your money or your account always show here and go by email.",
+      "ar": "اختر كيف يصلك كل إشعار: في الإشعارات، أو بالبريد الإلكتروني، أو برسالة نصية، أو كتنبيه على هواتفك. الإشعارات المتعلقة بأموالك أو حسابك تظهر هنا دائماً وتُرسل بالبريد الإلكتروني."
+    },
+    {
+      "key": "app.notifications.choices.scope",
+      "format": "text",
+      "description": "Label of the choice between all companies and this company",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choices for",
+      "ar": "الخيارات لـ"
+    },
+    {
+      "key": "app.notifications.choices.scope_person",
+      "format": "text",
+      "description": "Scope: the person's own choices for every company",
+      "placeholders": [],
+      "meta": {},
+      "en": "All my companies",
+      "ar": "كل شركاتي"
+    },
+    {
+      "key": "app.notifications.choices.scope_company",
+      "format": "text",
+      "description": "Scope: this company only",
+      "placeholders": [],
+      "meta": {},
+      "en": "This company",
+      "ar": "هذه الشركة"
+    },
+    {
+      "key": "app.notifications.choices.scope_company_named",
+      "format": "text",
+      "description": "Scope: this company only, named",
+      "placeholders": [
+        "company"
+      ],
+      "meta": {},
+      "en": "{company} only",
+      "ar": "{company} فقط"
+    },
+    {
+      "key": "app.notifications.choices.company_intro",
+      "format": "text",
+      "description": "Company scope intro",
+      "placeholders": [],
+      "meta": {},
+      "en": "These choices apply in this company only. Anything you do not change here follows your choices for all companies.",
+      "ar": "تنطبق هذه الخيارات على هذه الشركة فقط. أي خيار لا تغيّره هنا يتبع خياراتك لكل الشركات."
+    },
+    {
+      "key": "app.notifications.choices.reset_company",
+      "format": "text",
+      "description": "Button: remove this company's own choices",
+      "placeholders": [],
+      "meta": {},
+      "en": "Use my choices for all companies",
+      "ar": "استخدم خياراتي لكل الشركات"
+    },
+    {
+      "key": "app.notifications.choices.group_channels",
+      "format": "text",
+      "description": "Accessible name of the choices grid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Channels per notice",
+      "ar": "القنوات لكل إشعار"
+    },
+    {
+      "key": "app.notifications.choices.channel.inapp",
+      "format": "text",
+      "description": "Column: in the app's inbox",
+      "placeholders": [],
+      "meta": {},
+      "en": "In app",
+      "ar": "في التطبيق"
+    },
+    {
+      "key": "app.notifications.choices.channel.email",
+      "format": "text",
+      "description": "Column",
+      "placeholders": [],
+      "meta": {},
+      "en": "Email",
+      "ar": "البريد الإلكتروني"
+    },
+    {
+      "key": "app.notifications.choices.channel.sms",
+      "format": "text",
+      "description": "Column",
+      "placeholders": [],
+      "meta": {},
+      "en": "SMS",
+      "ar": "الرسائل النصية"
+    },
+    {
+      "key": "app.notifications.choices.channel.push",
+      "format": "text",
+      "description": "Column: alert on the person's phones",
+      "placeholders": [],
+      "meta": {},
+      "en": "Phone alert",
+      "ar": "تنبيه الهاتف"
+    },
+    {
+      "key": "app.notifications.choices.by_inapp",
+      "format": "text",
+      "description": "Accessible name of a toggle",
+      "placeholders": [
+        "kind"
+      ],
+      "meta": {},
+      "en": "{kind} in the app",
+      "ar": "{kind} في التطبيق"
+    },
+    {
+      "key": "app.notifications.choices.always_on",
+      "format": "text",
+      "description": "A mandatory kind",
+      "placeholders": [],
+      "meta": {},
+      "en": "Always in the app and by email",
+      "ar": "دائماً في التطبيق وبالبريد الإلكتروني"
+    },
+    {
+      "key": "app.notifications.choices.source.company",
+      "format": "text",
+      "description": "Where a company choice comes from",
+      "placeholders": [],
+      "meta": {},
+      "en": "Set for this company",
+      "ar": "مضبوط لهذه الشركة"
+    },
+    {
+      "key": "app.notifications.choices.source.person",
+      "format": "text",
+      "description": "Where a company choice comes from",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your choice for all companies",
+      "ar": "خيارك لكل الشركات"
+    },
+    {
+      "key": "app.notifications.choices.source.default",
+      "format": "text",
+      "description": "Where a company choice comes from",
+      "placeholders": [],
+      "meta": {},
+      "en": "Default",
+      "ar": "الإعداد الافتراضي"
+    },
+    {
+      "key": "app.notifications.choices.push_note",
+      "format": "text",
+      "description": "Note under the choices about phone alerts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Phone alerts go to the OnGem app on your phones. This browser does not get them.",
+      "ar": "تصل تنبيهات الهاتف إلى تطبيق OnGem على هواتفك. لا يتلقاها هذا المتصفح."
+    },
+    {
+      "key": "app.demo.notice_kind.money_in",
+      "format": "text",
+      "description": "Notice kind label (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Money received",
+      "ar": "استلام أموال"
+    },
+    {
+      "key": "app.demo.notice_kind.money_out",
+      "format": "text",
+      "description": "Notice kind label (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Money out",
+      "ar": "خروج أموال"
+    },
+    {
+      "key": "app.demo.notice_kind.movement_approval_waiting",
+      "format": "text",
+      "description": "Notice kind label (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "An international payment waits for your approval",
+      "ar": "دفعة دولية بانتظار موافقتك"
+    },
+    {
+      "key": "app.demo.notice_kind.movement_in_review",
+      "format": "text",
+      "description": "Notice kind label (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "International payment in review",
+      "ar": "دفعة دولية قيد المراجعة"
+    },
+    {
+      "key": "app.demo.notice_kind.movement_completed",
+      "format": "text",
+      "description": "Notice kind label (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "International payment completed",
+      "ar": "اكتملت الدفعة الدولية"
+    },
+    {
+      "key": "app.demo.notice_kind.movement_failed",
+      "format": "text",
+      "description": "Notice kind label (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "International payment not completed",
+      "ar": "لم تكتمل الدفعة الدولية"
+    },
+    {
+      "key": "app.demo.notice_kind.currency_account_opened",
+      "format": "text",
+      "description": "Notice kind label (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Currency account open",
+      "ar": "فُتح حساب العملة"
+    },
+    {
+      "key": "app.demo.notice_kind.application_submitted",
+      "format": "text",
+      "description": "Notice kind label (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Application sent to the bank",
+      "ar": "أُرسل الطلب إلى البنك"
+    },
+    {
+      "key": "app.demo.notice_kind.documents_requested",
+      "format": "text",
+      "description": "Notice kind label (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank asks for a document",
+      "ar": "يطلب البنك مستنداً"
+    },
+    {
+      "key": "app.demo.notice_kind.card_issued",
+      "format": "text",
+      "description": "Notice kind label (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card issued",
+      "ar": "صدرت البطاقة"
+    },
+    {
+      "key": "app.demo.notice_kind.device_removed",
+      "format": "text",
+      "description": "Notice kind label (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Device removed",
+      "ar": "أُزيل جهاز"
+    },
+    {
+      "key": "app.demo.notice_kind.member_joined",
+      "format": "text",
+      "description": "Notice kind label (OG-014)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Someone joined your team",
+      "ar": "انضم شخص إلى فريقك"
+    },
+    {
+      "key": "app.demo.notice_kind.get_paid_received",
+      "format": "text",
+      "description": "Notice kind label (OG-014, Get paid)",
+      "placeholders": [],
+      "meta": {},
+      "en": "A customer paid you",
+      "ar": "دفع لك أحد العملاء"
+    },
+    {
+      "key": "app.demo.notice_kind.get_paid_failed",
+      "format": "text",
+      "description": "Notice kind label (OG-014, Get paid)",
+      "placeholders": [],
+      "meta": {},
+      "en": "A customer payment failed",
+      "ar": "فشلت دفعة أحد العملاء"
+    },
+    {
+      "key": "app.demo.notice_kind.payout_sent",
+      "format": "text",
+      "description": "Notice kind label (OG-014, Get paid)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payout on its way",
+      "ar": "التحويل في الطريق"
+    },
+    {
+      "key": "app.demo.notice_kind.payout_failed",
+      "format": "text",
+      "description": "Notice kind label (OG-014, Get paid)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payout not made",
+      "ar": "لم يتم التحويل"
     }
   ]
 }

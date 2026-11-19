@@ -6,7 +6,8 @@ import { Button, Card, EmptyState, Notice, PageHeader } from '../design-system';
 import { formatDate } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
 import { useSession } from '../session';
-import { Load } from './common';
+import { FilterChips, Load } from './common';
+import { categoryLabel } from './NotificationChoices';
 import { T, t, tn } from '../i18n';
 
 /** Fired after a notice is read, so the bell counts again without a page change. */
@@ -30,7 +31,13 @@ export function noticeRoute(link: string | null): string | null {
     case 'support':
       return id ? `/support/${encodeURIComponent(id)}` : '/support';
     case 'accounts':
-      return '/accounts';
+      return id ? `/accounts/${encodeURIComponent(id)}` : '/accounts';
+    case 'movements':
+      return id ? `/payments/movements/${encodeURIComponent(id)}` : '/payments/international';
+    case 'get-paid':
+      return '/get-paid';
+    case 'team':
+      return '/team';
     case 'onboarding':
       return '/onboarding';
     case 'settings':
@@ -42,7 +49,10 @@ export function noticeRoute(link: string | null): string | null {
 
 const BELL = 'M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9'; // content-check: ignore (SVG path)
 
-/** The bell in the top bar: the unread count, read again on each page change and after a notice is read. */
+/**
+ * The bell in the top bar: the unread count (GET /v1/notifications/unread-count), read again on each page change, when
+ * the window gets focus and after a notice is read.
+ */
 export function NoticeBell() {
   const { api } = useSession();
   const location = useLocation();
@@ -50,10 +60,14 @@ export function NoticeBell() {
   useEffect(() => {
     const again = () => setN((x) => x + 1);
     window.addEventListener(NOTICES_CHANGED, again);
-    return () => window.removeEventListener(NOTICES_CHANGED, again);
+    window.addEventListener('focus', again);
+    return () => {
+      window.removeEventListener(NOTICES_CHANGED, again);
+      window.removeEventListener('focus', again);
+    };
   }, []);
-  const inbox = useAsync(() => api.notifications({ unread: true, limit: 1 }), [api, location.pathname, n]);
-  const unread = inbox.status === 'success' ? inbox.data.unread : 0;
+  const count = useAsync(() => api.unreadCount(), [api, location.pathname, n]);
+  const unread = count.status === 'success' ? count.data : 0;
   const label = unread ? t('app.notifications.bell_unread', { count: unread }) : t('app.notifications.title');
   return (
     <Link to="/notifications" className="fw-bell" aria-label={label} data-testid="notice-bell">
@@ -78,9 +92,17 @@ export function NoticeBell() {
   );
 }
 
-function Row({ n, onOpen }: { n: NoticeView; onOpen(n: NoticeView): void }) {
+function Row({
+  n,
+  onOpen,
+  onRead,
+}: {
+  n: NoticeView;
+  onOpen(n: NoticeView): void;
+  onRead(n: NoticeView): void;
+}) {
   return (
-    <li>
+    <li className="fw-notice">
       <button
         className={`fw-row${n.readAt ? '' : ' is-unread'}`}
         data-testid={`notice-${n.id}`}
@@ -92,9 +114,22 @@ function Row({ n, onOpen }: { n: NoticeView; onOpen(n: NoticeView): void }) {
             {n.title}
           </strong>
           <span>{n.body}</span>
-          <span className="fw-row__sub">{formatDate(n.occurredAt, { time: true })}</span>
+          <span className="fw-row__sub">
+            {n.category ? `${categoryLabel(n.category)} · ` : ''}
+            {formatDate(n.occurredAt, { time: true })}
+          </span>
         </span>
       </button>
+      {!n.readAt && (
+        <Button
+          variant="ghost"
+          data-testid={`notice-read-${n.id}`}
+          aria-label={t('app.notifications.mark_read_label', { title: n.title })}
+          onClick={() => onRead(n)}
+        >
+          {t('app.notifications.mark_read')}
+        </Button>
+      )}
     </li>
   );
 }
@@ -129,6 +164,12 @@ export function NotificationsScreen() {
     if (to) navigate(to);
   };
   const unread = inbox.status === 'success' ? inbox.data.unread : 0;
+  // OG-014: one category at a time, from the categories the inbox holds.
+  const [category, setCategory] = useState('all');
+  const categories =
+    inbox.status === 'success'
+      ? [...new Set(inbox.data.items.map((x) => x.category).filter((c): c is string => !!c))]
+      : [];
   return (
     <>
       <PageHeader
@@ -146,21 +187,39 @@ export function NotificationsScreen() {
         }
       />
       {error && <Notice status="failure">{error}</Notice>}
+      {categories.length > 1 && (
+        <FilterChips
+          label={t('app.notifications.filter_label')}
+          testId="notice-filter"
+          value={category}
+          onChange={setCategory}
+          options={[
+            { id: 'all', label: t('app.notifications.filter_all') },
+            ...categories.map((c) => ({ id: c, label: categoryLabel(c) })),
+          ]}
+        />
+      )}
       <Card>
         <Load state={inbox} label="notifications">
-          {(box) =>
-            box.items.length ? (
+          {(box) => {
+            const shown = box.items.filter((x) => category === 'all' || x.category === category);
+            return shown.length ? (
               <ul className="fw-list" data-testid="notices-list">
-                {box.items.map((x) => (
-                  <Row key={x.id} n={x} onOpen={(v) => void open(v)} />
+                {shown.map((x) => (
+                  <Row
+                    key={x.id}
+                    n={x}
+                    onOpen={(v) => void open(v)}
+                    onRead={(v) => void once(() => api.readNotification(v.id))}
+                  />
                 ))}
               </ul>
             ) : (
               <EmptyState title={t('app.notifications.empty_title')}>
                 {t('app.notifications.empty_text')}
               </EmptyState>
-            )
-          }
+            );
+          }}
         </Load>
       </Card>
       <p className="fw-row__sub">

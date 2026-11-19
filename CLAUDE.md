@@ -276,3 +276,13 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   the new one. A 403 `company_not_member` on a picked company drops the pick (`LiveOptions.onCompanyNotMember`). The
   last pick is remembered per person in localStorage `ongem.company.last` (id and region only) and reopened while it
   is still theirs. Demo review state `?state=invites`. Test `og023.test.tsx`.
+- 2026-11-20: OG-014 notifications (contract WS `ongem-engineering/outputs/review/og014-2026-11-20/notifications-exports-push-api.md`).
+  The bell reads `GET /v1/notifications/unread-count` on page change, window focus and after a read. The inbox shows
+  each notice's `category`, filters by category (`FilterChips`, test id `notice-filter`) and marks one notice read in
+  place (Mark read). Choices (`NotificationChoices.tsx`): per kind and channel (In app, Email, SMS, Phone alert),
+  grouped by category; a mandatory kind keeps In app and Email on; scope "All my companies" (the person's choices) or
+  this company (`/v1/notifications/preferences/company`: each kind's `source`, reset with DELETE). Demo has the full
+  32-kind catalogue (`NOTICE_KINDS` with categories; Get paid kinds US only) and company overrides. New links map
+  `accounts/<id>/...`, `movements/<id>`, `get-paid`, `team`. Texts `app.notifications.category.*`,
+  `app.notifications.choices.*`, `app.demo.notice_kind.*` (both seeds; ongem-core's seed needs them too). Test
+  `og014.test.tsx`.

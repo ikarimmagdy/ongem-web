@@ -35,6 +35,7 @@ import type {
   ExportLink,
   ExportRequest,
   ExportRun,
+  ExportFormat,
   TicketDetail,
   TicketSummary,
   Transaction,
@@ -184,6 +185,16 @@ export interface OnGemApi {
   notificationPreferences(): Promise<NotificationPreferences>;
   /** 422 mandatory_kind when email is turned off for a mandatory kind. */
   setNotificationPreferences(kinds: PreferenceChange[]): Promise<NotificationPreferences>;
+  /** OG-014: the unread count for the badge (cheap; asked on focus and page change). */
+  unreadCount(): Promise<number>;
+  /** OG-014: the effective choices in this company, each kind with its `source`. */
+  companyNotificationPreferences(): Promise<NotificationPreferences>;
+  /** This company's override for the kinds listed; 422 mandatory_kind. */
+  setCompanyNotificationPreferences(kinds: PreferenceChange[]): Promise<NotificationPreferences>;
+  /** Removes this company's override for [kind], or for every kind; answers the effective choices. */
+  resetCompanyNotificationPreferences(kind?: string): Promise<NotificationPreferences>;
+  /** OG-024: the export formats this region offers. */
+  exportFormats(): Promise<ExportFormat[]>;
   /** OG-033 R10: the person's language for notices (PUT /v1/me/preferences). */
   setLocale(locale: 'en' | 'ar'): Promise<void>;
   /** International form (E.164); a 6-digit code is sent to it. */

@@ -452,32 +452,57 @@ export const demoTickets = IS_AE
     ];
 
 /** OG-014 kinds as ongem-core's NoticeKind: mandatory (email always on) and the email default; the label is `app.demo.notice_kind.<kind>`. */
-export const NOTICE_KINDS: Array<[kind: string, mandatory: boolean, email: boolean]> = [
-  ['APPROVAL_WAITING', false, true],
-  ['PAYMENT_SENT', false, false],
-  ['PAYMENT_WITH_BANK', false, false],
-  ['PAYMENT_SETTLED', false, true],
-  ['PAYMENT_FAILED', true, true],
-  ['PAYMENT_RETURNED', true, true],
-  ['SCHEDULE_FAILED', true, true],
-  ['CARD_FROZEN', true, true],
-  ['APPLICATION_DECIDED', false, true],
-  ['ACCOUNT_READY', false, true],
-  ['LIMITS_CHANGED', true, true],
-  ['DETAILS_NEEDED', true, true],
-  ['SUPPORT_UPDATE', false, true],
-  ['NEW_DEVICE', true, true],
-  ['CLOSURE_STARTED', true, true],
-  ['ACCOUNT_FROZEN', true, true],
+/** OG-014 catalogue (contract 1.2): kind, category, mandatory, email by default. Get paid kinds only where it ships. */
+export const NOTICE_KINDS: Array<[kind: string, category: string, mandatory: boolean, email: boolean]> = [
+  ['MONEY_IN', 'MONEY', false, true],
+  ['MONEY_OUT', 'MONEY', false, false],
+  ['PAYMENT_SENT', 'MONEY', false, false],
+  ['PAYMENT_WITH_BANK', 'MONEY', false, false],
+  ['PAYMENT_SETTLED', 'MONEY', false, true],
+  ['PAYMENT_FAILED', 'MONEY', true, true],
+  ['PAYMENT_RETURNED', 'MONEY', true, true],
+  ['SCHEDULE_FAILED', 'MONEY', true, true],
+  ['APPROVAL_WAITING', 'APPROVALS', false, true],
+  ['MOVEMENT_APPROVAL_WAITING', 'APPROVALS', false, true],
+  ['MOVEMENT_IN_REVIEW', 'MOVEMENTS', false, true],
+  ['MOVEMENT_COMPLETED', 'MOVEMENTS', false, true],
+  ['MOVEMENT_FAILED', 'MOVEMENTS', true, true],
+  ...(IS_AE
+    ? []
+    : ([
+        ['GET_PAID_RECEIVED', 'GET_PAID', false, true],
+        ['GET_PAID_FAILED', 'GET_PAID', false, false],
+        ['PAYOUT_SENT', 'GET_PAID', false, true],
+        ['PAYOUT_FAILED', 'GET_PAID', true, true],
+      ] as Array<[string, string, boolean, boolean]>)),
+  ['CURRENCY_ACCOUNT_OPENED', 'ACCOUNTS', false, true],
+  ['ACCOUNT_READY', 'ACCOUNTS', false, true],
+  ['CLOSURE_STARTED', 'ACCOUNTS', true, true],
+  ['ACCOUNT_FROZEN', 'ACCOUNTS', true, true],
+  ['LIMITS_CHANGED', 'ACCOUNTS', true, true],
+  ['APPLICATION_SUBMITTED', 'ONBOARDING', false, true],
+  ['DOCUMENTS_REQUESTED', 'ONBOARDING', true, true],
+  ['APPLICATION_DECIDED', 'ONBOARDING', false, true],
+  ['DETAILS_NEEDED', 'ONBOARDING', true, true],
+  ['CARD_ISSUED', 'CARDS', false, true],
+  ['CARD_FROZEN', 'CARDS', true, true],
+  ['NEW_DEVICE', 'SECURITY', true, true],
+  ['DEVICE_REMOVED', 'SECURITY', true, true],
+  ['SUPPORT_UPDATE', 'SUPPORT', false, true],
+  ['MEMBER_JOINED', 'TEAM', false, true],
 ];
 
 export const demoPreferences = (): KindPreference[] =>
-  NOTICE_KINDS.map(([kind, mandatory, email]) => ({
+  NOTICE_KINDS.map(([kind, category, mandatory, email]) => ({
     kind,
     label: t(`app.demo.notice_kind.${kind.toLowerCase()}`),
+    category,
     mandatory,
+    inApp: true,
     email,
     sms: false,
+    push: true,
+    source: 'DEFAULT' as const,
   }));
 
 /** Sample notices in ongem-core's wording, newest first; two unread. */

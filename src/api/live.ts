@@ -409,6 +409,15 @@ export class LiveOnGemApi implements OnGemApi {
       throw e;
     }
   };
+  unreadCount: OnGemApi['unreadCount'] = async () =>
+    (await this.call<{ unread: number }>('GET', paths.unreadCount)).unread;
+  companyNotificationPreferences: OnGemApi['companyNotificationPreferences'] = () =>
+    this.call('GET', paths.companyNotificationPreferences);
+  setCompanyNotificationPreferences: OnGemApi['setCompanyNotificationPreferences'] = (kinds) =>
+    this.call('PUT', paths.companyNotificationPreferences, { json: { kinds } });
+  resetCompanyNotificationPreferences: OnGemApi['resetCompanyNotificationPreferences'] = (kind) =>
+    this.call('DELETE', paths.resetCompanyNotificationPreferences(kind));
+  exportFormats: OnGemApi['exportFormats'] = () => this.call('GET', paths.exportFormats);
   notificationPreferences: OnGemApi['notificationPreferences'] = () =>
     this.call('GET', paths.notificationPreferences);
   setNotificationPreferences: OnGemApi['setNotificationPreferences'] = (kinds) =>

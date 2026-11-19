@@ -519,6 +519,8 @@ export interface RecordingSession {
 export interface NoticeView {
   id: string;
   kind: string;
+  /** OG-014 (2026-11-20): MONEY, APPROVALS, MOVEMENTS, GET_PAID, ACCOUNTS, ONBOARDING, CARDS, SECURITY, SUPPORT, TEAM. */
+  category?: string;
   title: string;
   body: string;
   link: string | null;
@@ -537,13 +539,22 @@ export interface Inbox {
 export interface KindPreference {
   kind: string;
   label: string;
+  category?: string;
   mandatory: boolean;
+  /** OG-014 (2026-11-20): in the inbox; a mandatory kind is always in-app and by email. */
+  inApp?: boolean;
   email: boolean;
   sms: boolean;
+  /** To the person's phones (the founder app); the web has no push. */
+  push?: boolean;
+  /** Where the effective choice comes from: this company's override, the person's own choice, or the kind's default. */
+  source?: 'COMPANY' | 'PERSON' | 'DEFAULT';
 }
 
 /** The person's notification choices; the SMS number shows its last 4 digits only. */
 export interface NotificationPreferences {
+  /** Set on the company variant (the effective choices in the X-Company-Id company). */
+  companyId?: string | null;
   kinds: KindPreference[];
   smsNumberLast4: string | null;
   smsVerified: boolean;
@@ -552,8 +563,17 @@ export interface NotificationPreferences {
 /** A change to one kind; a field left out keeps its value. */
 export interface PreferenceChange {
   kind: string;
+  inApp?: boolean;
   email?: boolean;
   sms?: boolean;
+  push?: boolean;
+}
+
+/** OG-024: one export format the region offers (GET /v1/exports/formats). */
+export interface ExportFormat {
+  format: string;
+  labelKey: string;
+  extension: string;
 }
 
 /** OG-024: an export run of an account's posted activity (contract exports-api.md). */

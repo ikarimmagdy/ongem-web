@@ -24,6 +24,7 @@ import {
   demoSecurity,
   demoPreferences,
   demoInviteCompany,
+  NOTICE_KINDS,
 } from './demoData';
 import { DemoAssistant } from '../assistant/demoAssistant';
 import { DemoFx } from './demoFx';
@@ -148,7 +149,12 @@ export class DemoOnGemApi implements OnGemApi {
   /** Who approves a new top-up (Q-091): COMPANY in the demo, ONGEM to show a one-person company. */
   approvalBy: 'COMPANY' | 'ONGEM' = 'COMPANY';
   private ticketsState: TicketDetail[] = demoTickets();
-  private noticesState: NoticeView[] = demoNotices();
+  private noticesState: NoticeView[] = demoNotices().map((n) => ({
+    ...n,
+    category: n.category ?? NOTICE_KINDS.find((k) => k[0] === n.kind)?.[1],
+  }));
+  /** OG-014: this company's overrides, by kind. */
+  private companyPrefs = new Map<string, PreferenceChange>();
   private preferencesState: NotificationPreferences = {
     kinds: demoPreferences(),
     smsNumberLast4: null,
@@ -518,7 +524,7 @@ export class DemoOnGemApi implements OnGemApi {
     const to = r.month ? demoMonthEnd(r.month) : (r.to ?? '');
     if (!/^\d{4}-\d{2}-\d{2}$/.test(from) || !/^\d{4}-\d{2}-\d{2}$/.test(to) || to < from || to > today)
       throw new ApiError(422, 'period_invalid', t('app.exports.error.period_invalid'));
-    if (r.format !== 'CSV')
+    if (!['CSV', 'QUICKBOOKS', 'XERO'].includes(r.format))
       throw new ApiError(422, 'format_unavailable', t('app.exports.error.format_unavailable'));
     if (
       this.exportsState.some(
@@ -572,7 +578,7 @@ export class DemoOnGemApi implements OnGemApi {
         run.state = 'DONE';
         run.lineCount = (demoTransactions[accountId] ?? []).length;
         run.sha256 = '0'.repeat(64);
-        run.fileName = `ongem-activity-${run.from}-${run.to}.csv`;
+        run.fileName = `ongem-activity-${run.from}-${run.to}${run.format === 'CSV' ? '' : `-${run.format.toLowerCase()}`}.csv`;
       }
     }
     return this.log('exportRun', run.state === 'DONE' ? { ...run, link: this.demoLink(run) } : run);
@@ -1201,26 +1207,83 @@ export class DemoOnGemApi implements OnGemApi {
     await this.log('setLocale', locale);
   };
 
-  setNotificationPreferences = async (kinds: PreferenceChange[]) => {
+  private checkChanges(kinds: PreferenceChange[]) {
     const known = new Map(this.preferencesState.kinds.map((k) => [k.kind, k]));
     for (const c of kinds) {
       const k = known.get(c.kind);
       if (!k)
         throw new ApiError(422, 'validation_failed', t('app.demo.error.unknown_kind', { kind: c.kind }));
-      if (k.mandatory && c.email === false)
+      if (k.mandatory && (c.email === false || c.inApp === false))
         throw new ApiError(422, 'mandatory_kind', t('app.demo.error.mandatory_kind'));
       if (c.sms && !this.preferencesState.smsVerified)
         throw new ApiError(422, 'validation_failed', t('app.demo.error.sms_verify_first'));
     }
+  }
+
+  setNotificationPreferences = async (kinds: PreferenceChange[]) => {
+    this.checkChanges(kinds);
     this.preferencesState = {
       ...this.preferencesState,
       kinds: this.preferencesState.kinds.map((k) => {
         const c = kinds.find((x) => x.kind === k.kind);
-        return c ? { ...k, email: c.email ?? k.email, sms: c.sms ?? k.sms } : k;
+        return c
+          ? {
+              ...k,
+              inApp: c.inApp ?? k.inApp,
+              email: c.email ?? k.email,
+              sms: c.sms ?? k.sms,
+              push: c.push ?? k.push,
+              source: 'PERSON' as const,
+            }
+          : k;
       }),
     };
     return this.log('setNotificationPreferences', this.preferencesState);
   };
+
+  unreadCount = async () => this.log('unreadCount', this.noticesState.filter((n) => !n.readAt).length);
+
+  /** The company's choices: its override where there is one, else the person's own (OG-014 1.3). */
+  private companyView(): NotificationPreferences {
+    return {
+      ...this.preferencesState,
+      companyId: this.me_.companyId ?? null,
+      kinds: this.preferencesState.kinds.map((k) => {
+        const o = this.companyPrefs.get(k.kind);
+        return o
+          ? {
+              ...k,
+              inApp: o.inApp ?? k.inApp,
+              email: o.email ?? k.email,
+              sms: o.sms ?? k.sms,
+              push: o.push ?? k.push,
+              source: 'COMPANY' as const,
+            }
+          : k;
+      }),
+    };
+  }
+
+  companyNotificationPreferences = async () => this.log('companyNotificationPreferences', this.companyView());
+
+  setCompanyNotificationPreferences = async (kinds: PreferenceChange[]) => {
+    this.checkChanges(kinds);
+    for (const c of kinds) this.companyPrefs.set(c.kind, { ...this.companyPrefs.get(c.kind), ...c });
+    return this.log('setCompanyNotificationPreferences', this.companyView());
+  };
+
+  resetCompanyNotificationPreferences = async (kind?: string) => {
+    if (kind) this.companyPrefs.delete(kind);
+    else this.companyPrefs.clear();
+    return this.log('resetCompanyNotificationPreferences', this.companyView());
+  };
+
+  exportFormats = async () =>
+    this.log('exportFormats', [
+      { format: 'CSV', labelKey: 'app.exports.format_csv', extension: 'csv' },
+      { format: 'QUICKBOOKS', labelKey: 'app.exports.format_quickbooks', extension: 'csv' },
+      { format: 'XERO', labelKey: 'app.exports.format_xero', extension: 'csv' },
+    ]);
 
   setSmsNumber = async (number: string) => {
     if (!/^\+[1-9]\d{7,14}$/.test(number.trim()))

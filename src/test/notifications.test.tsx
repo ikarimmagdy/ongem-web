@@ -10,7 +10,7 @@ describe('notifications (M-3-R31 to R34, R36; OG-014 client)', () => {
     const api = new DemoOnGemApi();
     renderApp('/notifications', { api });
     const list = await screen.findByTestId('notices-list');
-    const rows = within(list).getAllByRole('button');
+    const rows = within(list).getAllByTestId(/^notice-ntc_/);
     expect(rows[0]).toHaveTextContent('A payment needs your approval');
     expect(rows[2]).toHaveTextContent('Payment completed');
     expect(screen.getByText('2 unread')).toBeInTheDocument();
@@ -76,7 +76,8 @@ describe('notifications (M-3-R31 to R34, R36; OG-014 client)', () => {
   it('AC_R36_1 demo carries sample notices and choices', async () => {
     const api = new DemoOnGemApi();
     expect((await api.notifications()).items).toHaveLength(3);
-    expect((await api.notificationPreferences()).kinds).toHaveLength(16);
+    // OG-014 catalogue (contract 2026-11-20 1.2): 32 kinds in the US build.
+    expect((await api.notificationPreferences()).kinds).toHaveLength(32);
     await expect(
       api.setNotificationPreferences([{ kind: 'PAYMENT_RETURNED', email: false }]),
     ).rejects.toMatchObject({

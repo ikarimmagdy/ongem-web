@@ -62,6 +62,11 @@ export const paths = {
   readNotification: (id: string) => `/v1/notifications/${q(id)}/read`,
   readAllNotifications: '/v1/notifications/read-all',
   notificationPreferences: '/v1/notifications/preferences',
+  unreadCount: '/v1/notifications/unread-count',
+  companyNotificationPreferences: '/v1/notifications/preferences/company',
+  resetCompanyNotificationPreferences: (kind?: string) =>
+    `/v1/notifications/preferences/company${kind ? `?kind=${q(kind)}` : ''}`,
+  exportFormats: '/v1/exports/formats',
   smsNumber: '/v1/notifications/sms-number',
   verifySmsNumber: '/v1/notifications/sms-number/verify',
   conversations: '/v1/assistant/conversations',
