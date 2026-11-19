@@ -6,7 +6,7 @@ import { useAsync } from '../lib/useAsync';
 import { DARK_THEME, useAppearance, type Appearance } from '../lib/appearance';
 import { formatDate } from '../lib/format';
 import { LanguageSwitch, t } from '../i18n';
-import { privacyLine } from '../recording/Recorder';
+import { privacyLine } from '../recording/privacy';
 import { useSession } from '../session';
 import { Load, human, stateStatus } from './common';
 import { lastSignInText, signInDevice, signInLine } from '../lib/signins';

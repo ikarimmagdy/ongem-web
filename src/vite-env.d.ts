@@ -25,6 +25,8 @@ interface ImportMetaEnv {
   readonly VITE_OTEL_ENVIRONMENT?: string;
   /** OG-039: `true` turns on payment acceptance (Get paid); ignored in an AE build. */
   readonly VITE_ACCEPTANCE_ENABLED?: string;
+  /** OG-055 reviews only: a Stripe test publishable key so the demo shows the real Payment Element; blank: a stand-in. */
+  readonly VITE_DEMO_STRIPE_PUBLISHABLE_KEY?: string;
 }
 
 /** The package version and commit of the build (vite.config.ts). */

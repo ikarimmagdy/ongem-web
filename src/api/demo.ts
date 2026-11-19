@@ -1,3 +1,5 @@
+import { ACCEPTANCE_ENABLED } from '../acceptance/api';
+import { DemoAcceptance } from '../acceptance/demo';
 import { invitableRoles, permissionsOf, Permission, type OnGemApi } from './client';
 import {
   demoForeignAccounts,
@@ -189,6 +191,14 @@ export class DemoOnGemApi implements OnGemApi {
     if (company && company !== this.home)
       this.accountsState = this.accountsState.map((a) => ({ ...a, id: `${a.id}_${company}` }));
   }
+
+  /** OG-055: a sample Get paid in a build with acceptance on (the shell shows it only then). */
+  readonly acceptance = ACCEPTANCE_ENABLED
+    ? new DemoAcceptance(
+        (purpose) => this.stepUp(purpose),
+        () => this.now(),
+      )
+    : undefined;
 
   /** OG-054: currencies, corridors, currency accounts, international recipients, quotes and movements. */
   readonly fx = new DemoFx({

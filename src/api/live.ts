@@ -203,8 +203,15 @@ export class LiveOnGemApi implements OnGemApi {
     }
   }
 
-  async call<T>(method: string, path: string, body?: Body, accept?: string): Promise<T> {
-    const key = method === 'GET' ? null : this.newKey();
+  /** [idempotencyKey]: the caller's own key, so a retry of the same action (OG-055 confirm) reuses it. */
+  async call<T>(
+    method: string,
+    path: string,
+    body?: Body,
+    accept?: string,
+    idempotencyKey?: string,
+  ): Promise<T> {
+    const key = method === 'GET' ? null : (idempotencyKey ?? this.newKey());
     // Binding the device itself never needs one, nor does whereami, which is asked before the person's region is known
     // and must leave nothing in a region that does not hold them (OG-022 R25); every other customer call carries it.
     let device =

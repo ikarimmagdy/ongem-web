@@ -19,7 +19,8 @@ const outDir = arg('--outDir') ?? 'dist';
 const region = regionOf();
 
 // PS-014: a production build stops when its public site URLs are missing or point at development hosts.
-const siteErrors = siteConfigErrors({ ...loadEnv('production', process.cwd(), 'VITE_'), ...process.env });
+const buildEnv = { ...loadEnv('production', process.cwd(), 'VITE_'), ...process.env };
+const siteErrors = siteConfigErrors(buildEnv);
 if (siteErrors.length) {
   for (const e of siteErrors) console.error(`site: ${e}`);
   console.error(
@@ -60,5 +61,15 @@ if (file) {
 }
 process.env.ONGEM_CONTENT_SNAPSHOT = file;
 
+// OG-055: Get paid is on in a development build of the US region unless VITE_ACCEPTANCE_ENABLED says otherwise (blank or
+// false is off); a production build and an AE build keep it off unless set. The dev deploy runs plain `npm run build`.
+const production = buildEnv.VITE_ENVIRONMENT === 'production';
+if (buildEnv.VITE_ACCEPTANCE_ENABLED === undefined && !production && region === 'us')
+  process.env.VITE_ACCEPTANCE_ENABLED = 'true';
+const acceptance = process.env.VITE_ACCEPTANCE_ENABLED === 'true' && region === 'us';
+console.log(`acceptance: Get paid ${acceptance ? 'on' : 'off'}`);
+
 await build({ build: { outDir } });
+// With Get paid on, the headers policy that allows the card form's frames and API sits beside the build.
+if (acceptance && outDir === 'dist') await import('./acceptance-headers.mjs');
 await import('./prerender.mjs');

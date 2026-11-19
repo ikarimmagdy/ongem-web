@@ -251,3 +251,20 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   is `app.errors.<code>` (`OG054_CODES`); texts `app.fx.*` in both seeds (ongem-core's seed needs them too). Demo:
   `api/demoFx.ts` (sample bank, corridors to DE, GB, JP and KW, a settled and a waiting payment abroad). Tests
   `og054.test.tsx`, `lib/bankDetails.test.ts`, `lib/fx.test.ts`.
+- 2026-11-20: OG-055 Get paid with Stripe (contract WS `ongem-engineering/outputs/review/og055-2026-11-20/get-paid-api.md`).
+  Provider-neutral: `GetPaid.tsx` reads `GET /v1/acceptance/get-paid` once (headline `state`, verification, live
+  balances, payout destination, recent payments and payouts) and loads the provider the API names. Stripe
+  (`StripeSurfaces.tsx`, lazy chunk with `@stripe/stripe-js` 10.2.1 and `@stripe/react-stripe-js` 7.0.1): the Payment
+  Element in deferred mode from `client-config` (publishable key and connected account from the API only), Pay makes a
+  ConfirmationToken and posts its id to `confirm` (one Idempotency-Key per tap, 202 `acceptance_outcome_unknown` asked
+  again with it; `call` takes the key), 3D Secure through `handleNextAction`, declines as text. Owners open the
+  provider's onboarding or remediation link at once (`onboarding-link`, never kept) and link the OnGem account as the
+  payout destination; Withdraw pays out to it with step-up. The buyer checkout is `/get-paid/checkout/:checkoutId`.
+  Whop companies keep `WhopSurfaces`. Demo: `acceptance/demo.ts` (`DemoOnGemApi.acceptance`, only in a build with Get
+  paid on); `VITE_DEMO_STRIPE_PUBLISHABLE_KEY` (a test publishable key, reviews only) shows the real Payment Element.
+  `scripts/build.mjs` turns Get paid on for a non-production US build unless `VITE_ACCEPTANCE_ENABLED` is set (blank or
+  false is off), and then writes `dist/security-headers.acceptance.json` (Whop and Stripe sources); ongem-infra must
+  deploy dev with `-c founderWebHeaders=../ongem-web/dist/security-headers.acceptance.json` for the card form to load.
+  Bundle: the Recorder (and rrweb) load only when recording is on; the shared first-load chunk is split into `react`,
+  `content`, `design-system` and `i18n` (`CHUNK_GROUPS` in vite.config.ts). Texts `app.get_paid.*` (US seed). Test
+  `og055.test.tsx`.

@@ -14509,6 +14509,740 @@
       "meta": {},
       "en": "Give a reason.",
       "ar": "اذكر السبب."
+    },
+    {
+      "key": "app.get_paid.arrives",
+      "format": "text",
+      "description": "Get paid (OG-055): when a payout is expected at the bank",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Expected {date}",
+      "ar": "متوقع في {date}"
+    },
+    {
+      "key": "app.get_paid.back",
+      "format": "text",
+      "description": "Get paid (OG-055): link back from the customer checkout",
+      "placeholders": [],
+      "meta": {},
+      "en": "Back to Get paid",
+      "ar": "العودة إلى استلام المدفوعات"
+    },
+    {
+      "key": "app.get_paid.balance_as_of",
+      "format": "text",
+      "description": "Get paid (OG-055): time the balance was read from the provider",
+      "placeholders": [
+        "time"
+      ],
+      "meta": {},
+      "en": "Read live from the provider at {time}.",
+      "ar": "قُرئ مباشرة من مزود الدفع في {time}."
+    },
+    {
+      "key": "app.get_paid.balance_unavailable",
+      "format": "text",
+      "description": "Get paid (OG-055): the provider did not answer for the balance",
+      "placeholders": [],
+      "meta": {},
+      "en": "The balance could not be read from the provider just now. Try again in a minute.",
+      "ar": "تعذّرت قراءة الرصيد من مزود الدفع الآن. حاول مرة أخرى بعد دقيقة."
+    },
+    {
+      "key": "app.get_paid.buyer_email",
+      "format": "text",
+      "description": "Get paid (OG-055): label: customer email for the receipt",
+      "placeholders": [],
+      "meta": {},
+      "en": "Customer email for the receipt (optional)",
+      "ar": "بريد العميل الإلكتروني للإيصال (اختياري)"
+    },
+    {
+      "key": "app.get_paid.buyer_email_hint",
+      "format": "text",
+      "description": "Get paid (OG-055): hint under the customer email",
+      "placeholders": [],
+      "meta": {},
+      "en": "The provider sends the receipt. OnGem does not keep this address.",
+      "ar": "يرسل مزود الدفع الإيصال. لا تحتفظ OnGem بهذا العنوان."
+    },
+    {
+      "key": "app.get_paid.checkout_title",
+      "format": "text",
+      "description": "Get paid (OG-055): title of the customer checkout when the company name is unknown",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pay by card",
+      "ar": "الدفع بالبطاقة"
+    },
+    {
+      "key": "app.get_paid.col.amount",
+      "format": "text",
+      "description": "Get paid (OG-055): table column",
+      "placeholders": [],
+      "meta": {},
+      "en": "Amount",
+      "ar": "المبلغ"
+    },
+    {
+      "key": "app.get_paid.col.date",
+      "format": "text",
+      "description": "Get paid (OG-055): table column",
+      "placeholders": [],
+      "meta": {},
+      "en": "Date",
+      "ar": "التاريخ"
+    },
+    {
+      "key": "app.get_paid.col.state",
+      "format": "text",
+      "description": "Get paid (OG-055): table column",
+      "placeholders": [],
+      "meta": {},
+      "en": "Status",
+      "ar": "الحالة"
+    },
+    {
+      "key": "app.get_paid.contact_support",
+      "format": "text",
+      "description": "Get paid (OG-055): button: contact support about a refused or restricted account",
+      "placeholders": [],
+      "meta": {},
+      "en": "Contact support",
+      "ar": "تواصل مع الدعم"
+    },
+    {
+      "key": "app.get_paid.continue_onboarding",
+      "format": "text",
+      "description": "Get paid (OG-055): button: open the provider page to finish setup",
+      "placeholders": [],
+      "meta": {},
+      "en": "Continue setup",
+      "ar": "متابعة الإعداد"
+    },
+    {
+      "key": "app.get_paid.decline.authentication",
+      "format": "text",
+      "description": "Get paid (OG-055): the customer did not finish card authentication",
+      "placeholders": [],
+      "meta": {},
+      "en": "The card check was not finished. Try again.",
+      "ar": "لم يكتمل التحقق من البطاقة. حاول مرة أخرى."
+    },
+    {
+      "key": "app.get_paid.decline.other",
+      "format": "text",
+      "description": "Get paid (OG-055): a card payment did not go through",
+      "placeholders": [],
+      "meta": {},
+      "en": "The payment did not go through. Try another card.",
+      "ar": "لم تتم عملية الدفع. جرّب بطاقة أخرى."
+    },
+    {
+      "key": "app.get_paid.decline.card_declined",
+      "format": "text",
+      "description": "Get paid (OG-055): decline reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "The card was declined.",
+      "ar": "رُفضت البطاقة."
+    },
+    {
+      "key": "app.get_paid.decline.insufficient_funds",
+      "format": "text",
+      "description": "Get paid (OG-055): decline reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "The card has insufficient funds.",
+      "ar": "رصيد البطاقة غير كافٍ."
+    },
+    {
+      "key": "app.get_paid.decline.expired_card",
+      "format": "text",
+      "description": "Get paid (OG-055): decline reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "The card has expired.",
+      "ar": "انتهت صلاحية البطاقة."
+    },
+    {
+      "key": "app.get_paid.decline.incorrect_cvc",
+      "format": "text",
+      "description": "Get paid (OG-055): decline reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "The security code is wrong.",
+      "ar": "رمز الأمان غير صحيح."
+    },
+    {
+      "key": "app.get_paid.demo_card",
+      "format": "text",
+      "description": "Get paid (OG-055): demo stand-in for the card form",
+      "placeholders": [],
+      "meta": {},
+      "en": "In the demo no card is taken. Live, the card form appears here.",
+      "ar": "في العرض التجريبي لا تُستخدم أي بطاقة. في الوضع الفعلي يظهر نموذج البطاقة هنا."
+    },
+    {
+      "key": "app.get_paid.destination_line",
+      "format": "text",
+      "description": "Get paid (OG-055): where payouts go",
+      "placeholders": [
+        "name",
+        "last4"
+      ],
+      "meta": {},
+      "en": "Payouts go to {name} account ending {last4}.",
+      "ar": "تُحوَّل المدفوعات إلى حساب {name} المنتهي بـ {last4}."
+    },
+    {
+      "key": "app.get_paid.destination_link",
+      "format": "text",
+      "description": "Get paid (OG-055): button: link the OnGem account for payouts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pay out to my OnGem account",
+      "ar": "التحويل إلى حسابي في OnGem"
+    },
+    {
+      "key": "app.get_paid.destination_none",
+      "format": "text",
+      "description": "Get paid (OG-055): no payout destination yet (owner)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Link your OnGem account so card payments can be paid out to it.",
+      "ar": "اربط حسابك في OnGem حتى تُحوَّل إليه مدفوعات البطاقات."
+    },
+    {
+      "key": "app.get_paid.destination_none_member",
+      "format": "text",
+      "description": "Get paid (OG-055): no payout destination yet (not an owner)",
+      "placeholders": [],
+      "meta": {},
+      "en": "An owner links the OnGem account for payouts.",
+      "ar": "يربط أحد المالكين حساب OnGem للتحويلات."
+    },
+    {
+      "key": "app.get_paid.open_checkout",
+      "format": "text",
+      "description": "Get paid (OG-055): button: open a checkout page for the customer",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open checkout for your customer",
+      "ar": "فتح صفحة الدفع لعميلك"
+    },
+    {
+      "key": "app.get_paid.pay",
+      "format": "text",
+      "description": "Get paid (OG-055): button: pay with the card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pay",
+      "ar": "ادفع"
+    },
+    {
+      "key": "app.get_paid.paying",
+      "format": "text",
+      "description": "Get paid (OG-055): button while paying",
+      "placeholders": [],
+      "meta": {},
+      "en": "Paying...",
+      "ar": "جارٍ الدفع..."
+    },
+    {
+      "key": "app.get_paid.payments",
+      "format": "text",
+      "description": "Get paid (OG-055): table title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments",
+      "ar": "المدفوعات"
+    },
+    {
+      "key": "app.get_paid.payments_empty",
+      "format": "text",
+      "description": "Get paid (OG-055): no payments yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "No payments yet",
+      "ar": "لا توجد مدفوعات بعد"
+    },
+    {
+      "key": "app.get_paid.payments_empty_text",
+      "format": "text",
+      "description": "Get paid (OG-055): no payments yet, text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card payments you take show here.",
+      "ar": "تظهر هنا مدفوعات البطاقات التي تستلمها."
+    },
+    {
+      "key": "app.get_paid.payout_destination",
+      "format": "text",
+      "description": "Get paid (OG-055): card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payouts",
+      "ar": "التحويلات"
+    },
+    {
+      "key": "app.get_paid.payouts",
+      "format": "text",
+      "description": "Get paid (OG-055): table title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payouts",
+      "ar": "التحويلات"
+    },
+    {
+      "key": "app.get_paid.payouts_empty",
+      "format": "text",
+      "description": "Get paid (OG-055): no payouts yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "No payouts yet",
+      "ar": "لا توجد تحويلات بعد"
+    },
+    {
+      "key": "app.get_paid.payouts_empty_text",
+      "format": "text",
+      "description": "Get paid (OG-055): no payouts yet, text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Money you move to your OnGem account shows here.",
+      "ar": "تظهر هنا الأموال التي تحوّلها إلى حسابك في OnGem."
+    },
+    {
+      "key": "app.get_paid.processing",
+      "format": "text",
+      "description": "Get paid (OG-055): the payment is being processed",
+      "placeholders": [],
+      "meta": {},
+      "en": "Processing. It shows as paid once the provider confirms it.",
+      "ar": "قيد المعالجة. يظهر كمدفوع بعد تأكيد مزود الدفع."
+    },
+    {
+      "key": "app.get_paid.recent",
+      "format": "text",
+      "description": "Get paid (OG-055): card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recent activity",
+      "ar": "النشاط الأخير"
+    },
+    {
+      "key": "app.get_paid.withdraw",
+      "format": "text",
+      "description": "Get paid (OG-055): button: pay out",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pay out",
+      "ar": "تحويل"
+    },
+    {
+      "key": "app.get_paid.withdraw_available",
+      "format": "text",
+      "description": "Get paid (OG-055): available balance line",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "Available to pay out: {amount}",
+      "ar": "المتاح للتحويل: {amount}"
+    },
+    {
+      "key": "app.get_paid.withdraw_done",
+      "format": "text",
+      "description": "Get paid (OG-055): payout made",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "{amount} is on its way to your OnGem account.",
+      "ar": "{amount} في طريقه إلى حسابك في OnGem."
+    },
+    {
+      "key": "app.get_paid.withdraw_needs_destination",
+      "format": "text",
+      "description": "Get paid (OG-055): withdraw needs a linked account",
+      "placeholders": [],
+      "meta": {},
+      "en": "Link your OnGem account in Overview first.",
+      "ar": "اربط حسابك في OnGem من النظرة العامة أولًا."
+    },
+    {
+      "key": "app.get_paid.withdraw_over",
+      "format": "text",
+      "description": "Get paid (OG-055): amount over the available balance",
+      "placeholders": [],
+      "meta": {},
+      "en": "This is more than the available balance.",
+      "ar": "هذا المبلغ أكبر من الرصيد المتاح."
+    },
+    {
+      "key": "app.get_paid.withdraw_title",
+      "format": "text",
+      "description": "Get paid (OG-055): card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pay out to OnGem",
+      "ar": "التحويل إلى OnGem"
+    },
+    {
+      "key": "app.get_paid.withdraw_to",
+      "format": "text",
+      "description": "Get paid (OG-055): payout destination line",
+      "placeholders": [
+        "name",
+        "last4"
+      ],
+      "meta": {},
+      "en": "To {name} account ending {last4}",
+      "ar": "إلى حساب {name} المنتهي بـ {last4}"
+    },
+    {
+      "key": "app.get_paid.headline.off",
+      "format": "text",
+      "description": "Get paid (OG-055): headline for state off",
+      "placeholders": [],
+      "meta": {},
+      "en": "Get paid is off",
+      "ar": "متوقف"
+    },
+    {
+      "key": "app.get_paid.headline_text.off",
+      "format": "text",
+      "description": "Get paid (OG-055): text for state off",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card payments are not available for this company.",
+      "ar": "مدفوعات البطاقات غير متاحة لهذه الشركة."
+    },
+    {
+      "key": "app.get_paid.state_word.off",
+      "format": "text",
+      "description": "Get paid (OG-055): status chip for state off",
+      "placeholders": [],
+      "meta": {},
+      "en": "Off",
+      "ar": "متوقف"
+    },
+    {
+      "key": "app.get_paid.headline.not_opened",
+      "format": "text",
+      "description": "Get paid (OG-055): headline for state not_opened",
+      "placeholders": [],
+      "meta": {},
+      "en": "Start taking card payments",
+      "ar": "ابدأ استلام مدفوعات البطاقات"
+    },
+    {
+      "key": "app.get_paid.headline_text.not_opened",
+      "format": "text",
+      "description": "Get paid (OG-055): text for state not_opened",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open a merchant account to take card payments from your customers. We prefill what we already know.",
+      "ar": "افتح حساب تاجر لاستلام مدفوعات البطاقات من عملائك. نملأ مسبقًا ما نعرفه."
+    },
+    {
+      "key": "app.get_paid.state_word.not_opened",
+      "format": "text",
+      "description": "Get paid (OG-055): status chip for state not_opened",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not started",
+      "ar": "لم يبدأ"
+    },
+    {
+      "key": "app.get_paid.headline.action_required",
+      "format": "text",
+      "description": "Get paid (OG-055): headline for state action_required",
+      "placeholders": [],
+      "meta": {},
+      "en": "Finish setting up",
+      "ar": "أكمل الإعداد"
+    },
+    {
+      "key": "app.get_paid.headline_text.action_required",
+      "format": "text",
+      "description": "Get paid (OG-055): text for state action_required",
+      "placeholders": [],
+      "meta": {},
+      "en": "The payment provider needs a few details from you before you can take payments.",
+      "ar": "يحتاج مزود الدفع إلى بعض التفاصيل منك قبل أن تستلم المدفوعات."
+    },
+    {
+      "key": "app.get_paid.state_word.action_required",
+      "format": "text",
+      "description": "Get paid (OG-055): status chip for state action_required",
+      "placeholders": [],
+      "meta": {},
+      "en": "Action needed",
+      "ar": "مطلوب إجراء"
+    },
+    {
+      "key": "app.get_paid.headline.in_review",
+      "format": "text",
+      "description": "Get paid (OG-055): headline for state in_review",
+      "placeholders": [],
+      "meta": {},
+      "en": "In review",
+      "ar": "قيد المراجعة"
+    },
+    {
+      "key": "app.get_paid.headline_text.in_review",
+      "format": "text",
+      "description": "Get paid (OG-055): text for state in_review",
+      "placeholders": [],
+      "meta": {},
+      "en": "The payment provider is checking your details. Nothing to do for now.",
+      "ar": "يراجع مزود الدفع بياناتك. لا يوجد ما تفعله الآن."
+    },
+    {
+      "key": "app.get_paid.state_word.in_review",
+      "format": "text",
+      "description": "Get paid (OG-055): status chip for state in_review",
+      "placeholders": [],
+      "meta": {},
+      "en": "In review",
+      "ar": "قيد المراجعة"
+    },
+    {
+      "key": "app.get_paid.headline.rejected",
+      "format": "text",
+      "description": "Get paid (OG-055): headline for state rejected",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not approved",
+      "ar": "لم تتم الموافقة"
+    },
+    {
+      "key": "app.get_paid.headline_text.rejected",
+      "format": "text",
+      "description": "Get paid (OG-055): text for state rejected",
+      "placeholders": [],
+      "meta": {},
+      "en": "The payment provider could not approve your business. Contact support to talk it through.",
+      "ar": "لم يتمكن مزود الدفع من الموافقة على نشاطك التجاري. تواصل مع الدعم لمناقشة ذلك."
+    },
+    {
+      "key": "app.get_paid.state_word.rejected",
+      "format": "text",
+      "description": "Get paid (OG-055): status chip for state rejected",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not approved",
+      "ar": "مرفوض"
+    },
+    {
+      "key": "app.get_paid.headline.restricted",
+      "format": "text",
+      "description": "Get paid (OG-055): headline for state restricted",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments paused",
+      "ar": "المدفوعات متوقفة مؤقتًا"
+    },
+    {
+      "key": "app.get_paid.headline_text.restricted",
+      "format": "text",
+      "description": "Get paid (OG-055): text for state restricted",
+      "placeholders": [],
+      "meta": {},
+      "en": "You cannot take payments right now. Contact support and we will help.",
+      "ar": "لا يمكنك استلام المدفوعات الآن. تواصل مع الدعم وسنساعدك."
+    },
+    {
+      "key": "app.get_paid.state_word.restricted",
+      "format": "text",
+      "description": "Get paid (OG-055): status chip for state restricted",
+      "placeholders": [],
+      "meta": {},
+      "en": "Paused",
+      "ar": "متوقف مؤقتًا"
+    },
+    {
+      "key": "app.get_paid.headline.active",
+      "format": "text",
+      "description": "Get paid (OG-055): headline for state active",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ready to take payments",
+      "ar": "جاهز لاستلام المدفوعات"
+    },
+    {
+      "key": "app.get_paid.headline_text.active",
+      "format": "text",
+      "description": "Get paid (OG-055): text for state active",
+      "placeholders": [],
+      "meta": {},
+      "en": "Create a payment request and take a card, then pay out to your OnGem account.",
+      "ar": "أنشئ طلب دفع واستلم البطاقة، ثم حوّل المبلغ إلى حسابك في OnGem."
+    },
+    {
+      "key": "app.get_paid.state_word.active",
+      "format": "text",
+      "description": "Get paid (OG-055): status chip for state active",
+      "placeholders": [],
+      "meta": {},
+      "en": "Active",
+      "ar": "نشط"
+    },
+    {
+      "key": "app.get_paid.payment_state.succeeded",
+      "format": "text",
+      "description": "Get paid (OG-055): payment state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Paid",
+      "ar": "مدفوع"
+    },
+    {
+      "key": "app.get_paid.payment_state.pending",
+      "format": "text",
+      "description": "Get paid (OG-055): payment state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Processing",
+      "ar": "قيد المعالجة"
+    },
+    {
+      "key": "app.get_paid.payment_state.authorized",
+      "format": "text",
+      "description": "Get paid (OG-055): payment state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Authorized",
+      "ar": "مُصرَّح به"
+    },
+    {
+      "key": "app.get_paid.payment_state.requires_action",
+      "format": "text",
+      "description": "Get paid (OG-055): payment state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for the customer",
+      "ar": "بانتظار العميل"
+    },
+    {
+      "key": "app.get_paid.payment_state.failed",
+      "format": "text",
+      "description": "Get paid (OG-055): payment state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Failed",
+      "ar": "فشل"
+    },
+    {
+      "key": "app.get_paid.payment_state.refunded",
+      "format": "text",
+      "description": "Get paid (OG-055): payment state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Refunded",
+      "ar": "مُسترد"
+    },
+    {
+      "key": "app.get_paid.payout_state.submitted",
+      "format": "text",
+      "description": "Get paid (OG-055): payout state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sent",
+      "ar": "أُرسل"
+    },
+    {
+      "key": "app.get_paid.payout_state.unknown",
+      "format": "text",
+      "description": "Get paid (OG-055): payout state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Checking",
+      "ar": "قيد التحقق"
+    },
+    {
+      "key": "app.get_paid.payout_state.requested",
+      "format": "text",
+      "description": "Get paid (OG-055): payout state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Requested",
+      "ar": "مطلوب"
+    },
+    {
+      "key": "app.get_paid.payout_state.in_review",
+      "format": "text",
+      "description": "Get paid (OG-055): payout state",
+      "placeholders": [],
+      "meta": {},
+      "en": "In review",
+      "ar": "قيد المراجعة"
+    },
+    {
+      "key": "app.get_paid.payout_state.processing",
+      "format": "text",
+      "description": "Get paid (OG-055): payout state",
+      "placeholders": [],
+      "meta": {},
+      "en": "On its way",
+      "ar": "في الطريق"
+    },
+    {
+      "key": "app.get_paid.payout_state.completed",
+      "format": "text",
+      "description": "Get paid (OG-055): payout state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Arrived",
+      "ar": "وصل"
+    },
+    {
+      "key": "app.get_paid.payout_state.failed",
+      "format": "text",
+      "description": "Get paid (OG-055): payout state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Failed",
+      "ar": "فشل"
+    },
+    {
+      "key": "app.get_paid.payout_state.reversed",
+      "format": "text",
+      "description": "Get paid (OG-055): payout state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reversed",
+      "ar": "أُعيد"
+    },
+    {
+      "key": "app.get_paid.payout_state.cancelled",
+      "format": "text",
+      "description": "Get paid (OG-055): payout state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cancelled",
+      "ar": "أُلغي"
+    },
+    {
+      "key": "app.get_paid.payout_state.denied",
+      "format": "text",
+      "description": "Get paid (OG-055): payout state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Denied",
+      "ar": "رُفض"
+    },
+    {
+      "key": "app.get_paid.payout_state.rejected",
+      "format": "text",
+      "description": "Get paid (OG-055): payout state",
+      "placeholders": [],
+      "meta": {},
+      "en": "Rejected",
+      "ar": "مرفوض"
     }
   ]
 }

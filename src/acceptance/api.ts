@@ -27,8 +27,113 @@ export interface MerchantSummary {
 
 export interface AcceptanceStatus {
   enabled: boolean;
+  /** OG-055: which provider serves this company; the client loads that provider's card form. */
+  provider?: Provider | null;
   environment: 'sandbox' | 'production' | null;
   merchant: MerchantSummary | null;
+}
+
+export type Provider = 'stripe' | 'whop';
+
+/** OG-055 the Get paid screen's headline state (contract 1.1). */
+export type GetPaidState =
+  'OFF' | 'NOT_OPENED' | 'ACTION_REQUIRED' | 'IN_REVIEW' | 'REJECTED' | 'RESTRICTED' | 'ACTIVE';
+
+export interface AcceptancePayment {
+  id: string;
+  checkoutId: string | null;
+  status: string;
+  amount: AcceptanceAmount;
+  failureCode: string | null;
+  paidAt: string | null;
+  updatedAt: string;
+}
+
+export interface Balances {
+  available: AcceptanceAmount;
+  pending: AcceptanceAmount;
+  reserve: AcceptanceAmount;
+}
+
+/** GET /v1/acceptance/get-paid: everything the Get paid screen shows, balances read live from the provider. */
+export interface GetPaid {
+  enabled: boolean;
+  provider: Provider | null;
+  environment: 'sandbox' | 'production' | null;
+  state: GetPaidState;
+  merchant: {
+    id: string;
+    active: boolean;
+    individual: string | null;
+    business: string | null;
+  } | null;
+  onboarding: { actionRequired: boolean } | null;
+  balances: Balances[];
+  balancesAsOf: string | null;
+  balanceUnavailable: boolean;
+  payoutDestination: PayoutDestination | null;
+  recentPayments: AcceptancePayment[];
+  recentPayouts: PayoutResult[];
+}
+
+export const GET_PAID_OFF: GetPaid = {
+  enabled: false,
+  provider: null,
+  environment: null,
+  state: 'OFF',
+  merchant: null,
+  onboarding: null,
+  balances: [],
+  balancesAsOf: null,
+  balanceUnavailable: false,
+  payoutDestination: null,
+  recentPayments: [],
+  recentPayouts: [],
+};
+
+/** GET /v1/acceptance/checkouts/{id}/client-config: what the card form needs, all public values. */
+export type ClientConfig = {
+  checkoutId: string;
+  environment: 'sandbox' | 'production';
+  amount: AcceptanceAmount;
+  title: string;
+} & (
+  | {
+      provider: 'stripe';
+      client: {
+        publishableKey: string;
+        connectedAccountId: string | null;
+        mode: 'payment';
+        amountMinor: string;
+        currency: string;
+        paymentMethodCreation: 'manual';
+      };
+    }
+  | { provider: 'whop'; client: { accountId: string; planId: string; purchaseUrl: string | null } }
+);
+
+/** POST /v1/acceptance/checkouts/{id}/confirm. `clientSecret` only with REQUIRES_ACTION, never kept. */
+export interface ConfirmResult {
+  paymentId: string;
+  checkoutId: string;
+  status: 'SUCCEEDED' | 'PENDING' | 'AUTHORIZED' | 'REQUIRES_ACTION' | 'FAILED';
+  clientSecret: string | null;
+  failureCode: string | null;
+}
+
+/** The demo's sample Get paid (a client that offers one); the live client calls the core. */
+export interface AcceptanceBackend {
+  getPaid(): Promise<GetPaid>;
+  status(): Promise<AcceptanceStatus>;
+  open(): Promise<unknown>;
+  onboardingLink(): Promise<{ url: string | null; returnUrl: string | null }>;
+  createCheckout(amountMinor: number, title: string): Promise<CheckoutSummary>;
+  clientConfig(checkoutId: string): Promise<ClientConfig>;
+  confirm(checkoutId: string, confirmationToken: string, buyerEmail: string | null): Promise<ConfirmResult>;
+  linkPayoutDestination(): Promise<PayoutDestination>;
+  payout(amountMinor: number, destinationId: string): Promise<PayoutResult>;
+  payments(): Promise<AcceptancePayment[]>;
+  payouts(): Promise<PayoutResult[]>;
 }
 
 export interface ElementToken {
@@ -54,6 +159,8 @@ export interface PayoutDestination {
   currency: string | null;
   isDefault: boolean;
   instant: boolean;
+  /** OG-055: the company's OnGem account this destination is, when OnGem linked it. */
+  ongemAccountId?: string | null;
 }
 
 export interface PayoutResult {
@@ -62,13 +169,28 @@ export interface PayoutResult {
   amount: AcceptanceAmount;
   fee: AcceptanceAmount | null;
   rejectCode: string | null;
+  /** OG-055: the day the provider expects the money at the bank, and when the payout was made. */
+  arrivalDate?: string | null;
+  createdAt?: string;
 }
 
 export type Surface = 'VERIFY' | 'PAYMENTS' | 'WALLET_ACTIVITY' | 'WITHDRAW';
 
-type Caller = { call<T>(method: string, path: string, body?: { json: unknown }): Promise<T> };
+type Caller = {
+  call<T>(
+    method: string,
+    path: string,
+    body?: { json: unknown },
+    accept?: string,
+    idempotencyKey?: string,
+  ): Promise<T>;
+};
+
+/** Waits between asks again of a confirm whose outcome the provider has not given yet (202, same key); tests shorten. */
+export const confirmTiming = { retryMs: [1000, 2000, 4000] };
 
 const BASE = '/v1/acceptance';
+const OUTCOME_UNKNOWN = 'acceptance_outcome_unknown';
 
 /** The acceptance endpoints of ongem-core through the live client (bearer, Idempotency-Key, step-up retry). */
 export class AcceptanceApi {
@@ -79,12 +201,69 @@ export class AcceptanceApi {
     return this.api as unknown as Caller;
   }
 
+  /** The demo's sample Get paid, when the demo client offers one; a demo without it reads acceptance as off. */
+  private get demo(): AcceptanceBackend | null {
+    if (this.api.kind === 'live') return null;
+    return (this.api as unknown as { acceptance?: AcceptanceBackend }).acceptance ?? null;
+  }
+
+  get provider(): 'live' | 'demo' {
+    return this.api.kind;
+  }
+
   status = async (): Promise<AcceptanceStatus> => {
+    if (this.demo) return this.demo.status();
     if (this.api.kind !== 'live') return { enabled: false, environment: null, merchant: null };
     return this.live.call('GET', BASE);
   };
 
-  open = async (): Promise<MerchantSummary> => this.live.call('POST', `${BASE}/account`);
+  /** OG-055: the whole Get paid screen in one read; off answers 200 with state OFF. */
+  getPaid = async (): Promise<GetPaid> => {
+    if (this.demo) return this.demo.getPaid();
+    if (this.api.kind !== 'live') return GET_PAID_OFF;
+    return this.live.call('GET', `${BASE}/get-paid`);
+  };
+
+  open = async (): Promise<unknown> =>
+    this.demo ? this.demo.open() : this.live.call('POST', `${BASE}/account`);
+
+  /** A short-lived link to the provider's hosted onboarding or remediation; opened at once, never kept. */
+  onboardingLink = async (): Promise<{ url: string | null; returnUrl: string | null }> =>
+    this.demo ? this.demo.onboardingLink() : this.live.call('POST', `${BASE}/onboarding-link`);
+
+  clientConfig = async (checkoutId: string): Promise<ClientConfig> =>
+    this.demo
+      ? this.demo.clientConfig(checkoutId)
+      : this.live.call('GET', `${BASE}/checkouts/${encodeURIComponent(checkoutId)}/client-config`);
+
+  /**
+   * One Idempotency-Key per Pay tap: a 202 `acceptance_outcome_unknown` is asked again with the same key, so the card is
+   * charged at most once. A declined card is a 200 with FAILED, not an error.
+   */
+  confirm = async (
+    checkoutId: string,
+    confirmationToken: string,
+    buyerEmail: string | null = null,
+    key: string = crypto.randomUUID(),
+  ): Promise<ConfirmResult> => {
+    if (this.demo) return this.demo.confirm(checkoutId, confirmationToken, buyerEmail);
+    const path = `${BASE}/checkouts/${encodeURIComponent(checkoutId)}/confirm`;
+    const body = { json: { confirmationToken, buyerEmail, returnUrl: null } };
+    for (let i = 0; ; i += 1) {
+      const r = await this.live.call<ConfirmResult & { code?: string }>('POST', path, body, undefined, key);
+      if (r.code !== OUTCOME_UNKNOWN) return r;
+      const wait = confirmTiming.retryMs[i];
+      if (wait === undefined) throw new ApiError(202, OUTCOME_UNKNOWN);
+      await new Promise((ok) => setTimeout(ok, wait));
+    }
+  };
+
+  /** The company's OnGem account as the payout destination (owners). */
+  linkPayoutDestination = async (): Promise<PayoutDestination> =>
+    this.demo ? this.demo.linkPayoutDestination() : this.live.call('POST', `${BASE}/payout-destination`);
+
+  payments = async (): Promise<AcceptancePayment[]> =>
+    this.demo ? this.demo.payments() : this.live.call('GET', `${BASE}/payments`);
 
   verify = async (
     kind: 'INDIVIDUAL' | 'BUSINESS',
@@ -95,7 +274,9 @@ export class AcceptanceApi {
     this.live.call('POST', `${BASE}/element-tokens`, { json: { surface } });
 
   createCheckout = async (amountMinor: number, title: string): Promise<CheckoutSummary> =>
-    this.live.call('POST', `${BASE}/checkouts`, { json: { amountMinor, currency: 'USD', title } });
+    this.demo
+      ? this.demo.createCheckout(amountMinor, title)
+      : this.live.call('POST', `${BASE}/checkouts`, { json: { amountMinor, currency: 'USD', title } });
 
   checkouts = async (): Promise<CheckoutSummary[]> => this.live.call('GET', `${BASE}/checkouts`);
 
@@ -107,11 +288,14 @@ export class AcceptanceApi {
     destinationId: string,
     speed: 'STANDARD' | 'INSTANT',
   ): Promise<PayoutResult> =>
-    this.live.call('POST', `${BASE}/payouts`, {
-      json: { amountMinor, currency: 'USD', destinationId, speed },
-    });
+    this.demo
+      ? this.demo.payout(amountMinor, destinationId)
+      : this.live.call('POST', `${BASE}/payouts`, {
+          json: { amountMinor, currency: 'USD', destinationId, speed },
+        });
 
-  payouts = async (): Promise<PayoutResult[]> => this.live.call('GET', `${BASE}/payouts`);
+  payouts = async (): Promise<PayoutResult[]> =>
+    this.demo ? this.demo.payouts() : this.live.call('GET', `${BASE}/payouts`);
 }
 
 /** Whole dollars and cents from the withdraw element's major-unit number, without float drift. */

@@ -27,7 +27,7 @@ import { useAppearance } from './lib/appearance';
 import { TeamScreen } from './screens/Team';
 import { DocumentsScreen } from './screens/Documents';
 import { MoreScreen } from './screens/More';
-import { RECORDING_ENABLED, Recorder } from './recording/Recorder';
+import { RECORDING_ENABLED } from './recording/privacy';
 import { MORE, NAV, NAV_GROUPS, PHONE_TABS, pageTitle } from './nav';
 import { ACCEPTANCE_ENABLED } from './acceptance/api';
 import { t, useContent } from './i18n';
@@ -160,8 +160,14 @@ const FORM_ROUTES = [
   /^\/onboarding/,
 ];
 
+/** OG-055: the recorder and rrweb load only when screen recording is on; off, neither is fetched. */
+const Recorder = lazy(() => import('./recording/Recorder').then((m) => ({ default: m.Recorder })));
+
 /** OG-039: the Get paid screen and the processor's elements load only when the build turns acceptance on. */
 const GetPaidScreen = lazy(() => import('./acceptance/GetPaid').then((m) => ({ default: m.GetPaidScreen })));
+const GetPaidCheckoutScreen = lazy(() =>
+  import('./acceptance/GetPaid').then((m) => ({ default: m.GetPaidCheckoutScreen })),
+);
 
 /** FA-008: the side bar's outline icons, each in a pale container of its brand category. */
 const NAV_ICON: Record<string, { d: string; cat: string }> = {
@@ -571,7 +577,11 @@ function CompanyScope() {
     <DraftProvider>
       <AssistantProvider>
         <Shell recording={recording}>
-          {RECORDING_ENABLED && <Recorder onSession={setRecording} />}
+          {RECORDING_ENABLED && (
+            <Suspense fallback={null}>
+              <Recorder onSession={setRecording} />
+            </Suspense>
+          )}
           <Routes>
             <Route path="/" element={<HomeScreen />} />
             <Route path="/accounts" element={<AccountsScreen />} />
@@ -605,6 +615,16 @@ function CompanyScope() {
                 element={
                   <Suspense fallback={<Skeleton />}>
                     <GetPaidScreen />
+                  </Suspense>
+                }
+              />
+            )}
+            {ACCEPTANCE_ENABLED && (
+              <Route
+                path="/get-paid/checkout/:checkoutId"
+                element={
+                  <Suspense fallback={<Skeleton />}>
+                    <GetPaidCheckoutScreen />
                   </Suspense>
                 }
               />

@@ -68,3 +68,27 @@ export function elementsAppearance(theme: Theme) {
     },
   };
 }
+
+/**
+ * OG-055: the Stripe Payment Element styled from the same theme: mode, the brand primary, surfaces, text, failure
+ * colour, border, body font and radius, all read from the active theme (Stripe's Appearance API variables).
+ */
+export function stripeAppearance(theme: Theme) {
+  return {
+    theme: theme.mode === 'dark' ? ('night' as const) : ('stripe' as const),
+    variables: {
+      colorPrimary: theme.color.brand.primary,
+      colorBackground: theme.color.surface.card,
+      colorText: theme.color.text.primary,
+      colorTextSecondary: theme.color.text.secondary,
+      colorDanger: theme.color.status.failure,
+      fontFamily: theme.typography.body.family,
+      borderRadius: `${theme.radius.md}px`,
+      spacingUnit: `${theme.space.xs}px`,
+    },
+    rules: {
+      '.Input': { borderColor: theme.color.border.default },
+      '.Input:focus': { borderColor: theme.color.border.focus },
+    },
+  };
+}

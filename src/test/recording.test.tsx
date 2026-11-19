@@ -6,11 +6,12 @@ import { maskAll } from '../recording/mask';
 import { EventQueue, privacyLine, RRWEB_OPTIONS } from '../recording/Recorder';
 import { renderApp } from './render';
 
-// The shell's recording switch is off (RECORDING_ENABLED); these tests cover the recorder itself, so they turn it on.
-vi.mock('../recording/Recorder', async (actual) => ({
-  ...(await actual<typeof import('../recording/Recorder')>()),
-  RECORDING_ENABLED: true,
-}));
+// The shell's recording switch is off (RECORDING_ENABLED); these tests cover the recorder itself, so they turn it on
+// where the switch lives (the shell loads the recorder lazily, OG-055).
+vi.mock('../recording/privacy', async (actual) => {
+  const real = await actual<typeof import('../recording/privacy')>();
+  return { ...real, RECORDING_ENABLED: true, privacyLine: real.privacyLineRecording };
+});
 
 describe('recording (OG-031 R5, R6, R8)', () => {
   it('screen_and_action_events_AC_R5_2', async () => {

@@ -136,9 +136,26 @@ const devApi = {
   },
 };
 
-export default defineConfig({
+/**
+ * OG-055: the shared first-load chunk split in three, so a release that changes only the app or its texts leaves React
+ * cached: React and its scheduler, the English texts, and the design system (components, theme, themes file).
+ */
+const CHUNK_GROUPS = [
+  { name: 'react', test: /node_modules[\\/](react|react-dom|scheduler)[\\/]/, priority: 3 },
+  { name: 'content', test: /ongem-content(?!-ar)/, priority: 2 },
+  { name: 'design-system', test: /src[\\/](design-system|themes)[\\/].*\.(tsx?|json)$/, priority: 1 },
+];
+
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react(), regionPublic(), contentSnapshot(), securityTxtFile()],
   define: { __APP_VERSION__: JSON.stringify(appVersion()) },
+  build: isSsrBuild
+    ? undefined
+    : {
+        rolldownOptions: {
+          output: { codeSplitting: { includeDependenciesRecursively: false, groups: CHUNK_GROUPS } },
+        },
+      },
   server: { port: 5190, strictPort: true, proxy: devApi },
   preview: { port: 5190, strictPort: true, proxy: devApi, headers: securityHeaders() },
   test: {
@@ -148,4 +165,4 @@ export default defineConfig({
     css: false,
     exclude: [...configDefaults.exclude, '**/*.e2e.ts', 'e2e-output/**'],
   },
-});
+}));

@@ -1741,3 +1741,54 @@
 .fw-receipt .og-kv {
   margin-block-end: var(--space-md);
 }
+
+/* OG-055 Get paid: label and value pairs, the hint under a card, figures in columns, and the buyer's checkout (one
+   narrow card with the amount as its headline). */
+.fw-kv {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-sm) var(--space-lg);
+  margin: 0;
+}
+.fw-kv dt {
+  color: var(--color-text-secondary);
+}
+.fw-kv dd {
+  margin: 0;
+}
+.fw-hint {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+.fw-num {
+  font-variant-numeric: tabular-nums;
+}
+.fw-checkout {
+  max-inline-size: 480px;
+  margin-inline: auto;
+  display: grid;
+  gap: var(--space-md);
+}
+.fw-checkout__amount {
+  font-family: var(--font-display);
+  font-weight: var(--font-display-weight);
+  font-size: var(--font-size-2xl);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+/* OG-014 choices: one column per channel; the scope switch and the reset sit above the grid. */
+.fw-prefs--channels {
+  grid-template-columns: 1fr repeat(4, auto);
+}
+.fw-prefs__group {
+  grid-column: 1 / -1;
+  margin-block-start: var(--space-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-body-strong-weight);
+}
+.fw-prefs__source {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
