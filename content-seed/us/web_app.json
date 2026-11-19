@@ -15771,6 +15771,28 @@
       "meta": {},
       "en": "The {format} file holds posted transactions only, for this account and its currency, ready to import.",
       "ar": "يحتوي ملف {format} على المعاملات المرحّلة فقط، لهذا الحساب وبعملته، وهو جاهز للاستيراد."
+    },
+    {
+      "key": "app.get_paid.destination_line_unnamed",
+      "format": "text",
+      "description": "Get paid (OG-055): where payouts go when the provider gives no bank name",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "Payouts go to your OnGem account ending {last4}.",
+      "ar": "تُحوَّل المدفوعات إلى حسابك في OnGem المنتهي بـ {last4}."
+    },
+    {
+      "key": "app.get_paid.withdraw_to_unnamed",
+      "format": "text",
+      "description": "Get paid (OG-055): payout destination line without a bank name",
+      "placeholders": [
+        "last4"
+      ],
+      "meta": {},
+      "en": "To your OnGem account ending {last4}",
+      "ar": "إلى حسابك في OnGem المنتهي بـ {last4}"
     }
   ]
 }

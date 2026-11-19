@@ -386,10 +386,12 @@ function Overview({
         <Card title={t('app.get_paid.payout_destination')}>
           {gp.payoutDestination ? (
             <p data-testid="acceptance-destination" data-mask>
-              {t('app.get_paid.destination_line', {
-                name: gp.payoutDestination.name ?? '',
-                last4: gp.payoutDestination.last4 ?? '',
-              })}
+              {gp.payoutDestination.name
+                ? t('app.get_paid.destination_line', {
+                    name: gp.payoutDestination.name,
+                    last4: gp.payoutDestination.last4 ?? '',
+                  })
+                : t('app.get_paid.destination_line_unnamed', { last4: gp.payoutDestination.last4 ?? '' })}
             </p>
           ) : owner ? (
             <div className="fw-thread">
@@ -573,7 +575,11 @@ function Withdraw({ gp, api, onPaidOut }: { gp: GetPaid; api: AcceptanceApi; onP
         {available && (
           <p data-mask>{t('app.get_paid.withdraw_available', { amount: formatMinor(available) })}</p>
         )}
-        <p data-mask>{t('app.get_paid.withdraw_to', { name: dest.name ?? '', last4: dest.last4 ?? '' })}</p>
+        <p data-mask>
+          {dest.name
+            ? t('app.get_paid.withdraw_to', { name: dest.name, last4: dest.last4 ?? '' })
+            : t('app.get_paid.withdraw_to_unnamed', { last4: dest.last4 ?? '' })}
+        </p>
         <Field
           label={t('app.get_paid.amount')}
           hint={t('app.get_paid.amount_hint')}

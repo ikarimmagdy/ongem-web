@@ -139,7 +139,7 @@ export class DemoAcceptance implements AcceptanceBackend {
   linkPayoutDestination = async (): Promise<PayoutDestination> => {
     this.destination ??= {
       id: 'ba_demo_ongem',
-      name: 'OnGem',
+      name: null,
       last4: '6789',
       currency: 'USD',
       isDefault: true,
