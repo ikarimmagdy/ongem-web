@@ -159,9 +159,11 @@ describe('company switcher across regions (OG-023)', () => {
             ? { items: [], unread: 0 }
             : path.startsWith('/v1/payments') || path === '/v1/recipients' || path === '/v1/cards'
               ? { items: [], next: null }
-              : path === '/v1/whereami'
-                ? { companyId: 'cmp_ae_dune', region: 'AE', apiBaseUrl: AE }
-                : [];
+              : path === '/v1/currencies'
+                ? { items: [] }
+                : path === '/v1/whereami'
+                  ? { companyId: 'cmp_ae_dune', region: 'AE', apiBaseUrl: AE }
+                  : [];
       return new Response(JSON.stringify(body), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
@@ -331,6 +333,7 @@ describe('the switcher leaves no record where the person is unknown (OG-022 R25)
       if (path === '/v1/notifications') return json({ items: [], unread: 0 });
       if (path.startsWith('/v1/payments') || path === '/v1/recipients' || path === '/v1/cards')
         return json({ items: [], next: null });
+      if (path === '/v1/currencies') return json({ items: [] });
       return json([]);
     }) as unknown as typeof fetch;
     const api = new LiveOnGemApi({

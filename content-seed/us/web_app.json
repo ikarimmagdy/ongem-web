@@ -12302,7 +12302,7 @@
       "placeholders": [],
       "meta": {},
       "en": "SWIFT",
-      "ar": "SWIFT"
+      "ar": "شبكة SWIFT"
     },
     {
       "key": "app.fx.rail.sepa",
@@ -12311,7 +12311,7 @@
       "placeholders": [],
       "meta": {},
       "en": "SEPA",
-      "ar": "SEPA"
+      "ar": "شبكة SEPA"
     },
     {
       "key": "app.fx.rail.fps",
@@ -12329,7 +12329,7 @@
       "placeholders": [],
       "meta": {},
       "en": "ACH",
-      "ar": "ACH"
+      "ar": "شبكة ACH"
     },
     {
       "key": "app.fx.rail.local",
