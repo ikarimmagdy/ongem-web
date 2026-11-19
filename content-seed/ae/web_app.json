@@ -14100,6 +14100,58 @@
       "meta": {},
       "en": "Give a reason.",
       "ar": "اذكر السبب."
+    },
+    {
+      "key": "app.shell.invites_waiting",
+      "format": "text",
+      "description": "Switcher (OG-023): heading over invitations waiting for the person",
+      "placeholders": [],
+      "meta": {},
+      "en": "Invitations",
+      "ar": "الدعوات"
+    },
+    {
+      "key": "app.shell.invite_by",
+      "format": "text",
+      "description": "Switcher (OG-023): who invited the person and as what role",
+      "placeholders": [
+        "name",
+        "role"
+      ],
+      "meta": {},
+      "en": "{name} invited you as {role}",
+      "ar": "دعاك {name} بصفة {role}"
+    },
+    {
+      "key": "app.shell.invite_role",
+      "format": "text",
+      "description": "Switcher (OG-023): the role an invitation gives, when the inviter is not named",
+      "placeholders": [
+        "role"
+      ],
+      "meta": {},
+      "en": "Invited as {role}",
+      "ar": "مدعو بصفة {role}"
+    },
+    {
+      "key": "app.shell.invite_expires",
+      "format": "text",
+      "description": "Switcher (OG-023): when an invitation expires",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Expires {date}",
+      "ar": "تنتهي في {date}"
+    },
+    {
+      "key": "app.shell.accept_invite",
+      "format": "text",
+      "description": "Switcher (OG-023): button to accept an invitation",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accept invite",
+      "ar": "قبول الدعوة"
     }
   ]
 }

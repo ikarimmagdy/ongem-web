@@ -44,6 +44,7 @@ import type {
   InviteAccepted,
   InviteCreated,
   InviteView,
+  MyInvite,
   NotificationPreferences,
   PreferenceChange,
   CurrencyInfo,
@@ -86,6 +87,10 @@ export interface OnGemApi {
   revokeInvite(companyId: string, inviteId: string): Promise<InviteView>;
   /** OG-023 R7: 410 invite_not_valid, 403 invite_email_mismatch, 409 membership_limit. */
   acceptInvite(token: string): Promise<InviteAccepted>;
+  /** OG-023 4.5: invitations waiting for the person's verified email in this region, oldest first (no company). */
+  myInvites(): Promise<MyInvite[]>;
+  /** OG-023 4.6: accepts one of them; 410 invite_not_valid, 409 membership_limit, 409 invalid_transition. */
+  acceptMyInvite(inviteId: string): Promise<InviteAccepted>;
   me(): Promise<Me>;
   /** FA-029: the person's bound devices (GET /v1/devices), newest first. */
   devices(): Promise<DeviceView[]>;

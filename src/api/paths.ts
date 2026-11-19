@@ -72,6 +72,8 @@ export const paths = {
   invites: (company: string) => `/v1/companies/${q(company)}/invites`,
   invite: (company: string, id: string) => `/v1/companies/${q(company)}/invites/${q(id)}`,
   acceptInvite: (token: string) => `/v1/invites/${q(token)}/accept`,
+  myInvites: '/v1/me/invites',
+  acceptMyInvite: (id: string) => `/v1/me/invites/${q(id)}/accept`,
   currencies: '/v1/currencies',
   corridors: '/v1/corridors',
   corridor: (id: string) => `/v1/corridors/${q(id)}`,

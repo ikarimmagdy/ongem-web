@@ -1,5 +1,5 @@
 import type { OnGemApi } from '../api/client';
-import type { CompanyState, Me, Membership } from '../api/types';
+import type { CompanyState, Me, Membership, MyInvite } from '../api/types';
 
 /** The membership of the company this answer runs in (G-69): the picked or default company, else the first one. */
 export function currentMembership(me: Me | null | undefined): Membership | undefined {
@@ -68,4 +68,47 @@ export async function loadCompanies(home: OnGemApi): Promise<Companies> {
 /** The company's lifecycle state, ACTIVE when the API does not say (OG-023 R13). */
 export function companyState(m: Membership | undefined): CompanyState {
   return m?.companyState ?? 'ACTIVE';
+}
+
+/**
+ * OG-023 open question 2: the server keeps no chosen default, so the browser remembers the person's last pick (the
+ * company id and its region, never anything about the company's money) and the shell opens it again on the next visit
+ * while it is still one of their active companies.
+ */
+const LAST_PICK = 'ongem.company.last';
+
+export interface LastPick {
+  companyId: string;
+  region: string | null;
+}
+
+export function rememberCompany(personId: string | null, pick: LastPick | null): void {
+  try {
+    if (!personId || !pick) localStorage.removeItem(LAST_PICK);
+    else localStorage.setItem(LAST_PICK, JSON.stringify({ personId, ...pick }));
+  } catch {
+    /* storage blocked: the pick lasts for this page */
+  }
+}
+
+export function lastCompany(personId: string | null): LastPick | null {
+  try {
+    const v = JSON.parse(localStorage.getItem(LAST_PICK) ?? 'null') as
+      (LastPick & { personId: string }) | null;
+    return v && personId && v.personId === personId ? { companyId: v.companyId, region: v.region } : null;
+  } catch {
+    return null;
+  }
+}
+
+/** OG-023 4.5: invitations waiting for the person in every region that holds them, each marked with its region. */
+export async function loadMyInvites(home: OnGemApi, regions: (string | undefined)[]): Promise<MyInvite[]> {
+  const asked = new Set([home.region, ...regions.filter((r): r is string => !!r)]);
+  const clients = [...asked]
+    .map((r) => (r === home.region ? home : home.forRegion(r)))
+    .filter((c): c is OnGemApi => c !== null);
+  const answers = await Promise.allSettled(clients.map((c) => c.myInvites()));
+  return answers.flatMap((a, i) =>
+    a.status === 'fulfilled' ? a.value.map((v) => ({ ...v, region: clients[i]!.region })) : [],
+  );
 }

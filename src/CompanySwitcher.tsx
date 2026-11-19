@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { Modal, StatusChip } from './design-system';
-import type { Membership } from './api/types';
+import { Button, Modal, Notice, StatusChip } from './design-system';
+import type { Membership, MyInvite } from './api/types';
+import { errorText } from './api/errors';
+import { formatDate } from './lib/format';
 import { human } from './screens/common';
 import { t } from './i18n';
 
@@ -27,20 +29,41 @@ export function stateMark(m: Membership | undefined): string | null {
  * The company switcher (G-69, OG-023), the same on web, iOS and Android: a button in the top bar with the current
  * company's name, opening "Switch company" with each company the person is an active member of in either region, its
  * role, region, lifecycle mark and unread notices, and a mark on the current one. Shown only with more than one
- * company. When a region did not answer, a notice says some companies could not be loaded (R12).
+ * company. When a region did not answer, a notice says some companies could not be loaded (R12). OG-023 4.5:
+ * invitations waiting for the person show as Accept invite rows, so a second company is joined without the link; the
+ * switcher shows with one company when an invitation waits.
  */
 export function CompanySwitcher({
   companies,
   current,
   onPick,
   partial = false,
+  invites = [],
+  onAccept,
 }: {
   companies: Membership[];
   current: Membership | undefined;
   onPick(companyId: string, region: string | null): void;
   partial?: boolean;
+  invites?: MyInvite[];
+  onAccept?(invite: MyInvite): Promise<void>;
 }) {
   const [open, setOpen] = useState(false);
+  const [accepting, setAccepting] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const accept = async (invite: MyInvite) => {
+    if (!onAccept || accepting) return;
+    setAccepting(invite.id);
+    setError(null);
+    try {
+      await onAccept(invite);
+      setOpen(false);
+    } catch (e) {
+      setError(errorText(e));
+    } finally {
+      setAccepting(null);
+    }
+  };
   const name = (m: Membership) => m.companyName ?? t('app.shell.company');
   const regions = new Set(companies.map((m) => m.region).filter(Boolean));
   const manyRegions = regions.size > 1;
@@ -49,7 +72,7 @@ export function CompanySwitcher({
       {t('app.shell.companies_partial')}
     </span>
   );
-  if (companies.length < 2)
+  if (companies.length < 2 && invites.length === 0)
     return (
       <>
         <span className="fw-company">{current?.companyName}</span>
@@ -76,6 +99,11 @@ export function CompanySwitcher({
         onClick={() => setOpen(true)}
       >
         <span className="fw-switcher__name">{currentName}</span>
+        {invites.length > 0 && (
+          <span className="fw-bell__count" data-testid="switcher-invites" aria-hidden="true">
+            {invites.length}
+          </span>
+        )}
         {unreadElsewhere > 0 && (
           <span className="fw-bell__count" data-testid="switcher-unread" aria-hidden="true">
             {unreadElsewhere}
@@ -132,6 +160,37 @@ export function CompanySwitcher({
             );
           })}
         </ul>
+        {invites.length > 0 && (
+          <>
+            <h3 className="fw-nav__heading">{t('app.shell.invites_waiting')}</h3>
+            <ul className="fw-list" data-testid="company-invites">
+              {invites.map((i) => (
+                <li key={i.id} className="fw-row" data-testid={`company-invite-${i.id}`}>
+                  <span className="fw-row__main">
+                    <span>{i.companyName}</span>
+                    <span className="fw-row__sub">
+                      {i.invitedByName
+                        ? t('app.shell.invite_by', { name: i.invitedByName, role: human(i.role) })
+                        : t('app.shell.invite_role', { role: human(i.role) })}
+                    </span>
+                    <span className="fw-row__sub">
+                      {t('app.shell.invite_expires', { date: formatDate(i.expiresAt) })}
+                    </span>
+                  </span>
+                  <Button
+                    variant="secondary"
+                    data-testid={`accept-invite-${i.id}`}
+                    disabled={accepting !== null}
+                    onClick={() => void accept(i)}
+                  >
+                    {t('app.shell.accept_invite')}
+                  </Button>
+                </li>
+              ))}
+            </ul>
+            {error && <Notice status="failure">{error}</Notice>}
+          </>
+        )}
       </Modal>
     </>
   );

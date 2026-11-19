@@ -8,7 +8,14 @@ import { ApiError, errorText } from './api/errors';
 import { Permission } from './api/client';
 import { human } from './screens/common';
 import { CompanySwitcher } from './CompanySwitcher';
-import { companyState, currentMembership, loadCompanies, switchable } from './lib/company';
+import {
+  companyState,
+  currentMembership,
+  lastCompany,
+  loadCompanies,
+  loadMyInvites,
+  switchable,
+} from './lib/company';
 import { AccountsScreen } from './screens/Accounts';
 import { CardsScreen } from './screens/Cards';
 import { HomeScreen } from './screens/Home';
@@ -212,6 +219,7 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
     setCompanies,
     setCompanyState,
     setCurrentCompanyId,
+    setCompanyPermissions,
     can,
   } = useSession();
   const navigate = useNavigate();
@@ -241,7 +249,8 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
     };
   }, [api]);
   // OG-023 R12: the switcher lists the person's companies in every region, each asked with the same sign-in.
-  const all = useAsync(() => loadCompanies(homeApi), [homeApi]);
+  const [joined, setJoined] = useState(0);
+  const all = useAsync(() => loadCompanies(homeApi), [homeApi, joined]);
   const person = me.status === 'success' ? me.data : null;
   const found = currentMembership(person);
   const merged = all.status === 'success' ? all.data.items : null;
@@ -260,6 +269,30 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
   useEffect(() => {
     if (me.status === 'success') setCompanyState(state);
   }, [me.status, state, setCompanyState]);
+  // OG-023: what the person may do in this company, as GET /v1/me says (the role decides for an older API).
+  const allowed = found?.permissions;
+  useEffect(() => {
+    if (me.status === 'success') setCompanyPermissions(allowed ?? null);
+  }, [me.status, allowed, setCompanyPermissions]);
+  // OG-023 4.5: invitations waiting for this person, shown in the switcher as Accept invite rows.
+  const invites = useAsync(
+    () =>
+      all.status === 'success'
+        ? loadMyInvites(
+            homeApi,
+            all.data.items.map((m) => m.region),
+          )
+        : Promise.resolve([]),
+    [homeApi, all.status, joined],
+  );
+  // OG-023 open question 2: the last company the person picked opens again while it is still theirs.
+  useEffect(() => {
+    if (mode !== 'live' || companyId || !person || all.status !== 'success') return;
+    const last = lastCompany(person.personId);
+    const m = last && all.data.items.find((x) => x.companyId === last.companyId);
+    if (m && m.companyId !== all.data.defaultCompanyId) switchCompany(m.companyId, m.region ?? null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, all.status, person?.personId]);
   useEffect(() => {
     if (me.status === 'success') setCurrentCompanyId(membership?.companyId ?? null);
   }, [me.status, membership?.companyId, setCurrentCompanyId]);
@@ -278,7 +311,20 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
   };
   // OG-035 R1: the company shows once, as the switcher: the top of the side bar, or the top bar on a phone.
   const switcher = (
-    <CompanySwitcher companies={companies} current={membership} onPick={pick} partial={partial} />
+    <CompanySwitcher
+      companies={companies}
+      current={membership}
+      onPick={pick}
+      partial={partial}
+      invites={invites.status === 'success' ? invites.data : []}
+      onAccept={async (invite) => {
+        const client =
+          invite.region && invite.region !== homeApi.region ? homeApi.forRegion(invite.region) : homeApi;
+        const joinedTo = await (client ?? homeApi).acceptMyInvite(invite.id);
+        setJoined((x) => x + 1);
+        pick(joinedTo.companyId, invite.region ?? null);
+      }}
+    />
   );
   const ready = me.status === 'success';
   const demoBadge = (

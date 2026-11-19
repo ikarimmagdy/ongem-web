@@ -66,6 +66,7 @@ import type {
   CreateInternationalRecipient,
   CreateQuote,
   CreateMovement,
+  MyInvite,
 } from './types';
 
 /**
@@ -119,7 +120,7 @@ export interface DemoOptions {
 }
 
 /** A demo account of a company other than the person's default carries the company in its id, so ids never clash. */
-export type DemoScenario = 'readonly' | 'slow' | 'error' | 'currencies' | 'currencies_total';
+export type DemoScenario = 'readonly' | 'slow' | 'error' | 'currencies' | 'currencies_total' | 'invites';
 
 const COMPANY_SUFFIX = /_(cmp_[A-Za-z0-9_]+)$/;
 const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -185,6 +186,7 @@ export class DemoOnGemApi implements OnGemApi {
     this.now = opts.now ?? (() => '2026-10-29T15:00:00Z');
     this.applicationState = opts.application ?? demoApplication();
     if (opts.approvalBy) this.approvalBy = opts.approvalBy;
+    this.myInvitesState = this.waitingInvites();
     const company = opts.companyId;
     if (opts.scenario === 'currencies' || opts.scenario === 'currencies_total')
       this.accountsState = [...this.accountsState, ...demoForeignAccounts()];
@@ -383,6 +385,52 @@ export class DemoOnGemApi implements OnGemApi {
     };
     this.me_ = { ...this.me_, memberships: [...this.me_.memberships, membership] };
     return this.log('acceptInvite', { membershipId: membership.id, companyId, companyName, role: 'MEMBER' });
+  };
+
+  /** OG-023 4.5: the review state `invites` has one invitation waiting for the person in the sample company. */
+  private myInvitesState: MyInvite[] = [];
+  private waitingInvites(): MyInvite[] {
+    return this.opts.scenario === 'invites'
+      ? [
+          {
+            id: 'inv_demo_waiting',
+            companyId: demoInviteCompany.companyId,
+            companyName: demoInviteCompany.companyName,
+            role: 'VIEWER',
+            expiresAt: '2026-11-05T10:00:00Z',
+            invitedByName: demoInviteCompany.invitedByName,
+          },
+        ]
+      : [];
+  }
+
+  myInvites = async () =>
+    this.log(
+      'myInvites',
+      this.myInvitesState.filter((i) => !this.me_.memberships.some((m) => m.companyId === i.companyId)),
+    );
+
+  acceptMyInvite = async (inviteId: string) => {
+    const i = this.myInvitesState.find((x) => x.id === inviteId);
+    if (!i || this.me_.memberships.some((m) => m.companyId === i.companyId))
+      throw new ApiError(410, 'invite_not_valid');
+    const membership = {
+      id: this.next('mbr'),
+      companyId: i.companyId,
+      companyName: i.companyName,
+      role: i.role,
+      state: 'ACTIVE',
+      companyState: 'ACTIVE' as const,
+      unreadNotices: 0,
+    };
+    this.me_ = { ...this.me_, memberships: [...this.me_.memberships, membership] };
+    this.myInvitesState = this.myInvitesState.filter((x) => x.id !== inviteId);
+    return this.log('acceptMyInvite', {
+      membershipId: membership.id,
+      companyId: i.companyId,
+      companyName: i.companyName,
+      role: i.role,
+    });
   };
 
   me = async () => this.log('me', this.me_);

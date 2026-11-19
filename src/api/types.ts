@@ -18,6 +18,23 @@ export interface Membership {
   unreadNotices?: number;
   /** OG-023 R12: the region whose API answered this membership; set by the client when it merges both regions. */
   region?: string;
+  /**
+   * OG-023 (2026-11-20): the action keys the person may use in this company now (the role's, without money and card
+   * actions while suspended); empty for a membership that is not ACTIVE. Absent from an older API: the role decides.
+   */
+  permissions?: string[];
+}
+
+/** OG-023 4.5: an invitation waiting for the signed-in person's verified email, accepted without the link. */
+export interface MyInvite {
+  id: string;
+  companyId: string;
+  companyName: string;
+  role: string;
+  expiresAt: string;
+  invitedByName?: string | null;
+  /** The region whose API holds the invite; set by the client. */
+  region?: string;
 }
 
 export type CompanyState = 'ACTIVE' | 'FROZEN' | 'CLOSING' | 'CLOSED';

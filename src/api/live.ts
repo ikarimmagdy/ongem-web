@@ -13,6 +13,7 @@ import type {
   RecipientPage,
   CardWidgetKind,
   InviteView,
+  MyInvite,
   CurrencyInfo,
   Corridor,
   InternationalRecipient,
@@ -35,6 +36,8 @@ export interface LiveOptions {
   region?: string;
   /** The API base of each region this build may call (VITE_API_BASE_URL_US, VITE_API_BASE_URL_AE). */
   regionBases?: Partial<Record<string, string>>;
+  /** OG-023 2: a picked company answered 403 company_not_member; the session falls back to the default company. */
+  onCompanyNotMember?: () => void;
 }
 
 /** The API base URL per region from the build's configuration; a region without one is not asked (OG-023 R12). */
@@ -273,6 +276,8 @@ export class LiveOnGemApi implements OnGemApi {
     }
     if (!res.ok) {
       const p = await LiveOnGemApi.problem(res);
+      if (res.status === 403 && p.code === 'company_not_member' && this.opts.companyId)
+        this.opts.onCompanyNotMember?.();
       const where =
         p.code === WRONG_REGION
           ? { homeRegion: p.homeRegion ?? null, apiBaseUrl: p.apiBaseUrl ?? null }
@@ -430,6 +435,9 @@ export class LiveOnGemApi implements OnGemApi {
     this.call('POST', paths.invites(company), { json: r });
   revokeInvite: OnGemApi['revokeInvite'] = (company, id) => this.call('DELETE', paths.invite(company, id));
   acceptInvite: OnGemApi['acceptInvite'] = (token) => this.call('POST', paths.acceptInvite(token));
+  myInvites: OnGemApi['myInvites'] = async () =>
+    (await this.call<{ items: MyInvite[] }>('GET', paths.myInvites)).items;
+  acceptMyInvite: OnGemApi['acceptMyInvite'] = (id) => this.call('POST', paths.acceptMyInvite(id));
   recordEvents: OnGemApi['recordEvents'] = (id, events) =>
     this.call('POST', paths.recordingEvents(id), { json: { events } });
   currencies: OnGemApi['currencies'] = async () =>

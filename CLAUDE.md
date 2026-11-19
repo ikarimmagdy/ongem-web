@@ -268,3 +268,11 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   Bundle: the Recorder (and rrweb) load only when recording is on; the shared first-load chunk is split into `react`,
   `content`, `design-system` and `i18n` (`CHUNK_GROUPS` in vite.config.ts). Texts `app.get_paid.*` (US seed). Test
   `og055.test.tsx`.
+- 2026-11-20: OG-023 round two (contract WS `ongem-engineering/outputs/review/og023-2026-11-20/multi-company-api.md`).
+  Permissions per company come from `memberships[].permissions` on GET /v1/me when the API sends them
+  (`session.setCompanyPermissions`), else from the role. Invitations waiting for the person (`GET /v1/me/invites` in
+  each region that holds them, `lib/company.ts` `loadMyInvites`) show in the switcher as Accept invite rows (the switcher
+  shows with one company when one waits); accepting (`POST /v1/me/invites/{id}/accept`) reloads the companies and opens
+  the new one. A 403 `company_not_member` on a picked company drops the pick (`LiveOptions.onCompanyNotMember`). The
+  last pick is remembered per person in localStorage `ongem.company.last` (id and region only) and reopened while it
+  is still theirs. Demo review state `?state=invites`. Test `og023.test.tsx`.

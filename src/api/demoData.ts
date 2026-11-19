@@ -64,7 +64,7 @@ export const demoMe: Me = IS_AE
 /** OG-023: the company a demo invitation joins. */
 export const demoInviteCompany = IS_AE
   ? AE.demoInviteCompany
-  : { companyId: 'cmp_demo_harbor', companyName: 'Harbor Studio LLC' };
+  : { companyId: 'cmp_demo_harbor', companyName: 'Harbor Studio LLC', invitedByName: 'Priya Shah' };
 
 const asOf = '2026-10-29T14:40:00Z';
 

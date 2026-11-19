@@ -18,6 +18,7 @@ import { Button, Field, Input, Modal } from './design-system';
 import { IS_AE, REGION } from './region';
 import { t } from './i18n';
 import { formatMinor } from './lib/format';
+import { rememberCompany } from './lib/company';
 
 export type Mode = 'none' | 'demo' | 'live';
 
@@ -42,6 +43,11 @@ export interface Session {
   /** The person's ACTIVE companies in every region that answered (OG-023 R12), as the shell last loaded them. */
   companies: Membership[];
   setCompanies(companies: Membership[]): void;
+  /**
+   * OG-023 (2026-11-20): the permissions GET /v1/me gives for the current company; null when the API sends none, and
+   * the role decides.
+   */
+  setCompanyPermissions(permissions: string[] | null): void;
   /** OG-023 R13: the current company's lifecycle; anything but ACTIVE keeps only the reading permissions. */
   companyState: CompanyState;
   setCompanyState(state: CompanyState): void;
@@ -179,7 +185,7 @@ function DemoReverify({ ask, onDone }: { ask: Ask | null; onDone(ok: boolean): v
   );
 }
 
-const SCENARIOS: DemoScenario[] = ['readonly', 'slow', 'error', 'currencies', 'currencies_total'];
+const SCENARIOS: DemoScenario[] = ['readonly', 'slow', 'error', 'currencies', 'currencies_total', 'invites'];
 
 /**
  * FA-056: `?state=readonly|slow|error` puts the demo in a state its data never reaches, for reviews and e2e; OG-049
@@ -231,6 +237,7 @@ export function SessionProvider({
   askRef.current = (purpose, detail) =>
     new Promise<boolean>((resolve) => setAsk({ purpose, detail, resolve }));
 
+  const notMemberRef = useRef<() => void>(() => undefined);
   // A new demo API each time demo mode is entered, so a fresh demo starts from the sample data.
   const demo = useMemo(
     () =>
@@ -264,6 +271,7 @@ export function SessionProvider({
         personId: userId,
         deviceKeys,
         getToken: (o) => authRef.current.getToken(o),
+        onCompanyNotMember: () => notMemberRef.current(),
         reverify: (hint) => {
           const r = authRef.current.reverify;
           return r ? r(hint) : Promise.resolve(false);
@@ -304,6 +312,7 @@ export function SessionProvider({
   // The pick belongs to the client it was made on: a new person, demo or sign-in starts on the default company again.
   const [companies, setCompanies] = useState<Membership[]>([]);
   const [companyState, setCompanyState] = useState<CompanyState>('ACTIVE');
+  const [companyPermissions, setCompanyPermissions] = useState<string[] | null>(null);
   const [currentCompanyId, setCurrentCompanyId] = useState<string | null>(null);
   const [pick, setPick] = useState<{ base: OnGemApi; companyId: string; region: string | null } | null>(null);
   const picked = pick && pick.base === base ? pick : null;
@@ -316,18 +325,23 @@ export function SessionProvider({
   const switchCompany = useCallback(
     (companyId: string | null, region?: string | null) => {
       setRole(null);
+      setCompanyPermissions(null);
       setCompanyState('ACTIVE');
       setPick(companyId ? { base, companyId, region: region ?? null } : null);
+      if (mode === 'live') rememberCompany(userId, companyId ? { companyId, region: region ?? null } : null);
     },
-    [base],
+    [base, mode, userId],
   );
+  // OG-023 2: on 403 company_not_member the picked company is dropped and the default company opens again.
+  notMemberRef.current = () => switchCompany(null);
   const permissions = useMemo(() => {
-    const all = permissionsOf(role);
+    const all = companyPermissions ? new Set(companyPermissions) : permissionsOf(role);
     return companyState === 'ACTIVE' ? all : new Set([...all].filter((p) => READ_ONLY.has(p)));
-  }, [role, companyState]);
+  }, [role, companyPermissions, companyState]);
   const leave = useCallback(() => {
     setDemoMode(false);
     setRole(null);
+    setCompanyPermissions(null);
     setPick(null);
     setCompanyState('ACTIVE');
     if (auth.signedIn) void auth.signOut();
@@ -348,6 +362,7 @@ export function SessionProvider({
       homeApi: base,
       companies,
       setCompanies,
+      setCompanyPermissions,
       companyState,
       setCompanyState,
       currentCompanyId,
