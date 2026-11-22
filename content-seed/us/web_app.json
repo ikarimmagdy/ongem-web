@@ -15793,6 +15793,17 @@
       "meta": {},
       "en": "To your OnGem account ending {last4}",
       "ar": "إلى حسابك في OnGem المنتهي بـ {last4}"
+    },
+    {
+      "key": "app.onboarding.owners_threshold",
+      "format": "text",
+      "description": "Onboarding (OG-069): who is listed and verified as an owner; {percent} is the threshold in force, a whole number",
+      "placeholders": [
+        "percent"
+      ],
+      "meta": {},
+      "en": "Everyone who owns {percent}% or more of the company is listed here and verifies their identity.",
+      "ar": "كل من يملك {percent}% أو أكثر من الشركة يُدرج هنا ويتحقق من هويته."
     }
   ]
 }

@@ -343,6 +343,8 @@ export function OnboardingScreen() {
   const refresh = () => setN((x) => x + 1);
   const apps = useAsync(() => api.applications(), [api, n]);
   const disclosures = useAsync(() => api.requiredDisclosures(), [api, n]);
+  // OG-069: the share at or above which owners are listed and verified, as configured in ongem-core.
+  const threshold = useAsync(() => api.ownerThreshold(), [api]);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const inFlight = useRef(false);
@@ -423,6 +425,13 @@ export function OnboardingScreen() {
               {error && <Notice status="failure">{error}</Notice>}
               {WAITING.includes(app.state) && <IdCaptureCard app={app} />}
               <Card title={t('app.onboarding.owners')}>
+                {threshold.status === 'success' && (
+                  <p className="fw-hint" data-testid="owners-threshold">
+                    {t('app.onboarding.owners_threshold', {
+                      percent: String(threshold.data.collectAtOrAbove),
+                    })}
+                  </p>
+                )}
                 <ul className="fw-list">
                   {app.owners.map((o) => (
                     <li key={o.id} className="fw-row fw-row--stack" data-testid={`owner-row-${o.id}`}>

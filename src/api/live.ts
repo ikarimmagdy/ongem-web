@@ -358,6 +358,7 @@ export class LiveOnGemApi implements OnGemApi {
   cardWidget: OnGemApi['cardWidget'] = (id: string, kind: CardWidgetKind) =>
     this.call('GET', paths.cardWidget(id, kind));
   applications: OnGemApi['applications'] = () => this.call('GET', paths.applications);
+  ownerThreshold: OnGemApi['ownerThreshold'] = () => this.call('GET', paths.ownerThreshold);
   application: OnGemApi['application'] = (id: string) => this.call('GET', paths.application(id));
   putOwnerIdentity: OnGemApi['putOwnerIdentity'] = (app: string, owner: string, identity: OwnerIdentity) =>
     this.call('PUT', paths.ownerIdentity(app, owner), { json: identity });

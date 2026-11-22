@@ -43,6 +43,7 @@ export const paths = {
   cardWidget: (id: string, kind: CardWidgetKind) => `/v1/cards/${q(id)}/widget-token?kind=${kind}`,
   cardFreeze: (id: string, frozen: boolean) => `/v1/cards/${q(id)}/${frozen ? 'freeze' : 'unfreeze'}`,
   applications: '/v1/onboarding/applications',
+  ownerThreshold: '/v1/onboarding/owner-threshold',
   application: (id: string) => `/v1/onboarding/applications/${q(id)}`,
   ownerIdentity: (id: string, owner: string) =>
     `/v1/onboarding/applications/${q(id)}/owners/${q(owner)}/identity`,

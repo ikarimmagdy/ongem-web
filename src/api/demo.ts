@@ -25,6 +25,7 @@ import {
   demoPreferences,
   demoInviteCompany,
   NOTICE_KINDS,
+  DEMO_OWNER_THRESHOLD,
 } from './demoData';
 import { DemoAssistant } from '../assistant/demoAssistant';
 import { DemoFx } from './demoFx';
@@ -1055,6 +1056,8 @@ export class DemoOnGemApi implements OnGemApi {
   }
 
   applications = async () => this.log('applications', [this.advance()]);
+
+  ownerThreshold = async () => this.log('ownerThreshold', structuredClone(DEMO_OWNER_THRESHOLD));
 
   application = async (id: string) => {
     if (id !== this.applicationState.id) this.notFound('application');

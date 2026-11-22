@@ -6,6 +6,7 @@ import type {
   SignInView,
   Amount,
   Application,
+  OwnerThreshold,
   Card,
   Me,
   Payment,
@@ -333,6 +334,15 @@ export const demoCards = IS_AE
         createdAt: '2026-09-21T09:00:00Z',
       },
     ];
+
+/** OG-069: the threshold as ongem-core seeds it before ops store a version (10 and 10; version null). */
+export const DEMO_OWNER_THRESHOLD: OwnerThreshold = {
+  percent: 10,
+  enhancedPercent: 10,
+  collectAtOrAbove: 10,
+  version: null,
+  effectiveFrom: null,
+};
 
 export const demoApplication = IS_AE
   ? AE.demoApplication

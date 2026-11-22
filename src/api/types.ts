@@ -355,6 +355,18 @@ export interface CardPage {
   next?: string | null;
 }
 
+/**
+ * OG-069 GET /v1/onboarding/owner-threshold: the beneficial owner threshold in force for the caller's company. Owners at or
+ * above `collectAtOrAbove` are listed and verified; the client never carries its own percentage.
+ */
+export interface OwnerThreshold {
+  percent: number;
+  enhancedPercent: number;
+  collectAtOrAbove: number;
+  version: number | null;
+  effectiveFrom: string | null;
+}
+
 export interface Owner {
   id: string;
   ref: string;

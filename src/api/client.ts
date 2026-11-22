@@ -26,6 +26,7 @@ import type {
   OpenTicket,
   Owner,
   OwnerIdentity,
+  OwnerThreshold,
   Payment,
   PaymentPage,
   Recipient,
@@ -156,6 +157,8 @@ export interface OnGemApi {
   /** Step-up: a five minute token for the bank's card widget; never stored. */
   cardWidget(id: string, kind: CardWidgetKind): Promise<CardWidgetSession>;
   applications(): Promise<Application[]>;
+  /** OG-069: the beneficial owner threshold in force (configuration in ongem-core, never a number in the client). */
+  ownerThreshold(): Promise<OwnerThreshold>;
   application(id: string): Promise<Application>;
   putOwnerIdentity(applicationId: string, ownerId: string, identity: OwnerIdentity): Promise<Owner>;
   confirmApplication(id: string): Promise<Application>;
