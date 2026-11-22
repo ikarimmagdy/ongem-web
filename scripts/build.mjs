@@ -71,5 +71,5 @@ console.log(`acceptance: Get paid ${acceptance ? 'on' : 'off'}`);
 
 await build({ build: { outDir } });
 // With Get paid on, the headers policy that allows the card form's frames and API sits beside the build.
-if (acceptance && outDir === 'dist') await import('./acceptance-headers.mjs');
+if (acceptance && outDir === 'dist') (await import('./acceptance-headers.mjs')).writeAcceptanceHeaders();
 await import('./prerender.mjs');

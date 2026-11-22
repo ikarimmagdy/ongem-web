@@ -1,12 +1,7 @@
 import type { OnGemApi } from '../api/client';
 import { ApiError } from '../api/errors';
-import { IS_AE } from '../region';
 
-/**
- * OG-039 payment acceptance (ADR-0055, proposed): on only when the build sets VITE_ACCEPTANCE_ENABLED=true, never in a
- * UAE build (residency, ADR-0050), and only when the core says it is on for this environment.
- */
-export const ACCEPTANCE_ENABLED: boolean = import.meta.env.VITE_ACCEPTANCE_ENABLED === 'true' && !IS_AE;
+export { ACCEPTANCE_ENABLED } from './flag';
 
 export interface AcceptanceAmount {
   amountMinor: number;
@@ -107,6 +102,8 @@ export type ClientConfig = {
         amountMinor: string;
         currency: string;
         paymentMethodCreation: 'manual';
+        /** Comma separated, such as `card` (cards only). */
+        paymentMethodTypes?: string;
       };
     }
   | { provider: 'whop'; client: { accountId: string; planId: string; purchaseUrl: string | null } }
@@ -134,6 +131,59 @@ export interface AcceptanceBackend {
   payout(amountMinor: number, destinationId: string): Promise<PayoutResult>;
   payments(): Promise<AcceptancePayment[]>;
   payouts(): Promise<PayoutResult[]>;
+  payLinkSettings(): Promise<PayLinkSettings>;
+  createPayLink(input: NewPayLink): Promise<PayLink>;
+  payLinks(state: PayLinkState | null): Promise<PayLink[]>;
+  revokePayLink(id: string): Promise<PayLink>;
+}
+
+/** OG-058 GET /v1/acceptance/pay-links/settings: the limits the core enforces; a client never carries its own. */
+export interface PayLinkSettings {
+  enabled: boolean;
+  baseUrl: string;
+  currencies: string[];
+  minAmountMinor: number;
+  maxAmountMinor: number;
+  /** ISO 8601 durations, such as PT168H, PT15M and P30D. */
+  defaultExpiry: string;
+  minExpiry: string;
+  maxExpiry: string;
+  defaultMaxUses: number;
+  maxUses: number;
+  maxOpenPerCompany: number;
+  titleMaxLength: number;
+}
+
+export type PayLinkState = 'OPEN' | 'PAID' | 'EXPIRED' | 'REVOKED';
+export const PAY_LINK_STATES: PayLinkState[] = ['OPEN', 'PAID', 'EXPIRED', 'REVOKED'];
+
+/** A pay link as every founder read answers it; `url` carries the full token so it can be shared again. */
+export interface PayLink {
+  id: string;
+  url: string;
+  state: PayLinkState;
+  checkoutId: string;
+  title: string;
+  amount: AcceptanceAmount;
+  maxUses: number;
+  uses: number;
+  usesRemaining: number;
+  expiresAt: string;
+  customerEmail: string | null;
+  createdAt: string;
+  createdBy: string;
+  revokedAt: string | null;
+  lastPaymentAt: string | null;
+}
+
+/** POST /v1/acceptance/pay-links in its amount form; the core makes the checkout. */
+export interface NewPayLink {
+  amountMinor: number;
+  currency: string;
+  title: string;
+  expiresAt?: string;
+  maxUses?: number;
+  customerEmail?: string;
 }
 
 export interface ElementToken {
@@ -296,6 +346,30 @@ export class AcceptanceApi {
 
   payouts = async (): Promise<PayoutResult[]> =>
     this.demo ? this.demo.payouts() : this.live.call('GET', `${BASE}/payouts`);
+
+  /** OG-058: the limits a pay link is made within. */
+  payLinkSettings = async (): Promise<PayLinkSettings> =>
+    this.demo ? this.demo.payLinkSettings() : this.live.call('GET', `${BASE}/pay-links/settings`);
+
+  createPayLink = async (input: NewPayLink): Promise<PayLink> =>
+    this.demo ? this.demo.createPayLink(input) : this.live.call('POST', `${BASE}/pay-links`, { json: input });
+
+  /** Newest first, at most 50; [state] narrows it. */
+  payLinks = async (state: PayLinkState | null = null): Promise<PayLink[]> =>
+    this.demo
+      ? this.demo.payLinks(state)
+      : this.live.call('GET', `${BASE}/pay-links${state ? `?state=${state}` : ''}`);
+
+  revokePayLink = async (id: string): Promise<PayLink> =>
+    this.demo
+      ? this.demo.revokePayLink(id)
+      : this.live.call('POST', `${BASE}/pay-links/${encodeURIComponent(id)}/revoke`);
+}
+
+/** Dollars and cents typed by the founder, as minor units; 0 when it is not an amount. */
+export function minorOf(text: string): number {
+  const v = text.trim();
+  return /^\d{1,7}(\.\d{1,2})?$/.test(v) ? Math.round(Number(v) * 100) : 0;
 }
 
 /** Whole dollars and cents from the withdraw element's major-unit number, without float drift. */

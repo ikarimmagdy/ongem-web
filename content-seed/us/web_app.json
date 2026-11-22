@@ -15795,6 +15795,482 @@
       "ar": "إلى حسابك في OnGem المنتهي بـ {last4}"
     },
     {
+      "key": "app.get_paid.check_again",
+      "format": "text",
+      "description": "Get paid (OG-058): button: ask the core again about a payment whose outcome is not known yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check again",
+      "ar": "تحقق مرة أخرى"
+    },
+    {
+      "key": "app.get_paid.outcome_unknown",
+      "format": "text",
+      "description": "Get paid (OG-058): the card processor has not confirmed the payment yet; checking again cannot charge twice",
+      "placeholders": [],
+      "meta": {},
+      "en": "We are still waiting for the card processor to confirm this payment. Check again in a moment; the card will not be charged twice.",
+      "ar": "ما زلنا ننتظر تأكيد معالج البطاقات لهذه الدفعة. تحقق مرة أخرى بعد قليل، ولن تُخصم البطاقة مرتين."
+    },
+    {
+      "key": "app.get_paid.tab.links",
+      "format": "text",
+      "description": "Get paid (OG-058): tab: payment links",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment links",
+      "ar": "روابط الدفع"
+    },
+    {
+      "key": "app.get_paid.pay_link.off",
+      "format": "text",
+      "description": "Get paid (OG-058): payment links are off for this company",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment links are not available for your company yet.",
+      "ar": "روابط الدفع غير متاحة لشركتك بعد."
+    },
+    {
+      "key": "app.get_paid.pay_link.create_title",
+      "format": "text",
+      "description": "Get paid (OG-058): card title: make a payment link",
+      "placeholders": [],
+      "meta": {},
+      "en": "New payment link",
+      "ar": "رابط دفع جديد"
+    },
+    {
+      "key": "app.get_paid.pay_link.intro",
+      "format": "text",
+      "description": "Get paid (OG-058): what a payment link is",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send your customer a link. They pay by card on a secure OnGem page without signing in.",
+      "ar": "أرسل إلى عميلك رابطا. يدفع بالبطاقة على صفحة آمنة من OnGem دون تسجيل الدخول."
+    },
+    {
+      "key": "app.get_paid.pay_link.amount_range",
+      "format": "text",
+      "description": "Get paid (OG-058): amount outside the allowed range; {min} and {max} are amounts",
+      "placeholders": [
+        "min",
+        "max"
+      ],
+      "meta": {},
+      "en": "Enter an amount from {min} to {max}.",
+      "ar": "أدخل مبلغا من {min} إلى {max}."
+    },
+    {
+      "key": "app.get_paid.pay_link.expiry",
+      "format": "text",
+      "description": "Get paid (OG-058): field: the day the link expires",
+      "placeholders": [],
+      "meta": {},
+      "en": "Expires on",
+      "ar": "ينتهي في"
+    },
+    {
+      "key": "app.get_paid.pay_link.expiry_hint",
+      "format": "text",
+      "description": "Get paid (OG-058): what happens when no day is chosen; {date} is a date and time",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Leave it empty and the link expires on {date}.",
+      "ar": "اتركه فارغا وسينتهي الرابط في {date}."
+    },
+    {
+      "key": "app.get_paid.pay_link.expiry_too_soon",
+      "format": "text",
+      "description": "Get paid (OG-058): the chosen day is too soon",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a later day.",
+      "ar": "اختر يوما لاحقا."
+    },
+    {
+      "key": "app.get_paid.pay_link.expiry_too_late",
+      "format": "text",
+      "description": "Get paid (OG-058): the chosen day is too late; {date} is the last allowed date",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Choose a day up to {date}.",
+      "ar": "اختر يوما حتى {date}."
+    },
+    {
+      "key": "app.get_paid.pay_link.uses",
+      "format": "text",
+      "description": "Get paid (OG-058): field: how many payments the link takes",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments",
+      "ar": "عدد الدفعات"
+    },
+    {
+      "key": "app.get_paid.pay_link.single_use",
+      "format": "text",
+      "description": "Get paid (OG-058): option: the link takes one payment",
+      "placeholders": [],
+      "meta": {},
+      "en": "One payment",
+      "ar": "دفعة واحدة"
+    },
+    {
+      "key": "app.get_paid.pay_link.limited_use",
+      "format": "text",
+      "description": "Get paid (OG-058): option: the link takes a set number of payments",
+      "placeholders": [],
+      "meta": {},
+      "en": "A set number of payments",
+      "ar": "عدد محدد من الدفعات"
+    },
+    {
+      "key": "app.get_paid.pay_link.max_uses",
+      "format": "text",
+      "description": "Get paid (OG-058): field: the most payments the link takes",
+      "placeholders": [],
+      "meta": {},
+      "en": "Number of payments",
+      "ar": "عدد الدفعات"
+    },
+    {
+      "key": "app.get_paid.pay_link.max_uses_hint",
+      "format": "text",
+      "description": "Get paid (OG-058): the allowed number of payments; {max} is a number",
+      "placeholders": [
+        "max"
+      ],
+      "meta": {},
+      "en": "From 2 to {max}.",
+      "ar": "من 2 إلى {max}."
+    },
+    {
+      "key": "app.get_paid.pay_link.uses_range",
+      "format": "text",
+      "description": "Get paid (OG-058): the number of payments is outside the allowed range; {max} is a number",
+      "placeholders": [
+        "max"
+      ],
+      "meta": {},
+      "en": "Enter a number from 2 to {max}.",
+      "ar": "أدخل رقما من 2 إلى {max}."
+    },
+    {
+      "key": "app.get_paid.pay_link.customer_email",
+      "format": "text",
+      "description": "Get paid (OG-058): field: the customer's email, optional",
+      "placeholders": [],
+      "meta": {},
+      "en": "Customer email (optional)",
+      "ar": "البريد الإلكتروني للعميل (اختياري)"
+    },
+    {
+      "key": "app.get_paid.pay_link.customer_email_hint",
+      "format": "text",
+      "description": "Get paid (OG-058): where the customer's email shows and what it is for",
+      "placeholders": [],
+      "meta": {},
+      "en": "Only you see it. The receipt goes there when the customer does not give an email.",
+      "ar": "تراه أنت فقط. يُرسل الإيصال إليه عندما لا يذكر العميل بريدا إلكترونيا."
+    },
+    {
+      "key": "app.get_paid.pay_link.email_invalid",
+      "format": "text",
+      "description": "Get paid (OG-058): the customer's email is not an email address",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter a full email address.",
+      "ar": "أدخل عنوان بريد إلكتروني كاملا."
+    },
+    {
+      "key": "app.get_paid.pay_link.create",
+      "format": "text",
+      "description": "Get paid (OG-058): button: make the payment link",
+      "placeholders": [],
+      "meta": {},
+      "en": "Create link",
+      "ar": "أنشئ الرابط"
+    },
+    {
+      "key": "app.get_paid.pay_link.made",
+      "format": "text",
+      "description": "Get paid (OG-058): the link was made; {amount} is an amount, {date} a date and time",
+      "placeholders": [
+        "amount",
+        "date"
+      ],
+      "meta": {},
+      "en": "Your link for {amount} is ready. It works until {date}.",
+      "ar": "رابطك بقيمة {amount} جاهز. يعمل حتى {date}."
+    },
+    {
+      "key": "app.get_paid.pay_link.copy",
+      "format": "text",
+      "description": "Get paid (OG-058): button: copy the link",
+      "placeholders": [],
+      "meta": {},
+      "en": "Copy link",
+      "ar": "انسخ الرابط"
+    },
+    {
+      "key": "app.get_paid.pay_link.copy_named",
+      "format": "text",
+      "description": "Get paid (OG-058): screen reader name of a copy button; {title} is what the link is for",
+      "placeholders": [
+        "title"
+      ],
+      "meta": {},
+      "en": "Copy the link for {title}",
+      "ar": "انسخ رابط {title}"
+    },
+    {
+      "key": "app.get_paid.pay_link.share",
+      "format": "text",
+      "description": "Get paid (OG-058): button: share the link with the device's share sheet",
+      "placeholders": [],
+      "meta": {},
+      "en": "Share",
+      "ar": "مشاركة"
+    },
+    {
+      "key": "app.get_paid.pay_link.share_text",
+      "format": "text",
+      "description": "Get paid (OG-058): text shared with the link; {title} is what the link is for",
+      "placeholders": [
+        "title"
+      ],
+      "meta": {},
+      "en": "Pay for {title}",
+      "ar": "ادفع مقابل {title}"
+    },
+    {
+      "key": "app.get_paid.pay_link.list_title",
+      "format": "text",
+      "description": "Get paid (OG-058): card and table title: the company's payment links",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your payment links",
+      "ar": "روابط الدفع الخاصة بك"
+    },
+    {
+      "key": "app.get_paid.pay_link.filter_label",
+      "format": "text",
+      "description": "Get paid (OG-058): screen reader name of the state filter",
+      "placeholders": [],
+      "meta": {},
+      "en": "Show links",
+      "ar": "عرض الروابط"
+    },
+    {
+      "key": "app.get_paid.pay_link.filter_all",
+      "format": "text",
+      "description": "Get paid (OG-058): filter: every link",
+      "placeholders": [],
+      "meta": {},
+      "en": "All",
+      "ar": "الكل"
+    },
+    {
+      "key": "app.get_paid.pay_link.state.open",
+      "format": "text",
+      "description": "Get paid (OG-058): link state: can take a payment",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open",
+      "ar": "مفتوح"
+    },
+    {
+      "key": "app.get_paid.pay_link.state.paid",
+      "format": "text",
+      "description": "Get paid (OG-058): link state: every payment is taken",
+      "placeholders": [],
+      "meta": {},
+      "en": "Paid",
+      "ar": "مدفوع"
+    },
+    {
+      "key": "app.get_paid.pay_link.state.expired",
+      "format": "text",
+      "description": "Get paid (OG-058): link state: the expiry passed",
+      "placeholders": [],
+      "meta": {},
+      "en": "Expired",
+      "ar": "منتهي"
+    },
+    {
+      "key": "app.get_paid.pay_link.state.revoked",
+      "format": "text",
+      "description": "Get paid (OG-058): link state: the founder turned it off",
+      "placeholders": [],
+      "meta": {},
+      "en": "Revoked",
+      "ar": "ملغى"
+    },
+    {
+      "key": "app.get_paid.pay_link.uses_of",
+      "format": "text",
+      "description": "Get paid (OG-058): payments taken out of the most allowed; {uses} and {max} are numbers",
+      "placeholders": [
+        "uses",
+        "max"
+      ],
+      "meta": {},
+      "en": "{uses} of {max} paid",
+      "ar": "{uses} من {max} مدفوعة"
+    },
+    {
+      "key": "app.get_paid.pay_link.col.title",
+      "format": "text",
+      "description": "Get paid (OG-058): column: what the link is for",
+      "placeholders": [],
+      "meta": {},
+      "en": "For",
+      "ar": "مقابل"
+    },
+    {
+      "key": "app.get_paid.pay_link.col.expires",
+      "format": "text",
+      "description": "Get paid (OG-058): column: when the link expires",
+      "placeholders": [],
+      "meta": {},
+      "en": "Expires",
+      "ar": "ينتهي"
+    },
+    {
+      "key": "app.get_paid.pay_link.col.actions",
+      "format": "text",
+      "description": "Get paid (OG-058): column: copy and revoke",
+      "placeholders": [],
+      "meta": {},
+      "en": "Actions",
+      "ar": "الإجراءات"
+    },
+    {
+      "key": "app.get_paid.pay_link.empty",
+      "format": "text",
+      "description": "Get paid (OG-058): no payment links",
+      "placeholders": [],
+      "meta": {},
+      "en": "No payment links",
+      "ar": "لا توجد روابط دفع"
+    },
+    {
+      "key": "app.get_paid.pay_link.empty_text",
+      "format": "text",
+      "description": "Get paid (OG-058): no payment links yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "Links you create show here with what has been paid.",
+      "ar": "تظهر هنا الروابط التي تنشئها مع ما دُفع منها."
+    },
+    {
+      "key": "app.get_paid.pay_link.revoke",
+      "format": "text",
+      "description": "Get paid (OG-058): button: turn the link off",
+      "placeholders": [],
+      "meta": {},
+      "en": "Revoke",
+      "ar": "إلغاء"
+    },
+    {
+      "key": "app.get_paid.pay_link.revoke_named",
+      "format": "text",
+      "description": "Get paid (OG-058): screen reader name of a revoke button; {title} is what the link is for",
+      "placeholders": [
+        "title"
+      ],
+      "meta": {},
+      "en": "Revoke the link for {title}",
+      "ar": "إلغاء رابط {title}"
+    },
+    {
+      "key": "app.get_paid.pay_link.revoke_title",
+      "format": "text",
+      "description": "Get paid (OG-058): dialog title: turn the link off",
+      "placeholders": [],
+      "meta": {},
+      "en": "Revoke this link?",
+      "ar": "هل تريد إلغاء هذا الرابط؟"
+    },
+    {
+      "key": "app.get_paid.pay_link.revoke_text",
+      "format": "text",
+      "description": "Get paid (OG-058): what revoking does; {title} and {amount}",
+      "placeholders": [
+        "title",
+        "amount"
+      ],
+      "meta": {},
+      "en": "The link for {title} ({amount}) stops working at once. Payments already made are not undone.",
+      "ar": "يتوقف رابط {title} ({amount}) عن العمل فورا. ولا تُلغى الدفعات التي تمت."
+    },
+    {
+      "key": "app.get_paid.pay_link.keep",
+      "format": "text",
+      "description": "Get paid (OG-058): button: keep the link",
+      "placeholders": [],
+      "meta": {},
+      "en": "Keep it",
+      "ar": "الإبقاء عليه"
+    },
+    {
+      "key": "app.get_paid.pay_link.error.pay_link_limit_reached",
+      "format": "text",
+      "description": "Get paid (OG-058): too many open links",
+      "placeholders": [],
+      "meta": {},
+      "en": "You have the most open links allowed. Revoke one or wait for one to expire.",
+      "ar": "لديك الحد الأقصى من الروابط المفتوحة. ألغِ أحدها أو انتظر انتهاء أحدها."
+    },
+    {
+      "key": "app.get_paid.pay_link.error.pay_link_not_open",
+      "format": "text",
+      "description": "Get paid (OG-058): only an open link can be revoked",
+      "placeholders": [],
+      "meta": {},
+      "en": "This link is already paid or expired, so it cannot be revoked.",
+      "ar": "هذا الرابط مدفوع أو منتهٍ بالفعل، لذا لا يمكن إلغاؤه."
+    },
+    {
+      "key": "app.get_paid.pay_link.error.pay_link_unsupported",
+      "format": "text",
+      "description": "Get paid (OG-058): the company's card processor cannot serve a payment link",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment links are not available with your card processor.",
+      "ar": "روابط الدفع غير متاحة مع معالج البطاقات لديك."
+    },
+    {
+      "key": "app.get_paid.pay_link.error.pay_link_not_found",
+      "format": "text",
+      "description": "Get paid (OG-058): the link was not found",
+      "placeholders": [],
+      "meta": {},
+      "en": "This link was not found.",
+      "ar": "لم يُعثر على هذا الرابط."
+    },
+    {
+      "key": "app.get_paid.pay_link.error.acceptance_not_opened",
+      "format": "text",
+      "description": "Get paid (OG-058): Get paid is not set up yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "Set up Get paid before you create a link.",
+      "ar": "أكمل إعداد استلام المدفوعات قبل إنشاء رابط."
+    },
+    {
+      "key": "app.get_paid.pay_link.error.validation_failed",
+      "format": "text",
+      "description": "Get paid (OG-058): the link details were refused",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the amount, the expiry and the number of payments.",
+      "ar": "تحقق من المبلغ وتاريخ الانتهاء وعدد الدفعات."
+    },
+    {
       "key": "app.onboarding.owners_threshold",
       "format": "text",
       "description": "Onboarding (OG-069): who is listed and verified as an owner; {percent} is the threshold in force, a whole number",
@@ -15804,6 +16280,286 @@
       "meta": {},
       "en": "Everyone who owns {percent}% or more of the company is listed here and verifies their identity.",
       "ar": "كل من يملك {percent}% أو أكثر من الشركة يُدرج هنا ويتحقق من هويته."
+    },
+    {
+      "key": "app.get_paid.pay_page.page_title",
+      "format": "text",
+      "description": "Pay link page (OG-058): browser title; {merchant} is the business name",
+      "placeholders": [
+        "merchant"
+      ],
+      "meta": {},
+      "en": "Pay {merchant}",
+      "ar": "ادفع إلى {merchant}"
+    },
+    {
+      "key": "app.get_paid.pay_page.page_title_plain",
+      "format": "text",
+      "description": "Pay link page (OG-058): browser title before the link is read",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pay by card",
+      "ar": "الدفع بالبطاقة"
+    },
+    {
+      "key": "app.get_paid.pay_page.page_description",
+      "format": "text",
+      "description": "Pay link page (OG-058): page description",
+      "placeholders": [],
+      "meta": {},
+      "en": "A secure card payment page from OnGem.",
+      "ar": "صفحة دفع آمنة بالبطاقة من OnGem."
+    },
+    {
+      "key": "app.get_paid.pay_page.loading",
+      "format": "text",
+      "description": "Pay link page (OG-058): loading",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading the payment",
+      "ar": "جارٍ تحميل الدفعة"
+    },
+    {
+      "key": "app.get_paid.pay_page.retry",
+      "format": "text",
+      "description": "Pay link page (OG-058): button: try reading the link again",
+      "placeholders": [],
+      "meta": {},
+      "en": "Try again",
+      "ar": "حاول مرة أخرى"
+    },
+    {
+      "key": "app.get_paid.pay_page.footer",
+      "format": "text",
+      "description": "Pay link page (OG-058): footer line",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card payments on this page are taken securely through OnGem. OnGem never sees your full card number.",
+      "ar": "تتم مدفوعات البطاقات على هذه الصفحة بأمان عبر OnGem. لا يرى OnGem رقم بطاقتك الكامل."
+    },
+    {
+      "key": "app.get_paid.pay_page.sandbox",
+      "format": "text",
+      "description": "Pay link page (OG-058): the link is in test mode",
+      "placeholders": [],
+      "meta": {},
+      "en": "Test mode: use a test card. No real money moves.",
+      "ar": "وضع الاختبار: استخدم بطاقة اختبار. لا تُنقل أموال حقيقية."
+    },
+    {
+      "key": "app.get_paid.pay_page.expires",
+      "format": "text",
+      "description": "Pay link page (OG-058): when the link stops working; {date} is a date and time",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "This link works until {date}.",
+      "ar": "يعمل هذا الرابط حتى {date}."
+    },
+    {
+      "key": "app.get_paid.pay_page.paid_title",
+      "format": "text",
+      "description": "Pay link page (OG-058): the buyer's payment went through",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment complete",
+      "ar": "اكتملت الدفعة"
+    },
+    {
+      "key": "app.get_paid.pay_page.paid_text",
+      "format": "text",
+      "description": "Pay link page (OG-058): after a payment went through",
+      "placeholders": [],
+      "meta": {},
+      "en": "Thank you. Your receipt is on its way by email if you gave one.",
+      "ar": "شكرا لك. سيصلك الإيصال بالبريد الإلكتروني إن ذكرته."
+    },
+    {
+      "key": "app.get_paid.pay_page.processing_title",
+      "format": "text",
+      "description": "Pay link page (OG-058): the payment is still being processed",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payment received",
+      "ar": "تم استلام الدفعة"
+    },
+    {
+      "key": "app.get_paid.pay_page.processing_text",
+      "format": "text",
+      "description": "Pay link page (OG-058): the card processor is still finishing the payment",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your payment is being processed. You do not need to pay again.",
+      "ar": "دفعتك قيد المعالجة. لا تحتاج إلى الدفع مرة أخرى."
+    },
+    {
+      "key": "app.get_paid.pay_page.state.paid_title",
+      "format": "text",
+      "description": "Pay link page (OG-058): the link is fully paid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Paid, thank you",
+      "ar": "تم الدفع، شكرا لك"
+    },
+    {
+      "key": "app.get_paid.pay_page.state.paid_text",
+      "format": "text",
+      "description": "Pay link page (OG-058): the link takes no more payments",
+      "placeholders": [],
+      "meta": {},
+      "en": "This link has been paid and takes no more payments.",
+      "ar": "تم دفع هذا الرابط ولا يقبل دفعات أخرى."
+    },
+    {
+      "key": "app.get_paid.pay_page.state.expired_title",
+      "format": "text",
+      "description": "Pay link page (OG-058): the link expired",
+      "placeholders": [],
+      "meta": {},
+      "en": "This link has expired",
+      "ar": "انتهت صلاحية هذا الرابط"
+    },
+    {
+      "key": "app.get_paid.pay_page.state.expired_text",
+      "format": "text",
+      "description": "Pay link page (OG-058): what to do with an expired link; {merchant} is the business name",
+      "placeholders": [
+        "merchant"
+      ],
+      "meta": {},
+      "en": "Ask {merchant} to send you a new link.",
+      "ar": "اطلب من {merchant} إرسال رابط جديد إليك."
+    },
+    {
+      "key": "app.get_paid.pay_page.state.revoked_title",
+      "format": "text",
+      "description": "Pay link page (OG-058): the merchant turned the link off",
+      "placeholders": [],
+      "meta": {},
+      "en": "This link is no longer active",
+      "ar": "هذا الرابط لم يعد نشطا"
+    },
+    {
+      "key": "app.get_paid.pay_page.state.revoked_text",
+      "format": "text",
+      "description": "Pay link page (OG-058): what to do with a revoked link; {merchant} is the business name",
+      "placeholders": [
+        "merchant"
+      ],
+      "meta": {},
+      "en": "Contact {merchant} if you still need to pay.",
+      "ar": "تواصل مع {merchant} إذا كنت لا تزال بحاجة إلى الدفع."
+    },
+    {
+      "key": "app.get_paid.pay_page.state.unavailable_title",
+      "format": "text",
+      "description": "Pay link page (OG-058): the merchant cannot take payments now",
+      "placeholders": [],
+      "meta": {},
+      "en": "Payments are paused",
+      "ar": "المدفوعات متوقفة مؤقتا"
+    },
+    {
+      "key": "app.get_paid.pay_page.state.unavailable_text",
+      "format": "text",
+      "description": "Pay link page (OG-058): the merchant cannot take card payments now; {merchant} is the business name",
+      "placeholders": [
+        "merchant"
+      ],
+      "meta": {},
+      "en": "{merchant} cannot take card payments right now. Try again later or contact them.",
+      "ar": "لا يستطيع {merchant} قبول مدفوعات البطاقات حاليا. حاول لاحقا أو تواصل معه."
+    },
+    {
+      "key": "app.get_paid.pay_page.not_found_title",
+      "format": "text",
+      "description": "Pay link page (OG-058): the link does not exist",
+      "placeholders": [],
+      "meta": {},
+      "en": "Link not found",
+      "ar": "الرابط غير موجود"
+    },
+    {
+      "key": "app.get_paid.pay_page.not_found_text",
+      "format": "text",
+      "description": "Pay link page (OG-058): the link may be mistyped",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check that you opened the whole link you were sent.",
+      "ar": "تأكد من أنك فتحت الرابط الذي أُرسل إليك كاملا."
+    },
+    {
+      "key": "app.get_paid.pay_page.error.network",
+      "format": "text",
+      "description": "Pay link page (OG-058): the page could not reach OnGem",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not reach OnGem. Check your connection and try again.",
+      "ar": "تعذر الوصول إلى OnGem. تحقق من اتصالك وحاول مرة أخرى."
+    },
+    {
+      "key": "app.get_paid.pay_page.error.other",
+      "format": "text",
+      "description": "Pay link page (OG-058): any other problem",
+      "placeholders": [],
+      "meta": {},
+      "en": "Something went wrong. Your card was not charged. Try again.",
+      "ar": "حدث خطأ. لم تُخصم بطاقتك. حاول مرة أخرى."
+    },
+    {
+      "key": "app.get_paid.pay_page.error.pay_link_busy",
+      "format": "text",
+      "description": "Pay link page (OG-058): the last payment is held by another buyer's payment in progress",
+      "placeholders": [],
+      "meta": {},
+      "en": "Someone else is paying this link right now. Try again in a few minutes.",
+      "ar": "هناك من يدفع هذا الرابط الآن. حاول مرة أخرى بعد بضع دقائق."
+    },
+    {
+      "key": "app.get_paid.pay_page.error.pay_link_attempts_exceeded",
+      "format": "text",
+      "description": "Pay link page (OG-058): too many declined attempts; the link pauses",
+      "placeholders": [],
+      "meta": {},
+      "en": "Too many card attempts were declined on this link. Try again later.",
+      "ar": "رُفضت محاولات كثيرة بالبطاقة على هذا الرابط. حاول مرة أخرى لاحقا."
+    },
+    {
+      "key": "app.get_paid.pay_page.error.rate_limited",
+      "format": "text",
+      "description": "Pay link page (OG-058): too many requests from this device",
+      "placeholders": [],
+      "meta": {},
+      "en": "Too many tries in a short time. Wait a minute and try again.",
+      "ar": "محاولات كثيرة في وقت قصير. انتظر دقيقة وحاول مرة أخرى."
+    },
+    {
+      "key": "app.get_paid.pay_page.error.acceptance_rejected",
+      "format": "text",
+      "description": "Pay link page (OG-058): the card processor refused the payment",
+      "placeholders": [],
+      "meta": {},
+      "en": "The payment was refused. Try another card.",
+      "ar": "رُفضت الدفعة. جرّب بطاقة أخرى."
+    },
+    {
+      "key": "app.get_paid.pay_page.error.validation_failed",
+      "format": "text",
+      "description": "Pay link page (OG-058): the card details were not accepted",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the card details and try again.",
+      "ar": "تحقق من بيانات البطاقة وحاول مرة أخرى."
+    },
+    {
+      "key": "app.get_paid.pay_page.error.pay_link_not_found",
+      "format": "text",
+      "description": "Pay link page (OG-058): the link does not exist",
+      "placeholders": [],
+      "meta": {},
+      "en": "This link was not found.",
+      "ar": "لم يُعثر على هذا الرابط."
     }
   ]
 }

@@ -1,5 +1,6 @@
 // content-check: data (sample amounts and ids; sentences shown as UI copy are content keys)
 import { ApiError } from '../api/errors';
+import { durationMs } from '../lib/duration';
 import type {
   AcceptanceBackend,
   AcceptanceAmount,
@@ -9,6 +10,10 @@ import type {
   ClientConfig,
   ConfirmResult,
   GetPaid,
+  NewPayLink,
+  PayLink,
+  PayLinkSettings,
+  PayLinkState,
   PayoutDestination,
   PayoutResult,
 } from './api';
@@ -46,6 +51,40 @@ export class DemoAcceptance implements AcceptanceBackend {
     },
   ];
   private checkouts = new Map<string, CheckoutSummary>();
+  /** OG-058 sample links: one open, one paid, one expired, newest first. */
+  private links: PayLink[] = [
+    link(
+      'plk_demo_3',
+      'OPEN',
+      'Logo design',
+      4300,
+      1,
+      0,
+      '2026-11-05T15:00:00Z',
+      '2026-10-29T10:00:00Z',
+      'buyer@example.com',
+    ),
+    link(
+      'plk_demo_2',
+      'PAID',
+      'Website hosting, November',
+      12000,
+      1,
+      1,
+      '2026-11-02T09:00:00Z',
+      '2026-10-26T09:00:00Z',
+    ),
+    link(
+      'plk_demo_1',
+      'EXPIRED',
+      'Workshop seat',
+      25000,
+      10,
+      3,
+      '2026-10-20T09:00:00Z',
+      '2026-10-13T09:00:00Z',
+    ),
+  ];
 
   constructor(
     private readonly stepUp: (purpose: string) => Promise<void> = async () => undefined,
@@ -168,6 +207,58 @@ export class DemoAcceptance implements AcceptanceBackend {
     return structuredClone(p);
   };
 
+  /** The core's default limits (contract 1), as a demo company would read them. */
+  payLinkSettings = async (): Promise<PayLinkSettings> => ({
+    enabled: true,
+    baseUrl: `${typeof window === 'undefined' ? 'https://app-dev.platform.ongem.com' : window.location.origin}/pay`,
+    currencies: ['USD'],
+    minAmountMinor: 100,
+    maxAmountMinor: 1000000,
+    defaultExpiry: 'PT168H',
+    minExpiry: 'PT15M',
+    maxExpiry: 'P30D',
+    defaultMaxUses: 1,
+    maxUses: 100,
+    maxOpenPerCompany: 500,
+    titleMaxLength: 120,
+  });
+
+  createPayLink = async (input: NewPayLink): Promise<PayLink> => {
+    const s = await this.payLinkSettings();
+    if (input.amountMinor < s.minAmountMinor || input.amountMinor > s.maxAmountMinor)
+      throw new ApiError(422, 'validation_failed');
+    const created = this.now();
+    const expires =
+      input.expiresAt ??
+      new Date(new Date(created).getTime() + (durationMs(s.defaultExpiry) ?? 0)).toISOString();
+    const l = link(
+      this.next('plk'),
+      'OPEN',
+      input.title,
+      input.amountMinor,
+      input.maxUses ?? s.defaultMaxUses,
+      0,
+      expires,
+      created,
+      input.customerEmail ?? null,
+    );
+    l.url = `${s.baseUrl}/${demoToken()}`;
+    this.links.unshift(l);
+    return structuredClone(l);
+  };
+
+  payLinks = async (state: PayLinkState | null): Promise<PayLink[]> =>
+    structuredClone(this.links.filter((l) => !state || l.state === state));
+
+  revokePayLink = async (id: string): Promise<PayLink> => {
+    const l = this.links.find((x) => x.id === id);
+    if (!l) throw new ApiError(404, 'pay_link_not_found');
+    if (l.state === 'PAID' || l.state === 'EXPIRED') throw new ApiError(409, 'pay_link_not_open');
+    l.state = 'REVOKED';
+    l.revokedAt ??= this.now();
+    return structuredClone(l);
+  };
+
   payments = async () => structuredClone(this.paymentsState);
   payouts = async () => structuredClone(this.payoutsState);
 }
@@ -189,4 +280,43 @@ function payment(
     paidAt: status === 'SUCCEEDED' ? at : null,
     updatedAt: at,
   };
+}
+
+function link(
+  id: string,
+  state: PayLinkState,
+  title: string,
+  amountMinor: number,
+  maxUses: number,
+  uses: number,
+  expiresAt: string,
+  createdAt: string,
+  customerEmail: string | null = null,
+): PayLink {
+  return {
+    id,
+    url: `https://app-dev.platform.ongem.com/pay/${id}_sample_token`,
+    state,
+    checkoutId: id.replace('plk_', 'chk_'),
+    title,
+    amount: usd(amountMinor),
+    maxUses,
+    uses,
+    usesRemaining: maxUses - uses,
+    expiresAt,
+    customerEmail,
+    createdAt,
+    createdBy: 'prn_demo_owner',
+    revokedAt: null,
+    lastPaymentAt: uses > 0 ? createdAt : null,
+  };
+}
+
+/** A random URL-safe token, as long as the core's. */
+function demoToken(): string {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  return btoa(String.fromCharCode(...bytes))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
 }

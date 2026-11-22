@@ -1,4 +1,5 @@
 import { has, keysUnder, metaOf, t, tList } from '../i18n';
+import { ACCEPTANCE_ENABLED } from '../acceptance/flag';
 import { US_MEDIA } from '../region';
 import { posts } from './media/blog';
 import { isMediaPath } from './media/paths';
@@ -117,6 +118,7 @@ export const APP_SEGMENTS = [
   'settings',
   'notifications',
   'invite',
+  ...(ACCEPTANCE_ENABLED ? ['get-paid'] : []),
 ];
 const APP_PATHS = new RegExp(`^/(${APP_SEGMENTS.join('|')})(/|$)`);
 export const isAppPath = (path: string) => APP_PATHS.test(path);
@@ -142,7 +144,9 @@ export function siteRoutes(): { pages: string[]; app: string[] } {
     ...posts().map((p) => `/blog/${p.slug}`),
     ...['/videos', '/product/cards'].filter((p) => isMediaPath(p) || movedPath(p)),
   ]);
-  return { pages: [...pages].sort(), app: [...APP_SEGMENTS] };
+  // The buyer's pay link page (OG-058) answers at the edge in a build that has it, but is not an app path for sign-in:
+  // a buyer never signs in.
+  return { pages: [...pages].sort(), app: [...APP_SEGMENTS, ...(ACCEPTANCE_ENABLED ? ['pay'] : [])] };
 }
 
 export interface NavLink {

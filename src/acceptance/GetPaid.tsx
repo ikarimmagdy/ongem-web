@@ -27,8 +27,10 @@ import {
   type GetPaid,
   type GetPaidState,
   type MerchantSummary,
+  minorOf,
   type PayoutResult,
 } from './api';
+import { PayLinks } from './PayLinks';
 import type { PayOutcome } from './StripeSurfaces';
 
 /** Whop's elements (OG-039) for a company Whop serves; Stripe's Payment Element (OG-055) for one Stripe serves. */
@@ -41,7 +43,7 @@ const Surfaces = {
   Stripe: lazy(() => import('./StripeSurfaces').then((m) => ({ default: m.StripeCheckout }))),
 };
 
-type Tab = 'overview' | 'request' | 'activity' | 'withdraw';
+type Tab = 'overview' | 'request' | 'links' | 'activity' | 'withdraw';
 
 function verificationStatus(s: string | null): 'success' | 'pending' | 'failure' | 'neutral' {
   if (s === 'APPROVED') return 'success';
@@ -70,11 +72,7 @@ export function moneyState(kind: 'payment' | 'payout', status: string) {
   return has(k) ? t(k) : human(status);
 }
 
-/** Dollars and cents typed by the founder, as minor units; 0 when it is not an amount. */
-export function minorOf(text: string): number {
-  const v = text.trim();
-  return /^\d{1,7}(\.\d{1,2})?$/.test(v) ? Math.round(Number(v) * 100) : 0;
-}
+export { minorOf } from './api';
 
 function Frame({ children }: { children: ReactNode }) {
   return (
@@ -158,6 +156,16 @@ export function GetPaidScreen() {
             id: 'request',
             label: t('app.get_paid.tab.request'),
             content: <RequestPayment api={acceptance} onPaid={reload} />,
+          },
+        ]
+      : []),
+    // OG-058: pay links need a card form a public page can mount, which Whop does not offer (contract 5).
+    ...(can(Permission.PAYMENT_VIEW) && active && gp.provider !== 'whop'
+      ? [
+          {
+            id: 'links',
+            label: t('app.get_paid.tab.links'),
+            content: <PayLinks api={acceptance} canCreate={can(Permission.PAYMENT_CREATE)} />,
           },
         ]
       : []),

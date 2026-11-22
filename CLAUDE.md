@@ -291,3 +291,19 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   import); an accounting format shows that it holds posted lines for the account's currency only. Recent exports name
   their format. Texts `app.exports.format_quickbooks`, `.format_xero`, `.format_note_accounting` (both seeds). Tests in
   `exports.test.tsx` (`OG024_*`).
+- 2026-11-22: OG-069 beneficial owner threshold (contract WS `ongem-engineering/outputs/review/og069-2026-11-22/owner-threshold-api.md`).
+  Onboarding's owners card reads `GET /v1/onboarding/owner-threshold` (`ownerThreshold`) and says owners at or above
+  `collectAtOrAbove` are listed and verified (`app.onboarding.owners_threshold`, both seeds; ongem-core's seed needs it
+  too); no percentage is written in the web. Demo answers the core's seed (10 and 10). Test `og069.test.tsx`.
+- 2026-11-22: OG-058 pay links (contract WS `ongem-engineering/outputs/review/og058-2026-11-22/pay-link-api.md`). Get paid
+  has a Payment links tab (`acceptance/PayLinks.tsx`, Stripe companies only): every limit from
+  `GET /v1/acceptance/pay-links/settings` (ISO 8601 durations, `lib/duration.ts`), amount, what it is for, expiry day,
+  one or a set number of payments, optional customer email, copy and share, the list with state and uses, revoke with a
+  confirm. The buyer's page `/pay/:token` (`acceptance/PayLinkPage.tsx`, own chunk, routed before sign-in in `App.tsx`,
+  noindex) calls the public paths with no bearer or cookies (`acceptance/publicPay.ts`), mounts the shared Stripe card
+  form (`StripeCardForm`; Stripe.js lazily, `allowedPaymentMethodTypes` from the API's `paymentMethodTypes`, since
+  Stripe.js 10 refuses `paymentMethodTypes`), one Idempotency-Key per Pay tap, 202 outcome unknown asked again with the
+  same key and token (Check again), 3D Secure then the core's re-read, and Paid, Expired, Revoked, Unavailable and not
+  found states. `routes.json` lists `pay` (and `get-paid` is an app path), telemetry treats the segment after `pay` as a
+  secret, and `dist/security-headers.acceptance.json` notes that it covers the page. Texts `app.get_paid.pay_link.*`,
+  `app.get_paid.pay_page.*`, `.check_again`, `.outcome_unknown` (US seed; ongem-core's seed needs them). Test `og058.test.tsx`.

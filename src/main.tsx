@@ -52,7 +52,7 @@ startTelemetry(
   telemetryConfig(import.meta.env, {
     service: 'ongem-web',
     version: __APP_VERSION__,
-    secretAfter: ['invite'],
+    secretAfter: ['invite', 'pay'],
     demo: () => {
       try {
         return sessionStorage.getItem('ongem.demo') === '1';

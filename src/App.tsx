@@ -1,10 +1,11 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { useAuthSession } from './auth';
 import { Md, t, tList, useChannels, useContent } from './i18n';
 import { Button, Notice, Skeleton, ThemeProvider, ToastProvider } from './design-system';
 import { SessionProvider, useSession, type Mode } from './session';
 import { privacyLine } from './recording/privacy';
+import { ACCEPTANCE_ENABLED, PAY_LINK_PATH } from './acceptance/flag';
 import { isAppPath, isPublicPath } from './public/content';
 import { Footer, Header, PublicSite } from './public/PublicSite';
 import { usePageHead } from './public/seo';
@@ -15,6 +16,8 @@ export { NAV } from './nav';
 // The signed-in shell and its screens are a separate chunk, so the first screen loads only what sign-in needs (OG-030-N3).
 const loadSignedIn = () => import('./SignedIn');
 const SignedIn = lazy(loadSignedIn);
+// OG-058: the buyer's pay link page is its own chunk; Stripe.js loads from it only when the card form shows.
+const PayLinkPage = lazy(() => import('./acceptance/PayLinkPage').then((m) => ({ default: m.PayLinkPage })));
 
 /** Loads [load] once the page has loaded and a short pause has passed, so it never competes with the first screen. */
 function prefetchAfterLoad(load: () => Promise<unknown>, delayMs = 1500): () => void {
@@ -117,6 +120,15 @@ export function Routed() {
   const { mode, regionPending } = useSession();
   const { pendingTask } = useAuthSession();
   const { pathname } = useLocation();
+  // OG-058: a pay link is for a buyer, signed in or not; it never shows sign-in or the founder's shell.
+  if (ACCEPTANCE_ENABLED && PAY_LINK_PATH.test(pathname))
+    return (
+      <Suspense fallback={<Skeleton label={t('app.get_paid.pay_page.loading')} />}>
+        <Routes>
+          <Route path="/pay/:token" element={<PayLinkPage />} />
+        </Routes>
+      </Suspense>
+    );
   // Signed out, the public site answers its own paths (OG-032 R1, R5); every other path is sign-in, as before. A
   // sign-in that still has a task to finish (WEB-COR-07) always shows sign-in, so the task form is never hidden.
   // A path that is neither public nor the app's is the public not-found page, never sign-in (PS-008).
