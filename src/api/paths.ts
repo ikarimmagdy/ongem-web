@@ -44,6 +44,7 @@ export const paths = {
   cardFreeze: (id: string, frozen: boolean) => `/v1/cards/${q(id)}/${frozen ? 'freeze' : 'unfreeze'}`,
   applications: '/v1/onboarding/applications',
   ownerThreshold: '/v1/onboarding/owner-threshold',
+  onboardingRules: '/v1/onboarding/rules',
   application: (id: string) => `/v1/onboarding/applications/${q(id)}`,
   ownerIdentity: (id: string, owner: string) =>
     `/v1/onboarding/applications/${q(id)}/owners/${q(owner)}/identity`,

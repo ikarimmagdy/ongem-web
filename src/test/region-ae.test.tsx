@@ -127,12 +127,15 @@ describe('AE build shows UAE content only (OG-022 R18)', () => {
     expect(review).not.toHaveTextContent(FORBIDDEN);
   });
 
-  it('owners_are_identified_by_emirates_id_or_passport_AC_R18_1', async () => {
+  it('owners_are_identified_by_the_configured_emirates_id_AC_R18_1_OG070', async () => {
+    // OG-070: ongem-core's ownerIdTypes (seed SSN and Emirates ID) cannot list a passport yet (Q-099), and an SSN is not
+    // issued in the UAE, so the Emirates ID is the only type offered and no type choice is shown.
     renderApp('/onboarding');
     await screen.findByTestId('shell');
     await settled();
-    const type = screen.getByTestId('owner-id-type-own_demo_dana');
-    expect(await optionLabels(type)).toEqual(['Emirates ID number', 'Passport number']);
+    expect(await screen.findByTestId('owner-id-own_demo_dana')).toBeInTheDocument();
+    expect(screen.getByText('Emirates ID number')).toBeInTheDocument();
+    expect(screen.queryByTestId('owner-id-type-own_demo_dana')).not.toBeInTheDocument();
   });
 
   it('recipients_are_added_by_uae_iban_AC_R18_1', async () => {

@@ -307,3 +307,11 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   found states. `routes.json` lists `pay` (and `get-paid` is an app path), telemetry treats the segment after `pay` as a
   secret, and `dist/security-headers.acceptance.json` notes that it covers the page. Texts `app.get_paid.pay_link.*`,
   `app.get_paid.pay_page.*`, `.check_again`, `.outcome_unknown` (US seed; ongem-core's seed needs them). Test `og058.test.tsx`.
+- 2026-11-23: OG-070 onboarding rules as configuration (contract WS `outputs/review/og070-2026-11-23/onboarding-rules-api.md`).
+  Onboarding reads `GET /v1/onboarding/rules` (`onboardingRules`): the owner ID types offered are the configured
+  `identifiers.ownerIdTypes` that this region issues (`acceptedOwnerIds` in `region.ts`; the formats stay in code as legal
+  facts, so the AE passport is not offered while the core cannot list it), none or no answer shows
+  `app.onboarding.id_types_unavailable` with Try again; `ownerLimits.maxOwners` holds Confirm with
+  `app.onboarding.owner_limit`; an owner the rule does not ask reads `app.onboarding.id_not_required`. Demo answers the
+  core's seed and refuses as the core does (`owner_id_type_not_accepted`, `owner_limit_exceeded`). Test `og070.test.tsx`
+  fails if an owner limit, control person count, ownership bound, trade licence length or ID type list is written again.

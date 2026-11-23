@@ -17,16 +17,28 @@ import {
 import { t } from '../i18n';
 import { useAsync } from '../lib/useAsync';
 import { applicationLabel } from '../lib/states';
-import { IS_AE, REGION_CONFIG } from '../region';
+import { acceptedOwnerIds, IS_AE, type OwnerIdType } from '../region';
 
 const ID_TEST = IS_AE ? 'id' : 'ssn';
 import { useSession } from '../session';
 import { Load, stateStatus } from './common';
 
-/** An owner's ID number, by the region's ID types (US: SSN; AE: Emirates ID or passport, OG-022 R18). */
-function OwnerId({ app, ownerId, onDone }: { app: Application; ownerId: string; onDone(): void }) {
+/**
+ * An owner's ID number, by the ID types the programme accepts that are issued in this region (OG-070
+ * `identifiers.ownerIdTypes`; OG-022 R18 for the region's documents).
+ */
+function OwnerId({
+  app,
+  ownerId,
+  types,
+  onDone,
+}: {
+  app: Application;
+  ownerId: string;
+  types: OwnerIdType[];
+  onDone(): void;
+}) {
   const { api } = useSession();
-  const types = REGION_CONFIG.ownerIds;
   const [idType, setIdType] = useState(types[0]!.idType);
   const kind = types.find((x) => x.idType === idType) ?? types[0]!;
   const [number, setNumber] = useState('');
@@ -345,6 +357,8 @@ export function OnboardingScreen() {
   const disclosures = useAsync(() => api.requiredDisclosures(), [api, n]);
   // OG-069: the share at or above which owners are listed and verified, as configured in ongem-core.
   const threshold = useAsync(() => api.ownerThreshold(), [api]);
+  // OG-070: the onboarding rules in force (ID types, owner limit), configuration in ongem-core.
+  const rules = useAsync(() => api.onboardingRules(), [api]);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const inFlight = useRef(false);
@@ -369,6 +383,10 @@ export function OnboardingScreen() {
           if (!app) return <Notice status="info">{t('app.onboarding.no_application')}</Notice>;
           const missing = app.owners.filter((o) => app.requirements.includes(`owner_id_missing:${o.id}`));
           const discs = disclosures.status === 'success' ? disclosures.data : [];
+          const idTypes =
+            rules.status === 'success' ? acceptedOwnerIds(rules.data.identifiers.ownerIdTypes) : [];
+          const maxOwners = rules.status === 'success' ? rules.data.ownerLimits.maxOwners : null;
+          const overLimit = maxOwners !== null && app.owners.length > maxOwners;
           const allAccepted = discs.every((d) => d.acknowledged);
           return (
             <>
@@ -441,20 +459,48 @@ export function OnboardingScreen() {
                           {o.ownershipPercent}%{' '}
                           {o.idLast4 ? (
                             <span data-mask="">{t('app.onboarding.id_ending', { last4: o.idLast4 })}</span>
-                          ) : (
+                          ) : missing.includes(o) ? (
                             t('app.onboarding.id_needed')
+                          ) : (
+                            t('app.onboarding.id_not_required')
                           )}
                         </span>
                       </span>
-                      {missing.includes(o) && <OwnerId app={app} ownerId={o.id} onDone={refresh} />}
+                      {missing.includes(o) && idTypes.length > 0 && (
+                        <OwnerId app={app} ownerId={o.id} types={idTypes} onDone={refresh} />
+                      )}
                     </li>
                   ))}
                 </ul>
+                {missing.length > 0 && rules.status !== 'loading' && idTypes.length === 0 && (
+                  <Notice
+                    status="failure"
+                    action={
+                      <Button variant="secondary" onClick={rules.reload}>
+                        {t('app.common.try_again')}
+                      </Button>
+                    }
+                  >
+                    <span data-testid="owner-id-types-unavailable">
+                      {t('app.onboarding.id_types_unavailable')}
+                    </span>
+                  </Notice>
+                )}
               </Card>
+              {app.state === 'COLLECTING' && overLimit && (
+                <Notice status="failure">
+                  <span data-testid="owner-limit">
+                    {t('app.onboarding.owner_limit', {
+                      max: String(maxOwners),
+                      count: String(app.owners.length),
+                    })}
+                  </span>
+                </Notice>
+              )}
               {app.state === 'COLLECTING' && (
                 <Button
                   data-testid="application-confirm"
-                  disabled={busy || missing.length > 0}
+                  disabled={busy || missing.length > 0 || overLimit}
                   onClick={() => act(() => api.confirmApplication(app.id))}
                 >
                   {t('app.onboarding.confirm_details')}

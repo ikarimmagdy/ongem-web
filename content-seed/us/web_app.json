@@ -16282,6 +16282,36 @@
       "ar": "كل من يملك {percent}% أو أكثر من الشركة يُدرج هنا ويتحقق من هويته."
     },
     {
+      "key": "app.onboarding.owner_limit",
+      "format": "text",
+      "description": "Onboarding (OG-070): the application lists more owners than the bank takes, so it cannot be confirmed; {max} is the configured owner limit and {count} the owners listed, whole numbers",
+      "placeholders": [
+        "max",
+        "count"
+      ],
+      "meta": {},
+      "en": "The bank takes up to {max} owners and this application lists {count}. Contact support to change the owners before you confirm.",
+      "ar": "يقبل البنك حتى {max} من المالكين، وهذا الطلب يذكر {count}. تواصل مع الدعم لتعديل المالكين قبل التأكيد."
+    },
+    {
+      "key": "app.onboarding.id_types_unavailable",
+      "format": "text",
+      "description": "Onboarding (OG-070): the ID types the programme accepts could not be read, or none of them is issued in this region, so no ID number can be sent",
+      "placeholders": [],
+      "meta": {},
+      "en": "ID numbers cannot be sent right now. Try again, or contact support if this stays.",
+      "ar": "لا يمكن إرسال أرقام الهوية الآن. حاول مرة أخرى، أو تواصل مع الدعم إذا استمر ذلك."
+    },
+    {
+      "key": "app.onboarding.id_not_required",
+      "format": "text",
+      "description": "Owner row (OG-070): the configured rule does not ask this owner for an ID number",
+      "placeholders": [],
+      "meta": {},
+      "en": "No ID needed",
+      "ar": "لا حاجة إلى الهوية"
+    },
+    {
       "key": "app.get_paid.pay_page.page_title",
       "format": "text",
       "description": "Pay link page (OG-058): browser title; {merchant} is the business name",

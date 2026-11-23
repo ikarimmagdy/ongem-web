@@ -26,6 +26,7 @@ import {
   demoInviteCompany,
   NOTICE_KINDS,
   DEMO_OWNER_THRESHOLD,
+  DEMO_ONBOARDING_RULES,
 } from './demoData';
 import { DemoAssistant } from '../assistant/demoAssistant';
 import { DemoFx } from './demoFx';
@@ -56,6 +57,7 @@ import type {
   InviteView,
   Me,
   OpenTicket,
+  OnboardingRules,
   OwnerIdentity,
   Payment,
   TicketDetail,
@@ -1059,6 +1061,11 @@ export class DemoOnGemApi implements OnGemApi {
 
   ownerThreshold = async () => this.log('ownerThreshold', structuredClone(DEMO_OWNER_THRESHOLD));
 
+  /** OG-070: the rules the demo enforces, ongem-core's seed unless a test sets others. */
+  rules: OnboardingRules = structuredClone(DEMO_ONBOARDING_RULES);
+
+  onboardingRules = async () => this.log('onboardingRules', structuredClone(this.rules));
+
   application = async (id: string) => {
     if (id !== this.applicationState.id) this.notFound('application');
     return this.log('application', this.advance());
@@ -1068,6 +1075,8 @@ export class DemoOnGemApi implements OnGemApi {
     this.require(Permission.ONBOARDING_MANAGE);
     const app = this.applicationState;
     if (app.id !== appId) this.notFound('application');
+    if (!this.rules.identifiers.ownerIdTypes.includes(identity.idType))
+      throw new ApiError(409, 'owner_id_type_not_accepted', t('app.onboarding.id_types_unavailable'));
     const kind = REGION_CONFIG.ownerIds.find((k) => k.idType === identity.idType);
     const digits =
       kind?.numeric === false ? identity.number.trim().toUpperCase() : identity.number.replace(/\D/g, '');
@@ -1094,6 +1103,13 @@ export class DemoOnGemApi implements OnGemApi {
     if (app.requirements.length)
       throw new ApiError(409, 'requirements_incomplete', t('app.demo.error.owner_id_missing'));
     if (app.state !== 'COLLECTING') throw new ApiError(409, 'invalid_state');
+    const max = this.rules.ownerLimits.maxOwners;
+    if (max !== null && app.owners.length > max)
+      throw new ApiError(
+        409,
+        'owner_limit_exceeded',
+        t('app.onboarding.owner_limit', { max: String(max), count: String(app.owners.length) }),
+      );
     this.applicationState = {
       ...app,
       state: 'READY_FOR_DISCLOSURES',

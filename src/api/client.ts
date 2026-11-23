@@ -27,6 +27,7 @@ import type {
   Owner,
   OwnerIdentity,
   OwnerThreshold,
+  OnboardingRules,
   Payment,
   PaymentPage,
   Recipient,
@@ -159,6 +160,8 @@ export interface OnGemApi {
   applications(): Promise<Application[]>;
   /** OG-069: the beneficial owner threshold in force (configuration in ongem-core, never a number in the client). */
   ownerThreshold(): Promise<OwnerThreshold>;
+  /** OG-070: every onboarding rule in force (configuration in ongem-core, never a number or list in the client). */
+  onboardingRules(): Promise<OnboardingRules>;
   application(id: string): Promise<Application>;
   putOwnerIdentity(applicationId: string, ownerId: string, identity: OwnerIdentity): Promise<Owner>;
   confirmApplication(id: string): Promise<Application>;

@@ -367,6 +367,34 @@ export interface OwnerThreshold {
   effectiveFrom: string | null;
 }
 
+/** One OG-070 rule as returned: the values plus the version in force (null while ongem-core's seed holds). */
+interface RuleVersion {
+  version: number | null;
+  effectiveFrom: string | null;
+}
+
+/**
+ * OG-070 GET /v1/onboarding/rules: the onboarding rules in force for the caller's company, configuration in ongem-core
+ * (outputs/review/og070-2026-11-23/onboarding-rules-api.md). The client reads every number and list from here.
+ */
+export interface OnboardingRules {
+  ownerThreshold: OwnerThreshold;
+  ownerIdRequired: RuleVersion & { owners: 'ALL' | 'AT_OR_ABOVE_THRESHOLD' };
+  controlPersons: RuleVersion & { min: number; max: number };
+  ownership: RuleVersion & {
+    minPercentPerOwner: number;
+    maxPercentPerOwner: number;
+    minTotalPercent: number;
+    maxTotalPercent: number;
+  };
+  /** `maxOwners`: the lowest provider limit configured, null when none. */
+  ownerLimits: RuleVersion & { acceptancePrefillMaxOwners: number; maxOwners: number | null };
+  identifiers: RuleVersion & {
+    ownerIdTypes: string[];
+    tradeLicence: { minLength: number; maxLength: number };
+  };
+}
+
 export interface Owner {
   id: string;
   ref: string;

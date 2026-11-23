@@ -7,6 +7,7 @@ import type {
   Amount,
   Application,
   OwnerThreshold,
+  OnboardingRules,
   Card,
   Me,
   Payment,
@@ -342,6 +343,28 @@ export const DEMO_OWNER_THRESHOLD: OwnerThreshold = {
   collectAtOrAbove: 10,
   version: null,
   effectiveFrom: null,
+};
+
+/** OG-070: the rules as ongem-core seeds them before ops store a version (onboarding-rules-api.md, "The settings"). */
+export const DEMO_ONBOARDING_RULES: OnboardingRules = {
+  ownerThreshold: DEMO_OWNER_THRESHOLD,
+  ownerIdRequired: { owners: 'ALL', version: null, effectiveFrom: null },
+  controlPersons: { min: 1, max: 1, version: null, effectiveFrom: null },
+  ownership: {
+    minPercentPerOwner: 0,
+    maxPercentPerOwner: 100,
+    minTotalPercent: 0,
+    maxTotalPercent: 100,
+    version: null,
+    effectiveFrom: null,
+  },
+  ownerLimits: { acceptancePrefillMaxOwners: 10, maxOwners: null, version: null, effectiveFrom: null },
+  identifiers: {
+    ownerIdTypes: ['SSN', 'EMIRATES_ID'],
+    tradeLicence: { minLength: 3, maxLength: 32 },
+    version: null,
+    effectiveFrom: null,
+  },
 };
 
 export const demoApplication = IS_AE

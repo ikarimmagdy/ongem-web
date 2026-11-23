@@ -64,6 +64,11 @@ export interface RegionConfig {
   /** Top-up limits in minor units. */
   topUpLimit: number;
   topUpDailyLimit: number;
+  /**
+   * The owner ID documents issued in this region and their formats: legal facts kept in code (OG-070
+   * onboarding-rules-api.md, "Kept in code on purpose"). Which of them a founder is offered is configuration, read with
+   * `acceptedOwnerIds`.
+   */
   ownerIds: OwnerIdType[];
   /** An account number's last four, as shown. */
   accountMask(last4: string): string;
@@ -217,6 +222,7 @@ const AE: RegionConfig = {
       numeric: true,
       country: 'AE',
     },
+    // Not offered while ongem-core's ownerIdTypes cannot list it (no verification path yet, Q-099).
     {
       idType: 'PASSPORT',
       get label() {
@@ -237,3 +243,11 @@ const AE: RegionConfig = {
 };
 
 export const REGION_CONFIG: RegionConfig = IS_AE ? AE : US;
+
+/**
+ * OG-070: the owner ID types offered, those the programme accepts (`identifiers.ownerIdTypes` from
+ * GET /v1/onboarding/rules) that are issued in this region, in the region's order.
+ */
+export function acceptedOwnerIds(ownerIdTypes: readonly string[]): OwnerIdType[] {
+  return REGION_CONFIG.ownerIds.filter((k) => ownerIdTypes.includes(k.idType));
+}
