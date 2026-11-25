@@ -7185,6 +7185,26 @@
       "ar": "أُرسل عدد كبير من الرموز. حاول مرة أخرى لاحقًا."
     },
     {
+      "key": "app.errors.credential_change_wait",
+      "format": "text",
+      "description": "OG-074: 409 credential_change_wait, card details, the PIN or a new card wait after a password, email or second factor change",
+      "placeholders": [
+        "until"
+      ],
+      "meta": {},
+      "en": "Your sign-in details changed recently, so for your safety this waits until {until}. You can still freeze a card.",
+      "ar": "تغيّرت بيانات تسجيل الدخول مؤخرًا، لذا حفاظًا على أمانك ينتظر هذا الإجراء حتى {until}. لا يزال بإمكانك تجميد البطاقة."
+    },
+    {
+      "key": "app.errors.credential_change_wait_unknown",
+      "format": "text",
+      "description": "OG-074: 409 credential_change_wait without a time",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your sign-in details changed recently, so for your safety this waits for a while. You can still freeze a card.",
+      "ar": "تغيّرت بيانات تسجيل الدخول مؤخرًا، لذا حفاظًا على أمانك ينتظر هذا الإجراء بعض الوقت. لا يزال بإمكانك تجميد البطاقة."
+    },
+    {
       "key": "app.mobile.brand.alt",
       "format": "text",
       "description": "Founder app: the word mark read aloud (a name, kept in English)",

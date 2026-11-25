@@ -118,6 +118,8 @@ export interface DemoOptions {
    * `currencies` adds balances in other currencies, `currencies_total` also the indicative total across them.
    */
   scenario?: DemoScenario | null;
+  /** OG-074: card details, PIN and a new card wait until this time, as after a credential change (tests). */
+  credentialWaitUntil?: string;
   /** OG-023 R12: the region this demo client stands for (the build's region by default). */
   region?: string;
   /** The person as another region's API answers them, or 'down' when that region does not answer (tests). */
@@ -1034,6 +1036,9 @@ export class DemoOnGemApi implements OnGemApi {
     const c = this.cardsState.find((x) => x.id === id) ?? this.notFound('card');
     const ok = kind === 'ACTIVATE' ? c.state === 'PENDING' : c.state === 'ACTIVE' || c.state === 'FROZEN';
     if (!ok) throw new ApiError(409, 'card_not_active', t('app.demo.error.card_details_unavailable'));
+    const until = this.opts.credentialWaitUntil;
+    if (until && (kind === 'REVEAL' || kind === 'GET_PIN'))
+      throw new ApiError(409, 'credential_change_wait', undefined, undefined, until);
     await this.stepUp('card_details', { action: 'card_details', last4: c.last4 ?? undefined });
     return this.log('cardWidget', {
       cardId: id,

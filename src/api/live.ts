@@ -197,6 +197,7 @@ export class LiveOnGemApi implements OnGemApi {
     detail?: string;
     reverification?: ReverificationHint;
     homeRegion?: string;
+    until?: string;
     apiBaseUrl?: string;
   }> {
     try {
@@ -282,7 +283,7 @@ export class LiveOnGemApi implements OnGemApi {
         p.code === WRONG_REGION
           ? { homeRegion: p.homeRegion ?? null, apiBaseUrl: p.apiBaseUrl ?? null }
           : undefined;
-      throw new ApiError(res.status, p.code ?? null, p.detail, where);
+      throw new ApiError(res.status, p.code ?? null, p.detail, where, p.until ?? undefined);
     }
     if (res.status === 204) return undefined as T;
     if (accept) return (await res.blob()) as T;

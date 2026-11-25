@@ -1,4 +1,4 @@
-import { formatMinor } from '../lib/format';
+import { formatDate, formatMinor } from '../lib/format';
 import { t } from '../i18n/store';
 import { REGION_CONFIG } from '../region';
 
@@ -17,6 +17,8 @@ export class ApiError extends Error {
     readonly code: string | null,
     detail?: string,
     readonly where?: WrongRegion,
+    /** OG-074 `credential_change_wait`: when card actions may run again (ISO time). */
+    readonly until?: string,
   ) {
     super(detail || code || `HTTP ${status}`);
   }
@@ -120,6 +122,11 @@ const KNOWN = new Set([
 /** The line a screen shows for a failure; anything unknown falls back to the API's own detail. */
 export function errorText(e: unknown): string {
   if (e instanceof ApiError) {
+    // OG-074: a card action waits after a password, email or second factor change; the sentence says until when.
+    if (e.code === 'credential_change_wait')
+      return e.until
+        ? t('app.errors.credential_change_wait', { until: formatDate(e.until, { time: true }) })
+        : t('app.errors.credential_change_wait_unknown');
     // 409 is a transfer between accounts at different banks or regions (OG-023); 422 is a rail that cannot be scheduled.
     if (e.code === 'capability_unavailable' && e.status === 409)
       return t('app.errors.capability_unavailable_accounts');

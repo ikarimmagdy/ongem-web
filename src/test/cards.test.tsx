@@ -2,6 +2,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { CardWidget } from '../screens/CardWidget';
 import userEvent from '@testing-library/user-event';
 import { renderApp } from './render';
+import { DemoOnGemApi } from '../api/demo';
+import { ApiError, errorText } from '../api/errors';
 
 describe('cards (OG-030 R5)', () => {
   it('freeze_and_unfreeze_with_step_up_AC_R5_1', async () => {
@@ -100,5 +102,22 @@ describe('card widgets (Synctera widgets, docs/synctera/cards.md s6)', () => {
       />,
     );
     expect(await screen.findByTestId('card-widget-expired')).toBeInTheDocument();
+  });
+});
+
+describe('OG-074 card actions wait after a credential change', () => {
+  it('card details are refused with when the wait ends; freeze stays available', async () => {
+    const api = new DemoOnGemApi({ credentialWaitUntil: '2026-11-27T15:00:00Z' });
+    renderApp('/cards', { api });
+    await userEvent.click(await screen.findByTestId('card-crd_demo_dana'));
+    await userEvent.click(await screen.findByTestId('card-widget-reveal'));
+    expect(await screen.findByText(/Your sign-in details changed recently.*27 Nov 2026/)).toBeInTheDocument();
+    expect(screen.queryByTestId('card-widget')).not.toBeInTheDocument();
+    // Freezing is never held by the wait (it protects the customer).
+    expect(screen.getByTestId('card-freeze')).toBeEnabled();
+  });
+
+  it('without a time the sentence still explains the wait', () => {
+    expect(errorText(new ApiError(409, 'credential_change_wait'))).toMatch(/changed recently/);
   });
 });
