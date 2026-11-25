@@ -6,7 +6,7 @@ import { useAsync } from '../lib/useAsync';
 import { DARK_THEME, useAppearance, type Appearance } from '../lib/appearance';
 import { formatDate } from '../lib/format';
 import { LanguageSwitch, t } from '../i18n';
-import { privacyLine } from '../recording/privacy';
+import { privacyLine, useRecordingSettings } from '../recording/privacy';
 import { useSession } from '../session';
 import { Load, human, stateStatus } from './common';
 import { lastSignInText, signInDevice, signInLine } from '../lib/signins';
@@ -182,6 +182,7 @@ export function SettingsScreen() {
   // G-157: the person's identity state at the bank (it moved here from Home's company card, OG-035 R1).
   const me = useAsync(() => api.me(), [api]);
   const bankState = me.status === 'success' ? (me.data.providerState ?? 'NOT_SUBMITTED') : null;
+  const recordingSettings = useRecordingSettings();
   return (
     <>
       <PageHeader title={t('app.settings.title')} />
@@ -197,7 +198,7 @@ export function SettingsScreen() {
         <SecuritySection />
         <Card title={t('app.settings.privacy')}>
           <p className="fw-privacy" data-testid="privacy-line">
-            {privacyLine()}
+            {privacyLine(recordingSettings)}
           </p>
         </Card>
         <Card title={t('app.settings.session')}>

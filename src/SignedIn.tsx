@@ -34,7 +34,7 @@ import { useAppearance } from './lib/appearance';
 import { TeamScreen } from './screens/Team';
 import { DocumentsScreen } from './screens/Documents';
 import { MoreScreen } from './screens/More';
-import { RECORDING_ENABLED } from './recording/privacy';
+import { useRecordingSettings } from './recording/privacy';
 import { MORE, NAV, NAV_GROUPS, PHONE_TABS, pageTitle } from './nav';
 import { ACCEPTANCE_ENABLED } from './acceptance/api';
 import { t, useContent } from './i18n';
@@ -619,11 +619,12 @@ function LinkCompany() {
 /** Everything under one company (G-69): a switch remounts it, so no screen, draft or recording outlives the company. */
 function CompanyScope() {
   const [recording, setRecording] = useState<string | null>(null);
+  const { enabled: recordingOn } = useRecordingSettings();
   return (
     <DraftProvider>
       <AssistantProvider>
         <Shell recording={recording}>
-          {RECORDING_ENABLED && (
+          {recordingOn && (
             <Suspense fallback={null}>
               <Recorder onSession={setRecording} />
             </Suspense>

@@ -4,7 +4,7 @@ import { PAYMENTS_PAGE } from '../screens/Payments';
 import type { AuthSession } from '../auth';
 import { NO_AUTH } from '../auth';
 import { t } from '../i18n';
-import { privacyLine, privacyLineOff, RECORDING_ENABLED } from '../recording/privacy';
+import { privacyLine, privacyLineOff, recordingSettings } from '../recording/privacy';
 import { asPhone, renderApp } from './render';
 
 /** UI and UX review of 2026-11-07 (ongem-engineering specs OG-030 and OG-032, outputs/review/ui-ux.md). */
@@ -33,8 +33,8 @@ describe('UX review 2026-11-07', () => {
     expect(screen.queryByText('sign-in form')).not.toBeInTheDocument();
   });
 
-  it('UX_05 the privacy line matches the recording switch: recording is off, so no screen says it records', async () => {
-    expect(RECORDING_ENABLED).toBe(false);
+  it('UX_05 the privacy line matches the recording switch: while it is off, no screen says it records', async () => {
+    expect(recordingSettings().enabled).toBe(false);
     expect(privacyLine()).toBe(privacyLineOff());
     const { unmount } = renderApp('/sign-in', { mode: 'none' });
     expect(screen.getByTestId('privacy-line')).toHaveTextContent('OnGem does not record your screen.');

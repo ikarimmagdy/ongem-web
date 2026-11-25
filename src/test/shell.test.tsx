@@ -1,7 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DemoOnGemApi } from '../api/demo';
-import { RECORDING_ENABLED } from '../recording/Recorder';
+import { recordingSettings } from '../recording/Recorder';
 import { renderApp } from './render';
 
 describe('shell and sign-in (OG-030 R1)', () => {
@@ -26,8 +26,8 @@ describe('shell and sign-in (OG-030 R1)', () => {
     }
   });
 
-  it('screen recording is off: no session starts and no event is sent', async () => {
-    expect(RECORDING_ENABLED).toBe(false);
+  it('OG-073 screen recording is off until ongem-core says on: no session starts and no event is sent', async () => {
+    expect(recordingSettings().enabled).toBe(false);
     const api = new DemoOnGemApi();
     renderApp('/', { api });
     await screen.findByTestId('home-total');

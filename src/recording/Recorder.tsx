@@ -21,10 +21,11 @@ export const RRWEB_OPTIONS = {
 };
 
 /**
- * The one switch for screen and action recording in the founder web app (`privacy.ts`): off, the signed-in shell never
- * mounts [Recorder], so no session starts and nothing is sent to /v1/recording, and the privacy line says so.
+ * The switch for screen and action recording in the founder web app is ongem-core's configuration (`privacy.ts`, OG-073):
+ * off, or not yet read, the signed-in shell never mounts [Recorder], so no session starts and nothing is sent to
+ * /v1/recording, and the privacy line says so.
  */
-export { RECORDING_ENABLED } from './privacy';
+export { recordingSettings, useRecordingSettings } from './privacy';
 
 const RRWEB_META = 4;
 

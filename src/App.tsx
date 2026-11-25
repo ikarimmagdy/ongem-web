@@ -4,7 +4,7 @@ import { useAuthSession } from './auth';
 import { Md, t, tList, useChannels, useContent } from './i18n';
 import { Button, Notice, Skeleton, ThemeProvider, ToastProvider } from './design-system';
 import { SessionProvider, useSession, type Mode } from './session';
-import { privacyLine } from './recording/privacy';
+import { privacyLine, useRecordingSettings } from './recording/privacy';
 import { ACCEPTANCE_ENABLED, PAY_LINK_PATH } from './acceptance/flag';
 import { isAppPath, isPublicPath } from './public/content';
 import { Footer, Header, PublicSite } from './public/PublicSite';
@@ -46,6 +46,7 @@ export function SignInScreen() {
   // it does not compete with the first screen for bandwidth (OG-030-N3).
   useEffect(() => prefetchAfterLoad(loadSignedIn), []);
   useChannels('web_public', 'legal');
+  const recordingSettings = useRecordingSettings();
   // Its own title and description, out of search (PS-035); the missing key is a note for developers only (PS-009).
   const page = signUp ? 'sign_up' : 'sign_in';
   usePageHead(
@@ -104,7 +105,7 @@ export function SignInScreen() {
               <p className="fw-auth__hint">{t('web.auth.demo_hint')}</p>
             </div>
             <p className="fw-privacy" data-testid="privacy-line">
-              {privacyLine()}
+              {privacyLine(recordingSettings)}
             </p>
           </section>
         </div>

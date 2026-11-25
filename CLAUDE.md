@@ -315,3 +315,7 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   `app.onboarding.owner_limit`; an owner the rule does not ask reads `app.onboarding.id_not_required`. Demo answers the
   core's seed and refuses as the core does (`owner_id_type_not_accepted`, `owner_limit_exceeded`). Test `og070.test.tsx`
   fails if an owner limit, control person count, ownership bound, trade licence length or ID type list is written again.
+- 2026-11-26: OG-073 recording on at launch from configuration: `main.tsx` reads ongem-core's `GET /v1/public/recording`
+  (`ongem.assistant.recording.enabled`, `.mask-digit-run`) into `recording/privacy.ts`; until it answers, or if it cannot,
+  recording is off. The mask hides every run of three or more digits (the configured length) besides amounts, inputs
+  and blocked areas. Tests in `recording.test.tsx`.

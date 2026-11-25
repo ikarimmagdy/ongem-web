@@ -8,6 +8,7 @@ import { clerkFirst } from './auth/defer';
 import { AuthProvider, NO_AUTH } from './auth/session';
 import { initContent } from './i18n';
 import { isAppPath } from './public/content';
+import { loadRecordingSettings } from './recording/privacy';
 import { startTelemetry, telemetryConfig } from './telemetry';
 
 const el = document.getElementById('root');
@@ -62,6 +63,9 @@ startTelemetry(
     },
   }),
 );
+
+// OG-073: whether to record comes from ongem-core; until it answers, and if it cannot, nothing is recorded.
+void loadRecordingSettings();
 
 // The remembered language (Arabic loads its texts first) and newer texts kept from the API, before the first render
 // (OG-033). A build without a sign-in key never downloads Clerk; a signed-out visitor on the public site downloads it

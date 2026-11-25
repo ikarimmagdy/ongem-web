@@ -2,15 +2,67 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { snapshot } from 'rrweb-snapshot';
 import { DemoOnGemApi } from '../api/demo';
-import { maskAll } from '../recording/mask';
+import { maskAll, maskNodeText, maskText } from '../recording/mask';
 import { EventQueue, privacyLine, RRWEB_OPTIONS } from '../recording/Recorder';
+import {
+  loadRecordingSettings,
+  parseRecordingSettings,
+  privacyLineOff,
+  privacyLineRecording,
+  RECORDING_OFF,
+  recordingSettings,
+  setRecordingSettings,
+} from '../recording/privacy';
 import { renderApp } from './render';
 
-// The shell's recording switch is off (RECORDING_ENABLED); these tests cover the recorder itself, so they turn it on
-// where the switch lives (the shell loads the recorder lazily, OG-055).
-vi.mock('../recording/privacy', async (actual) => {
-  const real = await actual<typeof import('../recording/privacy')>();
-  return { ...real, RECORDING_ENABLED: true, privacyLine: real.privacyLineRecording };
+// Recording is on when ongem-core says so (OG-073); these tests cover the recorder itself, so they turn it on the way
+// the server's answer does (the shell loads the recorder lazily, OG-055).
+beforeEach(() => setRecordingSettings({ enabled: true, maskDigitRun: 3 }));
+afterEach(() => setRecordingSettings(RECORDING_OFF));
+
+describe('OG-073 recording settings and the three-digit mask', () => {
+  it('masks any run of three or more digits: a last four and a three-digit code, not "2 items"', () => {
+    expect(maskText('Card ending 1234')).toBe('Card ending [digits]');
+    expect(maskText('Code 246')).toBe('Code [digits]');
+    expect(maskText('Account •••• 4821, 2 items')).toBe('Account •••• [digits], 2 items');
+    expect(maskText('2 items, page 12')).toBe('2 items, page 12');
+    expect(maskText('Routing 021 000 021')).toBe('Routing [digits]');
+    expect(maskNodeText('Sent to 987', null)).toBe('Sent to [digits]');
+  });
+
+  it('keeps amounts, ids and ISO dates as before', () => {
+    expect(maskText('Pay US$1,250.00 now')).toBe('Pay [amount] now');
+    expect(maskText('acc_9f12345 on 2026-11-26')).toBe('acc_9f12345 on 2026-11-26');
+    expect(maskNodeText('1,250.00', null)).toBe('[amount]');
+  });
+
+  it('the digit-run length is configuration', () => {
+    setRecordingSettings({ enabled: true, maskDigitRun: 5 });
+    expect(maskText('Code 246 and 12345')).toBe('Code 246 and [digits]');
+    expect(maskText('Code 246', 3)).toBe('Code [digits]');
+  });
+
+  it('reads on or off from ongem-core, and stays off when it cannot', async () => {
+    const answer = (body: unknown, ok = true) =>
+      (() => Promise.resolve({ ok, json: () => Promise.resolve(body) })) as unknown as typeof fetch;
+    const urls: string[] = [];
+    const on = ((url: string) => {
+      urls.push(url);
+      return Promise.resolve({ ok: true, json: () => Promise.resolve({ enabled: true, maskDigitRun: 4 }) });
+    }) as unknown as typeof fetch;
+    expect(await loadRecordingSettings('https://api.test/', on)).toEqual({ enabled: true, maskDigitRun: 4 });
+    expect(urls).toEqual(['https://api.test/v1/public/recording']);
+    expect(privacyLine()).toBe(privacyLineRecording());
+    expect(await loadRecordingSettings('https://api.test', answer({ enabled: true }, false))).toEqual(
+      RECORDING_OFF,
+    );
+    expect(await loadRecordingSettings('https://api.test', () => Promise.reject(new Error('down')))).toEqual(
+      RECORDING_OFF,
+    );
+    expect(recordingSettings()).toEqual(RECORDING_OFF);
+    expect(privacyLine()).toBe(privacyLineOff());
+    expect(parseRecordingSettings({ enabled: 'true', maskDigitRun: 9 })).toEqual(RECORDING_OFF);
+  });
 });
 
 describe('recording (OG-031 R5, R6, R8)', () => {
