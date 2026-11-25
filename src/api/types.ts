@@ -600,6 +600,24 @@ export interface NotificationPreferences {
   smsVerified: boolean;
 }
 
+/** OG-075: the SMS consent text shown before a code is sent, with what the acceptance names. */
+export interface SmsConsentText {
+  key: string;
+  version: number;
+  /** The language of `text`: the one asked for, or English when it has none published. */
+  language: 'en' | 'ar';
+  /** SHA-256 of `text`. */
+  hash: string;
+  text: string;
+}
+
+/** OG-075: the consent text accepted, as GET /v1/notifications/sms-consent named it. */
+export interface SmsConsentAcceptance {
+  key: string;
+  version: number;
+  language: 'en' | 'ar';
+}
+
 /** A change to one kind; a field left out keeps its value. */
 export interface PreferenceChange {
   kind: string;

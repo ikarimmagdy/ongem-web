@@ -54,6 +54,7 @@ describe('notifications (M-3-R31 to R34, R36; OG-014 client)', () => {
   it('AC_R34_1 SMS number verified with the code; a wrong code is explained', async () => {
     renderApp('/settings');
     await userEvent.type(await screen.findByTestId('sms-number'), '+15551234567');
+    await userEvent.click(await screen.findByTestId('sms-consent-accept'));
     await userEvent.click(screen.getByTestId('sms-number-save'));
     expect(await screen.findByTestId('sms-state')).toHaveTextContent('ending 4567, not verified yet');
     await userEvent.type(screen.getByTestId('sms-code'), '000000');
@@ -69,8 +70,29 @@ describe('notifications (M-3-R31 to R34, R36; OG-014 client)', () => {
   it('AC_R34_1 an invalid number shows the reason', async () => {
     renderApp('/settings');
     await userEvent.type(await screen.findByTestId('sms-number'), '5551234');
+    await userEvent.click(await screen.findByTestId('sms-consent-accept'));
     await userEvent.click(screen.getByTestId('sms-number-save'));
     expect(await screen.findByText(/international form/)).toBeInTheDocument();
+  });
+
+  it('OG-075 the SMS terms are shown with a checkbox; no code is sent until they are accepted', async () => {
+    const api = new DemoOnGemApi();
+    renderApp('/settings', { api });
+    await userEvent.type(await screen.findByTestId('sms-number'), '+15551234567');
+    const text = await screen.findByTestId('sms-consent-text');
+    expect(text).toHaveTextContent(/Reply STOP to stop and HELP for help/);
+    expect(text).toHaveTextContent(/Message and data rates may apply/);
+    expect(screen.getByTestId('sms-consent')).toHaveAccessibleName('SMS terms');
+    const accept = screen.getByRole('checkbox', { name: 'I agree to get SMS notices on these terms' });
+    expect(screen.getByTestId('sms-number-save')).toBeDisabled();
+    await userEvent.click(accept);
+    expect(screen.getByTestId('sms-number-save')).toBeEnabled();
+    await userEvent.click(screen.getByTestId('sms-number-save'));
+    expect(await screen.findByText(/ending 4567, not verified yet/)).toBeInTheDocument();
+    expect(api.calls).toContain('smsConsent');
+    await expect(api.setSmsNumber('+15551234567', undefined as never)).rejects.toMatchObject({
+      code: 'sms_consent_required',
+    });
   });
 
   it('AC_R36_1 demo carries sample notices and choices', async () => {

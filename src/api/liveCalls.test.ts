@@ -105,7 +105,8 @@ async function record() {
     api.readAllNotifications(),
     api.notificationPreferences(),
     api.setNotificationPreferences([{ kind: 'PAYMENT_SENT', email: true }]),
-    api.setSmsNumber('+15551234567'),
+    api.smsConsent('en'),
+    api.setSmsNumber('+15551234567', { key: 'notice.sms_consent.text', version: 1, language: 'en' }),
     api.verifySmsNumber('123456'),
     api.invites('c'),
     api.createInvite('c', { email: 'x@example.com', role: 'VIEWER' }),
@@ -155,7 +156,7 @@ function served(call: { method: string; path: string }) {
 describe('every live call is an ongem-core endpoint (OG-030 R8)', () => {
   it('every_live_call_is_in_the_openapi_AC_R8_1', async () => {
     const calls = await record();
-    expect(calls).toHaveLength(89);
+    expect(calls).toHaveLength(90);
     expect(calls.filter((c) => !served(c))).toEqual([]);
   });
 });

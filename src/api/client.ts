@@ -49,6 +49,8 @@ import type {
   InviteView,
   MyInvite,
   NotificationPreferences,
+  SmsConsentAcceptance,
+  SmsConsentText,
   PreferenceChange,
   CurrencyInfo,
   Corridor,
@@ -203,9 +205,14 @@ export interface OnGemApi {
   exportFormats(): Promise<ExportFormat[]>;
   /** OG-033 R10: the person's language for notices (PUT /v1/me/preferences). */
   setLocale(locale: 'en' | 'ar'): Promise<void>;
-  /** International form (E.164); a 6-digit code is sent to it. */
-  setSmsNumber(number: string): Promise<NotificationPreferences>;
-  /** 422 sms_code_invalid or sms_code_expired, 429 sms_code_locked. */
+  /** OG-075: the SMS consent text in [language] (English when that language has none published). */
+  smsConsent(language: 'en' | 'ar'): Promise<SmsConsentText>;
+  /**
+   * International form (E.164) with the consent text accepted; a 6-digit code is sent to it. 422 sms_consent_required or
+   * sms_consent_outdated, 429 sms_code_limit (OG-071).
+   */
+  setSmsNumber(number: string, consent: SmsConsentAcceptance): Promise<NotificationPreferences>;
+  /** 422 sms_code_invalid, sms_code_expired or sms_consent_required, 429 sms_code_locked. */
   verifySmsNumber(code: string): Promise<NotificationPreferences>;
   // OG-031: the assistant (reads and drafts only) and screen and action recording.
   startConversation(channel: string, recordingSessionId?: string | null): Promise<Conversation>;

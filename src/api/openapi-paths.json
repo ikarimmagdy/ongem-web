@@ -8,6 +8,12 @@
   "/partner/v1/oauth/token": [
     "post"
   ],
+  "/partner/v1/onboarding-rules": [
+    "get"
+  ],
+  "/partner/v1/owner-threshold": [
+    "get"
+  ],
   "/partner/v1/webhooks": [
     "get",
     "put"
@@ -34,11 +40,39 @@
   "/v1/acceptance/checkouts/{id}/charges": [
     "post"
   ],
+  "/v1/acceptance/checkouts/{id}/client-config": [
+    "get"
+  ],
+  "/v1/acceptance/checkouts/{id}/confirm": [
+    "post"
+  ],
   "/v1/acceptance/element-tokens": [
+    "post"
+  ],
+  "/v1/acceptance/get-paid": [
+    "get"
+  ],
+  "/v1/acceptance/onboarding-link": [
+    "post"
+  ],
+  "/v1/acceptance/pay-links": [
+    "get",
+    "post"
+  ],
+  "/v1/acceptance/pay-links/settings": [
+    "get"
+  ],
+  "/v1/acceptance/pay-links/{id}": [
+    "get"
+  ],
+  "/v1/acceptance/pay-links/{id}/revoke": [
     "post"
   ],
   "/v1/acceptance/payments": [
     "get"
+  ],
+  "/v1/acceptance/payout-destination": [
+    "post"
   ],
   "/v1/acceptance/payout-destinations": [
     "get"
@@ -172,6 +206,9 @@
   "/v1/disclosures/versions/{id}": [
     "get"
   ],
+  "/v1/exports/formats": [
+    "get"
+  ],
   "/v1/funding-sources": [
     "get",
     "post"
@@ -202,6 +239,12 @@
   ],
   "/v1/me": [
     "get"
+  ],
+  "/v1/me/invites": [
+    "get"
+  ],
+  "/v1/me/invites/{inviteId}/accept": [
+    "post"
   ],
   "/v1/me/preferences": [
     "put"
@@ -244,14 +287,25 @@
     "get",
     "put"
   ],
+  "/v1/notifications/preferences/company": [
+    "delete",
+    "get",
+    "put"
+  ],
   "/v1/notifications/read-all": [
     "post"
+  ],
+  "/v1/notifications/sms-consent": [
+    "get"
   ],
   "/v1/notifications/sms-number": [
     "put"
   ],
   "/v1/notifications/sms-number/verify": [
     "post"
+  ],
+  "/v1/notifications/unread-count": [
+    "get"
   ],
   "/v1/notifications/{id}/read": [
     "post"
@@ -277,6 +331,12 @@
   ],
   "/v1/onboarding/applications/{id}/submit": [
     "post"
+  ],
+  "/v1/onboarding/owner-threshold": [
+    "get"
+  ],
+  "/v1/onboarding/rules": [
+    "get"
   ],
   "/v1/ops/accounts": [
     "get"
@@ -371,6 +431,9 @@
   "/v1/ops/companies/{companyId}/acceptance": [
     "get"
   ],
+  "/v1/ops/companies/{companyId}/acceptance/payouts": [
+    "get"
+  ],
   "/v1/ops/companies/{companyId}/accounts": [
     "post"
   ],
@@ -389,7 +452,19 @@
   "/v1/ops/companies/{companyId}/freeze": [
     "post"
   ],
+  "/v1/ops/companies/{companyId}/international-recipients": [
+    "get"
+  ],
   "/v1/ops/companies/{companyId}/members": [
+    "get"
+  ],
+  "/v1/ops/companies/{companyId}/notifications/deliveries": [
+    "get"
+  ],
+  "/v1/ops/companies/{companyId}/people/{personId}/notification-preferences": [
+    "get"
+  ],
+  "/v1/ops/companies/{companyId}/people/{personId}/push-devices": [
     "get"
   ],
   "/v1/ops/companies/{companyId}/recipients": [
@@ -460,6 +535,9 @@
   "/v1/ops/corridors/{id}/changes/{version}/reject": [
     "post"
   ],
+  "/v1/ops/currencies": [
+    "get"
+  ],
   "/v1/ops/disputes": [
     "get",
     "post"
@@ -523,11 +601,67 @@
   "/v1/ops/movements/{id}/fail-requests": [
     "post"
   ],
+  "/v1/ops/movements/{id}/receipt": [
+    "get"
+  ],
   "/v1/ops/movements/{id}/recheck": [
     "post"
   ],
   "/v1/ops/movements/{id}/retry-requests": [
     "post"
+  ],
+  "/v1/ops/notification-flows": [
+    "get",
+    "post"
+  ],
+  "/v1/ops/notification-flows/preview": [
+    "post"
+  ],
+  "/v1/ops/notification-flows/{id}": [
+    "get"
+  ],
+  "/v1/ops/notification-flows/{id}/disable": [
+    "post"
+  ],
+  "/v1/ops/notification-flows/{id}/draft": [
+    "delete",
+    "put"
+  ],
+  "/v1/ops/notification-flows/{id}/enable": [
+    "post"
+  ],
+  "/v1/ops/notification-flows/{id}/history": [
+    "get"
+  ],
+  "/v1/ops/notification-flows/{id}/versions/{version}": [
+    "get"
+  ],
+  "/v1/ops/notification-flows/{id}/versions/{version}/approve": [
+    "post"
+  ],
+  "/v1/ops/notification-flows/{id}/versions/{version}/preview": [
+    "post"
+  ],
+  "/v1/ops/notification-flows/{id}/versions/{version}/propose": [
+    "post"
+  ],
+  "/v1/ops/notification-flows/{id}/versions/{version}/reject": [
+    "post"
+  ],
+  "/v1/ops/notification-flows/{id}/versions/{version}/test-send": [
+    "post"
+  ],
+  "/v1/ops/notification-kinds": [
+    "get"
+  ],
+  "/v1/ops/notification-kinds/{key}": [
+    "put"
+  ],
+  "/v1/ops/notification-triggers": [
+    "get"
+  ],
+  "/v1/ops/notification-triggers/{type}": [
+    "get"
   ],
   "/v1/ops/onboarding/applications": [
     "get"
@@ -611,6 +745,9 @@
   "/v1/ops/onboarding/rekyb/{id}/verify": [
     "post"
   ],
+  "/v1/ops/onboarding/rules": [
+    "get"
+  ],
   "/v1/ops/onboarding/test-applications": [
     "post"
   ],
@@ -657,6 +794,9 @@
     "post"
   ],
   "/v1/ops/people": [
+    "get"
+  ],
+  "/v1/ops/people/{personId}/memberships": [
     "get"
   ],
   "/v1/ops/people/{personId}/ops-roles/{role}": [
@@ -718,6 +858,10 @@
   ],
   "/v1/ops/retention/report": [
     "get"
+  ],
+  "/v1/ops/routes": [
+    "get",
+    "post"
   ],
   "/v1/ops/support/tickets": [
     "get",
@@ -805,6 +949,18 @@
     "post"
   ],
   "/v1/public/content/{channel}": [
+    "get"
+  ],
+  "/v1/public/pay-links/{token}": [
+    "get"
+  ],
+  "/v1/public/pay-links/{token}/confirm": [
+    "post"
+  ],
+  "/v1/public/pay-links/{token}/payments/{paymentId}": [
+    "get"
+  ],
+  "/v1/public/recording": [
     "get"
   ],
   "/v1/recipients": [

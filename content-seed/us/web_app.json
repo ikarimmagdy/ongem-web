@@ -1359,6 +1359,15 @@
       "ar": "جارٍ تحميل {what}"
     },
     {
+      "key": "app.common.loading.sms_terms",
+      "format": "text",
+      "description": "OG-075: the skeleton while the SMS consent text loads",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading the SMS terms",
+      "ar": "جارٍ تحميل شروط الرسائل النصية"
+    },
+    {
       "key": "app.common.loading.payment",
       "format": "text",
       "description": "Loading state label (screen readers) while payment load",
@@ -1700,6 +1709,15 @@
       "meta": {},
       "en": "That code is not right. Check the text and try again.",
       "ar": "الرمز غير صحيح. تحقق من الرسالة وحاول مرة أخرى."
+    },
+    {
+      "key": "app.demo.sms_consent_text",
+      "format": "text",
+      "description": "OG-075: demo mode's SMS consent text, the same words as ongem-core's notice.sms_consent.text",
+      "placeholders": [],
+      "meta": {},
+      "en": "By turning on SMS, you agree that OnGem may text this number the account, payment and security notices you choose, and the codes that check it. How often varies. Message and data rates may apply. Reply STOP to stop and HELP for help.",
+      "ar": "بتفعيل الرسائل النصية، توافق على أن ترسل OnGem إلى هذا الرقم إشعارات الحساب والمدفوعات والأمان التي تختارها، والرموز التي تتحقق منه. يختلف عدد الرسائل. قد تُطبَّق رسوم الرسائل والبيانات. أرسل STOP للإيقاف و HELP للمساعدة."
     },
     {
       "key": "app.demo.error.sms_number_format",
@@ -2821,6 +2839,24 @@
       "meta": {},
       "en": "Send code",
       "ar": "إرسال الرمز"
+    },
+    {
+      "key": "app.notifications.choices.sms_consent_title",
+      "format": "text",
+      "description": "OG-075: heading over the SMS consent text",
+      "placeholders": [],
+      "meta": {},
+      "en": "SMS terms",
+      "ar": "شروط الرسائل النصية"
+    },
+    {
+      "key": "app.notifications.choices.sms_consent_accept",
+      "format": "text",
+      "description": "OG-075: checkbox that accepts the SMS consent text; a code is sent only when it is ticked",
+      "placeholders": [],
+      "meta": {},
+      "en": "I agree to get SMS notices on these terms",
+      "ar": "أوافق على تلقي إشعارات الرسائل النصية بهذه الشروط"
     },
     {
       "key": "app.notifications.choices.sms",
@@ -7111,6 +7147,42 @@
       "meta": {},
       "en": "Too many requests. Wait a moment and try again.",
       "ar": "طلبات كثيرة جدًا. انتظر قليلًا ثم حاول مرة أخرى."
+    },
+    {
+      "key": "app.errors.sms_consent_required",
+      "format": "text",
+      "description": "OG-075: 422 sms_consent_required, the SMS terms were not accepted",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accept the SMS terms before we send a code.",
+      "ar": "وافق على شروط الرسائل النصية قبل أن نرسل الرمز."
+    },
+    {
+      "key": "app.errors.sms_consent_outdated",
+      "format": "text",
+      "description": "OG-075: 422 sms_consent_outdated, the SMS terms changed after they were shown",
+      "placeholders": [],
+      "meta": {},
+      "en": "The SMS terms have changed. Read them again and accept them.",
+      "ar": "تغيّرت شروط الرسائل النصية. اقرأها مرة أخرى ووافق عليها."
+    },
+    {
+      "key": "app.errors.sms_consent_unavailable",
+      "format": "text",
+      "description": "OG-075: 503 sms_consent_unavailable, no SMS terms are published",
+      "placeholders": [],
+      "meta": {},
+      "en": "SMS notices are not available yet.",
+      "ar": "إشعارات الرسائل النصية غير متاحة بعد."
+    },
+    {
+      "key": "app.errors.sms_code_limit",
+      "format": "text",
+      "description": "OG-071: 429 sms_code_limit, too many codes sent to this person or number",
+      "placeholders": [],
+      "meta": {},
+      "en": "Too many codes were sent. Try again later.",
+      "ar": "أُرسل عدد كبير من الرموز. حاول مرة أخرى لاحقًا."
     },
     {
       "key": "app.mobile.brand.alt",

@@ -424,8 +424,9 @@ export class LiveOnGemApi implements OnGemApi {
     this.call('GET', paths.notificationPreferences);
   setNotificationPreferences: OnGemApi['setNotificationPreferences'] = (kinds) =>
     this.call('PUT', paths.notificationPreferences, { json: { kinds } });
-  setSmsNumber: OnGemApi['setSmsNumber'] = (number) =>
-    this.call('PUT', paths.smsNumber, { json: { number } });
+  smsConsent: OnGemApi['smsConsent'] = (language) => this.call('GET', paths.smsConsent(language));
+  setSmsNumber: OnGemApi['setSmsNumber'] = (number, consent) =>
+    this.call('PUT', paths.smsNumber, { json: { number, consent } });
   verifySmsNumber: OnGemApi['verifySmsNumber'] = (code) =>
     this.call('POST', paths.verifySmsNumber, { json: { code } });
   startConversation: OnGemApi['startConversation'] = (channel, recordingSessionId) =>

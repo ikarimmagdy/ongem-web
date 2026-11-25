@@ -1,11 +1,11 @@
 import { Fragment, useRef, useState } from 'react';
 import { errorText } from '../api/errors';
-import type { KindPreference, NotificationPreferences, PreferenceChange } from '../api/types';
+import type { KindPreference, NotificationPreferences, PreferenceChange, SmsConsentText } from '../api/types';
 import { Button, Card, Field, Input, Notice } from '../design-system';
 import { useAsync } from '../lib/useAsync';
 import { useSession } from '../session';
 import { FilterChips, Load } from './common';
-import { has, t } from '../i18n';
+import { has, t, useContent } from '../i18n';
 
 type Scope = 'person' | 'company';
 type Channel = 'inApp' | 'email' | 'sms' | 'push';
@@ -38,6 +38,60 @@ function value(k: KindPreference, c: Channel): boolean {
 }
 
 /**
+ * OG-075: the SMS consent text from ongem-core (managed content, in the reader's language or English) and the box that
+ * accepts it. A code is sent only with the box ticked, and the acceptance names the text's key, version and language.
+ */
+function SmsConsent({
+  accepted,
+  onAccept,
+  onText,
+}: {
+  accepted: boolean;
+  onAccept(v: boolean): void;
+  onText(text: SmsConsentText | null): void;
+}) {
+  const { api } = useSession();
+  const locale = useContent();
+  const loaded = useAsync(
+    () =>
+      api.smsConsent(locale === 'ar' ? 'ar' : 'en').then(
+        (c) => (onText(c), c),
+        (e: unknown) => {
+          onText(null);
+          throw e;
+        },
+      ),
+    [api, locale],
+  );
+  return (
+    <Load state={loaded} label="sms terms">
+      {(c) => (
+        <div
+          className="fw-consent"
+          data-testid="sms-consent"
+          role="group"
+          aria-labelledby="sms-consent-title"
+        >
+          <strong id="sms-consent-title">{t('app.notifications.choices.sms_consent_title')}</strong>
+          <p data-testid="sms-consent-text" lang={c.language} dir={c.language === 'ar' ? 'rtl' : 'ltr'}>
+            {c.text}
+          </p>
+          <label className="fw-consent__accept">
+            <input
+              type="checkbox"
+              data-testid="sms-consent-accept"
+              checked={accepted}
+              onChange={(e) => onAccept(e.target.checked)}
+            />
+            <span>{t('app.notifications.choices.sms_consent_accept')}</span>
+          </label>
+        </div>
+      )}
+    </Load>
+  );
+}
+
+/**
  * OG-014 choices (M-3-R33, R34; contract 2026-11-20 1.3): per kind and channel (in app, email, SMS, push), either the
  * person's own choices for every company, or this company's override with where each choice comes from and a reset to
  * the person's choices. One change is saved at a time; SMS only after the number is verified with its 6-digit code.
@@ -53,6 +107,8 @@ export function NotificationChoices() {
   const [number, setNumber] = useState('');
   const [code, setCode] = useState('');
   const [codeSent, setCodeSent] = useState(false);
+  const [consent, setConsent] = useState<SmsConsentText | null>(null);
+  const [accepted, setAccepted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const inFlight = useRef(false);
@@ -196,13 +252,30 @@ export function NotificationChoices() {
                       onChange={(e) => setNumber(e.target.value)}
                     />
                   </Field>
+                  <SmsConsent
+                    accepted={accepted}
+                    onAccept={setAccepted}
+                    onText={(c) => {
+                      setConsent(c);
+                      setAccepted(false);
+                    }}
+                  />
                   <div className="fw-actions">
                     <Button
                       variant="secondary"
                       data-testid="sms-number-save"
-                      disabled={busy || !number.trim()}
+                      disabled={busy || !number.trim() || !accepted || !consent}
                       onClick={() =>
-                        void once(() => api.setSmsNumber(number.trim()), 'person').then((ok) => {
+                        consent &&
+                        void once(
+                          () =>
+                            api.setSmsNumber(number.trim(), {
+                              key: consent.key,
+                              version: consent.version,
+                              language: consent.language,
+                            }),
+                          'person',
+                        ).then((ok) => {
                           if (ok) {
                             setCodeSent(true);
                             setCode('');

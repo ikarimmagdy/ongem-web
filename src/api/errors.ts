@@ -110,6 +110,10 @@ const KNOWN = new Set([
   'device_proof_required',
   'device_proof_invalid',
   'rate_limited',
+  'sms_consent_required',
+  'sms_consent_outdated',
+  'sms_consent_unavailable',
+  'sms_code_limit',
   ...OG054_CODES,
 ]);
 

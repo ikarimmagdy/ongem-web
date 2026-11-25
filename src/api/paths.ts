@@ -70,6 +70,7 @@ export const paths = {
     `/v1/notifications/preferences/company${kind ? `?kind=${q(kind)}` : ''}`,
   exportFormats: '/v1/exports/formats',
   smsNumber: '/v1/notifications/sms-number',
+  smsConsent: (language: string) => `/v1/notifications/sms-consent?language=${q(language)}`,
   verifySmsNumber: '/v1/notifications/sms-number/verify',
   conversations: '/v1/assistant/conversations',
   messages: (id: string) => `/v1/assistant/conversations/${q(id)}/messages`,

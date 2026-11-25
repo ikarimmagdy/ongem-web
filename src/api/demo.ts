@@ -64,6 +64,7 @@ import type {
   DeviceView,
   NoticeView,
   NotificationPreferences,
+  SmsConsentAcceptance,
   PreferenceChange,
   ExportRequest,
   ExportRun,
@@ -1304,7 +1305,19 @@ export class DemoOnGemApi implements OnGemApi {
       { format: 'XERO', labelKey: 'app.exports.format_xero', extension: 'csv' },
     ]);
 
-  setSmsNumber = async (number: string) => {
+  /** OG-075: the demo's consent text, the same words as ongem-core's `notice.sms_consent.text`. */
+  smsConsent = async (language: 'en' | 'ar') =>
+    this.log('smsConsent', {
+      key: 'notice.sms_consent.text',
+      version: 1,
+      language,
+      hash: 'demo',
+      text: t('app.demo.sms_consent_text'),
+    });
+
+  setSmsNumber = async (number: string, consent?: SmsConsentAcceptance) => {
+    if (consent?.key !== 'notice.sms_consent.text')
+      throw new ApiError(422, 'sms_consent_required', t('app.errors.sms_consent_required'));
     if (!/^\+[1-9]\d{7,14}$/.test(number.trim()))
       throw new ApiError(422, 'sms_number_invalid', t('app.demo.error.sms_number_format'));
     this.smsPending = true;
