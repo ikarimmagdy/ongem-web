@@ -188,7 +188,7 @@ export class LiveOnGemApi implements OnGemApi {
         credentials: 'omit',
       });
     } catch {
-      throw new ApiError(0, 'network', 'Could not reach OnGem.');
+      throw new ApiError(0, 'network', 'Could not reach the API.');
     }
   }
 

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getLocale, setLocale, t, useContent } from '../i18n';
+import { brand, useBrandConfig } from '../lib/brand';
 import { isPagePath } from './content';
 import { HREFLANG, SITE, siteOf } from './site';
 
@@ -16,7 +17,8 @@ const FAQ_LD_ID = 'ld-faq';
 export const organizationLd = () => ({
   '@context': 'https://schema.org',
   '@type': 'Organization', // content-check: ignore
-  name: 'OnGem',
+  name: brand().names.product,
+  legalName: brand().names.legal,
   url: `${SITE.url}/`,
   description: t('web.page.home.description'),
 });
@@ -72,7 +74,7 @@ export const shareImage = (locale: string) =>
 export function socialTags(path: string, meta: { title: string; description: string }, locale: string) {
   const og: Array<[string, string]> = [
     ['og:type', path.startsWith('/blog/') ? 'article' : 'website'],
-    ['og:site_name', 'OnGem'],
+    ['og:site_name', brand().names.product],
     ['og:title', meta.title],
     ['og:description', meta.description],
     ['og:url', `${SITE.url}${path}`],
@@ -114,6 +116,7 @@ export function usePageHead(
   { noindex = false }: { noindex?: boolean } = {},
 ) {
   const locale = useContent();
+  const { id: brandId } = useBrandConfig();
   const { search } = useLocation();
   // `?lang=ar` (the ar-AE alternate) opens the page in Arabic; `?lang=en` in English.
   useEffect(() => {
@@ -134,5 +137,5 @@ export function usePageHead(
     setLd(FAQ_LD_ID, qa.length ? faqLd(qa) : null);
     // qa is read through faqKey, its content.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [path, locale, meta.title, meta.description, faqKey, noindex]);
+  }, [path, locale, meta.title, meta.description, faqKey, noindex, brandId]);
 }

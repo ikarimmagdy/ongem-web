@@ -7,6 +7,7 @@ import { CLERK_PUBLISHABLE_KEY } from './auth/key';
 import { clerkFirst } from './auth/defer';
 import { AuthProvider, NO_AUTH } from './auth/session';
 import { initContent } from './i18n';
+import { loadBrand } from './lib/brand';
 import { isAppPath } from './public/content';
 import { loadRecordingSettings } from './recording/privacy';
 import { startTelemetry, telemetryConfig } from './telemetry';
@@ -63,6 +64,9 @@ startTelemetry(
     },
   }),
 );
+
+// OG-082: the brand from ongem-core (`?brand=` passed through in dev and demo); the bundled brand until it answers.
+void loadBrand();
 
 // OG-073: whether to record comes from ongem-core; until it answers, and if it cannot, nothing is recorded.
 void loadRecordingSettings();

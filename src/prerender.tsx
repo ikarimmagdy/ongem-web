@@ -3,7 +3,8 @@ import { MemoryRouter } from 'react-router-dom';
 import { App } from './App';
 import { CLERK_PUBLISHABLE_KEY } from './auth/key';
 import { AuthProvider, NO_AUTH } from './auth/session';
-import { defaultTheme, themeToCssVars } from './design-system';
+import { BUNDLED_THEMES, defaultTheme, themeToCssVars } from './design-system';
+import { brand } from './lib/brand';
 import { pageMeta, siteRoutes } from './public/content';
 import { notFoundMeta } from './public/pages/NotFound';
 import { FirstPaint } from './public/first-paint';
@@ -26,7 +27,8 @@ export function prerender() {
       </FirstPaint.Provider>,
     );
   const html = at('/');
-  const theme = defaultTheme();
+  // OG-082: the environment's brand names the first screen's theme.
+  const theme = BUNDLED_THEMES.find((x) => x.id === brand().theme.light) ?? defaultTheme();
   const vars = themeToCssVars(theme);
   const style =
     Object.entries(vars)

@@ -139,7 +139,7 @@ export function Shot({
   const phone = PHONE_SCREENS[name];
   if (!phone)
     return (
-      <BrowserFrame address="app.ongem.com">
+      <BrowserFrame>
         {phoneHidden ? (
           <picture>
             <source media={NARROW} srcSet={BLANK_IMAGE} />
@@ -153,7 +153,7 @@ export function Shot({
   return (
     <>
       <div className="pub-shot--wide" data-testid={`shot-wide-${name}`}>
-        <BrowserFrame address="app.ongem.com">
+        <BrowserFrame>
           <picture>
             <source media={NARROW} srcSet={BLANK_IMAGE} />
             {desktop}

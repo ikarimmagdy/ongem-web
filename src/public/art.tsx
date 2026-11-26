@@ -2,15 +2,16 @@ import { t } from '../i18n';
 import { useId, type ReactNode } from 'react';
 import { formatMinor } from '../lib/format';
 import { REGION_CONFIG } from '../region';
-import brandMark from '../assets/ongem-favicon.png';
-import { CardFace } from '../design-system';
+import { BRAND_ASSETS } from '../assets';
+import { CardFace, useTheme } from '../design-system';
+import { useBrandConfig } from '../lib/brand';
 import type { ArtName } from './content';
 
 /** Sample amounts in the build's currency (US$48,250.00, or AED in the AE build). */
 const sample = (amountMinor: number) => formatMinor({ amountMinor, currency: REGION_CONFIG.currency });
 
 /**
- * Original OnGem illustrations (OG-032 R7): the faceted gem from the brand and simple product shapes, drawn only with
+ * Original illustrations (OG-032 R7): the faceted gem from the brand and simple product shapes, drawn only with
  * classes whose colours come from theme variables (public.css), so they follow light and dark themes.
  */
 
@@ -30,9 +31,16 @@ function Svg({
   );
 }
 
-/** The brand mark from the logo file, never redrawn or recoloured (PS-016); 48 units square at scale 1. */
+/**
+ * The brand mark from the logo file, never redrawn or recoloured (PS-016); 48 units square at scale 1. The brand's
+ * own mark (OG-082), else the theme's favicon file; a brand with neither shows no mark.
+ */
 export function Gem({ x, y, s = 1 }: { x: number; y: number; s?: number }) {
-  return <image href={brandMark} x={x} y={y} width={48 * s} height={48 * s} />;
+  const { theme, brand } = useTheme();
+  const file = theme.logo.favicon ? BRAND_ASSETS[theme.logo.favicon] : undefined;
+  const href = brand?.mark || file;
+  if (!href) return null;
+  return <image href={href} x={x} y={y} width={48 * s} height={48 * s} />;
 }
 
 function Panel({ x, y, w, h }: { x: number; y: number; w: number; h: number }) {
@@ -333,7 +341,10 @@ export function GemGlow({ className }: { className?: string }) {
 }
 
 /** An original browser window frame around a product screen (OG-032 R10). */
-export function BrowserFrame({ children, address }: { children: ReactNode; address: string }) {
+/** A browser window around a screenshot; the address bar shows the brand's web domain (OG-082). */
+export function BrowserFrame({ children, address }: { children: ReactNode; address?: string }) {
+  const brand = useBrandConfig();
+  address ??= brand.domains.web;
   return (
     <div className="pub-browser">
       <svg

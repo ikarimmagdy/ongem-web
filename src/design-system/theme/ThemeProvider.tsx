@@ -21,8 +21,27 @@ import {
 import { applyTheme } from './tokens';
 import type { Theme } from './types';
 
+/**
+ * The white-label brand as the design system needs it (OG-082, ADR-0058): its name for copy and the title, image URLs
+ * that replace the theme's logo files, and the light and dark themes the brand allows (with any themes it serves).
+ */
+export interface BrandFace {
+  name: string;
+  wordmark?: string | null;
+  mark?: string | null;
+  favicon?: string | null;
+  light?: string;
+  dark?: string | null;
+  themes?: Theme[];
+}
+
 export interface ThemeContextValue {
   theme: Theme;
+  /** The brand in force, when the app passes one. */
+  brand: BrandFace | null;
+  /** The brand's light theme and its dark one (null when the brand has none). */
+  lightId: string;
+  darkId: string | null;
   baseTheme: Theme;
   themes: Array<{ id: string; name: string }>;
   hasOverride: boolean;
@@ -49,9 +68,20 @@ export interface ThemeProviderProps {
   /** Extra sources loaded after mount, such as the tenant theme from the API. */
   remoteSources?: ThemeSource[];
   initialThemeId?: string;
+  /** The white-label brand: its name and logo, and the only themes a visitor can be shown. */
+  brand?: BrandFace;
 }
 
-export function ThemeProvider({ children, storage, remoteSources, initialThemeId }: ThemeProviderProps) {
+export const DEFAULT_LIGHT_THEME = 'ongem';
+export const DEFAULT_DARK_THEME = 'ongem-dark';
+
+export function ThemeProvider({
+  children,
+  storage,
+  remoteSources,
+  initialThemeId,
+  brand,
+}: ThemeProviderProps) {
   const store = useMemo(() => storage ?? new LocalThemeStorage(), [storage]);
   const [baseThemes, setBaseThemes] = useState<Theme[]>(BUNDLED_THEMES);
   const [tenantDefault, setTenantDefault] = useState<string | null>(null);
@@ -81,23 +111,44 @@ export function ThemeProvider({ children, storage, remoteSources, initialThemeId
     };
   }, [remoteSources]);
 
+  const brandThemes = brand?.themes;
   const allThemes = useMemo(() => {
-    const extra = Object.values(overrides).filter((o) => !baseThemes.some((b) => b.id === o.id));
-    return [...baseThemes, ...extra];
-  }, [baseThemes, overrides]);
+    const served = brandThemes ?? [];
+    const base = [...baseThemes.filter((b) => !served.some((s) => s.id === b.id)), ...served];
+    const extra = Object.values(overrides).filter((o) => !base.some((b) => b.id === o.id));
+    return [...base, ...extra];
+  }, [baseThemes, overrides, brandThemes]);
 
-  const resolvedId = allThemes.some((t) => t.id === selectedId)
-    ? selectedId
-    : (tenantDefault ?? DEFAULT_THEME_ID);
-  const baseTheme = baseThemes.find((t) => t.id === resolvedId) ?? overrides[resolvedId] ?? defaultTheme();
+  const lightId = brand?.light ?? DEFAULT_LIGHT_THEME;
+  const darkId = brand ? (brand.dark ?? null) : DEFAULT_DARK_THEME;
+  const known = (id: string | null | undefined): id is string => !!id && allThemes.some((t) => t.id === id);
+  // With a brand only its own themes show: the light one, or the dark one where the visitor chose dark.
+  const resolvedId = brand?.light
+    ? selectedId === lightId || (selectedId === darkId && known(darkId))
+      ? selectedId
+      : allThemes.find((t) => t.id === selectedId)?.mode === 'dark' && known(darkId)
+        ? darkId
+        : known(lightId)
+          ? lightId
+          : DEFAULT_THEME_ID
+    : allThemes.some((t) => t.id === selectedId)
+      ? selectedId
+      : (tenantDefault ?? DEFAULT_THEME_ID);
+  const baseTheme =
+    brandThemes?.find((t) => t.id === resolvedId) ??
+    baseThemes.find((t) => t.id === resolvedId) ??
+    overrides[resolvedId] ??
+    defaultTheme();
   const theme = overrides[resolvedId] ?? baseTheme;
 
   // Before the first paint: the layout reads the theme's spacing variables, so applying them after paint moved the
   // whole shell once on every load (layout shift).
+  const brandName = brand?.name;
+  const brandFavicon = brand?.favicon;
   useLayoutEffect(() => {
     applyTheme(theme);
-    applyBranding(theme);
-  }, [theme]);
+    applyBranding(theme, document, { name: brandName, favicon: brandFavicon });
+  }, [theme, brandName, brandFavicon]);
 
   const setTheme = useCallback(
     (id: string) => {
@@ -154,6 +205,9 @@ export function ThemeProvider({ children, storage, remoteSources, initialThemeId
   const value = useMemo<ThemeContextValue>(
     () => ({
       theme,
+      brand: brand ?? null,
+      lightId,
+      darkId,
       baseTheme,
       themes: allThemes.map((t) => ({ id: t.id, name: t.name })),
       hasOverride: Boolean(overrides[resolvedId]),
@@ -165,6 +219,9 @@ export function ThemeProvider({ children, storage, remoteSources, initialThemeId
     }),
     [
       theme,
+      brand,
+      lightId,
+      darkId,
       baseTheme,
       allThemes,
       overrides,
@@ -186,7 +243,8 @@ export function useTheme(): ThemeContextValue {
   return ctx;
 }
 
-/** The active brand name for copy, so screens never hard-code one. */
+/** The active brand name for copy, so screens never hard-code one: the app's brand, else the theme's. */
 export function useBrand(): string {
-  return brandName(useTheme().theme);
+  const { theme, brand } = useTheme();
+  return brand?.name ?? brandName(theme);
 }

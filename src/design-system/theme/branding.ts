@@ -40,9 +40,15 @@ export function activeTheme(): Theme | null {
   return active;
 }
 
-export function applyBranding(theme: Theme, doc: Document = document): void {
+/** The brand's name and favicon URL (OG-082) over the theme's own, when the app passes a brand. */
+export interface BrandingOverride {
+  name?: string;
+  favicon?: string | null;
+}
+
+export function applyBranding(theme: Theme, doc: Document = document, brand: BrandingOverride = {}): void {
   active = theme;
-  doc.title = documentTitle(theme);
+  doc.title = brand.name ?? documentTitle(theme);
   const icons = Array.from(doc.querySelectorAll<HTMLLinkElement>('link[rel="icon"]'));
   let link = icons[0];
   for (const extra of icons.slice(1)) extra.remove();
@@ -51,7 +57,7 @@ export function applyBranding(theme: Theme, doc: Document = document): void {
     link.rel = 'icon';
     doc.head.appendChild(link);
   }
-  const href = faviconHref(theme);
+  const href = brand.favicon || faviconHref(theme);
   link.removeAttribute('sizes');
   link.type = href.startsWith('data:image/svg+xml') ? 'image/svg+xml' : 'image/png';
   link.href = href;

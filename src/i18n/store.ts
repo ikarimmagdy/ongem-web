@@ -1,4 +1,5 @@
 import BUILT from 'virtual:ongem-content';
+import { brandOverride, brandVars, subscribeBrand } from '../lib/brand';
 import type { Channel, ChannelContent, Locale, RegionContent } from './types';
 
 /**
@@ -10,7 +11,13 @@ import type { Channel, ChannelContent, Locale, RegionContent } from './types';
 // Read from the build's env, not region.ts: region.ts reads its texts from here, so importing it would be a cycle.
 const REGION_KEY = import.meta.env.VITE_REGION === 'AE' ? 'ae' : 'us';
 const LOCALE_KEY = 'ongem.locale';
-const cacheKey = (locale: Locale, channel: string) => `ongem.content.${REGION_KEY}.${locale}.${channel}`;
+// OG-082: texts served for a brand chosen with `?brand=` (dev and demo only) are kept apart from the environment's.
+const brandSuffix = () => {
+  const o = brandOverride();
+  return o ? `.${o}` : '';
+};
+const cacheKey = (locale: Locale, channel: string) =>
+  `ongem.content.${REGION_KEY}.${locale}.${channel}${brandSuffix()}`;
 
 /** The content API: the build's API base (OG-022 R11 keeps banking calls on whereami's base; content stays public). */
 export const CONTENT_API_BASE = import.meta.env.VITE_API_BASE_URL?.trim() || '/api-dev';
@@ -50,6 +57,12 @@ function rebuild() {
 }
 rebuild();
 
+// A new brand changes every `{brand}` in the texts, so the page renders again.
+subscribeBrand(() => {
+  revision++;
+  listeners.forEach((l) => l());
+});
+
 export const subscribe = (l: () => void) => {
   listeners.add(l);
   return () => listeners.delete(l);
@@ -67,7 +80,10 @@ function storage(): Storage | null {
 
 const warned = new Set<string>();
 
-/** The text of [key] in the current locale (English when it has none), with `{name}` placeholders filled in. */
+/**
+ * The text of [key] in the current locale (English when it has none), with `{name}` placeholders filled in. `{brand}`
+ * and `{legalName}` come from the active brand (OG-082, ADR-0058) unless [vars] names them.
+ */
 export function t(key: string, vars?: Record<string, string | number>): string {
   const raw = merged[locale][key] ?? merged.en[key];
   if (raw === undefined) {
@@ -77,7 +93,8 @@ export function t(key: string, vars?: Record<string, string | number>): string {
     }
     return key;
   }
-  return vars ? fill(raw, vars) : raw;
+  if (!raw.includes('{')) return raw;
+  return fill(raw, vars ? { ...brandVars(), ...vars } : brandVars());
 }
 
 export function fill(raw: string, vars: Record<string, string | number>): string {
@@ -210,7 +227,10 @@ export async function refreshChannel(
 ): Promise<ChannelContent | undefined> {
   const l = opts.locale ?? locale;
   const have = channels[l][channel];
-  const url = `${(opts.base ?? CONTENT_API_BASE).replace(/\/$/, '')}/v1/public/content/${channel}?locale=${l}`;
+  const override = brandOverride();
+  const url = `${(opts.base ?? CONTENT_API_BASE).replace(/\/$/, '')}/v1/public/content/${channel}?locale=${l}${
+    override ? `&brand=${encodeURIComponent(override)}` : ''
+  }`;
   try {
     const res = await (opts.fetchImpl ?? fetch)(url, {
       headers: have ? { 'If-None-Match': have.etag ?? have.version } : {},

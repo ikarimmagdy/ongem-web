@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useTheme } from '../design-system';
+import { DEFAULT_DARK_THEME, DEFAULT_LIGHT_THEME, useTheme } from '../design-system';
 
 /** FA-030: a founder picks Light, Dark or System; white-label themes are not offered. */
 export type Appearance = 'light' | 'dark' | 'system';
@@ -7,8 +7,9 @@ export type Appearance = 'light' | 'dark' | 'system';
 const KEY = 'ongem.appearance';
 const EVENT = 'ongem-appearance';
 const DARK_QUERY = '(prefers-color-scheme: dark)'; // content-check: ignore (media query)
-export const LIGHT_THEME = 'ongem';
-export const DARK_THEME = 'ongem-dark';
+/** The default brand's themes; a white-label brand names its own (ThemeProvider `lightId`, `darkId`). */
+export const LIGHT_THEME = DEFAULT_LIGHT_THEME;
+export const DARK_THEME = DEFAULT_DARK_THEME;
 
 function stored(): Appearance | null {
   try {
@@ -31,11 +32,12 @@ function store(a: Appearance) {
 const systemDark = () => typeof window.matchMedia === 'function' && window.matchMedia(DARK_QUERY).matches;
 
 /**
- * The founder's appearance and a setter. Light and Dark are the OnGem themes (the theme provider keeps them); System
+ * The founder's appearance and a setter. Light and Dark are the brand's themes (the theme provider keeps them); System
  * follows the device and changes with it. Call it once in the shell so System applies on every screen.
  */
 export function useAppearance(): [Appearance, (a: Appearance) => void] {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, lightId, darkId } = useTheme();
+  const dark = darkId ?? lightId;
   const [system, setSystem] = useState(() => stored() === 'system');
   useEffect(() => {
     const on = () => setSystem(stored() === 'system');
@@ -44,19 +46,19 @@ export function useAppearance(): [Appearance, (a: Appearance) => void] {
   }, []);
   useEffect(() => {
     if (!system) return;
-    const apply = () => setTheme(systemDark() ? DARK_THEME : LIGHT_THEME);
+    const apply = () => setTheme(systemDark() ? dark : lightId);
     apply();
     const m = typeof window.matchMedia === 'function' ? window.matchMedia(DARK_QUERY) : null;
     m?.addEventListener?.('change', apply);
     return () => m?.removeEventListener?.('change', apply);
-  }, [system, setTheme]);
+  }, [system, setTheme, dark, lightId]);
   const set = useCallback(
     (a: Appearance) => {
       store(a);
       setSystem(a === 'system');
-      if (a !== 'system') setTheme(a === 'dark' ? DARK_THEME : LIGHT_THEME);
+      if (a !== 'system') setTheme(a === 'dark' ? dark : lightId);
     },
-    [setTheme],
+    [setTheme, dark, lightId],
   );
   return [system ? 'system' : theme.mode === 'dark' ? 'dark' : 'light', set];
 }

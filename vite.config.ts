@@ -127,6 +127,58 @@ function appVersion(): string {
   }
 }
 
+/**
+ * OG-082 (ADR-0058): the environment's brand (`VITE_BRAND`, default the bundle's) names the page before the script runs
+ * and the web manifest, which is generated, so no build carries another brand's name in a static file. At run time
+ * the page follows the brand ongem-core serves.
+ */
+export function brandManifest(env: Record<string, string | undefined>) {
+  const bundle = JSON.parse(readFileSync(new URL('./src/lib/brands.json', import.meta.url), 'utf8'));
+  const id = env.VITE_BRAND?.trim();
+  const brand = bundle.brands[id && bundle.brands[id] ? id : bundle.default];
+  const themes = JSON.parse(readFileSync(new URL('./src/themes/ongem-themes.json', import.meta.url), 'utf8'));
+  const theme = themes.themes.find((t: { id: string }) => t.id === brand.theme.light) ?? themes.themes[0];
+  const canvas: string = theme.color.surface.canvas;
+  const manifest = {
+    name: brand.names.product,
+    short_name: brand.names.short,
+    start_url: '/',
+    display: 'standalone',
+    background_color: canvas,
+    theme_color: canvas,
+    icons: [
+      { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+      { src: '/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+    ],
+  };
+  return { brand, json: JSON.stringify(manifest, null, 2) + '\n' };
+}
+
+function brandFiles(): Plugin {
+  let made: ReturnType<typeof brandManifest>;
+  const escape = (v: string) => v.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  return {
+    name: 'ongem-brand',
+    configResolved(config) {
+      made = brandManifest({ ...config.env, ...process.env });
+    },
+    transformIndexHtml(html) {
+      return html.replace(/%BRAND_PRODUCT%/g, escape(made.brand.names.product));
+    },
+    configureServer(server) {
+      server.middlewares.use('/site.webmanifest', (_req, res) => {
+        res.setHeader('Content-Type', 'application/manifest+json');
+        res.end(made.json);
+      });
+    },
+    generateBundle() {
+      if (this.environment?.config.build.ssr) return;
+      this.emitFile({ type: 'asset', fileName: 'site.webmanifest', source: made.json });
+    },
+  };
+}
+
 const devApi = {
   '/api-dev': {
     target: 'https://api-dev.ongem.com',
@@ -147,7 +199,7 @@ const CHUNK_GROUPS = [
 ];
 
 export default defineConfig(({ isSsrBuild }) => ({
-  plugins: [react(), regionPublic(), contentSnapshot(), securityTxtFile()],
+  plugins: [react(), regionPublic(), contentSnapshot(), securityTxtFile(), brandFiles()],
   define: { __APP_VERSION__: JSON.stringify(appVersion()) },
   build: isSsrBuild
     ? undefined

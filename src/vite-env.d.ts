@@ -27,6 +27,8 @@ interface ImportMetaEnv {
   readonly VITE_ACCEPTANCE_ENABLED?: string;
   /** OG-055 reviews only: a Stripe test publishable key so the demo shows the real Payment Element; blank: a stand-in. */
   readonly VITE_DEMO_STRIPE_PUBLISHABLE_KEY?: string;
+  /** OG-082: the environment's bundled brand id (ADR-0058, default ongem), used until ongem-core serves the brand. */
+  readonly VITE_BRAND?: string;
 }
 
 /** The package version and commit of the build (vite.config.ts). */

@@ -1,5 +1,6 @@
 import { ACCEPTANCE_ENABLED } from './acceptance/api';
 import { t } from './i18n/store';
+import { brand } from './lib/brand';
 
 export interface NavEntry {
   to: string;
@@ -84,5 +85,5 @@ const TITLES: [RegExp, string][] = [
 
 export function pageTitle(pathname: string): string {
   const page = TITLES.find(([re]) => re.test(pathname))?.[1];
-  return page ? t(`app.nav.title.${page}`) : 'OnGem';
+  return page ? t(`app.nav.title.${page}`) : brand().names.product;
 }

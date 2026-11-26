@@ -1,7 +1,6 @@
 import { useEffect, useId, useRef, useState, type FocusEvent, type RefObject } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BRAND_ASSET_ON_DARK, BRAND_ASSET_SIZES, BRAND_ASSETS } from '../assets';
-import { Logo, useDismiss, useTheme } from '../design-system';
+import { Logo, logoImage, useDismiss, useTheme } from '../design-system';
 import { getLocale, LanguageSwitch, t, tList, useContent } from '../i18n';
 import { groupOf, legalSlugs, legalTitle, navGroups, navLinks, type NavGroup } from './content';
 import { BLANK_IMAGE, useFirstPaint } from './first-paint';
@@ -399,21 +398,13 @@ export function Header({ path }: { path?: string }) {
 
 /** The wordmark in light ink for the navy footer in every theme (PS-025); the theme's name where it has no file. */
 function FooterLogo() {
-  const { theme } = useTheme();
+  const { theme, brand } = useTheme();
   const firstPaint = useFirstPaint();
-  const named = theme.logo.wordmark;
-  const file = named ? BRAND_ASSET_ON_DARK[named] : undefined;
-  const src = file ? BRAND_ASSETS[file] : undefined;
-  if (!src || !file) return <span className="og-logo og-logo--text">{theme.logo.alt}</span>;
-  const size = BRAND_ASSET_SIZES[file];
+  const logo = logoImage(theme, brand, 'dark');
+  if (!logo.src) return <span className="og-logo og-logo--text">{logo.alt}</span>;
   return (
     <span className="og-logo og-logo--image og-logo--ink pub-footer__logo">
-      <img
-        src={firstPaint ? BLANK_IMAGE : src}
-        alt={theme.logo.alt}
-        width={size?.width}
-        height={size?.height}
-      />
+      <img src={firstPaint ? BLANK_IMAGE : logo.src} alt={logo.alt} width={logo.width} height={logo.height} />
     </span>
   );
 }

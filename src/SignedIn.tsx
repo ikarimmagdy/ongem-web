@@ -40,15 +40,17 @@ import { ACCEPTANCE_ENABLED } from './acceptance/api';
 import { t, useContent } from './i18n';
 import { DemoBar } from './public/DemoBar';
 import { IdleLogout } from './auth/IdleLogout';
+import { useBrandConfig } from './lib/brand';
 import './app-shell.css';
 
 /** Every route names its page in the browser tab (WCAG 2.4.2, UI review 2026-11-07). */
 function usePageTitle() {
   const { pathname } = useLocation();
   const locale = useContent();
+  const { id: brandId } = useBrandConfig();
   useEffect(() => {
     document.title = t('app.nav.document_title', { page: pageTitle(pathname) });
-  }, [pathname, locale]);
+  }, [pathname, locale, brandId]);
 }
 
 /**

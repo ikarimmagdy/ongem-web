@@ -1,0 +1,65 @@
+{
+  "default": "ongem",
+  "brands": {
+    "ongem": {
+      "id": "ongem",
+      "version": 1,
+      "names": {
+        "product": "OnGem",
+        "short": "OnGem",
+        "legal": "OnGem Inc.",
+        "assistant": "OnGem Assistant"
+      },
+      "logo": null,
+      "theme": { "light": "ongem", "dark": "ongem-dark", "tokens": null },
+      "domains": { "web": "app.ongem.com", "marketing": "ongem.com", "api": "api.ongem.com" },
+      "support": { "email": "support@ongem.com", "phone": null, "url": "https://ongem.com/help" },
+      "legal": { "entity": "OnGem Inc.", "address": "", "bankDisclosureKey": "legal.bank_disclosure" },
+      "messaging": {
+        "emailFrom": "notices@ongem.com",
+        "emailFromName": "OnGem",
+        "smsPrefix": "OnGem",
+        "pushTitle": "OnGem"
+      },
+      "apps": {
+        "iosBundleId": "com.ongem.app",
+        "androidApplicationId": "com.ongem.app",
+        "appStoreUrl": null,
+        "playStoreUrl": null
+      },
+      "auth": { "clerkPublishableKey": null }
+    },
+    "harbor": {
+      "id": "harbor",
+      "version": 1,
+      "names": {
+        "product": "Harbor",
+        "short": "Harbor",
+        "legal": "Harbor Financial Inc.",
+        "assistant": "Harbor Assistant"
+      },
+      "logo": null,
+      "theme": { "light": "demo-harbor", "dark": null, "tokens": null },
+      "domains": { "web": "app.harbor.example", "marketing": "harbor.example", "api": "api.harbor.example" },
+      "support": { "email": "support@harbor.example", "phone": null, "url": "https://harbor.example/help" },
+      "legal": {
+        "entity": "Harbor Financial Inc.",
+        "address": "",
+        "bankDisclosureKey": "legal.bank_disclosure"
+      },
+      "messaging": {
+        "emailFrom": "notices@harbor.example",
+        "emailFromName": "Harbor",
+        "smsPrefix": "Harbor",
+        "pushTitle": "Harbor"
+      },
+      "apps": {
+        "iosBundleId": null,
+        "androidApplicationId": null,
+        "appStoreUrl": null,
+        "playStoreUrl": null
+      },
+      "auth": { "clerkPublishableKey": null }
+    }
+  }
+}

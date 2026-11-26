@@ -3,7 +3,7 @@ import { errorText } from '../api/errors';
 import type { DeviceView } from '../api/types';
 import { Button, Card, KeyValue, Notice, PageHeader, StatusChip, useTheme } from '../design-system';
 import { useAsync } from '../lib/useAsync';
-import { DARK_THEME, useAppearance, type Appearance } from '../lib/appearance';
+import { useAppearance, type Appearance } from '../lib/appearance';
 import { formatDate } from '../lib/format';
 import { LanguageSwitch, t } from '../i18n';
 import { privacyLine, useRecordingSettings } from '../recording/privacy';
@@ -25,11 +25,9 @@ export function LastSignIn({ testId, className }: { testId: string; className?: 
 
 /** FA-030: Light, Dark or System as one choice; another brand's white-label theme is never offered to a founder. */
 function AppearanceChoice() {
-  const { themes } = useTheme();
+  const { themes, darkId } = useTheme();
   const [appearance, setAppearance] = useAppearance();
-  const options: Appearance[] = themes.some((x) => x.id === DARK_THEME)
-    ? ['light', 'dark', 'system']
-    : ['light'];
+  const options: Appearance[] = themes.some((x) => x.id === darkId) ? ['light', 'dark', 'system'] : ['light'];
   return (
     <div
       className="fw-segmented"

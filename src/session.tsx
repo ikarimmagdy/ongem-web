@@ -19,6 +19,7 @@ import { IS_AE, REGION } from './region';
 import { t } from './i18n';
 import { formatMinor } from './lib/format';
 import { rememberCompany } from './lib/company';
+import { brand, brandOverride, setBrand } from './lib/brand';
 
 export type Mode = 'none' | 'demo' | 'live';
 
@@ -64,7 +65,7 @@ export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.trim() || '/api-d
 
 /**
  * OG-022 R11: the API base for banking calls once whereami has answered. The build's base stays when the company
- * lives in the build's own region (or whereami fails); otherwise the region's base, if it is https on an OnGem host.
+ * lives in the build's own region (or whereami fails); otherwise the region's base, if it is https on the operator's or the brand's API host.
  */
 export function regionApiBase(
   answer: { region?: string | null; apiBaseUrl?: string | null } | null,
@@ -73,8 +74,10 @@ export function regionApiBase(
   if (!answer?.region || answer.region === REGION || !answer.apiBaseUrl) return fallback;
   try {
     const u = new URL(answer.apiBaseUrl);
-    const onGem = u.hostname === 'ongem.com' || u.hostname.endsWith('.ongem.com');
-    return u.protocol === 'https:' && onGem ? u.origin : fallback;
+    // The operator's hosts, or the brand's API host (OG-082): a white-label environment answers on its own domain.
+    const on = (domain: string) => !!domain && (u.hostname === domain || u.hostname.endsWith(`.${domain}`));
+    const known = on('ongem.com') || on(brand().domains.api);
+    return u.protocol === 'https:' && known ? u.origin : fallback;
   } catch {
     return fallback;
   }
@@ -254,6 +257,19 @@ export function SessionProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [injected, demoMode],
   );
+  // OG-082: in the demo, `?brand=<id>` is answered by the demo API's brand, so a brand works without ongem-core.
+  useEffect(() => {
+    if (!demoMode || !(demo instanceof DemoOnGemApi)) return;
+    const id = brandOverride();
+    if (!id) return;
+    let gone = false;
+    void demo.brand(id).then((b) => {
+      if (!gone && b.id !== brand().id) setBrand(b);
+    });
+    return () => {
+      gone = true;
+    };
+  }, [demoMode, demo]);
   // One live client for the signed-in person: the auth value changes on many Clerk renders, and a new client would
   // reload every screen and start a new recording session each time. It reads the current auth through a ref.
   const authRef = useRef(auth);

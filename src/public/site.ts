@@ -1,3 +1,4 @@
+import { brand, brandServed } from '../lib/brand';
 import { IS_AE, REGION, type Region } from '../region';
 
 /**
@@ -20,8 +21,13 @@ export const SITE = {
   url: env(import.meta.env.VITE_SITE_URL) ?? (IS_AE ? AE_SITE : US_SITE),
   /** The other region's public origin, for the region chooser and hreflang. */
   otherUrl: env(import.meta.env.VITE_OTHER_SITE_URL) ?? (IS_AE ? US_SITE : AE_SITE),
-  /** Public contact address; empty until OnGem names one (OG-034 open question 1). */
-  contactEmail: import.meta.env.VITE_CONTACT_EMAIL?.trim() ?? '',
+  /**
+   * Public contact address: VITE_CONTACT_EMAIL, else the support address of the brand ongem-core serves (OG-082); empty
+   * until one is named (OG-034 open question 1, PS-010), so a bundled brand never invents one.
+   */
+  get contactEmail(): string {
+    return import.meta.env.VITE_CONTACT_EMAIL?.trim() || (brandServed() ? (brand().support.email ?? '') : '');
+  },
 };
 
 /**

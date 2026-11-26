@@ -42,7 +42,7 @@ export function Home() {
           {US_MEDIA ? (
             <div className="pub-hero__stage" data-testid="hero-stage">
               <div className="pub-hero__desk">
-                <BrowserFrame address="app.ongem.com">
+                <BrowserFrame>
                   {/* A phone hides the desktop screen, so it never downloads it (PS-013). */}
                   <picture>
                     <source media={NARROW} srcSet={BLANK_IMAGE} />

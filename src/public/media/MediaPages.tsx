@@ -140,7 +140,7 @@ function Shot({ shot }: { shot: GalleryShot }) {
       {shot.device === 'phone' ? (
         <PhoneFrame>{img}</PhoneFrame>
       ) : shot.device === 'web' ? (
-        <BrowserFrame address="app.ongem.com">{img}</BrowserFrame>
+        <BrowserFrame>{img}</BrowserFrame>
       ) : (
         <div className="pub-gallery__tablet">{img}</div>
       )}

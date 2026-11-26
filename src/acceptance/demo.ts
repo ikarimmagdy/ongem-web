@@ -1,5 +1,6 @@
 // content-check: data (sample amounts and ids; sentences shown as UI copy are content keys)
 import { ApiError } from '../api/errors';
+import { brand } from '../lib/brand';
 import { durationMs } from '../lib/duration';
 import type {
   AcceptanceBackend,
@@ -210,7 +211,7 @@ export class DemoAcceptance implements AcceptanceBackend {
   /** The core's default limits (contract 1), as a demo company would read them. */
   payLinkSettings = async (): Promise<PayLinkSettings> => ({
     enabled: true,
-    baseUrl: `${typeof window === 'undefined' ? 'https://app-dev.platform.ongem.com' : window.location.origin}/pay`,
+    baseUrl: `${typeof window === 'undefined' ? `https://${brand().domains.web}` : window.location.origin}/pay`,
     currencies: ['USD'],
     minAmountMinor: 100,
     maxAmountMinor: 1000000,
@@ -295,7 +296,7 @@ function link(
 ): PayLink {
   return {
     id,
-    url: `https://app-dev.platform.ongem.com/pay/${id}_sample_token`,
+    url: `https://${brand().domains.web}/pay/${id}_sample_token`,
     state,
     checkoutId: id.replace('plk_', 'chk_'),
     title,

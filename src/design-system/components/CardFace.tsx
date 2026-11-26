@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { BRAND_ASSETS, BRAND_ASSET_ON_DARK, BRAND_ASSET_SIZES } from '../../assets';
 import { useTheme } from '../theme/ThemeProvider';
+import { logoImage } from './Logo';
 
 export interface CardFaceProps {
   /** The card's last four digits; never a full number. */
@@ -24,7 +24,7 @@ export interface CardFaceProps {
 }
 
 /**
- * OnGem's card face (FA-001, Brand V2 section 08): a navy or white base, the brand gradient as one controlled corner
+ * The brand's card face (FA-001, Brand V2 section 08): a navy or white base, the brand gradient as one controlled corner
  * detail, the wordmark at the top start, chip and contactless mark, last four in tabular figures, the holder's name and
  * the network mark area at the bottom end. Theme tokens only, so a white-label theme gets its own face; logical sides,
  * so it mirrors in Arabic. Shared by the founder app and the public site.
@@ -41,12 +41,11 @@ export function CardFace({
   selected = false,
   size = 'md',
 }: CardFaceProps) {
-  const { theme } = useTheme();
-  const named = theme.logo.wordmark;
-  // The navy face always takes the light-ink wordmark; the white face the full-colour one.
-  const file = named && base === 'navy' ? (BRAND_ASSET_ON_DARK[named] ?? named) : named;
-  const src = file ? BRAND_ASSETS[file] : undefined;
-  const dims = file ? BRAND_ASSET_SIZES[file] : undefined;
+  const { theme, brand } = useTheme();
+  // The navy face takes the light-ink wordmark where one exists, else the full-colour one; the white face the full-colour one.
+  const ink = base === 'navy' ? logoImage(theme, brand, 'dark') : null;
+  const logo = ink?.src ? ink : logoImage(theme, brand, 'light');
+  const { src } = logo;
   const cls = [
     'og-cardface',
     `og-cardface--${base}`,
@@ -64,12 +63,12 @@ export function CardFace({
           <img
             className="og-cardface__wordmark"
             src={src}
-            alt={theme.logo.alt}
-            width={dims?.width}
-            height={dims?.height}
+            alt={logo.alt}
+            width={logo.width}
+            height={logo.height}
           />
         ) : (
-          <span className="og-cardface__wordmark og-cardface__wordmark--text">{theme.logo.alt}</span>
+          <span className="og-cardface__wordmark og-cardface__wordmark--text">{logo.alt}</span>
         )}
         <span className="og-cardface__kind">{kind}</span>
       </span>

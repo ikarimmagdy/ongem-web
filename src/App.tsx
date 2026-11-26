@@ -1,8 +1,18 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useMemo } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useAuthSession } from './auth';
 import { Md, t, tList, useChannels, useContent } from './i18n';
-import { Button, Notice, Skeleton, ThemeProvider, ToastProvider } from './design-system';
+import {
+  Button,
+  Notice,
+  Skeleton,
+  ThemeProvider,
+  ToastProvider,
+  validateTheme,
+  type BrandFace,
+  type Theme,
+} from './design-system';
+import { useBrandConfig, type Brand } from './lib/brand';
 import { SessionProvider, useSession, type Mode } from './session';
 import { privacyLine, useRecordingSettings } from './recording/privacy';
 import { ACCEPTANCE_ENABLED, PAY_LINK_PATH } from './acceptance/flag';
@@ -148,9 +158,36 @@ export function Routed() {
   );
 }
 
+/** A theme the brand serves in full (`theme.tokens`), when it is a valid ongem-theme/v1 theme. */
+function servedTheme(tokens: unknown): Theme | null {
+  if (!tokens) return null;
+  const r = validateTheme(tokens);
+  return r.ok ? r.theme : null;
+}
+
+/**
+ * OG-082: what the theme provider needs from the brand: its name and logo URLs, and its themes, served in full
+ * (`theme.tokens`) or named from the bundled ones (`theme.light`, `theme.dark`).
+ */
+export function brandFace(brand: Brand): BrandFace {
+  const light = servedTheme(brand.theme.tokens?.light);
+  const dark = servedTheme(brand.theme.tokens?.dark);
+  return {
+    name: brand.names.product,
+    wordmark: brand.logo?.wordmark ?? null,
+    mark: brand.logo?.mark ?? null,
+    favicon: brand.logo?.favicon ?? null,
+    light: light?.id ?? brand.theme.light,
+    dark: dark?.id ?? brand.theme.dark,
+    themes: [light, dark].filter((x): x is Theme => x !== null),
+  };
+}
+
 export function App({ initialMode }: { initialMode?: Mode } = {}) {
+  const brand = useBrandConfig();
+  const face = useMemo(() => brandFace(brand), [brand]);
   return (
-    <ThemeProvider>
+    <ThemeProvider brand={face}>
       <ToastProvider>
         <SessionProvider initialMode={initialMode}>
           <Routed />

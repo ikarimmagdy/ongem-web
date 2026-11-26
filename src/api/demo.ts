@@ -35,6 +35,7 @@ import { t } from '../i18n/store';
 import { normaliseIban, uaeIbanValid } from '../lib/iban';
 import { nthRun } from '../lib/schedule';
 import { formatMinor } from '../lib/format';
+import { brand as activeBrand, bundledBrand, type Brand } from '../lib/brand';
 import { samplePdf } from './samplePdf';
 import { IS_AE, REGION, REGION_CONFIG } from '../region';
 import { REVERIFICATION_CANCELLED } from './reverify';
@@ -141,6 +142,11 @@ const CAPTURE_OPEN = ['SUBMITTED', 'VERIFYING', 'MORE_INFO', 'IN_REVIEW', 'EDD',
  */
 export class DemoOnGemApi implements OnGemApi {
   readonly kind = 'demo' as const;
+  /**
+   * OG-082 `GET /v1/public/brand` as the demo answers it: the bundled brand [id] names (harbor, the neutral demo brand),
+   * else the environment's, so a brand works in the demo without ongem-core.
+   */
+  brand = async (id?: string | null): Promise<Brand> => structuredClone(bundledBrand(id ?? undefined));
   private accountsState: Account[] = demoAccounts();
   private recipientsState = demoRecipients();
   private paymentsState: Payment[] = demoPayments();
@@ -584,7 +590,7 @@ export class DemoOnGemApi implements OnGemApi {
         run.state = 'DONE';
         run.lineCount = (demoTransactions[accountId] ?? []).length;
         run.sha256 = '0'.repeat(64);
-        run.fileName = `ongem-activity-${run.from}-${run.to}${run.format === 'CSV' ? '' : `-${run.format.toLowerCase()}`}.csv`;
+        run.fileName = `${activeBrand().id}-activity-${run.from}-${run.to}${run.format === 'CSV' ? '' : `-${run.format.toLowerCase()}`}.csv`;
       }
     }
     return this.log('exportRun', run.state === 'DONE' ? { ...run, link: this.demoLink(run) } : run);

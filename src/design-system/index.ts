@@ -10,7 +10,7 @@ export { EmptyState } from './components/EmptyState';
 export { Field } from './components/Field';
 export { Input, TextArea } from './components/Input';
 export { KeyValue } from './components/KeyValue';
-export { Logo } from './components/Logo';
+export { Logo, logoImage, type LogoImage } from './components/Logo';
 export { Modal } from './components/Modal';
 export { Money } from './components/Money';
 export { Notice } from './components/Notice';
