@@ -29,6 +29,14 @@ export interface Brand {
     playStoreUrl: string | null;
   };
   auth: { clerkPublishableKey: string | null };
+  /** The partners behind the service; null names none, and texts say the generic definition instead (OG-079). */
+  partners: BrandPartners | null;
+}
+
+export interface BrandPartners {
+  sponsorBank: string | null;
+  baasProvider: string | null;
+  formationPartner: string | null;
 }
 
 export const BUNDLED_BRANDS: Record<string, Brand> = BUNDLE.brands as unknown as Record<string, Brand>;
@@ -54,7 +62,8 @@ function merge<T>(base: T, served: unknown): T {
   for (const [k, v] of Object.entries(served)) {
     if (v === null || v === undefined) continue;
     const b = out[k];
-    out[k] = isObj(b) && isObj(v) && k !== 'tokens' ? merge(b, v) : v;
+    // A served partners section is taken whole: there a null means the generic definition, not the bundled name.
+    out[k] = isObj(b) && isObj(v) && k !== 'tokens' && k !== 'partners' ? merge(b, v) : v;
   }
   return out as T;
 }
@@ -68,6 +77,8 @@ export function parseBrand(body: unknown): Brand | null {
   const merged = merge(base, body);
   // A served brand that sets no logo uses its theme's logo, never the default brand's files.
   if (!BUNDLED_BRANDS[body.id] && !isObj(body.logo)) merged.logo = null;
+  // Nor does it name the default brand's partners.
+  if (!BUNDLED_BRANDS[body.id] && !isObj(body.partners)) merged.partners = null;
   return merged;
 }
 
@@ -102,8 +113,38 @@ export const subscribeBrand = (l: () => void) => {
 /** The brand for a component, re-rendered when ongem-core's answer or a demo brand arrives. */
 export const useBrandConfig = (): Brand => useSyncExternalStore(subscribeBrand, brand, brand);
 
-/** The words a content text may carry as placeholders: `{brand}` (product name) and `{legalName}`. */
-export const brandVars = (b: Brand = current) => ({ brand: b.names.product, legalName: b.names.legal });
+/** What a text says for a partner the brand does not name, per locale (English for any other). */
+const PARTNER_DEFINITIONS: Record<string, Record<keyof BrandPartners, string>> = {
+  en: {
+    sponsorBank: 'our sponsor bank',
+    baasProvider: 'our BaaS partner',
+    formationPartner: 'a company formation partner',
+  },
+  ar: {
+    sponsorBank: 'بنكنا الراعي',
+    baasProvider: 'منصتنا المصرفية الشريكة',
+    formationPartner: 'شركة تأسيس شريكة',
+  },
+};
+
+/** The partner placeholders; a value of one that starts a sentence is written with a capital letter. */
+export const PARTNER_VARS: ReadonlySet<string> = new Set(['sponsorBank', 'baasProvider', 'formationPartner']);
+
+/** A partner's name in [locale]: the brand's, else the generic definition ("our sponsor bank"). */
+export const partnerName = (key: keyof BrandPartners, locale: string = 'en', b: Brand = current): string =>
+  b.partners?.[key] ?? (PARTNER_DEFINITIONS[locale] ?? PARTNER_DEFINITIONS.en!)[key];
+
+/**
+ * The words a content text may carry as placeholders: `{brand}` (product name), `{legalName}` and the partners'
+ * `{sponsorBank}`, `{baasProvider}` and `{formationPartner}` in [locale].
+ */
+export const brandVars = (b: Brand = current, locale: string = 'en') => ({
+  brand: b.names.product,
+  legalName: b.names.legal,
+  sponsorBank: partnerName('sponsorBank', locale, b),
+  baasProvider: partnerName('baasProvider', locale, b),
+  formationPartner: partnerName('formationPartner', locale, b),
+});
 
 const OVERRIDE_KEY = 'ongem.brand';
 const DEMO_FLAG = 'ongem.demo';

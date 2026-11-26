@@ -248,7 +248,13 @@ describe('content (OG-033)', () => {
   });
 });
 
-const BRAND_VARS = new Set(['{brand}', '{legalName}']);
+const BRAND_VARS = new Set([
+  '{brand}',
+  '{legalName}',
+  '{sponsorBank}',
+  '{baasProvider}',
+  '{formationPartner}',
+]);
 
 describe('seed files (OG-033 R12)', () => {
   it('ae_seed_names_no_us_bank_partner_or_rail_AC_R12_2', () => {

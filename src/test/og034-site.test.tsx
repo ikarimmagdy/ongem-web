@@ -421,7 +421,7 @@ describe('OG-034 public site structure (US build)', () => {
         const web = readFileSync(join(root, 'content-seed', region, `${channel}.json`), 'utf8');
         // Names and patterns (a bank's name, "{title} | OnGem", "English") fall back to English by design (OG-033 R7).
         const sameInArabic =
-          /^(© \{year\} (OnGem|\{brand\})|\{title\}.*|English|Piermont Bank|Synctera|GenZone|OnGem|\{brand\})$/;
+          /^(© \{year\} (OnGem|\{brand\})|\{title\}.*|English|\{sponsorBank\}|\{baasProvider\}|\{formationPartner\}|OnGem|\{brand\})$/;
         for (const e of JSON.parse(web).entries as Array<{ key: string; en: string; ar: string }>) {
           expect(e.en, e.key).toBeTruthy();
           if (!sameInArabic.test(e.en)) expect(e.ar, e.key).toBeTruthy();

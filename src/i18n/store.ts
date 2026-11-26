@@ -1,5 +1,5 @@
 import BUILT from 'virtual:ongem-content';
-import { brandOverride, brandVars, subscribeBrand } from '../lib/brand';
+import { brandOverride, brandVars, PARTNER_VARS, subscribeBrand } from '../lib/brand';
 import type { Channel, ChannelContent, Locale, RegionContent } from './types';
 
 /**
@@ -82,7 +82,8 @@ const warned = new Set<string>();
 
 /**
  * The text of [key] in the current locale (English when it has none), with `{name}` placeholders filled in. `{brand}`
- * and `{legalName}` come from the active brand (OG-082, ADR-0058) unless [vars] names them.
+ * and `{legalName}` come from the active brand (OG-082, ADR-0058), and the partners' `{sponsorBank}`, `{baasProvider}`
+ * and `{formationPartner}` in the current locale (OG-079), unless [vars] names them.
  */
 export function t(key: string, vars?: Record<string, string | number>): string {
   const raw = merged[locale][key] ?? merged.en[key];
@@ -94,11 +95,21 @@ export function t(key: string, vars?: Record<string, string | number>): string {
     return key;
   }
   if (!raw.includes('{')) return raw;
-  return fill(raw, vars ? { ...brandVars(), ...vars } : brandVars());
+  const named = brandVars(undefined, locale);
+  return fill(raw, vars ? { ...named, ...vars } : named);
 }
 
+/** Text before a placeholder that starts a sentence: nothing, a sentence end and a space, or a line break, then markup. */
+const SENTENCE_START = /(^|[.!?]\s|\n)[\s#>*-]*$/;
+
 export function fill(raw: string, vars: Record<string, string | number>): string {
-  return raw.replace(/\{([a-zA-Z0-9_]+)\}/g, (m, name: string) => (name in vars ? String(vars[name]) : m));
+  return raw.replace(/\{([a-zA-Z0-9_]+)\}/g, (m, name: string, at: number) => {
+    if (!(name in vars)) return m;
+    const v = String(vars[name]);
+    return PARTNER_VARS.has(name) && SENTENCE_START.test(raw.slice(0, at))
+      ? v.charAt(0).toUpperCase() + v.slice(1)
+      : v;
+  });
 }
 
 export const has = (key: string): boolean => key in merged[locale] || key in merged.en;

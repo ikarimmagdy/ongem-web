@@ -2,7 +2,9 @@ import { act, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { App } from '../App';
 import { AuthProvider, NO_AUTH } from '../auth/session';
-import { bundledBrand, setBrand } from '../lib/brand';
+import { t } from '../i18n';
+import { fill, setLocale } from '../i18n/store';
+import { brandVars, bundledBrand, parseBrand, setBrand } from '../lib/brand';
 import { isPublicPath, legalSlugs, movedPath, navLinks } from '../public/content';
 import { posts, postBySlug, withoutVideoLinks } from '../public/media/blog';
 import { videos } from '../public/media/videos';
@@ -12,6 +14,7 @@ import { recordedMedia } from '../region';
 
 /** OG-079: a white-label demo under another brand shows nothing that carries the default brand. */
 const BRAND = /ongem/i;
+const PARTNERS = /synctera|piermont|genzone/i;
 
 function renderPublic(route: string) {
   return render(
@@ -97,5 +100,61 @@ describe('OG-079 white-label demo', () => {
       ),
     ].join('\n');
     expect(shown).not.toMatch(BRAND);
+    expect(shown).not.toMatch(PARTNERS);
+    expect(shown).toContain('Our sponsor bank');
+  });
+
+  it('OG079_partner_names_under_the_default_brand_definitions_under_another', async () => {
+    expect(t('web.trust.1.name')).toBe('Piermont Bank');
+    expect(t('web.bank_statement')).toBe(
+      'OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank, Member FDIC.',
+    );
+    expect(t('faq.general.1.a')).toContain(
+      'held at Piermont Bank, which provides the accounts through Synctera.',
+    );
+    harbor();
+    expect(t('web.trust.1.name')).toBe('Our sponsor bank');
+    expect(t('web.trust.2.name')).toBe('Our BaaS partner');
+    expect(t('web.trust.3.name')).toBe('A company formation partner');
+    expect(t('web.bank_statement')).toBe(
+      'Harbor is a financial technology company, not a bank. Banking services are provided by our sponsor bank, Member FDIC.',
+    );
+    expect(t('faq.accounts.1.a')).toMatch(/^Our sponsor bank holds your deposits/);
+    await act(() => setLocale('ar'));
+    try {
+      expect(t('web.trust.1.name')).toBe('بنكنا الراعي');
+      expect(t('web.bank_statement')).toContain('بنكنا الراعي، عضو FDIC');
+    } finally {
+      await act(() => setLocale('en'));
+    }
+  });
+
+  it('OG079_partner_placeholders_start_a_sentence_with_a_capital', () => {
+    const vars = brandVars(bundledBrand('harbor'));
+    expect(fill('{sponsorBank} decides. Held at **{sponsorBank}**.\n1. {formationPartner} sends', vars)).toBe(
+      'Our sponsor bank decides. Held at **our sponsor bank**.\n1. A company formation partner sends',
+    );
+    expect(fill('Held at {sponsorBank}', brandVars(bundledBrand('ongem')))).toBe('Held at Piermont Bank');
+  });
+
+  it('OG079_a_served_brand_names_its_partners_or_none', () => {
+    const base = {
+      id: 'acme',
+      names: { product: 'Acme', short: 'Acme', legal: 'Acme LLC', assistant: null },
+    };
+    expect(parseBrand(base)?.partners).toBeNull();
+    expect(brandVars(parseBrand(base)!).sponsorBank).toBe('our sponsor bank');
+    const named = parseBrand({
+      ...base,
+      partners: { sponsorBank: 'Acme Bank', baasProvider: null, formationPartner: null },
+    });
+    expect(brandVars(named!).sponsorBank).toBe('Acme Bank');
+    expect(brandVars(named!, 'ar').baasProvider).toBe('منصتنا المصرفية الشريكة');
+    // The default brand cleared a name: the generic definition, not its bundled name.
+    const cleared = parseBrand({
+      ...bundledBrand('ongem'),
+      partners: { sponsorBank: null, baasProvider: null, formationPartner: null },
+    });
+    expect(brandVars(cleared!).sponsorBank).toBe('our sponsor bank');
   });
 });

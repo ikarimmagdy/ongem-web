@@ -27,7 +27,12 @@
         "appStoreUrl": null,
         "playStoreUrl": null
       },
-      "auth": { "clerkPublishableKey": null }
+      "auth": { "clerkPublishableKey": null },
+      "partners": {
+        "sponsorBank": "Piermont Bank",
+        "baasProvider": "Synctera",
+        "formationPartner": "GenZone"
+      }
     },
     "harbor": {
       "id": "harbor",
@@ -59,7 +64,8 @@
         "appStoreUrl": null,
         "playStoreUrl": null
       },
-      "auth": { "clerkPublishableKey": null }
+      "auth": { "clerkPublishableKey": null },
+      "partners": { "sponsorBank": null, "baasProvider": null, "formationPartner": null }
     }
   }
 }
