@@ -332,7 +332,9 @@ describe('public site review fixes (US)', () => {
 
   it('PS_016_the_gem_is_the_logo_file_not_a_drawing', () => {
     const art = readFileSync(join(root, 'src/public/art.tsx'), 'utf8');
-    expect(art).toMatch(/import brandMark from '\.\.\/assets\/ongem-favicon\.png'/);
+    // OG-082: the brand's mark file, else the theme's favicon file; never a drawing.
+    expect(art).toMatch(/BRAND_ASSETS\[theme\.logo\.favicon\]/);
+    expect(art).toMatch(/brand\?\.mark/);
     expect(art).not.toMatch(/points="0,14 14,0 34,0 48,14 24,44"/);
     expect(art).not.toMatch(/points="0,140 140,0/);
   });

@@ -319,3 +319,14 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   (`ongem.assistant.recording.enabled`, `.mask-digit-run`) into `recording/privacy.ts`; until it answers, or if it cannot,
   recording is off. The mask hides every run of three or more digits (the configured length) besides amounts, inputs
   and blocked areas. Tests in `recording.test.tsx`.
+- 2026-11-26: OG-082 white label (ADR-0058). `src/lib/brand.ts` holds the brand: the bundled ones in `src/lib/brands.json`
+  (`ongem`, and `harbor`, the neutral demo brand), `VITE_BRAND` names the environment's (default ongem), and `main.tsx`
+  reads ongem-core's `GET /v1/public/brand` (nulls keep the bundled value; a failure keeps the bundled brand). `?brand=`
+  is passed through as a query only in a non-production build or in demo mode, kept for the tab (sessionStorage
+  `ongem.brand`); in the demo `DemoOnGemApi.brand` answers it, so Harbor works without the core. The brand gives the
+  theme (`theme.tokens` when served, else the bundled `theme.light`/`theme.dark`; only the brand's themes are offered),
+  the title, favicon, wordmark (theme logo when `logo` is null), card face, Organization JSON-LD and `og:site_name`, the
+  browser frame address, the contact address (only a served brand's) and the demo's support name. Every text says
+  `{brand}` (or `{legalName}`), filled by `t()`; content from ongem-core arrives already filled. `index.html` carries
+  `%BRAND_PRODUCT%` and the web manifest is generated (vite plugin `ongem-brand`). `src/test/white-label.test.tsx` fails
+  on the product name in screens, components, the public site, acceptance, demo data and the seeds.
