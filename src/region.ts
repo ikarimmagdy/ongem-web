@@ -5,6 +5,7 @@
  * names (a helper function would keep both).
  */
 import { t } from './i18n/store';
+import { isDefaultBrand } from './lib/brand';
 
 export type Region = 'US' | 'AE';
 
@@ -13,6 +14,12 @@ export const REGION: Region = IS_AE ? 'AE' : 'US';
 
 /** Public screenshots, the gallery and the walkthrough videos were recorded on the US demo, so the AE build leaves them out. */
 export const US_MEDIA: boolean = !IS_AE;
+
+/**
+ * Whether the recorded media show (OG-079): a US build under the default brand. They were recorded under it, so another
+ * brand gets the drawn art in their place and no videos, as the AE build does.
+ */
+export const recordedMedia = (): boolean => US_MEDIA && isDefaultBrand();
 
 export interface RailOption {
   /** The form's value and the API rail. */

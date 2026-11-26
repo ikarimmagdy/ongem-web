@@ -1,4 +1,4 @@
-import { brand, brandServed } from '../lib/brand';
+import { brand, brandServed, isDefaultBrand } from '../lib/brand';
 import { IS_AE, REGION, type Region } from '../region';
 
 /**
@@ -11,16 +11,24 @@ const AE_SITE = 'https://ongemuaedevweb.z1.web.core.windows.net';
 
 const env = (v: string | undefined) => v?.trim().replace(/\/$/, '') || undefined;
 
+/** Another brand's own site, so its pages never name the default brand's hosts. */
+const brandSite = (): string | undefined =>
+  isDefaultBrand() ? undefined : `https://${brand().domains.web.replace(/\/$/, '')}`;
+
 export const SITE = {
   region: REGION,
   /** Accounts are open in this region. */
   live: !IS_AE,
   /** The bank issues cards in this region. */
   cards: !IS_AE,
-  /** This build's public origin. */
-  url: env(import.meta.env.VITE_SITE_URL) ?? (IS_AE ? AE_SITE : US_SITE),
+  /** This build's public origin; under another brand than the default, that brand's web domain (OG-079). */
+  get url(): string {
+    return env(import.meta.env.VITE_SITE_URL) ?? brandSite() ?? (IS_AE ? AE_SITE : US_SITE);
+  },
   /** The other region's public origin, for the region chooser and hreflang. */
-  otherUrl: env(import.meta.env.VITE_OTHER_SITE_URL) ?? (IS_AE ? US_SITE : AE_SITE),
+  get otherUrl(): string {
+    return env(import.meta.env.VITE_OTHER_SITE_URL) ?? brandSite() ?? (IS_AE ? US_SITE : AE_SITE);
+  },
   /**
    * Public contact address: VITE_CONTACT_EMAIL, else the support address of the brand ongem-core serves (OG-082); empty
    * until one is named (OG-034 open question 1, PS-010), so a bundled brand never invents one.
@@ -35,6 +43,21 @@ export const SITE = {
  * hides the draft disclosures and their draft note (PS-002), which stay on every other build for legal review.
  */
 export const isProduction = () => import.meta.env.VITE_ENVIRONMENT?.trim().toLowerCase() === 'production';
+
+/**
+ * Demo mode for the legal pages (OG-079): a demo site (`VITE_DEMO_SITE=true`) or a tab in demo mode, under another
+ * brand than the default. There the legal pages show sample texts that name the brand, never the operator's own legal
+ * texts, which name the operator and are written by its legal team.
+ */
+export function demoLegal(): boolean {
+  if (isDefaultBrand()) return false;
+  if (import.meta.env.VITE_DEMO_SITE?.trim() === 'true') return true;
+  try {
+    return typeof window !== 'undefined' && window.sessionStorage.getItem('ongem.demo') === '1';
+  } catch {
+    return false;
+  }
+}
 
 export const OTHER_REGION: Region = IS_AE ? 'US' : 'AE';
 

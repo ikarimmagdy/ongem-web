@@ -3,7 +3,7 @@ import { configDefaults } from 'vitest/config';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { execSync } from 'node:child_process';
-import { readdirSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { seedSnapshot, type Snapshot } from './scripts/content.mjs';
 import { SECURITY_TXT_PATH, securityTxt, securityTxtOrigin } from './scripts/security-txt.mjs';
@@ -136,6 +136,8 @@ export function brandManifest(env: Record<string, string | undefined>) {
   const bundle = JSON.parse(readFileSync(new URL('./src/lib/brands.json', import.meta.url), 'utf8'));
   const id = env.VITE_BRAND?.trim();
   const brand = bundle.brands[id && bundle.brands[id] ? id : bundle.default];
+  // The icons, share images and videos in public/ carry the default brand; another brand gets its own icon only.
+  const own = brand.id === bundle.default;
   const themes = JSON.parse(readFileSync(new URL('./src/themes/ongem-themes.json', import.meta.url), 'utf8'));
   const theme = themes.themes.find((t: { id: string }) => t.id === brand.theme.light) ?? themes.themes[0];
   const canvas: string = theme.color.surface.canvas;
@@ -146,35 +148,92 @@ export function brandManifest(env: Record<string, string | undefined>) {
     display: 'standalone',
     background_color: canvas,
     theme_color: canvas,
-    icons: [
-      { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
-      { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },
-      { src: '/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
-    ],
+    icons: own
+      ? [
+          { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+          { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+          { src: '/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+        ]
+      : [{ src: `/${BRAND_ICON}`, sizes: 'any', type: 'image/svg+xml' }],
   };
-  return { brand, json: JSON.stringify(manifest, null, 2) + '\n' };
+  return {
+    brand,
+    own,
+    icon: own ? null : brandIcon(brand, theme),
+    json: JSON.stringify(manifest, null, 2) + '\n',
+  };
 }
+
+/** Another brand's browser and home screen icon (OG-079): its favicon file in src/assets, else a letter mark. */
+const BRAND_ICON = 'brand-icon.svg';
+function brandIcon(
+  brand: { id: string; names: { product: string } },
+  theme: { color: { brand: { primary: string }; action: { primaryText: string } } },
+): string {
+  const file = new URL(`./src/assets/${brand.id}-favicon.svg`, import.meta.url);
+  if (existsSync(file)) return readFileSync(file, 'utf8');
+  const letter = brand.names.product.charAt(0).toUpperCase().replace(/[<&]/g, '');
+  return (
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" ` +
+    `fill="${theme.color.brand.primary}"/><text x="32" y="44" text-anchor="middle" font-family="sans-serif" ` +
+    `font-weight="700" font-size="38" fill="${theme.color.action.primaryText}">${letter}</text></svg>`
+  );
+}
+
+/** The files in public/ that show the default brand: left out of another brand's build (OG-079). */
+const DEFAULT_BRAND_PUBLIC = [
+  'favicon.ico',
+  'favicon-16.png',
+  'favicon-32.png',
+  'apple-touch-icon.png',
+  'icon-192.png',
+  'icon-512.png',
+  'icon-maskable-512.png',
+  'og',
+  'videos',
+];
 
 function brandFiles(): Plugin {
   let made: ReturnType<typeof brandManifest>;
+  let outDir = '';
+  let ssr = false;
   const escape = (v: string) => v.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   return {
     name: 'ongem-brand',
     configResolved(config) {
       made = brandManifest({ ...config.env, ...process.env });
+      outDir = resolve(config.root, config.build.outDir);
+      ssr = Boolean(config.build.ssr);
     },
     transformIndexHtml(html) {
-      return html.replace(/%BRAND_PRODUCT%/g, escape(made.brand.names.product));
+      const named = html.replace(/%BRAND_PRODUCT%/g, escape(made.brand.names.product));
+      if (made.own) return named;
+      return named
+        .replace(/\s*<link rel="(icon|apple-touch-icon)"[^>]*\/>/g, '')
+        .replace(
+          '<link rel="manifest"',
+          `<link rel="icon" type="image/svg+xml" href="/${BRAND_ICON}" />\n    <link rel="manifest"`,
+        );
     },
     configureServer(server) {
       server.middlewares.use('/site.webmanifest', (_req, res) => {
         res.setHeader('Content-Type', 'application/manifest+json');
         res.end(made.json);
       });
+      if (made.icon)
+        server.middlewares.use(`/${BRAND_ICON}`, (_req, res) => {
+          res.setHeader('Content-Type', 'image/svg+xml');
+          res.end(made.icon);
+        });
     },
     generateBundle() {
       if (this.environment?.config.build.ssr) return;
       this.emitFile({ type: 'asset', fileName: 'site.webmanifest', source: made.json });
+      if (made.icon) this.emitFile({ type: 'asset', fileName: BRAND_ICON, source: made.icon });
+    },
+    closeBundle() {
+      if (made.own || ssr || this.environment?.config.build.ssr) return;
+      for (const f of DEFAULT_BRAND_PUBLIC) rmSync(join(outDir, f), { recursive: true, force: true });
     },
   };
 }

@@ -29,6 +29,8 @@ interface ImportMetaEnv {
   readonly VITE_DEMO_STRIPE_PUBLISHABLE_KEY?: string;
   /** OG-082: the environment's bundled brand id (ADR-0058, default ongem), used until ongem-core serves the brand. */
   readonly VITE_BRAND?: string;
+  /** OG-079: `true` for a demo site (bin/demo-local): another brand's legal pages show sample texts, not the operator's. */
+  readonly VITE_DEMO_SITE?: string;
 }
 
 /** The package version and commit of the build (vite.config.ts). */

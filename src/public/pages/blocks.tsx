@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { t } from '../../i18n';
-import { US_MEDIA } from '../../region';
+import { recordedMedia } from '../../region';
 import { BrowserFrame, CapabilityArt, PhoneFrame } from '../art';
 import { facts as allFacts, type ArtName, type Fact } from '../content';
 import { DEMO, DemoLink, PrimaryCta } from '../Nav';
@@ -119,7 +119,7 @@ export function Shot({
 }) {
   // The prerendered first screen carries only the hero's screens; the app puts the others in (PS-013).
   const deferred = useFirstPaint() && priority !== 'high';
-  if (!US_MEDIA) return <CapabilityArt name={SCREEN_ART[name]} />;
+  if (!recordedMedia()) return <CapabilityArt name={SCREEN_ART[name]} />;
   const s = SCREENSHOTS[name];
   const loading = lazy ? 'lazy' : 'eager';
   const desktop = (

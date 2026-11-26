@@ -9,7 +9,7 @@ import { posts } from '../public/media/blog';
 import { APP_SHOTS, WEB_SHOTS } from '../public/media/gallery';
 import { Markdown } from '../i18n/markdown';
 import { isMediaPath } from '../public/media/paths';
-import { VIDEOS, videoTitle } from '../public/media/videos';
+import { videos, videoTitle } from '../public/media/videos';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { renderApp } from './render';
@@ -62,7 +62,7 @@ describe('public media (OG-032)', () => {
   });
 
   it('every_post_links_a_recorded_video_and_a_product_page_AC_R15_3', () => {
-    const ids = new Set(VIDEOS.map((v) => v.id));
+    const ids = new Set(videos().map((v) => v.id));
     for (const p of posts()) {
       expect(p.video && ids.has(p.video)).toBe(true);
       expect(p.product).toMatch(/^\/(product|partners)/);
@@ -111,9 +111,9 @@ describe('public media (OG-032)', () => {
   it('videos_page_with_captions_and_posters_AC_R16_1', () => {
     renderApp('/videos', { mode: 'none' });
     expect(screen.getByTestId('public-videos')).toBeInTheDocument();
-    expect(VIDEOS.length).toBeGreaterThanOrEqual(7);
-    expect(VIDEOS.some((v) => v.height > v.width)).toBe(true);
-    for (const v of VIDEOS) {
+    expect(videos().length).toBeGreaterThanOrEqual(7);
+    expect(videos().some((v) => v.height > v.width)).toBe(true);
+    for (const v of videos()) {
       const fig = screen.getByTestId(`video-${v.id}`);
       const video = fig.querySelector('video')!;
       // Native controls appear once played; before that the branded play button stands in (OG-032 R23).
@@ -130,7 +130,7 @@ describe('public media (OG-032)', () => {
   });
 
   it('video_files_exist_and_stay_small_AC_R16_2', () => {
-    for (const v of VIDEOS) {
+    for (const v of videos()) {
       for (const ext of ['webm', 'vtt', 'jpg'])
         expect(existsSync(join(root, 'public/videos', `${v.id}.${ext}`))).toBe(true);
       const size = statSync(join(root, 'public/videos', `${v.id}.webm`)).size;
@@ -188,7 +188,7 @@ describe('public media (OG-032)', () => {
 
   it('videos_show_a_branded_play_button_that_starts_playback_AC_R23_1', async () => {
     renderApp('/videos', { mode: 'none' });
-    const v = VIDEOS[0]!;
+    const v = videos()[0]!;
     const fig = screen.getByTestId(`video-${v.id}`);
     const video = fig.querySelector('video')!;
     expect(video).not.toHaveAttribute('controls');

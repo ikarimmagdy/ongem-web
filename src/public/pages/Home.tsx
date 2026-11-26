@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { t, tList } from '../../i18n';
-import { US_MEDIA } from '../../region';
+import { recordedMedia } from '../../region';
 import { BrowserFrame, CapabilityArt, GemGlow, HeroArt, ShieldArt } from '../art';
 import { capabilities, capability, faq, securityControls, trustParties, who, WHO_IDS } from '../content';
 import { VideoStrip } from '../media/MediaPages';
@@ -39,7 +39,7 @@ export function Home() {
               ))}
             </ul>
           </div>
-          {US_MEDIA ? (
+          {recordedMedia() ? (
             <div className="pub-hero__stage" data-testid="hero-stage">
               <div className="pub-hero__desk">
                 <BrowserFrame>

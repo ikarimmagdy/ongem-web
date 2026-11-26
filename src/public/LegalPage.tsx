@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom';
 import { has, Md, metaOf, t } from '../i18n';
 import { formatDay } from '../lib/schedule';
 import { legalTitle } from './content';
+import { demoLegal } from './site';
 
 /** A legal page's meta: on its title or its body entry (version, effective date). */
 function legalInfo(slug: string) {
+  if (demoLegal()) return { version: '', effective: '' };
   const m = { ...metaOf(`legal.${slug}.body`), ...metaOf(`legal.${slug}.title`) };
   return { version: m.version ?? '', effective: m.effective ?? m.effective_date ?? m.effectiveDate ?? '' };
 }
@@ -19,11 +21,14 @@ export const legalMeta = (path: string) => {
 
 /**
  * /legal/<slug> (OG-033 R14, PS-001): the published text of the `legal` channel, with its version and effective date.
- * Until OnGem's legal team publishes it, a holding line and a way to reach OnGem; never text written here.
+ * Until the legal team publishes it, a holding line and a way to reach the brand; never text written here. A demo site
+ * under another brand shows that brand's sample texts instead (OG-079).
  */
 export function LegalPage({ slug }: { slug: string }) {
   const { version, effective } = legalInfo(slug);
-  const published = has(`legal.${slug}.body`);
+  // OG-079: in demo mode under another brand, the sample text that names the brand (`web.legal.demo.<slug>`).
+  const demo = demoLegal() && has(`web.legal.demo.${slug}`);
+  const published = !demo && has(`legal.${slug}.body`);
   return (
     <article data-testid="public-legal">
       <section className="pub-pagehead">
@@ -44,7 +49,14 @@ export function LegalPage({ slug }: { slug: string }) {
       </section>
       <section className="pub-section">
         <div className="pub-wrap pub-post">
-          {published ? (
+          {demo ? (
+            <div className="pub-prose" data-testid="legal-demo">
+              <p className="pub-lede" data-testid="legal-demo-note">
+                {t('web.legal.demo.note')}
+              </p>
+              <Md k={`web.legal.demo.${slug}`} />
+            </div>
+          ) : published ? (
             <div className="pub-prose" data-testid="legal-body">
               <Md k={`legal.${slug}.body`} />
             </div>

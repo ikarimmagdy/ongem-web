@@ -1,5 +1,7 @@
 import { has, keysUnder, metaOf, t } from '../../i18n';
+import { brand } from '../../lib/brand';
 import { formatDay } from '../../lib/schedule';
+import { recordedMedia } from '../../region';
 import { SITE } from '../site';
 
 /**
@@ -29,6 +31,9 @@ export function postBySlug(slug: string): Post | undefined {
     .filter(Boolean);
   // A post about cards is left out where the bank has no cards (the UAE in v0, OG-034 R7).
   if (!SITE.cards && tags.includes('cards')) return undefined;
+  // OG-079: a post about one brand's own story (meta `brand`) is left out under any other brand.
+  if (meta.brand && meta.brand !== brand().id) return undefined;
+  const media = recordedMedia();
   return {
     slug,
     title: t(`blog.${slug}.title`),
@@ -36,11 +41,18 @@ export function postBySlug(slug: string): Post | undefined {
     summary: t(`blog.${slug}.summary`),
     author: t(`blog.${slug}.author`),
     tags,
-    video: meta.video || undefined,
+    video: (media && meta.video) || undefined,
     product: meta.product || undefined,
-    body: t(`blog.${slug}.body`),
+    body: media ? t(`blog.${slug}.body`) : withoutVideoLinks(t(`blog.${slug}.body`)),
   };
 }
+
+/** The body without its paragraphs that point at the walkthrough videos, where there are none (OG-079). */
+export const withoutVideoLinks = (body: string): string =>
+  body
+    .split(/\n{2,}/)
+    .filter((p) => !/\]\(\/videos[#)]/.test(p))
+    .join('\n\n');
 
 /** Every post the content has, newest first. */
 export function posts(): Post[] {

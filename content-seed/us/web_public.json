@@ -1384,6 +1384,65 @@
       "ar": "شروط الاستخدام"
     },
     {
+      "key": "web.legal.demo.note",
+      "format": "text",
+      "description": "Legal page in a demo site (OG-079): the line above the sample text",
+      "placeholders": [
+        "brand"
+      ],
+      "meta": {},
+      "en": "This is sample text for the {brand} demo. It is not a legal document and creates no rights or obligations.",
+      "ar": "هذا نص تجريبي لعرض {brand}. وهو ليس مستندًا قانونيًا ولا ينشئ أي حقوق أو التزامات."
+    },
+    {
+      "key": "web.legal.demo.terms",
+      "format": "markdown",
+      "description": "Legal page in a demo site under another brand than the operator's (OG-079): neutral sample text that names the brand, never a legal text (terms of use)",
+      "placeholders": [
+        "brand",
+        "legalName"
+      ],
+      "meta": {},
+      "en": "## Using {brand}\n\n{legalName} offers {brand}. These sample terms show where the real terms of use will sit once {legalName} publishes them.\n\n## Your account\n\nYou keep your sign-in details to yourself, and you tell us at once if you think someone else has used them.\n\n## Payments\n\nYou check each payment before you send it. A payment that needs a second person waits until they approve it.\n\n## Changes\n\nWhen the terms change, {brand} tells you before the change takes effect.",
+      "ar": "## استخدام {brand}\n\nتقدّم {legalName} خدمة {brand}. توضّح هذه الشروط التجريبية مكان شروط الاستخدام الفعلية عندما تنشرها {legalName}.\n\n## حسابك\n\nتحتفظ ببيانات تسجيل الدخول لنفسك، وتخبرنا فورًا إذا ظننت أن شخصًا آخر استخدمها.\n\n## الدفعات\n\nتراجع كل دفعة قبل إرسالها. والدفعة التي تحتاج إلى شخص ثانٍ تنتظر حتى يوافق عليها.\n\n## التغييرات\n\nعندما تتغير الشروط، تخبرك {brand} قبل أن يسري التغيير."
+    },
+    {
+      "key": "web.legal.demo.privacy",
+      "format": "markdown",
+      "description": "Legal page in a demo site under another brand than the operator's (OG-079): neutral sample text that names the brand, never a legal text (privacy notice)",
+      "placeholders": [
+        "brand",
+        "legalName"
+      ],
+      "meta": {},
+      "en": "## What {brand} keeps\n\nIn this demo nothing you type is kept: the sample company, accounts and payments live in your browser tab and are gone when you close it.\n\n## In the real service\n\n{legalName} will describe here which details it keeps about you and your company, why, for how long and who it shares them with.\n\n## Your choices\n\nYou will be able to ask for a copy of your details and to correct them.",
+      "ar": "## ما تحتفظ به {brand}\n\nفي هذا العرض لا يُحفظ أي شيء تكتبه: الشركة والحسابات والدفعات التجريبية موجودة في علامة التبويب لديك وتختفي عند إغلاقها.\n\n## في الخدمة الفعلية\n\nستوضّح {legalName} هنا البيانات التي تحتفظ بها عنك وعن شركتك، ولماذا، ولأي مدة، ومع من تشاركها.\n\n## خياراتك\n\nستتمكن من طلب نسخة من بياناتك وتصحيحها."
+    },
+    {
+      "key": "web.legal.demo.cookies",
+      "format": "markdown",
+      "description": "Legal page in a demo site under another brand than the operator's (OG-079): neutral sample text that names the brand, never a legal text (cookies)",
+      "placeholders": [
+        "brand",
+        "legalName"
+      ],
+      "meta": {},
+      "en": "## Cookies in this demo\n\nThe {brand} demo sets no advertising or tracking cookies. It keeps a few choices for your browser tab, such as the language and the light or dark look.\n\n## In the real service\n\n{legalName} will list here each cookie it uses and what it is for.",
+      "ar": "## ملفات تعريف الارتباط في هذا العرض\n\nلا يضع عرض {brand} أي ملفات تعريف ارتباط للإعلانات أو التتبع. ويحتفظ ببعض الخيارات لعلامة التبويب لديك، مثل اللغة والمظهر الفاتح أو الداكن.\n\n## في الخدمة الفعلية\n\nستذكر {legalName} هنا كل ملف تعريف ارتباط تستخدمه والغرض منه."
+    },
+    {
+      "key": "web.legal.demo.disclosures",
+      "format": "markdown",
+      "description": "Legal page in a demo site under another brand than the operator's (OG-079): neutral sample text that names the brand, never a legal text (disclosures)",
+      "placeholders": [
+        "brand",
+        "legalName"
+      ],
+      "meta": {},
+      "en": "## About this demo\n\n{brand} is a demonstration brand. {legalName} is not a bank, and no account, card or payment in this demo is real.\n\n## In the real service\n\nThe bank that holds the money and the protections that apply will be named here, as the bank and {legalName} agree them.",
+      "ar": "## عن هذا العرض\n\n{brand} علامة تجارية للعرض فقط. {legalName} ليست بنكًا، ولا يوجد في هذا العرض أي حساب أو بطاقة أو دفعة حقيقية.\n\n## في الخدمة الفعلية\n\nسيُذكر هنا البنك الذي يحتفظ بالأموال وأوجه الحماية المطبقة، كما يتفق عليها البنك و{legalName}."
+    },
+    {
       "key": "web.legal.version",
       "format": "text",
       "description": "Legal page: the version of the text",

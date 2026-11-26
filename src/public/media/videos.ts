@@ -1,4 +1,4 @@
-import { US_MEDIA } from '../../region';
+import { recordedMedia } from '../../region';
 import { t } from '../../i18n';
 import recorded from './videos.json';
 
@@ -15,8 +15,8 @@ export interface Video {
   height: number;
 }
 
-/** None in the AE build: they were recorded on the US demo (OG-022 R18). */
-export const VIDEOS: Video[] = US_MEDIA ? recorded : [];
+/** None in the AE build or under another brand: they were recorded on the US demo (OG-022 R18, OG-079). */
+export const videos = (): Video[] => (recordedMedia() ? recorded : []);
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 export const videoSrc = (id: string) => `${base}videos/${id}.webm`;
@@ -24,7 +24,7 @@ export const videoTrack = (id: string) => `${base}videos/${id}.vtt`;
 export const videoPoster = (id: string) => `${base}videos/${id}.jpg`;
 export const videoTitle = (v: Video) => t(`web.videos.${v.id.replace(/-/g, '_')}.title`);
 export const videoSummary = (v: Video) => t(`web.videos.${v.id.replace(/-/g, '_')}.summary`);
-export const videoById = (id: string) => VIDEOS.find((v) => v.id === id);
+export const videoById = (id: string) => videos().find((v) => v.id === id);
 
 /** 0:25, the length a viewer reads. */
 export function formatDuration(seconds: number): string {

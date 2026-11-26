@@ -43,8 +43,10 @@ export function prerender() {
     html,
     style,
     social: [
-      ...og.map(([property, content]) => ({ attr: 'property', name: property, content })),
-      ...twitter.map(([name, content]) => ({ attr: 'name', name, content })),
+      ...og.flatMap(([property, content]) =>
+        content ? [{ attr: 'property', name: property, content }] : [],
+      ),
+      ...twitter.flatMap(([name, content]) => (content ? [{ attr: 'name', name, content }] : [])),
     ],
     themeId: theme.id,
     themeMode: theme.mode ?? 'light',

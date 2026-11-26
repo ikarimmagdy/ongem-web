@@ -76,6 +76,12 @@ let served = false;
 const listeners = new Set<() => void>();
 
 export const brand = (): Brand => current;
+
+/**
+ * True for the bundle's default brand, the operator's own. Screenshots, the gallery, the walkthrough videos and the share
+ * images were recorded under it, so another brand never shows them (OG-079).
+ */
+export const isDefaultBrand = (b: Pick<Brand, 'id'> = current): boolean => b.id === BUNDLE.default;
 /** True once ongem-core answered with the brand (a bundled brand never invents a contact address). */
 export const brandServed = (): boolean => served;
 

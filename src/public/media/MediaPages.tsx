@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { US_MEDIA } from '../../region';
+import { recordedMedia } from '../../region';
 import { BrowserFrame, PhoneFrame } from '../art';
 import { formatPostDate, posts, postBySlug, type Post } from './blog';
 import { productLink } from '../content';
@@ -13,7 +13,7 @@ import {
   formatDuration,
   videoById,
   videoPoster,
-  VIDEOS,
+  videos,
   videoSrc,
   videoSummary,
   videoTitle,
@@ -95,7 +95,7 @@ export function VideoPlayer({ video }: { video: Video }) {
 
 /** Three featured walkthroughs, for the home and product pages. */
 export function VideoStrip() {
-  if (!US_MEDIA) return null;
+  if (!recordedMedia()) return null;
   const featured = FEATURED.map(videoById).filter((v): v is Video => Boolean(v));
   return (
     <section
@@ -151,7 +151,7 @@ function Shot({ shot }: { shot: GalleryShot }) {
 
 /** Web and app screens for the product page; loaded eagerly at low priority, so no frame is ever empty (OG-034 R1). */
 export function Gallery() {
-  if (!US_MEDIA) return null;
+  if (!recordedMedia()) return null;
   return (
     <section className="pub-section" aria-labelledby="gallery" data-testid="gallery">
       <div className="pub-wrap">
@@ -274,7 +274,7 @@ function Videos() {
       <section className="pub-section pub-section--after-head">
         <div className="pub-wrap">
           <div className="pub-video-grid pub-video-grid--all">
-            {VIDEOS.map((v) => (
+            {videos().map((v) => (
               <VideoPlayer key={v.id} video={v} />
             ))}
           </div>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 128" width="420" height="128" role="img" aria-label="Harbor">
+  <g transform="translate(16 16)">
+    <rect width="96" height="96" rx="21" fill="#0F766E"/>
+    <rect x="27" y="19.5" width="10.5" height="43.5" rx="3" fill="#FFFFFF"/>
+    <rect x="58.5" y="19.5" width="10.5" height="43.5" rx="3" fill="#FFFFFF"/>
+    <rect x="27" y="36.75" width="42" height="9" rx="2.25" fill="#FFFFFF"/>
+    <path d="M18 75q10-9 20 0t20 0t20 0" fill="none" stroke="#F59E0B" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <text x="132" y="88" fill="#0B2A28" font-family="Merriweather, Georgia, 'Times New Roman', serif" font-size="68" font-weight="700" letter-spacing="-1">Harbor</text>
+</svg>

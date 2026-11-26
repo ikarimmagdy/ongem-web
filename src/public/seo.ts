@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getLocale, setLocale, t, useContent } from '../i18n';
-import { brand, useBrandConfig } from '../lib/brand';
+import { brand, isDefaultBrand, useBrandConfig } from '../lib/brand';
 import { isPagePath } from './content';
 import { HREFLANG, SITE, siteOf } from './site';
 
@@ -66,28 +66,34 @@ function setMeta(name: string, content: string | null, attr: 'name' | 'property'
   tag.content = content;
 }
 
-/** The branded share image of this build's region and the page's language (PS-015), an absolute URL. */
-export const shareImage = (locale: string) =>
-  `${SITE.url}/og/ongem-${SITE.region.toLowerCase()}-${locale === 'ar' ? 'ar' : 'en'}.png`;
+/**
+ * The branded share image of this build's region and the page's language (PS-015), an absolute URL. The images carry
+ * the default brand, so another brand has none (OG-079) and shares as a text card.
+ */
+export const shareImage = (locale: string): string | null =>
+  isDefaultBrand()
+    ? `${SITE.url}/og/ongem-${SITE.region.toLowerCase()}-${locale === 'ar' ? 'ar' : 'en'}.png`
+    : null;
 
 /** Open Graph and Twitter card tags (PS-015): title, description, canonical URL, image, type and locale. */
 export function socialTags(path: string, meta: { title: string; description: string }, locale: string) {
-  const og: Array<[string, string]> = [
+  const image = shareImage(locale);
+  const og: Array<[string, string | null]> = [
     ['og:type', path.startsWith('/blog/') ? 'article' : 'website'],
     ['og:site_name', brand().names.product],
     ['og:title', meta.title],
     ['og:description', meta.description],
     ['og:url', `${SITE.url}${path}`],
-    ['og:image', shareImage(locale)],
-    ['og:image:width', '1200'],
-    ['og:image:height', '630'],
+    ['og:image', image],
+    ['og:image:width', image && '1200'],
+    ['og:image:height', image && '630'],
     ['og:locale', `${locale === 'ar' ? 'ar' : 'en'}_${SITE.region}`],
   ];
-  const twitter: Array<[string, string]> = [
-    ['twitter:card', 'summary_large_image'],
+  const twitter: Array<[string, string | null]> = [
+    ['twitter:card', image ? 'summary_large_image' : 'summary'],
     ['twitter:title', meta.title],
     ['twitter:description', meta.description],
-    ['twitter:image', shareImage(locale)],
+    ['twitter:image', image],
   ];
   return { og, twitter };
 }

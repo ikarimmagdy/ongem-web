@@ -1,9 +1,9 @@
 import { has, keysUnder, metaOf, t, tList } from '../i18n';
 import { ACCEPTANCE_ENABLED } from '../acceptance/flag';
-import { US_MEDIA } from '../region';
+import { recordedMedia } from '../region';
 import { posts } from './media/blog';
 import { isMediaPath } from './media/paths';
-import { SITE } from './site';
+import { demoLegal, SITE } from './site';
 
 /**
  * The public site's structure (OG-032, OG-034): which pages exist, what the menus hold and the readers of their texts.
@@ -67,6 +67,7 @@ export type PagePath = string;
 export const LEGAL_PAGES = ['terms', 'privacy', 'cookies', 'disclosures'];
 
 export function legalSlugs(): string[] {
+  if (demoLegal()) return [...LEGAL_PAGES];
   const published = keysUnder('legal.')
     .filter((k) => k.endsWith('.title'))
     .map((k) => k.slice(6, -6))
@@ -77,7 +78,7 @@ export function legalSlugs(): string[] {
 
 /** The page's own published title, else its name from the site's texts. */
 export const legalTitle = (slug: string) =>
-  has(`legal.${slug}.title`) ? t(`legal.${slug}.title`) : t(`web.legal.page.${slug}`);
+  !demoLegal() && has(`legal.${slug}.title`) ? t(`legal.${slug}.title`) : t(`web.legal.page.${slug}`);
 
 export const isLegalPath = (path: string) =>
   path.startsWith('/legal/') && legalSlugs().includes(path.slice(7));
@@ -94,7 +95,7 @@ export function isPublicPath(path: string): boolean {
 /** Old paths a build does not have, to the page that now holds them (PS-008): no card page or videos in the UAE. */
 export function movedPath(path: string): string | undefined {
   if (path === '/product/cards' && !SITE.cards) return '/product';
-  if (path === '/videos' && !US_MEDIA) return '/blog';
+  if (path === '/videos' && !recordedMedia()) return '/blog';
   return undefined;
 }
 
@@ -184,7 +185,7 @@ export function navGroups(): NavGroup[] {
       links: [
         { to: '/guides', label: t('web.nav.guides') },
         { to: '/blog', label: t('web.nav.blog') },
-        ...(US_MEDIA ? [{ to: '/videos', label: t('web.nav.videos') }] : []),
+        ...(recordedMedia() ? [{ to: '/videos', label: t('web.nav.videos') }] : []),
         { to: '/faq', label: t('web.nav.faq') },
         // Status stays out of the menus until the monitoring work (OG-002) gives it a real page (PS-029).
       ],
