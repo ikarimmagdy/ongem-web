@@ -96,25 +96,25 @@
       "key": "blog.from-genzone-to-ongem.body",
       "format": "markdown",
       "description": "Blog post text (markdown: ## headings, lists, links, bold)",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank", "formationPartner"],
       "meta": {},
-      "en": "GenZone forms companies and handles business licences. When you form your company with GenZone, you can ask it to send your company's details to {brand}.\n\n## What happens\n\n1. GenZone sends your company's details through {brand}'s Partner API, with your consent.\n2. You sign in to {brand} and find your application already filled in: the company, its address and its owners.\n3. Each owner adds their own identity details in {brand}.\n4. You confirm the details, accept the bank's disclosures and submit.\n5. Piermont Bank verifies the business and its owners, and {brand} shows you each step.\n\nNo retyping what you already gave GenZone, and nothing is submitted to the bank until you do it yourself.\n\nWatch the [sign-up and onboarding walkthrough](/videos#sign-up-and-onboarding), or read [how partner onboarding works](/partners).",
-      "ar": "تؤسس GenZone الشركات وتتولى الرخص التجارية. وعندما تؤسس شركتك مع GenZone، يمكنك أن تطلب منها إرسال بيانات شركتك إلى {brand}.\n\n## ما الذي يحدث\n\n1. ترسل GenZone بيانات شركتك عبر واجهة برمجة الشركاء من {brand}، بموافقتك.\n2. تسجّل الدخول إلى {brand} فتجد طلبك معبأً مسبقًا: الشركة وعنوانها وملاكها.\n3. يضيف كل مالك بيانات هويته بنفسه في {brand}.\n4. تؤكد البيانات، وتقبل إفصاحات البنك، ثم تقدّم الطلب.\n5. يتحقق Piermont Bank من النشاط التجاري وملاكه، وتعرض لك {brand} كل خطوة.\n\nدون إعادة كتابة ما قدمته إلى GenZone، ولا يُقدَّم أي شيء إلى البنك إلا عندما تقدّمه بنفسك.\n\nشاهد [جولة التسجيل وفتح الحساب](/videos#sign-up-and-onboarding)، أو اقرأ [كيف يعمل التسجيل عبر الشركاء](/partners)."
+      "en": "{formationPartner} forms companies and handles business licences. When you form your company with {formationPartner}, you can ask it to send your company's details to {brand}.\n\n## What happens\n\n1. {formationPartner} sends your company's details through {brand}'s Partner API, with your consent.\n2. You sign in to {brand} and find your application already filled in: the company, its address and its owners.\n3. Each owner adds their own identity details in {brand}.\n4. You confirm the details, accept the bank's disclosures and submit.\n5. {sponsorBank} verifies the business and its owners, and {brand} shows you each step.\n\nNo retyping what you already gave {formationPartner}, and nothing is submitted to the bank until you do it yourself.\n\nWatch the [sign-up and onboarding walkthrough](/videos#sign-up-and-onboarding), or read [how partner onboarding works](/partners).",
+      "ar": "تؤسس {formationPartner} الشركات وتتولى الرخص التجارية. وعندما تؤسس شركتك مع {formationPartner}، يمكنك أن تطلب منها إرسال بيانات شركتك إلى {brand}.\n\n## ما الذي يحدث\n\n1. ترسل {formationPartner} بيانات شركتك عبر واجهة برمجة الشركاء من {brand}، بموافقتك.\n2. تسجّل الدخول إلى {brand} فتجد طلبك معبأً مسبقًا: الشركة وعنوانها وملاكها.\n3. يضيف كل مالك بيانات هويته بنفسه في {brand}.\n4. تؤكد البيانات، وتقبل إفصاحات البنك، ثم تقدّم الطلب.\n5. يتحقق {sponsorBank} من النشاط التجاري وملاكه، وتعرض لك {brand} كل خطوة.\n\nدون إعادة كتابة ما قدمته إلى {formationPartner}، ولا يُقدَّم أي شيء إلى البنك إلا عندما تقدّمه بنفسك.\n\nشاهد [جولة التسجيل وفتح الحساب](/videos#sign-up-and-onboarding)، أو اقرأ [كيف يعمل التسجيل عبر الشركاء](/partners)."
     },
     {
       "key": "blog.from-genzone-to-ongem.summary",
       "format": "text",
       "description": "Blog post summary on the list and in search results",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "formationPartner"],
       "meta": {},
-      "en": "GenZone sends your company's details to {brand} when you ask it to. You review them, add what is missing and submit.",
-      "ar": "ترسل GenZone بيانات شركتك إلى {brand} عندما تطلب منها ذلك. تراجعها، وتضيف ما ينقص، ثم تقدّم الطلب."
+      "en": "{formationPartner} sends your company's details to {brand} when you ask it to. You review them, add what is missing and submit.",
+      "ar": "ترسل {formationPartner} بيانات شركتك إلى {brand} عندما تطلب منها ذلك. تراجعها، وتضيف ما ينقص، ثم تقدّم الطلب."
     },
     {
       "key": "blog.from-genzone-to-ongem.title",
       "format": "text",
       "description": "Blog post title; meta holds the date, tags, the linked video and product page",
-      "placeholders": [],
+      "placeholders": ["formationPartner"],
       "meta": {
         "date": "2026-11-07",
         "tags": "partners,onboarding",
@@ -122,8 +122,8 @@
         "product": "/partners",
         "brand": "ongem"
       },
-      "en": "Formed your company with GenZone? Your application is mostly done",
-      "ar": "هل أسّست شركتك مع GenZone؟ طلبك شبه مكتمل"
+      "en": "Formed your company with {formationPartner}? Your application is mostly done",
+      "ar": "هل أسّست شركتك مع {formationPartner}؟ طلبك شبه مكتمل"
     },
     {
       "key": "blog.limits-that-follow-the-bank.author",
@@ -138,10 +138,10 @@
       "key": "blog.limits-that-follow-the-bank.body",
       "format": "markdown",
       "description": "Blog post text (markdown: ## headings, lists, links, bold)",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank"],
       "meta": {},
-      "en": "Like every business bank account, an {brand} account has limits on how much can move: per payment, per day and per month.\n\n## Where the limits come from\n\nPiermont Bank, the bank that holds your account, reviews every business it banks and keeps that review up to date. {brand} reads the bank's view of your business every day, and again straight away when the bank tells us it has changed. The limits that apply to your payments follow it.\n\nThat means:\n\n- **A new company may start with lower limits.** As your company builds a history with the bank, limits can rise.\n- **Limits can change.** When they do, {brand} sends you a notice that your limits have changed.\n- **Some features need a history.** For example, pulling money in from another bank can need a period of payments without returns first.\n\n## What you see when a payment is over a limit\n\n{brand} tells you plainly that the payment is over the limit, for one payment or for the day or month, and that nothing was sent. It never moves part of a payment.\n\n## The limits we use today\n\nUntil the bank confirms the limits for our pilot, {brand} uses its built-in limits: **US$25,000 per payment and US$50,000 per day**. The limits per level that we proposed to the bank are waiting for its approval.\n\nWatch [sending a payment](/videos#send-a-payment).",
-      "ar": "مثل كل حساب مصرفي للأعمال، لحساب {brand} حدود لما يمكن تحريكه: لكل دفعة، ولكل يوم، ولكل شهر.\n\n## من أين تأتي الحدود\n\nيراجع Piermont Bank، البنك الذي يحتفظ بحسابك، كل نشاط تجاري يتعامل معه ويُبقي هذه المراجعة محدَّثة. تقرأ {brand} تقييم البنك لنشاطك التجاري كل يوم، ومرة أخرى فورًا عندما يبلغنا البنك بأنه تغيّر. والحدود المطبقة على دفعاتك تتبعه.\n\nوهذا يعني:\n\n- **قد تبدأ الشركة الجديدة بحدود أقل.** ومع بناء شركتك سجلًا مع البنك، يمكن أن ترتفع الحدود.\n- **قد تتغير الحدود.** وعندما يحدث ذلك، ترسل لك {brand} إشعارًا بأن حدودك تغيّرت.\n- **بعض الميزات تتطلب سجلًا.** على سبيل المثال، قد يتطلب سحب الأموال من بنك آخر فترة من الدفعات دون إعادة أولًا.\n\n## ما الذي تراه عندما تتجاوز الدفعة أحد الحدود\n\nتوضح لك {brand} بوضوح أن الدفعة تتجاوز الحد، سواء لدفعة واحدة أو لليوم أو للشهر، وأنه لم يُرسل شيء. ولا تحرك أبدًا جزءًا من دفعة.\n\n## الحدود التي نستخدمها اليوم\n\nإلى أن يؤكد البنك الحدود الخاصة بمرحلتنا التجريبية، تستخدم {brand} حدودها المضمّنة: **US$25,000 لكل دفعة وUS$50,000 لكل يوم**. أما الحدود لكل مستوى التي اقترحناها على البنك فهي بانتظار موافقته.\n\nشاهد [إرسال دفعة](/videos#send-a-payment)."
+      "en": "Like every business bank account, an {brand} account has limits on how much can move: per payment, per day and per month.\n\n## Where the limits come from\n\n{sponsorBank}, the bank that holds your account, reviews every business it banks and keeps that review up to date. {brand} reads the bank's view of your business every day, and again straight away when the bank tells us it has changed. The limits that apply to your payments follow it.\n\nThat means:\n\n- **A new company may start with lower limits.** As your company builds a history with the bank, limits can rise.\n- **Limits can change.** When they do, {brand} sends you a notice that your limits have changed.\n- **Some features need a history.** For example, pulling money in from another bank can need a period of payments without returns first.\n\n## What you see when a payment is over a limit\n\n{brand} tells you plainly that the payment is over the limit, for one payment or for the day or month, and that nothing was sent. It never moves part of a payment.\n\n## The limits we use today\n\nUntil the bank confirms the limits for our pilot, {brand} uses its built-in limits: **US$25,000 per payment and US$50,000 per day**. The limits per level that we proposed to the bank are waiting for its approval.\n\nWatch [sending a payment](/videos#send-a-payment).",
+      "ar": "مثل كل حساب مصرفي للأعمال، لحساب {brand} حدود لما يمكن تحريكه: لكل دفعة، ولكل يوم، ولكل شهر.\n\n## من أين تأتي الحدود\n\nيراجع {sponsorBank}، البنك الذي يحتفظ بحسابك، كل نشاط تجاري يتعامل معه ويُبقي هذه المراجعة محدَّثة. تقرأ {brand} تقييم البنك لنشاطك التجاري كل يوم، ومرة أخرى فورًا عندما يبلغنا البنك بأنه تغيّر. والحدود المطبقة على دفعاتك تتبعه.\n\nوهذا يعني:\n\n- **قد تبدأ الشركة الجديدة بحدود أقل.** ومع بناء شركتك سجلًا مع البنك، يمكن أن ترتفع الحدود.\n- **قد تتغير الحدود.** وعندما يحدث ذلك، ترسل لك {brand} إشعارًا بأن حدودك تغيّرت.\n- **بعض الميزات تتطلب سجلًا.** على سبيل المثال، قد يتطلب سحب الأموال من بنك آخر فترة من الدفعات دون إعادة أولًا.\n\n## ما الذي تراه عندما تتجاوز الدفعة أحد الحدود\n\nتوضح لك {brand} بوضوح أن الدفعة تتجاوز الحد، سواء لدفعة واحدة أو لليوم أو للشهر، وأنه لم يُرسل شيء. ولا تحرك أبدًا جزءًا من دفعة.\n\n## الحدود التي نستخدمها اليوم\n\nإلى أن يؤكد البنك الحدود الخاصة بمرحلتنا التجريبية، تستخدم {brand} حدودها المضمّنة: **US$25,000 لكل دفعة وUS$50,000 لكل يوم**. أما الحدود لكل مستوى التي اقترحناها على البنك فهي بانتظار موافقته.\n\nشاهد [إرسال دفعة](/videos#send-a-payment)."
     },
     {
       "key": "blog.limits-that-follow-the-bank.summary",
@@ -179,10 +179,10 @@
       "key": "blog.virtual-cards-and-card-safety.body",
       "format": "markdown",
       "description": "Blog post text (markdown: ## headings, lists, links, bold)",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank"],
       "meta": {},
-      "en": "{brand} cards are issued by Piermont Bank. You manage them in {brand} on the web and on your phone.\n\n## Freeze and unfreeze\n\nIf a card looks wrong, freeze it. Payments on a frozen card are declined until you unfreeze it. Both take one tap and your second sign-in step.\n\n## Card details {brand} never sees\n\nWhen you show the card number, the PIN or set a PIN, the bank's own secure window opens inside {brand}. The number goes from the bank to your screen; it never passes through {brand}'s servers. The window closes by itself after **5 minutes**.\n\n## Something you do not recognise?\n\nOpen the card and choose **Dispute a charge**. It starts a support request about that card, and you follow the replies and the status in one thread.\n\nWatch [freezing a card and showing its details](/videos#cards-freeze-and-details) and [disputing a charge](/videos#support-and-disputes).",
-      "ar": "تُصدر بطاقات {brand} من Piermont Bank. وتديرها في {brand} على الويب وعلى هاتفك.\n\n## التجميد وإلغاء التجميد\n\nإذا بدا شيء غير طبيعي في بطاقة، فجمّدها. تُرفض الدفعات على البطاقة المجمّدة إلى أن تلغي تجميدها. ويتطلب كلا الإجراءين لمسة واحدة وخطوة التحقق الثانية.\n\n## تفاصيل بطاقة لا تراها {brand} أبدًا\n\nعندما تعرض رقم البطاقة أو الرقم السري أو تعيّن رقمًا سريًا، تُفتح نافذة البنك الآمنة داخل {brand}. ينتقل الرقم من البنك إلى شاشتك مباشرة، ولا يمر أبدًا عبر خوادم {brand}. وتُغلق النافذة تلقائيًا بعد **5 دقائق**.\n\n## عملية لا تعرفها؟\n\nافتح البطاقة واختر **الاعتراض على عملية**. يبدأ ذلك طلب دعم بشأن تلك البطاقة، وتتابع الردود والحالة في محادثة واحدة.\n\nشاهد [تجميد البطاقة وعرض تفاصيلها](/videos#cards-freeze-and-details) و[الاعتراض على عملية](/videos#support-and-disputes)."
+      "en": "{brand} cards are issued by {sponsorBank}. You manage them in {brand} on the web and on your phone.\n\n## Freeze and unfreeze\n\nIf a card looks wrong, freeze it. Payments on a frozen card are declined until you unfreeze it. Both take one tap and your second sign-in step.\n\n## Card details {brand} never sees\n\nWhen you show the card number, the PIN or set a PIN, the bank's own secure window opens inside {brand}. The number goes from the bank to your screen; it never passes through {brand}'s servers. The window closes by itself after **5 minutes**.\n\n## Something you do not recognise?\n\nOpen the card and choose **Dispute a charge**. It starts a support request about that card, and you follow the replies and the status in one thread.\n\nWatch [freezing a card and showing its details](/videos#cards-freeze-and-details) and [disputing a charge](/videos#support-and-disputes).",
+      "ar": "تُصدر بطاقات {brand} من {sponsorBank}. وتديرها في {brand} على الويب وعلى هاتفك.\n\n## التجميد وإلغاء التجميد\n\nإذا بدا شيء غير طبيعي في بطاقة، فجمّدها. تُرفض الدفعات على البطاقة المجمّدة إلى أن تلغي تجميدها. ويتطلب كلا الإجراءين لمسة واحدة وخطوة التحقق الثانية.\n\n## تفاصيل بطاقة لا تراها {brand} أبدًا\n\nعندما تعرض رقم البطاقة أو الرقم السري أو تعيّن رقمًا سريًا، تُفتح نافذة البنك الآمنة داخل {brand}. ينتقل الرقم من البنك إلى شاشتك مباشرة، ولا يمر أبدًا عبر خوادم {brand}. وتُغلق النافذة تلقائيًا بعد **5 دقائق**.\n\n## عملية لا تعرفها؟\n\nافتح البطاقة واختر **الاعتراض على عملية**. يبدأ ذلك طلب دعم بشأن تلك البطاقة، وتتابع الردود والحالة في محادثة واحدة.\n\nشاهد [تجميد البطاقة وعرض تفاصيلها](/videos#cards-freeze-and-details) و[الاعتراض على عملية](/videos#support-and-disputes)."
     },
     {
       "key": "blog.virtual-cards-and-card-safety.summary",
@@ -220,33 +220,33 @@
       "key": "blog.where-your-money-lives.body",
       "format": "markdown",
       "description": "Blog post text (markdown: ## headings, lists, links, bold)",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank", "baasProvider"],
       "meta": {},
-      "en": "{brand} is a financial technology company, not a bank. When you open a business account with {brand}, the account is held at **Piermont Bank**, through **Synctera**, the banking platform that connects {brand} to the bank.\n\n## What that means for you\n\n- **The bank holds the deposits.** The balance you see in {brand} is the bank's balance, read from the bank. {brand} shows it; it does not keep your money in its own accounts.\n- **The bank decides who can open an account.** When you apply, Piermont Bank verifies your business and its owners. {brand} shows you each step and asks for anything the bank needs, such as an ID document.\n- **Every night we check our view against the bank's.** If the balance or a transaction we show ever differs from the bank's records, our nightly check flags it so it is corrected.\n\n## What {brand} adds on top\n\nThe bank account is the foundation. {brand} gives you the tools to run it: payments by ACH, scheduled payments, virtual cards, approvals for larger payments, notices when something needs you, and support that answers in the same place.\n\n## Records\n\n{brand} keeps customer records for seven years after an account closes, and tells you so when you open and when you close an account.\n\nWatch the [sign-up and onboarding walkthrough](/videos#sign-up-and-onboarding), or read [what {brand} does today](/product).\n\n_The exact wording of our bank and deposit disclosures is with our legal reviewers. The disclosures at the foot of each page are the ones that apply._",
-      "ar": "{brand} شركة تقنية مالية وليست بنكًا. عندما تفتح حساب أعمال مع {brand}، يُحفظ الحساب لدى **Piermont Bank**، عبر **Synctera**، المنصة المصرفية التي تربط {brand} بالبنك.\n\n## ماذا يعني ذلك بالنسبة إليك\n\n- **البنك يحتفظ بالودائع.** الرصيد الذي تراه في {brand} هو رصيد البنك، مقروءًا من البنك. تعرضه {brand}، ولا تحتفظ بأموالك في حساباتها الخاصة.\n- **البنك يقرر من يمكنه فتح حساب.** عندما تتقدم بطلب، يتحقق Piermont Bank من نشاطك التجاري وملاكه. وتعرض لك {brand} كل خطوة وتطلب منك ما يحتاجه البنك، مثل وثيقة هوية.\n- **كل ليلة نطابق بياناتنا مع بيانات البنك.** إذا اختلف الرصيد أو أي معاملة نعرضها عن سجلات البنك، ينبّه فحصنا الليلي إلى ذلك حتى يُصحَّح.\n\n## ما الذي تضيفه {brand}\n\nالحساب المصرفي هو الأساس. وتمنحك {brand} الأدوات لإدارته: الدفعات عبر ACH، والدفعات المجدولة، والبطاقات الافتراضية، والموافقات على الدفعات الأكبر، والإشعارات عندما يحتاج شيء إليك، ودعمًا يجيبك في المكان نفسه.\n\n## السجلات\n\nتحتفظ {brand} بسجلات العملاء لمدة سبع سنوات بعد إغلاق الحساب، وتبلغك بذلك عند فتح الحساب وعند إغلاقه.\n\nشاهد [جولة التسجيل وفتح الحساب](/videos#sign-up-and-onboarding)، أو اقرأ [ما تقدمه {brand} اليوم](/product).\n\n_الصيغة الدقيقة لإفصاحات البنك والودائع لدى مراجعينا القانونيين. والإفصاحات الواردة أسفل كل صفحة هي المعمول بها._"
+      "en": "{brand} is a financial technology company, not a bank. When you open a business account with {brand}, the account is held at **{sponsorBank}**, through **{baasProvider}**, the banking platform that connects {brand} to the bank.\n\n## What that means for you\n\n- **The bank holds the deposits.** The balance you see in {brand} is the bank's balance, read from the bank. {brand} shows it; it does not keep your money in its own accounts.\n- **The bank decides who can open an account.** When you apply, {sponsorBank} verifies your business and its owners. {brand} shows you each step and asks for anything the bank needs, such as an ID document.\n- **Every night we check our view against the bank's.** If the balance or a transaction we show ever differs from the bank's records, our nightly check flags it so it is corrected.\n\n## What {brand} adds on top\n\nThe bank account is the foundation. {brand} gives you the tools to run it: payments by ACH, scheduled payments, virtual cards, approvals for larger payments, notices when something needs you, and support that answers in the same place.\n\n## Records\n\n{brand} keeps customer records for seven years after an account closes, and tells you so when you open and when you close an account.\n\nWatch the [sign-up and onboarding walkthrough](/videos#sign-up-and-onboarding), or read [what {brand} does today](/product).\n\n_The exact wording of our bank and deposit disclosures is with our legal reviewers. The disclosures at the foot of each page are the ones that apply._",
+      "ar": "{brand} شركة تقنية مالية وليست بنكًا. عندما تفتح حساب أعمال مع {brand}، يُحفظ الحساب لدى **{sponsorBank}**، عبر **{baasProvider}**، المنصة المصرفية التي تربط {brand} بالبنك.\n\n## ماذا يعني ذلك بالنسبة إليك\n\n- **البنك يحتفظ بالودائع.** الرصيد الذي تراه في {brand} هو رصيد البنك، مقروءًا من البنك. تعرضه {brand}، ولا تحتفظ بأموالك في حساباتها الخاصة.\n- **البنك يقرر من يمكنه فتح حساب.** عندما تتقدم بطلب، يتحقق {sponsorBank} من نشاطك التجاري وملاكه. وتعرض لك {brand} كل خطوة وتطلب منك ما يحتاجه البنك، مثل وثيقة هوية.\n- **كل ليلة نطابق بياناتنا مع بيانات البنك.** إذا اختلف الرصيد أو أي معاملة نعرضها عن سجلات البنك، ينبّه فحصنا الليلي إلى ذلك حتى يُصحَّح.\n\n## ما الذي تضيفه {brand}\n\nالحساب المصرفي هو الأساس. وتمنحك {brand} الأدوات لإدارته: الدفعات عبر ACH، والدفعات المجدولة، والبطاقات الافتراضية، والموافقات على الدفعات الأكبر، والإشعارات عندما يحتاج شيء إليك، ودعمًا يجيبك في المكان نفسه.\n\n## السجلات\n\nتحتفظ {brand} بسجلات العملاء لمدة سبع سنوات بعد إغلاق الحساب، وتبلغك بذلك عند فتح الحساب وعند إغلاقه.\n\nشاهد [جولة التسجيل وفتح الحساب](/videos#sign-up-and-onboarding)، أو اقرأ [ما تقدمه {brand} اليوم](/product).\n\n_الصيغة الدقيقة لإفصاحات البنك والودائع لدى مراجعينا القانونيين. والإفصاحات الواردة أسفل كل صفحة هي المعمول بها._"
     },
     {
       "key": "blog.where-your-money-lives.summary",
       "format": "text",
       "description": "Blog post summary on the list and in search results",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank"],
       "meta": {},
-      "en": "{brand} is the place you run your company's money. The money itself sits in an account at Piermont Bank. Here is how the two fit together.",
-      "ar": "{brand} هي المكان الذي تدير منه أموال شركتك، أما الأموال نفسها فتُحفظ في حساب لدى Piermont Bank. إليك كيف يتكامل الاثنان."
+      "en": "{brand} is the place you run your company's money. The money itself sits in an account at {sponsorBank}. Here is how the two fit together.",
+      "ar": "{brand} هي المكان الذي تدير منه أموال شركتك، أما الأموال نفسها فتُحفظ في حساب لدى {sponsorBank}. إليك كيف يتكامل الاثنان."
     },
     {
       "key": "blog.where-your-money-lives.title",
       "format": "text",
       "description": "Blog post title; meta holds the date, tags, the linked video and product page",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank"],
       "meta": {
         "date": "2026-11-07",
         "tags": "banking,security",
         "video": "sign-up-and-onboarding",
         "product": "/product#accounts"
       },
-      "en": "Where your money lives: {brand} and Piermont Bank",
-      "ar": "أين تُحفظ أموالك: {brand} وPiermont Bank"
+      "en": "Where your money lives: {brand} and {sponsorBank}",
+      "ar": "أين تُحفظ أموالك: {brand} و{sponsorBank}"
     }
   ]
 }

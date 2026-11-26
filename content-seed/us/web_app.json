@@ -2428,10 +2428,10 @@
       "key": "app.accounts.institution.home_bank",
       "format": "text",
       "description": "The institution that holds an account at the region's home bank, on each account row (OG-049); approved wording as web.bank_statement",
-      "placeholders": [],
+      "placeholders": ["sponsorBank"],
       "meta": {},
-      "en": "Piermont Bank, Member FDIC",
-      "ar": "Piermont Bank، عضو FDIC"
+      "en": "{sponsorBank}, Member FDIC",
+      "ar": "{sponsorBank}، عضو FDIC"
     },
     {
       "key": "app.home.indicative_total",
@@ -10838,10 +10838,10 @@
       "key": "app.shell.disclosure",
       "format": "text",
       "description": "Signed-in side bar foot and Settings: who holds the money (FA-055); AE never names the bank Glossary term shared by web and app (FA-052).",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank"],
       "meta": {},
-      "en": "{brand} is a financial technology company, not a bank. Banking services are provided by Piermont Bank, Member FDIC.",
-      "ar": "{brand} شركة تقنية مالية وليست بنكا. يقدّم الخدمات المصرفية Piermont Bank، عضو FDIC."
+      "en": "{brand} is a financial technology company, not a bank. Banking services are provided by {sponsorBank}, Member FDIC.",
+      "ar": "{brand} شركة تقنية مالية وليست بنكا. يقدّم الخدمات المصرفية {sponsorBank}، عضو FDIC."
     },
     {
       "key": "app.state.payment.sent",

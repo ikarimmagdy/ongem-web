@@ -302,10 +302,10 @@
       "key": "web.auth.sign_in_intro",
       "format": "text",
       "description": "Sign-in screen: sentence under the heading",
-      "placeholders": [],
+      "placeholders": ["sponsorBank"],
       "meta": {},
-      "en": "Your accounts at Piermont Bank, your payments and your cards, with the same approvals on the web and on your phone.",
-      "ar": "حساباتك لدى Piermont Bank ودفعاتك وبطاقاتك، مع الموافقات نفسها على الويب وعلى هاتفك."
+      "en": "Your accounts at {sponsorBank}, your payments and your cards, with the same approvals on the web and on your phone.",
+      "ar": "حساباتك لدى {sponsorBank} ودفعاتك وبطاقاتك، مع الموافقات نفسها على الويب وعلى هاتفك."
     },
     {
       "key": "web.auth.sign_in_title",
@@ -320,10 +320,10 @@
       "key": "web.auth.sign_up_lede",
       "format": "text",
       "description": "Sign-in page: sign up lede",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank"],
       "meta": {},
-      "en": "Create your sign-in, then tell us about your company. Piermont Bank decides on your account and {brand} shows you each step.",
-      "ar": "أنشئ بيانات الدخول، ثم أخبرنا عن شركتك. يقرر Piermont Bank بشأن حسابك، وتعرض لك {brand} كل خطوة."
+      "en": "Create your sign-in, then tell us about your company. {sponsorBank} decides on your account and {brand} shows you each step.",
+      "ar": "أنشئ بيانات الدخول، ثم أخبرنا عن شركتك. يقرر {sponsorBank} بشأن حسابك، وتعرض لك {brand} كل خطوة."
     },
     {
       "key": "web.auth.sign_up_title",
@@ -338,10 +338,10 @@
       "key": "web.bank_statement",
       "format": "text",
       "description": "Who provides the banking services: the required disclosure, approved wording (Volume 8 Table 8.15)",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank"],
       "meta": {},
-      "en": "{brand} is a financial technology company, not a bank. Banking services are provided by Piermont Bank, Member FDIC.",
-      "ar": "{brand} شركة تقنية مالية وليست بنكًا. تُقدَّم الخدمات المصرفية من Piermont Bank، عضو FDIC.",
+      "en": "{brand} is a financial technology company, not a bank. Banking services are provided by {sponsorBank}, Member FDIC.",
+      "ar": "{brand} شركة تقنية مالية وليست بنكًا. تُقدَّم الخدمات المصرفية من {sponsorBank}، عضو FDIC.",
       "replaces": {
         "en": [
           "OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank through Synctera.¹"
@@ -510,28 +510,28 @@
       "key": "web.disclosures.1",
       "format": "text",
       "description": "Footer disclosure 1",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank", "baasProvider"],
       "meta": {},
-      "en": "{brand} is a financial technology company, not a bank. Banking services are provided by Piermont Bank, Member FDIC, through Synctera.",
-      "ar": "{brand} شركة تقنية مالية وليست بنكًا. تُقدَّم الخدمات المصرفية من Piermont Bank، عضو FDIC، عبر Synctera."
+      "en": "{brand} is a financial technology company, not a bank. Banking services are provided by {sponsorBank}, Member FDIC, through {baasProvider}.",
+      "ar": "{brand} شركة تقنية مالية وليست بنكًا. تُقدَّم الخدمات المصرفية من {sponsorBank}، عضو FDIC، عبر {baasProvider}."
     },
     {
       "key": "web.disclosures.2",
       "format": "text",
       "description": "Footer disclosure 2",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank"],
       "meta": {},
-      "en": "{brand} cards are issued by Piermont Bank.",
-      "ar": "تُصدر بطاقات {brand} من Piermont Bank."
+      "en": "{brand} cards are issued by {sponsorBank}.",
+      "ar": "تُصدر بطاقات {brand} من {sponsorBank}."
     },
     {
       "key": "web.disclosures.3",
       "format": "text",
       "description": "Footer disclosure 3",
-      "placeholders": [],
+      "placeholders": ["sponsorBank"],
       "meta": {},
-      "en": "Deposit insurance covers the failure of an insured bank, up to the applicable limits, once funds are on deposit at Piermont Bank. Conditions apply.",
-      "ar": "يغطي تأمين الودائع تعثر بنك مؤمَّن عليه، ضمن الحدود المعمول بها، بمجرد إيداع الأموال لدى Piermont Bank. تُطبَّق الشروط."
+      "en": "Deposit insurance covers the failure of an insured bank, up to the applicable limits, once funds are on deposit at {sponsorBank}. Conditions apply.",
+      "ar": "يغطي تأمين الودائع تعثر بنك مؤمَّن عليه، ضمن الحدود المعمول بها، بمجرد إيداع الأموال لدى {sponsorBank}. تُطبَّق الشروط."
     },
     {
       "key": "web.disclosures.4",
@@ -829,28 +829,28 @@
       "key": "web.hero.intro",
       "format": "text",
       "description": "Home hero: the sentence under the headline",
-      "placeholders": [],
+      "placeholders": ["sponsorBank"],
       "meta": {},
-      "en": "A US business account held at Piermont Bank, ACH and scheduled payments, virtual cards and approvals that keep two sets of eyes on every payment. On the web and on your phone.",
-      "ar": "حساب أعمال أمريكي لدى Piermont Bank، ودفعات ACH ودفعات مجدولة، وبطاقات افتراضية، وموافقات تضمن مراجعة ثانية لكل دفعة. على الويب وعلى هاتفك."
+      "en": "A US business account held at {sponsorBank}, ACH and scheduled payments, virtual cards and approvals that keep two sets of eyes on every payment. On the web and on your phone.",
+      "ar": "حساب أعمال أمريكي لدى {sponsorBank}، ودفعات ACH ودفعات مجدولة، وبطاقات افتراضية، وموافقات تضمن مراجعة ثانية لكل دفعة. على الويب وعلى هاتفك."
     },
     {
       "key": "web.hero.intro_short",
       "format": "text",
       "description": "Home hero on a phone: the short sentence under the headline",
-      "placeholders": [],
+      "placeholders": ["sponsorBank"],
       "meta": {},
-      "en": "Business accounts at Piermont Bank, with cards and two-person approvals.",
-      "ar": "حسابات أعمال لدى Piermont Bank، مع بطاقات وموافقات من شخصين."
+      "en": "Business accounts at {sponsorBank}, with cards and two-person approvals.",
+      "ar": "حسابات أعمال لدى {sponsorBank}، مع بطاقات وموافقات من شخصين."
     },
     {
       "key": "web.hero.points.1",
       "format": "text",
       "description": "Home hero: a short proof point",
-      "placeholders": [],
+      "placeholders": ["sponsorBank"],
       "meta": {},
-      "en": "Your money is held at Piermont Bank",
-      "ar": "أموالك محفوظة لدى Piermont Bank"
+      "en": "Your money is held at {sponsorBank}",
+      "ar": "أموالك محفوظة لدى {sponsorBank}"
     },
     {
       "key": "web.hero.points.2",
@@ -964,10 +964,10 @@
       "key": "web.how.3.text",
       "format": "text",
       "description": "From sign-up to an open account: step text",
-      "placeholders": [],
+      "placeholders": ["sponsorBank"],
       "meta": {},
-      "en": "Piermont Bank verifies your business and its owners.",
-      "ar": "يتحقق Piermont Bank من نشاطك التجاري وملاكه."
+      "en": "{sponsorBank} verifies your business and its owners.",
+      "ar": "يتحقق {sponsorBank} من نشاطك التجاري وملاكه."
     },
     {
       "key": "web.how.3.title",
@@ -2212,10 +2212,10 @@
       "key": "web.page.home.description",
       "format": "text",
       "description": "Page description for search results: home",
-      "placeholders": [],
+      "placeholders": ["sponsorBank"],
       "meta": {},
-      "en": "Open a US business account held at Piermont Bank, pay by ACH, issue virtual cards and approve every larger payment with a second person, on the web and on your phone.",
-      "ar": "افتح حساب أعمال أمريكيًا لدى Piermont Bank، وادفع عبر ACH، وأصدر بطاقات افتراضية، ووافق على كل دفعة كبيرة بشخص ثانٍ، على الويب وعلى هاتفك."
+      "en": "Open a US business account held at {sponsorBank}, pay by ACH, issue virtual cards and approve every larger payment with a second person, on the web and on your phone.",
+      "ar": "افتح حساب أعمال أمريكيًا لدى {sponsorBank}، وادفع عبر ACH، وأصدر بطاقات افتراضية، ووافق على كل دفعة كبيرة بشخص ثانٍ، على الويب وعلى هاتفك."
     },
     {
       "key": "web.page.home.title",
@@ -2266,10 +2266,10 @@
       "key": "web.page.partners.description",
       "format": "text",
       "description": "Page description for search results: partners",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "formationPartner"],
       "meta": {},
-      "en": "Founders who form their company with GenZone apply to {brand} with their company details already filled in. Formation firms connect through the Partner API.",
-      "ar": "المؤسسون الذين يؤسسون شركتهم مع GenZone يتقدمون إلى {brand} وبيانات شركتهم معبأة مسبقًا. وتتصل شركات التأسيس عبر واجهة برمجة الشركاء."
+      "en": "Founders who form their company with {formationPartner} apply to {brand} with their company details already filled in. Formation firms connect through the Partner API.",
+      "ar": "المؤسسون الذين يؤسسون شركتهم مع {formationPartner} يتقدمون إلى {brand} وبيانات شركتهم معبأة مسبقًا. وتتصل شركات التأسيس عبر واجهة برمجة الشركاء."
     },
     {
       "key": "web.page.partners.title",
@@ -2473,19 +2473,19 @@
       "key": "web.partner.text",
       "format": "text",
       "description": "Partners page intro",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "formationPartner"],
       "meta": {},
-      "en": "GenZone sends your company’s details to {brand} when you ask it to. You review them, add what is missing and submit. No retyping what you already gave.",
-      "ar": "ترسل GenZone بيانات شركتك إلى {brand} عندما تطلب منها ذلك. تراجعها، وتضيف ما ينقص، ثم تقدّم الطلب. دون إعادة كتابة ما قدمته من قبل."
+      "en": "{formationPartner} sends your company’s details to {brand} when you ask it to. You review them, add what is missing and submit. No retyping what you already gave.",
+      "ar": "ترسل {formationPartner} بيانات شركتك إلى {brand} عندما تطلب منها ذلك. تراجعها، وتضيف ما ينقص، ثم تقدّم الطلب. دون إعادة كتابة ما قدمته من قبل."
     },
     {
       "key": "web.partner.title",
       "format": "text",
       "description": "Partners page heading and home partner section heading",
-      "placeholders": [],
+      "placeholders": ["formationPartner"],
       "meta": {},
-      "en": "Formed your company with GenZone?",
-      "ar": "هل أسّست شركتك مع GenZone؟"
+      "en": "Formed your company with {formationPartner}?",
+      "ar": "هل أسّست شركتك مع {formationPartner}؟"
     },
     {
       "key": "web.pricing.label",
@@ -2536,10 +2536,10 @@
       "key": "web.product.accounts.lede",
       "format": "text",
       "description": "Capability accounts: one sentence under the headline",
-      "placeholders": [],
+      "placeholders": ["sponsorBank"],
       "meta": {},
-      "en": "A US business account at Piermont Bank, every transaction in one list and a monthly statement for each account.",
-      "ar": "حساب أعمال أمريكي لدى Piermont Bank، وكل معاملة في قائمة واحدة، وكشف شهري لكل حساب."
+      "en": "A US business account at {sponsorBank}, every transaction in one list and a monthly statement for each account.",
+      "ar": "حساب أعمال أمريكي لدى {sponsorBank}، وكل معاملة في قائمة واحدة، وكشف شهري لكل حساب."
     },
     {
       "key": "web.product.accounts.nav",
@@ -3004,10 +3004,10 @@
       "key": "web.protect.1.text",
       "format": "text",
       "description": "Security: control text",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank"],
       "meta": {},
-      "en": "Deposits are held at Piermont Bank. {brand} shows the bank’s balance and never holds your funds.¹",
-      "ar": "تُحفظ الودائع لدى Piermont Bank. تعرض {brand} رصيد البنك ولا تحتفظ بأموالك أبدًا.¹"
+      "en": "Deposits are held at {sponsorBank}. {brand} shows the bank’s balance and never holds your funds.¹",
+      "ar": "تُحفظ الودائع لدى {sponsorBank}. تعرض {brand} رصيد البنك ولا تحتفظ بأموالك أبدًا.¹"
     },
     {
       "key": "web.protect.1.title",
@@ -3238,9 +3238,9 @@
       "key": "web.trust.1.name",
       "format": "text",
       "description": "Home: party 1 behind every account",
-      "placeholders": [],
+      "placeholders": ["sponsorBank"],
       "meta": {},
-      "en": "Piermont Bank"
+      "en": "{sponsorBank}"
     },
     {
       "key": "web.trust.1.role",
@@ -3255,9 +3255,9 @@
       "key": "web.trust.2.name",
       "format": "text",
       "description": "Home: party 2 behind every account",
-      "placeholders": [],
+      "placeholders": ["baasProvider"],
       "meta": {},
-      "en": "Synctera"
+      "en": "{baasProvider}"
     },
     {
       "key": "web.trust.2.role",
@@ -3272,9 +3272,9 @@
       "key": "web.trust.3.name",
       "format": "text",
       "description": "Home: party 3 behind every account",
-      "placeholders": [],
+      "placeholders": ["formationPartner"],
       "meta": {},
-      "en": "GenZone"
+      "en": "{formationPartner}"
     },
     {
       "key": "web.trust.3.role",
@@ -3460,10 +3460,10 @@
       "key": "web.who.new_companies.points.1",
       "format": "text",
       "description": "Who it's for: newly formed companies, a point",
-      "placeholders": [],
+      "placeholders": ["formationPartner"],
       "meta": {},
-      "en": "Formed with GenZone? Your company details arrive prefilled",
-      "ar": "أسست شركتك مع GenZone؟ تصل بيانات شركتك معبأة مسبقًا"
+      "en": "Formed with {formationPartner}? Your company details arrive prefilled",
+      "ar": "أسست شركتك مع {formationPartner}؟ تصل بيانات شركتك معبأة مسبقًا"
     },
     {
       "key": "web.who.new_companies.points.2",

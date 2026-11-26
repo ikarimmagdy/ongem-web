@@ -5,10 +5,10 @@
       "key": "faq.accounts.1.a",
       "format": "text",
       "description": "FAQ accounts: answer",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank"],
       "meta": {},
-      "en": "Piermont Bank holds your deposits and provides the account. {brand} shows you the bank’s balance and never holds your funds.¹",
-      "ar": "يحتفظ Piermont Bank بودائعك ويقدم الحساب. يعرض لك {brand} رصيد البنك ولا يحتفظ بأموالك أبدًا.¹"
+      "en": "{sponsorBank} holds your deposits and provides the account. {brand} shows you the bank’s balance and never holds your funds.¹",
+      "ar": "يحتفظ {sponsorBank} بودائعك ويقدم الحساب. يعرض لك {brand} رصيد البنك ولا يحتفظ بأموالك أبدًا.¹"
     },
     {
       "key": "faq.accounts.1.q",
@@ -203,10 +203,10 @@
       "key": "faq.general.1.a",
       "format": "text",
       "description": "FAQ general: answer",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "sponsorBank", "baasProvider"],
       "meta": {},
-      "en": "No. {brand} is a financial technology company. Your deposits are held at Piermont Bank, which provides the accounts through Synctera. {brand} shows you the bank’s balance and never holds your funds.¹",
-      "ar": "لا. {brand} شركة تقنية مالية. تُحفظ ودائعك لدى Piermont Bank، الذي يقدّم الحسابات عبر Synctera. تعرض لك {brand} رصيد البنك ولا تحتفظ بأموالك أبدًا.¹"
+      "en": "No. {brand} is a financial technology company. Your deposits are held at {sponsorBank}, which provides the accounts through {baasProvider}. {brand} shows you the bank’s balance and never holds your funds.¹",
+      "ar": "لا. {brand} شركة تقنية مالية. تُحفظ ودائعك لدى {sponsorBank}، الذي يقدّم الحسابات عبر {baasProvider}. تعرض لك {brand} رصيد البنك ولا تحتفظ بأموالك أبدًا.¹"
     },
     {
       "key": "faq.general.1.q",
@@ -239,19 +239,19 @@
       "key": "faq.general.3.a",
       "format": "text",
       "description": "FAQ general: answer",
-      "placeholders": ["brand"],
+      "placeholders": ["brand", "formationPartner"],
       "meta": {},
-      "en": "When you ask it to, GenZone sends your company’s details to {brand}. You review them, add what is missing, accept the bank’s disclosures and submit. The bank makes its decision as it does for every founder.",
-      "ar": "عندما تطلب منها ذلك، ترسل GenZone بيانات شركتك إلى {brand}. تراجعها، وتضيف ما ينقص، وتقبل إفصاحات البنك، ثم تقدّم الطلب. ويتخذ البنك قراره كما يفعل مع كل مؤسس."
+      "en": "When you ask it to, {formationPartner} sends your company’s details to {brand}. You review them, add what is missing, accept the bank’s disclosures and submit. The bank makes its decision as it does for every founder.",
+      "ar": "عندما تطلب منها ذلك، ترسل {formationPartner} بيانات شركتك إلى {brand}. تراجعها، وتضيف ما ينقص، وتقبل إفصاحات البنك، ثم تقدّم الطلب. ويتخذ البنك قراره كما يفعل مع كل مؤسس."
     },
     {
       "key": "faq.general.3.q",
       "format": "text",
       "description": "FAQ general: question",
-      "placeholders": [],
+      "placeholders": ["formationPartner"],
       "meta": {},
-      "en": "I formed my company with GenZone. What changes?",
-      "ar": "أسّست شركتي مع GenZone. ما الذي يتغير؟"
+      "en": "I formed my company with {formationPartner}. What changes?",
+      "ar": "أسّست شركتي مع {formationPartner}. ما الذي يتغير؟"
     },
     {
       "key": "faq.general.4.a",
