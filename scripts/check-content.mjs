@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 
 /** Words that are not copy: header names and protocol words. */
-const ALLOWED = new Set(['Authorization', 'Accept', 'Bearer', 'Content-Type', 'ETag', 'OnGem']);
+const ALLOWED = new Set(['Authorization', 'Accept', 'Bearer', 'Content-Type', 'ETag']);
 
 const skipped = (path) =>
   /(^|\/)(test|fixtures)\//.test(path) || /\.(test|e2e)\.tsx?$/.test(path) || /\.d\.ts$/.test(path);

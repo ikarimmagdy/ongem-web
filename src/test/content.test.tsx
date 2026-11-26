@@ -248,6 +248,8 @@ describe('content (OG-033)', () => {
   });
 });
 
+const BRAND_VARS = new Set(['{brand}', '{legalName}']);
+
 describe('seed files (OG-033 R12)', () => {
   it('ae_seed_names_no_us_bank_partner_or_rail_AC_R12_2', () => {
     const files = seed('ae');
@@ -269,9 +271,18 @@ describe('seed files (OG-033 R12)', () => {
           expect(e.description, e.key).toBeTruthy();
           // Arabic text, a figure or format kept as it is, or no Arabic (a name such as OnGem falls back to English).
           if (e.ar != null && e.ar !== e.en) expect(e.ar, e.key).toMatch(/[\u0600-\u06FF]/);
-          const used = (s: string) => [...new Set(s.match(/\{[a-zA-Z0-9_]+\}/g) ?? [])].sort();
-          expect(used(e.en), e.key).toEqual(e.placeholders.map((p) => `{${p}}`).sort());
+          // OG-082: `{brand}` and `{legalName}` come from the brand, so a language may use one where the other does not.
+          const used = (s: string) =>
+            [...new Set(s.match(/\{[a-zA-Z0-9_]+\}/g) ?? [])].filter((p) => !BRAND_VARS.has(p)).sort();
+          expect(used(e.en), e.key).toEqual(
+            e.placeholders
+              .filter((p) => !BRAND_VARS.has(`{${p}}`))
+              .map((p) => `{${p}}`)
+              .sort(),
+          );
           if (e.ar != null) expect(used(e.ar), e.key).toEqual(used(e.en));
+          for (const v of BRAND_VARS)
+            if (`${e.en} ${e.ar ?? ''}`.includes(v)) expect(e.placeholders, e.key).toContain(v.slice(1, -1));
           expect(`${e.en} ${e.ar ?? ''}`, e.key).not.toMatch(/[–—]/);
         }
       }

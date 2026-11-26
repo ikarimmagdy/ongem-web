@@ -20,6 +20,7 @@ import {
 } from '../public/content';
 import { posts } from '../public/media/blog';
 import { SITE } from '../public/site';
+import { bundledBrand } from '../lib/brand';
 import { prerender } from '../prerender';
 import { renderApp } from './render';
 
@@ -405,19 +406,34 @@ describe('OG-034 public site structure (US build)', () => {
   });
 
   it('seeds_have_en_ar_and_match_core_AC_R13_1', () => {
+    type SeedEntry = { key: string; en: string; ar?: string; placeholders: string[] };
+    const name = bundledBrand('ongem').names.product;
+    const withDefaultBrand = (text: string) =>
+      (JSON.parse(text).entries as SeedEntry[]).map((e) => ({
+        ...e,
+        en: e.en.replaceAll('{brand}', name),
+        ar: e.ar?.replaceAll('{brand}', name),
+        placeholders: e.placeholders.filter((p) => p !== 'brand'),
+      }));
     const core = join(root, '..', 'ongem-core', 'src/main/resources/content/seed');
     for (const region of ['us', 'ae'])
       for (const channel of ['web_public', 'faq', 'blog']) {
         const web = readFileSync(join(root, 'content-seed', region, `${channel}.json`), 'utf8');
         // Names and patterns (a bank's name, "{title} | OnGem", "English") fall back to English by design (OG-033 R7).
-        const sameInArabic = /^(© \{year\} OnGem|\{title\}.*|English|Piermont Bank|Synctera|GenZone|OnGem)$/;
+        const sameInArabic =
+          /^(© \{year\} (OnGem|\{brand\})|\{title\}.*|English|Piermont Bank|Synctera|GenZone|OnGem|\{brand\})$/;
         for (const e of JSON.parse(web).entries as Array<{ key: string; en: string; ar: string }>) {
           expect(e.en, e.key).toBeTruthy();
           if (!sameInArabic.test(e.en)) expect(e.ar, e.key).toBeTruthy();
         }
         // The core's copy is the same file (OG-033), where the sibling checkout is present.
         const coreFile = join(core, region, `${channel}.json`);
-        if (existsSync(coreFile)) expect(readFileSync(coreFile, 'utf8'), `${region}/${channel}`).toBe(web);
+        // OG-082: until ongem-core takes the `{brand}` seed (OG-080), its copy may still carry the default brand's name.
+        if (existsSync(coreFile)) {
+          const coreText = readFileSync(coreFile, 'utf8');
+          if (coreText !== web)
+            expect(withDefaultBrand(coreText), `${region}/${channel}`).toEqual(withDefaultBrand(web));
+        }
       }
   });
 

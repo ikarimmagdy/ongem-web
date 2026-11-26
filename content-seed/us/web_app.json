@@ -1061,10 +1061,10 @@
       "key": "app.cards.secure_view_note",
       "format": "text",
       "description": "Card detail: where card numbers show",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "The bank shows the card number and PIN in its own secure view. OnGem never sees them.",
-      "ar": "يعرض البنك رقم البطاقة والرقم السري في نافذته الآمنة الخاصة، ولا يطلع عليهما OnGem أبدا."
+      "en": "The bank shows the card number and PIN in its own secure view. {brand} never sees them.",
+      "ar": "يعرض البنك رقم البطاقة والرقم السري في نافذته الآمنة الخاصة، ولا يطلع عليهما {brand} أبدا."
     },
     {
       "key": "app.cards.status",
@@ -1180,10 +1180,10 @@
       "key": "app.cards.widget_note",
       "format": "text",
       "description": "Under the card widget",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Shown by the bank. OnGem never sees or stores these numbers.",
-      "ar": "يعرضها البنك. لا يطلع OnGem على هذه الأرقام ولا يحتفظ بها أبدا."
+      "en": "Shown by the bank. {brand} never sees or stores these numbers.",
+      "ar": "يعرضها البنك. لا يطلع {brand} على هذه الأرقام ولا يحتفظ بها أبدا."
     },
     {
       "key": "app.cards.widget_opening",
@@ -1714,10 +1714,10 @@
       "key": "app.demo.sms_consent_text",
       "format": "text",
       "description": "OG-075: demo mode's SMS consent text, the same words as ongem-core's notice.sms_consent.text",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "By turning on SMS, you agree that OnGem may text this number the account, payment and security notices you choose, and the codes that check it. How often varies. Message and data rates may apply. Reply STOP to stop and HELP for help.",
-      "ar": "بتفعيل الرسائل النصية، توافق على أن ترسل OnGem إلى هذا الرقم إشعارات الحساب والمدفوعات والأمان التي تختارها، والرموز التي تتحقق منه. يختلف عدد الرسائل. قد تُطبَّق رسوم الرسائل والبيانات. أرسل STOP للإيقاف و HELP للمساعدة."
+      "en": "By turning on SMS, you agree that {brand} may text this number the account, payment and security notices you choose, and the codes that check it. How often varies. Message and data rates may apply. Reply STOP to stop and HELP for help.",
+      "ar": "بتفعيل الرسائل النصية، توافق على أن ترسل {brand} إلى هذا الرقم إشعارات الحساب والمدفوعات والأمان التي تختارها، والرموز التي تتحقق منه. يختلف عدد الرسائل. قد تُطبَّق رسوم الرسائل والبيانات. أرسل STOP للإيقاف و HELP للمساعدة."
     },
     {
       "key": "app.demo.error.sms_number_format",
@@ -1810,10 +1810,10 @@
       "key": "app.demo.notice.support.body",
       "format": "text",
       "description": "Demo notice body",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem replied to your request.",
-      "ar": "ردّ فريق OnGem على طلبك."
+      "en": "{brand} replied to your request.",
+      "ar": "ردّ فريق {brand} على طلبك."
     },
     {
       "key": "app.demo.notice.support.title",
@@ -2041,6 +2041,15 @@
       "ar": "كشف حساب شهر سبتمبر"
     },
     {
+      "key": "app.demo.ticket.ops_author",
+      "format": "text",
+      "description": "Demo sample data: the name on a reply from the brand's support team",
+      "placeholders": ["brand"],
+      "meta": {},
+      "en": "{brand} support",
+      "ar": "دعم {brand}"
+    },
+    {
       "key": "app.ds.account",
       "format": "text",
       "description": "Console shell account button",
@@ -2136,10 +2145,10 @@
       "key": "app.errors.company_not_member",
       "format": "text",
       "description": "Error shown for the API problem code company_not_member",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "You are no longer a member of that company. OnGem opened your default company.",
-      "ar": "لم تعد عضواً في تلك الشركة. فتح OnGem شركتك الافتراضية."
+      "en": "You are no longer a member of that company. {brand} opened your default company.",
+      "ar": "لم تعد عضواً في تلك الشركة. فتح {brand} شركتك الافتراضية."
     },
     {
       "key": "app.errors.daily_limit_exceeded",
@@ -2156,10 +2165,10 @@
       "key": "app.errors.device_required",
       "format": "text",
       "description": "Error shown for the API problem code device_required",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "This browser is not registered with OnGem yet. Sign out, then sign in again.",
-      "ar": "لم يُسجَّل هذا المتصفح لدى OnGem بعد. سجّل الخروج ثم سجّل الدخول مجدداً."
+      "en": "This browser is not registered with {brand} yet. Sign out, then sign in again.",
+      "ar": "لم يُسجَّل هذا المتصفح لدى {brand} بعد. سجّل الخروج ثم سجّل الدخول مجدداً."
     },
     {
       "key": "app.errors.device_proof_required",
@@ -2174,19 +2183,19 @@
       "key": "app.errors.device_proof_invalid",
       "format": "text",
       "description": "Error shown for the API problem code device_proof_invalid",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem could not confirm this browser. Check that this device sets its date and time automatically, then sign in again.",
-      "ar": "تعذّر على OnGem التحقق من هذا المتصفح. تأكد من أن هذا الجهاز يضبط التاريخ والوقت تلقائياً، ثم سجّل الدخول مجدداً."
+      "en": "{brand} could not confirm this browser. Check that this device sets its date and time automatically, then sign in again.",
+      "ar": "تعذّر على {brand} التحقق من هذا المتصفح. تأكد من أن هذا الجهاز يضبط التاريخ والوقت تلقائياً، ثم سجّل الدخول مجدداً."
     },
     {
       "key": "app.errors.device_revoked",
       "format": "text",
       "description": "Error shown for the API problem code device_revoked",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "This browser was signed out of OnGem. Sign in again.",
-      "ar": "تم تسجيل خروج هذا المتصفح من OnGem. سجّل الدخول مجدداً."
+      "en": "This browser was signed out of {brand}. Sign in again.",
+      "ar": "تم تسجيل خروج هذا المتصفح من {brand}. سجّل الدخول مجدداً."
     },
     {
       "key": "app.errors.draft_not_found",
@@ -2255,10 +2264,10 @@
       "key": "app.errors.idempotency_in_progress",
       "format": "text",
       "description": "Error shown for the API problem code idempotency_in_progress",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem is still working on this request. Wait a moment and check before trying again; it will not run twice.",
-      "ar": "لا يزال OnGem يعالج هذا الطلب. انتظر قليلاً وتحقق قبل المحاولة مجدداً؛ لن يُنفَّذ الطلب مرتين."
+      "en": "{brand} is still working on this request. Wait a moment and check before trying again; it will not run twice.",
+      "ar": "لا يزال {brand} يعالج هذا الطلب. انتظر قليلاً وتحقق قبل المحاولة مجدداً؛ لن يُنفَّذ الطلب مرتين."
     },
     {
       "key": "app.errors.insufficient_funds",
@@ -2293,10 +2302,10 @@
       "key": "app.errors.network",
       "format": "text",
       "description": "Error when the API cannot be reached",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Could not reach OnGem. Check your connection and try again.",
-      "ar": "تعذّر الاتصال بـ OnGem. تحقق من اتصالك وحاول مجدداً."
+      "en": "Could not reach {brand}. Check your connection and try again.",
+      "ar": "تعذّر الاتصال بـ {brand}. تحقق من اتصالك وحاول مجدداً."
     },
     {
       "key": "app.errors.payment_not_pending_approval",
@@ -2320,10 +2329,10 @@
       "key": "app.errors.rail_unavailable",
       "format": "text",
       "description": "Error shown for the API problem code rail_unavailable",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Link this account for an OnGem account at the same bank.",
-      "ar": "اربط هذا الحساب بحساب OnGem في البنك نفسه."
+      "en": "Link this account for an {brand} account at the same bank.",
+      "ar": "اربط هذا الحساب بحساب {brand} في البنك نفسه."
     },
     {
       "key": "app.errors.recipient_blocked",
@@ -2568,10 +2577,11 @@
       "format": "text",
       "description": "Browser tab title of a signed-in page; {page} is the page name",
       "placeholders": [
-        "page"
+        "page",
+        "brand"
       ],
       "meta": {},
-      "en": "{page} | OnGem"
+      "en": "{page} | {brand}"
     },
     {
       "key": "app.nav.home",
@@ -3898,10 +3908,10 @@
       "key": "app.payments.status_line.pending_approval_ongem",
       "format": "text",
       "description": "Payment detail status: waiting for OnGem to approve (one-person company)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Waiting for OnGem to approve it, because no one else in your company can approve payments. Nothing has moved yet.",
-      "ar": "بانتظار موافقة OnGem عليها، إذ لا يوجد في شركتك شخص آخر مخوّل بالموافقة على المدفوعات. لم يُحوَّل أي مبلغ بعد."
+      "en": "Waiting for {brand} to approve it, because no one else in your company can approve payments. Nothing has moved yet.",
+      "ar": "بانتظار موافقة {brand} عليها، إذ لا يوجد في شركتك شخص آخر مخوّل بالموافقة على المدفوعات. لم يُحوَّل أي مبلغ بعد."
     },
     {
       "key": "app.payments.status_line.rejected",
@@ -3981,19 +3991,19 @@
       "key": "app.privacy.off",
       "format": "text",
       "description": "Privacy line while screen recording is off (shown on sign-in and in Settings)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem does not record your screen. We keep a log of the changes you make, such as payments and approvals, because the bank requires it, and we use it only to run your account and to help when you ask for support.",
-      "ar": "لا يسجّل OnGem شاشتك. نحتفظ بسجل للتغييرات التي تجريها، مثل المدفوعات والاعتمادات، لأن البنك يشترط ذلك، ونستخدمه فقط لإدارة حسابك ومساعدتك عند طلب الدعم."
+      "en": "{brand} does not record your screen. We keep a log of the changes you make, such as payments and approvals, because the bank requires it, and we use it only to run your account and to help when you ask for support.",
+      "ar": "لا يسجّل {brand} شاشتك. نحتفظ بسجل للتغييرات التي تجريها، مثل المدفوعات والاعتمادات، لأن البنك يشترط ذلك، ونستخدمه فقط لإدارة حسابك ومساعدتك عند طلب الدعم."
     },
     {
       "key": "app.privacy.recording",
       "format": "text",
       "description": "Privacy line while screen recording is on (shown on sign-in and in Settings)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "We record the screens you use and what you tap, with account numbers, balances and identity details hidden, to improve OnGem and help when you ask for support. Recordings stay with OnGem.",
-      "ar": "نسجّل الشاشات التي تستخدمها وما تنقر عليه، مع إخفاء أرقام الحسابات والأرصدة وبيانات الهوية، لتحسين OnGem ومساعدتك عند طلب الدعم. تبقى التسجيلات لدى OnGem."
+      "en": "We record the screens you use and what you tap, with account numbers, balances and identity details hidden, to improve {brand} and help when you ask for support. Recordings stay with {brand}.",
+      "ar": "نسجّل الشاشات التي تستخدمها وما تنقر عليه، مع إخفاء أرقام الحسابات والأرصدة وبيانات الهوية، لتحسين {brand} ومساعدتك عند طلب الدعم. تبقى التسجيلات لدى {brand}."
     },
     {
       "key": "app.recipients.account_number_label",
@@ -4620,11 +4630,12 @@
       "format": "text",
       "description": "New schedule intro; how is the region rail in words",
       "placeholders": [
-        "how"
+        "how",
+        "brand"
       ],
       "meta": {},
-      "en": "OnGem makes each payment on its date as {how}, with the same checks as one you send yourself. A date on a weekend or holiday goes on the next banking day.",
-      "ar": "تنفّذ OnGem كل دفعة في موعدها بوصفها {how}، مع عمليات التحقق ذاتها التي تخضع لها أي دفعة ترسلها بنفسك. وإذا وافق الموعد عطلة نهاية أسبوع أو عطلة رسمية، تُنفَّذ الدفعة في يوم العمل المصرفي التالي."
+      "en": "{brand} makes each payment on its date as {how}, with the same checks as one you send yourself. A date on a weekend or holiday goes on the next banking day.",
+      "ar": "تنفّذ {brand} كل دفعة في موعدها بوصفها {how}، مع عمليات التحقق ذاتها التي تخضع لها أي دفعة ترسلها بنفسك. وإذا وافق الموعد عطلة نهاية أسبوع أو عطلة رسمية، تُنفَّذ الدفعة في يوم العمل المصرفي التالي."
     },
     {
       "key": "app.schedules.form.months",
@@ -5978,10 +5989,10 @@
       "key": "app.support.pick_text",
       "format": "text",
       "description": "Support detail column hint",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "The conversation with OnGem support and each status change show here.",
-      "ar": "تظهر هنا محادثتك مع فريق دعم OnGem وكل تغيير في حالة الطلب."
+      "en": "The conversation with {brand} support and each status change show here.",
+      "ar": "تظهر هنا محادثتك مع فريق دعم {brand} وكل تغيير في حالة الطلب."
     },
     {
       "key": "app.support.pick_title",
@@ -6032,10 +6043,10 @@
       "key": "app.support.subtitle",
       "format": "text",
       "description": "Support page subtitle",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Ask OnGem's team; we answer here.",
-      "ar": "تواصل مع فريق OnGem، وستجد ردنا هنا."
+      "en": "Ask {brand}'s team; we answer here.",
+      "ar": "تواصل مع فريق {brand}، وستجد ردنا هنا."
     },
     {
       "key": "app.support.title",
@@ -6080,10 +6091,10 @@
       "key": "app.topup.empty.text",
       "format": "text",
       "description": "Empty list text",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Link your company's account at another bank to move money into OnGem.",
-      "ar": "اربط حساب شركتك في بنك آخر لتحويل الأموال إلى OnGem."
+      "en": "Link your company's account at another bank to move money into {brand}.",
+      "ar": "اربط حساب شركتك في بنك آخر لتحويل الأموال إلى {brand}."
     },
     {
       "key": "app.topup.empty.title",
@@ -6146,10 +6157,10 @@
       "key": "app.topup.link.for_account",
       "format": "text",
       "description": "Link form label",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "For the OnGem account",
-      "ar": "لحساب OnGem"
+      "en": "For the {brand} account",
+      "ar": "لحساب {brand}"
     },
     {
       "key": "app.topup.link.intro",
@@ -6317,10 +6328,10 @@
       "key": "app.topup.review.note",
       "format": "text",
       "description": "Review: approvals and step-up",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "A second person in your company approves it before the bank pulls the money. If no one else in your company can approve, OnGem approves it. You confirm it is you first.",
-      "ar": "يوافق عليه شخص آخر في شركتك قبل أن يسحب البنك الأموال، وإذا لم يكن في شركتك من يمكنه الموافقة توافق عليه OnGem. ستؤكد هويتك أولًا."
+      "en": "A second person in your company approves it before the bank pulls the money. If no one else in your company can approve, {brand} approves it. You confirm it is you first.",
+      "ar": "يوافق عليه شخص آخر في شركتك قبل أن يسحب البنك الأموال، وإذا لم يكن في شركتك من يمكنه الموافقة توافق عليه {brand}. ستؤكد هويتك أولًا."
     },
     {
       "key": "app.topup.review.title",
@@ -7208,9 +7219,9 @@
       "key": "app.mobile.brand.alt",
       "format": "text",
       "description": "Founder app: the word mark read aloud (a name, kept in English)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem"
+      "en": "{brand}"
     },
     {
       "key": "app.mobile.demo.badge_description",
@@ -7291,10 +7302,10 @@
       "key": "app.mobile.signin.demo_hint",
       "format": "text",
       "description": "Founder app: hint under the demo button",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Sample data only. Nothing is sent to OnGem.",
-      "ar": "بيانات نموذجية فقط. لا يُرسل أي شيء إلى OnGem."
+      "en": "Sample data only. Nothing is sent to {brand}.",
+      "ar": "بيانات نموذجية فقط. لا يُرسل أي شيء إلى {brand}."
     },
     {
       "key": "app.mobile.signin.session_rejected",
@@ -7328,11 +7339,12 @@
       "format": "text",
       "description": "Founder app: home body when no company is linked; {email} is the support address",
       "placeholders": [
-        "email"
+        "email",
+        "brand"
       ],
       "meta": {},
-      "en": "Sign in with the email your partner has on file for you. If you did and still see this, contact OnGem support at {email} and name the partner that invited you.",
-      "ar": "سجّل الدخول بالبريد الإلكتروني المسجّل لدى شريكك. إذا فعلت ذلك وما زلت ترى هذه الرسالة، فتواصل مع دعم OnGem على {email} واذكر اسم الشريك الذي دعاك."
+      "en": "Sign in with the email your partner has on file for you. If you did and still see this, contact {brand} support at {email} and name the partner that invited you.",
+      "ar": "سجّل الدخول بالبريد الإلكتروني المسجّل لدى شريكك. إذا فعلت ذلك وما زلت ترى هذه الرسالة، فتواصل مع دعم {brand} على {email} واذكر اسم الشريك الذي دعاك."
     },
     {
       "key": "app.mobile.home.next_title",
@@ -7392,10 +7404,10 @@
       "key": "app.mobile.mfa.body",
       "format": "text",
       "description": "Founder app: body asking to turn on two-step verification",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem needs a second factor on your account before it shows any company data. Add an authenticator app, then continue.",
-      "ar": "يحتاج OnGem إلى عامل تحقق ثانٍ على حسابك قبل عرض أي بيانات للشركة. أضف تطبيق مصادقة، ثم تابع."
+      "en": "{brand} needs a second factor on your account before it shows any company data. Add an authenticator app, then continue.",
+      "ar": "يحتاج {brand} إلى عامل تحقق ثانٍ على حسابك قبل عرض أي بيانات للشركة. أضف تطبيق مصادقة، ثم تابع."
     },
     {
       "key": "app.mobile.mfa.setup",
@@ -7464,10 +7476,10 @@
       "key": "app.mobile.lock.title",
       "format": "text",
       "description": "Founder app: app lock heading",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem is locked",
-      "ar": "OnGem مقفل"
+      "en": "{brand} is locked",
+      "ar": "{brand} مقفل"
     },
     {
       "key": "app.mobile.lock.body",
@@ -7500,10 +7512,10 @@
       "key": "app.mobile.lock.reason",
       "format": "text",
       "description": "Founder app: reason shown in the system biometric prompt",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Unlock OnGem",
-      "ar": "افتح قفل OnGem"
+      "en": "Unlock {brand}",
+      "ar": "افتح قفل {brand}"
     },
     {
       "key": "app.mobile.capture.cover",
@@ -7554,21 +7566,22 @@
       "key": "app.mobile.settings.lock_toggle",
       "format": "text",
       "description": "Founder app: switch that turns the app lock on",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Lock OnGem with biometrics",
-      "ar": "قفل OnGem بالقياسات الحيوية"
+      "en": "Lock {brand} with biometrics",
+      "ar": "قفل {brand} بالقياسات الحيوية"
     },
     {
       "key": "app.mobile.settings.lock_detail",
       "format": "text",
       "description": "Founder app: how long until the app locks; {minutes} is a number",
       "placeholders": [
-        "minutes"
+        "minutes",
+        "brand"
       ],
       "meta": {},
-      "en": "OnGem locks after {minutes} minutes in the background.",
-      "ar": "يُقفل OnGem بعد {minutes} دقائق في الخلفية."
+      "en": "{brand} locks after {minutes} minutes in the background.",
+      "ar": "يُقفل {brand} بعد {minutes} دقائق في الخلفية."
     },
     {
       "key": "app.mobile.settings.lock_unavailable",
@@ -7592,10 +7605,10 @@
       "key": "app.mobile.settings.analytics_detail",
       "format": "text",
       "description": "Founder app: what the usage data switch shares; crash reports are always sent (OG-036)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Helps us improve OnGem by counting which screens you open. It never includes your name, your company or your money. Crash reports are always sent so we can fix problems.",
-      "ar": "يساعدنا على تحسين OnGem بحساب الشاشات التي تفتحها. لا يتضمن أبدا اسمك أو شركتك أو أموالك. تُرسل تقارير الأعطال دائما لنتمكن من إصلاح المشكلات."
+      "en": "Helps us improve {brand} by counting which screens you open. It never includes your name, your company or your money. Crash reports are always sent so we can fix problems.",
+      "ar": "يساعدنا على تحسين {brand} بحساب الشاشات التي تفتحها. لا يتضمن أبدا اسمك أو شركتك أو أموالك. تُرسل تقارير الأعطال دائما لنتمكن من إصلاح المشكلات."
     },
     {
       "key": "app.mobile.settings.devices",
@@ -7720,10 +7733,10 @@
       "key": "app.mobile.devices.revoke_body",
       "format": "text",
       "description": "Founder app: revoke device dialog body",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "It will have to sign in again before it can use OnGem.",
-      "ar": "سيتعيّن عليه تسجيل الدخول مجدداً قبل استخدام OnGem."
+      "en": "It will have to sign in again before it can use {brand}.",
+      "ar": "سيتعيّن عليه تسجيل الدخول مجدداً قبل استخدام {brand}."
     },
     {
       "key": "app.mobile.devices.revoke_self_body",
@@ -8660,10 +8673,10 @@
       "key": "app.mobile.topup.sources_empty",
       "format": "text",
       "description": "Founder app: no linked accounts",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "No accounts linked yet. Link your company's account at another bank to move money into OnGem.",
-      "ar": "لا توجد حسابات مرتبطة بعد. اربط حساب شركتك في بنك آخر لتحويل الأموال إلى OnGem."
+      "en": "No accounts linked yet. Link your company's account at another bank to move money into {brand}.",
+      "ar": "لا توجد حسابات مرتبطة بعد. اربط حساب شركتك في بنك آخر لتحويل الأموال إلى {brand}."
     },
     {
       "key": "app.mobile.topup.linked",
@@ -8732,10 +8745,10 @@
       "key": "app.mobile.schedules.new_body",
       "format": "text",
       "description": "Founder app: how scheduled payments work",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem makes each payment on its date as a standard ACH, with the same checks as one you send yourself. A date on a weekend or holiday goes on the next banking day.",
-      "ar": "ينفّذ OnGem كل دفعة في موعدها بتحويل ACH عادي، بنفس الفحوص التي تخضع لها الدفعة التي ترسلها بنفسك. الموعد الذي يصادف عطلة نهاية أسبوع أو عطلة رسمية يُنفّذ في يوم العمل المصرفي التالي."
+      "en": "{brand} makes each payment on its date as a standard ACH, with the same checks as one you send yourself. A date on a weekend or holiday goes on the next banking day.",
+      "ar": "ينفّذ {brand} كل دفعة في موعدها بتحويل ACH عادي، بنفس الفحوص التي تخضع لها الدفعة التي ترسلها بنفسك. الموعد الذي يصادف عطلة نهاية أسبوع أو عطلة رسمية يُنفّذ في يوم العمل المصرفي التالي."
     },
     {
       "key": "app.mobile.schedules.date_hint",
@@ -10767,10 +10780,10 @@
       "key": "app.settings.security.intro",
       "format": "text",
       "description": "Settings security card intro (FA-029)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "The devices signed in to your OnGem account. Sign out any device you do not recognise.",
-      "ar": "الأجهزة التي سجّلت الدخول إلى حسابك في OnGem. سجّل الخروج من أي جهاز لا تعرفه."
+      "en": "The devices signed in to your {brand} account. Sign out any device you do not recognise.",
+      "ar": "الأجهزة التي سجّلت الدخول إلى حسابك في {brand}. سجّل الخروج من أي جهاز لا تعرفه."
     },
     {
       "key": "app.settings.security.last_used",
@@ -10825,10 +10838,10 @@
       "key": "app.shell.disclosure",
       "format": "text",
       "description": "Signed-in side bar foot and Settings: who holds the money (FA-055); AE never names the bank Glossary term shared by web and app (FA-052).",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem is a financial technology company, not a bank. Banking services are provided by Piermont Bank, Member FDIC.",
-      "ar": "OnGem شركة تقنية مالية وليست بنكا. يقدّم الخدمات المصرفية Piermont Bank، عضو FDIC."
+      "en": "{brand} is a financial technology company, not a bank. Banking services are provided by Piermont Bank, Member FDIC.",
+      "ar": "{brand} شركة تقنية مالية وليست بنكا. يقدّم الخدمات المصرفية Piermont Bank، عضو FDIC."
     },
     {
       "key": "app.state.payment.sent",
@@ -11028,19 +11041,19 @@
       "key": "app.mobile.dispute.next",
       "format": "text",
       "description": "Dispute form: what happens next (FA-039)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem support checks the charge with the bank and replies in Support, usually within 2 business days. Keep any receipt; we may ask for it.",
-      "ar": "يتحقق فريق دعم OnGem من العملية مع البنك ويرد في قسم الدعم، عادةً خلال يومي عمل. احتفظ بأي إيصال، فقد نطلبه منك."
+      "en": "{brand} support checks the charge with the bank and replies in Support, usually within 2 business days. Keep any receipt; we may ask for it.",
+      "ar": "يتحقق فريق دعم {brand} من العملية مع البنك ويرد في قسم الدعم، عادةً خلال يومي عمل. احتفظ بأي إيصال، فقد نطلبه منك."
     },
     {
       "key": "app.mobile.dispute.sent_title",
       "format": "text",
       "description": "Dispute form: sent (FA-039)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Your dispute is with OnGem support",
-      "ar": "اعتراضك لدى فريق دعم OnGem"
+      "en": "Your dispute is with {brand} support",
+      "ar": "اعتراضك لدى فريق دعم {brand}"
     },
     {
       "key": "app.mobile.dispute.subject",
@@ -11502,28 +11515,28 @@
       "key": "app.settings.security.device_ios",
       "format": "text",
       "description": "Security section: a sign-in from the iPhone or iPad app (FA-029)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem app on iPhone or iPad",
-      "ar": "تطبيق OnGem على iPhone أو iPad"
+      "en": "{brand} app on iPhone or iPad",
+      "ar": "تطبيق {brand} على iPhone أو iPad"
     },
     {
       "key": "app.settings.security.device_android",
       "format": "text",
       "description": "Security section: a sign-in from the Android app (FA-029)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem app on Android",
-      "ar": "تطبيق OnGem على Android"
+      "en": "{brand} app on Android",
+      "ar": "تطبيق {brand} على Android"
     },
     {
       "key": "app.settings.security.device_unbound",
       "format": "text",
       "description": "Security section: a sign-in from the app before the device was registered (FA-029)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem app",
-      "ar": "تطبيق OnGem"
+      "en": "{brand} app",
+      "ar": "تطبيق {brand}"
     },
     {
       "key": "app.settings.security.place",
@@ -12382,10 +12395,10 @@
       "key": "app.fx.export_note",
       "format": "text",
       "description": "Export form note on the FX columns (OG-054)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Lines from a currency conversion also carry the pair, rate, provider fee, OnGem margin and quote.",
-      "ar": "تتضمن البنود الناتجة عن تحويل العملات أيضًا زوج العملات والسعر ورسوم المزوّد وهامش OnGem ورقم عرض السعر."
+      "en": "Lines from a currency conversion also carry the pair, rate, provider fee, {brand} margin and quote.",
+      "ar": "تتضمن البنود الناتجة عن تحويل العملات أيضًا زوج العملات والسعر ورسوم المزوّد وهامش {brand} ورقم عرض السعر."
     },
     {
       "key": "app.fx.rail.swift",
@@ -13151,11 +13164,12 @@
       "format": "text",
       "description": "Label: OnGem margin, shown apart (OG-054)",
       "placeholders": [
-        "bps"
+        "bps",
+        "brand"
       ],
       "meta": {},
-      "en": "OnGem margin ({bps} bps)",
-      "ar": "هامش OnGem، {bps} نقطة أساس"
+      "en": "{brand} margin ({bps} bps)",
+      "ar": "هامش {brand}، {bps} نقطة أساس"
     },
     {
       "key": "app.fx.quote.total",
@@ -13777,11 +13791,12 @@
       "format": "text",
       "description": "Transaction FX line: margin (OG-054)",
       "placeholders": [
-        "amount"
+        "amount",
+        "brand"
       ],
       "meta": {},
-      "en": "OnGem margin {amount}",
-      "ar": "هامش OnGem {amount}"
+      "en": "{brand} margin {amount}",
+      "ar": "هامش {brand} {amount}"
     },
     {
       "key": "app.fx.txn.open",
@@ -13868,10 +13883,10 @@
       "key": "app.fx.movement.state.needs_ops",
       "format": "text",
       "description": "Movement state (OG-054)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem is looking into it",
-      "ar": "يتابعها فريق OnGem"
+      "en": "{brand} is looking into it",
+      "ar": "يتابعها فريق {brand}"
     },
     {
       "key": "app.fx.movement.state.rejected",
@@ -13976,10 +13991,10 @@
       "key": "app.fx.movement.sentence.needs_ops",
       "format": "text",
       "description": "Movement sentence (OG-054)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "A step needs a person at OnGem. We will contact you.",
-      "ar": "تحتاج إحدى الخطوات إلى تدخل فريق OnGem. سنتواصل معك."
+      "en": "A step needs a person at {brand}. We will contact you.",
+      "ar": "تحتاج إحدى الخطوات إلى تدخل فريق {brand}. سنتواصل معك."
     },
     {
       "key": "app.fx.movement.sentence.rejected",
@@ -14061,11 +14076,12 @@
       "format": "text",
       "description": "Leg: OnGem margin (OG-054)",
       "placeholders": [
-        "amount"
+        "amount",
+        "brand"
       ],
       "meta": {},
-      "en": "OnGem margin of {amount}",
-      "ar": "هامش OnGem بقيمة {amount}"
+      "en": "{brand} margin of {amount}",
+      "ar": "هامش {brand} بقيمة {amount}"
     },
     {
       "key": "app.fx.leg.state.planned",
@@ -14192,10 +14208,10 @@
       "key": "app.errors.currency_unsupported",
       "format": "text",
       "description": "Error (OG-054)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem does not handle that currency.",
-      "ar": "لا يتعامل OnGem مع هذه العملة."
+      "en": "{brand} does not handle that currency.",
+      "ar": "لا يتعامل {brand} مع هذه العملة."
     },
     {
       "key": "app.errors.corridor_not_found",
@@ -14426,10 +14442,10 @@
       "key": "app.errors.ops_issuer_required",
       "format": "text",
       "description": "Error (OG-054)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "That needs an OnGem staff sign-in.",
-      "ar": "يتطلب ذلك تسجيل دخول موظف في OnGem."
+      "en": "That needs an {brand} staff sign-in.",
+      "ar": "يتطلب ذلك تسجيل دخول موظف في {brand}."
     },
     {
       "key": "app.errors.validation_failed",
@@ -14655,10 +14671,10 @@
       "key": "app.get_paid.buyer_email_hint",
       "format": "text",
       "description": "Get paid (OG-055): hint under the customer email",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "The provider sends the receipt. OnGem does not keep this address.",
-      "ar": "يرسل مزود الدفع الإيصال. لا تحتفظ OnGem بهذا العنوان."
+      "en": "The provider sends the receipt. {brand} does not keep this address.",
+      "ar": "يرسل مزود الدفع الإيصال. لا تحتفظ {brand} بهذا العنوان."
     },
     {
       "key": "app.get_paid.checkout_title",
@@ -14793,28 +14809,28 @@
       "key": "app.get_paid.destination_link",
       "format": "text",
       "description": "Get paid (OG-055): button: link the OnGem account for payouts",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Pay out to my OnGem account",
-      "ar": "التحويل إلى حسابي في OnGem"
+      "en": "Pay out to my {brand} account",
+      "ar": "التحويل إلى حسابي في {brand}"
     },
     {
       "key": "app.get_paid.destination_none",
       "format": "text",
       "description": "Get paid (OG-055): no payout destination yet (owner)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Link your OnGem account so card payments can be paid out to it.",
-      "ar": "اربط حسابك في OnGem حتى تُحوَّل إليه مدفوعات البطاقات."
+      "en": "Link your {brand} account so card payments can be paid out to it.",
+      "ar": "اربط حسابك في {brand} حتى تُحوَّل إليه مدفوعات البطاقات."
     },
     {
       "key": "app.get_paid.destination_none_member",
       "format": "text",
       "description": "Get paid (OG-055): no payout destination yet (not an owner)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "An owner links the OnGem account for payouts.",
-      "ar": "يربط أحد المالكين حساب OnGem للتحويلات."
+      "en": "An owner links the {brand} account for payouts.",
+      "ar": "يربط أحد المالكين حساب {brand} للتحويلات."
     },
     {
       "key": "app.get_paid.open_checkout",
@@ -14901,10 +14917,10 @@
       "key": "app.get_paid.payouts_empty_text",
       "format": "text",
       "description": "Get paid (OG-055): no payouts yet, text",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Money you move to your OnGem account shows here.",
-      "ar": "تظهر هنا الأموال التي تحوّلها إلى حسابك في OnGem."
+      "en": "Money you move to your {brand} account shows here.",
+      "ar": "تظهر هنا الأموال التي تحوّلها إلى حسابك في {brand}."
     },
     {
       "key": "app.get_paid.processing",
@@ -14949,20 +14965,21 @@
       "format": "text",
       "description": "Get paid (OG-055): payout made",
       "placeholders": [
-        "amount"
+        "amount",
+        "brand"
       ],
       "meta": {},
-      "en": "{amount} is on its way to your OnGem account.",
-      "ar": "{amount} في طريقه إلى حسابك في OnGem."
+      "en": "{amount} is on its way to your {brand} account.",
+      "ar": "{amount} في طريقه إلى حسابك في {brand}."
     },
     {
       "key": "app.get_paid.withdraw_needs_destination",
       "format": "text",
       "description": "Get paid (OG-055): withdraw needs a linked account",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Link your OnGem account in Overview first.",
-      "ar": "اربط حسابك في OnGem من النظرة العامة أولًا."
+      "en": "Link your {brand} account in Overview first.",
+      "ar": "اربط حسابك في {brand} من النظرة العامة أولًا."
     },
     {
       "key": "app.get_paid.withdraw_over",
@@ -14977,10 +14994,10 @@
       "key": "app.get_paid.withdraw_title",
       "format": "text",
       "description": "Get paid (OG-055): card title",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Pay out to OnGem",
-      "ar": "التحويل إلى OnGem"
+      "en": "Pay out to {brand}",
+      "ar": "التحويل إلى {brand}"
     },
     {
       "key": "app.get_paid.withdraw_to",
@@ -15169,10 +15186,10 @@
       "key": "app.get_paid.headline_text.active",
       "format": "text",
       "description": "Get paid (OG-055): text for state active",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Create a payment request and take a card, then pay out to your OnGem account.",
-      "ar": "أنشئ طلب دفع واستلم البطاقة، ثم حوّل المبلغ إلى حسابك في OnGem."
+      "en": "Create a payment request and take a card, then pay out to your {brand} account.",
+      "ar": "أنشئ طلب دفع واستلم البطاقة، ثم حوّل المبلغ إلى حسابك في {brand}."
     },
     {
       "key": "app.get_paid.state_word.active",
@@ -15686,10 +15703,10 @@
       "key": "app.notifications.choices.push_note",
       "format": "text",
       "description": "Note under the choices about phone alerts",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Phone alerts go to the OnGem app on your phones. This browser does not get them.",
-      "ar": "تصل تنبيهات الهاتف إلى تطبيق OnGem على هواتفك. لا يتلقاها هذا المتصفح."
+      "en": "Phone alerts go to the {brand} app on your phones. This browser does not get them.",
+      "ar": "تصل تنبيهات الهاتف إلى تطبيق {brand} على هواتفك. لا يتلقاها هذا المتصفح."
     },
     {
       "key": "app.demo.notice_kind.money_in",
@@ -15869,22 +15886,24 @@
       "format": "text",
       "description": "Get paid (OG-055): where payouts go when the provider gives no bank name",
       "placeholders": [
-        "last4"
+        "last4",
+        "brand"
       ],
       "meta": {},
-      "en": "Payouts go to your OnGem account ending {last4}.",
-      "ar": "تُحوَّل المدفوعات إلى حسابك في OnGem المنتهي بـ {last4}."
+      "en": "Payouts go to your {brand} account ending {last4}.",
+      "ar": "تُحوَّل المدفوعات إلى حسابك في {brand} المنتهي بـ {last4}."
     },
     {
       "key": "app.get_paid.withdraw_to_unnamed",
       "format": "text",
       "description": "Get paid (OG-055): payout destination line without a bank name",
       "placeholders": [
-        "last4"
+        "last4",
+        "brand"
       ],
       "meta": {},
-      "en": "To your OnGem account ending {last4}",
-      "ar": "إلى حسابك في OnGem المنتهي بـ {last4}"
+      "en": "To your {brand} account ending {last4}",
+      "ar": "إلى حسابك في {brand} المنتهي بـ {last4}"
     },
     {
       "key": "app.get_paid.check_again",
@@ -15935,10 +15954,10 @@
       "key": "app.get_paid.pay_link.intro",
       "format": "text",
       "description": "Get paid (OG-058): what a payment link is",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Send your customer a link. They pay by card on a secure OnGem page without signing in.",
-      "ar": "أرسل إلى عميلك رابطا. يدفع بالبطاقة على صفحة آمنة من OnGem دون تسجيل الدخول."
+      "en": "Send your customer a link. They pay by card on a secure {brand} page without signing in.",
+      "ar": "أرسل إلى عميلك رابطا. يدفع بالبطاقة على صفحة آمنة من {brand} دون تسجيل الدخول."
     },
     {
       "key": "app.get_paid.pay_link.amount_range",
@@ -16427,10 +16446,10 @@
       "key": "app.get_paid.pay_page.page_description",
       "format": "text",
       "description": "Pay link page (OG-058): page description",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "A secure card payment page from OnGem.",
-      "ar": "صفحة دفع آمنة بالبطاقة من OnGem."
+      "en": "A secure card payment page from {brand}.",
+      "ar": "صفحة دفع آمنة بالبطاقة من {brand}."
     },
     {
       "key": "app.get_paid.pay_page.loading",
@@ -16454,10 +16473,10 @@
       "key": "app.get_paid.pay_page.footer",
       "format": "text",
       "description": "Pay link page (OG-058): footer line",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Card payments on this page are taken securely through OnGem. OnGem never sees your full card number.",
-      "ar": "تتم مدفوعات البطاقات على هذه الصفحة بأمان عبر OnGem. لا يرى OnGem رقم بطاقتك الكامل."
+      "en": "Card payments on this page are taken securely through {brand}. {brand} never sees your full card number.",
+      "ar": "تتم مدفوعات البطاقات على هذه الصفحة بأمان عبر {brand}. لا يرى {brand} رقم بطاقتك الكامل."
     },
     {
       "key": "app.get_paid.pay_page.sandbox",
@@ -16615,10 +16634,10 @@
       "key": "app.get_paid.pay_page.error.network",
       "format": "text",
       "description": "Pay link page (OG-058): the page could not reach OnGem",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "We could not reach OnGem. Check your connection and try again.",
-      "ar": "تعذر الوصول إلى OnGem. تحقق من اتصالك وحاول مرة أخرى."
+      "en": "We could not reach {brand}. Check your connection and try again.",
+      "ar": "تعذر الوصول إلى {brand}. تحقق من اتصالك وحاول مرة أخرى."
     },
     {
       "key": "app.get_paid.pay_page.error.other",

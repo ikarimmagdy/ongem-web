@@ -113,10 +113,10 @@
       "key": "web.art.label.hero",
       "format": "text",
       "description": "Description of an illustration for screen readers",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem on a laptop and a phone",
-      "ar": "OnGem على حاسوب محمول وهاتف"
+      "en": "{brand} on a laptop and a phone",
+      "ar": "{brand} على حاسوب محمول وهاتف"
     },
     {
       "key": "web.art.label.notifications",
@@ -131,10 +131,10 @@
       "key": "web.art.label.partner",
       "format": "text",
       "description": "Description of an illustration for screen readers",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "A company passing its details to OnGem",
-      "ar": "شركة ترسل بياناتها إلى OnGem"
+      "en": "A company passing its details to {brand}",
+      "ar": "شركة ترسل بياناتها إلى {brand}"
     },
     {
       "key": "web.art.label.payments",
@@ -158,10 +158,10 @@
       "key": "web.art.label.shield",
       "format": "text",
       "description": "Description of an illustration for screen readers",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "A shield with the OnGem gem",
-      "ar": "درع يحمل جوهرة OnGem"
+      "en": "A shield with the {brand} gem",
+      "ar": "درع يحمل جوهرة {brand}"
     },
     {
       "key": "web.art.label.support",
@@ -266,10 +266,10 @@
       "key": "web.auth.not_configured",
       "format": "markdown",
       "description": "Sign-in page when the build has no sign-in key (markdown)",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Accounts are not open in the UAE yet. Until then, explore OnGem on sample data in the demo.",
-      "ar": "لم تُفتح الحسابات في الإمارات بعد. وإلى ذلك الحين، استكشف OnGem ببيانات تجريبية في النسخة التجريبية."
+      "en": "Accounts are not open in the UAE yet. Until then, explore {brand} on sample data in the demo.",
+      "ar": "لم تُفتح الحسابات في الإمارات بعد. وإلى ذلك الحين، استكشف {brand} ببيانات تجريبية في النسخة التجريبية."
     },
     {
       "key": "web.auth.promises.1",
@@ -311,37 +311,37 @@
       "key": "web.auth.sign_in_title",
       "format": "text",
       "description": "Sign-in page: sign in title",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Sign in to OnGem",
-      "ar": "تسجيل الدخول إلى OnGem"
+      "en": "Sign in to {brand}",
+      "ar": "تسجيل الدخول إلى {brand}"
     },
     {
       "key": "web.auth.sign_up_lede",
       "format": "text",
       "description": "Sign-in page: sign up lede",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Create your sign-in, then tell us about your company and its trade licence. A licensed UAE bank decides on your account and OnGem shows you each step.",
-      "ar": "أنشئ بيانات الدخول، ثم أخبرنا عن شركتك ورخصتها التجارية. يقرر بنك مرخّص في الإمارات بشأن حسابك، وتعرض لك OnGem كل خطوة."
+      "en": "Create your sign-in, then tell us about your company and its trade licence. A licensed UAE bank decides on your account and {brand} shows you each step.",
+      "ar": "أنشئ بيانات الدخول، ثم أخبرنا عن شركتك ورخصتها التجارية. يقرر بنك مرخّص في الإمارات بشأن حسابك، وتعرض لك {brand} كل خطوة."
     },
     {
       "key": "web.auth.sign_up_title",
       "format": "text",
       "description": "Sign-in page: sign up title",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Create your OnGem account",
-      "ar": "أنشئ حسابك في OnGem"
+      "en": "Create your {brand} account",
+      "ar": "أنشئ حسابك في {brand}"
     },
     {
       "key": "web.bank_statement",
       "format": "text",
       "description": "Who provides the banking services; the ¹ points to disclosure 1",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem is a financial technology company, not a bank. Banking services are provided by a licensed UAE bank.",
-      "ar": "OnGem شركة تقنية مالية وليست بنكًا. تُقدَّم الخدمات المصرفية من بنك مرخّص في الإمارات العربية المتحدة."
+      "en": "{brand} is a financial technology company, not a bank. Banking services are provided by a licensed UAE bank.",
+      "ar": "{brand} شركة تقنية مالية وليست بنكًا. تُقدَّم الخدمات المصرفية من بنك مرخّص في الإمارات العربية المتحدة."
     },
     {
       "key": "web.close.text",
@@ -356,10 +356,10 @@
       "key": "web.close.title",
       "format": "text",
       "description": "Final call to action: heading",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem is coming to the UAE",
-      "ar": "OnGem قادم إلى الإمارات"
+      "en": "{brand} is coming to the UAE",
+      "ar": "{brand} قادم إلى الإمارات"
     },
     {
       "key": "web.contact.customers_text",
@@ -374,19 +374,19 @@
       "key": "web.contact.customers_title",
       "format": "text",
       "description": "Contact page: customers heading",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Already banking with OnGem",
-      "ar": "تتعامل مع OnGem بالفعل"
+      "en": "Already banking with {brand}",
+      "ar": "تتعامل مع {brand} بالفعل"
     },
     {
       "key": "web.contact.lede",
       "format": "text",
       "description": "Contact page: sentence",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "The right way to reach us depends on where you are with OnGem.",
-      "ar": "الطريقة المناسبة للتواصل معنا تعتمد على علاقتك بـ OnGem."
+      "en": "The right way to reach us depends on where you are with {brand}.",
+      "ar": "الطريقة المناسبة للتواصل معنا تعتمد على علاقتك بـ {brand}."
     },
     {
       "key": "web.contact.new_text",
@@ -410,10 +410,10 @@
       "key": "web.contact.partners_text",
       "format": "text",
       "description": "Contact page: partners text",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Connect through OnGem’s Partner API so the companies you form apply with their details prefilled.",
-      "ar": "اتصل عبر واجهة برمجة الشركاء في OnGem لتتقدم الشركات التي تؤسسها ببياناتها معبأة مسبقًا."
+      "en": "Connect through {brand}’s Partner API so the companies you form apply with their details prefilled.",
+      "ar": "اتصل عبر واجهة برمجة الشركاء في {brand} لتتقدم الشركات التي تؤسسها ببياناتها معبأة مسبقًا."
     },
     {
       "key": "web.contact.partners_title",
@@ -484,10 +484,10 @@
       "key": "web.demo.bar_text",
       "format": "text",
       "description": "Demo bar over the app in demo mode: what the visitor is looking at",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "You are exploring OnGem on sample data. Nothing you do reaches a bank.",
-      "ar": "أنت تستكشف OnGem ببيانات تجريبية. لا يصل أي شيء تفعله إلى أي بنك."
+      "en": "You are exploring {brand} on sample data. Nothing you do reaches a bank.",
+      "ar": "أنت تستكشف {brand} ببيانات تجريبية. لا يصل أي شيء تفعله إلى أي بنك."
     },
     {
       "key": "web.demo.opening",
@@ -558,19 +558,19 @@
       "key": "web.faq_page.general",
       "format": "text",
       "description": "FAQ page: heading of the general questions",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "About OnGem",
-      "ar": "عن OnGem"
+      "en": "About {brand}",
+      "ar": "عن {brand}"
     },
     {
       "key": "web.faq_page.lede",
       "format": "text",
       "description": "FAQ page: sentence",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Answers about accounts, payments, approvals and how OnGem works with the bank.",
-      "ar": "إجابات عن الحسابات والمدفوعات والموافقات وكيف يعمل OnGem مع البنك."
+      "en": "Answers about accounts, payments, approvals and how {brand} works with the bank.",
+      "ar": "إجابات عن الحسابات والمدفوعات والموافقات وكيف يعمل {brand} مع البنك."
     },
     {
       "key": "web.footer.company",
@@ -586,10 +586,11 @@
       "format": "text",
       "description": "Copyright line in the footer",
       "placeholders": [
-        "year"
+        "year",
+        "brand"
       ],
       "meta": {},
-      "en": "© {year} OnGem"
+      "en": "© {year} {brand}"
     },
     {
       "key": "web.footer.region_language",
@@ -604,10 +605,10 @@
       "key": "web.guides.lede",
       "format": "text",
       "description": "Guides page: sentence",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "How each part of OnGem works, step by step, with a walkthrough where there is one.",
-      "ar": "كيف يعمل كل جزء من OnGem، خطوة بخطوة، مع جولة مصورة حيثما وُجدت."
+      "en": "How each part of {brand} works, step by step, with a walkthrough where there is one.",
+      "ar": "كيف يعمل كل جزء من {brand}، خطوة بخطوة، مع جولة مصورة حيثما وُجدت."
     },
     {
       "key": "web.guides.read",
@@ -676,10 +677,10 @@
       "key": "web.hero.intro",
       "format": "text",
       "description": "Home hero: the sentence under the headline",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem is coming to the UAE: business accounts in AED at a licensed UAE bank, instant Aani payments and approvals that keep two sets of eyes on every payment. Accounts are not open yet.",
-      "ar": "OnGem قادم إلى الإمارات: حسابات أعمال بالدرهم لدى بنك مرخّص في الإمارات، ومدفوعات فورية عبر آني، وموافقات تضع عينين على كل دفعة. الحسابات غير مفتوحة بعد."
+      "en": "{brand} is coming to the UAE: business accounts in AED at a licensed UAE bank, instant Aani payments and approvals that keep two sets of eyes on every payment. Accounts are not open yet.",
+      "ar": "{brand} قادم إلى الإمارات: حسابات أعمال بالدرهم لدى بنك مرخّص في الإمارات، ومدفوعات فورية عبر آني، وموافقات تضع عينين على كل دفعة. الحسابات غير مفتوحة بعد."
     },
     {
       "key": "web.hero.intro_short",
@@ -766,10 +767,10 @@
       "key": "web.home.who_title",
       "format": "text",
       "description": "Home: heading of the who it's for cards",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Who OnGem is for",
-      "ar": "لمن OnGem"
+      "en": "Who {brand} is for",
+      "ar": "لمن {brand}"
     },
     {
       "key": "web.how.1.text",
@@ -901,10 +902,10 @@
       "key": "web.labels.home_link",
       "format": "text",
       "description": "Public site label: home link",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem home",
-      "ar": "الصفحة الرئيسية لـ OnGem"
+      "en": "{brand} home",
+      "ar": "الصفحة الرئيسية لـ {brand}"
     },
     {
       "key": "web.labels.home_security",
@@ -946,10 +947,10 @@
       "key": "web.labels.more_product",
       "format": "text",
       "description": "Capability page: heading of links to the other capability pages",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "More of OnGem",
-      "ar": "المزيد من OnGem"
+      "en": "More of {brand}",
+      "ar": "المزيد من {brand}"
     },
     {
       "key": "web.labels.open_demo",
@@ -982,10 +983,10 @@
       "key": "web.labels.product_title",
       "format": "text",
       "description": "Public site label: product title",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "What OnGem will do in the UAE",
-      "ar": "ما سيقدمه OnGem في الإمارات"
+      "en": "What {brand} will do in the UAE",
+      "ar": "ما سيقدمه {brand} في الإمارات"
     },
     {
       "key": "web.labels.read_more",
@@ -1020,10 +1021,10 @@
       "key": "web.labels.security_title",
       "format": "text",
       "description": "Public site label: security title",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "How OnGem protects your money",
-      "ar": "كيف تحمي OnGem أموالك"
+      "en": "How {brand} protects your money",
+      "ar": "كيف تحمي {brand} أموالك"
     },
     {
       "key": "web.labels.see_how",
@@ -1128,10 +1129,10 @@
       "key": "web.legal.contact_link",
       "format": "text",
       "description": "Legal page: link to the contact page under the holding line",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Ways to reach OnGem",
-      "ar": "طرق التواصل مع OnGem"
+      "en": "Ways to reach {brand}",
+      "ar": "طرق التواصل مع {brand}"
     },
     {
       "key": "web.legal.effective",
@@ -1167,21 +1168,23 @@
       "format": "text",
       "description": "Search description of a legal page",
       "placeholders": [
-        "title"
+        "title",
+        "brand"
       ],
       "meta": {},
-      "en": "{title} for OnGem business accounts.",
-      "ar": "{title} الخاصة بحسابات الأعمال في OnGem."
+      "en": "{title} for {brand} business accounts.",
+      "ar": "{title} الخاصة بحسابات الأعمال في {brand}."
     },
     {
       "key": "web.legal.meta_title",
       "format": "text",
       "description": "Browser tab title of a legal page",
       "placeholders": [
-        "title"
+        "title",
+        "brand"
       ],
       "meta": {},
-      "en": "{title} | OnGem"
+      "en": "{title} | {brand}"
     },
     {
       "key": "web.legal.nav",
@@ -1261,28 +1264,28 @@
       "key": "web.media.blog_lede",
       "format": "text",
       "description": "Blog, videos and gallery: blog lede",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Plain answers about running your company’s money with OnGem: how it works today, and what is coming.",
-      "ar": "إجابات واضحة عن إدارة أموال شركتك مع OnGem: كيف تعمل اليوم، وما الذي سيأتي."
+      "en": "Plain answers about running your company’s money with {brand}: how it works today, and what is coming.",
+      "ar": "إجابات واضحة عن إدارة أموال شركتك مع {brand}: كيف تعمل اليوم، وما الذي سيأتي."
     },
     {
       "key": "web.media.blog_meta_title",
       "format": "text",
       "description": "Blog, videos and gallery: blog meta title",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Blog: running your company’s money with OnGem | OnGem",
-      "ar": "المدونة: إدارة أموال شركتك مع OnGem | OnGem"
+      "en": "Blog: running your company’s money with {brand} | {brand}",
+      "ar": "المدونة: إدارة أموال شركتك مع {brand} | {brand}"
     },
     {
       "key": "web.media.blog_title",
       "format": "text",
       "description": "Blog, videos and gallery: blog title",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "The OnGem blog",
-      "ar": "مدونة OnGem"
+      "en": "The {brand} blog",
+      "ar": "مدونة {brand}"
     },
     {
       "key": "web.media.by_author",
@@ -1357,10 +1360,11 @@
       "format": "text",
       "description": "Browser tab title of a blog post",
       "placeholders": [
-        "title"
+        "title",
+        "brand"
       ],
       "meta": {},
-      "en": "{title} | OnGem"
+      "en": "{title} | {brand}"
     },
     {
       "key": "web.media.read_post",
@@ -1384,10 +1388,10 @@
       "key": "web.media.strip_lede",
       "format": "text",
       "description": "Blog, videos and gallery: strip lede",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Real walkthroughs of the OnGem app, recorded on sample data.",
-      "ar": "جولات حقيقية في تطبيق OnGem، مسجلة ببيانات نموذجية."
+      "en": "Real walkthroughs of the {brand} app, recorded on sample data.",
+      "ar": "جولات حقيقية في تطبيق {brand}، مسجلة ببيانات نموذجية."
     },
     {
       "key": "web.media.strip_title",
@@ -1447,19 +1451,19 @@
       "key": "web.media.videos_lede",
       "format": "text",
       "description": "Blog, videos and gallery: videos lede",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Short walkthroughs recorded in the OnGem demo, on sample data: sign-up, payments, approvals, adding money, cards, notices and support.",
-      "ar": "جولات قصيرة مسجلة في النسخة التجريبية من OnGem، ببيانات نموذجية: التسجيل، والدفعات، والموافقات، وإضافة الأموال، والبطاقات، والإشعارات، والدعم."
+      "en": "Short walkthroughs recorded in the {brand} demo, on sample data: sign-up, payments, approvals, adding money, cards, notices and support.",
+      "ar": "جولات قصيرة مسجلة في النسخة التجريبية من {brand}، ببيانات نموذجية: التسجيل، والدفعات، والموافقات، وإضافة الأموال، والبطاقات، والإشعارات، والدعم."
     },
     {
       "key": "web.media.videos_meta_title",
       "format": "text",
       "description": "Blog, videos and gallery: videos meta title",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Videos: OnGem walkthroughs for founders | OnGem",
-      "ar": "الفيديوهات: جولات OnGem للمؤسسين | OnGem"
+      "en": "Videos: {brand} walkthroughs for founders | {brand}",
+      "ar": "الفيديوهات: جولات {brand} للمؤسسين | {brand}"
     },
     {
       "key": "web.media.videos_sample_note",
@@ -1474,10 +1478,10 @@
       "key": "web.media.videos_title",
       "format": "text",
       "description": "Blog, videos and gallery: videos title",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "See OnGem in action",
-      "ar": "شاهد OnGem أثناء العمل"
+      "en": "See {brand} in action",
+      "ar": "شاهد {brand} أثناء العمل"
     },
     {
       "key": "web.media.watch_video",
@@ -1546,10 +1550,10 @@
       "key": "web.nav.overview",
       "format": "text",
       "description": "Product menu: the product overview page",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Everything OnGem will do",
-      "ar": "كل ما سيقدمه OnGem"
+      "en": "Everything {brand} will do",
+      "ar": "كل ما سيقدمه {brand}"
     },
     {
       "key": "web.nav.pricing",
@@ -1656,10 +1660,10 @@
       "key": "web.nav.who",
       "format": "text",
       "description": "Header menu: who OnGem is for",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
       "en": "Who it’s for",
-      "ar": "لمن OnGem"
+      "ar": "لمن {brand}"
     },
     {
       "key": "web.not_found.home",
@@ -1674,10 +1678,10 @@
       "key": "web.not_found.lede",
       "format": "text",
       "description": "Not-found page: one sentence under the heading",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "This page does not exist or has moved. Start from the home page, see what OnGem does or try the demo.",
-      "ar": "هذه الصفحة غير موجودة أو نُقلت. ابدأ من الصفحة الرئيسية، أو تعرّف على ما تقدّمه OnGem، أو جرّب النسخة التجريبية."
+      "en": "This page does not exist or has moved. Start from the home page, see what {brand} does or try the demo.",
+      "ar": "هذه الصفحة غير موجودة أو نُقلت. ابدأ من الصفحة الرئيسية، أو تعرّف على ما تقدّمه {brand}، أو جرّب النسخة التجريبية."
     },
     {
       "key": "web.not_found.title",
@@ -1781,10 +1785,10 @@
       "key": "web.page.accounts.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: accounts",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Business accounts and statements | OnGem",
-      "ar": "حسابات الأعمال وكشوفها | OnGem"
+      "en": "Business accounts and statements | {brand}",
+      "ar": "حسابات الأعمال وكشوفها | {brand}"
     },
     {
       "key": "web.page.approvals.description",
@@ -1799,10 +1803,10 @@
       "key": "web.page.approvals.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: approvals",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Approvals and team: two people on every larger payment | OnGem",
-      "ar": "الموافقات والفريق: شخصان على كل دفعة كبيرة | OnGem"
+      "en": "Approvals and team: two people on every larger payment | {brand}",
+      "ar": "الموافقات والفريق: شخصان على كل دفعة كبيرة | {brand}"
     },
     {
       "key": "web.page.assistant.description",
@@ -1817,10 +1821,10 @@
       "key": "web.page.assistant.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: assistant",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Assistant: it drafts, you decide | OnGem",
-      "ar": "المساعد: يُعد المسودة وأنت تقرر | OnGem"
+      "en": "Assistant: it drafts, you decide | {brand}",
+      "ar": "المساعد: يُعد المسودة وأنت تقرر | {brand}"
     },
     {
       "key": "web.page.companies.description",
@@ -1835,10 +1839,10 @@
       "key": "web.page.companies.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: companies",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Several companies: one sign-in for every company you run | OnGem",
-      "ar": "عدة شركات: تسجيل دخول واحد لكل شركاتك | OnGem"
+      "en": "Several companies: one sign-in for every company you run | {brand}",
+      "ar": "عدة شركات: تسجيل دخول واحد لكل شركاتك | {brand}"
     },
     {
       "key": "web.page.contact.description",
@@ -1853,46 +1857,46 @@
       "key": "web.page.contact.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: contact",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Contact OnGem | OnGem",
-      "ar": "تواصل مع OnGem | OnGem"
+      "en": "Contact {brand} | {brand}",
+      "ar": "تواصل مع {brand} | {brand}"
     },
     {
       "key": "web.page.demo.description",
       "format": "text",
       "description": "Page description for search results: demo",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "The OnGem demo on sample data: nothing you do reaches a bank.",
-      "ar": "العرض التجريبي لـ OnGem على بيانات تجريبية: لا يصل شيء مما تفعله إلى أي بنك."
+      "en": "The {brand} demo on sample data: nothing you do reaches a bank.",
+      "ar": "العرض التجريبي لـ {brand} على بيانات تجريبية: لا يصل شيء مما تفعله إلى أي بنك."
     },
     {
       "key": "web.page.demo.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: demo",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Opening the demo | OnGem",
-      "ar": "فتح العرض التجريبي | OnGem"
+      "en": "Opening the demo | {brand}",
+      "ar": "فتح العرض التجريبي | {brand}"
     },
     {
       "key": "web.page.faq.description",
       "format": "text",
       "description": "Page description for search results: faq",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Answers about accounts, payments, approvals, several companies, the assistant and how OnGem works with the bank.",
-      "ar": "إجابات عن الحسابات والمدفوعات والموافقات وعدة شركات والمساعد وكيف يعمل OnGem مع البنك."
+      "en": "Answers about accounts, payments, approvals, several companies, the assistant and how {brand} works with the bank.",
+      "ar": "إجابات عن الحسابات والمدفوعات والموافقات وعدة شركات والمساعد وكيف يعمل {brand} مع البنك."
     },
     {
       "key": "web.page.faq.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: faq",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "FAQ: questions founders ask about OnGem | OnGem",
-      "ar": "الأسئلة الشائعة: ما يسأله المؤسسون عن OnGem | OnGem"
+      "en": "FAQ: questions founders ask about {brand} | {brand}",
+      "ar": "الأسئلة الشائعة: ما يسأله المؤسسون عن {brand} | {brand}"
     },
     {
       "key": "web.page.guides.description",
@@ -1907,28 +1911,28 @@
       "key": "web.page.guides.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: guides",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Guides: how OnGem works, step by step | OnGem",
-      "ar": "الأدلة: كيف يعمل OnGem خطوة بخطوة | OnGem"
+      "en": "Guides: how {brand} works, step by step | {brand}",
+      "ar": "الأدلة: كيف يعمل {brand} خطوة بخطوة | {brand}"
     },
     {
       "key": "web.page.home.description",
       "format": "text",
       "description": "Page description for search results: home",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem is coming to the UAE: AED business accounts at a licensed UAE bank, Aani and UAEFTS payments and two-person approvals. Try the demo today.",
-      "ar": "OnGem قادم إلى الإمارات: حسابات أعمال بالدرهم لدى بنك مرخّص في الإمارات، ومدفوعات عبر آني ونظام الإمارات لتحويل الأموال، وموافقة شخصين. جرّب العرض التجريبي اليوم."
+      "en": "{brand} is coming to the UAE: AED business accounts at a licensed UAE bank, Aani and UAEFTS payments and two-person approvals. Try the demo today.",
+      "ar": "{brand} قادم إلى الإمارات: حسابات أعمال بالدرهم لدى بنك مرخّص في الإمارات، ومدفوعات عبر آني ونظام الإمارات لتحويل الأموال، وموافقة شخصين. جرّب العرض التجريبي اليوم."
     },
     {
       "key": "web.page.home.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: home",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem: business banking for founders in the UAE, coming soon",
-      "ar": "OnGem: خدمات مصرفية للأعمال للمؤسسين في الإمارات، قريبًا"
+      "en": "{brand}: business banking for founders in the UAE, coming soon",
+      "ar": "{brand}: خدمات مصرفية للأعمال للمؤسسين في الإمارات، قريبًا"
     },
     {
       "key": "web.page.new_companies.description",
@@ -1943,46 +1947,46 @@
       "key": "web.page.new_companies.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: new_companies",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "For newly formed companies | OnGem",
-      "ar": "للشركات المؤسسة حديثًا | OnGem"
+      "en": "For newly formed companies | {brand}",
+      "ar": "للشركات المؤسسة حديثًا | {brand}"
     },
     {
       "key": "web.page.not_found.description",
       "format": "text",
       "description": "Meta description of the not-found page",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "The page you asked for is not on the OnGem site.",
-      "ar": "الصفحة التي طلبتها غير موجودة على موقع OnGem."
+      "en": "The page you asked for is not on the {brand} site.",
+      "ar": "الصفحة التي طلبتها غير موجودة على موقع {brand}."
     },
     {
       "key": "web.page.not_found.title",
       "format": "text",
       "description": "Browser tab title of the not-found page",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Page not found | OnGem",
-      "ar": "الصفحة غير موجودة | OnGem"
+      "en": "Page not found | {brand}",
+      "ar": "الصفحة غير موجودة | {brand}"
     },
     {
       "key": "web.page.partners.description",
       "format": "text",
       "description": "Page description for search results: partners",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Founders who form their company with an OnGem partner will apply with their trade licence and company details already filled in.",
-      "ar": "المؤسسون الذين يؤسسون شركتهم مع أحد شركاء OnGem سيتقدمون ورخصتهم التجارية وبيانات شركتهم معبأة مسبقًا."
+      "en": "Founders who form their company with an {brand} partner will apply with their trade licence and company details already filled in.",
+      "ar": "المؤسسون الذين يؤسسون شركتهم مع أحد شركاء {brand} سيتقدمون ورخصتهم التجارية وبيانات شركتهم معبأة مسبقًا."
     },
     {
       "key": "web.page.partners.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: partners",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Formation partners: an account for the company you just formed | OnGem",
-      "ar": "شركاء التأسيس: حساب للشركة التي أسستها للتو | OnGem"
+      "en": "Formation partners: an account for the company you just formed | {brand}",
+      "ar": "شركاء التأسيس: حساب للشركة التي أسستها للتو | {brand}"
     },
     {
       "key": "web.page.payments.description",
@@ -1997,10 +2001,10 @@
       "key": "web.page.payments.title",
       "format": "text",
       "description": "Page title: payments",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Payments: Aani, UAEFTS, schedules and adding money | OnGem",
-      "ar": "المدفوعات: آني ونظام الإمارات لتحويل الأموال والجدولة وإضافة الأموال | OnGem"
+      "en": "Payments: Aani, UAEFTS, schedules and adding money | {brand}",
+      "ar": "المدفوعات: آني ونظام الإمارات لتحويل الأموال والجدولة وإضافة الأموال | {brand}"
     },
     {
       "key": "web.page.pricing.description",
@@ -2015,28 +2019,28 @@
       "key": "web.page.pricing.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: pricing",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Pricing: talk to us | OnGem",
-      "ar": "الأسعار: تحدث إلينا | OnGem"
+      "en": "Pricing: talk to us | {brand}",
+      "ar": "الأسعار: تحدث إلينا | {brand}"
     },
     {
       "key": "web.page.product.description",
       "format": "text",
       "description": "Page description for search results: product",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Accounts and statements in AED, Aani and UAEFTS payments, approvals, several companies and an assistant: what OnGem is preparing for UAE founders.",
-      "ar": "حسابات وكشوف بالدرهم، ومدفوعات عبر آني ونظام الإمارات لتحويل الأموال، وموافقات، وعدة شركات، ومساعد: ما يجهزه OnGem للمؤسسين في الإمارات."
+      "en": "Accounts and statements in AED, Aani and UAEFTS payments, approvals, several companies and an assistant: what {brand} is preparing for UAE founders.",
+      "ar": "حسابات وكشوف بالدرهم، ومدفوعات عبر آني ونظام الإمارات لتحويل الأموال، وموافقات، وعدة شركات، ومساعد: ما يجهزه {brand} للمؤسسين في الإمارات."
     },
     {
       "key": "web.page.product.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: product",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Product: what OnGem will do in the UAE | OnGem",
-      "ar": "المنتج: ما سيقدمه OnGem في الإمارات | OnGem"
+      "en": "Product: what {brand} will do in the UAE | {brand}",
+      "ar": "المنتج: ما سيقدمه {brand} في الإمارات | {brand}"
     },
     {
       "key": "web.page.security.description",
@@ -2051,10 +2055,10 @@
       "key": "web.page.security.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: security",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Security: how OnGem protects your money and data | OnGem",
-      "ar": "الأمان: كيف يحمي OnGem أموالك وبياناتك | OnGem"
+      "en": "Security: how {brand} protects your money and data | {brand}",
+      "ar": "الأمان: كيف يحمي {brand} أموالك وبياناتك | {brand}"
     },
     {
       "key": "web.page.several_companies.description",
@@ -2069,73 +2073,73 @@
       "key": "web.page.several_companies.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: several_companies",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "For founders with several companies | OnGem",
-      "ar": "للمؤسسين الذين يملكون عدة شركات | OnGem"
+      "en": "For founders with several companies | {brand}",
+      "ar": "للمؤسسين الذين يملكون عدة شركات | {brand}"
     },
     {
       "key": "web.page.sign_in.description",
       "format": "text",
       "description": "Meta description of the sign-in page",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Sign in to OnGem to see your company's accounts, payments and approvals.",
-      "ar": "سجّل الدخول إلى OnGem لترى حسابات شركتك ومدفوعاتها والموافقات."
+      "en": "Sign in to {brand} to see your company's accounts, payments and approvals.",
+      "ar": "سجّل الدخول إلى {brand} لترى حسابات شركتك ومدفوعاتها والموافقات."
     },
     {
       "key": "web.page.sign_in.title",
       "format": "text",
       "description": "Browser tab title of the sign-in page",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Sign in | OnGem",
-      "ar": "تسجيل الدخول | OnGem"
+      "en": "Sign in | {brand}",
+      "ar": "تسجيل الدخول | {brand}"
     },
     {
       "key": "web.page.sign_up.description",
       "format": "text",
       "description": "Meta description of the sign-up page",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Create your OnGem sign-in, then tell us about your company.",
-      "ar": "أنشئ بيانات الدخول إلى OnGem، ثم أخبرنا عن شركتك."
+      "en": "Create your {brand} sign-in, then tell us about your company.",
+      "ar": "أنشئ بيانات الدخول إلى {brand}، ثم أخبرنا عن شركتك."
     },
     {
       "key": "web.page.sign_up.title",
       "format": "text",
       "description": "Browser tab title of the sign-up page",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Create your account | OnGem",
-      "ar": "أنشئ حسابك | OnGem"
+      "en": "Create your account | {brand}",
+      "ar": "أنشئ حسابك | {brand}"
     },
     {
       "key": "web.page.status.description",
       "format": "text",
       "description": "Page description for search results: status",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "A public status page for each part of OnGem is being built. Until then, Support in the app is the place to tell us.",
-      "ar": "يجري إنشاء صفحة حالة عامة لكل جزء من OnGem. وحتى ذلك الحين، الدعم في التطبيق هو المكان لإبلاغنا."
+      "en": "A public status page for each part of {brand} is being built. Until then, Support in the app is the place to tell us.",
+      "ar": "يجري إنشاء صفحة حالة عامة لكل جزء من {brand}. وحتى ذلك الحين، الدعم في التطبيق هو المكان لإبلاغنا."
     },
     {
       "key": "web.page.status.title",
       "format": "text",
       "description": "Page title in the browser tab and search results: status",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Service status | OnGem",
-      "ar": "حالة الخدمة | OnGem"
+      "en": "Service status | {brand}",
+      "ar": "حالة الخدمة | {brand}"
     },
     {
       "key": "web.partner.api_text",
       "format": "text",
       "description": "Partners page: the Partner API in one sentence",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Company formation and licensing firms connect through OnGem’s Partner API: they submit applications, see their progress and never see a founder’s banking data.",
-      "ar": "تتصل شركات تأسيس الأعمال والترخيص عبر واجهة برمجة الشركاء من OnGem: تقدّم الطلبات، وتتابع تقدمها، ولا ترى البيانات المصرفية للمؤسس أبدًا."
+      "en": "Company formation and licensing firms connect through {brand}’s Partner API: they submit applications, see their progress and never see a founder’s banking data.",
+      "ar": "تتصل شركات تأسيس الأعمال والترخيص عبر واجهة برمجة الشركاء من {brand}: تقدّم الطلبات، وتتابع تقدمها، ولا ترى البيانات المصرفية للمؤسس أبدًا."
     },
     {
       "key": "web.partner.api_title",
@@ -2177,19 +2181,19 @@
       "key": "web.partner.text",
       "format": "text",
       "description": "Partners page intro",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Your formation partner sends your trade licence and company details to OnGem when you ask it to. You review them, add what is missing and submit. No retyping what you already gave.",
-      "ar": "يرسل شريك التأسيس الرخصة التجارية وبيانات شركتك إلى OnGem عندما تطلب منه ذلك. تراجعها، وتضيف ما ينقص، ثم تقدّم الطلب. دون إعادة كتابة ما قدمته من قبل."
+      "en": "Your formation partner sends your trade licence and company details to {brand} when you ask it to. You review them, add what is missing and submit. No retyping what you already gave.",
+      "ar": "يرسل شريك التأسيس الرخصة التجارية وبيانات شركتك إلى {brand} عندما تطلب منه ذلك. تراجعها، وتضيف ما ينقص، ثم تقدّم الطلب. دون إعادة كتابة ما قدمته من قبل."
     },
     {
       "key": "web.partner.title",
       "format": "text",
       "description": "Partners page heading and home partner section heading",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Formed your company with an OnGem partner?",
-      "ar": "هل أسّست شركتك مع أحد شركاء OnGem؟"
+      "en": "Formed your company with an {brand} partner?",
+      "ar": "هل أسّست شركتك مع أحد شركاء {brand}؟"
     },
     {
       "key": "web.pricing.label",
@@ -2258,10 +2262,10 @@
       "key": "web.product.accounts.points.1",
       "format": "text",
       "description": "Capability accounts: what it does",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Balances read from the bank and checked against OnGem every night",
-      "ar": "أرصدة تُقرأ من البنك وتُطابق مع OnGem كل ليلة"
+      "en": "Balances read from the bank and checked against {brand} every night",
+      "ar": "أرصدة تُقرأ من البنك وتُطابق مع {brand} كل ليلة"
     },
     {
       "key": "web.product.accounts.points.2",
@@ -2348,10 +2352,10 @@
       "key": "web.product.approvals.points.3",
       "format": "text",
       "description": "Capability approvals: what it does",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "One-person company? OnGem approves instead, so you are never stuck",
-      "ar": "شركة من شخص واحد؟ يوافق OnGem بدلًا من ذلك، فلا تتوقف أبدًا"
+      "en": "One-person company? {brand} approves instead, so you are never stuck",
+      "ar": "شركة من شخص واحد؟ يوافق {brand} بدلًا من ذلك، فلا تتوقف أبدًا"
     },
     {
       "key": "web.product.approvals.points.4",
@@ -2510,10 +2514,10 @@
       "key": "web.product.intro",
       "format": "text",
       "description": "Product overview: the sentence under the headline",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "What OnGem is preparing for the UAE: accounts and statements in AED, Aani and UAEFTS payments, approvals, several companies and an assistant.",
-      "ar": "ما يجهزه OnGem للإمارات: حسابات وكشوف بالدرهم، ومدفوعات عبر آني ونظام الإمارات لتحويل الأموال، وموافقات، وعدة شركات، ومساعد."
+      "en": "What {brand} is preparing for the UAE: accounts and statements in AED, Aani and UAEFTS payments, approvals, several companies and an assistant.",
+      "ar": "ما يجهزه {brand} للإمارات: حسابات وكشوف بالدرهم، ومدفوعات عبر آني ونظام الإمارات لتحويل الأموال، وموافقات، وعدة شركات، ومساعد."
     },
     {
       "key": "web.product.payments.lede",
@@ -2609,10 +2613,10 @@
       "key": "web.protect.1.text",
       "format": "text",
       "description": "Security: control text",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Deposits are held at a licensed UAE bank. OnGem shows the bank’s balance and never holds your funds.",
-      "ar": "تُحفظ الودائع لدى بنك مرخّص في الإمارات. تعرض OnGem رصيد البنك ولا تحتفظ بأموالك أبدًا."
+      "en": "Deposits are held at a licensed UAE bank. {brand} shows the bank’s balance and never holds your funds.",
+      "ar": "تُحفظ الودائع لدى بنك مرخّص في الإمارات. تعرض {brand} رصيد البنك ولا تحتفظ بأموالك أبدًا."
     },
     {
       "key": "web.protect.1.title",
@@ -2699,10 +2703,10 @@
       "key": "web.shots.approvals.alt",
       "format": "text",
       "description": "Screen description for screen readers",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem approving a payment for a one-person company, on sample data",
-      "ar": "OnGem يوافق على دفعة لشركة من شخص واحد، على بيانات تجريبية"
+      "en": "{brand} approving a payment for a one-person company, on sample data",
+      "ar": "{brand} يوافق على دفعة لشركة من شخص واحد، على بيانات تجريبية"
     },
     {
       "key": "web.shots.assistant.alt",
@@ -2735,10 +2739,10 @@
       "key": "web.soon.note",
       "format": "text",
       "description": "UAE build: note on product pages that accounts are not open yet",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem is not open in the UAE yet: accounts open once the connection to our licensed UAE bank is live. You can try the demo today.",
-      "ar": "OnGem غير متاح في الإمارات بعد: تُفتح الحسابات عندما يصبح الاتصال ببنكنا المرخّص في الإمارات جاهزًا. يمكنك تجربة العرض التجريبي اليوم."
+      "en": "{brand} is not open in the UAE yet: accounts open once the connection to our licensed UAE bank is live. You can try the demo today.",
+      "ar": "{brand} غير متاح في الإمارات بعد: تُفتح الحسابات عندما يصبح الاتصال ببنكنا المرخّص في الإمارات جاهزًا. يمكنك تجربة العرض التجريبي اليوم."
     },
     {
       "key": "web.soon.talk",
@@ -2753,10 +2757,10 @@
       "key": "web.status.lede",
       "format": "text",
       "description": "Status page: sentence",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "A public status page for each part of OnGem is being built on our monitoring.",
-      "ar": "يجري إنشاء صفحة حالة عامة لكل جزء من OnGem، اعتمادًا على أنظمة المراقبة لدينا."
+      "en": "A public status page for each part of {brand} is being built on our monitoring.",
+      "ar": "يجري إنشاء صفحة حالة عامة لكل جزء من {brand}، اعتمادًا على أنظمة المراقبة لدينا."
     },
     {
       "key": "web.status.text",
@@ -2798,9 +2802,9 @@
       "key": "web.trust.2.name",
       "format": "text",
       "description": "Home: party 2 behind every account",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem"
+      "en": "{brand}"
     },
     {
       "key": "web.trust.2.role",
@@ -2860,10 +2864,10 @@
       "key": "web.who.new_companies.points.1",
       "format": "text",
       "description": "Who it's for: newly formed companies, a point",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Formed with an OnGem partner? Your trade licence and company details arrive prefilled",
-      "ar": "أسست شركتك مع أحد شركاء OnGem؟ تصل رخصتك التجارية وبيانات شركتك معبأة مسبقًا"
+      "en": "Formed with an {brand} partner? Your trade licence and company details arrive prefilled",
+      "ar": "أسست شركتك مع أحد شركاء {brand}؟ تصل رخصتك التجارية وبيانات شركتك معبأة مسبقًا"
     },
     {
       "key": "web.who.new_companies.points.2",
@@ -2878,10 +2882,10 @@
       "key": "web.who.new_companies.points.3",
       "format": "text",
       "description": "Who it's for: newly formed companies, a point",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem approves for a one-person company, so you are never stuck",
-      "ar": "يوافق OnGem عن الشركة المكونة من شخص واحد، فلا تتوقف أبدًا"
+      "en": "{brand} approves for a one-person company, so you are never stuck",
+      "ar": "يوافق {brand} عن الشركة المكونة من شخص واحد، فلا تتوقف أبدًا"
     },
     {
       "key": "web.who.new_companies.points.4",

@@ -5,10 +5,10 @@
       "key": "faq.accounts.1.a",
       "format": "text",
       "description": "FAQ accounts: answer",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Piermont Bank holds your deposits and provides the account. OnGem shows you the bank’s balance and never holds your funds.¹",
-      "ar": "يحتفظ Piermont Bank بودائعك ويقدم الحساب. يعرض لك OnGem رصيد البنك ولا يحتفظ بأموالك أبدًا.¹"
+      "en": "Piermont Bank holds your deposits and provides the account. {brand} shows you the bank’s balance and never holds your funds.¹",
+      "ar": "يحتفظ Piermont Bank بودائعك ويقدم الحساب. يعرض لك {brand} رصيد البنك ولا يحتفظ بأموالك أبدًا.¹"
     },
     {
       "key": "faq.accounts.1.q",
@@ -59,10 +59,10 @@
       "key": "faq.approvals.1.a",
       "format": "text",
       "description": "FAQ approvals: answer",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "You set who can create and who can approve payments. Above your threshold a payment waits for a second person, and the person who created it can never approve it. If no one else in your company can approve, OnGem approves it, so a one-person company is never stuck.",
-      "ar": "أنت تحدد من يمكنه إنشاء الدفعات ومن يمكنه الموافقة عليها. فوق الحد الذي تضعه تنتظر الدفعة موافقة شخص ثانٍ، ولا يمكن لمن أنشأها أن يوافق عليها أبدًا. وإذا لم يكن في شركتك من يملك صلاحية الموافقة، توافق OnGem عليها، فلا تتعطل شركة الشخص الواحد أبدًا."
+      "en": "You set who can create and who can approve payments. Above your threshold a payment waits for a second person, and the person who created it can never approve it. If no one else in your company can approve, {brand} approves it, so a one-person company is never stuck.",
+      "ar": "أنت تحدد من يمكنه إنشاء الدفعات ومن يمكنه الموافقة عليها. فوق الحد الذي تضعه تنتظر الدفعة موافقة شخص ثانٍ، ولا يمكن لمن أنشأها أن يوافق عليها أبدًا. وإذا لم يكن في شركتك من يملك صلاحية الموافقة، توافق {brand} عليها، فلا تتعطل شركة الشخص الواحد أبدًا."
     },
     {
       "key": "faq.approvals.1.q",
@@ -77,10 +77,10 @@
       "key": "faq.approvals.2.a",
       "format": "text",
       "description": "FAQ approvals: answer",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "OnGem approves your payment or top-up instead, so you are never stuck, and your limits still apply.",
-      "ar": "يوافق OnGem على دفعتك أو عملية التعبئة بدلًا من ذلك، فلا تتوقف أبدًا، وتبقى حدودك سارية."
+      "en": "{brand} approves your payment or top-up instead, so you are never stuck, and your limits still apply.",
+      "ar": "يوافق {brand} على دفعتك أو عملية التعبئة بدلًا من ذلك، فلا تتوقف أبدًا، وتبقى حدودك سارية."
     },
     {
       "key": "faq.approvals.2.q",
@@ -149,19 +149,19 @@
       "key": "faq.cards.2.a",
       "format": "text",
       "description": "FAQ cards: answer",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "No. Card numbers and PINs open in the bank’s secure window, so they never pass through OnGem, and the details close by themselves after 5 minutes.",
-      "ar": "لا. تُفتح أرقام البطاقات والأرقام السرية في نافذة البنك الآمنة، فلا تمر عبر OnGem أبدًا، وتُغلق التفاصيل تلقائيًا بعد 5 دقائق."
+      "en": "No. Card numbers and PINs open in the bank’s secure window, so they never pass through {brand}, and the details close by themselves after 5 minutes.",
+      "ar": "لا. تُفتح أرقام البطاقات والأرقام السرية في نافذة البنك الآمنة، فلا تمر عبر {brand} أبدًا، وتُغلق التفاصيل تلقائيًا بعد 5 دقائق."
     },
     {
       "key": "faq.cards.2.q",
       "format": "text",
       "description": "FAQ cards: question",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Does OnGem see my card number?",
-      "ar": "هل يرى OnGem رقم بطاقتي؟"
+      "en": "Does {brand} see my card number?",
+      "ar": "هل يرى {brand} رقم بطاقتي؟"
     },
     {
       "key": "faq.companies.1.a",
@@ -203,28 +203,28 @@
       "key": "faq.general.1.a",
       "format": "text",
       "description": "FAQ general: answer",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "No. OnGem is a financial technology company. Your deposits are held at Piermont Bank, which provides the accounts through Synctera. OnGem shows you the bank’s balance and never holds your funds.¹",
-      "ar": "لا. OnGem شركة تقنية مالية. تُحفظ ودائعك لدى Piermont Bank، الذي يقدّم الحسابات عبر Synctera. تعرض لك OnGem رصيد البنك ولا تحتفظ بأموالك أبدًا.¹"
+      "en": "No. {brand} is a financial technology company. Your deposits are held at Piermont Bank, which provides the accounts through Synctera. {brand} shows you the bank’s balance and never holds your funds.¹",
+      "ar": "لا. {brand} شركة تقنية مالية. تُحفظ ودائعك لدى Piermont Bank، الذي يقدّم الحسابات عبر Synctera. تعرض لك {brand} رصيد البنك ولا تحتفظ بأموالك أبدًا.¹"
     },
     {
       "key": "faq.general.1.q",
       "format": "text",
       "description": "FAQ general: question",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Is OnGem a bank? Who holds my money?",
-      "ar": "هل OnGem بنك؟ ومن يحتفظ بأموالي؟"
+      "en": "Is {brand} a bank? Who holds my money?",
+      "ar": "هل {brand} بنك؟ ومن يحتفظ بأموالي؟"
     },
     {
       "key": "faq.general.2.a",
       "format": "text",
       "description": "FAQ general: answer",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Money moves only after a second sign-in step, larger payments need two people, every change is written to an audit trail that cannot be rewritten, and card numbers open in the bank’s window so they never pass through OnGem.",
-      "ar": "لا تتحرك الأموال إلا بعد خطوة تحقق ثانية عند تسجيل الدخول، وتحتاج الدفعات الأكبر إلى شخصين، ويُسجَّل كل تغيير في سجل تدقيق لا يمكن تعديله، وتُفتح أرقام البطاقات في نافذة البنك فلا تمر عبر OnGem أبدًا."
+      "en": "Money moves only after a second sign-in step, larger payments need two people, every change is written to an audit trail that cannot be rewritten, and card numbers open in the bank’s window so they never pass through {brand}.",
+      "ar": "لا تتحرك الأموال إلا بعد خطوة تحقق ثانية عند تسجيل الدخول، وتحتاج الدفعات الأكبر إلى شخصين، ويُسجَّل كل تغيير في سجل تدقيق لا يمكن تعديله، وتُفتح أرقام البطاقات في نافذة البنك فلا تمر عبر {brand} أبدًا."
     },
     {
       "key": "faq.general.2.q",
@@ -239,10 +239,10 @@
       "key": "faq.general.3.a",
       "format": "text",
       "description": "FAQ general: answer",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "When you ask it to, GenZone sends your company’s details to OnGem. You review them, add what is missing, accept the bank’s disclosures and submit. The bank makes its decision as it does for every founder.",
-      "ar": "عندما تطلب منها ذلك، ترسل GenZone بيانات شركتك إلى OnGem. تراجعها، وتضيف ما ينقص، وتقبل إفصاحات البنك، ثم تقدّم الطلب. ويتخذ البنك قراره كما يفعل مع كل مؤسس."
+      "en": "When you ask it to, GenZone sends your company’s details to {brand}. You review them, add what is missing, accept the bank’s disclosures and submit. The bank makes its decision as it does for every founder.",
+      "ar": "عندما تطلب منها ذلك، ترسل GenZone بيانات شركتك إلى {brand}. تراجعها، وتضيف ما ينقص، وتقبل إفصاحات البنك، ثم تقدّم الطلب. ويتخذ البنك قراره كما يفعل مع كل مؤسس."
     },
     {
       "key": "faq.general.3.q",
@@ -266,10 +266,10 @@
       "key": "faq.general.4.q",
       "format": "text",
       "description": "FAQ general: question",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "Can I try OnGem before I sign up?",
-      "ar": "هل يمكنني تجربة OnGem قبل التسجيل؟"
+      "en": "Can I try {brand} before I sign up?",
+      "ar": "هل يمكنني تجربة {brand} قبل التسجيل؟"
     },
     {
       "key": "faq.general.5.a",
@@ -284,10 +284,10 @@
       "key": "faq.general.5.q",
       "format": "text",
       "description": "FAQ general: question",
-      "placeholders": [],
+      "placeholders": ["brand"],
       "meta": {},
-      "en": "What does OnGem cost?",
-      "ar": "كم تكلفة OnGem؟"
+      "en": "What does {brand} cost?",
+      "ar": "كم تكلفة {brand}؟"
     },
     {
       "key": "faq.payments.1.a",

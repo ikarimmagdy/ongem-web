@@ -447,7 +447,7 @@ export const demoTickets = IS_AE
           {
             id: 'msg_demo_2',
             authorKind: 'OPS',
-            authorName: 'OnGem support',
+            authorName: t('app.demo.ticket.ops_author'),
             body: t('app.demo.ticket.card.answer'),
             at: '2026-10-28T12:00:00Z',
           },
@@ -475,7 +475,7 @@ export const demoTickets = IS_AE
           {
             id: 'msg_demo_4',
             authorKind: 'OPS',
-            authorName: 'OnGem support',
+            authorName: t('app.demo.ticket.ops_author'),
             body: t('app.demo.ticket.statement.answer'),
             at: '2026-10-21T09:00:00Z',
           },
