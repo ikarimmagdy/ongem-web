@@ -36,12 +36,11 @@ import {
 /** Expenses per page; tests shorten it. */
 export const expensePaging = { size: 25 };
 
-/** Who decided: the policy itself (`policy:v<N>`) or a person. */
-export function decidedByText(by: string): string {
+/** Who decided: the policy itself (`policy:v<N>`), the person the API names, or a person. */
+export function decidedByText(by: string, name?: string | null): string {
   const m = /^policy:v(\d+)$/.exec(by);
-  return m
-    ? t('app.spend.expense.decided_by_policy', { version: m[1]! })
-    : t('app.spend.expense.decided_by_person');
+  if (m) return t('app.spend.expense.decided_by_policy', { version: m[1]! });
+  return name ? t('app.spend.expense.decided_by_name', { name }) : t('app.spend.expense.decided_by_person');
 }
 
 /** The facts of one expense, the same for finance and for the employee. */
@@ -100,7 +99,7 @@ export function ExpenseFacts({ x }: { x: ExpenseView }) {
             ? [
                 {
                   label: t('app.spend.expense.decided'),
-                  value: `${decidedByText(x.decidedBy)}, ${formatDate(x.decidedAt, { time: true })}`,
+                  value: `${decidedByText(x.decidedBy, x.decidedByName)}, ${formatDate(x.decidedAt, { time: true })}`,
                 },
               ]
             : []),
@@ -420,6 +419,13 @@ export function ExpenseDetail() {
   const toast = useToast();
   const spend = spendOf(api);
   const one = useAsync(() => spend.expense(id), [api, id]);
+  // Own expense (I-12): the expense's employee is linked to the signed-in person (EmployeeView.personId).
+  const employeeId = one.status === 'success' ? one.data.employeeId : null;
+  const owner = useAsync(
+    () => (employeeId ? spend.employee(employeeId) : Promise.resolve(null)),
+    [api, employeeId],
+  );
+  const me = useAsync(() => api.me(), [api]);
   const policy = useAsync(() => spend.policy(), [api]);
   const settings = useAsync(() => spend.settings(), [api]);
   const [error, setError] = useState<string | null>(null);
@@ -456,7 +462,10 @@ export function ExpenseDetail() {
       </Button>
       <Load state={one} label="spend expenses">
         {(x) => {
-          const own = access.employee?.employee.id === x.employeeId;
+          const linked = owner.status === 'success' ? owner.data?.personId : null;
+          const own =
+            (!!linked && me.status === 'success' && linked === me.data.personId) ||
+            access.employee?.employee.id === x.employeeId;
           const p = policy.status === 'success' ? policy.data.active?.policy : undefined;
           const selfOk = !!p && p.selfApproval && x.amount.amountMinor <= p.selfApprovalMaxMinor;
           const canDecide = can(Permission.SPEND_APPROVE) && x.state === 'PENDING_APPROVAL';

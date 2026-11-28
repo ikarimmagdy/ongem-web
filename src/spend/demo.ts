@@ -35,6 +35,8 @@ export interface DemoSpendDeps {
   stepUp(purpose: string, detail: SpendStepUp): Promise<void>;
   role(): string;
   personId(): string;
+  /** The signed-in person's name, as the core answers `decidedByName`. */
+  personName?(): string | null;
   now(): string;
   /** Spend is on for this company (Northwind Labs LLC, as the core's demo seed switches it on). */
   active(): boolean;
@@ -177,6 +179,7 @@ function purchase(
     policyVersion: null,
     submittedAt: null,
     decidedBy: null,
+    decidedByName: null,
     decidedAt: null,
     decisionNote: null,
     overLimit: false,
@@ -187,6 +190,8 @@ function purchase(
 function receipt(id: string, x: ExpenseView, file: string): ReceiptView {
   return {
     id,
+    employeeId: x.employeeId,
+    employeeName: x.employeeName,
     expenseId: x.id,
     state: 'MATCHED',
     matchRule: 'ATTACHED',
@@ -255,6 +260,7 @@ export class DemoSpend implements SpendBackend {
         proposedBy: 'system',
         proposedByName: null,
         decidedBy: 'system',
+        decidedByName: null,
         decidedAt: '2026-10-27T09:00:00Z',
         createdAt: '2026-10-27T09:00:00Z',
       },
@@ -289,6 +295,8 @@ export class DemoSpend implements SpendBackend {
     this.expensesState.push(claim);
     this.receiptsState.unshift({
       id: 'rct_demo_3',
+      employeeId: sam.id,
+      employeeName: `${sam.firstName} ${sam.lastName}`,
       expenseId: null,
       state: 'UNMATCHED',
       matchRule: null,
@@ -309,6 +317,7 @@ export class DemoSpend implements SpendBackend {
       proposedBy: 'prn_demo_priya',
       proposedByName: 'Priya Shah',
       decidedBy: null,
+      decidedByName: null,
       decidedAt: null,
       createdAt: '2026-10-29T10:00:00Z',
     });
@@ -334,8 +343,7 @@ export class DemoSpend implements SpendBackend {
   }
 
   private view(e: DemoEmployee): EmployeeView {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { personId, ...rest } = e;
+    const rest: EmployeeView = { ...e };
     const p = this.inForce().policy;
     const own = p.employees[e.id] ?? {};
     const team = (e.teamId && p.teams[e.teamId]) || {};
@@ -571,27 +579,41 @@ export class DemoSpend implements SpendBackend {
       ...Object.values(policy.teams),
       ...Object.values(policy.employees),
     ];
-    const bad =
-      policy.currency !== CURRENCY ||
-      policy.receiptRequiredAboveMinor < 0 ||
-      policy.receiptReminderHours < 1 ||
-      policy.receiptReminderHours > 720 ||
-      !policy.categories.length ||
-      limits.some(
-        (l) =>
-          (l.perTransactionMinor != null &&
-            (l.perTransactionMinor <= 0 || l.perTransactionMinor > ceil.perTransaction!.amountMinor)) ||
-          (l.monthlyMinor != null && (l.monthlyMinor <= 0 || l.monthlyMinor > ceil.monthly!.amountMinor)),
+    // The core's checks, each with its problem code (`problems[].code`).
+    const problems = [
+      policy.currency !== CURRENCY && 'currency_not_programme',
+      policy.receiptRequiredAboveMinor < 0 && 'receipt_threshold_negative',
+      (policy.receiptReminderHours < 1 || policy.receiptReminderHours > 720) && 'reminder_hours_out_of_range',
+      policy.selfApprovalMaxMinor < 0 && 'self_approval_max_negative',
+      !policy.categories.length && 'categories_empty',
+      new Set(policy.categories.map((c) => c.key)).size !== policy.categories.length && 'category_duplicate',
+      limits.some((l) => (l.perTransactionMinor ?? 1) <= 0 || (l.monthlyMinor ?? 1) <= 0) &&
+        'limit_not_positive',
+      limits.some((l) => (l.perTransactionMinor ?? 0) > ceil.perTransaction!.amountMinor) &&
+        'per_transaction_over_ceiling',
+      limits.some((l) => (l.monthlyMinor ?? 0) > ceil.monthly!.amountMinor) && 'monthly_over_ceiling',
+      Object.keys(policy.teams).some((id) => !this.teamsState.some((x) => x.id === id)) && 'unknown_team',
+      Object.keys(policy.employees).some((id) => !this.employeesState.some((x) => x.id === id)) &&
+        'unknown_employee',
+    ].filter((c): c is string => !!c);
+    if (problems.length)
+      throw new ApiError(
+        422,
+        'policy_invalid',
+        undefined,
+        undefined,
+        undefined,
+        problems.map((code) => ({ code })),
       );
-    if (bad) throw new ApiError(422, 'policy_invalid');
     const v: PolicyVersionView = {
       version: Math.max(...this.versions.map((x) => x.version)) + 1,
       state: 'PROPOSED',
       policy: structuredClone(policy),
       reason: reason?.trim() || null,
       proposedBy: this.d.personId(),
-      proposedByName: null,
+      proposedByName: this.d.personName?.() ?? null,
       decidedBy: null,
+      decidedByName: null,
       decidedAt: null,
       createdAt: this.d.now(),
     };
@@ -611,6 +633,7 @@ export class DemoSpend implements SpendBackend {
     }
     v.state = approve ? 'ACTIVE' : 'REJECTED';
     v.decidedBy = this.d.personId();
+    v.decidedByName = this.d.personName?.() ?? null;
     v.decidedAt = this.d.now();
     return this.d.log('spendDecidePolicy', v);
   };
@@ -622,6 +645,7 @@ export class DemoSpend implements SpendBackend {
     if (v.proposedBy !== this.d.personId()) throw new ApiError(403, 'forbidden');
     v.state = 'WITHDRAWN';
     v.decidedBy = this.d.personId();
+    v.decidedByName = this.d.personName?.() ?? null;
     v.decidedAt = this.d.now();
     return this.d.log('spendWithdrawPolicy', v);
   };
@@ -687,6 +711,7 @@ export class DemoSpend implements SpendBackend {
     }
     x.state = approve ? 'APPROVED' : 'REJECTED';
     x.decidedBy = this.d.personId();
+    x.decidedByName = this.d.personName?.() ?? null;
     x.decidedAt = this.d.now();
     x.decisionNote = note?.trim() || null;
     return this.d.log('spendDecideExpense', x);
@@ -711,7 +736,9 @@ export class DemoSpend implements SpendBackend {
   matchReceipt = async (id: string, expenseId: string) => {
     this.require(Permission.SPEND_MANAGE);
     const r = this.receiptsState.find((x) => x.id === id) ?? this.missing('receipt');
-    this.attach(r, this.findExpense(expenseId), 'MANUAL');
+    const x = this.findExpense(expenseId);
+    if (x.employeeId !== r.employeeId) throw new ApiError(409, 'receipt_employee_mismatch');
+    this.attach(r, x, 'MANUAL');
     return this.d.log('spendMatchReceipt', r);
   };
 
@@ -737,7 +764,8 @@ export class DemoSpend implements SpendBackend {
   createExport = async (body: { from: string; to: string; format: string }) => {
     this.require(Permission.SPEND_EXPORT);
     const span = days(body.from, body.to) + 1;
-    if (!(body.from <= body.to) || span > 366) throw new ApiError(422, 'period_invalid');
+    if (!(body.from <= body.to) || span > 366 || body.to > this.d.now().slice(0, 10))
+      throw new ApiError(422, 'period_invalid');
     if (!DEMO_SPEND_SETTINGS.exportFormats.includes(body.format))
       throw new ApiError(422, 'format_unavailable');
     const inPeriod = this.expensesState.filter((x) => x.spentOn >= body.from && x.spentOn <= body.to);
@@ -953,6 +981,8 @@ export class DemoSpend implements SpendBackend {
     if (same) throw new ApiError(409, 'duplicate_receipt');
     const r: ReceiptView = {
       id: `rct_mine_${this.next('r')}`,
+      employeeId: me.id,
+      employeeName: `${me.firstName} ${me.lastName}`,
       expenseId: null,
       state: 'UNMATCHED',
       matchRule: null,

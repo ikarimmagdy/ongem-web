@@ -880,6 +880,9 @@
   "/v1/ops/spend/demo-seed": [
     "post"
   ],
+  "/v1/ops/spend/programme": [
+    "get"
+  ],
   "/v1/ops/support/tickets": [
     "get",
     "post"

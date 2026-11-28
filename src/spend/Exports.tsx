@@ -9,9 +9,14 @@ import { lastFullMonth } from '../screens/ExportActivity';
 import { spendOf, type ExportView } from './api';
 import { excludedLabel, formatName, isCode, spendErrorText } from './common';
 
-/** The contract's rule (422 period_invalid): the end not before the start, at most 366 days. */
-export function spendPeriodValid(from: string, to: string): boolean {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(from) || !/^\d{4}-\d{2}-\d{2}$/.test(to) || to < from) return false;
+/** The contract's rule (422 period_invalid): the end not before the start, not after today (UTC), at most 366 days. */
+export function spendPeriodValid(
+  from: string,
+  to: string,
+  today = new Date().toISOString().slice(0, 10),
+): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(from) || !/^\d{4}-\d{2}-\d{2}$/.test(to) || to < from || to > today)
+    return false;
   return (Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / 86_400_000 + 1 <= 366;
 }
 

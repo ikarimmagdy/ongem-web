@@ -248,6 +248,7 @@ export class DemoOnGemApi implements OnGemApi {
     stepUp: (purpose, detail) => this.stepUp(purpose, detail as StepUpDetail),
     role: () => this.role,
     personId: () => this.me_.personId,
+    personName: () => [this.me_.legalFirstName, this.me_.legalLastName].filter(Boolean).join(' ') || null,
     now: () => this.now(),
     active: () => !IS_AE && (this.me_.companyId ?? null) === 'cmp_demo_northwind',
     review: () => this.opts.scenario === 'spend_review',

@@ -164,4 +164,23 @@ describe('OG-087 spend calls on the live client', () => {
       spendOf(new LiveOnGemApi({ baseUrl: '', getToken: async () => 't', reverify: async () => true })),
     ).toBeInstanceOf(LiveSpend);
   });
+
+  it('OG087_core_policy_invalid_problems_reach_the_error', async () => {
+    const { spend } = client(
+      () =>
+        new Response(
+          JSON.stringify({
+            code: 'policy_invalid',
+            detail: 'x',
+            problems: [{ code: 'categories_empty', detail: 'at least one category is needed' }],
+          }),
+          { status: 422, headers: { 'Content-Type': 'application/problem+json' } },
+        ),
+    );
+    await expect(spend.proposePolicy(defaultPolicy())).rejects.toMatchObject({
+      status: 422,
+      code: 'policy_invalid',
+      problems: [{ code: 'categories_empty', detail: 'at least one category is needed' }],
+    });
+  });
 });

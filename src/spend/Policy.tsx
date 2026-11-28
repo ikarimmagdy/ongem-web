@@ -19,7 +19,7 @@ import { useAsync } from '../lib/useAsync';
 import { useSession } from '../session';
 import { Load, PrefixedInput, currencyPrefix } from '../screens/common';
 import { spendOf, type LimitsView, type PolicyVersionView, type SpendPolicy, type TeamView } from './api';
-import { categoryLabel, isCode, spendErrorText, spendStatus, stateLabel } from './common';
+import { categoryLabel, policyProblemTexts, spendErrorText, spendStatus, stateLabel } from './common';
 
 const KEY = /^[a-z][a-z0-9_]{0,31}$/;
 
@@ -95,6 +95,10 @@ const proposer = (v: PolicyVersionView, me: string | null) =>
     : v.proposedBy === 'system'
       ? t('app.spend.policy.by_programme')
       : (v.proposedByName ?? t('app.spend.policy.by_someone'));
+
+/** Who decided a version: its name from the API, else you or another person. */
+const decider = (v: PolicyVersionView, me: string | null) =>
+  v.decidedBy === me ? t('app.spend.policy.by_you') : (v.decidedByName ?? t('app.spend.policy.by_someone'));
 
 /**
  * The policy in force, the proposal waiting and earlier versions. One person proposes (spend:manage), a different person
@@ -267,6 +271,14 @@ export function PolicyScreen() {
                           date: formatDate(v.createdAt),
                         })}
                       </span>
+                      {v.decidedBy && v.decidedAt && v.decidedBy !== v.proposedBy && (
+                        <span className="fw-row__sub" data-testid={`policy-decided-${v.version}`}>
+                          {t('app.spend.policy.decided_by', {
+                            name: decider(v, personId),
+                            date: formatDate(v.decidedAt),
+                          })}
+                        </span>
+                      )}
                     </span>
                     <StatusChip status={spendStatus(v.state)}>{stateLabel(v.state)}</StatusChip>
                   </li>
@@ -391,6 +403,7 @@ function ProposeForm({
     ),
   );
   const [reason, setReason] = useState('');
+  const [refused, setRefused] = useState<string[]>([]);
   const [problems, setProblems] = useState<Problems>({});
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -439,6 +452,7 @@ function ProposeForm({
         onSubmit={async (e) => {
           e.preventDefault();
           setError(null);
+          setRefused([]);
           const policy = build();
           if (!policy) return;
           setBusy(true);
@@ -446,9 +460,8 @@ function ProposeForm({
             await spendOf(api).proposePolicy(policy, reason);
             onDone();
           } catch (err) {
-            setError(
-              isCode(err, 'policy_invalid') ? t('app.spend.error.policy_invalid') : spendErrorText(err),
-            );
+            setError(spendErrorText(err));
+            setRefused(policyProblemTexts(err));
           } finally {
             setBusy(false);
           }
@@ -645,6 +658,13 @@ function ProposeForm({
         {error && (
           <Notice status="failure">
             <span data-testid="policy-form-error">{error}</span>
+            {refused.length > 0 && (
+              <ul data-testid="policy-form-problems">
+                {refused.map((p) => (
+                  <li key={p}>{p}</li>
+                ))}
+              </ul>
+            )}
           </Notice>
         )}
         <div className="fw-actions">

@@ -68,13 +68,18 @@ export function ReceiptsScreen() {
           ) : (
             <ul className="fw-list" data-testid="receipt-list">
               {list.map((r) => {
-                const candidates = pool.filter((x) => r.candidates.includes(x.id));
-                const options = (candidates.length ? candidates : pool).map(expenseOption);
+                // A receipt matches only its own employee's expenses (409 receipt_employee_mismatch otherwise).
+                const theirs = pool.filter((x) => x.employeeId === r.employeeId);
+                const candidates = theirs.filter((x) => r.candidates.includes(x.id));
+                const options = (candidates.length ? candidates : theirs).map(expenseOption);
                 const choice = picked[r.id] ?? options[0]?.value ?? '';
                 return (
                   <li key={r.id} className="fw-row fw-row--stack" data-testid={`receipt-${r.id}`}>
                     <span className="fw-row__main">
                       <strong>{r.fileName}</strong>
+                      <span className="fw-row__sub" data-testid={`receipt-from-${r.id}`}>
+                        {t('app.spend.receipts.from', { name: r.employeeName })}
+                      </span>
                       <ReceiptHintsLine r={r} />
                       <span className="fw-row__sub">
                         {t('app.spend.receipts.uploaded', { date: formatDate(r.createdAt) })}

@@ -59,6 +59,8 @@ export interface CardSummary {
 
 export interface EmployeeView {
   id: string;
+  /** The person linked once they signed in; null while INVITED. */
+  personId?: string | null;
   firstName: string;
   lastName: string;
   emailHint: string;
@@ -114,6 +116,7 @@ export interface PolicyVersionView {
   proposedBy: string;
   proposedByName?: string | null;
   decidedBy?: string | null;
+  decidedByName?: string | null;
   decidedAt?: string | null;
   createdAt: string;
 }
@@ -145,7 +148,10 @@ export interface ExpenseView {
   reasons: string[];
   policyVersion?: number | null;
   submittedAt?: string | null;
+  /** A person id, or `policy:v<N>` when the policy approved it. */
   decidedBy?: string | null;
+  /** The deciding person's name; null when the policy decided or no name is known. */
+  decidedByName?: string | null;
   decidedAt?: string | null;
   decisionNote?: string | null;
   overLimit: boolean;
@@ -159,6 +165,9 @@ export interface Page<T> {
 
 export interface ReceiptView {
   id: string;
+  /** Who uploaded it: a receipt matches only this employee's expenses. */
+  employeeId: string;
+  employeeName: string;
   expenseId?: string | null;
   state: 'UNMATCHED' | 'MATCHED';
   matchRule?: 'ATTACHED' | 'AMOUNT_DATE' | 'MANUAL' | null;

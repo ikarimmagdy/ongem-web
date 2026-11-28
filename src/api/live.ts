@@ -199,6 +199,7 @@ export class LiveOnGemApi implements OnGemApi {
     homeRegion?: string;
     until?: string;
     apiBaseUrl?: string;
+    problems?: { code: string; detail?: string }[];
   }> {
     try {
       return (await res.clone().json()) as { code?: string; detail?: string };
@@ -283,7 +284,10 @@ export class LiveOnGemApi implements OnGemApi {
         p.code === WRONG_REGION
           ? { homeRegion: p.homeRegion ?? null, apiBaseUrl: p.apiBaseUrl ?? null }
           : undefined;
-      throw new ApiError(res.status, p.code ?? null, p.detail, where, p.until ?? undefined);
+      const problems = Array.isArray(p.problems)
+        ? p.problems.filter((x) => typeof x?.code === 'string')
+        : undefined;
+      throw new ApiError(res.status, p.code ?? null, p.detail, where, p.until ?? undefined, problems);
     }
     if (res.status === 204) return undefined as T;
     if (accept) return (await res.blob()) as T;

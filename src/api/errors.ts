@@ -19,6 +19,8 @@ export class ApiError extends Error {
     readonly where?: WrongRegion,
     /** OG-074 `credential_change_wait`: when card actions may run again (ISO time). */
     readonly until?: string,
+    /** OG-087 `policy_invalid`: each problem's stable code (and English detail, for logs only). */
+    readonly problems?: { code: string; detail?: string }[],
   ) {
     super(detail || code || `HTTP ${status}`);
   }

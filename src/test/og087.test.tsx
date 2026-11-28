@@ -9,7 +9,7 @@ import { demoMe } from '../api/demoData';
 import { getLocale, setLocale } from '../i18n';
 import { noticeRoute } from '../screens/Notifications';
 import { spendOf } from '../spend/api';
-import { SPEND_ERROR_CODES, spendErrorText } from '../spend/common';
+import { POLICY_PROBLEM_CODES, SPEND_ERROR_CODES, policyProblemTexts, spendErrorText } from '../spend/common';
 import { demoEmployeeMe } from '../spend/demo';
 import { expensePaging } from '../spend/Expenses';
 import { spendPeriodValid } from '../spend/Exports';
@@ -29,6 +29,7 @@ const leaOwner = () =>
 
 afterEach(async () => {
   expensePaging.size = 25;
+  vi.setSystemTime(new Date('2026-10-20T14:42:00Z'));
   if (getLocale() !== 'en') await act(() => setLocale('en'));
 });
 
@@ -321,6 +322,35 @@ describe('OG-087 expenses (R6, R9, R11)', () => {
     });
   });
 
+  it('OG087_core_own_expense_found_by_the_employee_personId', async () => {
+    const api = leaOwner();
+    const spend = spendOf(api);
+    const claim = await spend.claim({
+      amountMinor: 1800,
+      currency: 'USD',
+      merchant: 'Corner Bistro',
+      spentOn: '2026-10-29',
+      category: 'meals',
+    });
+    await spend.submitMyExpense(claim.id);
+    // Without the employee view (GET /v1/spend/me), the expense's employee is still linked to this person.
+    spend.me = () => Promise.reject(new ApiError(404, 'employee_not_found'));
+    expect((await spend.employee(claim.employeeId)).personId).toBe(demoEmployeeMe.personId);
+    renderApp(`/spend/expenses/${claim.id}`, { api });
+    expect(await screen.findByTestId('expense-four-eyes')).toHaveTextContent('This is your own expense');
+    expect(screen.queryByTestId('expense-approve')).toBeNull();
+  });
+
+  it('OG087_core_decided_by_name_and_by_policy', async () => {
+    const api = finance({ scenario: 'spend_review' });
+    const first = renderApp('/spend/expenses/exp_demo_3', { api });
+    expect(await screen.findByTestId('expense-detail')).toHaveTextContent('By policy version 1');
+    first.unmount();
+    const decided = await spendOf(api).decideExpense('exp_demo_8', true);
+    expect(decided.decidedByName).toBe('Dana Rivera');
+    renderApp('/spend/expenses/exp_demo_8', { api });
+    expect(await screen.findByTestId('expense-detail')).toHaveTextContent('By Dana Rivera');
+  });
   it('OG087_receipt_download_on_an_expense', async () => {
     const api = finance();
     const created = vi.fn(() => 'blob:x');
@@ -349,6 +379,20 @@ describe('OG-087 unmatched receipts (R8)', () => {
     expect((await spendOf(api).expense('exp_demo_6')).receipt).toBe('ATTACHED');
   });
 
+  it('OG087_core_receipt_names_its_employee_and_matches_only_their_expenses', async () => {
+    const api = finance({ scenario: 'spend_review' });
+    renderApp('/spend/receipts', { api });
+    expect(await screen.findByTestId('receipt-from-rct_demo_3')).toHaveTextContent('From Sam Iverson');
+    const pick = screen.getByTestId('receipt-pick-rct_demo_3');
+    expect(pick).not.toHaveTextContent('Lea Fontaine');
+    expect(pick).not.toHaveTextContent('Tom Bergstrom');
+    await expect(spendOf(api).matchReceipt('rct_demo_3', 'exp_demo_1')).rejects.toMatchObject({
+      code: 'receipt_employee_mismatch',
+    });
+    expect(spendErrorText(new ApiError(409, 'receipt_employee_mismatch'))).toBe(
+      'This receipt belongs to another employee, so it cannot be matched to this expense.',
+    );
+  });
   it('OG087_receipts_empty_state', async () => {
     renderApp('/spend/receipts', { api: finance() });
     expect(await screen.findByText('Every receipt is matched')).toBeInTheDocument();
@@ -376,6 +420,31 @@ describe('OG-087 policy with four eyes (R5)', () => {
         perTransactionLimitMinor: 2_000_000,
       }),
     ).rejects.toMatchObject({ code: 'policy_invalid' });
+  });
+
+  it('OG087_core_policy_invalid_problem_codes_each_show_their_text', async () => {
+    const api = finance();
+    const spend = spendOf(api);
+    await expect(
+      spend.proposePolicy({ ...(await spend.policy()).active!.policy, teams: { spt_gone: {} } }),
+    ).rejects.toMatchObject({ code: 'policy_invalid', problems: [{ code: 'unknown_team' }] });
+    spend.proposePolicy = () =>
+      Promise.reject(
+        new ApiError(422, 'policy_invalid', 'limits must be positive', undefined, undefined, [
+          { code: 'monthly_over_ceiling', detail: 'a monthly limit is above the programme ceiling' },
+          { code: 'unknown_employee' },
+          { code: 'a_code_from_a_newer_core' },
+        ]),
+      );
+    renderApp('/spend/policy', { api });
+    await userEvent.click(await screen.findByTestId('policy-propose'));
+    await userEvent.click(screen.getByTestId('policy-submit'));
+    const problems = await screen.findByTestId('policy-form-problems');
+    expect(problems).toHaveTextContent('A monthly limit is above what the programme allows.');
+    expect(problems).toHaveTextContent('The policy names an employee who no longer exists.');
+    expect(problems).not.toHaveTextContent('a monthly limit is above the programme ceiling');
+    expect(within(problems).getAllByRole('listitem')).toHaveLength(2);
+    expect(policyProblemTexts(new ApiError(409, 'policy_pending'))).toEqual([]);
   });
 
   it('OG087_AC_R5_1_the_proposer_cannot_approve_and_may_withdraw', async () => {
@@ -414,6 +483,8 @@ describe('OG-087 policy with four eyes (R5)', () => {
     );
     expect(api.stepUps).toContain('spend_policy');
     expect(within(screen.getByTestId('policy-versions')).getByText('Superseded')).toBeInTheDocument();
+    expect(screen.getByTestId('policy-decided-2')).toHaveTextContent('Decided by you on');
+    expect((await spendOf(api).policy()).active!.decidedByName).toBe('Dana Rivera');
   });
 
   it('OG087_reject_a_proposal_and_an_admin_without_approval_rights', async () => {
@@ -438,15 +509,17 @@ describe('OG-087 policy with four eyes (R5)', () => {
 
 describe('OG-087 exports (R13)', () => {
   it('OG087_AC_R13_1_approved_lines_and_what_was_left_out', async () => {
+    // The demo's purchases are of 27 to 29 Oct; the export may end on today at the latest.
+    vi.setSystemTime(new Date('2026-10-30T12:00:00Z'));
     const api = finance({ scenario: 'spend_review' });
     renderApp('/spend/exports', { api });
     expect(await screen.findByText('No exports yet.')).toBeInTheDocument();
     await chooseDate(screen.getByTestId('spend-export-from'), '2026-10-01');
-    await chooseDate(screen.getByTestId('spend-export-to'), '2026-10-31');
+    await chooseDate(screen.getByTestId('spend-export-to'), '2026-10-29');
     await chooseOption(screen.getByTestId('spend-export-format'), 'XERO');
     await userEvent.click(screen.getByTestId('spend-export-create'));
     const result = await screen.findByTestId('spend-export-result');
-    expect(result).toHaveTextContent('1 expenses from 1 Oct 2026 to 31 Oct 2026');
+    expect(result).toHaveTextContent('1 expenses from 1 Oct 2026 to 29 Oct 2026');
     expect(result).toHaveTextContent('Xero');
     expect(result).toHaveTextContent('US$78.00');
     const left = within(result).getByTestId('spend-export-excluded');
@@ -454,7 +527,7 @@ describe('OG-087 exports (R13)', () => {
     expect(left).toHaveTextContent('Left out: 1 expenses, US$18.00, still waiting for approval');
     expect(within(result).getByTestId('spend-export-download')).toHaveAttribute(
       'download',
-      'spend-2026-10-01-2026-10-31.xero.csv',
+      'spend-2026-10-01-2026-10-29.xero.csv',
     );
     expect(await screen.findByTestId('spend-export-list')).toBeInTheDocument();
     // AC-R13.2: the same period again has no line, the expense was exported once.
@@ -463,9 +536,20 @@ describe('OG-087 exports (R13)', () => {
   }, 30_000);
 
   it('OG087_period_rule_is_the_contracts', () => {
-    expect(spendPeriodValid('2026-10-01', '2026-10-31')).toBe(true);
-    expect(spendPeriodValid('2026-10-31', '2026-10-01')).toBe(false);
-    expect(spendPeriodValid('2025-01-01', '2026-01-02')).toBe(false);
+    const today = '2027-01-31';
+    expect(spendPeriodValid('2026-10-01', '2026-10-31', today)).toBe(true);
+    expect(spendPeriodValid('2026-10-31', '2026-10-01', today)).toBe(false);
+    expect(spendPeriodValid('2025-01-01', '2026-01-02', today)).toBe(false);
+    // OG-087 core gap 5: a period that ends in the future is refused, as the account export.
+    expect(spendPeriodValid('2026-11-01', '2026-11-29', '2026-11-28')).toBe(false);
+    expect(spendPeriodValid('2026-11-01', '2026-11-28', '2026-11-28')).toBe(true);
+  });
+
+  it('OG087_core_period_invalid_when_the_export_ends_after_today', async () => {
+    const api = finance({ scenario: 'spend_review' });
+    await expect(
+      spendOf(api).createExport({ from: '2026-10-01', to: '2026-10-30', format: 'CSV' }),
+    ).rejects.toMatchObject({ code: 'period_invalid' });
   });
 
   it('OG087_exports_hidden_without_spend_export', async () => {
@@ -680,6 +764,7 @@ describe('OG-087 copy', () => {
         ...['not_required', 'missing', 'attached'].map((c) => `app.spend.receipt.${c}`),
         ...['attached', 'amount_date', 'manual'].map((c) => `app.spend.match.${c}`),
         ...['not_submitted', 'pending_approval'].map((c) => `app.spend.export.excluded.${c}`),
+        ...POLICY_PROBLEM_CODES.map((c) => `app.spend.policy.problem.${c}`),
       ];
       for (const k of keys) {
         const e = byKey.get(k);

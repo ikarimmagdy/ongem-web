@@ -2,42 +2,6 @@
   "channel": "web_app",
   "entries": [
     {
-      "key": "app.common.close",
-      "format": "text",
-      "description": "Close button of a dialog",
-      "placeholders": [],
-      "meta": {},
-      "en": "Close",
-      "ar": "إغلاق"
-    },
-    {
-      "key": "app.common.date.choose",
-      "format": "text",
-      "description": "Date field before a day is chosen",
-      "placeholders": [],
-      "meta": {},
-      "en": "Choose a date",
-      "ar": "اختر تاريخًا"
-    },
-    {
-      "key": "app.common.date.next_month",
-      "format": "text",
-      "description": "Calendar button: show the month after",
-      "placeholders": [],
-      "meta": {},
-      "en": "Next month",
-      "ar": "الشهر التالي"
-    },
-    {
-      "key": "app.common.date.previous_month",
-      "format": "text",
-      "description": "Calendar button: show the month before",
-      "placeholders": [],
-      "meta": {},
-      "en": "Previous month",
-      "ar": "الشهر السابق"
-    },
-    {
       "key": "app.accounts.available",
       "format": "text",
       "description": "Label: available balance",
@@ -1267,6 +1231,42 @@
       "ar": "إلغاء"
     },
     {
+      "key": "app.common.close",
+      "format": "text",
+      "description": "Close button of a dialog",
+      "placeholders": [],
+      "meta": {},
+      "en": "Close",
+      "ar": "إغلاق"
+    },
+    {
+      "key": "app.common.date.choose",
+      "format": "text",
+      "description": "Date field before a day is chosen",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a date",
+      "ar": "اختر تاريخًا"
+    },
+    {
+      "key": "app.common.date.next_month",
+      "format": "text",
+      "description": "Calendar button: show the month after",
+      "placeholders": [],
+      "meta": {},
+      "en": "Next month",
+      "ar": "الشهر التالي"
+    },
+    {
+      "key": "app.common.date.previous_month",
+      "format": "text",
+      "description": "Calendar button: show the month before",
+      "placeholders": [],
+      "meta": {},
+      "en": "Previous month",
+      "ar": "الشهر السابق"
+    },
+    {
       "key": "app.common.confirm",
       "format": "text",
       "description": "Confirm button",
@@ -2048,15 +2048,6 @@
       "meta": {},
       "en": "Statement for September",
       "ar": "كشف حساب شهر سبتمبر"
-    },
-    {
-      "key": "app.demo.ticket.ops_author",
-      "format": "text",
-      "description": "Demo sample data: the name on a reply from the brand's support team",
-      "placeholders": ["brand"],
-      "meta": {},
-      "en": "{brand} support",
-      "ar": "دعم {brand}"
     },
     {
       "key": "app.ds.account",
@@ -6884,6 +6875,24 @@
       "ar": "CSV (جدول بيانات)"
     },
     {
+      "key": "app.exports.format_quickbooks",
+      "format": "text",
+      "description": "Export format (OG-024): QuickBooks Online bank upload",
+      "placeholders": [],
+      "meta": {},
+      "en": "QuickBooks Online (bank upload)",
+      "ar": "QuickBooks Online (رفع كشف بنكي)"
+    },
+    {
+      "key": "app.exports.format_xero",
+      "format": "text",
+      "description": "Export format (OG-024): Xero bank statement import",
+      "placeholders": [],
+      "meta": {},
+      "en": "Xero (bank statement import)",
+      "ar": "Xero (استيراد كشف بنكي)"
+    },
+    {
       "key": "app.exports.confirm",
       "format": "text",
       "description": "Button that starts the export",
@@ -10692,147 +10701,6 @@
       "ar": "المستفيد"
     },
     {
-      "key": "app.settings.appearance_choice.dark",
-      "format": "text",
-      "description": "Settings appearance choice (FA-030)",
-      "placeholders": [],
-      "meta": {},
-      "en": "Dark",
-      "ar": "داكن"
-    },
-    {
-      "key": "app.settings.appearance_choice.light",
-      "format": "text",
-      "description": "Settings appearance choice (FA-030)",
-      "placeholders": [],
-      "meta": {},
-      "en": "Light",
-      "ar": "فاتح"
-    },
-    {
-      "key": "app.settings.appearance_choice.system",
-      "format": "text",
-      "description": "Settings appearance choice: follow the device (FA-030)",
-      "placeholders": [],
-      "meta": {},
-      "en": "System",
-      "ar": "حسب الجهاز"
-    },
-    {
-      "key": "app.settings.bank.title",
-      "format": "text",
-      "description": "Settings card title: the bank behind the account (FA-055)",
-      "placeholders": [],
-      "meta": {},
-      "en": "Your bank",
-      "ar": "بنكك"
-    },
-    {
-      "key": "app.settings.security.added_on",
-      "format": "text",
-      "description": "Device row: when it was added (FA-029)",
-      "placeholders": [
-        "date"
-      ],
-      "meta": {},
-      "en": "Added {date}",
-      "ar": "أُضيف في {date}"
-    },
-    {
-      "key": "app.settings.security.cannot_revoke_current",
-      "format": "text",
-      "description": "Error: this device cannot sign itself out here (FA-029)",
-      "placeholders": [],
-      "meta": {},
-      "en": "Use Sign out to leave on this device.",
-      "ar": "استخدم تسجيل الخروج لمغادرة هذا الجهاز."
-    },
-    {
-      "key": "app.settings.security.empty",
-      "format": "text",
-      "description": "Settings security: no devices listed (FA-029)",
-      "placeholders": [],
-      "meta": {},
-      "en": "No devices yet.",
-      "ar": "لا توجد أجهزة بعد."
-    },
-    {
-      "key": "app.settings.security.intro",
-      "format": "text",
-      "description": "Settings security card intro (FA-029)",
-      "placeholders": ["brand"],
-      "meta": {},
-      "en": "The devices signed in to your {brand} account. Sign out any device you do not recognise.",
-      "ar": "الأجهزة التي سجّلت الدخول إلى حسابك في {brand}. سجّل الخروج من أي جهاز لا تعرفه."
-    },
-    {
-      "key": "app.settings.security.last_used",
-      "format": "text",
-      "description": "Device row: when it was last used (FA-029)",
-      "placeholders": [
-        "date"
-      ],
-      "meta": {},
-      "en": "Last used {date}",
-      "ar": "آخر استخدام {date}"
-    },
-    {
-      "key": "app.settings.security.revoked_on",
-      "format": "text",
-      "description": "Device row: signed out for good on a date (FA-029)",
-      "placeholders": [
-        "date"
-      ],
-      "meta": {},
-      "en": "Signed out {date}",
-      "ar": "تم تسجيل الخروج في {date}"
-    },
-    {
-      "key": "app.settings.security.sign_out_device",
-      "format": "text",
-      "description": "Device row button: sign that device out (FA-029)",
-      "placeholders": [],
-      "meta": {},
-      "en": "Sign out",
-      "ar": "تسجيل الخروج"
-    },
-    {
-      "key": "app.settings.security.this_device",
-      "format": "text",
-      "description": "Device row: the device in use (FA-029)",
-      "placeholders": [],
-      "meta": {},
-      "en": "This device",
-      "ar": "هذا الجهاز"
-    },
-    {
-      "key": "app.settings.security.title",
-      "format": "text",
-      "description": "Settings card title: devices and sign-in (FA-029)",
-      "placeholders": [],
-      "meta": {},
-      "en": "Security and devices",
-      "ar": "الأمان والأجهزة"
-    },
-    {
-      "key": "app.shell.disclosure",
-      "format": "text",
-      "description": "Signed-in side bar foot and Settings: who holds the money (FA-055); AE never names the bank Glossary term shared by web and app (FA-052).",
-      "placeholders": ["brand"],
-      "meta": {},
-      "en": "{brand} is a financial technology company, not a bank. Banking services are provided by a licensed UAE bank.",
-      "ar": "{brand} شركة تقنية مالية وليست بنكا. يقدّم الخدمات المصرفية بنك مرخّص في الإمارات."
-    },
-    {
-      "key": "app.state.payment.sent",
-      "format": "text",
-      "description": "Payment state chip: the bank has the payment (FA-007)",
-      "placeholders": [],
-      "meta": {},
-      "en": "Sent",
-      "ar": "أُرسلت"
-    },
-    {
       "key": "app.mobile.cards.face_label",
       "format": "text",
       "description": "Screen reader label of a card face: type, last four digits and holder (FA-002)",
@@ -10980,6 +10848,63 @@
       "meta": {},
       "en": "Save {name} as a recipient",
       "ar": "حفظ {name} كمستفيد"
+    },
+    {
+      "key": "app.mobile.stepup.open_account",
+      "format": "text",
+      "description": "Step-up purpose: opening a currency account",
+      "placeholders": [
+        "currency"
+      ],
+      "meta": {},
+      "en": "Open a {currency} account",
+      "ar": "فتح حساب بعملة {currency}"
+    },
+    {
+      "key": "app.mobile.stepup.convert",
+      "format": "text",
+      "description": "Step-up purpose: accepting a conversion quote",
+      "placeholders": [
+        "amount",
+        "currency"
+      ],
+      "meta": {},
+      "en": "Convert {amount} to {currency}",
+      "ar": "تحويل {amount} إلى {currency}"
+    },
+    {
+      "key": "app.mobile.stepup.pay_abroad",
+      "format": "text",
+      "description": "Step-up purpose: accepting a payment abroad",
+      "placeholders": [
+        "amount",
+        "payee"
+      ],
+      "meta": {},
+      "en": "Send {amount} to {payee}",
+      "ar": "إرسال {amount} إلى {payee}"
+    },
+    {
+      "key": "app.mobile.stepup.approve_movement",
+      "format": "text",
+      "description": "Step-up purpose: approving a conversion or payment abroad",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "Approve {amount}",
+      "ar": "الموافقة على {amount}"
+    },
+    {
+      "key": "app.mobile.stepup.cancel_movement",
+      "format": "text",
+      "description": "Step-up purpose: cancelling a conversion or payment abroad",
+      "placeholders": [
+        "amount"
+      ],
+      "meta": {},
+      "en": "Cancel {amount}",
+      "ar": "إلغاء {amount}"
     },
     {
       "key": "app.mobile.dispute.no_charges",
@@ -11321,6 +11246,147 @@
       "meta": {},
       "en": "Statements",
       "ar": "كشوف الحساب"
+    },
+    {
+      "key": "app.settings.appearance_choice.dark",
+      "format": "text",
+      "description": "Settings appearance choice (FA-030)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Dark",
+      "ar": "داكن"
+    },
+    {
+      "key": "app.settings.appearance_choice.light",
+      "format": "text",
+      "description": "Settings appearance choice (FA-030)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Light",
+      "ar": "فاتح"
+    },
+    {
+      "key": "app.settings.appearance_choice.system",
+      "format": "text",
+      "description": "Settings appearance choice: follow the device (FA-030)",
+      "placeholders": [],
+      "meta": {},
+      "en": "System",
+      "ar": "حسب الجهاز"
+    },
+    {
+      "key": "app.settings.bank.title",
+      "format": "text",
+      "description": "Settings card title: the bank behind the account (FA-055)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your bank",
+      "ar": "بنكك"
+    },
+    {
+      "key": "app.settings.security.added_on",
+      "format": "text",
+      "description": "Device row: when it was added (FA-029)",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Added {date}",
+      "ar": "أُضيف في {date}"
+    },
+    {
+      "key": "app.settings.security.cannot_revoke_current",
+      "format": "text",
+      "description": "Error: this device cannot sign itself out here (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Use Sign out to leave on this device.",
+      "ar": "استخدم تسجيل الخروج لمغادرة هذا الجهاز."
+    },
+    {
+      "key": "app.settings.security.empty",
+      "format": "text",
+      "description": "Settings security: no devices listed (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "No devices yet.",
+      "ar": "لا توجد أجهزة بعد."
+    },
+    {
+      "key": "app.settings.security.intro",
+      "format": "text",
+      "description": "Settings security card intro (FA-029)",
+      "placeholders": ["brand"],
+      "meta": {},
+      "en": "The devices signed in to your {brand} account. Sign out any device you do not recognise.",
+      "ar": "الأجهزة التي سجّلت الدخول إلى حسابك في {brand}. سجّل الخروج من أي جهاز لا تعرفه."
+    },
+    {
+      "key": "app.settings.security.last_used",
+      "format": "text",
+      "description": "Device row: when it was last used (FA-029)",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Last used {date}",
+      "ar": "آخر استخدام {date}"
+    },
+    {
+      "key": "app.settings.security.revoked_on",
+      "format": "text",
+      "description": "Device row: signed out for good on a date (FA-029)",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Signed out {date}",
+      "ar": "تم تسجيل الخروج في {date}"
+    },
+    {
+      "key": "app.settings.security.sign_out_device",
+      "format": "text",
+      "description": "Device row button: sign that device out (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sign out",
+      "ar": "تسجيل الخروج"
+    },
+    {
+      "key": "app.settings.security.this_device",
+      "format": "text",
+      "description": "Device row: the device in use (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "This device",
+      "ar": "هذا الجهاز"
+    },
+    {
+      "key": "app.settings.security.title",
+      "format": "text",
+      "description": "Settings card title: devices and sign-in (FA-029)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Security and devices",
+      "ar": "الأمان والأجهزة"
+    },
+    {
+      "key": "app.shell.disclosure",
+      "format": "text",
+      "description": "Signed-in side bar foot and Settings: who holds the money (FA-055); AE never names the bank Glossary term shared by web and app (FA-052).",
+      "placeholders": ["brand"],
+      "meta": {},
+      "en": "{brand} is a financial technology company, not a bank. Banking services are provided by a licensed UAE bank.",
+      "ar": "{brand} شركة تقنية مالية وليست بنكا. يقدّم الخدمات المصرفية بنك مرخّص في الإمارات."
+    },
+    {
+      "key": "app.state.payment.sent",
+      "format": "text",
+      "description": "Payment state chip: the bank has the payment (FA-007)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sent",
+      "ar": "أُرسلت"
     },
     {
       "key": "app.payments.requested_by",
@@ -11705,6 +11771,58 @@
       "meta": {},
       "en": "Expand side menu",
       "ar": "توسيع القائمة الجانبية"
+    },
+    {
+      "key": "app.shell.invites_waiting",
+      "format": "text",
+      "description": "Switcher (OG-023): heading over invitations waiting for the person",
+      "placeholders": [],
+      "meta": {},
+      "en": "Invitations",
+      "ar": "الدعوات"
+    },
+    {
+      "key": "app.shell.invite_by",
+      "format": "text",
+      "description": "Switcher (OG-023): who invited the person and as what role",
+      "placeholders": [
+        "name",
+        "role"
+      ],
+      "meta": {},
+      "en": "{name} invited you as {role}",
+      "ar": "دعاك {name} بصفة {role}"
+    },
+    {
+      "key": "app.shell.invite_role",
+      "format": "text",
+      "description": "Switcher (OG-023): the role an invitation gives, when the inviter is not named",
+      "placeholders": [
+        "role"
+      ],
+      "meta": {},
+      "en": "Invited as {role}",
+      "ar": "مدعو بصفة {role}"
+    },
+    {
+      "key": "app.shell.invite_expires",
+      "format": "text",
+      "description": "Switcher (OG-023): when an invitation expires",
+      "placeholders": [
+        "date"
+      ],
+      "meta": {},
+      "en": "Expires {date}",
+      "ar": "تنتهي في {date}"
+    },
+    {
+      "key": "app.shell.accept_invite",
+      "format": "text",
+      "description": "Switcher (OG-023): button to accept an invitation",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accept invite",
+      "ar": "قبول الدعوة"
     },
     {
       "key": "app.nav.group.money",
@@ -14210,58 +14328,6 @@
       "ar": "اذكر السبب."
     },
     {
-      "key": "app.shell.invites_waiting",
-      "format": "text",
-      "description": "Switcher (OG-023): heading over invitations waiting for the person",
-      "placeholders": [],
-      "meta": {},
-      "en": "Invitations",
-      "ar": "الدعوات"
-    },
-    {
-      "key": "app.shell.invite_by",
-      "format": "text",
-      "description": "Switcher (OG-023): who invited the person and as what role",
-      "placeholders": [
-        "name",
-        "role"
-      ],
-      "meta": {},
-      "en": "{name} invited you as {role}",
-      "ar": "دعاك {name} بصفة {role}"
-    },
-    {
-      "key": "app.shell.invite_role",
-      "format": "text",
-      "description": "Switcher (OG-023): the role an invitation gives, when the inviter is not named",
-      "placeholders": [
-        "role"
-      ],
-      "meta": {},
-      "en": "Invited as {role}",
-      "ar": "مدعو بصفة {role}"
-    },
-    {
-      "key": "app.shell.invite_expires",
-      "format": "text",
-      "description": "Switcher (OG-023): when an invitation expires",
-      "placeholders": [
-        "date"
-      ],
-      "meta": {},
-      "en": "Expires {date}",
-      "ar": "تنتهي في {date}"
-    },
-    {
-      "key": "app.shell.accept_invite",
-      "format": "text",
-      "description": "Switcher (OG-023): button to accept an invitation",
-      "placeholders": [],
-      "meta": {},
-      "en": "Accept invite",
-      "ar": "قبول الدعوة"
-    },
-    {
       "key": "app.notifications.category.money",
       "format": "text",
       "description": "Notification category (OG-014)",
@@ -14673,24 +14739,6 @@
       "ar": "انضم شخص إلى فريقك"
     },
     {
-      "key": "app.exports.format_quickbooks",
-      "format": "text",
-      "description": "Export format (OG-024): QuickBooks Online bank upload",
-      "placeholders": [],
-      "meta": {},
-      "en": "QuickBooks Online (bank upload)",
-      "ar": "QuickBooks Online (رفع كشف بنكي)"
-    },
-    {
-      "key": "app.exports.format_xero",
-      "format": "text",
-      "description": "Export format (OG-024): Xero bank statement import",
-      "placeholders": [],
-      "meta": {},
-      "en": "Xero (bank statement import)",
-      "ar": "Xero (استيراد كشف بنكي)"
-    },
-    {
       "key": "app.exports.format_note_accounting",
       "format": "text",
       "description": "Note under the format when an accounting format is picked (OG-024)",
@@ -14700,6 +14748,261 @@
       "meta": {},
       "en": "The {format} file holds posted transactions only, for this account and its currency, ready to import.",
       "ar": "يحتوي ملف {format} على المعاملات المرحّلة فقط، لهذا الحساب وبعملته، وهو جاهز للاستيراد."
+    },
+    {
+      "key": "app.mobile.prefs.in_app",
+      "format": "text",
+      "description": "Notification choices: column for the in-app inbox",
+      "placeholders": [],
+      "meta": {},
+      "en": "In app",
+      "ar": "في التطبيق"
+    },
+    {
+      "key": "app.mobile.prefs.by_in_app",
+      "format": "text",
+      "description": "Notification choices: checkbox label for screen readers",
+      "placeholders": [
+        "kind"
+      ],
+      "meta": {},
+      "en": "{kind} in the app",
+      "ar": "{kind} في التطبيق"
+    },
+    {
+      "key": "app.mobile.prefs.always_in_app_email",
+      "format": "text",
+      "description": "Notification choices: a mandatory kind",
+      "placeholders": [],
+      "meta": {},
+      "en": "Always in the app and by email",
+      "ar": "دائماً في التطبيق وبالبريد الإلكتروني"
+    },
+    {
+      "key": "app.mobile.prefs.scope",
+      "format": "text",
+      "description": "Notification choices: whose choices are shown",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choices for",
+      "ar": "الخيارات لـ"
+    },
+    {
+      "key": "app.mobile.prefs.scope_all",
+      "format": "text",
+      "description": "Notification choices: the person's choices for every company",
+      "placeholders": [],
+      "meta": {},
+      "en": "All my companies",
+      "ar": "كل شركاتي"
+    },
+    {
+      "key": "app.mobile.prefs.scope_company",
+      "format": "text",
+      "description": "Notification choices: this company's own choices",
+      "placeholders": [
+        "company"
+      ],
+      "meta": {},
+      "en": "{company} only",
+      "ar": "{company} فقط"
+    },
+    {
+      "key": "app.mobile.prefs.company_intro",
+      "format": "text",
+      "description": "Notification choices: intro for one company",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choices here apply to this company only. A notice you do not change here follows your choices for all your companies.",
+      "ar": "تنطبق الخيارات هنا على هذه الشركة فقط. أي إشعار لا تغيّره هنا يتبع خياراتك لكل شركاتك."
+    },
+    {
+      "key": "app.mobile.prefs.source_company",
+      "format": "text",
+      "description": "Notification choices: this kind is set for this company",
+      "placeholders": [],
+      "meta": {},
+      "en": "Set for this company",
+      "ar": "محدد لهذه الشركة"
+    },
+    {
+      "key": "app.mobile.prefs.reset_kind",
+      "format": "text",
+      "description": "Notification choices: drop one company override",
+      "placeholders": [],
+      "meta": {},
+      "en": "Use my usual choice",
+      "ar": "استخدم خياري المعتاد"
+    },
+    {
+      "key": "app.mobile.prefs.reset_all",
+      "format": "text",
+      "description": "Notification choices: drop every company override",
+      "placeholders": [],
+      "meta": {},
+      "en": "Use my usual choices for this company",
+      "ar": "استخدم خياراتي المعتادة لهذه الشركة"
+    },
+    {
+      "key": "app.mobile.prefs.category.money",
+      "format": "text",
+      "description": "Notification category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Money in and out",
+      "ar": "الأموال الواردة والصادرة"
+    },
+    {
+      "key": "app.mobile.prefs.category.approvals",
+      "format": "text",
+      "description": "Notification category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approvals",
+      "ar": "الموافقات"
+    },
+    {
+      "key": "app.mobile.prefs.category.movements",
+      "format": "text",
+      "description": "Notification category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Transfers and conversions",
+      "ar": "التحويلات وتبديل العملات"
+    },
+    {
+      "key": "app.mobile.prefs.category.accounts",
+      "format": "text",
+      "description": "Notification category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accounts",
+      "ar": "الحسابات"
+    },
+    {
+      "key": "app.mobile.prefs.category.onboarding",
+      "format": "text",
+      "description": "Notification category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your application",
+      "ar": "طلبك"
+    },
+    {
+      "key": "app.mobile.prefs.category.cards",
+      "format": "text",
+      "description": "Notification category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cards",
+      "ar": "البطاقات"
+    },
+    {
+      "key": "app.mobile.prefs.category.security",
+      "format": "text",
+      "description": "Notification category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Security",
+      "ar": "الأمان"
+    },
+    {
+      "key": "app.mobile.prefs.category.support",
+      "format": "text",
+      "description": "Notification category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Support",
+      "ar": "الدعم"
+    },
+    {
+      "key": "app.mobile.prefs.category.team",
+      "format": "text",
+      "description": "Notification category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Team",
+      "ar": "الفريق"
+    },
+    {
+      "key": "app.mobile.company.invites_title",
+      "format": "text",
+      "description": "Switcher: heading over invites waiting for the person",
+      "placeholders": [],
+      "meta": {},
+      "en": "Invitations for you",
+      "ar": "دعوات لك"
+    },
+    {
+      "key": "app.mobile.company.invite_from",
+      "format": "text",
+      "description": "Switcher: an invite's role and who sent it",
+      "placeholders": [
+        "role",
+        "name"
+      ],
+      "meta": {},
+      "en": "{role}, invited by {name}",
+      "ar": "{role}، بدعوة من {name}"
+    },
+    {
+      "key": "app.mobile.company.invite_accept",
+      "format": "text",
+      "description": "Switcher: accept an invite button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Accept",
+      "ar": "قبول"
+    },
+    {
+      "key": "app.mobile.company.invite_accept_label",
+      "format": "text",
+      "description": "Switcher: accept button label for screen readers",
+      "placeholders": [
+        "company",
+        "role"
+      ],
+      "meta": {},
+      "en": "Accept the invitation to join {company} as {role}",
+      "ar": "قبول الدعوة للانضمام إلى {company} بدور {role}"
+    },
+    {
+      "key": "app.mobile.exports.accounting_note",
+      "format": "text",
+      "description": "Export: what a QuickBooks or Xero file holds",
+      "placeholders": [],
+      "meta": {},
+      "en": "Posted transactions only, one account and currency per file, ready to import into your accounting software.",
+      "ar": "المعاملات المرحّلة فقط، حساب واحد وعملة واحدة لكل ملف، جاهز للاستيراد في برنامج المحاسبة."
+    },
+    {
+      "key": "app.mobile.exports.share",
+      "format": "text",
+      "description": "Export: hand the file to the phone's share or save screen",
+      "placeholders": [],
+      "meta": {},
+      "en": "Share or save the file",
+      "ar": "مشاركة الملف أو حفظه"
+    },
+    {
+      "key": "app.mobile.exports.share_failed",
+      "format": "text",
+      "description": "Export: the file could not be fetched",
+      "placeholders": [],
+      "meta": {},
+      "en": "The file could not be downloaded. Get a new download link and try again.",
+      "ar": "تعذّر تنزيل الملف. احصل على رابط تنزيل جديد وحاول مرة أخرى."
+    },
+    {
+      "key": "app.mobile.owner.threshold",
+      "format": "text",
+      "description": "Onboarding owners (OG-069): the beneficial owner threshold from GET /v1/onboarding/owner-threshold",
+      "placeholders": [
+        "percent"
+      ],
+      "meta": {},
+      "en": "Every owner with {percent}% or more of the company is verified.",
+      "ar": "يتم التحقق من كل مالك يملك {percent}% أو أكثر من الشركة."
     },
     {
       "key": "app.onboarding.owners_threshold",
@@ -14741,6 +15044,15 @@
       "meta": {},
       "en": "No ID needed",
       "ar": "لا حاجة إلى الهوية"
+    },
+    {
+      "key": "app.demo.ticket.ops_author",
+      "format": "text",
+      "description": "Demo sample data: the name on a reply from the brand's support team",
+      "placeholders": ["brand"],
+      "meta": {},
+      "en": "{brand} support",
+      "ar": "دعم {brand}"
     },
     {
       "key": "app.nav.spend",
@@ -15478,7 +15790,7 @@
       "placeholders": [],
       "meta": {},
       "en": "CSV",
-      "ar": "CSV"
+      "ar": "ملف CSV"
     },
     {
       "key": "app.spend.export.format.quickbooks",
@@ -15487,7 +15799,7 @@
       "placeholders": [],
       "meta": {},
       "en": "QuickBooks",
-      "ar": "QuickBooks"
+      "ar": "برنامج QuickBooks"
     },
     {
       "key": "app.spend.export.format.xero",
@@ -15496,7 +15808,7 @@
       "placeholders": [],
       "meta": {},
       "en": "Xero",
-      "ar": "Xero"
+      "ar": "برنامج Xero"
     },
     {
       "key": "app.spend.error.spend_not_enabled",
@@ -15810,8 +16122,8 @@
       "description": "Spend error period_invalid",
       "placeholders": [],
       "meta": {},
-      "en": "Choose an end date that is not before the start date, within 366 days.",
-      "ar": "اختر تاريخ نهاية لا يسبق تاريخ البداية، وخلال 366 يوما."
+      "en": "Choose an end date that is not before the start date, not in the future and within 366 days.",
+      "ar": "اختر تاريخ نهاية لا يسبق تاريخ البداية، وليس في المستقبل، وخلال 366 يوما."
     },
     {
       "key": "app.spend.error.format_unavailable",
@@ -17242,7 +17554,7 @@
       "placeholders": [],
       "meta": {},
       "en": "Receipt needed above",
-      "ar": "الإيصال مطلوب فوق"
+      "ar": "الإيصال مطلوب لما يزيد على"
     },
     {
       "key": "app.spend.policy.categories",
@@ -18332,6 +18644,771 @@
       "meta": {},
       "en": "Claim created. Add a receipt and submit it.",
       "ar": "تم إنشاء المطالبة. أضف إيصالا وقدمها."
+    },
+    {
+      "key": "app.mobile.spend.tab.receipts",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): tab receipts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Receipts",
+      "ar": "الإيصالات"
+    },
+    {
+      "key": "app.mobile.spend.tab.approvals",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): tab approvals",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approvals",
+      "ar": "الموافقات"
+    },
+    {
+      "key": "app.mobile.spend.card.none",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): card none",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your company card has not been issued yet. Your finance team issues it.",
+      "ar": "لم تُصدر بطاقة شركتك بعد. يصدرها فريق المالية."
+    },
+    {
+      "key": "app.mobile.spend.card.frozen_by_company",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): card frozen by company",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your company froze this card. Only your finance team can unfreeze it.",
+      "ar": "جمّدت شركتك هذه البطاقة. لا يمكن إلغاء تجميدها إلا من فريق المالية."
+    },
+    {
+      "key": "app.mobile.spend.card.limits",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): card limits",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your limits",
+      "ar": "حدودك"
+    },
+    {
+      "key": "app.mobile.spend.card.per_purchase",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): card per purchase",
+      "placeholders": [],
+      "meta": {},
+      "en": "Per purchase",
+      "ar": "لكل عملية شراء"
+    },
+    {
+      "key": "app.mobile.spend.card.per_month",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): card per month",
+      "placeholders": [],
+      "meta": {},
+      "en": "Per month",
+      "ar": "في الشهر"
+    },
+    {
+      "key": "app.mobile.spend.expenses.empty",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expenses empty",
+      "placeholders": [],
+      "meta": {},
+      "en": "No expenses yet. Purchases on your card show here.",
+      "ar": "لا توجد مصروفات بعد. تظهر هنا مشترياتك بالبطاقة."
+    },
+    {
+      "key": "app.mobile.spend.expenses.banner_text",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expenses banner text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add a receipt to each of them so they can be approved.",
+      "ar": "أضف إيصالًا لكل منها لتتم الموافقة عليها."
+    },
+    {
+      "key": "app.mobile.spend.expenses.more",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expenses more",
+      "placeholders": [],
+      "meta": {},
+      "en": "Show more",
+      "ar": "عرض المزيد"
+    },
+    {
+      "key": "app.mobile.spend.expense.paid_with",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expense paid with",
+      "placeholders": [],
+      "meta": {},
+      "en": "Paid with",
+      "ar": "طريقة الدفع"
+    },
+    {
+      "key": "app.mobile.spend.expense.source.claim",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expense source claim",
+      "placeholders": [],
+      "meta": {},
+      "en": "Out of pocket",
+      "ar": "من مالك الخاص"
+    },
+    {
+      "key": "app.mobile.spend.expense.reasons",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expense reasons",
+      "placeholders": [],
+      "meta": {},
+      "en": "Why it needs approval",
+      "ar": "سبب حاجته إلى موافقة"
+    },
+    {
+      "key": "app.mobile.spend.expense.decision_note",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expense decision note",
+      "placeholders": [],
+      "meta": {},
+      "en": "Note from the approver",
+      "ar": "ملاحظة من صاحب الموافقة"
+    },
+    {
+      "key": "app.mobile.spend.expense.vat",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expense vat",
+      "placeholders": [],
+      "meta": {},
+      "en": "VAT amount (optional)",
+      "ar": "مبلغ ضريبة القيمة المضافة (اختياري)"
+    },
+    {
+      "key": "app.mobile.spend.expense.vat_invalid",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expense vat invalid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter an amount such as 12.50, no more than the expense.",
+      "ar": "أدخل مبلغًا مثل 12.50، لا يزيد على المصروف."
+    },
+    {
+      "key": "app.mobile.spend.expense.submit",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expense submit",
+      "placeholders": [],
+      "meta": {},
+      "en": "Submit",
+      "ar": "إرسال"
+    },
+    {
+      "key": "app.mobile.spend.expense.saved",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expense saved",
+      "placeholders": [],
+      "meta": {},
+      "en": "Saved.",
+      "ar": "تم الحفظ."
+    },
+    {
+      "key": "app.mobile.spend.expense.approved_by_policy",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expense approved by policy",
+      "placeholders": [],
+      "meta": {},
+      "en": "Submitted and approved by your company's policy.",
+      "ar": "تم الإرسال والموافقة وفق سياسة شركتك."
+    },
+    {
+      "key": "app.mobile.spend.expense.waiting",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expense waiting",
+      "placeholders": [],
+      "meta": {},
+      "en": "Submitted. It waits for a person to approve it.",
+      "ar": "تم الإرسال. ينتظر موافقة أحد الأشخاص."
+    },
+    {
+      "key": "app.mobile.spend.expense.locked",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expense locked",
+      "placeholders": [],
+      "meta": {},
+      "en": "This expense was submitted, so it can no longer be changed.",
+      "ar": "تم إرسال هذا المصروف، لذا لا يمكن تعديله."
+    },
+    {
+      "key": "app.mobile.spend.expense.add_receipt",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): expense add receipt",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add receipt",
+      "ar": "إضافة إيصال"
+    },
+    {
+      "key": "app.mobile.spend.receipts.title",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add a receipt",
+      "ar": "إضافة إيصال"
+    },
+    {
+      "key": "app.mobile.spend.receipts.hint",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "There is no reading of the receipt yet: enter its amount and date so it is matched to your purchase.",
+      "ar": "لا تُقرأ الإيصالات تلقائيًا بعد: أدخل مبلغ الإيصال وتاريخه لتتم مطابقته مع مشترياتك."
+    },
+    {
+      "key": "app.mobile.spend.receipts.limits",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts limits",
+      "placeholders": ["types", "size"],
+      "meta": {},
+      "en": "{types}, up to {size} MB.",
+      "ar": "{types}، حتى {size} ميغابايت."
+    },
+    {
+      "key": "app.mobile.spend.receipts.too_large",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts too large",
+      "placeholders": ["size"],
+      "meta": {},
+      "en": "That file is over {size} MB.",
+      "ar": "حجم هذا الملف أكبر من {size} ميغابايت."
+    },
+    {
+      "key": "app.mobile.spend.receipts.wrong_type",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts wrong type",
+      "placeholders": ["types"],
+      "meta": {},
+      "en": "This kind of file is not accepted. Use {types}.",
+      "ar": "هذا النوع من الملفات غير مقبول. استخدم {types}."
+    },
+    {
+      "key": "app.mobile.spend.receipts.chosen",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts chosen",
+      "placeholders": ["name"],
+      "meta": {},
+      "en": "Chosen: {name}",
+      "ar": "الملف المختار: {name}"
+    },
+    {
+      "key": "app.mobile.spend.receipts.uploaded_matched",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts uploaded matched",
+      "placeholders": ["merchant", "amount"],
+      "meta": {},
+      "en": "Receipt added to {merchant}, {amount}.",
+      "ar": "أضيف الإيصال إلى {merchant}، {amount}."
+    },
+    {
+      "key": "app.mobile.spend.receipts.uploaded_unmatched",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts uploaded unmatched",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not tell which purchase this receipt is for. Choose it below.",
+      "ar": "تعذر معرفة عملية الشراء التي يخص هذا الإيصال. اخترها أدناه."
+    },
+    {
+      "key": "app.mobile.spend.receipts.candidates",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts candidates",
+      "placeholders": [],
+      "meta": {},
+      "en": "Purchases it could be for",
+      "ar": "عمليات شراء قد يخصها"
+    },
+    {
+      "key": "app.mobile.spend.receipts.no_candidates",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts no candidates",
+      "placeholders": [],
+      "meta": {},
+      "en": "No purchase is waiting for a receipt.",
+      "ar": "لا توجد عملية شراء بانتظار إيصال."
+    },
+    {
+      "key": "app.mobile.spend.receipts.yours",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts yours",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your receipts",
+      "ar": "إيصالاتك"
+    },
+    {
+      "key": "app.mobile.spend.receipts.amount_invalid",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts amount invalid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter the amount, such as 42.50.",
+      "ar": "أدخل المبلغ، مثل 42.50."
+    },
+    {
+      "key": "app.mobile.spend.receipts.date_invalid",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts date invalid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter the date as yyyy-mm-dd.",
+      "ar": "أدخل التاريخ بصيغة yyyy-mm-dd."
+    },
+    {
+      "key": "app.mobile.spend.receipts.file_needed",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): receipts file needed",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a photo or a file first.",
+      "ar": "اختر صورة أو ملفًا أولًا."
+    },
+    {
+      "key": "app.mobile.spend.claim.title",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): claim title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Claim an expense you paid yourself",
+      "ar": "مطالبة بمصروف دفعته بنفسك"
+    },
+    {
+      "key": "app.mobile.spend.claim.intro",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): claim intro",
+      "placeholders": [],
+      "meta": {},
+      "en": "It follows the same coding and approval as card purchases.",
+      "ar": "تتبع المطالبة نفس التصنيف والموافقة المتبعة في مشتريات البطاقة."
+    },
+    {
+      "key": "app.mobile.spend.claim.amount",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): claim amount",
+      "placeholders": ["currency"],
+      "meta": {},
+      "en": "Amount ({currency})",
+      "ar": "المبلغ ({currency})"
+    },
+    {
+      "key": "app.mobile.spend.claim.submit",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): claim submit",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add claim",
+      "ar": "إضافة المطالبة"
+    },
+    {
+      "key": "app.mobile.spend.claim.amount_invalid",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): claim amount invalid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter an amount, such as 18.00.",
+      "ar": "أدخل مبلغًا، مثل 18.00."
+    },
+    {
+      "key": "app.mobile.spend.claim.merchant_invalid",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): claim merchant invalid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter where you paid, up to 120 characters.",
+      "ar": "أدخل مكان الدفع، حتى 120 حرفًا."
+    },
+    {
+      "key": "app.mobile.spend.claim.date_invalid",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): claim date invalid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter a date that is not in the future, as yyyy-mm-dd.",
+      "ar": "أدخل تاريخًا ليس في المستقبل بصيغة yyyy-mm-dd."
+    },
+    {
+      "key": "app.mobile.spend.claim.added",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): claim added",
+      "placeholders": [],
+      "meta": {},
+      "en": "Claim added. Code it, add a receipt and submit it.",
+      "ar": "تمت إضافة المطالبة. صنّفها وأضف إيصالًا ثم أرسلها."
+    },
+    {
+      "key": "app.mobile.spend.claim.open",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): claim open",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open the claim",
+      "ar": "فتح المطالبة"
+    },
+    {
+      "key": "app.mobile.spend.approvals.empty",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): approvals empty",
+      "placeholders": [],
+      "meta": {},
+      "en": "Nothing waits for your approval.",
+      "ar": "لا شيء بانتظار موافقتك."
+    },
+    {
+      "key": "app.mobile.spend.approvals.reject_reason",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): approvals reject reason",
+      "placeholders": [],
+      "meta": {},
+      "en": "Why are you rejecting it?",
+      "ar": "لماذا ترفضه؟"
+    },
+    {
+      "key": "app.mobile.spend.approvals.reject_hint",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): approvals reject hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "The employee sees this note.",
+      "ar": "يرى الموظف هذه الملاحظة."
+    },
+    {
+      "key": "app.mobile.spend.approvals.reject_confirm",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): approvals reject confirm",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reject expense",
+      "ar": "رفض المصروف"
+    },
+    {
+      "key": "app.mobile.spend.approvals.own",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): approvals own",
+      "placeholders": [],
+      "meta": {},
+      "en": "This is your own expense, so another person approves it.",
+      "ar": "هذا مصروفك، لذا يوافق عليه شخص آخر."
+    },
+    {
+      "key": "app.mobile.spend.approvals.approved",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): approvals approved",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approved.",
+      "ar": "تمت الموافقة."
+    },
+    {
+      "key": "app.mobile.spend.approvals.rejected",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): approvals rejected",
+      "placeholders": [],
+      "meta": {},
+      "en": "Rejected.",
+      "ar": "تم الرفض."
+    },
+    {
+      "key": "app.mobile.spend.unavailable",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): unavailable",
+      "placeholders": [],
+      "meta": {},
+      "en": "Spend is not available for you here.",
+      "ar": "إدارة المصروفات غير متاحة لك هنا."
+    },
+    {
+      "key": "app.mobile.spend.expenses.banner.one",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): the receipts needed banner (one)",
+      "placeholders": [],
+      "meta": {},
+      "en": "1 purchase needs a receipt",
+      "ar": "عملية شراء واحدة تحتاج إلى إيصال"
+    },
+    {
+      "key": "app.mobile.spend.expenses.banner.other",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): the receipts needed banner (other)",
+      "placeholders": ["count"],
+      "meta": {},
+      "en": "{count} purchases need a receipt",
+      "ar": "{count} عملية شراء تحتاج إلى إيصال"
+    },
+    {
+      "key": "app.mobile.spend.expenses.banner.zero",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): the receipts needed banner (zero)",
+      "placeholders": [],
+      "meta": {},
+      "en": "No purchases need a receipt",
+      "ar": "لا توجد مشتريات تحتاج إلى إيصال"
+    },
+    {
+      "key": "app.mobile.spend.expenses.banner.two",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): the receipts needed banner (two)",
+      "placeholders": [],
+      "meta": {},
+      "en": "2 purchases need a receipt",
+      "ar": "عمليتا شراء تحتاجان إلى إيصال"
+    },
+    {
+      "key": "app.mobile.spend.expenses.banner.few",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): the receipts needed banner (few)",
+      "placeholders": ["count"],
+      "meta": {},
+      "en": "{count} purchases need a receipt",
+      "ar": "{count} عمليات شراء تحتاج إلى إيصال"
+    },
+    {
+      "key": "app.mobile.spend.expenses.banner.many",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): the receipts needed banner (many)",
+      "placeholders": ["count"],
+      "meta": {},
+      "en": "{count} purchases need a receipt",
+      "ar": "{count} عملية شراء تحتاج إلى إيصال"
+    },
+    {
+      "key": "app.mobile.spend.expenses.to_submit.one",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): open expenses to submit (one)",
+      "placeholders": [],
+      "meta": {},
+      "en": "1 expense to submit",
+      "ar": "مصروف واحد للإرسال"
+    },
+    {
+      "key": "app.mobile.spend.expenses.to_submit.other",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): open expenses to submit (other)",
+      "placeholders": ["count"],
+      "meta": {},
+      "en": "{count} expenses to submit",
+      "ar": "{count} مصروف للإرسال"
+    },
+    {
+      "key": "app.mobile.spend.expenses.to_submit.zero",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): open expenses to submit (zero)",
+      "placeholders": [],
+      "meta": {},
+      "en": "No expenses to submit",
+      "ar": "لا توجد مصروفات للإرسال"
+    },
+    {
+      "key": "app.mobile.spend.expenses.to_submit.two",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): open expenses to submit (two)",
+      "placeholders": [],
+      "meta": {},
+      "en": "2 expenses to submit",
+      "ar": "مصروفان للإرسال"
+    },
+    {
+      "key": "app.mobile.spend.expenses.to_submit.few",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): open expenses to submit (few)",
+      "placeholders": ["count"],
+      "meta": {},
+      "en": "{count} expenses to submit",
+      "ar": "{count} مصروفات للإرسال"
+    },
+    {
+      "key": "app.mobile.spend.expenses.to_submit.many",
+      "format": "text",
+      "description": "Founder app, spend (OG-087): open expenses to submit (many)",
+      "placeholders": ["count"],
+      "meta": {},
+      "en": "{count} expenses to submit",
+      "ar": "{count} مصروفًا للإرسال"
+    },
+    {
+      "key": "app.demo.notice.spend_receipt.title",
+      "format": "text",
+      "description": "Demo notice title: a card purchase needs a receipt (OG-087)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add your receipt",
+      "ar": "أضف إيصالك"
+    },
+    {
+      "key": "app.demo.notice.spend_receipt.body",
+      "format": "text",
+      "description": "Demo notice body (OG-087); {amount} formatted money, {merchant} the shop",
+      "placeholders": ["amount", "merchant"],
+      "meta": {},
+      "en": "A purchase of {amount} at {merchant} needs a receipt.",
+      "ar": "عملية شراء بمبلغ {amount} لدى {merchant} تحتاج إلى إيصال."
+    },
+    {
+      "key": "app.spend.policy.problem.malformed",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem malformed",
+      "placeholders": [],
+      "meta": {},
+      "en": "The policy could not be read. Check every field and try again.",
+      "ar": "تعذرت قراءة السياسة. تحقق من كل الحقول وحاول مرة أخرى."
+    },
+    {
+      "key": "app.spend.policy.problem.currency_not_programme",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem currency_not_programme",
+      "placeholders": [],
+      "meta": {},
+      "en": "The policy must be in the programme currency.",
+      "ar": "يجب أن تكون السياسة بعملة البرنامج."
+    },
+    {
+      "key": "app.spend.policy.problem.receipt_threshold_negative",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem receipt_threshold_negative",
+      "placeholders": [],
+      "meta": {},
+      "en": "The receipt amount cannot be below zero.",
+      "ar": "لا يمكن أن يكون مبلغ الإيصال أقل من صفر."
+    },
+    {
+      "key": "app.spend.policy.problem.reminder_hours_out_of_range",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem reminder_hours_out_of_range",
+      "placeholders": [],
+      "meta": {},
+      "en": "The receipt reminder is 1 to 720 hours.",
+      "ar": "يكون التذكير بالإيصال من 1 إلى 720 ساعة."
+    },
+    {
+      "key": "app.spend.policy.problem.self_approval_max_negative",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem self_approval_max_negative",
+      "placeholders": [],
+      "meta": {},
+      "en": "The own approval amount cannot be below zero.",
+      "ar": "لا يمكن أن يكون مبلغ الموافقة الذاتية أقل من صفر."
+    },
+    {
+      "key": "app.spend.policy.problem.categories_empty",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem categories_empty",
+      "placeholders": [],
+      "meta": {},
+      "en": "Keep at least one category.",
+      "ar": "احتفظ بفئة واحدة على الأقل."
+    },
+    {
+      "key": "app.spend.policy.problem.category_duplicate",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem category_duplicate",
+      "placeholders": [],
+      "meta": {},
+      "en": "Each category may appear once.",
+      "ar": "يجب أن تظهر كل فئة مرة واحدة."
+    },
+    {
+      "key": "app.spend.policy.problem.category_key_invalid",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem category_key_invalid",
+      "placeholders": [],
+      "meta": {},
+      "en": "A category is lower case letters, digits and underscores.",
+      "ar": "تتكون الفئة من أحرف لاتينية صغيرة وأرقام وشرطات سفلية."
+    },
+    {
+      "key": "app.spend.policy.problem.category_ledger_invalid",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem category_ledger_invalid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Each category needs a ledger account of up to 32 characters.",
+      "ar": "تحتاج كل فئة إلى حساب دفتر لا يزيد على 32 حرفا."
+    },
+    {
+      "key": "app.spend.policy.problem.limit_not_positive",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem limit_not_positive",
+      "placeholders": [],
+      "meta": {},
+      "en": "A limit must be above zero.",
+      "ar": "يجب أن يكون الحد أكبر من صفر."
+    },
+    {
+      "key": "app.spend.policy.problem.per_transaction_over_ceiling",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem per_transaction_over_ceiling",
+      "placeholders": [],
+      "meta": {},
+      "en": "A per purchase limit is above what the programme allows.",
+      "ar": "حد العملية الواحدة أعلى مما يسمح به البرنامج."
+    },
+    {
+      "key": "app.spend.policy.problem.monthly_over_ceiling",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem monthly_over_ceiling",
+      "placeholders": [],
+      "meta": {},
+      "en": "A monthly limit is above what the programme allows.",
+      "ar": "الحد الشهري أعلى مما يسمح به البرنامج."
+    },
+    {
+      "key": "app.spend.policy.problem.unknown_team",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem unknown_team",
+      "placeholders": [],
+      "meta": {},
+      "en": "The policy names a team that no longer exists. Reload and try again.",
+      "ar": "تذكر السياسة فريقا لم يعد موجودا. أعد التحميل وحاول مرة أخرى."
+    },
+    {
+      "key": "app.spend.policy.problem.unknown_employee",
+      "format": "text",
+      "description": "Spend policy refused (policy_invalid), problem unknown_employee",
+      "placeholders": [],
+      "meta": {},
+      "en": "The policy names an employee who no longer exists. Reload and try again.",
+      "ar": "تذكر السياسة موظفا لم يعد موجودا. أعد التحميل وحاول مرة أخرى."
+    },
+    {
+      "key": "app.spend.error.receipt_employee_mismatch",
+      "format": "text",
+      "description": "Spend error receipt_employee_mismatch: the expense is another employee's",
+      "placeholders": [],
+      "meta": {},
+      "en": "This receipt belongs to another employee, so it cannot be matched to this expense.",
+      "ar": "هذا الإيصال يخص موظفا آخر، لذلك لا يمكن مطابقته بهذا المصروف."
+    },
+    {
+      "key": "app.spend.expense.decided_by_name",
+      "format": "text",
+      "description": "Who decided an expense: the person's name",
+      "placeholders": ["name"],
+      "meta": {},
+      "en": "By {name}",
+      "ar": "بواسطة {name}"
+    },
+    {
+      "key": "app.spend.policy.decided_by",
+      "format": "text",
+      "description": "Who decided a policy version and when",
+      "placeholders": ["date", "name"],
+      "meta": {},
+      "en": "Decided by {name} on {date}",
+      "ar": "قرر بشأنها {name} في {date}"
+    },
+    {
+      "key": "app.spend.receipts.from",
+      "format": "text",
+      "description": "Unmatched receipt: who uploaded it",
+      "placeholders": ["name"],
+      "meta": {},
+      "en": "From {name}",
+      "ar": "من {name}"
     }
   ]
 }

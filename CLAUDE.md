@@ -343,3 +343,10 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   my receipts with matching, claims). Roles EMPLOYEE and the `spend:*` permissions in `api/client.ts`. Every contract
   error code is `app.spend.error.<code>`; texts `app.spend.*` in both seeds (ongem-core's seed needs them too). Tests
   `og087.test.tsx`, `og087-live.test.ts`.
+- 2026-11-28: OG-087 core follow-up (ongem-core `5c97bed`). `content-seed/*/web_app.json` are ongem-core's files again,
+  byte for byte (they now hold the app's `app.mobile.*` texts too). 422 `policy_invalid` shows one text per
+  `problems[].code` (`app.spend.policy.problem.<code>`, `POLICY_PROBLEM_CODES`, `ApiError.problems`); an own expense is
+  found by the expense employee's `personId` (`GET /v1/spend/employees/{id}`) against `/v1/me`; expenses and policy
+  versions say who decided (`decidedByName`); unmatched receipts say who uploaded them and offer only that employee's
+  expenses (409 `receipt_employee_mismatch`); a spend export may not end after today. Tests in `og087.test.tsx`
+  (`OG087_core_*`) and `og087-live.test.ts`.

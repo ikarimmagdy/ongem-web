@@ -27,6 +27,7 @@ export const SPEND_ERROR_CODES = [
   'duplicate_receipt',
   'receipt_matched',
   'expense_has_receipt',
+  'receipt_employee_mismatch',
   'reason_required',
   'demo_unavailable',
   'forbidden',
@@ -50,6 +51,33 @@ const CODES = new Set<string>(SPEND_ERROR_CODES);
 export function spendErrorText(e: unknown): string {
   if (e instanceof ApiError && e.code && CODES.has(e.code)) return t(`app.spend.error.${e.code}`);
   return errorText(e);
+}
+
+/** Every `problems[].code` of 422 `policy_invalid`, with its own sentence `app.spend.policy.problem.<code>`. */
+export const POLICY_PROBLEM_CODES = [
+  'malformed',
+  'currency_not_programme',
+  'receipt_threshold_negative',
+  'reminder_hours_out_of_range',
+  'self_approval_max_negative',
+  'categories_empty',
+  'category_duplicate',
+  'category_key_invalid',
+  'category_ledger_invalid',
+  'limit_not_positive',
+  'per_transaction_over_ceiling',
+  'monthly_over_ceiling',
+  'unknown_team',
+  'unknown_employee',
+] as const;
+
+const PROBLEMS = new Set<string>(POLICY_PROBLEM_CODES);
+
+/** The sentences for a refused policy: one per known problem code, in order and once each; none for other errors. */
+export function policyProblemTexts(e: unknown): string[] {
+  if (!(e instanceof ApiError) || e.code !== 'policy_invalid') return [];
+  const codes = [...new Set((e.problems ?? []).map((p) => p.code).filter((c) => PROBLEMS.has(c)))];
+  return codes.map((c) => t(`app.spend.policy.problem.${c}`));
 }
 
 /** True when [e] is the API's [code]. */
