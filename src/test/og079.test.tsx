@@ -137,6 +137,19 @@ describe('OG-079 white-label demo', () => {
     expect(fill('Held at {sponsorBank}', brandVars(bundledBrand('ongem')))).toBe('Held at Piermont Bank');
   });
 
+  it('OG086_product_and_contact_placeholders_read_well_with_or_without_names', () => {
+    const text =
+      'Decide in the {baasConsole}. {baasComplianceService} works cases; payouts on {baasPayoutRail}. Questions: {supportEmail}, sign-in for {webDomain}.';
+    expect(fill(text, brandVars(bundledBrand('ongem')))).toBe(
+      'Decide in the Synctera Console. Synctera Ground Control works cases; payouts on SyncteraPay. Questions: support@ongem.com, sign-in for app.ongem.com.',
+    );
+    expect(fill(text, brandVars(bundledBrand('harbor')))).toBe(
+      "Decide in the BaaS partner's console. Our BaaS partner's managed compliance service works cases; payouts on our BaaS partner's international payout rail. Questions: support@harbor.example, sign-in for app.harbor.example.",
+    );
+    const bare = { ...bundledBrand('harbor'), support: { email: null, phone: null, url: null } };
+    expect(brandVars(bare, 'ar').supportEmail).toBe('فريق الدعم لدينا');
+  });
+
   it('OG079_a_served_brand_names_its_partners_or_none', () => {
     const base = {
       id: 'acme',

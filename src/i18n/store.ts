@@ -83,7 +83,8 @@ const warned = new Set<string>();
 /**
  * The text of [key] in the current locale (English when it has none), with `{name}` placeholders filled in. `{brand}`
  * and `{legalName}` come from the active brand (OG-082, ADR-0058), and the partners' `{sponsorBank}`, `{baasProvider}`
- * and `{formationPartner}` in the current locale (OG-079), unless [vars] names them.
+ * and `{formationPartner}`, the BaaS products and `{supportEmail}` and `{webDomain}` in the current locale (OG-079,
+ * OG-086), unless [vars] names them.
  */
 export function t(key: string, vars?: Record<string, string | number>): string {
   const raw = merged[locale][key] ?? merged.en[key];

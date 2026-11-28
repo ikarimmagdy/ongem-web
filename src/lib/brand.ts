@@ -29,7 +29,10 @@ export interface Brand {
     playStoreUrl: string | null;
   };
   auth: { clerkPublishableKey: string | null };
-  /** The partners behind the service; null names none, and texts say the generic definition instead (OG-079). */
+  /**
+   * The partners behind the service and the BaaS provider's products texts name; null names none, and texts say the
+   * generic definition instead (OG-079, OG-086).
+   */
   partners: BrandPartners | null;
 }
 
@@ -37,6 +40,9 @@ export interface BrandPartners {
   sponsorBank: string | null;
   baasProvider: string | null;
   formationPartner: string | null;
+  baasConsole?: string | null;
+  baasComplianceService?: string | null;
+  baasPayoutRail?: string | null;
 }
 
 export const BUNDLED_BRANDS: Record<string, Brand> = BUNDLE.brands as unknown as Record<string, Brand>;
@@ -113,30 +119,51 @@ export const subscribeBrand = (l: () => void) => {
 /** The brand for a component, re-rendered when ongem-core's answer or a demo brand arrives. */
 export const useBrandConfig = (): Brand => useSyncExternalStore(subscribeBrand, brand, brand);
 
-/** What a text says for a partner the brand does not name, per locale (English for any other). */
-const PARTNER_DEFINITIONS: Record<string, Record<keyof BrandPartners, string>> = {
+/** What a text says for a partner, product or contact the brand does not name, per locale (English for any other). */
+const DEFINITIONS: Record<string, Record<keyof BrandPartners | 'supportEmail' | 'webDomain', string>> = {
   en: {
     sponsorBank: 'our sponsor bank',
     baasProvider: 'our BaaS partner',
     formationPartner: 'a company formation partner',
+    baasConsole: "BaaS partner's console",
+    baasComplianceService: "our BaaS partner's managed compliance service",
+    baasPayoutRail: "our BaaS partner's international payout rail",
+    supportEmail: 'our support team',
+    webDomain: 'our website',
   },
   ar: {
     sponsorBank: 'بنكنا الراعي',
     baasProvider: 'منصتنا المصرفية الشريكة',
     formationPartner: 'شركة تأسيس شريكة',
+    baasConsole: 'لوحة تحكم المنصة المصرفية الشريكة',
+    baasComplianceService: 'خدمة الامتثال المُدارة لدى منصتنا المصرفية الشريكة',
+    baasPayoutRail: 'شبكة المدفوعات الدولية لدى منصتنا المصرفية الشريكة',
+    supportEmail: 'فريق الدعم لدينا',
+    webDomain: 'موقعنا الإلكتروني',
   },
 };
 
-/** The partner placeholders; a value of one that starts a sentence is written with a capital letter. */
-export const PARTNER_VARS: ReadonlySet<string> = new Set(['sponsorBank', 'baasProvider', 'formationPartner']);
+const definition = (key: keyof BrandPartners | 'supportEmail' | 'webDomain', locale: string): string =>
+  (DEFINITIONS[locale] ?? DEFINITIONS.en!)[key];
+
+/** The partner and product placeholders; a value of one that starts a sentence is written with a capital letter. */
+export const PARTNER_VARS: ReadonlySet<string> = new Set([
+  'sponsorBank',
+  'baasProvider',
+  'formationPartner',
+  'baasConsole',
+  'baasComplianceService',
+  'baasPayoutRail',
+]);
 
 /** A partner's name in [locale]: the brand's, else the generic definition ("our sponsor bank"). */
 export const partnerName = (key: keyof BrandPartners, locale: string = 'en', b: Brand = current): string =>
-  b.partners?.[key] ?? (PARTNER_DEFINITIONS[locale] ?? PARTNER_DEFINITIONS.en!)[key];
+  b.partners?.[key] ?? definition(key, locale);
 
 /**
- * The words a content text may carry as placeholders: `{brand}` (product name), `{legalName}` and the partners'
- * `{sponsorBank}`, `{baasProvider}` and `{formationPartner}` in [locale].
+ * The words a content text may carry as placeholders: `{brand}` (product name), `{legalName}`, the partners'
+ * `{sponsorBank}`, `{baasProvider}` and `{formationPartner}`, the BaaS provider's products `{baasConsole}`,
+ * `{baasComplianceService}` and `{baasPayoutRail}`, and the brand's `{supportEmail}` and `{webDomain}`, in [locale].
  */
 export const brandVars = (b: Brand = current, locale: string = 'en') => ({
   brand: b.names.product,
@@ -144,6 +171,11 @@ export const brandVars = (b: Brand = current, locale: string = 'en') => ({
   sponsorBank: partnerName('sponsorBank', locale, b),
   baasProvider: partnerName('baasProvider', locale, b),
   formationPartner: partnerName('formationPartner', locale, b),
+  baasConsole: partnerName('baasConsole', locale, b),
+  baasComplianceService: partnerName('baasComplianceService', locale, b),
+  baasPayoutRail: partnerName('baasPayoutRail', locale, b),
+  supportEmail: b.support.email ?? definition('supportEmail', locale),
+  webDomain: b.domains.web || definition('webDomain', locale),
 });
 
 const OVERRIDE_KEY = 'ongem.brand';

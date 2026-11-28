@@ -31,7 +31,10 @@
       "partners": {
         "sponsorBank": "Piermont Bank",
         "baasProvider": "Synctera",
-        "formationPartner": "GenZone"
+        "formationPartner": "GenZone",
+        "baasConsole": "Synctera Console",
+        "baasComplianceService": "Synctera Ground Control",
+        "baasPayoutRail": "SyncteraPay"
       }
     },
     "harbor": {
@@ -65,7 +68,14 @@
         "playStoreUrl": null
       },
       "auth": { "clerkPublishableKey": null },
-      "partners": { "sponsorBank": null, "baasProvider": null, "formationPartner": null }
+      "partners": {
+        "sponsorBank": null,
+        "baasProvider": null,
+        "formationPartner": null,
+        "baasConsole": null,
+        "baasComplianceService": null,
+        "baasPayoutRail": null
+      }
     }
   }
 }
