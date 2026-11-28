@@ -35,7 +35,9 @@ import { TeamScreen } from './screens/Team';
 import { DocumentsScreen } from './screens/Documents';
 import { MoreScreen } from './screens/More';
 import { useRecordingSettings } from './recording/privacy';
-import { MORE, NAV, NAV_GROUPS, PHONE_TABS, pageTitle } from './nav';
+import { EMPLOYEE_TABS, MORE, NAV, NAV_GROUPS, PHONE_TABS, pageTitle } from './nav';
+import { navShown, SpendAccessProvider, useSpendAccess } from './spend/access';
+import { SpendScreen } from './spend/SpendScreen';
 import { ACCEPTANCE_ENABLED } from './acceptance/api';
 import { t, useContent } from './i18n';
 import { DemoBar } from './public/DemoBar';
@@ -191,6 +193,7 @@ const NAV_ICON: Record<string, { d: string; cat: string }> = {
   },
   documents: { d: 'M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6', cat: 'treasury' }, // content-check: ignore (SVG path)
   support: { d: 'M4 5h16v11H9l-5 4zM8 9h8M8 12h5', cat: 'compliance' }, // content-check: ignore (SVG path)
+  spend: { d: 'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6M9 16h3', cat: 'cards' }, // content-check: ignore (SVG path)
   settings: {
     d: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM4 12h2M18 12h2M12 4v2M12 18v2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M6.3 17.7l1.4-1.4M16.3 7.7l1.4-1.4', // content-check: ignore (SVG path)
     cat: 'banking',
@@ -207,6 +210,9 @@ const TAB_ICON: Record<string, string> = {
   pay: 'M12 5v14M5 12h14', // content-check: ignore (SVG path)
   cards: 'M3 6h18v12H3zM3 10h18', // content-check: ignore (SVG path)
   more: 'M5 12h.01M12 12h.01M19 12h.01', // content-check: ignore (SVG path)
+  my_card: 'M3 6h18v12H3zM3 10h18', // content-check: ignore (SVG path)
+  my_expenses: 'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6', // content-check: ignore (SVG path)
+  my_receipts: 'M6 3h8l4 4v14H6zM14 3v4h4M9 13l2 2 4-4', // content-check: ignore (SVG path)
 };
 
 function Shell({ children, recording }: { children: ReactNode; recording: string | null }) {
@@ -223,12 +229,17 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
     setCurrentCompanyId,
     setCompanyPermissions,
     can,
+    role,
   } = useSession();
   const navigate = useNavigate();
   const wide = useWide();
   const { pathname } = useLocation();
+  const spend = useSpendAccess();
   // More stays marked while one of its screens is open on a phone.
-  const inMore = MORE.some((m) => pathname.startsWith(m.to));
+  const inMore =
+    MORE.some((m) => navShown(m.id, spend) && pathname.startsWith(m.to)) &&
+    !(spend.employeeOnly && pathname.startsWith('/spend'));
+  const tabs = spend.employeeOnly ? EMPLOYEE_TABS : PHONE_TABS;
   usePageTitle();
   // FA-030: a System appearance follows the device on every screen.
   useAppearance();
@@ -345,7 +356,10 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
     () => (approver ? api.payments(null, 100).catch(() => null) : Promise.resolve(null)),
     [api, approver, section],
   );
-  const tickets = useAsync(() => api.tickets().catch(() => []), [api, section]);
+  const tickets = useAsync(
+    () => (spend.employeeOnly ? Promise.resolve([]) : api.tickets().catch(() => [])),
+    [api, section, spend.employeeOnly],
+  );
   const counts: Record<string, number> = {
     payments:
       approvals.status === 'success' && approvals.data
@@ -405,7 +419,10 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
         )}
         <nav aria-label={t('app.shell.main_nav')} className="fw-side__nav">
           {NAV_GROUPS.map((g, gi) => {
-            const entries = g.ids.map((id) => byId.get(id)).filter((n): n is (typeof NAV)[number] => !!n);
+            const entries = g.ids
+              .filter((id) => navShown(id, spend))
+              .map((id) => byId.get(id))
+              .filter((n): n is (typeof NAV)[number] => !!n);
             if (!entries.length) return null;
             return (
               <div className="fw-nav__group" key={g.id ?? `g${gi}`}>
@@ -505,7 +522,8 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
           </span>
         </header>
         <main className="fw-content" id="main">
-          {me.status === 'loading' ? (
+          {/* OG-087: the screens wait for the role, so an employee never asks for Home's accounts. */}
+          {me.status === 'loading' || (me.status === 'success' && role !== (membership?.role ?? null)) ? (
             <Skeleton label={t('app.shell.loading_company')} />
           ) : me.status === 'error' ? (
             <Notice
@@ -541,7 +559,7 @@ function Shell({ children, recording }: { children: ReactNode; recording: string
       </div>
       <nav aria-label={t('app.nav.tab_bar')} className="fw-bottom" data-testid="bottom-nav">
         <ul className="og-nav fw-bottom__list">
-          {PHONE_TABS.map((n) => (
+          {tabs.map((n) => (
             <li key={n.id}>
               <NavLink
                 to={n.to}
@@ -625,66 +643,76 @@ function CompanyScope() {
   return (
     <DraftProvider>
       <AssistantProvider>
-        <Shell recording={recording}>
-          {recordingOn && (
-            <Suspense fallback={null}>
-              <Recorder onSession={setRecording} />
-            </Suspense>
-          )}
-          <Routes>
-            <Route path="/" element={<HomeScreen />} />
-            <Route path="/accounts" element={<AccountsScreen />} />
-            <Route path="/accounts/:id" element={<AccountsScreen />} />
-            <Route path="/payments" element={<PaymentsScreen />} />
-            <Route path="/payments/new" element={<PaymentsScreen />} />
-            <Route path="/payments/top-up" element={<PaymentsScreen />} />
-            <Route path="/payments/schedules" element={<PaymentsScreen />} />
-            <Route path="/payments/recipients" element={<PaymentsScreen />} />
-            <Route path="/payments/approvals" element={<PaymentsScreen />} />
-            <Route path="/payments/international" element={<PaymentsScreen />} />
-            <Route path="/payments/convert" element={<PaymentsScreen />} />
-            <Route path="/payments/abroad" element={<PaymentsScreen />} />
-            <Route path="/payments/movements/:movementId" element={<PaymentsScreen />} />
-            <Route path="/payments/:id" element={<PaymentsScreen />} />
-            <Route path="/recipients" element={<ToRecipients />} />
-            <Route path="/cards" element={<CardsScreen />} />
-            <Route path="/cards/:id" element={<CardsScreen />} />
-            <Route path="/team" element={<TeamScreen />} />
-            <Route path="/documents" element={<DocumentsScreen />} />
-            <Route path="/more" element={<MoreScreen />} />
-            <Route path="/onboarding" element={<OnboardingScreen />} />
-            <Route path="/support" element={<SupportScreen />} />
-            <Route path="/support/new" element={<SupportScreen />} />
-            <Route path="/support/:id" element={<SupportScreen />} />
-            <Route path="/settings" element={<SettingsScreen />} />
-            <Route path="/notifications" element={<NotificationsScreen />} />
-            {ACCEPTANCE_ENABLED && (
-              <Route
-                path="/get-paid"
-                element={
-                  <Suspense fallback={<Skeleton />}>
-                    <GetPaidScreen />
-                  </Suspense>
-                }
-              />
+        <SpendAccessProvider>
+          <Shell recording={recording}>
+            {recordingOn && (
+              <Suspense fallback={null}>
+                <Recorder onSession={setRecording} />
+              </Suspense>
             )}
-            {ACCEPTANCE_ENABLED && (
-              <Route
-                path="/get-paid/checkout/:checkoutId"
-                element={
-                  <Suspense fallback={<Skeleton />}>
-                    <GetPaidCheckoutScreen />
-                  </Suspense>
-                }
-              />
-            )}
-            <Route path="/invite/:token" element={<InviteScreen />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Shell>
+            <Routes>
+              <Route path="/" element={<HomeOrSpend />} />
+              <Route path="/accounts" element={<AccountsScreen />} />
+              <Route path="/accounts/:id" element={<AccountsScreen />} />
+              <Route path="/payments" element={<PaymentsScreen />} />
+              <Route path="/payments/new" element={<PaymentsScreen />} />
+              <Route path="/payments/top-up" element={<PaymentsScreen />} />
+              <Route path="/payments/schedules" element={<PaymentsScreen />} />
+              <Route path="/payments/recipients" element={<PaymentsScreen />} />
+              <Route path="/payments/approvals" element={<PaymentsScreen />} />
+              <Route path="/payments/international" element={<PaymentsScreen />} />
+              <Route path="/payments/convert" element={<PaymentsScreen />} />
+              <Route path="/payments/abroad" element={<PaymentsScreen />} />
+              <Route path="/payments/movements/:movementId" element={<PaymentsScreen />} />
+              <Route path="/payments/:id" element={<PaymentsScreen />} />
+              <Route path="/recipients" element={<ToRecipients />} />
+              <Route path="/cards" element={<CardsScreen />} />
+              <Route path="/cards/:id" element={<CardsScreen />} />
+              <Route path="/spend/*" element={<SpendScreen />} />
+              <Route path="/team" element={<TeamScreen />} />
+              <Route path="/documents" element={<DocumentsScreen />} />
+              <Route path="/more" element={<MoreScreen />} />
+              <Route path="/onboarding" element={<OnboardingScreen />} />
+              <Route path="/support" element={<SupportScreen />} />
+              <Route path="/support/new" element={<SupportScreen />} />
+              <Route path="/support/:id" element={<SupportScreen />} />
+              <Route path="/settings" element={<SettingsScreen />} />
+              <Route path="/notifications" element={<NotificationsScreen />} />
+              {ACCEPTANCE_ENABLED && (
+                <Route
+                  path="/get-paid"
+                  element={
+                    <Suspense fallback={<Skeleton />}>
+                      <GetPaidScreen />
+                    </Suspense>
+                  }
+                />
+              )}
+              {ACCEPTANCE_ENABLED && (
+                <Route
+                  path="/get-paid/checkout/:checkoutId"
+                  element={
+                    <Suspense fallback={<Skeleton />}>
+                      <GetPaidCheckoutScreen />
+                    </Suspense>
+                  }
+                />
+              )}
+              <Route path="/invite/:token" element={<InviteScreen />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Shell>
+        </SpendAccessProvider>
       </AssistantProvider>
     </DraftProvider>
   );
+}
+
+/** OG-087: an EMPLOYEE has no Home of accounts and payments; their start is their card and expenses. */
+function HomeOrSpend() {
+  const spend = useSpendAccess();
+  if (spend.employeeOnly) return <Navigate to="/spend/me" replace />;
+  return <HomeScreen />;
 }
 
 /** OG-035 R6: Recipients moved into Payments; the old route keeps working, with its query (`?add=1`, `?name=`). */

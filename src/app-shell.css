@@ -1816,3 +1816,11 @@
   gap: var(--space-sm);
   min-height: calc(var(--space-2xl) - var(--space-xs));
 }
+
+/* OG-087: the expense filters (employee, team, dates) side by side, wrapping on a phone. */
+.fw-filters-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: var(--space-sm) var(--space-md);
+  align-items: end;
+}

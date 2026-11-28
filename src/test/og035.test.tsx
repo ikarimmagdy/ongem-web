@@ -380,20 +380,20 @@ describe('OG-035 R8: phone tabs and More', () => {
     }
   });
 
-  it('AC_R8_2 More links Support, Team, Documents, Settings and Notifications with the unread count, and Sign out', async () => {
+  it('AC_R8_2 More links Spend (while it is on), Support, Team, Documents, Settings and Notifications with the unread count, and Sign out', async () => {
     renderApp('/more');
     const list = await screen.findByTestId('more-list');
     expect(
       within(list)
         .getAllByRole('link')
         .map((a) => a.getAttribute('href')),
-    ).toEqual(['/support', '/team', '/documents', '/settings', '/notifications']);
+    ).toEqual(['/spend', '/support', '/team', '/documents', '/settings', '/notifications']);
     expect(await screen.findByTestId('more-unread')).toHaveTextContent('2 unread');
     await userEvent.click(screen.getByTestId('more-sign-out'));
     expect(await screen.findByTestId('explore-demo')).toBeInTheDocument();
   });
 
-  it('AC_R8_3 a wide side bar has the eight entries', async () => {
+  it('AC_R8_3 a wide side bar has the eight entries, and Spend while the company has it on', async () => {
     renderApp('/');
     const side = document.querySelector('.fw-side nav') as HTMLElement;
     await screen.findByTestId('home-total');
@@ -401,7 +401,7 @@ describe('OG-035 R8: phone tabs and More', () => {
       within(side)
         .getAllByRole('link')
         .map((a) => a.querySelector('.fw-nav__label')?.textContent),
-    ).toEqual(['Home', 'Accounts', 'Payments', 'Cards', 'Team', 'Documents', 'Support', 'Settings']);
+    ).toEqual(['Home', 'Accounts', 'Payments', 'Cards', 'Spend', 'Team', 'Documents', 'Support', 'Settings']);
   });
 });
 

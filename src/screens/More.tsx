@@ -4,10 +4,12 @@ import { useAsync } from '../lib/useAsync';
 import { MORE } from '../nav';
 import { t } from '../i18n';
 import { useSession } from '../session';
+import { navShown, useSpendAccess } from '../spend/access';
 
 /** More on a phone (OG-035 R8): Support, Team, Documents, Settings, Notifications with the unread count, Sign out. */
 export function MoreScreen() {
   const { api, mode, leave } = useSession();
+  const spend = useSpendAccess();
   const inbox = useAsync(() => api.notifications({ unread: true, limit: 1 }), [api]);
   const unread = inbox.status === 'success' ? inbox.data.unread : 0;
   return (
@@ -15,7 +17,7 @@ export function MoreScreen() {
       <PageHeader title={t('app.more.title')} />
       <nav aria-label={t('app.more.title')}>
         <ul className="fw-list fw-more" data-testid="more-list">
-          {MORE.map((n) => (
+          {MORE.filter((n) => navShown(n.id, spend)).map((n) => (
             <li key={n.to}>
               <NavLink to={n.to} className="fw-row fw-more__row" data-testid={`more-${n.id}`}>
                 <span className="fw-row__main">

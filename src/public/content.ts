@@ -111,6 +111,7 @@ export const APP_SEGMENTS = [
   'payments',
   'recipients',
   'cards',
+  'spend',
   'team',
   'documents',
   'more',

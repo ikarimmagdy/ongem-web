@@ -272,10 +272,20 @@ export const Permission = {
   EXPORT_CREATE: 'export:create',
   /** OG-054: open a currency account; OWNER only. */
   ACCOUNT_OPEN: 'account:open',
+  /** OG-087 spend: an employee's own card, expenses and receipts. */
+  SPEND_OWN: 'spend:own',
+  SPEND_VIEW: 'spend:view',
+  SPEND_MANAGE: 'spend:manage',
+  SPEND_APPROVE: 'spend:approve',
+  SPEND_EXPORT: 'spend:export',
 } as const;
 
 /** The permissions a FROZEN, CLOSING or CLOSED company keeps (OG-023 R13): reading only. */
-export const READ_ONLY = new Set<string>([Permission.ACCOUNT_VIEW, Permission.PAYMENT_VIEW]);
+export const READ_ONLY = new Set<string>([
+  Permission.ACCOUNT_VIEW,
+  Permission.PAYMENT_VIEW,
+  Permission.SPEND_VIEW,
+]);
 
 /** The roles, widest first, as ongem-core's Role lists them. */
 export const ROLES = ['OWNER', 'ADMIN', 'APPROVER', 'MEMBER', 'VIEWER'] as const;
@@ -299,13 +309,20 @@ export function permissionsOf(role: string | null | undefined): Set<string> {
         p.PAYMENT_VIEW,
         p.CARD_MANAGE,
         p.ACCOUNT_VIEW,
+        p.SPEND_OWN,
+        p.SPEND_VIEW,
+        p.SPEND_MANAGE,
+        p.SPEND_EXPORT,
       ]);
     case 'APPROVER':
-      return new Set([p.PAYMENT_APPROVE, p.PAYMENT_VIEW, p.ACCOUNT_VIEW]);
+      return new Set([p.PAYMENT_APPROVE, p.PAYMENT_VIEW, p.ACCOUNT_VIEW, p.SPEND_VIEW, p.SPEND_APPROVE]);
     case 'MEMBER':
       return new Set([p.PAYMENT_CREATE, p.PAYMENT_VIEW, p.RECIPIENT_MANAGE, p.ACCOUNT_VIEW]);
     case 'VIEWER':
-      return new Set([p.ACCOUNT_VIEW, p.PAYMENT_VIEW]);
+      return new Set([p.ACCOUNT_VIEW, p.PAYMENT_VIEW, p.SPEND_VIEW]);
+    // OG-087: an employee with a company card sees their own spend and nothing else.
+    case 'EMPLOYEE':
+      return new Set([p.SPEND_OWN]);
     default:
       return new Set();
   }

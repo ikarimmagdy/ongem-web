@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { t, tList } from '../../i18n';
 import { useSession } from '../../session';
 import { CapabilityArt, GemGlow, PartnerArt, ShieldArt } from '../art';
@@ -329,10 +329,12 @@ export function Contact() {
 export function DemoEntry() {
   const { enterDemo } = useSession();
   const navigate = useNavigate();
+  const { search } = useLocation();
   useEffect(() => {
-    navigate('/', { replace: true });
+    // The review switches (`?state=`, `?demo=employee`) stay in the address so the demo starts with them.
+    navigate({ pathname: '/', search }, { replace: true });
     enterDemo();
-  }, [enterDemo, navigate]);
+  }, [enterDemo, navigate, search]);
   return (
     <section className="pub-pagehead">
       <p className="pub-wrap pub-lede" role="status">

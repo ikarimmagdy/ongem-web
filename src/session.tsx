@@ -20,6 +20,7 @@ import { t } from './i18n';
 import { formatMinor } from './lib/format';
 import { rememberCompany } from './lib/company';
 import { brand, brandOverride, setBrand } from './lib/brand';
+import { demoEmployeeMe } from './spend/demo';
 
 export type Mode = 'none' | 'demo' | 'live';
 
@@ -188,7 +189,15 @@ function DemoReverify({ ask, onDone }: { ask: Ask | null; onDone(ok: boolean): v
   );
 }
 
-const SCENARIOS: DemoScenario[] = ['readonly', 'slow', 'error', 'currencies', 'currencies_total', 'invites'];
+const SCENARIOS: DemoScenario[] = [
+  'readonly',
+  'slow',
+  'error',
+  'currencies',
+  'currencies_total',
+  'invites',
+  'spend_review',
+];
 
 /**
  * FA-056: `?state=readonly|slow|error` puts the demo in a state its data never reaches, for reviews and e2e; OG-049
@@ -198,6 +207,10 @@ function demoScenario(): DemoScenario | null {
   if (typeof window === 'undefined') return null;
   const s = new URLSearchParams(window.location.search).get('state');
   return SCENARIOS.find((x) => x === s) ?? null;
+}
+
+function demoParam(): string | null {
+  return typeof window === 'undefined' ? null : new URLSearchParams(window.location.search).get('demo');
 }
 
 const DEMO_FLAG = 'ongem.demo';
@@ -247,11 +260,10 @@ export function SessionProvider({
       injected ??
       new DemoOnGemApi({
         stepUp: (p, d) => askRef.current(p, d),
+        // OG-087: `?demo=employee` signs the demo in as Lea Fontaine, an employee with a company card (US).
+        me: !IS_AE && demoParam() === 'employee' ? demoEmployeeMe : undefined,
         // `?demo=solo` shows the demo as a one-person company, where OnGem approves (Q-091; videos, OG-032 R16).
-        approvalBy:
-          typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('demo') === 'solo'
-            ? 'ONGEM'
-            : 'COMPANY',
+        approvalBy: demoParam() === 'solo' ? 'ONGEM' : 'COMPANY',
         scenario: demoScenario(),
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps

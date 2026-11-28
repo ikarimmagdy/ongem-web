@@ -27,6 +27,7 @@ const scanned = [
   'design-system/components',
   'public',
   'acceptance',
+  'spend',
   'assistant',
   'recording',
   'auth',

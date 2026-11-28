@@ -330,3 +330,16 @@ Workspace rules live in the OnGem workspace `Career/Others/other-1/` (WS): `cons
   `{brand}` (or `{legalName}`), filled by `t()`; content from ongem-core arrives already filled. `index.html` carries
   `%BRAND_PRODUCT%` and the web manifest is generated (vite plugin `ongem-brand`). `src/test/white-label.test.tsx` fails
   on the product name in screens, components, the public site, acceptance, demo data and the seeds.
+- 2026-11-28: OG-087 spend management (contract WS `outputs/review/og087-2026-11-28/spend-api.md`, local only, never
+  deployed). `src/spend/`: `api.ts` (shapes, `spendPaths`, `LiveSpend` on the live client, `spendOf(api)`), `demo.ts`
+  (`DemoOnGemApi.spend`: Northwind Labs LLC as ongem-core's demo seed leaves it, US only; `?state=spend_review` adds a
+  waiting claim, an unmatched receipt and a proposal by another person; `/demo?demo=employee` signs in as Lea Fontaine,
+  role EMPLOYEE), `access.tsx` (GET /v1/spend/program once per company; `navShown` hides Spend unless ACTIVE; an
+  EMPLOYEE sees Spend and Settings only and starts at `/spend/me`), `SpendScreen.tsx` (`/spend/*`: Overview, Expenses
+  with filters and keyset paging, expense detail with recode, approve and reject with a reason, Employees with invite,
+  suspend, reactivate, offboard, card issue with step-up and one Idempotency-Key per issue, freeze, Teams, Unmatched
+  receipts with manual match, Policy with propose, four-eyes approve, reject and withdraw, Exports), `MySpend.tsx` (my
+  card with freeze and the bank's widget, my expenses with coding, receipt upload with amount and date hints, submit,
+  my receipts with matching, claims). Roles EMPLOYEE and the `spend:*` permissions in `api/client.ts`. Every contract
+  error code is `app.spend.error.<code>`; texts `app.spend.*` in both seeds (ongem-core's seed needs them too). Tests
+  `og087.test.tsx`, `og087-live.test.ts`.

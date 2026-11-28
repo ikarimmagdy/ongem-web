@@ -30,6 +30,7 @@ import {
 } from './demoData';
 import { DemoAssistant } from '../assistant/demoAssistant';
 import { DemoFx } from './demoFx';
+import { DemoSpend } from '../spend/demo';
 import { ApiError } from './errors';
 import { t } from '../i18n/store';
 import { normaliseIban, uaeIbanValid } from '../lib/iban';
@@ -96,7 +97,10 @@ export interface StepUpDetail {
     | 'fx_accept'
     | 'movement_submit'
     | 'movement_approve'
-    | 'movement_cancel';
+    | 'movement_cancel'
+    | 'spend_card_issue'
+    | 'spend_policy_approve'
+    | 'spend_policy_reject';
   amount?: { amountMinor: number; currency: string };
   payee?: string;
   last4?: string;
@@ -128,7 +132,8 @@ export interface DemoOptions {
 }
 
 /** A demo account of a company other than the person's default carries the company in its id, so ids never clash. */
-export type DemoScenario = 'readonly' | 'slow' | 'error' | 'currencies' | 'currencies_total' | 'invites';
+export type DemoScenario =
+  'readonly' | 'slow' | 'error' | 'currencies' | 'currencies_total' | 'invites' | 'spend_review';
 
 const COMPANY_SUFFIX = /_(cmp_[A-Za-z0-9_]+)$/;
 const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -232,6 +237,20 @@ export class DemoOnGemApi implements OnGemApi {
     require: (p) => this.require(p),
     now: () => this.now(),
     next: (p) => this.next(p),
+  });
+
+  /**
+   * OG-087: spend management as ongem-core's demo seed leaves Northwind Labs LLC (US only); another company of the
+   * person reads spend as off. `?state=spend_review` adds items waiting for a decision.
+   */
+  readonly spend = new DemoSpend({
+    log: (name, v) => this.log(name, v),
+    stepUp: (purpose, detail) => this.stepUp(purpose, detail as StepUpDetail),
+    role: () => this.role,
+    personId: () => this.me_.personId,
+    now: () => this.now(),
+    active: () => !IS_AE && (this.me_.companyId ?? null) === 'cmp_demo_northwind',
+    review: () => this.opts.scenario === 'spend_review',
   });
 
   /** The table of currencies is answered quietly: it is read by the shell, not by a screen the tests count calls of. */

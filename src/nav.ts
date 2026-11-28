@@ -24,16 +24,29 @@ export const NAV: NavEntry[] = [
   // OG-039 Get paid: only in a build with payment acceptance on (VITE_ACCEPTANCE_ENABLED, never AE).
   ...(ACCEPTANCE_ENABLED ? [{ to: '/get-paid', id: 'get_paid' }] : []),
   { to: '/cards', id: 'cards' },
+  // OG-087: shown only while the company's spend programme is ACTIVE (the shell asks GET /v1/spend/program).
+  { to: '/spend', id: 'spend' },
   { to: '/team', id: 'team' },
   { to: '/documents', id: 'documents' },
   { to: '/support', id: 'support' },
   { to: '/settings', id: 'settings' },
 ].map(withLabel);
 
+/** OG-087: the entries an EMPLOYEE sees (their card, expenses and receipts, and their settings), nothing else. */
+export const EMPLOYEE_NAV = new Set(['spend', 'settings']);
+
+/** OG-087: the phone tab bar for an EMPLOYEE. */
+export const EMPLOYEE_TABS: NavEntry[] = [
+  { to: '/spend/me', id: 'my_card', end: true },
+  { to: '/spend/me/expenses', id: 'my_expenses' },
+  { to: '/spend/me/receipts', id: 'my_receipts' },
+  { to: '/more', id: 'more' },
+].map(withLabel);
+
 /** OG-040: the side menu in groups (a heading where it helps, `app.nav.group.<id>`; null is a group without one). */
 export const NAV_GROUPS: { id: string | null; ids: string[] }[] = [
   { id: null, ids: ['home'] },
-  { id: 'money', ids: ['accounts', 'payments', 'get_paid', 'cards'] },
+  { id: 'money', ids: ['accounts', 'payments', 'get_paid', 'cards', 'spend'] },
   { id: 'company', ids: ['team', 'documents'] },
   { id: null, ids: ['support', 'settings'] },
 ];
@@ -50,6 +63,7 @@ export const PHONE_TABS: NavEntry[] = [
 /** What More lists on a phone (OG-035 R8), before Sign out. */
 export const MORE: NavEntry[] = [
   ...(ACCEPTANCE_ENABLED ? [{ to: '/get-paid', id: 'get_paid' }] : []),
+  { to: '/spend', id: 'spend' },
   { to: '/support', id: 'support' },
   { to: '/team', id: 'team' },
   { to: '/documents', id: 'documents' },
@@ -73,6 +87,8 @@ const TITLES: [RegExp, string][] = [
   [/^\/recipients/, 'recipients'],
   [/^\/get-paid/, 'get_paid'],
   [/^\/cards/, 'cards'],
+  [/^\/spend\/me/, 'my_spend'],
+  [/^\/spend/, 'spend'],
   [/^\/team/, 'team'],
   [/^\/documents/, 'documents'],
   [/^\/more/, 'more'],

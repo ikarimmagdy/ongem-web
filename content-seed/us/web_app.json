@@ -16701,6 +16701,3597 @@
       "meta": {},
       "en": "This link was not found.",
       "ar": "لم يُعثر على هذا الرابط."
+    },
+    {
+      "key": "app.nav.spend",
+      "format": "text",
+      "description": "Side menu entry for spend management (company cards and expenses)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Spend",
+      "ar": "المصروفات"
+    },
+    {
+      "key": "app.nav.my_card",
+      "format": "text",
+      "description": "Employee phone tab: their company card",
+      "placeholders": [],
+      "meta": {},
+      "en": "My card",
+      "ar": "بطاقتي"
+    },
+    {
+      "key": "app.nav.my_expenses",
+      "format": "text",
+      "description": "Employee phone tab: their expenses",
+      "placeholders": [],
+      "meta": {},
+      "en": "Expenses",
+      "ar": "المصروفات"
+    },
+    {
+      "key": "app.nav.my_receipts",
+      "format": "text",
+      "description": "Employee phone tab: their receipts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Receipts",
+      "ar": "الإيصالات"
+    },
+    {
+      "key": "app.nav.title.spend",
+      "format": "text",
+      "description": "Browser tab page name for spend management",
+      "placeholders": [],
+      "meta": {},
+      "en": "Spend",
+      "ar": "المصروفات"
+    },
+    {
+      "key": "app.nav.title.my_spend",
+      "format": "text",
+      "description": "Browser tab page name for the employee view",
+      "placeholders": [],
+      "meta": {},
+      "en": "My spend",
+      "ar": "مصروفاتي"
+    },
+    {
+      "key": "app.state.word.employee",
+      "format": "text",
+      "description": "Role name: an employee with a company card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Employee",
+      "ar": "موظف"
+    },
+    {
+      "key": "app.session.reverify.action.spend_card_issue",
+      "format": "text",
+      "description": "Step-up dialog title when issuing an employee card",
+      "placeholders": ["payee"],
+      "meta": {},
+      "en": "Issue a company card to {payee}",
+      "ar": "إصدار بطاقة الشركة لـ {payee}"
+    },
+    {
+      "key": "app.session.reverify.action.spend_policy_approve",
+      "format": "text",
+      "description": "Step-up dialog title when approving a spending policy version",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approve the new spending policy",
+      "ar": "الموافقة على سياسة الإنفاق الجديدة"
+    },
+    {
+      "key": "app.session.reverify.action.spend_policy_reject",
+      "format": "text",
+      "description": "Step-up dialog title when rejecting a spending policy version",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reject the proposed spending policy",
+      "ar": "رفض سياسة الإنفاق المقترحة"
+    },
+    {
+      "key": "app.common.loading.spend",
+      "format": "text",
+      "description": "Loading label: loading spend",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading spend",
+      "ar": "جارٍ تحميل المصروفات"
+    },
+    {
+      "key": "app.common.loading.spend_teams",
+      "format": "text",
+      "description": "Loading label: loading teams",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading teams",
+      "ar": "جارٍ تحميل الفرق"
+    },
+    {
+      "key": "app.common.loading.spend_employees",
+      "format": "text",
+      "description": "Loading label: loading employees",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading employees",
+      "ar": "جارٍ تحميل الموظفين"
+    },
+    {
+      "key": "app.common.loading.spend_expenses",
+      "format": "text",
+      "description": "Loading label: loading expenses",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading expenses",
+      "ar": "جارٍ تحميل المصروفات"
+    },
+    {
+      "key": "app.common.loading.spend_receipts",
+      "format": "text",
+      "description": "Loading label: loading receipts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading receipts",
+      "ar": "جارٍ تحميل الإيصالات"
+    },
+    {
+      "key": "app.common.loading.spend_policy",
+      "format": "text",
+      "description": "Loading label: loading the spending policy",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading the spending policy",
+      "ar": "جارٍ تحميل سياسة الإنفاق"
+    },
+    {
+      "key": "app.common.loading.spend_exports",
+      "format": "text",
+      "description": "Loading label: loading exports",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading exports",
+      "ar": "جارٍ تحميل ملفات التصدير"
+    },
+    {
+      "key": "app.common.loading.spend_card",
+      "format": "text",
+      "description": "Loading label: loading your card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Loading your card",
+      "ar": "جارٍ تحميل بطاقتك"
+    },
+    {
+      "key": "app.spend.title",
+      "format": "text",
+      "description": "Spend section page title (finance)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Spend",
+      "ar": "المصروفات"
+    },
+    {
+      "key": "app.spend.my_title",
+      "format": "text",
+      "description": "Spend section page title in the employee view",
+      "placeholders": [],
+      "meta": {},
+      "en": "My spend",
+      "ar": "مصروفاتي"
+    },
+    {
+      "key": "app.spend.loading",
+      "format": "text",
+      "description": "While the spend programme is read",
+      "placeholders": [],
+      "meta": {},
+      "en": "Checking spend for this company",
+      "ar": "جارٍ التحقق من المصروفات لهذه الشركة"
+    },
+    {
+      "key": "app.spend.off_title",
+      "format": "text",
+      "description": "Title when the company has no active spend programme",
+      "placeholders": [],
+      "meta": {},
+      "en": "Spend management is not on",
+      "ar": "إدارة المصروفات غير مفعلة"
+    },
+    {
+      "key": "app.spend.off_text",
+      "format": "text",
+      "description": "Text when the company has no active spend programme",
+      "placeholders": [],
+      "meta": {},
+      "en": "Company cards and expenses are not turned on for this company. Contact us to turn them on.",
+      "ar": "بطاقات الشركة والمصروفات غير مفعلة لهذه الشركة. تواصل معنا لتفعيلها."
+    },
+    {
+      "key": "app.spend.tabs_label",
+      "format": "text",
+      "description": "Accessible name of the spend tabs",
+      "placeholders": [],
+      "meta": {},
+      "en": "Spend sections",
+      "ar": "أقسام المصروفات"
+    },
+    {
+      "key": "app.spend.save",
+      "format": "text",
+      "description": "Save button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Save",
+      "ar": "حفظ"
+    },
+    {
+      "key": "app.spend.filter.all",
+      "format": "text",
+      "description": "Filter chip that shows everything",
+      "placeholders": [],
+      "meta": {},
+      "en": "All",
+      "ar": "الكل"
+    },
+    {
+      "key": "app.spend.tab.overview",
+      "format": "text",
+      "description": "Spend tab: Overview",
+      "placeholders": [],
+      "meta": {},
+      "en": "Overview",
+      "ar": "نظرة عامة"
+    },
+    {
+      "key": "app.spend.tab.expenses",
+      "format": "text",
+      "description": "Spend tab: Expenses",
+      "placeholders": [],
+      "meta": {},
+      "en": "Expenses",
+      "ar": "المصروفات"
+    },
+    {
+      "key": "app.spend.tab.employees",
+      "format": "text",
+      "description": "Spend tab: Employees",
+      "placeholders": [],
+      "meta": {},
+      "en": "Employees",
+      "ar": "الموظفون"
+    },
+    {
+      "key": "app.spend.tab.teams",
+      "format": "text",
+      "description": "Spend tab: Teams",
+      "placeholders": [],
+      "meta": {},
+      "en": "Teams",
+      "ar": "الفرق"
+    },
+    {
+      "key": "app.spend.tab.receipts",
+      "format": "text",
+      "description": "Spend tab: Unmatched receipts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unmatched receipts",
+      "ar": "إيصالات غير مطابقة"
+    },
+    {
+      "key": "app.spend.tab.policy",
+      "format": "text",
+      "description": "Spend tab: Policy",
+      "placeholders": [],
+      "meta": {},
+      "en": "Policy",
+      "ar": "السياسة"
+    },
+    {
+      "key": "app.spend.tab.exports",
+      "format": "text",
+      "description": "Spend tab: Exports",
+      "placeholders": [],
+      "meta": {},
+      "en": "Exports",
+      "ar": "التصدير"
+    },
+    {
+      "key": "app.spend.tab.my_spend",
+      "format": "text",
+      "description": "Spend tab: My spend",
+      "placeholders": [],
+      "meta": {},
+      "en": "My spend",
+      "ar": "مصروفاتي"
+    },
+    {
+      "key": "app.spend.tab.back_finance",
+      "format": "text",
+      "description": "Spend tab: Company spend",
+      "placeholders": [],
+      "meta": {},
+      "en": "Company spend",
+      "ar": "مصروفات الشركة"
+    },
+    {
+      "key": "app.spend.tab.my_card",
+      "format": "text",
+      "description": "Spend tab: My card",
+      "placeholders": [],
+      "meta": {},
+      "en": "My card",
+      "ar": "بطاقتي"
+    },
+    {
+      "key": "app.spend.tab.my_expenses",
+      "format": "text",
+      "description": "Spend tab: My expenses",
+      "placeholders": [],
+      "meta": {},
+      "en": "My expenses",
+      "ar": "مصروفاتي"
+    },
+    {
+      "key": "app.spend.tab.my_receipts",
+      "format": "text",
+      "description": "Spend tab: My receipts",
+      "placeholders": [],
+      "meta": {},
+      "en": "My receipts",
+      "ar": "إيصالاتي"
+    },
+    {
+      "key": "app.spend.tab.claim",
+      "format": "text",
+      "description": "Spend tab: Claim",
+      "placeholders": [],
+      "meta": {},
+      "en": "Claim",
+      "ar": "مطالبة"
+    },
+    {
+      "key": "app.spend.state.off",
+      "format": "text",
+      "description": "Spend state OFF",
+      "placeholders": [],
+      "meta": {},
+      "en": "Off",
+      "ar": "غير مفعل"
+    },
+    {
+      "key": "app.spend.state.active",
+      "format": "text",
+      "description": "Spend state ACTIVE",
+      "placeholders": [],
+      "meta": {},
+      "en": "Active",
+      "ar": "نشط"
+    },
+    {
+      "key": "app.spend.state.suspended",
+      "format": "text",
+      "description": "Spend state SUSPENDED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Suspended",
+      "ar": "موقوف"
+    },
+    {
+      "key": "app.spend.state.archived",
+      "format": "text",
+      "description": "Spend state ARCHIVED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Archived",
+      "ar": "مؤرشف"
+    },
+    {
+      "key": "app.spend.state.invited",
+      "format": "text",
+      "description": "Spend state INVITED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Invited",
+      "ar": "مدعو"
+    },
+    {
+      "key": "app.spend.state.offboarded",
+      "format": "text",
+      "description": "Spend state OFFBOARDED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Offboarded",
+      "ar": "غادر الشركة"
+    },
+    {
+      "key": "app.spend.state.pending",
+      "format": "text",
+      "description": "Spend state PENDING",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pending",
+      "ar": "قيد الإصدار"
+    },
+    {
+      "key": "app.spend.state.frozen",
+      "format": "text",
+      "description": "Spend state FROZEN",
+      "placeholders": [],
+      "meta": {},
+      "en": "Frozen",
+      "ar": "مجمدة"
+    },
+    {
+      "key": "app.spend.state.cancelled",
+      "format": "text",
+      "description": "Spend state CANCELLED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Cancelled",
+      "ar": "ملغاة"
+    },
+    {
+      "key": "app.spend.state.rejected",
+      "format": "text",
+      "description": "Spend state REJECTED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Rejected",
+      "ar": "مرفوض"
+    },
+    {
+      "key": "app.spend.state.proposed",
+      "format": "text",
+      "description": "Spend state PROPOSED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Proposed",
+      "ar": "مقترحة"
+    },
+    {
+      "key": "app.spend.state.superseded",
+      "format": "text",
+      "description": "Spend state SUPERSEDED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Superseded",
+      "ar": "مستبدلة"
+    },
+    {
+      "key": "app.spend.state.withdrawn",
+      "format": "text",
+      "description": "Spend state WITHDRAWN",
+      "placeholders": [],
+      "meta": {},
+      "en": "Withdrawn",
+      "ar": "مسحوبة"
+    },
+    {
+      "key": "app.spend.state.open",
+      "format": "text",
+      "description": "Spend state OPEN",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open",
+      "ar": "مفتوح"
+    },
+    {
+      "key": "app.spend.state.pending_approval",
+      "format": "text",
+      "description": "Spend state PENDING_APPROVAL",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for approval",
+      "ar": "بانتظار الموافقة"
+    },
+    {
+      "key": "app.spend.state.approved",
+      "format": "text",
+      "description": "Spend state APPROVED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approved",
+      "ar": "تمت الموافقة"
+    },
+    {
+      "key": "app.spend.state.exported",
+      "format": "text",
+      "description": "Spend state EXPORTED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Exported",
+      "ar": "تم التصدير"
+    },
+    {
+      "key": "app.spend.state.unmatched",
+      "format": "text",
+      "description": "Spend state UNMATCHED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unmatched",
+      "ar": "غير مطابق"
+    },
+    {
+      "key": "app.spend.state.matched",
+      "format": "text",
+      "description": "Spend state MATCHED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Matched",
+      "ar": "مطابق"
+    },
+    {
+      "key": "app.spend.reason.over_transaction_limit",
+      "format": "text",
+      "description": "Why an expense needs a person: over_transaction_limit",
+      "placeholders": [],
+      "meta": {},
+      "en": "over the per purchase limit",
+      "ar": "يتجاوز حد العملية الواحدة"
+    },
+    {
+      "key": "app.spend.reason.over_monthly_limit",
+      "format": "text",
+      "description": "Why an expense needs a person: over_monthly_limit",
+      "placeholders": [],
+      "meta": {},
+      "en": "over the monthly limit",
+      "ar": "يتجاوز الحد الشهري"
+    },
+    {
+      "key": "app.spend.reason.category_not_allowed",
+      "format": "text",
+      "description": "Why an expense needs a person: category_not_allowed",
+      "placeholders": [],
+      "meta": {},
+      "en": "a category the policy does not allow",
+      "ar": "فئة لا تسمح بها السياسة"
+    },
+    {
+      "key": "app.spend.reason.claim",
+      "format": "text",
+      "description": "Why an expense needs a person: claim",
+      "placeholders": [],
+      "meta": {},
+      "en": "an out of pocket claim",
+      "ar": "مطالبة عن مبلغ مدفوع شخصيا"
+    },
+    {
+      "key": "app.spend.category.travel",
+      "format": "text",
+      "description": "Expense category travel",
+      "placeholders": [],
+      "meta": {},
+      "en": "Travel",
+      "ar": "السفر"
+    },
+    {
+      "key": "app.spend.category.software",
+      "format": "text",
+      "description": "Expense category software",
+      "placeholders": [],
+      "meta": {},
+      "en": "Software",
+      "ar": "البرمجيات"
+    },
+    {
+      "key": "app.spend.category.meals",
+      "format": "text",
+      "description": "Expense category meals",
+      "placeholders": [],
+      "meta": {},
+      "en": "Meals",
+      "ar": "الوجبات"
+    },
+    {
+      "key": "app.spend.category.office",
+      "format": "text",
+      "description": "Expense category office",
+      "placeholders": [],
+      "meta": {},
+      "en": "Office",
+      "ar": "المكتب"
+    },
+    {
+      "key": "app.spend.category.other",
+      "format": "text",
+      "description": "Expense category other",
+      "placeholders": [],
+      "meta": {},
+      "en": "Other",
+      "ar": "أخرى"
+    },
+    {
+      "key": "app.spend.tax.none",
+      "format": "text",
+      "description": "Tax code NONE",
+      "placeholders": [],
+      "meta": {},
+      "en": "No tax",
+      "ar": "بدون ضريبة"
+    },
+    {
+      "key": "app.spend.tax.sales_tax",
+      "format": "text",
+      "description": "Tax code SALES_TAX",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sales tax",
+      "ar": "ضريبة المبيعات"
+    },
+    {
+      "key": "app.spend.tax.vat_5",
+      "format": "text",
+      "description": "Tax code VAT_5",
+      "placeholders": [],
+      "meta": {},
+      "en": "VAT 5%",
+      "ar": "ضريبة القيمة المضافة 5%"
+    },
+    {
+      "key": "app.spend.tax.vat_0",
+      "format": "text",
+      "description": "Tax code VAT_0",
+      "placeholders": [],
+      "meta": {},
+      "en": "VAT 0%",
+      "ar": "ضريبة القيمة المضافة 0%"
+    },
+    {
+      "key": "app.spend.tax.exempt",
+      "format": "text",
+      "description": "Tax code EXEMPT",
+      "placeholders": [],
+      "meta": {},
+      "en": "Exempt",
+      "ar": "معفى"
+    },
+    {
+      "key": "app.spend.tax.out_of_scope",
+      "format": "text",
+      "description": "Tax code OUT_OF_SCOPE",
+      "placeholders": [],
+      "meta": {},
+      "en": "Out of scope",
+      "ar": "خارج النطاق"
+    },
+    {
+      "key": "app.spend.receipt.not_required",
+      "format": "text",
+      "description": "Receipt status of an expense: NOT_REQUIRED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not needed",
+      "ar": "غير مطلوب"
+    },
+    {
+      "key": "app.spend.receipt.missing",
+      "format": "text",
+      "description": "Receipt status of an expense: MISSING",
+      "placeholders": [],
+      "meta": {},
+      "en": "Missing",
+      "ar": "مفقود"
+    },
+    {
+      "key": "app.spend.receipt.attached",
+      "format": "text",
+      "description": "Receipt status of an expense: ATTACHED",
+      "placeholders": [],
+      "meta": {},
+      "en": "Attached",
+      "ar": "مرفق"
+    },
+    {
+      "key": "app.spend.match.attached",
+      "format": "text",
+      "description": "How a receipt was matched: ATTACHED",
+      "placeholders": [],
+      "meta": {},
+      "en": "attached to the expense",
+      "ar": "أرفق بالمصروف"
+    },
+    {
+      "key": "app.spend.match.amount_date",
+      "format": "text",
+      "description": "How a receipt was matched: AMOUNT_DATE",
+      "placeholders": [],
+      "meta": {},
+      "en": "matched by amount and date",
+      "ar": "طوبق بالمبلغ والتاريخ"
+    },
+    {
+      "key": "app.spend.match.manual",
+      "format": "text",
+      "description": "How a receipt was matched: MANUAL",
+      "placeholders": [],
+      "meta": {},
+      "en": "matched by hand",
+      "ar": "طوبق يدويا"
+    },
+    {
+      "key": "app.spend.export.excluded.not_submitted",
+      "format": "text",
+      "description": "Why an expense was left out of an export",
+      "placeholders": [],
+      "meta": {},
+      "en": "not submitted yet",
+      "ar": "لم تقدم بعد"
+    },
+    {
+      "key": "app.spend.export.excluded.pending_approval",
+      "format": "text",
+      "description": "Why an expense was left out of an export",
+      "placeholders": [],
+      "meta": {},
+      "en": "still waiting for approval",
+      "ar": "ما زالت بانتظار الموافقة"
+    },
+    {
+      "key": "app.spend.export.format.csv",
+      "format": "text",
+      "description": "Export format name",
+      "placeholders": [],
+      "meta": {},
+      "en": "CSV",
+      "ar": "CSV"
+    },
+    {
+      "key": "app.spend.export.format.quickbooks",
+      "format": "text",
+      "description": "Export format name",
+      "placeholders": [],
+      "meta": {},
+      "en": "QuickBooks",
+      "ar": "QuickBooks"
+    },
+    {
+      "key": "app.spend.export.format.xero",
+      "format": "text",
+      "description": "Export format name",
+      "placeholders": [],
+      "meta": {},
+      "en": "Xero",
+      "ar": "Xero"
+    },
+    {
+      "key": "app.spend.error.spend_not_enabled",
+      "format": "text",
+      "description": "Spend error spend_not_enabled",
+      "placeholders": [],
+      "meta": {},
+      "en": "Spend management is not on for this company.",
+      "ar": "إدارة المصروفات غير مفعلة لهذه الشركة."
+    },
+    {
+      "key": "app.spend.error.team_exists",
+      "format": "text",
+      "description": "Spend error team_exists",
+      "placeholders": [],
+      "meta": {},
+      "en": "A team with this name already exists.",
+      "ar": "يوجد فريق بهذا الاسم بالفعل."
+    },
+    {
+      "key": "app.spend.error.employee_exists",
+      "format": "text",
+      "description": "Spend error employee_exists",
+      "placeholders": [],
+      "meta": {},
+      "en": "This person is already an employee here.",
+      "ar": "هذا الشخص موظف هنا بالفعل."
+    },
+    {
+      "key": "app.spend.error.card_exists",
+      "format": "text",
+      "description": "Spend error card_exists",
+      "placeholders": [],
+      "meta": {},
+      "en": "This employee already has a card.",
+      "ar": "لدى هذا الموظف بطاقة بالفعل."
+    },
+    {
+      "key": "app.spend.error.team_not_found",
+      "format": "text",
+      "description": "Spend error team_not_found",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not find that team.",
+      "ar": "لم نعثر على هذا الفريق."
+    },
+    {
+      "key": "app.spend.error.employee_not_found",
+      "format": "text",
+      "description": "Spend error employee_not_found",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not find that employee.",
+      "ar": "لم نعثر على هذا الموظف."
+    },
+    {
+      "key": "app.spend.error.expense_not_found",
+      "format": "text",
+      "description": "Spend error expense_not_found",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not find that expense.",
+      "ar": "لم نعثر على هذا المصروف."
+    },
+    {
+      "key": "app.spend.error.receipt_not_found",
+      "format": "text",
+      "description": "Spend error receipt_not_found",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not find that receipt.",
+      "ar": "لم نعثر على هذا الإيصال."
+    },
+    {
+      "key": "app.spend.error.export_not_found",
+      "format": "text",
+      "description": "Spend error export_not_found",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not find that export.",
+      "ar": "لم نعثر على ملف التصدير هذا."
+    },
+    {
+      "key": "app.spend.error.policy_not_found",
+      "format": "text",
+      "description": "Spend error policy_not_found",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not find that policy version.",
+      "ar": "لم نعثر على إصدار السياسة هذا."
+    },
+    {
+      "key": "app.spend.error.employee_not_active",
+      "format": "text",
+      "description": "Spend error employee_not_active",
+      "placeholders": [],
+      "meta": {},
+      "en": "This employee is suspended or has left, so nothing was changed.",
+      "ar": "هذا الموظف موقوف أو غادر الشركة، لذلك لم يتغير شيء."
+    },
+    {
+      "key": "app.spend.error.policy_invalid",
+      "format": "text",
+      "description": "Spend error policy_invalid",
+      "placeholders": [],
+      "meta": {},
+      "en": "The policy breaks a programme rule: limits must be above zero and within the ceilings, with at least one category and a ledger account for each.",
+      "ar": "السياسة تخالف قاعدة في البرنامج: يجب أن تكون الحدود أكبر من صفر وضمن الحدود القصوى، مع فئة واحدة على الأقل وحساب دفتر لكل فئة."
+    },
+    {
+      "key": "app.spend.error.policy_pending",
+      "format": "text",
+      "description": "Spend error policy_pending",
+      "placeholders": [],
+      "meta": {},
+      "en": "A proposed policy is already waiting for a decision.",
+      "ar": "هناك سياسة مقترحة بانتظار قرار بالفعل."
+    },
+    {
+      "key": "app.spend.error.self_approval_forbidden",
+      "format": "text",
+      "description": "Spend error self_approval_forbidden",
+      "placeholders": [],
+      "meta": {},
+      "en": "Another person must decide this: nobody approves their own expense or a policy they proposed.",
+      "ar": "يجب أن يقرر شخص آخر: لا أحد يوافق على مصروفه أو على سياسة اقترحها."
+    },
+    {
+      "key": "app.spend.error.category_required",
+      "format": "text",
+      "description": "Spend error category_required",
+      "placeholders": [],
+      "meta": {},
+      "en": "Pick a category before you submit.",
+      "ar": "اختر فئة قبل التقديم."
+    },
+    {
+      "key": "app.spend.error.receipt_required",
+      "format": "text",
+      "description": "Spend error receipt_required",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add the receipt before you submit: this amount needs one.",
+      "ar": "أضف الإيصال قبل التقديم: هذا المبلغ يحتاج إلى إيصال."
+    },
+    {
+      "key": "app.spend.error.receipt_too_large",
+      "format": "text",
+      "description": "Spend error receipt_too_large",
+      "placeholders": [],
+      "meta": {},
+      "en": "This file is too large. Upload a smaller photo or PDF.",
+      "ar": "هذا الملف كبير جدا. حمّل صورة أو ملف PDF أصغر."
+    },
+    {
+      "key": "app.spend.error.receipt_type_unsupported",
+      "format": "text",
+      "description": "Spend error receipt_type_unsupported",
+      "placeholders": [],
+      "meta": {},
+      "en": "This file type is not accepted. Upload a photo or a PDF.",
+      "ar": "نوع الملف هذا غير مقبول. حمّل صورة أو ملف PDF."
+    },
+    {
+      "key": "app.spend.error.duplicate_receipt",
+      "format": "text",
+      "description": "Spend error duplicate_receipt",
+      "placeholders": [],
+      "meta": {},
+      "en": "This receipt was uploaded before.",
+      "ar": "تم تحميل هذا الإيصال من قبل."
+    },
+    {
+      "key": "app.spend.error.receipt_matched",
+      "format": "text",
+      "description": "Spend error receipt_matched",
+      "placeholders": [],
+      "meta": {},
+      "en": "This receipt is already matched to an expense.",
+      "ar": "هذا الإيصال مطابق لمصروف بالفعل."
+    },
+    {
+      "key": "app.spend.error.expense_has_receipt",
+      "format": "text",
+      "description": "Spend error expense_has_receipt",
+      "placeholders": [],
+      "meta": {},
+      "en": "That expense already has a receipt.",
+      "ar": "لهذا المصروف إيصال بالفعل."
+    },
+    {
+      "key": "app.spend.error.reason_required",
+      "format": "text",
+      "description": "Spend error reason_required",
+      "placeholders": [],
+      "meta": {},
+      "en": "Write why you reject it, so the employee knows.",
+      "ar": "اكتب سبب الرفض ليعرفه الموظف."
+    },
+    {
+      "key": "app.spend.error.demo_unavailable",
+      "format": "text",
+      "description": "Spend error demo_unavailable",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sample data is not available here.",
+      "ar": "البيانات التجريبية غير متاحة هنا."
+    },
+    {
+      "key": "app.spend.error.forbidden",
+      "format": "text",
+      "description": "Spend error forbidden",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your role does not allow this.",
+      "ar": "دورك لا يسمح بذلك."
+    },
+    {
+      "key": "app.spend.error.validation_failed",
+      "format": "text",
+      "description": "Spend error validation_failed",
+      "placeholders": [],
+      "meta": {},
+      "en": "Some details are not valid. Check them and try again.",
+      "ar": "بعض التفاصيل غير صحيحة. تحقق منها وحاول مرة أخرى."
+    },
+    {
+      "key": "app.spend.error.invalid_transition",
+      "format": "text",
+      "description": "Spend error invalid_transition",
+      "placeholders": [],
+      "meta": {},
+      "en": "This can no longer be changed in its current state.",
+      "ar": "لم يعد بالإمكان تغيير هذا في حالته الحالية."
+    },
+    {
+      "key": "app.spend.error.account_not_found",
+      "format": "text",
+      "description": "Spend error account_not_found",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not find the account that funds the cards.",
+      "ar": "لم نعثر على الحساب الذي يمول البطاقات."
+    },
+    {
+      "key": "app.spend.error.account_not_transactable",
+      "format": "text",
+      "description": "Spend error account_not_transactable",
+      "placeholders": [],
+      "meta": {},
+      "en": "The account that funds the cards cannot be used right now.",
+      "ar": "لا يمكن استخدام الحساب الذي يمول البطاقات الآن."
+    },
+    {
+      "key": "app.spend.error.bank_rejected",
+      "format": "text",
+      "description": "Spend error bank_rejected",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank did not issue the card. Check the details and try again.",
+      "ar": "لم يصدر البنك البطاقة. تحقق من التفاصيل وحاول مرة أخرى."
+    },
+    {
+      "key": "app.spend.error.bank_unavailable",
+      "format": "text",
+      "description": "Spend error bank_unavailable",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank did not answer. Try again: the card will not be issued twice.",
+      "ar": "لم يستجب البنك. حاول مرة أخرى: لن تصدر البطاقة مرتين."
+    },
+    {
+      "key": "app.spend.error.card_not_found",
+      "format": "text",
+      "description": "Spend error card_not_found",
+      "placeholders": [],
+      "meta": {},
+      "en": "There is no card yet.",
+      "ar": "لا توجد بطاقة بعد."
+    },
+    {
+      "key": "app.spend.error.card_not_active",
+      "format": "text",
+      "description": "Spend error card_not_active",
+      "placeholders": [],
+      "meta": {},
+      "en": "Only an active card can be frozen.",
+      "ar": "يمكن تجميد البطاقة النشطة فقط."
+    },
+    {
+      "key": "app.spend.error.card_not_frozen",
+      "format": "text",
+      "description": "Spend error card_not_frozen",
+      "placeholders": [],
+      "meta": {},
+      "en": "This card is not frozen.",
+      "ar": "هذه البطاقة غير مجمدة."
+    },
+    {
+      "key": "app.spend.error.frozen_by_other",
+      "format": "text",
+      "description": "Spend error frozen_by_other",
+      "placeholders": [],
+      "meta": {},
+      "en": "This card was frozen for the account or the company, so it cannot be unfrozen here.",
+      "ar": "جُمدت هذه البطاقة على مستوى الحساب أو الشركة، لذلك لا يمكن إلغاء تجميدها هنا."
+    },
+    {
+      "key": "app.spend.error.period_invalid",
+      "format": "text",
+      "description": "Spend error period_invalid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose an end date that is not before the start date, within 366 days.",
+      "ar": "اختر تاريخ نهاية لا يسبق تاريخ البداية، وخلال 366 يوما."
+    },
+    {
+      "key": "app.spend.error.format_unavailable",
+      "format": "text",
+      "description": "Spend error format_unavailable",
+      "placeholders": [],
+      "meta": {},
+      "en": "This file format is not offered. Choose another.",
+      "ar": "صيغة الملف هذه غير متاحة. اختر صيغة أخرى."
+    },
+    {
+      "key": "app.spend.overview.title",
+      "format": "text",
+      "description": "Overview card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "At a glance",
+      "ar": "لمحة سريعة"
+    },
+    {
+      "key": "app.spend.overview.waiting",
+      "format": "text",
+      "description": "Count label: expenses waiting for approval",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for approval",
+      "ar": "بانتظار الموافقة"
+    },
+    {
+      "key": "app.spend.overview.open",
+      "format": "text",
+      "description": "Count label: open expenses",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not submitted yet",
+      "ar": "لم تقدم بعد"
+    },
+    {
+      "key": "app.spend.overview.unmatched",
+      "format": "text",
+      "description": "Count label: unmatched receipts",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unmatched receipts",
+      "ar": "إيصالات غير مطابقة"
+    },
+    {
+      "key": "app.spend.overview.policy",
+      "format": "text",
+      "description": "Label: the policy version in force",
+      "placeholders": [],
+      "meta": {},
+      "en": "Policy in force",
+      "ar": "السياسة السارية"
+    },
+    {
+      "key": "app.spend.overview.many",
+      "format": "text",
+      "description": "A count when there are more pages",
+      "placeholders": ["count"],
+      "meta": {},
+      "en": "{count} or more",
+      "ar": "{count} أو أكثر"
+    },
+    {
+      "key": "app.spend.overview.proposal",
+      "format": "text",
+      "description": "Link to a waiting policy proposal",
+      "placeholders": ["version"],
+      "meta": {},
+      "en": "Policy version {version} is waiting for a decision",
+      "ar": "إصدار السياسة {version} بانتظار قرار"
+    },
+    {
+      "key": "app.spend.overview.waiting_title",
+      "format": "text",
+      "description": "Card title: expenses waiting for approval",
+      "placeholders": [],
+      "meta": {},
+      "en": "Waiting for a decision",
+      "ar": "بانتظار قرار"
+    },
+    {
+      "key": "app.spend.overview.nothing_waiting",
+      "format": "text",
+      "description": "Empty state: no expense waits",
+      "placeholders": [],
+      "meta": {},
+      "en": "Nothing is waiting for a decision.",
+      "ar": "لا شيء بانتظار قرار."
+    },
+    {
+      "key": "app.spend.overview.no_approve",
+      "format": "text",
+      "description": "For finance without approval rights",
+      "placeholders": [],
+      "meta": {},
+      "en": "A person with approval rights decides these.",
+      "ar": "يقرر هذه شخص لديه صلاحية الموافقة."
+    },
+    {
+      "key": "app.spend.teams.title",
+      "format": "text",
+      "description": "Teams card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Teams",
+      "ar": "الفرق"
+    },
+    {
+      "key": "app.spend.teams.add_title",
+      "format": "text",
+      "description": "Card title of the new team form",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add a team",
+      "ar": "إضافة فريق"
+    },
+    {
+      "key": "app.spend.teams.name",
+      "format": "text",
+      "description": "Team name field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Team name",
+      "ar": "اسم الفريق"
+    },
+    {
+      "key": "app.spend.teams.name_required",
+      "format": "text",
+      "description": "Team name missing",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter a team name.",
+      "ar": "أدخل اسم الفريق."
+    },
+    {
+      "key": "app.spend.teams.add",
+      "format": "text",
+      "description": "Button that adds a team",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add team",
+      "ar": "إضافة الفريق"
+    },
+    {
+      "key": "app.spend.teams.added",
+      "format": "text",
+      "description": "Toast after a team was added",
+      "placeholders": ["name"],
+      "meta": {},
+      "en": "{name} added",
+      "ar": "تمت إضافة {name}"
+    },
+    {
+      "key": "app.spend.teams.renamed",
+      "format": "text",
+      "description": "Toast after a team was renamed",
+      "placeholders": ["name"],
+      "meta": {},
+      "en": "Renamed to {name}",
+      "ar": "تمت إعادة التسمية إلى {name}"
+    },
+    {
+      "key": "app.spend.teams.archived",
+      "format": "text",
+      "description": "Toast after a team was archived",
+      "placeholders": ["name"],
+      "meta": {},
+      "en": "{name} archived",
+      "ar": "تمت أرشفة {name}"
+    },
+    {
+      "key": "app.spend.teams.rename",
+      "format": "text",
+      "description": "Rename a team",
+      "placeholders": [],
+      "meta": {},
+      "en": "Rename",
+      "ar": "إعادة تسمية"
+    },
+    {
+      "key": "app.spend.teams.archive",
+      "format": "text",
+      "description": "Archive a team",
+      "placeholders": [],
+      "meta": {},
+      "en": "Archive",
+      "ar": "أرشفة"
+    },
+    {
+      "key": "app.spend.teams.count.one",
+      "format": "text",
+      "description": "Active employees in a team",
+      "placeholders": [],
+      "meta": {},
+      "en": "1 active employee",
+      "ar": "موظف نشط واحد"
+    },
+    {
+      "key": "app.spend.teams.count.other",
+      "format": "text",
+      "description": "Active employees in a team",
+      "placeholders": ["count"],
+      "meta": {},
+      "en": "{count} active employees",
+      "ar": "{count} موظفين نشطين"
+    },
+    {
+      "key": "app.spend.teams.empty",
+      "format": "text",
+      "description": "Empty state: no teams",
+      "placeholders": [],
+      "meta": {},
+      "en": "No teams yet.",
+      "ar": "لا توجد فرق بعد."
+    },
+    {
+      "key": "app.spend.employees.title",
+      "format": "text",
+      "description": "Employees card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Employees",
+      "ar": "الموظفون"
+    },
+    {
+      "key": "app.spend.employees.filter_label",
+      "format": "text",
+      "description": "Accessible name of the employee state filter",
+      "placeholders": [],
+      "meta": {},
+      "en": "Show employees",
+      "ar": "عرض الموظفين"
+    },
+    {
+      "key": "app.spend.employees.empty",
+      "format": "text",
+      "description": "Empty state title: no employees",
+      "placeholders": [],
+      "meta": {},
+      "en": "No employees here",
+      "ar": "لا يوجد موظفون هنا"
+    },
+    {
+      "key": "app.spend.employees.empty_text",
+      "format": "text",
+      "description": "Empty state text: no employees",
+      "placeholders": [],
+      "meta": {},
+      "en": "Invite an employee to give them a company card.",
+      "ar": "ادع موظفا لتمنحه بطاقة الشركة."
+    },
+    {
+      "key": "app.spend.employees.no_team",
+      "format": "text",
+      "description": "An employee without a team",
+      "placeholders": [],
+      "meta": {},
+      "en": "No team",
+      "ar": "بدون فريق"
+    },
+    {
+      "key": "app.spend.employees.no_card",
+      "format": "text",
+      "description": "An employee without a card",
+      "placeholders": [],
+      "meta": {},
+      "en": "No card",
+      "ar": "بدون بطاقة"
+    },
+    {
+      "key": "app.spend.employees.invite_title",
+      "format": "text",
+      "description": "Card title of the invite form",
+      "placeholders": [],
+      "meta": {},
+      "en": "Invite an employee",
+      "ar": "دعوة موظف"
+    },
+    {
+      "key": "app.spend.employees.invite_text",
+      "format": "text",
+      "description": "What inviting an employee does",
+      "placeholders": [],
+      "meta": {},
+      "en": "We email them an invitation. Once they sign in with that email, they see their card and expenses.",
+      "ar": "نرسل إليه دعوة بالبريد الإلكتروني. بعد تسجيل الدخول بهذا البريد يرى بطاقته ومصروفاته."
+    },
+    {
+      "key": "app.spend.employees.first_name",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "First name",
+      "ar": "الاسم الأول"
+    },
+    {
+      "key": "app.spend.employees.last_name",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Last name",
+      "ar": "اسم العائلة"
+    },
+    {
+      "key": "app.spend.employees.email",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Work email",
+      "ar": "البريد الإلكتروني للعمل"
+    },
+    {
+      "key": "app.spend.employees.team",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Team",
+      "ar": "الفريق"
+    },
+    {
+      "key": "app.spend.employees.required",
+      "format": "text",
+      "description": "A required field is empty",
+      "placeholders": [],
+      "meta": {},
+      "en": "This is needed.",
+      "ar": "هذا الحقل مطلوب."
+    },
+    {
+      "key": "app.spend.employees.email_invalid",
+      "format": "text",
+      "description": "Email not valid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter an email such as name@company.com.",
+      "ar": "أدخل بريدا إلكترونيا مثل name@company.com."
+    },
+    {
+      "key": "app.spend.employees.invite",
+      "format": "text",
+      "description": "Button that invites an employee",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send invitation",
+      "ar": "إرسال الدعوة"
+    },
+    {
+      "key": "app.spend.employees.invited",
+      "format": "text",
+      "description": "Toast after inviting",
+      "placeholders": ["name"],
+      "meta": {},
+      "en": "{name} invited",
+      "ar": "تمت دعوة {name}"
+    },
+    {
+      "key": "app.spend.employees.back",
+      "format": "text",
+      "description": "Back link",
+      "placeholders": [],
+      "meta": {},
+      "en": "Back to employees",
+      "ar": "العودة إلى الموظفين"
+    },
+    {
+      "key": "app.spend.employees.state",
+      "format": "text",
+      "description": "Label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Status",
+      "ar": "الحالة"
+    },
+    {
+      "key": "app.spend.employees.linked",
+      "format": "text",
+      "description": "Label: whether the invited person signed in",
+      "placeholders": [],
+      "meta": {},
+      "en": "Signed in",
+      "ar": "سجّل الدخول"
+    },
+    {
+      "key": "app.spend.employees.linked_yes",
+      "format": "text",
+      "description": "Signed in yes",
+      "placeholders": [],
+      "meta": {},
+      "en": "Yes",
+      "ar": "نعم"
+    },
+    {
+      "key": "app.spend.employees.linked_no",
+      "format": "text",
+      "description": "Signed in not yet",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not yet",
+      "ar": "ليس بعد"
+    },
+    {
+      "key": "app.spend.employees.since",
+      "format": "text",
+      "description": "Label: when the employee was added",
+      "placeholders": [],
+      "meta": {},
+      "en": "Added",
+      "ar": "تاريخ الإضافة"
+    },
+    {
+      "key": "app.spend.employees.moved",
+      "format": "text",
+      "description": "Toast after the team changed",
+      "placeholders": ["name"],
+      "meta": {},
+      "en": "{name} moved",
+      "ar": "تم نقل {name}"
+    },
+    {
+      "key": "app.spend.employees.suspend",
+      "format": "text",
+      "description": "Suspend an employee (freezes the card)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Suspend",
+      "ar": "إيقاف"
+    },
+    {
+      "key": "app.spend.employees.suspended",
+      "format": "text",
+      "description": "Toast after suspending",
+      "placeholders": ["name"],
+      "meta": {},
+      "en": "{name} suspended and their card frozen",
+      "ar": "تم إيقاف {name} وتجميد بطاقته"
+    },
+    {
+      "key": "app.spend.employees.reactivate",
+      "format": "text",
+      "description": "Reactivate an employee",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reactivate",
+      "ar": "إعادة التفعيل"
+    },
+    {
+      "key": "app.spend.employees.reactivated",
+      "format": "text",
+      "description": "Toast after reactivating",
+      "placeholders": ["name"],
+      "meta": {},
+      "en": "{name} reactivated",
+      "ar": "تمت إعادة تفعيل {name}"
+    },
+    {
+      "key": "app.spend.employees.offboard",
+      "format": "text",
+      "description": "Offboard an employee (final)",
+      "placeholders": [],
+      "meta": {},
+      "en": "Offboard",
+      "ar": "إنهاء الخدمة"
+    },
+    {
+      "key": "app.spend.employees.offboard_title",
+      "format": "text",
+      "description": "Confirm dialog title",
+      "placeholders": ["name"],
+      "meta": {},
+      "en": "Offboard {name}?",
+      "ar": "إنهاء خدمة {name}؟"
+    },
+    {
+      "key": "app.spend.employees.offboard_text",
+      "format": "text",
+      "description": "Confirm dialog text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Their card is frozen and they can no longer use it. This cannot be undone.",
+      "ar": "ستُجمد بطاقته ولن يتمكن من استخدامها. لا يمكن التراجع عن ذلك."
+    },
+    {
+      "key": "app.spend.employees.offboarded",
+      "format": "text",
+      "description": "Toast after offboarding",
+      "placeholders": ["name"],
+      "meta": {},
+      "en": "{name} offboarded",
+      "ar": "تم إنهاء خدمة {name}"
+    },
+    {
+      "key": "app.spend.employees.offboarded_note",
+      "format": "text",
+      "description": "Note on an offboarded employee",
+      "placeholders": [],
+      "meta": {},
+      "en": "This employee has left. Their expenses stay for your records.",
+      "ar": "غادر هذا الموظف. تبقى مصروفاته في سجلاتك."
+    },
+    {
+      "key": "app.spend.limits.per_transaction",
+      "format": "text",
+      "description": "Label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Per purchase limit",
+      "ar": "حد العملية الواحدة"
+    },
+    {
+      "key": "app.spend.limits.monthly",
+      "format": "text",
+      "description": "Label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Monthly limit",
+      "ar": "الحد الشهري"
+    },
+    {
+      "key": "app.spend.limits.none",
+      "format": "text",
+      "description": "No limit set",
+      "placeholders": [],
+      "meta": {},
+      "en": "No limit",
+      "ar": "بدون حد"
+    },
+    {
+      "key": "app.spend.card.title",
+      "format": "text",
+      "description": "Card section title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Company card",
+      "ar": "بطاقة الشركة"
+    },
+    {
+      "key": "app.spend.card.number",
+      "format": "text",
+      "description": "Label: card last four",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card",
+      "ar": "البطاقة"
+    },
+    {
+      "key": "app.spend.card.state",
+      "format": "text",
+      "description": "Label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card status",
+      "ar": "حالة البطاقة"
+    },
+    {
+      "key": "app.spend.card.frozen_by",
+      "format": "text",
+      "description": "Label: who froze the card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Frozen by",
+      "ar": "جمدها"
+    },
+    {
+      "key": "app.spend.card.frozen_by_card",
+      "format": "text",
+      "description": "Frozen on the card itself",
+      "placeholders": [],
+      "meta": {},
+      "en": "This card",
+      "ar": "هذه البطاقة"
+    },
+    {
+      "key": "app.spend.card.frozen_by_account",
+      "format": "text",
+      "description": "Frozen with the account",
+      "placeholders": [],
+      "meta": {},
+      "en": "The funding account",
+      "ar": "الحساب الممول"
+    },
+    {
+      "key": "app.spend.card.frozen_by_company",
+      "format": "text",
+      "description": "Frozen with the company",
+      "placeholders": [],
+      "meta": {},
+      "en": "The company",
+      "ar": "الشركة"
+    },
+    {
+      "key": "app.spend.card.none",
+      "format": "text",
+      "description": "An employee without a card",
+      "placeholders": [],
+      "meta": {},
+      "en": "No card yet.",
+      "ar": "لا توجد بطاقة بعد."
+    },
+    {
+      "key": "app.spend.card.freeze",
+      "format": "text",
+      "description": "Freeze a card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Freeze card",
+      "ar": "تجميد البطاقة"
+    },
+    {
+      "key": "app.spend.card.unfreeze",
+      "format": "text",
+      "description": "Unfreeze a card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unfreeze card",
+      "ar": "إلغاء تجميد البطاقة"
+    },
+    {
+      "key": "app.spend.card.frozen_done",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card frozen",
+      "ar": "تم تجميد البطاقة"
+    },
+    {
+      "key": "app.spend.card.unfrozen_done",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card unfrozen",
+      "ar": "تم إلغاء تجميد البطاقة"
+    },
+    {
+      "key": "app.spend.card.issue",
+      "format": "text",
+      "description": "Issue a virtual card",
+      "placeholders": [],
+      "meta": {},
+      "en": "Issue card",
+      "ar": "إصدار البطاقة"
+    },
+    {
+      "key": "app.spend.card.issue_title",
+      "format": "text",
+      "description": "Issue card dialog title",
+      "placeholders": ["name"],
+      "meta": {},
+      "en": "Issue a card to {name}",
+      "ar": "إصدار بطاقة لـ {name}"
+    },
+    {
+      "key": "app.spend.card.issue_text",
+      "format": "text",
+      "description": "Issue card dialog text",
+      "placeholders": [],
+      "meta": {},
+      "en": "The bank needs the date of birth and home address. We send them to the bank and do not keep them.",
+      "ar": "يحتاج البنك إلى تاريخ الميلاد وعنوان السكن. نرسلهما إلى البنك ولا نحتفظ بهما."
+    },
+    {
+      "key": "app.spend.card.dob",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Date of birth",
+      "ar": "تاريخ الميلاد"
+    },
+    {
+      "key": "app.spend.card.line1",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Street address",
+      "ar": "عنوان الشارع"
+    },
+    {
+      "key": "app.spend.card.city",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "City",
+      "ar": "المدينة"
+    },
+    {
+      "key": "app.spend.card.region",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "State or region",
+      "ar": "الولاية أو المنطقة"
+    },
+    {
+      "key": "app.spend.card.postal_code",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Postal code",
+      "ar": "الرمز البريدي"
+    },
+    {
+      "key": "app.spend.card.phone",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Mobile number",
+      "ar": "رقم الجوال"
+    },
+    {
+      "key": "app.spend.card.phone_hint",
+      "format": "text",
+      "description": "Field hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "Optional, in international form",
+      "ar": "اختياري، بالصيغة الدولية"
+    },
+    {
+      "key": "app.spend.card.issued",
+      "format": "text",
+      "description": "Toast after issuing",
+      "placeholders": ["last4", "name"],
+      "meta": {},
+      "en": "Card ending {last4} issued to {name}",
+      "ar": "تم إصدار البطاقة المنتهية بـ {last4} لـ {name}"
+    },
+    {
+      "key": "app.spend.expenses.title",
+      "format": "text",
+      "description": "Expenses card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Expenses",
+      "ar": "المصروفات"
+    },
+    {
+      "key": "app.spend.expenses.filter_label",
+      "format": "text",
+      "description": "Accessible name of the state filter",
+      "placeholders": [],
+      "meta": {},
+      "en": "Show expenses",
+      "ar": "عرض المصروفات"
+    },
+    {
+      "key": "app.spend.expenses.employee",
+      "format": "text",
+      "description": "Filter field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Employee",
+      "ar": "الموظف"
+    },
+    {
+      "key": "app.spend.expenses.anyone",
+      "format": "text",
+      "description": "Any employee",
+      "placeholders": [],
+      "meta": {},
+      "en": "Anyone",
+      "ar": "الجميع"
+    },
+    {
+      "key": "app.spend.expenses.team",
+      "format": "text",
+      "description": "Filter field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Team",
+      "ar": "الفريق"
+    },
+    {
+      "key": "app.spend.expenses.any_team",
+      "format": "text",
+      "description": "Any team",
+      "placeholders": [],
+      "meta": {},
+      "en": "Any team",
+      "ar": "أي فريق"
+    },
+    {
+      "key": "app.spend.expenses.from",
+      "format": "text",
+      "description": "Filter field",
+      "placeholders": [],
+      "meta": {},
+      "en": "From",
+      "ar": "من"
+    },
+    {
+      "key": "app.spend.expenses.to",
+      "format": "text",
+      "description": "Filter field",
+      "placeholders": [],
+      "meta": {},
+      "en": "To",
+      "ar": "إلى"
+    },
+    {
+      "key": "app.spend.expenses.dates_invalid",
+      "format": "text",
+      "description": "Filter dates wrong",
+      "placeholders": [],
+      "meta": {},
+      "en": "The end date is before the start date.",
+      "ar": "تاريخ النهاية يسبق تاريخ البداية."
+    },
+    {
+      "key": "app.spend.expenses.empty",
+      "format": "text",
+      "description": "Empty state",
+      "placeholders": [],
+      "meta": {},
+      "en": "No expenses match.",
+      "ar": "لا توجد مصروفات مطابقة."
+    },
+    {
+      "key": "app.spend.expenses.next",
+      "format": "text",
+      "description": "Paging",
+      "placeholders": [],
+      "meta": {},
+      "en": "Next page",
+      "ar": "الصفحة التالية"
+    },
+    {
+      "key": "app.spend.expenses.previous",
+      "format": "text",
+      "description": "Paging",
+      "placeholders": [],
+      "meta": {},
+      "en": "Previous page",
+      "ar": "الصفحة السابقة"
+    },
+    {
+      "key": "app.spend.expenses.back",
+      "format": "text",
+      "description": "Back link",
+      "placeholders": [],
+      "meta": {},
+      "en": "Back to expenses",
+      "ar": "العودة إلى المصروفات"
+    },
+    {
+      "key": "app.spend.expense.amount",
+      "format": "text",
+      "description": "Expense field label: Amount",
+      "placeholders": [],
+      "meta": {},
+      "en": "Amount",
+      "ar": "المبلغ"
+    },
+    {
+      "key": "app.spend.expense.merchant",
+      "format": "text",
+      "description": "Expense field label: Merchant",
+      "placeholders": [],
+      "meta": {},
+      "en": "Merchant",
+      "ar": "التاجر"
+    },
+    {
+      "key": "app.spend.expense.employee",
+      "format": "text",
+      "description": "Expense field label: Employee",
+      "placeholders": [],
+      "meta": {},
+      "en": "Employee",
+      "ar": "الموظف"
+    },
+    {
+      "key": "app.spend.expense.date",
+      "format": "text",
+      "description": "Expense field label: Date",
+      "placeholders": [],
+      "meta": {},
+      "en": "Date",
+      "ar": "التاريخ"
+    },
+    {
+      "key": "app.spend.expense.source",
+      "format": "text",
+      "description": "Expense field label: Source",
+      "placeholders": [],
+      "meta": {},
+      "en": "Source",
+      "ar": "المصدر"
+    },
+    {
+      "key": "app.spend.expense.state",
+      "format": "text",
+      "description": "Expense field label: Status",
+      "placeholders": [],
+      "meta": {},
+      "en": "Status",
+      "ar": "الحالة"
+    },
+    {
+      "key": "app.spend.expense.receipt",
+      "format": "text",
+      "description": "Expense field label: Receipt",
+      "placeholders": [],
+      "meta": {},
+      "en": "Receipt",
+      "ar": "الإيصال"
+    },
+    {
+      "key": "app.spend.expense.category",
+      "format": "text",
+      "description": "Expense field label: Category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Category",
+      "ar": "الفئة"
+    },
+    {
+      "key": "app.spend.expense.tax_code",
+      "format": "text",
+      "description": "Expense field label: Tax code",
+      "placeholders": [],
+      "meta": {},
+      "en": "Tax code",
+      "ar": "رمز الضريبة"
+    },
+    {
+      "key": "app.spend.expense.vat",
+      "format": "text",
+      "description": "Expense field label: VAT amount",
+      "placeholders": [],
+      "meta": {},
+      "en": "VAT amount",
+      "ar": "مبلغ ضريبة القيمة المضافة"
+    },
+    {
+      "key": "app.spend.expense.note",
+      "format": "text",
+      "description": "Expense field label: Note",
+      "placeholders": [],
+      "meta": {},
+      "en": "Note",
+      "ar": "ملاحظة"
+    },
+    {
+      "key": "app.spend.expense.policy",
+      "format": "text",
+      "description": "Expense field label: Policy",
+      "placeholders": [],
+      "meta": {},
+      "en": "Policy",
+      "ar": "السياسة"
+    },
+    {
+      "key": "app.spend.expense.decided",
+      "format": "text",
+      "description": "Expense field label: Decided",
+      "placeholders": [],
+      "meta": {},
+      "en": "Decided",
+      "ar": "القرار"
+    },
+    {
+      "key": "app.spend.expense.decision_note",
+      "format": "text",
+      "description": "Expense field label: Decision note",
+      "placeholders": [],
+      "meta": {},
+      "en": "Decision note",
+      "ar": "ملاحظة القرار"
+    },
+    {
+      "key": "app.spend.expense.none",
+      "format": "text",
+      "description": "No value",
+      "placeholders": [],
+      "meta": {},
+      "en": "None",
+      "ar": "لا يوجد"
+    },
+    {
+      "key": "app.spend.expense.source_card",
+      "format": "text",
+      "description": "Expense source CARD",
+      "placeholders": [],
+      "meta": {},
+      "en": "Company card",
+      "ar": "بطاقة الشركة"
+    },
+    {
+      "key": "app.spend.expense.source_claim",
+      "format": "text",
+      "description": "Expense source CLAIM",
+      "placeholders": [],
+      "meta": {},
+      "en": "Out of pocket claim",
+      "ar": "مطالبة عن مبلغ مدفوع شخصيا"
+    },
+    {
+      "key": "app.spend.expense.decided_by_policy",
+      "format": "text",
+      "description": "Approved by the policy automatically",
+      "placeholders": ["version"],
+      "meta": {},
+      "en": "By policy version {version}",
+      "ar": "وفق إصدار السياسة {version}"
+    },
+    {
+      "key": "app.spend.expense.decided_by_person",
+      "format": "text",
+      "description": "Decided by a person",
+      "placeholders": [],
+      "meta": {},
+      "en": "By a person",
+      "ar": "بواسطة شخص"
+    },
+    {
+      "key": "app.spend.expense.reasons",
+      "format": "text",
+      "description": "Why the expense waits for approval",
+      "placeholders": ["reasons"],
+      "meta": {},
+      "en": "Needs a person: {reasons}",
+      "ar": "يحتاج إلى قرار شخص: {reasons}"
+    },
+    {
+      "key": "app.spend.expense.over_limit",
+      "format": "text",
+      "description": "Over limit warning",
+      "placeholders": [],
+      "meta": {},
+      "en": "This purchase broke a spending limit.",
+      "ar": "تجاوزت هذه العملية حد إنفاق."
+    },
+    {
+      "key": "app.spend.expense.receipt_download",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Download receipt",
+      "ar": "تنزيل الإيصال"
+    },
+    {
+      "key": "app.spend.expense.receipt_download_failed",
+      "format": "text",
+      "description": "Download failed",
+      "placeholders": [],
+      "meta": {},
+      "en": "We could not download the receipt. Try again.",
+      "ar": "تعذر تنزيل الإيصال. حاول مرة أخرى."
+    },
+    {
+      "key": "app.spend.expense.decide_title",
+      "format": "text",
+      "description": "Card title for approve and reject",
+      "placeholders": [],
+      "meta": {},
+      "en": "Decide",
+      "ar": "القرار"
+    },
+    {
+      "key": "app.spend.expense.four_eyes",
+      "format": "text",
+      "description": "Four-eyes rule on own expense",
+      "placeholders": [],
+      "meta": {},
+      "en": "This is your own expense, so another person with approval rights must decide it.",
+      "ar": "هذا مصروفك، لذلك يجب أن يقرره شخص آخر لديه صلاحية الموافقة."
+    },
+    {
+      "key": "app.spend.expense.approve_note",
+      "format": "text",
+      "description": "Approve note field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Note (optional)",
+      "ar": "ملاحظة (اختيارية)"
+    },
+    {
+      "key": "app.spend.expense.approve",
+      "format": "text",
+      "description": "Approve an expense",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approve",
+      "ar": "موافقة"
+    },
+    {
+      "key": "app.spend.expense.reject",
+      "format": "text",
+      "description": "Reject an expense",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reject",
+      "ar": "رفض"
+    },
+    {
+      "key": "app.spend.expense.approved",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Expense approved",
+      "ar": "تمت الموافقة على المصروف"
+    },
+    {
+      "key": "app.spend.expense.rejected",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Expense rejected",
+      "ar": "تم رفض المصروف"
+    },
+    {
+      "key": "app.spend.expense.reject_title",
+      "format": "text",
+      "description": "Reject dialog title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reject this expense",
+      "ar": "رفض هذا المصروف"
+    },
+    {
+      "key": "app.spend.expense.reject_reason",
+      "format": "text",
+      "description": "Reject reason field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Why (the employee sees this)",
+      "ar": "السبب (يراه الموظف)"
+    },
+    {
+      "key": "app.spend.expense.recode_title",
+      "format": "text",
+      "description": "Recode card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Coding",
+      "ar": "الترميز"
+    },
+    {
+      "key": "app.spend.expense.recode_text",
+      "format": "text",
+      "description": "Recode is audited",
+      "placeholders": [],
+      "meta": {},
+      "en": "Changes are recorded with what was there before.",
+      "ar": "تُسجل التغييرات مع القيم السابقة."
+    },
+    {
+      "key": "app.spend.expense.recoded",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Coding saved",
+      "ar": "تم حفظ الترميز"
+    },
+    {
+      "key": "app.spend.expense.choose_category",
+      "format": "text",
+      "description": "Category placeholder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a category",
+      "ar": "اختر فئة"
+    },
+    {
+      "key": "app.spend.expense.choose_tax",
+      "format": "text",
+      "description": "Tax code placeholder",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a tax code",
+      "ar": "اختر رمز الضريبة"
+    },
+    {
+      "key": "app.spend.expense.vat_hint",
+      "format": "text",
+      "description": "VAT hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "Not more than the amount",
+      "ar": "لا يزيد على المبلغ"
+    },
+    {
+      "key": "app.spend.expense.vat_invalid",
+      "format": "text",
+      "description": "VAT invalid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter an amount no larger than the expense.",
+      "ar": "أدخل مبلغا لا يزيد على المصروف."
+    },
+    {
+      "key": "app.spend.expense.note_hint",
+      "format": "text",
+      "description": "Note hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "Up to 500 characters",
+      "ar": "حتى 500 حرف"
+    },
+    {
+      "key": "app.spend.expense.save_coding",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Save coding",
+      "ar": "حفظ الترميز"
+    },
+    {
+      "key": "app.spend.receipts.title",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Unmatched receipts",
+      "ar": "إيصالات غير مطابقة"
+    },
+    {
+      "key": "app.spend.receipts.intro",
+      "format": "text",
+      "description": "Intro",
+      "placeholders": [],
+      "meta": {},
+      "en": "Receipts that no expense took on its own. Match each to the purchase it is for.",
+      "ar": "إيصالات لم تطابق أي مصروف تلقائيا. طابق كل إيصال بالعملية الخاصة به."
+    },
+    {
+      "key": "app.spend.receipts.empty",
+      "format": "text",
+      "description": "Empty state title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Every receipt is matched",
+      "ar": "كل الإيصالات مطابقة"
+    },
+    {
+      "key": "app.spend.receipts.empty_text",
+      "format": "text",
+      "description": "Empty state text",
+      "placeholders": [],
+      "meta": {},
+      "en": "New receipts that need a hand show here.",
+      "ar": "تظهر هنا الإيصالات الجديدة التي تحتاج إلى مطابقة يدوية."
+    },
+    {
+      "key": "app.spend.receipts.hints",
+      "format": "text",
+      "description": "The hints the uploader gave",
+      "placeholders": ["hints"],
+      "meta": {},
+      "en": "Told: {hints}",
+      "ar": "المعطيات: {hints}"
+    },
+    {
+      "key": "app.spend.receipts.no_hints",
+      "format": "text",
+      "description": "No hints given",
+      "placeholders": [],
+      "meta": {},
+      "en": "No amount or date given",
+      "ar": "لم يُذكر مبلغ أو تاريخ"
+    },
+    {
+      "key": "app.spend.receipts.uploaded",
+      "format": "text",
+      "description": "Upload date",
+      "placeholders": ["date"],
+      "meta": {},
+      "en": "Uploaded {date}",
+      "ar": "تم التحميل {date}"
+    },
+    {
+      "key": "app.spend.receipts.download",
+      "format": "text",
+      "description": "Download a receipt file",
+      "placeholders": [],
+      "meta": {},
+      "en": "Download",
+      "ar": "تنزيل"
+    },
+    {
+      "key": "app.spend.receipts.candidates",
+      "format": "text",
+      "description": "Match picker label when there are candidates",
+      "placeholders": [],
+      "meta": {},
+      "en": "Likely expenses",
+      "ar": "المصروفات المحتملة"
+    },
+    {
+      "key": "app.spend.receipts.any_open",
+      "format": "text",
+      "description": "Match picker label otherwise",
+      "placeholders": [],
+      "meta": {},
+      "en": "Open expenses",
+      "ar": "المصروفات المفتوحة"
+    },
+    {
+      "key": "app.spend.receipts.option",
+      "format": "text",
+      "description": "An expense in a match picker",
+      "placeholders": ["amount", "date", "merchant", "name"],
+      "meta": {},
+      "en": "{merchant}, {amount}, {date}, {name}",
+      "ar": "{merchant}، {amount}، {date}، {name}"
+    },
+    {
+      "key": "app.spend.receipts.match",
+      "format": "text",
+      "description": "Match button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Match",
+      "ar": "مطابقة"
+    },
+    {
+      "key": "app.spend.receipts.matched",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Receipt matched",
+      "ar": "تمت مطابقة الإيصال"
+    },
+    {
+      "key": "app.spend.receipts.nothing_to_match",
+      "format": "text",
+      "description": "Nothing to match to",
+      "placeholders": [],
+      "meta": {},
+      "en": "No open expense without a receipt to match.",
+      "ar": "لا يوجد مصروف مفتوح بلا إيصال للمطابقة."
+    },
+    {
+      "key": "app.spend.policy.title",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Spending policy",
+      "ar": "سياسة الإنفاق"
+    },
+    {
+      "key": "app.spend.policy.active_title",
+      "format": "text",
+      "description": "Active policy card title",
+      "placeholders": ["version"],
+      "meta": {},
+      "en": "Policy in force: version {version}",
+      "ar": "السياسة السارية: الإصدار {version}"
+    },
+    {
+      "key": "app.spend.policy.version",
+      "format": "text",
+      "description": "A policy version",
+      "placeholders": ["version"],
+      "meta": {},
+      "en": "Version {version}",
+      "ar": "الإصدار {version}"
+    },
+    {
+      "key": "app.spend.policy.none",
+      "format": "text",
+      "description": "No active policy",
+      "placeholders": [],
+      "meta": {},
+      "en": "No policy in force",
+      "ar": "لا توجد سياسة سارية"
+    },
+    {
+      "key": "app.spend.policy.in_force_since",
+      "format": "text",
+      "description": "When the policy took effect",
+      "placeholders": ["by", "date"],
+      "meta": {},
+      "en": "In force since {date}, proposed by {by}",
+      "ar": "سارية منذ {date}، اقترحها {by}"
+    },
+    {
+      "key": "app.spend.policy.by_you",
+      "format": "text",
+      "description": "Proposer is the reader",
+      "placeholders": [],
+      "meta": {},
+      "en": "you",
+      "ar": "أنت"
+    },
+    {
+      "key": "app.spend.policy.by_programme",
+      "format": "text",
+      "description": "Version 1 from the programme",
+      "placeholders": [],
+      "meta": {},
+      "en": "the programme default",
+      "ar": "إعدادات البرنامج الافتراضية"
+    },
+    {
+      "key": "app.spend.policy.by_someone",
+      "format": "text",
+      "description": "Proposer without a name",
+      "placeholders": [],
+      "meta": {},
+      "en": "another person",
+      "ar": "شخص آخر"
+    },
+    {
+      "key": "app.spend.policy.receipt_above",
+      "format": "text",
+      "description": "Receipt threshold",
+      "placeholders": [],
+      "meta": {},
+      "en": "Receipt needed above",
+      "ar": "الإيصال مطلوب فوق"
+    },
+    {
+      "key": "app.spend.policy.categories",
+      "format": "text",
+      "description": "Label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Categories",
+      "ar": "الفئات"
+    },
+    {
+      "key": "app.spend.policy.category_gl",
+      "format": "text",
+      "description": "A category with its ledger account",
+      "placeholders": ["category", "gl"],
+      "meta": {},
+      "en": "{category} ({gl})",
+      "ar": "{category} ({gl})"
+    },
+    {
+      "key": "app.spend.policy.auto_approve",
+      "format": "text",
+      "description": "Rule",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approve expenses within the policy automatically",
+      "ar": "الموافقة تلقائيا على المصروفات ضمن السياسة"
+    },
+    {
+      "key": "app.spend.policy.claims_approval",
+      "format": "text",
+      "description": "Rule",
+      "placeholders": [],
+      "meta": {},
+      "en": "Out of pocket claims need a person to approve",
+      "ar": "المطالبات عن مبالغ مدفوعة شخصيا تحتاج إلى موافقة شخص"
+    },
+    {
+      "key": "app.spend.policy.self_approval",
+      "format": "text",
+      "description": "Rule",
+      "placeholders": [],
+      "meta": {},
+      "en": "People may approve their own expenses",
+      "ar": "يمكن للأشخاص الموافقة على مصروفاتهم"
+    },
+    {
+      "key": "app.spend.policy.self_approval_up_to",
+      "format": "text",
+      "description": "Self approval with ceiling",
+      "placeholders": ["amount"],
+      "meta": {},
+      "en": "Yes, up to {amount}",
+      "ar": "نعم، حتى {amount}"
+    },
+    {
+      "key": "app.spend.policy.self_max",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Own approval up to",
+      "ar": "الموافقة الذاتية حتى"
+    },
+    {
+      "key": "app.spend.policy.reminder",
+      "format": "text",
+      "description": "Rule",
+      "placeholders": [],
+      "meta": {},
+      "en": "Receipt reminder after",
+      "ar": "التذكير بالإيصال بعد"
+    },
+    {
+      "key": "app.spend.policy.reminder_hint",
+      "format": "text",
+      "description": "Field hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "Hours, 1 to 720",
+      "ar": "بالساعات، من 1 إلى 720"
+    },
+    {
+      "key": "app.spend.policy.hours",
+      "format": "text",
+      "description": "Hours",
+      "placeholders": ["hours"],
+      "meta": {},
+      "en": "{hours} hours",
+      "ar": "{hours} ساعة"
+    },
+    {
+      "key": "app.spend.policy.yes",
+      "format": "text",
+      "description": "Yes",
+      "placeholders": [],
+      "meta": {},
+      "en": "Yes",
+      "ar": "نعم"
+    },
+    {
+      "key": "app.spend.policy.no",
+      "format": "text",
+      "description": "No",
+      "placeholders": [],
+      "meta": {},
+      "en": "No",
+      "ar": "لا"
+    },
+    {
+      "key": "app.spend.policy.team_limits",
+      "format": "text",
+      "description": "A team limit override",
+      "placeholders": ["monthly", "per"],
+      "meta": {},
+      "en": "Per purchase {per}, monthly {monthly}",
+      "ar": "للعملية الواحدة {per}، شهريا {monthly}"
+    },
+    {
+      "key": "app.spend.policy.team_limits_title",
+      "format": "text",
+      "description": "Fieldset legend",
+      "placeholders": [],
+      "meta": {},
+      "en": "Team limits (leave blank to use the company limits)",
+      "ar": "حدود الفرق (اتركها فارغة لاستخدام حدود الشركة)"
+    },
+    {
+      "key": "app.spend.policy.team_per",
+      "format": "text",
+      "description": "Field",
+      "placeholders": ["team"],
+      "meta": {},
+      "en": "{team}: per purchase",
+      "ar": "{team}: للعملية الواحدة"
+    },
+    {
+      "key": "app.spend.policy.team_monthly",
+      "format": "text",
+      "description": "Field",
+      "placeholders": ["team"],
+      "meta": {},
+      "en": "{team}: monthly",
+      "ar": "{team}: شهريا"
+    },
+    {
+      "key": "app.spend.policy.propose",
+      "format": "text",
+      "description": "Opens the propose form",
+      "placeholders": [],
+      "meta": {},
+      "en": "Propose a change",
+      "ar": "اقتراح تغيير"
+    },
+    {
+      "key": "app.spend.policy.propose_title",
+      "format": "text",
+      "description": "Form title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Propose a new policy",
+      "ar": "اقتراح سياسة جديدة"
+    },
+    {
+      "key": "app.spend.policy.propose_text",
+      "format": "text",
+      "description": "Four-eyes rule in the form",
+      "placeholders": [],
+      "meta": {},
+      "en": "Another person with approval rights must approve it before it takes effect.",
+      "ar": "يجب أن يوافق عليها شخص آخر لديه صلاحية الموافقة قبل أن تسري."
+    },
+    {
+      "key": "app.spend.policy.ceiling_hint",
+      "format": "text",
+      "description": "Programme ceiling",
+      "placeholders": ["ceiling"],
+      "meta": {},
+      "en": "Up to {ceiling}",
+      "ar": "حتى {ceiling}"
+    },
+    {
+      "key": "app.spend.policy.category_key",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Category",
+      "ar": "الفئة"
+    },
+    {
+      "key": "app.spend.policy.gl_account",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Ledger account",
+      "ar": "حساب الدفتر"
+    },
+    {
+      "key": "app.spend.policy.add_category",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add category",
+      "ar": "إضافة فئة"
+    },
+    {
+      "key": "app.spend.policy.remove_category",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Remove",
+      "ar": "إزالة"
+    },
+    {
+      "key": "app.spend.policy.reason",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Why (optional)",
+      "ar": "السبب (اختياري)"
+    },
+    {
+      "key": "app.spend.policy.submit",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Send for approval",
+      "ar": "إرسال للموافقة"
+    },
+    {
+      "key": "app.spend.policy.proposed_done",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Sent for approval",
+      "ar": "تم الإرسال للموافقة"
+    },
+    {
+      "key": "app.spend.policy.proposed_title",
+      "format": "text",
+      "description": "Proposal card title",
+      "placeholders": ["version"],
+      "meta": {},
+      "en": "Proposed: version {version}",
+      "ar": "مقترحة: الإصدار {version}"
+    },
+    {
+      "key": "app.spend.policy.proposed_by",
+      "format": "text",
+      "description": "Who proposed",
+      "placeholders": ["by", "date"],
+      "meta": {},
+      "en": "Proposed by {by} on {date}",
+      "ar": "اقترحها {by} في {date}"
+    },
+    {
+      "key": "app.spend.policy.reason_line",
+      "format": "text",
+      "description": "Proposal reason",
+      "placeholders": ["reason"],
+      "meta": {},
+      "en": "Why: {reason}",
+      "ar": "السبب: {reason}"
+    },
+    {
+      "key": "app.spend.policy.four_eyes",
+      "format": "text",
+      "description": "Four-eyes rule",
+      "placeholders": [],
+      "meta": {},
+      "en": "Four eyes: a person other than the proposer approves or rejects it, after confirming it is them.",
+      "ar": "مبدأ العينين: يوافق عليها أو يرفضها شخص غير المقترح بعد تأكيد هويته."
+    },
+    {
+      "key": "app.spend.policy.four_eyes_mine",
+      "format": "text",
+      "description": "Four-eyes rule for the proposer",
+      "placeholders": [],
+      "meta": {},
+      "en": "You proposed this, so another person with approval rights must decide it. You can withdraw it.",
+      "ar": "أنت اقترحت هذه السياسة، لذلك يجب أن يقرر بشأنها شخص آخر لديه صلاحية الموافقة. يمكنك سحبها."
+    },
+    {
+      "key": "app.spend.policy.approve",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Approve",
+      "ar": "موافقة"
+    },
+    {
+      "key": "app.spend.policy.reject",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Reject",
+      "ar": "رفض"
+    },
+    {
+      "key": "app.spend.policy.withdraw",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Withdraw",
+      "ar": "سحب"
+    },
+    {
+      "key": "app.spend.policy.approved_done",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Policy approved and in force",
+      "ar": "تمت الموافقة على السياسة وأصبحت سارية"
+    },
+    {
+      "key": "app.spend.policy.rejected_done",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Policy rejected",
+      "ar": "تم رفض السياسة"
+    },
+    {
+      "key": "app.spend.policy.withdrawn_done",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Proposal withdrawn",
+      "ar": "تم سحب الاقتراح"
+    },
+    {
+      "key": "app.spend.policy.no_approve",
+      "format": "text",
+      "description": "Reader cannot approve",
+      "placeholders": [],
+      "meta": {},
+      "en": "Only a person with approval rights can decide it.",
+      "ar": "لا يقرر بشأنها إلا شخص لديه صلاحية الموافقة."
+    },
+    {
+      "key": "app.spend.policy.history",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Versions",
+      "ar": "الإصدارات"
+    },
+    {
+      "key": "app.spend.policy.reject_title",
+      "format": "text",
+      "description": "Reject dialog title",
+      "placeholders": ["version"],
+      "meta": {},
+      "en": "Reject version {version}",
+      "ar": "رفض الإصدار {version}"
+    },
+    {
+      "key": "app.spend.policy.reject_note",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Note (optional)",
+      "ar": "ملاحظة (اختيارية)"
+    },
+    {
+      "key": "app.spend.policy.error.amount",
+      "format": "text",
+      "description": "Amount not valid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter an amount such as 250.00.",
+      "ar": "أدخل مبلغا مثل 250.00."
+    },
+    {
+      "key": "app.spend.policy.error.positive",
+      "format": "text",
+      "description": "Limit not positive",
+      "placeholders": [],
+      "meta": {},
+      "en": "A limit must be above zero.",
+      "ar": "يجب أن يكون الحد أكبر من صفر."
+    },
+    {
+      "key": "app.spend.policy.error.ceiling",
+      "format": "text",
+      "description": "Above the ceiling",
+      "placeholders": ["ceiling"],
+      "meta": {},
+      "en": "The programme allows up to {ceiling}.",
+      "ar": "يسمح البرنامج بحد أقصى {ceiling}."
+    },
+    {
+      "key": "app.spend.policy.error.not_negative",
+      "format": "text",
+      "description": "Negative amount",
+      "placeholders": [],
+      "meta": {},
+      "en": "This cannot be below zero.",
+      "ar": "لا يمكن أن يكون أقل من صفر."
+    },
+    {
+      "key": "app.spend.policy.error.reminder",
+      "format": "text",
+      "description": "Reminder out of range",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter 1 to 720 hours.",
+      "ar": "أدخل من 1 إلى 720 ساعة."
+    },
+    {
+      "key": "app.spend.policy.error.categories",
+      "format": "text",
+      "description": "No category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Keep at least one category.",
+      "ar": "احتفظ بفئة واحدة على الأقل."
+    },
+    {
+      "key": "app.spend.policy.error.duplicate",
+      "format": "text",
+      "description": "Duplicate category",
+      "placeholders": [],
+      "meta": {},
+      "en": "Each category may appear once.",
+      "ar": "يجب أن تظهر كل فئة مرة واحدة."
+    },
+    {
+      "key": "app.spend.policy.error.category_rule",
+      "format": "text",
+      "description": "Category rule",
+      "placeholders": [],
+      "meta": {},
+      "en": "A category is lower case letters, digits and underscores, with a ledger account of up to 32 characters.",
+      "ar": "تتكون الفئة من أحرف لاتينية صغيرة وأرقام وشرطات سفلية، مع حساب دفتر حتى 32 حرفا."
+    },
+    {
+      "key": "app.spend.exports.title",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Export approved expenses",
+      "ar": "تصدير المصروفات الموافق عليها"
+    },
+    {
+      "key": "app.spend.exports.intro",
+      "format": "text",
+      "description": "Intro",
+      "placeholders": [],
+      "meta": {},
+      "en": "A file of the approved expenses of a period for your accountant. Each expense is exported once.",
+      "ar": "ملف بالمصروفات الموافق عليها لفترة لمحاسبك. يُصدَّر كل مصروف مرة واحدة."
+    },
+    {
+      "key": "app.spend.exports.from",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "From",
+      "ar": "من"
+    },
+    {
+      "key": "app.spend.exports.to",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "To",
+      "ar": "إلى"
+    },
+    {
+      "key": "app.spend.exports.format",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Format",
+      "ar": "الصيغة"
+    },
+    {
+      "key": "app.spend.exports.no_formats",
+      "format": "text",
+      "description": "No formats",
+      "placeholders": [],
+      "meta": {},
+      "en": "No export format is offered yet.",
+      "ar": "لا توجد صيغة تصدير متاحة بعد."
+    },
+    {
+      "key": "app.spend.exports.create",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Create export",
+      "ar": "إنشاء ملف التصدير"
+    },
+    {
+      "key": "app.spend.exports.created",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Export created",
+      "ar": "تم إنشاء ملف التصدير"
+    },
+    {
+      "key": "app.spend.exports.result",
+      "format": "text",
+      "description": "Export result headline",
+      "placeholders": ["from", "lines", "to"],
+      "meta": {},
+      "en": "{lines} expenses from {from} to {to}",
+      "ar": "{lines} مصروفات من {from} إلى {to}"
+    },
+    {
+      "key": "app.spend.exports.total",
+      "format": "text",
+      "description": "Label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Total",
+      "ar": "الإجمالي"
+    },
+    {
+      "key": "app.spend.exports.excluded_line",
+      "format": "text",
+      "description": "What the export left out",
+      "placeholders": ["amount", "count", "reason"],
+      "meta": {},
+      "en": "Left out: {count} expenses, {amount}, {reason}",
+      "ar": "مستبعد: {count} مصروفات، {amount}، {reason}"
+    },
+    {
+      "key": "app.spend.exports.download",
+      "format": "text",
+      "description": "Download link",
+      "placeholders": ["file"],
+      "meta": {},
+      "en": "Download {file}",
+      "ar": "تنزيل {file}"
+    },
+    {
+      "key": "app.spend.exports.link_expires",
+      "format": "text",
+      "description": "Link expiry",
+      "placeholders": ["time"],
+      "meta": {},
+      "en": "The link works until {time}.",
+      "ar": "يعمل الرابط حتى {time}."
+    },
+    {
+      "key": "app.spend.exports.no_lines",
+      "format": "text",
+      "description": "Empty export",
+      "placeholders": [],
+      "meta": {},
+      "en": "No approved expenses in this period, so there is no file.",
+      "ar": "لا توجد مصروفات موافق عليها في هذه الفترة، لذلك لا يوجد ملف."
+    },
+    {
+      "key": "app.spend.exports.fresh_link",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Get a new download link",
+      "ar": "الحصول على رابط تنزيل جديد"
+    },
+    {
+      "key": "app.spend.exports.recent",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Recent exports",
+      "ar": "ملفات التصدير الأخيرة"
+    },
+    {
+      "key": "app.spend.exports.none",
+      "format": "text",
+      "description": "Empty state",
+      "placeholders": [],
+      "meta": {},
+      "en": "No exports yet.",
+      "ar": "لا توجد ملفات تصدير بعد."
+    },
+    {
+      "key": "app.spend.exports.row",
+      "format": "text",
+      "description": "An export row",
+      "placeholders": ["from", "to"],
+      "meta": {},
+      "en": "{from} to {to}",
+      "ar": "{from} إلى {to}"
+    },
+    {
+      "key": "app.spend.exports.row_sub",
+      "format": "text",
+      "description": "An export row detail",
+      "placeholders": ["format", "lines"],
+      "meta": {},
+      "en": "{format}, {lines} expenses",
+      "ar": "{format}، {lines} مصروفات"
+    },
+    {
+      "key": "app.spend.me.card_title",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "My company card",
+      "ar": "بطاقة الشركة الخاصة بي"
+    },
+    {
+      "key": "app.spend.me.no_card",
+      "format": "text",
+      "description": "Empty state title",
+      "placeholders": [],
+      "meta": {},
+      "en": "No card yet",
+      "ar": "لا توجد بطاقة بعد"
+    },
+    {
+      "key": "app.spend.me.no_card_text",
+      "format": "text",
+      "description": "Empty state text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Your finance team issues your card. You can still claim money you paid yourself.",
+      "ar": "يصدر فريق المالية بطاقتك. ما زال بإمكانك المطالبة بمبالغ دفعتها بنفسك."
+    },
+    {
+      "key": "app.spend.me.show_details",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Show card details",
+      "ar": "عرض تفاصيل البطاقة"
+    },
+    {
+      "key": "app.spend.me.limits_title",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Limits and rules",
+      "ar": "الحدود والقواعد"
+    },
+    {
+      "key": "app.spend.me.month_spent",
+      "format": "text",
+      "description": "Label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Spent this month",
+      "ar": "المصروف هذا الشهر"
+    },
+    {
+      "key": "app.spend.me.team",
+      "format": "text",
+      "description": "Label",
+      "placeholders": [],
+      "meta": {},
+      "en": "Team",
+      "ar": "الفريق"
+    },
+    {
+      "key": "app.spend.me.reminder_hint",
+      "format": "text",
+      "description": "Reminder rule",
+      "placeholders": ["hours"],
+      "meta": {},
+      "en": "Add receipts within {hours} hours of a purchase, or we remind you.",
+      "ar": "أضف الإيصالات خلال {hours} ساعة من العملية، وإلا سنذكرك."
+    },
+    {
+      "key": "app.spend.me.receipts_needed.one",
+      "format": "text",
+      "description": "Banner",
+      "placeholders": [],
+      "meta": {},
+      "en": "1 expense needs a receipt.",
+      "ar": "مصروف واحد يحتاج إلى إيصال."
+    },
+    {
+      "key": "app.spend.me.receipts_needed.other",
+      "format": "text",
+      "description": "Banner",
+      "placeholders": ["count"],
+      "meta": {},
+      "en": "{count} expenses need a receipt.",
+      "ar": "{count} مصروفات تحتاج إلى إيصال."
+    },
+    {
+      "key": "app.spend.me.to_submit.one",
+      "format": "text",
+      "description": "Banner",
+      "placeholders": [],
+      "meta": {},
+      "en": "1 expense to submit.",
+      "ar": "مصروف واحد للتقديم."
+    },
+    {
+      "key": "app.spend.me.to_submit.other",
+      "format": "text",
+      "description": "Banner",
+      "placeholders": ["count"],
+      "meta": {},
+      "en": "{count} expenses to submit.",
+      "ar": "{count} مصروفات للتقديم."
+    },
+    {
+      "key": "app.spend.me.expenses_title",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "My expenses",
+      "ar": "مصروفاتي"
+    },
+    {
+      "key": "app.spend.me.no_expenses",
+      "format": "text",
+      "description": "Empty state title",
+      "placeholders": [],
+      "meta": {},
+      "en": "No expenses here",
+      "ar": "لا توجد مصروفات هنا"
+    },
+    {
+      "key": "app.spend.me.no_expenses_text",
+      "format": "text",
+      "description": "Empty state text",
+      "placeholders": [],
+      "meta": {},
+      "en": "Card purchases show here once they post. Claim money you paid yourself under Claim.",
+      "ar": "تظهر مشتريات البطاقة هنا بعد ترحيلها. طالب بالمبالغ التي دفعتها بنفسك من قسم المطالبة."
+    },
+    {
+      "key": "app.spend.me.back",
+      "format": "text",
+      "description": "Back link",
+      "placeholders": [],
+      "meta": {},
+      "en": "Back to my expenses",
+      "ar": "العودة إلى مصروفاتي"
+    },
+    {
+      "key": "app.spend.me.code_title",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Category and tax",
+      "ar": "الفئة والضريبة"
+    },
+    {
+      "key": "app.spend.me.add_receipt",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Add the receipt",
+      "ar": "إضافة الإيصال"
+    },
+    {
+      "key": "app.spend.me.receipt_required_above",
+      "format": "text",
+      "description": "Receipt rule",
+      "placeholders": ["amount"],
+      "meta": {},
+      "en": "A receipt is needed for purchases above {amount}.",
+      "ar": "الإيصال مطلوب للمشتريات التي تزيد على {amount}."
+    },
+    {
+      "key": "app.spend.me.submit_title",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Submit",
+      "ar": "التقديم"
+    },
+    {
+      "key": "app.spend.me.submit_text",
+      "format": "text",
+      "description": "Submit explanation",
+      "placeholders": [],
+      "meta": {},
+      "en": "Once submitted, it is approved by the policy or sent to a person to approve, and can no longer be changed.",
+      "ar": "بعد التقديم تتم الموافقة عليه وفق السياسة أو يُرسل إلى شخص للموافقة، ولا يمكن تغييره بعد ذلك."
+    },
+    {
+      "key": "app.spend.me.submit",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Submit expense",
+      "ar": "تقديم المصروف"
+    },
+    {
+      "key": "app.spend.me.submitted_approved",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Submitted and approved by the policy",
+      "ar": "تم التقديم والموافقة وفق السياسة"
+    },
+    {
+      "key": "app.spend.me.submitted_waiting",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Submitted and waiting for approval",
+      "ar": "تم التقديم وهو بانتظار الموافقة"
+    },
+    {
+      "key": "app.spend.me.upload_title",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Upload a receipt",
+      "ar": "تحميل إيصال"
+    },
+    {
+      "key": "app.spend.me.upload_text",
+      "format": "text",
+      "description": "Upload intro",
+      "placeholders": [],
+      "meta": {},
+      "en": "Give the amount and date on the receipt and we match it to your purchase.",
+      "ar": "أدخل المبلغ والتاريخ المذكورين في الإيصال وسنطابقه مع عمليتك."
+    },
+    {
+      "key": "app.spend.me.receipts_title",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "My receipts",
+      "ar": "إيصالاتي"
+    },
+    {
+      "key": "app.spend.me.no_receipts",
+      "format": "text",
+      "description": "Empty state",
+      "placeholders": [],
+      "meta": {},
+      "en": "No receipts yet.",
+      "ar": "لا توجد إيصالات بعد."
+    },
+    {
+      "key": "app.spend.me.receipt_matched_how",
+      "format": "text",
+      "description": "Matched receipt line",
+      "placeholders": ["date", "how"],
+      "meta": {},
+      "en": "Uploaded {date}, {how}",
+      "ar": "تم التحميل {date}، {how}"
+    },
+    {
+      "key": "app.spend.me.match_option",
+      "format": "text",
+      "description": "Own expense in a match picker",
+      "placeholders": ["amount", "date", "merchant"],
+      "meta": {},
+      "en": "{merchant}, {amount}, {date}",
+      "ar": "{merchant}، {amount}، {date}"
+    },
+    {
+      "key": "app.spend.upload.file",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Photo or PDF",
+      "ar": "صورة أو ملف PDF"
+    },
+    {
+      "key": "app.spend.upload.file_hint",
+      "format": "text",
+      "description": "Field hint",
+      "placeholders": ["size"],
+      "meta": {},
+      "en": "A photo or PDF, up to {size} MB",
+      "ar": "صورة أو ملف PDF، حتى {size} ميجابايت"
+    },
+    {
+      "key": "app.spend.upload.choose_file",
+      "format": "text",
+      "description": "No file chosen",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a file to upload.",
+      "ar": "اختر ملفا لتحميله."
+    },
+    {
+      "key": "app.spend.upload.amount",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Amount on the receipt",
+      "ar": "المبلغ في الإيصال"
+    },
+    {
+      "key": "app.spend.upload.hint_text",
+      "format": "text",
+      "description": "Field hint",
+      "placeholders": [],
+      "meta": {},
+      "en": "Used to find the purchase it is for",
+      "ar": "يستخدم للعثور على العملية المقصودة"
+    },
+    {
+      "key": "app.spend.upload.amount_invalid",
+      "format": "text",
+      "description": "Amount not valid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter an amount such as 42.50.",
+      "ar": "أدخل مبلغا مثل 42.50."
+    },
+    {
+      "key": "app.spend.upload.date",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Date on the receipt",
+      "ar": "التاريخ في الإيصال"
+    },
+    {
+      "key": "app.spend.upload.merchant",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Merchant (optional)",
+      "ar": "التاجر (اختياري)"
+    },
+    {
+      "key": "app.spend.upload.submit",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Upload receipt",
+      "ar": "تحميل الإيصال"
+    },
+    {
+      "key": "app.spend.upload.attached",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Receipt attached",
+      "ar": "تم إرفاق الإيصال"
+    },
+    {
+      "key": "app.spend.upload.matched",
+      "format": "text",
+      "description": "Upload result: matched",
+      "placeholders": ["how"],
+      "meta": {},
+      "en": "Receipt uploaded and {how}.",
+      "ar": "تم تحميل الإيصال و{how}."
+    },
+    {
+      "key": "app.spend.upload.unmatched",
+      "format": "text",
+      "description": "Upload result: unmatched",
+      "placeholders": [],
+      "meta": {},
+      "en": "Receipt uploaded. We could not tell which purchase it is for: pick it below.",
+      "ar": "تم تحميل الإيصال. لم نتمكن من تحديد العملية المقصودة: اخترها أدناه."
+    },
+    {
+      "key": "app.spend.claim.title",
+      "format": "text",
+      "description": "Card title",
+      "placeholders": [],
+      "meta": {},
+      "en": "Claim money you paid",
+      "ar": "المطالبة بمبلغ دفعته"
+    },
+    {
+      "key": "app.spend.claim.intro",
+      "format": "text",
+      "description": "Intro",
+      "placeholders": [],
+      "meta": {},
+      "en": "For a work cost you paid yourself. It follows the same rules as card purchases.",
+      "ar": "لتكلفة عمل دفعتها بنفسك. تنطبق عليها قواعد مشتريات البطاقة نفسها."
+    },
+    {
+      "key": "app.spend.claim.amount",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Amount",
+      "ar": "المبلغ"
+    },
+    {
+      "key": "app.spend.claim.amount_invalid",
+      "format": "text",
+      "description": "Amount not valid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Enter an amount above zero, such as 18.00.",
+      "ar": "أدخل مبلغا أكبر من صفر، مثل 18.00."
+    },
+    {
+      "key": "app.spend.claim.merchant",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Where you paid",
+      "ar": "مكان الدفع"
+    },
+    {
+      "key": "app.spend.claim.date",
+      "format": "text",
+      "description": "Field",
+      "placeholders": [],
+      "meta": {},
+      "en": "Date paid",
+      "ar": "تاريخ الدفع"
+    },
+    {
+      "key": "app.spend.claim.date_invalid",
+      "format": "text",
+      "description": "Date not valid",
+      "placeholders": [],
+      "meta": {},
+      "en": "Choose a day that is not in the future.",
+      "ar": "اختر يوما ليس في المستقبل."
+    },
+    {
+      "key": "app.spend.claim.invalid",
+      "format": "text",
+      "description": "Claim refused by validation",
+      "placeholders": [],
+      "meta": {},
+      "en": "Check the amount, merchant and date: the amount must be in the policy currency.",
+      "ar": "تحقق من المبلغ والتاجر والتاريخ: يجب أن يكون المبلغ بعملة السياسة."
+    },
+    {
+      "key": "app.spend.claim.submit",
+      "format": "text",
+      "description": "Button",
+      "placeholders": [],
+      "meta": {},
+      "en": "Create claim",
+      "ar": "إنشاء المطالبة"
+    },
+    {
+      "key": "app.spend.claim.created",
+      "format": "text",
+      "description": "Toast",
+      "placeholders": [],
+      "meta": {},
+      "en": "Claim created. Add a receipt and submit it.",
+      "ar": "تم إنشاء المطالبة. أضف إيصالا وقدمها."
     }
   ]
 }

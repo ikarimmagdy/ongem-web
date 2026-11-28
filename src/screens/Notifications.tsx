@@ -36,6 +36,11 @@ export function noticeRoute(link: string | null): string | null {
       return id ? `/payments/movements/${encodeURIComponent(id)}` : '/payments/international';
     case 'get-paid':
       return '/get-paid';
+    case 'spend': {
+      // OG-087: `spend/expenses/<id>`, `spend/me/expenses/<id>`, `spend/policy`.
+      const path = link.replace(/^\/+/, '');
+      return /^spend(\/(me\/)?expenses\/[\w-]+|\/me|\/policy)?$/.test(path) ? `/${path}` : '/spend';
+    }
     case 'team':
       return '/team';
     case 'onboarding':

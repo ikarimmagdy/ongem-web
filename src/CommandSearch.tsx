@@ -4,6 +4,7 @@ import { Permission } from './api/client';
 import { Modal } from './design-system';
 import { useAsync } from './lib/useAsync';
 import { NAV } from './nav';
+import { navShown, useSpendAccess } from './spend/access';
 import { t } from './i18n';
 import { useSession } from './session';
 import { useAssistantControl } from './assistant/control';
@@ -87,12 +88,18 @@ export function CommandSearch() {
         : Promise.resolve([]),
     [api, open],
   );
+  const spend = useSpendAccess();
   const options = useMemo(() => {
     const q = query.trim().toLowerCase();
     const match = (s: string) => !q || s.toLowerCase().includes(q);
     const tabs = visiblePaymentTabs(can, companyState).filter((x) => x.id !== 'all');
     const screens: Option[] = [
-      ...NAV.map((n) => ({ id: `screen-${n.id}`, group: 'screens' as const, label: n.label, to: n.to })),
+      ...NAV.filter((n) => navShown(n.id, spend)).map((n) => ({
+        id: `screen-${n.id}`,
+        group: 'screens' as const,
+        label: n.label,
+        to: n.to,
+      })),
       ...tabs.map((x) => ({
         id: `screen-payments-${x.id}`,
         group: 'screens' as const,
@@ -174,7 +181,7 @@ export function CommandSearch() {
     return q
       ? [...found, { id: 'ask', group: 'ask' as const, label: t('app.search.ask', { query: query.trim() }) }]
       : found;
-  }, [query, accounts, recipients, payments, cards, can, companyState]);
+  }, [query, accounts, recipients, payments, cards, can, companyState, spend]);
   useEffect(() => setActive(0), [query]);
   const choose = (o: Option | undefined) => {
     if (!o) return;

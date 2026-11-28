@@ -401,6 +401,16 @@
   "/v1/ops/audit/verify": [
     "get"
   ],
+  "/v1/ops/brands": [
+    "get"
+  ],
+  "/v1/ops/brands/{id}": [
+    "get",
+    "put"
+  ],
+  "/v1/ops/brands/{id}/logo/{slot}": [
+    "post"
+  ],
   "/v1/ops/calls": [
     "get"
   ],
@@ -476,6 +486,10 @@
   ],
   "/v1/ops/companies/{companyId}/recipients/{id}/versions": [
     "get"
+  ],
+  "/v1/ops/companies/{companyId}/spend": [
+    "get",
+    "put"
   ],
   "/v1/ops/companies/{companyId}/unfreeze-requests": [
     "post"
@@ -863,6 +877,9 @@
     "get",
     "post"
   ],
+  "/v1/ops/spend/demo-seed": [
+    "post"
+  ],
   "/v1/ops/support/tickets": [
     "get",
     "post"
@@ -948,6 +965,12 @@
   "/v1/payments/{id}/send": [
     "post"
   ],
+  "/v1/public/brand": [
+    "get"
+  ],
+  "/v1/public/brand-assets/{id}/{file}": [
+    "get"
+  ],
   "/v1/public/content/{channel}": [
     "get"
   ],
@@ -977,6 +1000,107 @@
   ],
   "/v1/recording/sessions/{id}/events": [
     "post"
+  ],
+  "/v1/spend/employees": [
+    "get",
+    "post"
+  ],
+  "/v1/spend/employees/{id}": [
+    "get",
+    "patch"
+  ],
+  "/v1/spend/employees/{id}/card": [
+    "post"
+  ],
+  "/v1/spend/employees/{id}/card/{action}": [
+    "post"
+  ],
+  "/v1/spend/employees/{id}/{action}": [
+    "post"
+  ],
+  "/v1/spend/expenses": [
+    "get"
+  ],
+  "/v1/spend/expenses/{id}": [
+    "get",
+    "patch"
+  ],
+  "/v1/spend/expenses/{id}/{action}": [
+    "post"
+  ],
+  "/v1/spend/exports": [
+    "get",
+    "post"
+  ],
+  "/v1/spend/exports/{id}": [
+    "get"
+  ],
+  "/v1/spend/me": [
+    "get"
+  ],
+  "/v1/spend/me/card": [
+    "get"
+  ],
+  "/v1/spend/me/card/widget-token": [
+    "get"
+  ],
+  "/v1/spend/me/card/{action}": [
+    "post"
+  ],
+  "/v1/spend/me/expenses": [
+    "get",
+    "post"
+  ],
+  "/v1/spend/me/expenses/{id}": [
+    "get",
+    "patch"
+  ],
+  "/v1/spend/me/expenses/{id}/submit": [
+    "post"
+  ],
+  "/v1/spend/me/receipts": [
+    "get",
+    "post"
+  ],
+  "/v1/spend/me/receipts/{id}/file": [
+    "get"
+  ],
+  "/v1/spend/me/receipts/{id}/match": [
+    "post"
+  ],
+  "/v1/spend/policy": [
+    "get"
+  ],
+  "/v1/spend/policy/versions": [
+    "post"
+  ],
+  "/v1/spend/policy/versions/{version}/withdraw": [
+    "post"
+  ],
+  "/v1/spend/policy/versions/{version}/{action}": [
+    "post"
+  ],
+  "/v1/spend/program": [
+    "get"
+  ],
+  "/v1/spend/receipts": [
+    "get"
+  ],
+  "/v1/spend/receipts/{id}/file": [
+    "get"
+  ],
+  "/v1/spend/receipts/{id}/match": [
+    "post"
+  ],
+  "/v1/spend/settings": [
+    "get"
+  ],
+  "/v1/spend/teams": [
+    "get",
+    "post"
+  ],
+  "/v1/spend/teams/{id}": [
+    "patch"
   ],
   "/v1/support/tickets": [
     "get",
