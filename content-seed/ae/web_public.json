@@ -31,7 +31,7 @@
     {
       "key": "web.art.card_business",
       "format": "text",
-      "description": "Illustration: the line on an OnGem card face that names it a business card",
+      "description": "Illustration: the line on an {brand} card face that names it a business card",
       "placeholders": [],
       "meta": {},
       "en": "Business",
@@ -1148,7 +1148,7 @@
     {
       "key": "web.legal.holding",
       "format": "text",
-      "description": "Legal page: shown where OnGem's legal team has not published the text yet (never legal terms)",
+      "description": "Legal page: shown where {brand}'s legal team has not published the text yet (never legal terms)",
       "placeholders": [],
       "meta": {},
       "en": "This page is being prepared by our legal team.",
@@ -1718,7 +1718,7 @@
     {
       "key": "web.nav.who",
       "format": "text",
-      "description": "Header menu: who OnGem is for",
+      "description": "Header menu: who {brand} is for",
       "placeholders": ["brand"],
       "meta": {},
       "en": "Who it’s for",
@@ -2788,7 +2788,7 @@
     {
       "key": "web.soon.badge",
       "format": "text",
-      "description": "UAE build: badge that OnGem is not open in the UAE yet",
+      "description": "UAE build: badge that {brand} is not open in the UAE yet",
       "placeholders": [],
       "meta": {},
       "en": "Coming soon to the UAE",

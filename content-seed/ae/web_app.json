@@ -1989,7 +1989,7 @@
     {
       "key": "app.demo.ticket.card.answer",
       "format": "text",
-      "description": "Demo support ticket: OnGem support's answer",
+      "description": "Demo support ticket: {brand} support's answer",
       "placeholders": [],
       "meta": {},
       "en": "Yes. Add them as a cardholder and we will issue it.",
@@ -2016,7 +2016,7 @@
     {
       "key": "app.demo.ticket.statement.answer",
       "format": "text",
-      "description": "Demo support ticket: OnGem support's answer",
+      "description": "Demo support ticket: {brand} support's answer",
       "placeholders": [],
       "meta": {},
       "en": "Accounts, Operating, Statements, September 2026.",
@@ -3707,7 +3707,7 @@
     {
       "key": "app.payments.kind.topup",
       "format": "text",
-      "description": "A payment that tops up an OnGem account from another bank; title, list row and kind",
+      "description": "A payment that tops up an {brand} account from another bank; title, list row and kind",
       "placeholders": [],
       "meta": {},
       "en": "Top-up",
@@ -3907,7 +3907,7 @@
     {
       "key": "app.payments.status_line.pending_approval_ongem",
       "format": "text",
-      "description": "Payment detail status: waiting for OnGem to approve (one-person company)",
+      "description": "Payment detail status: waiting for {brand} to approve (one-person company)",
       "placeholders": ["brand"],
       "meta": {},
       "en": "Waiting for {brand} to approve it, because no one else in your company can approve payments. Nothing has moved yet.",
@@ -3970,7 +3970,7 @@
     {
       "key": "app.payments.to.topup_to",
       "format": "text",
-      "description": "Payments list: who a top-up goes to; account is the OnGem account name",
+      "description": "Payments list: who a top-up goes to; account is the {brand} account name",
       "placeholders": [
         "account"
       ],
@@ -7584,7 +7584,7 @@
     {
       "key": "app.mobile.settings.analytics_toggle",
       "format": "text",
-      "description": "Founder app: switch that lets OnGem collect app usage analytics (off by default, OG-036)",
+      "description": "Founder app: switch that lets {brand} collect app usage analytics (off by default, OG-036)",
       "placeholders": [],
       "meta": {},
       "en": "Share usage data",
@@ -12871,7 +12871,7 @@
     {
       "key": "app.fx.quote.margin",
       "format": "text",
-      "description": "Label: OnGem margin, shown apart (OG-054)",
+      "description": "Label: {brand} margin, shown apart (OG-054)",
       "placeholders": [
         "bps",
         "brand"
@@ -13783,7 +13783,7 @@
     {
       "key": "app.fx.leg.margin",
       "format": "text",
-      "description": "Leg: OnGem margin (OG-054)",
+      "description": "Leg: {brand} margin (OG-054)",
       "placeholders": [
         "amount",
         "brand"
