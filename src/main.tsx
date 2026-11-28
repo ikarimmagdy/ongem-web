@@ -75,6 +75,10 @@ void loadRecordingSettings();
 // (OG-033). A build without a sign-in key never downloads Clerk; a signed-out visitor on the public site downloads it
 // only on the way to sign-in (PS-013).
 void initContent().then(() => {
+  // OG-100: a build made with VITE_LOCAL_IDENTITY=true signs in through the local identity issuer; the flag is replaced
+  // at build time, so any other build drops the import and carries none of the local sign-in.
+  if (import.meta.env.VITE_LOCAL_IDENTITY === 'true')
+    return void import('./auth/LocalAuth').then(({ LocalAuth }) => mount(LocalAuth));
   if (!CLERK_PUBLISHABLE_KEY) return mount(NoAuth);
   let asked = false;
   const clerk = () => {

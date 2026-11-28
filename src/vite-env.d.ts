@@ -31,6 +31,8 @@ interface ImportMetaEnv {
   readonly VITE_BRAND?: string;
   /** OG-079: `true` for a demo site (bin/demo-local): another brand's legal pages show sample texts, not the operator's. */
   readonly VITE_DEMO_SITE?: string;
+  /** OG-100: `true` signs in through the workspace's local identity issuer (unified local platform only). */
+  readonly VITE_LOCAL_IDENTITY?: string;
 }
 
 /** The package version and commit of the build (vite.config.ts). */

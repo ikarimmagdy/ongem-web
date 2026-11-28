@@ -20,6 +20,12 @@ const region = regionOf();
 
 // PS-014: a production build stops when its public site URLs are missing or point at development hosts.
 const buildEnv = { ...loadEnv('production', process.cwd(), 'VITE_'), ...process.env };
+// OG-100: the local sign-in exists for the unified local platform only, never in a production build.
+if (buildEnv.VITE_LOCAL_IDENTITY === 'true' && buildEnv.VITE_ENVIRONMENT === 'production') {
+  console.error('identity: VITE_LOCAL_IDENTITY is for local builds only; a production build refuses it.');
+  process.exit(1);
+}
+
 const siteErrors = siteConfigErrors(buildEnv);
 if (siteErrors.length) {
   for (const e of siteErrors) console.error(`site: ${e}`);
